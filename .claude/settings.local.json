@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:plagiarismsearch.com)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__browser_batch",
+      "mcp__Claude_in_Chrome__navigate",
+      "mcp__Claude_in_Chrome__computer",
+      "mcp__Claude_in_Chrome__javascript_tool",
+      "WebFetch(domain:linear.app)",
+      "WebFetch(domain:stripe.com)",
+      "WebFetch(domain:resend.com)",
+      "WebFetch(domain:www.scribbr.com)",
+      "WebFetch(domain:www.cursor.com)",
+      "WebFetch(domain:www.anthropic.com)",
+      "mcp__7caf373f-5e9c-4b8d-9868-6cfd9ee667d6__get_metadata",
+      "mcp__7caf373f-5e9c-4b8d-9868-6cfd9ee667d6__get_screenshot",
+      "Bash(curl -s -o \"D:\\\\Vibe-Coding\\\\Claude-Code\\\\Plagiarismsearch\\\\figma_references.png\" \"https://www.figma.com/api/mcp/asset/f0418fe1-6a11-439d-878a-b151a5394d28\")",
+      "Bash(dir \"D:\\\\Vibe-Coding\\\\Claude-Code\\\\Plagiarismsearch\\\\figma_references.png\")",
+      "mcp__7caf373f-5e9c-4b8d-9868-6cfd9ee667d6__use_figma",
+      "Bash(curl -s -o \"D:\\\\Vibe-Coding\\\\Claude-Code\\\\Plagiarismsearch\\\\figma_moodboard_v1.png\" \"https://www.figma.com/api/mcp/asset/f7e31138-d404-4cdf-858e-5d1dbbf59486\")",
+      "WebFetch(domain:www.turnitin.com)",
+      "WebFetch(domain:copyleaks.com)",
+      "WebFetch(domain:gptzero.me)",
+      "WebFetch(domain:originality.ai)",
+      "WebFetch(domain:www.quillbot.com)",
+      "WebSearch",
+      "Bash(curl -s -o \"D:\\\\Vibe-Coding\\\\Claude-Code\\\\Plagiarismsearch\\\\persona1.png\" \"https://www.figma.com/api/mcp/asset/69800504-f0e3-4dc6-9b71-181fc20df68a\")",
+      "Bash(curl -s -o \"D:\\\\Vibe-Coding\\\\Claude-Code\\\\Plagiarismsearch\\\\button_fixed_h.png\" \"https://www.figma.com/api/mcp/asset/c8371865-0782-4840-9838-fc5897ebb09d\")",
+      "Bash(curl -s -o \"D:\\\\Vibe-Coding\\\\Claude-Code\\\\Plagiarismsearch\\\\input_fixed_h.png\" \"https://www.figma.com/api/mcp/asset/b5d63ec4-1c5d-431c-bf37-f773f02991db\")",
+      "mcp__Figma__get_metadata",
+      "Bash(where /R \"C:\\\\Users\\\\pursu\" SKILL.md)",
+      "Bash(findstr /I frontend-design)",
+      "Bash(where /R \"C:\\\\Users\\\\pursu\\\\.claude\" SKILL.md)",
+      "Bash(dir /S /B \"C:\\\\Users\\\\pursu\\\\.claude\\\\skills\")",
+      "Bash(findstr /I \"frontend-design\")",
+      "Bash(ls -la \"/c/Users/pursu/.claude/skills\" 2>/dev/null || echo \"no global skills dir\")",
+      "Bash(npx skills *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  }
+}

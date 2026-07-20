@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PlagiarismSearch — Plagiarism + AI detection in one</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+      },
+      colors: {
+        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
+        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
+        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
+        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
+      },
+      letterSpacing: { tightest: '-0.035em' },
+      boxShadow: {
+        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
+        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
+        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
+      },
+      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+    }
+  }
+}
+</script>
+<style>
+  html { background:#fff; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background:#F36F5A; color:#fff; }
+
+  /* ---------- grain overlay ---------- */
+  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:256px 256px; }
+
+  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
+  .orb { position:absolute; border-radius:9999px; pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+  /* ---------- reveal (transform/opacity only — compositor-friendly) ---------- */
+  .rv { opacity:0; transform:translateY(40px); }
+  .no-motion .rv { opacity:1 !important; transform:none !important; }
+  .hero-float, #scanLine, #probBar { will-change: transform; }
+
+  /* ---------- scan highlights ---------- */
+  .hl { background-repeat:no-repeat; background-size:0% 100%; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
+        transition:color .3s ease; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .hl-orange { background-image:linear-gradient(to right, rgba(243,111,90,.16), rgba(243,111,90,.16)); }
+  .hl-teal   { background-image:linear-gradient(to right, rgba(12,169,195,.14), rgba(12,169,195,.14)); }
+  .hl.on-orange { color:#B84431; font-weight:600; }
+  .hl.on-teal { color:#06748A; font-weight:600; }
+
+  /* ---------- language live-scan block ---------- */
+  .pill-lang { transition: background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+  .pill-lang.active { background:#111827; color:#fff; }
+
+  /* ---------- pen annotations (reduced-motion: static final state) ---------- */
+  .no-motion #freeWord, .no-motion #oneWord { color:#DC5A45; }
+  .no-motion #oneUnderline, .no-motion #freeCirclePath { opacity:1; }
+
+  /* ---------- breathing bar ---------- */
+  @keyframes breathe { 0%,100% { width:26%; } 50% { width:38%; } }
+  .breathe { animation:breathe 4.5s cubic-bezier(.45,0,.25,1) infinite; }
+  .no-motion .breathe { animation:none; width:32%; }
+
+  @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1);} 50% { opacity:.45; transform:scale(.8);} }
+  .pulse-dot { animation:pulse-dot 2.2s ease-in-out infinite; }
+
+  /* ---------- FAQ accordion ---------- */
+  .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1); }
+  .faq-item.open .faq-a { grid-template-rows:1fr; }
+  .faq-a > div { overflow:hidden; }
+  .faq-chev { transition:transform .45s cubic-bezier(.32,.72,0,1); }
+  .faq-item.open .faq-chev { transform:rotate(180deg); }
+
+  /* ---------- persona fade ---------- */
+  .persona-panel { transition:opacity .45s cubic-bezier(.32,.72,0,1), transform .45s cubic-bezier(.32,.72,0,1); }
+  .persona-panel.hidden-panel { opacity:0; transform:translateY(14px); position:absolute; inset:0; pointer-events:none; }
+
+  /* ---------- buttons ---------- */
+  .btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
+  .btn-press:active { transform:scale(.97); }
+  .icon-orb { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+  .group:hover .icon-orb { transform:translate(3px,-1px) scale(1.05); }
+
+  .nums { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body class="font-sans text-ink-900 bg-white overflow-x-hidden">
+
+<div class="grain"></div>
+
+<!-- ================= FLOATING ISLAND NAV ================= -->
+<header class="fixed top-5 inset-x-0 z-50 flex justify-center px-4">
+  <nav class="flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-2 py-2">
+    <a href="#top" class="flex items-center gap-2.5 pr-3">
+      <span class="relative block w-7 h-6">
+        <span class="absolute left-0 top-1 w-3.5 h-3.5 bg-orange-500 rounded-[3px] rotate-45"></span>
+        <span class="absolute left-2.5 top-1 w-3.5 h-3.5 bg-teal-500 rounded-[3px] rotate-45 mix-blend-multiply"></span>
+      </span>
+      <span class="font-bold tracking-tight text-[15px]">PlagiarismSearch</span>
+    </a>
+    <div class="hidden md:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+      <a href="#scan" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">How it works</a>
+      <a href="#capabilities" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Capabilities</a>
+      <a href="#pricing" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Pricing</a>
+      <a href="#faq" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">FAQ</a>
+    </div>
+    <a href="#top" class="btn-press group ml-2 flex items-center gap-2 rounded-full bg-ink-900 text-white text-[13.5px] font-semibold pl-4 pr-1.5 py-1.5">
+      Check free
+      <span class="icon-orb w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </span>
+    </a>
+  </nav>
+</header>
+
+<!-- ================= ACT 1 · HERO ================= -->
+<section id="top" class="relative min-h-[100dvh] flex items-center overflow-hidden pt-28 pb-16">
+  <div class="orb w-[820px] h-[780px] bg-orange-500/20 -left-52 -top-56"></div>
+  <div class="orb w-[700px] h-[640px] bg-teal-500/15 right-[-180px] top-[30%]"></div>
+  <div class="orb w-[480px] h-[460px] bg-orange-300/10 left-[35%] bottom-[-220px]"></div>
+
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 w-full grid lg:grid-cols-[1.1fr_.9fr] gap-16 items-center">
+    <!-- Left -->
+    <div>
+      <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-7">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-dot"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Plagiarism + AI detection</span>
+      </div>
+
+      <h1 class="rv text-[clamp(2.6rem,5.2vw,4.35rem)] font-extrabold leading-[1.02] tracking-tightest mb-6">
+        Plagiarism + AI<br>detection in <span id="oneWord" class="relative inline-block">one.<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none"><path id="oneUnderline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span>
+      </h1>
+
+      <p class="rv text-[17px] leading-relaxed text-ink-600 max-w-[52ch] mb-9">
+        Catch copied passages and AI-written paragraphs in 17 languages — without false positives on non-native English. Plans from $9.95.
+      </p>
+
+      <!-- Paste form -->
+      <div class="rv relative rounded-4xl bg-black/[.025] ring-1 ring-black/5 p-2 shadow-diffuse max-w-[600px]">
+        <div class="rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+              <span class="text-[13px] font-bold">Free check — up to 150 words</span>
+            </div>
+            <span class="text-[11.5px] font-medium text-ink-400">No signup · No card</span>
+          </div>
+          <textarea rows="3" placeholder="Paste your text here. We compare against 14B pages and detect AI-generated content in seconds." class="w-full resize-none text-[15px] leading-relaxed placeholder:text-ink-300 focus:outline-none mb-4"></textarea>
+          <div class="flex items-center justify-between">
+            <span class="text-[12px] font-medium text-ink-400 nums" id="wordCount">0 / 150 words</span>
+            <button class="btn-press group magnetic flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[14.5px] font-semibold pl-6 pr-2 py-2">
+              Check for free
+              <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rv flex flex-wrap items-center gap-x-5 gap-y-2 mt-8 text-[12.5px] font-semibold text-ink-500">
+        <span>500,000+ writers</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span>490K Google Docs installs</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span>14B pages indexed</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span class="text-teal-700">4.9 on Trustpilot</span>
+      </div>
+    </div>
+
+    <!-- Right — floating abstraction cards -->
+    <div class="rv relative h-[560px] hidden lg:block" id="heroCards">
+      <!-- accuracy card -->
+      <div class="hero-float absolute right-6 top-8 w-[340px] rounded-4xl bg-black/[.025] ring-1 ring-black/5 p-1.5 shadow-diffuse-lg">
+        <div class="rounded-[calc(2rem-0.375rem)] bg-white shadow-inner-hl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
+                <span class="w-3.5 h-3.5 rounded-full bg-orange-600"></span>
+              </span>
+              <span class="text-[13px] font-semibold text-ink-600">Detection accuracy</span>
+            </div>
+            <span class="text-[10px] font-bold tracking-wide text-mint-700 bg-mint-100 rounded-full px-2 py-0.5">+2.8% Q1</span>
+          </div>
+          <div class="text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums">97.4%</div>
+          <div class="text-[12.5px] font-medium text-ink-400 mb-5">across 17 languages · ESL-aware</div>
+          <div class="flex items-end gap-1 h-9" id="accuracyBars"></div>
+        </div>
+      </div>
+      <!-- rating pill -->
+      <div class="hero-float absolute left-0 top-[300px] flex items-center gap-3 rounded-full bg-ink-900 pl-2 pr-6 py-2 shadow-diffuse-lg">
+        <span class="w-9 h-9 rounded-full bg-teal-400 flex items-center justify-center text-[13px] font-bold text-ink-950 nums">9.8</span>
+        <div>
+          <div class="text-[13px] font-semibold text-white leading-tight">Overall users rating</div>
+          <div class="text-[11px] font-medium text-ink-400">More than 47.2K reviews</div>
+        </div>
+      </div>
+      <!-- ESL badge -->
+      <div class="hero-float absolute left-10 -top-2 flex items-center gap-2 rounded-full bg-white ring-1 ring-mint-200 px-4 py-2.5 shadow-diffuse">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <span class="text-[12.5px] font-semibold text-mint-700">ESL-aware · false-positive &lt; 2%</span>
+      </div>
+      <!-- live scan mini -->
+      <div class="hero-float absolute right-0 bottom-2 w-[310px] rounded-3xl bg-white ring-1 ring-black/5 p-5 shadow-diffuse-lg">
+        <div class="flex items-center justify-between mb-3.5">
+          <span class="text-[12.5px] font-bold">Live scan</span>
+          <span class="text-[9.5px] font-bold tracking-wider text-mint-700 bg-mint-100 rounded-full px-2 py-0.5">87.2% ORIGINAL</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">PLAGIARISM</div><div class="text-[16px] font-extrabold text-orange-600 nums">0.8%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">AI WRITTEN</div><div class="text-[16px] font-extrabold text-teal-600 nums">12.0%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">ORIGINAL</div><div class="text-[16px] font-extrabold text-mint-600 nums">87.2%</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACT 2 · SCAN SCROLLYTELLING ================= -->
+<section id="scan" class="relative bg-ink-950 text-white">
+  <div id="scanWrap" class="relative" style="height:360vh;">
+    <div class="sticky top-0 h-[100dvh] flex flex-col justify-center overflow-hidden">
+      <div class="orb w-[700px] h-[700px] bg-teal-500/10 -left-40 top-[-200px]"></div>
+      <div class="orb w-[600px] h-[600px] bg-orange-500/10 right-[-150px] bottom-[-200px]"></div>
+
+      <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 w-full">
+        <div class="scan-head flex items-end justify-between mb-8">
+          <div>
+            <div class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/10 px-3.5 py-1.5 mb-5">
+              <span class="w-1.5 h-1.5 rounded-full bg-teal-400 pulse-dot"></span>
+              <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/70">Watch it work</span>
+            </div>
+            <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.04]">Scroll. We scan.</h2>
+          </div>
+          <p class="hidden md:block text-[15px] text-white/50 leading-relaxed max-w-[34ch] pb-1">Every flagged passage links to its source. Every AI paragraph shows probability. No black-box scoring.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-[1fr_360px] gap-5">
+          <!-- Document -->
+          <div class="scan-doc relative rounded-4xl bg-white/[.07] ring-1 ring-white/10 p-1.5">
+            <div class="relative rounded-[calc(2rem-0.375rem)] bg-white text-ink-900 p-8 lg:p-10 overflow-hidden">
+              <!-- scan line -->
+              <div id="scanLine" class="absolute left-0 right-0 top-0 h-16 pointer-events-none" style="transform:translateY(-80px);">
+                <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
+                <div class="h-16 w-full bg-gradient-to-b from-teal-400/10 to-transparent"></div>
+              </div>
+
+              <div class="flex items-center gap-2 mb-6">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></span><span class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></span><span class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></span>
+                <span class="ml-3 text-[12px] font-medium text-ink-400">Marshall_2024_climate_essay.docx</span>
+                <span id="scanStatus" class="ml-auto text-[9.5px] font-bold tracking-widest rounded-full px-2.5 py-1 bg-teal-100 text-teal-700 nums">SCANNING · 0%</span>
+              </div>
+
+              <h3 class="text-[20px] font-bold tracking-tight mb-1.5">Climate change impacts on global agriculture</h3>
+              <div class="text-[10.5px] font-bold tracking-[0.18em] text-ink-400 mb-6">PARAGRAPH 1 OF 2 · 247 WORDS</div>
+
+              <p class="text-[15.5px] leading-[1.85] text-ink-700 mb-5">
+                The economic implications of climate change extend beyond environmental damage.
+                <span class="hl hl-teal" data-step="1">Recent studies have shown that rising global temperatures correlate with decreased agricultural yields,</span>
+                <span class="hl hl-orange" data-step="2">particularly in regions dependent on rain-fed farming.</span>
+                Researchers project a 47.2% drop in tropical yields by 2050.
+              </p>
+              <p class="text-[15.5px] leading-[1.85] text-ink-700">
+                However, smallholder farmers in West Africa have adapted through
+                <span class="hl hl-orange" data-step="3">diversified cropping patterns — a strategy that combines drought-resistant millet</span>
+                with shade-tolerant maize varieties.
+                <span class="hl hl-teal" data-step="4">Field data from 2023 supports this approach across multiple growing seasons.</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="flex flex-col gap-4">
+            <div class="scan-side rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-6">
+              <div class="text-[10px] font-bold tracking-[0.2em] text-white/40 mb-4">DETECTION SUMMARY</div>
+              <div class="grid grid-cols-3 gap-2.5 text-center">
+                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">PLAGIARISM</div><div class="text-[19px] font-extrabold text-orange-400 nums"><span id="cPlag">0.0</span>%</div></div>
+                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">AI WRITTEN</div><div class="text-[19px] font-extrabold text-teal-400 nums"><span id="cAI">0.0</span>%</div></div>
+                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">ORIGINAL</div><div class="text-[19px] font-extrabold text-mint-400 nums"><span id="cOrig">100</span>%</div></div>
+              </div>
+              <div class="mt-5">
+                <div class="flex justify-between text-[11.5px] font-medium text-white/50 mb-2"><span>AI-generated probability</span><span class="text-teal-400 font-bold nums" id="probLabel">0%</span></div>
+                <div class="h-1.5 rounded-full bg-white/10 overflow-hidden"><div id="probBar" class="h-full rounded-full bg-gradient-to-r from-teal-400 to-orange-500 origin-left" style="transform:scaleX(0)"></div></div>
+              </div>
+            </div>
+
+            <div id="srcCard1" class="rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-5 opacity-0 translate-y-6">
+              <div class="flex items-center justify-between mb-2.5">
+                <span class="text-[9px] font-bold tracking-widest text-orange-300 bg-orange-500/15 rounded-full px-2 py-0.5">94% MATCH</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </div>
+              <div class="text-[13.5px] font-semibold mb-1">Rain-fed agriculture vulnerability</div>
+              <div class="text-[11px] text-white/40">Nature Climate Change · 2023</div>
+            </div>
+
+            <div id="srcCard2" class="rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-5 opacity-0 translate-y-6">
+              <div class="flex items-center justify-between mb-2.5">
+                <span class="text-[9px] font-bold tracking-widest text-orange-300 bg-orange-500/15 rounded-full px-2 py-0.5">67% MATCH</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </div>
+              <div class="text-[13.5px] font-semibold mb-1">Climate-yield correlation analysis</div>
+              <div class="text-[11px] text-white/40">Cambridge J. Agricultural Econ. · 2022</div>
+            </div>
+
+            <div id="scanDone" class="rounded-3xl bg-mint-500/10 ring-1 ring-mint-400/20 p-5 opacity-0 translate-y-6">
+              <div class="flex items-center gap-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ED2A0" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                <div>
+                  <div class="text-[13.5px] font-bold text-mint-400">Scan complete in 3.2s</div>
+                  <div class="text-[11.5px] text-white/40">2 sources · 2 AI-likely passages · verifiable</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KINETIC BREAK ================= -->
+<section class="relative py-28 lg:py-36 overflow-hidden bg-white">
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 text-center mb-16">
+    <h2 class="rv text-[clamp(2.6rem,6vw,5rem)] font-extrabold tracking-tightest leading-[1.0]">
+      One scan.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-teal-600">Two detections.</span>
+    </h2>
+  </div>
+  <div class="rv grid grid-cols-3 max-w-[880px] mx-auto px-6 text-center mb-20">
+    <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="500" data-suffix="K">0</div><div class="text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Writers</div></div>
+    <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="14" data-suffix="B">0</div><div class="text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Pages indexed</div></div>
+    <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="17" data-suffix="">0</div><div class="text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Languages</div></div>
+  </div>
+  <!-- ===== LANGUAGES · live scan demo with explainer ===== -->
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[420px_1fr] gap-12 lg:gap-16 items-center">
+
+    <!-- Explainer (matches capabilities header style) -->
+    <div class="rv">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">17 languages</span>
+      </div>
+      <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05] mb-5">Same accuracy,<br>any language.</h2>
+      <p class="text-[16.5px] text-ink-600 leading-relaxed mb-7">One sentence, re-scanned across all 17 supported languages. The highlight lands on the same claim every time — and accuracy holds between 94.2% and 98.2%, because each language runs its own trained model, not a translation shortcut.</p>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px] font-semibold text-ink-500">
+        <span class="flex items-center gap-2">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          ESL-aware · false positives under 2%
+        </span>
+        <span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span>Benchmark · 40K documents</span>
+      </div>
+    </div>
+
+    <!-- Live scan cycler -->
+    <div id="langLive" class="rv">
+      <div class="rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
+        <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-8 lg:p-10">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-8">
+            <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-teal-500 pulse-dot"></span>
+              <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Live demo</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <span id="laName" class="text-[13px] font-bold text-ink-700">English</span>
+              <span id="laChip" class="text-[11px] font-bold tracking-wide text-mint-700 bg-mint-100 rounded-full px-2.5 py-1 nums">98.2% accuracy</span>
+            </div>
+          </div>
+          <p id="laSentence" class="text-[clamp(1.25rem,2.3vw,1.8rem)] font-semibold leading-[1.55] tracking-tight text-ink-800 min-h-[5.6em] sm:min-h-[4.2em]">
+            <span id="laPre"></span><span id="laHl" class="hl hl-teal"></span><span id="laPost"></span>
+          </p>
+          <div class="h-px bg-ink-100 my-8"></div>
+          <div id="laPills" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GDocs wide -->
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 mt-20">
+    <div class="rv rounded-5xl bg-ink-950 text-white p-2 ring-1 ring-white/10 shadow-diffuse-lg overflow-hidden">
+      <div class="relative rounded-[calc(2.5rem-0.5rem)] p-8 lg:p-12 grid lg:grid-cols-[1.2fr_.8fr] gap-10 items-center overflow-hidden">
+        <div class="orb w-[500px] h-[500px] bg-teal-500/15 -right-32 -bottom-48"></div>
+        <div class="relative">
+          <div class="inline-flex items-center gap-2 rounded-full bg-white/[.07] ring-1 ring-white/10 px-3.5 py-1.5 mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-teal-400 pulse-dot"></span>
+            <span class="text-[10px] font-bold tracking-[0.18em] text-teal-300">GOOGLE DOCS ADD-ON · 490K INSTALLS</span>
+          </div>
+          <h3 class="text-[clamp(1.6rem,2.8vw,2.3rem)] font-extrabold tracking-tightest leading-[1.1] mb-4">Already a Google Docs user?<br>Claim your account.</h3>
+          <p class="text-[15px] text-white/50 leading-relaxed max-w-[46ch] mb-8">490K educators and writers run checks inside the document — no app switching. Pull your past scans into a web account in one click.</p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#" class="btn-press group flex items-center gap-2.5 rounded-full bg-white text-ink-900 text-[14px] font-semibold pl-6 pr-2 py-2">
+              Claim my account
+              <span class="icon-orb w-8 h-8 rounded-full bg-ink-900/5 flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </a>
+            <a href="#" class="btn-press rounded-full text-[14px] font-semibold text-white/60 hover:text-white px-5 py-3.5 transition-colors duration-300">Install add-on free</a>
+          </div>
+        </div>
+        <div class="relative rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5">
+          <div class="flex items-center gap-1.5 mb-4">
+            <span class="w-2 h-2 rounded-full bg-[#FF5F57]/60"></span><span class="w-2 h-2 rounded-full bg-[#FEBC2E]/60"></span><span class="w-2 h-2 rounded-full bg-[#28C840]/60"></span>
+            <span class="ml-auto text-[10.5px] text-white/40">Climate change essay.docx</span>
+          </div>
+          <div class="rounded-2xl bg-white/[.04] p-4">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[11.5px] font-bold tracking-wide text-white/85">PlagiarismSearch</span>
+              <span class="text-[8.5px] font-bold tracking-widest text-mint-400 bg-mint-500/10 rounded-full px-2 py-0.5 flex items-center gap-1">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>CHECKED
+              </span>
+            </div>
+            <div class="space-y-2.5 text-[12px]">
+              <div class="flex justify-between"><span class="text-white/50">Plagiarism</span><span class="font-bold text-orange-400 nums">0.8%</span></div>
+              <div class="flex justify-between"><span class="text-white/50">AI written</span><span class="font-bold text-teal-400 nums">12.0%</span></div>
+              <div class="flex justify-between"><span class="text-white/50">Original</span><span class="font-bold text-mint-400 nums">87.2%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACT 3 · CAPABILITIES BENTO ================= -->
+<section id="capabilities" class="relative py-28 lg:py-36 bg-ink-50 overflow-hidden">
+  <div class="orb w-[600px] h-[600px] bg-orange-500/8 -left-40 top-20"></div>
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv max-w-[560px] mb-16">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Capabilities</span>
+      </div>
+      <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05] mb-5">Built for honesty,<br>not gotchas.</h2>
+      <p class="text-[16.5px] text-ink-600 leading-relaxed">Plagiarism and AI-generated content checked in the same pass — with sources you can verify yourself.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-5 gap-5">
+      <!-- Plagiarism BIG -->
+      <div class="rv lg:col-span-3 rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
+        <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-8 lg:p-10 h-full">
+          <span class="inline-flex w-12 h-12 rounded-2xl bg-orange-100 items-center justify-center mb-6">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <h3 class="text-[26px] font-bold tracking-tight mb-3">Plagiarism check — with receipts.</h3>
+          <p class="text-[15px] text-ink-600 leading-relaxed max-w-[48ch] mb-8">14B+ pages indexed across academic journals, news archives, and open web. Every match links back to the source.</p>
+          <div class="rounded-3xl bg-ink-50 p-6">
+            <div class="text-[10px] font-bold tracking-[0.18em] text-orange-700 mb-3">EXCERPT · MATCH FOUND</div>
+            <p class="text-[14px] leading-[1.8] text-ink-700 mb-4">Climate change impacts have intensified over the past decade, <span class="text-orange-700 font-semibold bg-orange-100/70 rounded px-1">particularly in regions dependent on rain-fed farming</span>. Recent studies suggest yield variability increased by 47.2%.</p>
+            <div class="flex items-center gap-3 rounded-xl bg-white ring-1 ring-black/5 px-4 py-3">
+              <span class="text-[9px] font-bold tracking-widest text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">94% MATCH</span>
+              <span class="text-[12px] font-medium text-ink-600 truncate">Nature Climate Change · "Rain-fed agriculture vulnerability" · 2023</span>
+              <svg class="ml-auto shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="lg:col-span-2 flex flex-col gap-5">
+        <div class="rv rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse flex-1">
+          <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-8 h-full">
+            <span class="inline-flex w-11 h-11 rounded-2xl bg-teal-100 items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+            </span>
+            <h3 class="text-[20px] font-bold tracking-tight mb-2">AI detection</h3>
+            <p class="text-[14px] text-ink-600 leading-relaxed mb-5">ChatGPT, Claude, Gemini, Llama — flagged with probability per paragraph. 97.4% accuracy.</p>
+            <div class="flex justify-between text-[11px] font-medium text-ink-400 mb-2"><span>Probability</span><span class="text-teal-700 font-bold">live</span></div>
+            <div class="h-1.5 rounded-full bg-ink-100 overflow-hidden"><div class="breathe h-full rounded-full bg-gradient-to-r from-teal-400 to-orange-400"></div></div>
+          </div>
+        </div>
+        <div class="rv rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse flex-1">
+          <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-8 h-full">
+            <span class="inline-flex w-11 h-11 rounded-2xl bg-ink-100 items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </span>
+            <h3 class="text-[20px] font-bold tracking-tight mb-2">17 languages · ESL-aware</h3>
+            <p class="text-[14px] text-ink-600 leading-relaxed">Native-quality detection in EN, ES, FR, DE, UA + 12 more. False positives &lt;2% on non-native English.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- GDocs wide · v2 — Report details product mock (from Figma 5379:2309) -->
+      <div class="rv lg:col-span-5 rounded-5xl text-white shadow-diffuse-lg overflow-hidden">
+        <div class="relative rounded-5xl bg-ink-950 p-8 lg:p-12 grid lg:grid-cols-[1fr_420px] gap-10 overflow-hidden">
+          <img src="assets/gdocs-bg.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/50"></div>
+          <div class="relative flex flex-col justify-end items-start">
+            <div class="inline-flex items-center gap-2 rounded-full bg-white/[.07] backdrop-blur-md ring-1 ring-white/10 px-3.5 py-1.5 mb-6">
+              <span class="w-1.5 h-1.5 rounded-full bg-teal-400 pulse-dot"></span>
+              <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-300">Google Docs add-on</span>
+            </div>
+            <h3 class="text-[clamp(1.6rem,2.8vw,2.3rem)] font-extrabold tracking-tightest leading-[1.1] mb-4">Already a Google Docs user?<br>Claim your account.</h3>
+            <p class="text-[15px] text-ink-300 leading-relaxed max-w-[46ch] mb-8">490K educators and writers run checks inside the document — no app switching, no copy-paste. Pull your past scans into a web account in one click.</p>
+            <div class="flex flex-wrap gap-3">
+              <a href="#" class="btn-press group flex items-center gap-2.5 rounded-full bg-white text-ink-900 text-[14px] font-semibold pl-6 pr-2 py-2">
+                Claim my account
+                <span class="icon-orb w-8 h-8 rounded-full bg-ink-900/5 flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+              <a href="#" class="btn-press rounded-full text-[14px] font-semibold text-ink-50/80 hover:text-white px-5 py-3.5 transition-colors duration-300">Install add-on free</a>
+            </div>
+          </div>
+
+          <!-- Report details mock -->
+          <div class="relative rounded-[20px] bg-white/[.12] backdrop-blur-xl ring-1 ring-white/10 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.12),0_16px_40px_-12px_rgba(0,0,0,.35)]">
+            <div class="flex items-center gap-2 mb-3.5">
+              <span class="w-2 h-2 rounded-full bg-[#FF5F57]"></span><span class="w-2 h-2 rounded-full bg-[#FEBC2E]"></span><span class="w-2 h-2 rounded-full bg-[#28C840]"></span>
+              <span class="ml-auto text-[13px] font-medium text-white">Climate change essay.docx</span>
+            </div>
+            <div class="rounded-xl bg-white text-ink-900 overflow-hidden">
+              <!-- header -->
+              <div class="flex items-center gap-1 px-5 pt-3 pb-2">
+                <span class="text-[18px] font-semibold tracking-tight mr-auto">Report details</span>
+                <span class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></span>
+                <span class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></span>
+                <span class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span>
+                <span class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-500"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg></span>
+              </div>
+              <!-- file box -->
+              <div class="mx-5 mb-2 flex items-center gap-4 rounded-xl bg-teal-500/[.08] px-4 py-3.5">
+                <svg width="24" height="28" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                <div class="mr-auto">
+                  <div class="text-[13px] font-semibold leading-tight">Climate change essay.docx</div>
+                  <div class="text-[13px] text-ink-500">13.37 Kb</div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </div>
+              <!-- scan option chips -->
+              <div class="flex flex-wrap gap-1.5 px-5 pb-4 pt-1">
+                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Search for AI text</span>
+                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Search on the web</span>
+                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Exclude references</span>
+                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Only latin characters</span>
+              </div>
+              <!-- tabs -->
+              <div class="bg-ink-50 border-y border-ink-100 px-6 flex gap-4 text-[13px] font-medium">
+                <span class="py-3 text-teal-600 border-b-2 border-teal-500 -mb-px">Plagiarism</span>
+                <span class="py-3 text-ink-500">AI</span>
+                <span class="py-3 text-ink-500">Citations</span>
+                <span class="py-3 text-ink-500">References</span>
+                <span class="py-3 text-ink-500">Comments</span>
+              </div>
+              <!-- sources list -->
+              <div class="px-5 py-2 divide-y divide-ink-100">
+                <div class="flex items-center gap-3 py-3">
+                  <div class="min-w-0 mr-auto">
+                    <div class="text-[13px] font-semibold leading-tight">simplylivingwell.com</div>
+                    <div class="text-[12.5px] text-ink-500 truncate max-w-[210px]">https://simplylivingwell.com/blog-bath-body/natural-shower-spray</div>
+                  </div>
+                  <span class="w-6 h-6 shrink-0 rounded-full bg-[#DCDFE4] flex items-center justify-center text-[10px] font-medium text-ink-800">OP</span>
+                  <span class="shrink-0 rounded-lg bg-orange-100 px-2.5 h-8 flex items-center text-[13px] font-semibold text-orange-800 nums">3.20%</span>
+                </div>
+                <div class="flex items-center gap-3 py-3">
+                  <div class="min-w-0 mr-auto">
+                    <div class="text-[13px] font-semibold leading-tight">bataviail.gov</div>
+                    <div class="text-[12.5px] text-ink-500 truncate max-w-[210px]">https://bataviail.gov/1103/DIY-Natural-Household-Cleaning-Product-R</div>
+                  </div>
+                  <span class="w-6 h-6 shrink-0 rounded-full bg-[#DCDFE4] flex items-center justify-center text-[10px] font-medium text-ink-800">OP</span>
+                  <span class="shrink-0 rounded-lg bg-orange-100 px-2.5 h-8 flex items-center text-[13px] font-semibold text-orange-800 nums">1.26%</span>
+                </div>
+                <div class="flex items-center gap-3 py-3">
+                  <div class="min-w-0 mr-auto">
+                    <div class="text-[13px] font-semibold leading-tight">puracy.com</div>
+                    <div class="text-[12.5px] text-ink-500 truncate max-w-[210px]">https://puracy.com/blogs/puracy-blog/how-to-remove-years-of-soap-scum</div>
+                  </div>
+                  <span class="w-6 h-6 shrink-0 rounded-full bg-[#DCDFE4] flex items-center justify-center text-[10px] font-medium text-ink-800">OP</span>
+                  <span class="shrink-0 rounded-lg bg-orange-100 px-2.5 h-8 flex items-center text-[13px] font-semibold text-orange-800 nums">0.96%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACT 4 · PERSONAS ================= -->
+<section class="relative py-28 lg:py-36 bg-white overflow-hidden">
+  <div class="max-w-[1080px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center mb-12">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Who it's for</span>
+      </div>
+      <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05]">Students. Teachers.<br>Universities.</h2>
+    </div>
+
+    <!-- tabs -->
+    <div class="rv flex justify-center mb-12">
+      <div class="inline-flex rounded-full bg-ink-100 p-1" id="personaTabs">
+        <button data-persona="0" class="persona-tab rounded-full px-6 py-2.5 text-[14px] font-semibold bg-white shadow-sm transition-all duration-300">Student</button>
+        <button data-persona="1" class="persona-tab rounded-full px-6 py-2.5 text-[14px] font-semibold text-ink-500 transition-all duration-300">Teacher</button>
+        <button data-persona="2" class="persona-tab rounded-full px-6 py-2.5 text-[14px] font-semibold text-ink-500 transition-all duration-300">University</button>
+      </div>
+    </div>
+
+    <div class="rv relative min-h-[380px]" id="personaPanels">
+      <!-- Student -->
+      <div class="persona-panel" data-panel="0">
+        <div class="rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
+          <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-8 py-12 lg:px-16 text-center">
+            <div class="flex justify-center gap-1 mb-8" aria-hidden="true">
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <blockquote class="font-serif italic text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.35] text-ink-800 max-w-[30ch] mx-auto mb-10">"Other checkers flag my voice as AI because I write differently. PlagiarismSearch reads my actual sentences — not patterns."</blockquote>
+            <div class="flex items-center justify-center gap-4">
+              <span class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-[14px] font-bold">PV</span>
+              <div class="text-left">
+                <div class="text-[14.5px] font-bold">Priya Venkataraman</div>
+                <div class="text-[12.5px] text-ink-500">Junior · Brown University · 47 scans</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Teacher -->
+      <div class="persona-panel hidden-panel" data-panel="1">
+        <div class="rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
+          <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-8 py-12 lg:px-16 text-center">
+            <div class="flex justify-center gap-1 mb-8" aria-hidden="true">
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <blockquote class="font-serif italic text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.35] text-ink-800 max-w-[30ch] mx-auto mb-10">"I check 32 essays a week inside Google Docs. Sources I can click. AI flags I can defend. My weekends are mine again."</blockquote>
+            <div class="flex items-center justify-center gap-4">
+              <span class="w-12 h-12 rounded-full bg-gradient-to-br from-mint-400 to-mint-600 flex items-center justify-center text-white text-[14px] font-bold">DB</span>
+              <div class="text-left">
+                <div class="text-[14.5px] font-bold">Daniel Boyko</div>
+                <div class="text-[12.5px] text-ink-500">AP English Lit · Cleveland Heights HS · 1,287 essays</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- University -->
+      <div class="persona-panel hidden-panel" data-panel="2">
+        <div class="rounded-5xl bg-ink-950 ring-1 ring-white/10 p-2 shadow-diffuse-lg">
+          <div class="relative rounded-[calc(2.5rem-0.5rem)] px-8 py-12 lg:px-16 text-center overflow-hidden">
+            <div class="orb w-[400px] h-[400px] bg-teal-500/15 -right-24 -top-32"></div>
+            <div class="relative flex justify-center gap-1 mb-8" aria-hidden="true">
+              <svg class="text-teal-400" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-teal-400" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-teal-400" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-teal-400" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg class="text-teal-400" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <blockquote class="relative font-serif italic text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.35] text-white max-w-[32ch] mx-auto mb-10">"We compared 14 vendors. PlagiarismSearch matched Turnitin's hit-rate on AI submissions — for one-third of the per-student cost. We migrated 3,400 students in one term."</blockquote>
+            <div class="relative flex items-center justify-center gap-4">
+              <span class="w-12 h-12 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-[14px] font-bold">MA</span>
+              <div class="text-left">
+                <div class="text-[14.5px] font-bold text-white">Dr. Margaret Achebe</div>
+                <div class="text-[12.5px] text-white/50">Academic Integrity Office · U. of Manchester</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACT 5 · PRICING ================= -->
+<section id="pricing" class="relative py-28 lg:py-36 bg-ink-50 overflow-hidden">
+  <div class="orb w-[520px] h-[520px] bg-teal-500/8 right-[-140px] top-10"></div>
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[560px] mx-auto mb-12">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Pricing</span>
+      </div>
+      <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05] mb-5">3 simple plans.<br>No hidden tiers.</h2>
+      <p class="text-[16px] text-ink-600 leading-relaxed">Pay only for what you need. Cancel anytime. 7-day money-back guarantee.</p>
+    </div>
+
+    <!-- toggle -->
+    <div class="rv flex justify-center mb-14">
+      <div class="inline-flex items-center rounded-full bg-ink-100 p-1" id="billingToggle">
+        <button data-billing="monthly" class="billing-btn rounded-full px-6 py-2.5 text-[14px] font-semibold text-ink-500 transition-all duration-300">Monthly</button>
+        <button data-billing="yearly" class="billing-btn rounded-full px-5 py-2.5 text-[14px] font-semibold bg-white shadow-sm transition-all duration-300 flex items-center gap-2">Yearly <span class="text-[9.5px] font-bold tracking-wide text-mint-700 bg-mint-100 rounded-full px-2 py-0.5">SAVE 20%</span></button>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6 items-center max-w-[1180px] mx-auto">
+      <!-- Light -->
+      <div class="rv rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-8 lg:p-9">
+        <div class="text-[11px] font-bold tracking-[0.16em] text-orange-600 mb-1.5">LIGHT</div>
+        <div class="text-[13.5px] text-ink-500 mb-6">For occasional checks</div>
+        <div class="flex items-end gap-1.5 mb-7">
+          <span class="text-[46px] font-extrabold tracking-tightest leading-none nums price" data-monthly="$9.95" data-yearly="$7.96">$7.96</span>
+          <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 period">/ mo · billed yearly</span>
+        </div>
+        <div class="h-px bg-ink-100 mb-7"></div>
+        <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 mb-9">
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>50 checks per month</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Up to 5,000 words per check</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Plagiarism + AI detection</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Web report · share link</li>
+        </ul>
+        <a href="#" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-[14.5px] font-semibold py-3.5 hover:bg-ink-50 transition-colors duration-300">Start Light</a>
+      </div>
+
+      <!-- Standard -->
+      <div class="rv relative rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-8 lg:p-10 lg:-my-6 overflow-hidden">
+        <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>
+        <div class="relative">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-[11px] font-bold tracking-[0.16em] text-teal-300">STANDARD</span>
+            <span class="flex items-center gap-1.5 text-[9.5px] font-bold tracking-widest bg-orange-500 rounded-full px-2.5 py-1">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+              MOST POPULAR
+            </span>
+          </div>
+          <div class="text-[13.5px] text-white/50 mb-6">For active writers and students</div>
+          <div class="flex items-end gap-1.5 mb-7">
+            <span class="text-[52px] font-extrabold tracking-tightest leading-none nums price" data-monthly="$19.95" data-yearly="$15.96">$15.96</span>
+            <span class="text-[12.5px] font-medium text-white/40 pb-1.5 period">/ mo · billed yearly</span>
+          </div>
+          <div class="h-px bg-white/10 mb-7"></div>
+          <ul class="space-y-3.5 text-[13.5px] font-medium text-white/85 mb-9">
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>200 checks per month</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Up to 25,000 words per check</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Light</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>PDF report export</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Priority email support</li>
+          </ul>
+          <a href="#" class="btn-press group flex items-center justify-center gap-2.5 rounded-full bg-white text-ink-900 text-[14.5px] font-semibold py-2 pl-6 pr-2">
+            Start Standard
+            <span class="icon-orb w-8 h-8 rounded-full bg-ink-900/5 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Pro -->
+      <div class="rv rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-8 lg:p-9">
+        <div class="text-[11px] font-bold tracking-[0.16em] text-orange-600 mb-1.5">PRO</div>
+        <div class="text-[13.5px] text-ink-500 mb-6">For teams and educators</div>
+        <div class="flex items-end gap-1.5 mb-7">
+          <span class="text-[46px] font-extrabold tracking-tightest leading-none nums price" data-monthly="$39.95" data-yearly="$31.96">$31.96</span>
+          <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 period">/ mo · billed yearly</span>
+        </div>
+        <div class="h-px bg-ink-100 mb-7"></div>
+        <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 mb-9">
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unlimited checks</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Up to 100,000 words per check</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Standard</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>API access · 10K calls/mo</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dedicated support</li>
+        </ul>
+        <a href="#" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-[14.5px] font-semibold py-3.5 hover:bg-ink-50 transition-colors duration-300">Start Pro</a>
+      </div>
+    </div>
+
+    <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-12 text-[13px] font-medium text-ink-500">
+      <span>Need a single check? <span class="font-semibold text-teal-700">Pay-as-you-go $1.95</span></span>
+      <span class="w-1 h-1 rounded-full bg-ink-200"></span>
+      <a href="#" class="font-semibold text-ink-900 hover:text-orange-600 transition-colors">See full comparison</a>
+      <span class="w-1 h-1 rounded-full bg-ink-200"></span>
+      <a href="#" class="font-semibold text-ink-900 hover:text-orange-600 transition-colors">Universities &amp; teams</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACT 6 · FAQ ================= -->
+<section id="faq" class="relative py-28 lg:py-36 bg-white">
+  <div class="max-w-[1180px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[400px_1fr] gap-14 items-start">
+    <div class="rv lg:sticky lg:top-32">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">FAQ</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-5">Common questions —<br>straight answers.</h2>
+      <p class="text-[15px] text-ink-600 leading-relaxed mb-7">No marketing fluff. If you don't see your question, ping our team — we usually reply within 4 hours.</p>
+      <a href="#" class="inline-flex items-center gap-2.5 rounded-full bg-ink-50 ring-1 ring-black/5 px-5 py-3 text-[13.5px] font-semibold text-ink-700 hover:bg-ink-100 transition-colors duration-300">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Contact support · 4-hour avg reply
+      </a>
+    </div>
+
+    <div class="rv rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse" id="faqList">
+      <div class="rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+        <div class="faq-item open">
+          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+            <span class="text-[15.5px] font-bold tracking-tight">Is the free check really free? No card, no email gate?</span>
+            <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Yes. Up to 150 words, no signup, no credit card. We rate-limit to prevent abuse (3 anonymous checks per IP per day), but you can use it as many times as you need across days. Paid plans start at $7.96/mo.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+            <span class="text-[15.5px] font-semibold tracking-tight">How accurate is AI-detection on ChatGPT and Claude?</span>
+            <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">97.4% detection rate across GPT-4, Claude, Gemini and Llama outputs, measured on a 40K-document benchmark. False-positive rate on human ESL writing is under 2% — the lowest in independent comparisons.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+            <span class="text-[15.5px] font-semibold tracking-tight">What's the difference between plagiarism and AI detection?</span>
+            <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Plagiarism detection compares your text against 14B indexed pages and returns exact source matches. AI detection analyzes the writing itself for machine-generation patterns. One scan runs both — flagged orange and teal respectively.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+            <span class="text-[15.5px] font-semibold tracking-tight">Which 17 languages do you support — and what about ESL writing?</span>
+            <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">English, Spanish, French, German, Ukrainian, Polish, Italian, Portuguese, Dutch, Czech, Romanian, Turkish, Swedish, Danish, Norwegian, Finnish and Greek. Our ESL-aware filter is trained on non-native writing so it doesn't confuse an accent in style with machine generation.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+            <span class="text-[15.5px] font-semibold tracking-tight">Is my text saved anywhere? Privacy policy?</span>
+            <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Anonymous checks are processed in memory and deleted after the scan. Account-based scans are stored encrypted so you can revisit reports — deletable anytime. We never add your text to our index and never train models on it. GDPR-compliant, EU data residency available.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+            <span class="text-[15.5px] font-semibold tracking-tight">Can I cancel my plan anytime? Money-back guarantee?</span>
+            <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Yes — cancel in two clicks from your account, no retention calls. Every plan carries a 7-day money-back guarantee: if it's not what you expected, write to support and we refund in full.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACT 7 · CTA ================= -->
+<section class="relative py-32 lg:py-44 overflow-hidden bg-ink-50">
+  <div class="orb w-[700px] h-[640px] bg-orange-500/20 left-[10%] -top-64"></div>
+  <div class="orb w-[640px] h-[600px] bg-teal-500/16 right-[5%] -bottom-56"></div>
+  <div class="relative max-w-[880px] mx-auto px-6 text-center">
+    <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-8">
+      <span class="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-dot"></span>
+      <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Stop guessing — start checking</span>
+    </div>
+    <h2 class="rv text-[clamp(2.6rem,6vw,4.6rem)] font-extrabold tracking-tightest leading-[1.0] mb-7">Your first check<br>is <span id="freeWord" class="relative inline-block">free<svg class="absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-16%; top:-24%; width:132%; height:150%; transform:rotate(-2deg);"><path id="freeCirclePath" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span>.</h2>
+    <p class="rv text-[17px] text-ink-600 leading-relaxed max-w-[46ch] mx-auto mb-11">150 words. No signup. No card. Plagiarism + AI detection across 17 languages. ESL-aware.</p>
+    <div class="rv flex flex-wrap justify-center gap-4 mb-12">
+      <a href="#top" class="btn-press group magnetic flex items-center gap-3 rounded-full bg-ink-900 text-white text-[16px] font-semibold pl-8 pr-2.5 py-2.5">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+        Check 150 words free
+        <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </a>
+      <a href="#" class="btn-press flex items-center gap-2.5 rounded-full bg-white ring-1 ring-ink-200 text-[16px] font-semibold px-7 py-4 hover:bg-ink-50 transition-colors duration-300">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Talk to sales · universities
+      </a>
+    </div>
+    <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] font-semibold text-ink-400">
+      <span>G2 Leader · Spring 2024</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+      <span>Trustpilot 4.9 · 47.2K reviews</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+      <span>Capterra 4.8</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+      <span>7-day money-back</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="relative bg-ink-950 text-white pt-20 pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-12 mb-16">
+      <div>
+        <a href="#top" class="flex items-center gap-2.5 mb-6">
+          <span class="relative block w-7 h-6">
+            <span class="absolute left-0 top-1 w-3.5 h-3.5 bg-orange-500 rounded-[3px] rotate-45"></span>
+            <span class="absolute left-2.5 top-1 w-3.5 h-3.5 bg-teal-500 rounded-[3px] rotate-45"></span>
+          </span>
+          <span class="font-bold tracking-tight text-[16px]">PlagiarismSearch</span>
+        </a>
+        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+        <div class="flex gap-3">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.9</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">PRODUCT</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Sample Report</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Students</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Teachers</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Universities</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">API docs</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">About</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Compliance</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="h-px bg-white/10 mb-8"></div>
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>© 2026 PlagiarismSearch. All rights reserved.</span>
+      <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
+      <a href="#" class="hover:text-white/70 transition-colors">DPA</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Cookies</a>
+      <span class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (reduceMotion) document.documentElement.classList.add('no-motion');
+
+/* ---------- accuracy bars ---------- */
+(() => {
+  const wrap = document.getElementById('accuracyBars');
+  if (!wrap) return;
+  const hs = [32,28,36,30,34,26,32,30,28,33,31,35,29,34,32,30,33];
+  hs.forEach(h => {
+    const b = document.createElement('div');
+    b.className = 'flex-1 rounded-[3px] bg-orange-200';
+    b.style.height = h + 'px';
+    wrap.appendChild(b);
+  });
+})();
+
+/* ---------- language data (shared by both variants) ---------- */
+const LANGS = [
+  { name:'English',    pre:'Recent studies show that ',              hl:'rising temperatures reduce crop yields',            post:' across tropical regions.',   t:'teal',   acc:98.2 },
+  { name:'Español',    pre:'Estudios recientes muestran que ',       hl:'el aumento de las temperaturas reduce las cosechas',post:' en regiones tropicales.',    t:'orange', acc:97.6 },
+  { name:'Français',   pre:'Des études récentes montrent que ',      hl:'la hausse des températures réduit les rendements',  post:' dans les régions tropicales.',t:'teal',  acc:97.1 },
+  { name:'Italiano',   pre:'Studi recenti mostrano che ',            hl:'l’aumento delle temperature riduce i raccolti',post:' nelle regioni tropicali.',   t:'orange', acc:96.9 },
+  { name:'Deutsch',    pre:'Neue Studien zeigen, dass ',             hl:'steigende Temperaturen die Ernteerträge senken',    post:', besonders in den Tropen.',  t:'teal',   acc:96.8 },
+  { name:'Português',  pre:'Estudos recentes mostram que ',          hl:'o aumento das temperaturas reduz as colheitas',     post:' nas regiões tropicais.',     t:'orange', acc:96.6 },
+  { name:'Українська', pre:'Останні дослідження показують, що ',     hl:'підвищення температур знижує врожайність',          post:' у тропічних регіонах.',      t:'teal',   acc:96.4 },
+  { name:'Polski',     pre:'Najnowsze badania pokazują, że ',        hl:'rosnące temperatury obniżają plony',                post:' w regionach tropikalnych.',  t:'orange', acc:96.1 },
+  { name:'Nederlands', pre:'Recente studies tonen aan dat ',         hl:'stijgende temperaturen de oogsten verminderen',     post:' in tropische gebieden.',     t:'teal',   acc:95.8 },
+  { name:'Svenska',    pre:'Nya studier visar att ',                 hl:'stigande temperaturer minskar skördarna',           post:' i tropiska regioner.',       t:'orange', acc:95.5 },
+  { name:'Norsk',      pre:'Nye studier viser at ',                  hl:'stigende temperaturer reduserer avlingene',         post:' i tropiske områder.',        t:'teal',   acc:95.3 },
+  { name:'Čeština',    pre:'Nedávné studie ukazují, že ',            hl:'rostoucí teploty snižují výnosy plodin',            post:' v tropických oblastech.',    t:'orange', acc:95.2 },
+  { name:'Dansk',      pre:'Nye studier viser, at ',                 hl:'stigende temperaturer reducerer høstudbyttet',      post:' i troperne.',                t:'teal',   acc:95.1 },
+  { name:'Română',     pre:'Studii recente arată că ',               hl:'creșterea temperaturilor reduce recoltele',         post:' în regiunile tropicale.',    t:'orange', acc:94.9 },
+  { name:'Ελληνικά',   pre:'Πρόσφατες μελέτες δείχνουν ότι ',        hl:'η άνοδος της θερμοκρασίας μειώνει τις σοδειές',     post:' στις τροπικές περιοχές.',    t:'teal',   acc:94.7 },
+  { name:'Türkçe',     pre:'Son araştırmalar, ',                     hl:'yükselen sıcaklıkların mahsul verimini düşürdüğünü',post:' gösteriyor.',                t:'orange', acc:94.6 },
+  { name:'Suomi',      pre:'Tuoreet tutkimukset osoittavat, että ',  hl:'nousevat lämpötilat pienentävät satoja',            post:' trooppisilla alueilla.',     t:'teal',   acc:94.2 },
+];
+
+/* ---------- VARIANT A · live scan cycler ---------- */
+const langLive = (() => {
+  const pre = document.getElementById('laPre'), hl = document.getElementById('laHl'),
+        post = document.getElementById('laPost'), name = document.getElementById('laName'),
+        chip = document.getElementById('laChip'), pills = document.getElementById('laPills'),
+        box = document.getElementById('laSentence'), card = document.getElementById('langLive');
+  if (!pre) return null;
+  let cur = -1, timer = null, inView = false, hover = false;
+
+  LANGS.forEach((L, i) => {
+    const b = document.createElement('button');
+    b.className = 'pill-lang rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold bg-ink-50 text-ink-600 ring-1 ring-black/5';
+    b.textContent = L.name;
+    b.addEventListener('click', () => { show(i, !reduceMotion); restart(); });
+    pills.appendChild(b);
+  });
+  const setPill = i => [...pills.children].forEach((b, j) => b.classList.toggle('active', j === i));
+  const apply = L => {
+    pre.textContent = L.pre; hl.textContent = L.hl; post.textContent = L.post;
+    hl.className = 'hl ' + (L.t === 'orange' ? 'hl-orange' : 'hl-teal');
+    hl.style.backgroundSize = '0% 100%';
+    name.textContent = L.name; chip.textContent = L.acc.toFixed(1) + '% accuracy';
+  };
+  const finish = L => { hl.style.backgroundSize = '100% 100%'; hl.classList.add(L.t === 'orange' ? 'on-orange' : 'on-teal'); };
+  const show = (i, animate) => {
+    if (i === cur) return; cur = i;
+    const L = LANGS[i]; setPill(i);
+    if (!animate || typeof gsap === 'undefined') { apply(L); finish(L); return; }
+    gsap.to(box, { opacity: 0, y: -8, duration: .22, ease: 'power2.in', onComplete() {
+      apply(L);
+      gsap.fromTo(box, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .32, ease: 'power2.out', onComplete() {
+        gsap.to(hl, { backgroundSize: '100% 100%', duration: .55, ease: 'power2.out', onComplete: () => finish(L) });
+      }});
+    }});
+  };
+  const restart = () => { if (reduceMotion) return; clearInterval(timer); timer = setInterval(() => { if (inView && !hover) show((cur + 1) % LANGS.length, true); }, 3200); };
+  show(0, false);
+  if (!reduceMotion) {
+    card.addEventListener('mouseenter', () => hover = true);
+    card.addEventListener('mouseleave', () => hover = false);
+    new IntersectionObserver(es => es.forEach(e => inView = e.isIntersecting), { threshold: .25 }).observe(card);
+    restart();
+  }
+  return { show };
+})();
+
+
+/* ---------- word counter ---------- */
+(() => {
+  const ta = document.querySelector('textarea');
+  const el = document.getElementById('wordCount');
+  if (!ta || !el) return;
+  ta.addEventListener('input', () => {
+    const n = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
+    el.textContent = `${n} / 150 words`;
+    el.classList.toggle('text-orange-600', n > 150);
+  });
+})();
+
+/* ---------- FAQ ---------- */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+/* ---------- persona tabs ---------- */
+(() => {
+  const tabs = document.querySelectorAll('.persona-tab');
+  const panels = document.querySelectorAll('.persona-panel');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => { t.classList.remove('bg-white','shadow-sm'); t.classList.add('text-ink-500'); });
+    tab.classList.add('bg-white','shadow-sm'); tab.classList.remove('text-ink-500');
+    const idx = tab.dataset.persona;
+    panels.forEach(p => p.classList.toggle('hidden-panel', p.dataset.panel !== idx));
+  }));
+})();
+
+/* ---------- billing toggle ---------- */
+(() => {
+  const btns = document.querySelectorAll('.billing-btn');
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    btns.forEach(b => { b.classList.remove('bg-white','shadow-sm'); b.classList.add('text-ink-500'); });
+    btn.classList.add('bg-white','shadow-sm'); btn.classList.remove('text-ink-500');
+    const mode = btn.dataset.billing;
+    document.querySelectorAll('.price').forEach(p => {
+      gsap.fromTo(p, {y:-8, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
+      p.textContent = p.dataset[mode];
+    });
+    document.querySelectorAll('.period').forEach(el => {
+      el.textContent = mode === 'yearly' ? '/ mo · billed yearly' : '/ mo · billed monthly';
+    });
+  }));
+})();
+
+/* ---------- magnetic buttons ---------- */
+if (!reduceMotion && matchMedia('(pointer:fine)').matches) {
+  document.querySelectorAll('.magnetic').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      gsap.to(el, { x:(e.clientX-r.left-r.width/2)*.18, y:(e.clientY-r.top-r.height/2)*.18, duration:.5, ease:'power3.out' });
+    });
+    el.addEventListener('mouseleave', () => gsap.to(el, { x:0, y:0, duration:.7, ease:'elastic.out(1,.4)' }));
+  });
+}
+
+/* ---------- GSAP scenes ---------- */
+if (!reduceMotion) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Native scroll (no smooth-scroll library) — uniform wheel feel, zero JS scroll loop.
+  // debug helpers: freeze/thaw all motion (used for screenshot tooling)
+  window.__scrollTo = y => window.scrollTo({ top: y, behavior: 'instant' });
+  window.__freeze = () => { gsap.globalTimeline.pause();
+    document.querySelectorAll('.marquee-track,.breathe,.pulse-dot').forEach(el => el.style.animationPlayState = 'paused'); return 'frozen'; };
+  window.__thaw = () => { gsap.globalTimeline.resume();
+    document.querySelectorAll('.marquee-track,.breathe,.pulse-dot').forEach(el => el.style.animationPlayState = ''); return 'running'; };
+
+  // reveals — elements visible on load appear immediately (top-down cascade);
+  // everything below the fold reveals when it reaches mid-viewport. transform/opacity only.
+  let lastRevealEnd = 0;
+  document.querySelectorAll('.rv').forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < innerHeight * .92) {
+      const delay = Math.max(0, top / innerHeight) * .3;
+      lastRevealEnd = Math.max(lastRevealEnd, delay + .8);
+      gsap.to(el, { opacity:1, y:0, duration:.8, ease:'power3.out', delay });
+    } else {
+      gsap.to(el, {
+        opacity:1, y:0, duration:.8, ease:'power3.out',
+        scrollTrigger:{ trigger: el, start:'top 55%' }
+      });
+    }
+  });
+
+  /* ----- hero "one." — colours in once the hero cascade has landed, then the underline draws ----- */
+  const oneWord = document.getElementById('oneWord');
+  if (oneWord) {
+    const oneLine = document.getElementById('oneUnderline');
+    const oneLen = oneLine.getTotalLength();
+    gsap.set(oneLine, { strokeDasharray: oneLen, strokeDashoffset: oneLen });
+    gsap.timeline({ delay: lastRevealEnd + .25 })
+      .to(oneWord, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+      .set(oneLine, { opacity: 1 }, .35)
+      .to(oneLine, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
+  }
+
+  // hero floating cards drift — paused while offscreen
+  const floatTweens = [];
+  document.querySelectorAll('.hero-float').forEach((el, i) => {
+    floatTweens.push(gsap.to(el, { y: (i % 2 ? 14 : -14), duration: 3.6 + i * .5, ease:'sine.inOut', yoyo:true, repeat:-1 }));
+  });
+  if (floatTweens.length) {
+    ScrollTrigger.create({
+      trigger: '#heroCards', start: 'top bottom', end: 'bottom top',
+      onToggle: self => floatTweens.forEach(t => self.isActive ? t.play() : t.pause())
+    });
+  }
+
+  // pause perpetual CSS animations (breathing bars) while offscreen
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    e.target.querySelectorAll('.breathe').forEach(el =>
+      el.style.animationPlayState = e.isIntersecting ? '' : 'paused');
+  }), { rootMargin: '100px' });
+  document.querySelectorAll('section').forEach(s => {
+    if (s.querySelector('.breathe')) io.observe(s);
+  });
+
+  // counters (kinetic break)
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const obj = { v: 0 };
+    gsap.to(obj, {
+      v: target, duration: 1.6, ease:'power2.out',
+      scrollTrigger: { trigger: el, start:'top 85%' },
+      onUpdate: () => el.textContent = Math.round(obj.v) + suffix
+    });
+  });
+
+  /* ----- SCAN SCROLLYTELLING ----- */
+  const spans = [1,2,3,4].map(n => document.querySelector(`[data-step="${n}"]`));
+  const counters = { plag: {el: document.getElementById('cPlag'), final: 0.8}, ai: {el: document.getElementById('cAI'), final: 12.0}, orig: {el: document.getElementById('cOrig'), final: 87.2} };
+  const status = document.getElementById('scanStatus');
+  const probBar = document.getElementById('probBar');
+  const probLabel = document.getElementById('probLabel');
+  const doc = document.querySelector('#scanWrap .rounded-\\[calc\\(2rem-0\\.375rem\\)\\]');
+  const docH = () => doc ? doc.offsetHeight : 600;
+
+  // initial states — the scene builds itself as you scroll in
+  gsap.set('.scan-head > *', { opacity: 0, y: 28 });
+  gsap.set('.scan-doc',      { opacity: 0, y: 56, scale: .98 });
+  gsap.set('.scan-side',     { opacity: 0, y: 44 });
+
+  const tl = gsap.timeline({
+    scrollTrigger: { trigger:'#scanWrap', start:'top top', end:'bottom bottom', scrub:.4 },
+    defaults: { ease:'none' }
+  });
+
+  // phase 1 — blocks reveal (first ~20% of the scroll distance)
+  tl.to('.scan-head > *', { opacity:1, y:0, duration:1.1, stagger:.3, ease:'power2.out' }, 0);
+  tl.to('.scan-doc',      { opacity:1, y:0, scale:1, duration:1.6, ease:'power2.out' }, .5);
+  tl.to('.scan-side',     { opacity:1, y:0, duration:1.4, ease:'power2.out' }, 1.0);
+
+  // phase 2 — scan line traverses the document
+  tl.fromTo('#scanLine', { y:-80 }, { y: () => docH() + 20, duration: 8 }, 2.6);
+
+  // highlights fire as the line passes them
+  const fireAt = [4.0, 5.5, 7.6, 9.2];
+  spans.forEach((span, i) => {
+    if (!span) return;
+    tl.to(span, { backgroundSize:'100% 100%', duration:.7 }, fireAt[i]);
+    tl.add(() => span.classList.add(span.classList.contains('hl-orange') ? 'on-orange' : 'on-teal'), fireAt[i] + .35);
+  });
+
+  // source cards pop after their matching orange spans
+  tl.to('#srcCard1', { opacity:1, y:0, duration:.8, ease:'power2.out' }, 6.0);
+  tl.to('#srcCard2', { opacity:1, y:0, duration:.8, ease:'power2.out' }, 9.4);
+
+  // progress + counters — cached writes: touch the DOM only when a displayed value changes
+  const prog = { p: 0 };
+  const last = { pct: -1, plag: '', ai: '', orig: '', prob: -1, done: false };
+  tl.to(prog, {
+    p: 1, duration: 8,
+    onUpdate: () => {
+      const p = prog.p;
+      const pct = Math.round(p * 100);
+      if (pct !== last.pct) {
+        last.pct = pct;
+        status.textContent = pct < 99 ? `SCANNING · ${pct}%` : 'SCAN COMPLETE';
+        const done = pct >= 99;
+        if (done !== last.done) {
+          last.done = done;
+          status.classList.toggle('bg-mint-100', done);
+          status.classList.toggle('text-mint-700', done);
+        }
+      }
+      const plag = (counters.plag.final * p).toFixed(1);
+      if (plag !== last.plag) { last.plag = plag; counters.plag.el.textContent = plag; }
+      const ai = (counters.ai.final * p).toFixed(1);
+      if (ai !== last.ai) { last.ai = ai; counters.ai.el.textContent = ai; }
+      const orig = (100 - (100 - counters.orig.final) * p).toFixed(1);
+      if (orig !== last.orig) { last.orig = orig; counters.orig.el.textContent = orig; }
+      const prob = Math.round(12 * p);
+      if (prob !== last.prob) {
+        last.prob = prob;
+        probBar.style.transform = `scaleX(${(12 * p) / 100})`;
+        probLabel.textContent = prob + '%';
+      }
+    }
+  }, 2.6);
+
+  // done card
+  tl.to('#scanDone', { opacity:1, y:0, duration:.8, ease:'power2.out' }, 10.8);
+
+  /* ----- "free" — brand color pop + hand-drawn pen circle ----- */
+  const freeWord = document.getElementById('freeWord');
+  if (freeWord) {
+    const path = document.getElementById('freeCirclePath');
+    const len = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.timeline({ scrollTrigger: { trigger: freeWord, start: 'top 42%', once: true } })
+      .to(freeWord, { color: '#DC5A45', duration: .4, ease: 'power2.out' })
+      .set(path, { opacity: 1 }, .15)
+      .to(path, { strokeDashoffset: 0, duration: .9, ease: 'power2.inOut' }, .15);
+  }
+
+} else {
+  // reduced motion: final states
+  document.querySelectorAll('[data-step]').forEach(s => {
+    s.style.backgroundSize = '100% 100%';
+    s.classList.add(s.classList.contains('hl-orange') ? 'on-orange' : 'on-teal');
+  });
+  ['srcCard1','srcCard2','scanDone'].forEach(id => { const el = document.getElementById(id); el.style.opacity = 1; el.style.transform = 'none'; });
+  document.getElementById('cPlag').textContent = '0.8';
+  document.getElementById('cAI').textContent = '12.0';
+  document.getElementById('cOrig').textContent = '87.2';
+  document.getElementById('probBar').style.transform = 'scaleX(.12)';
+  document.getElementById('probLabel').textContent = '12%';
+  document.getElementById('scanStatus').textContent = 'SCAN COMPLETE';
+  document.querySelectorAll('[data-count]').forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
+}
+</script>
+</body>
+</html>
