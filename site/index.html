@@ -225,9 +225,8 @@ tailwind.config = {
 
       <div class="rv flex flex-wrap items-center gap-x-5 gap-y-2 mt-8 text-[12.5px] font-semibold text-ink-500">
         <span>500,000+ writers</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
-        <span>490K Google Docs installs</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
-        <span>14B pages indexed</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
-        <span class="text-teal-700">4.7 on Trustpilot</span>
+        <span class="flex items-center gap-2"><img src="assets/svg/google-icon.svg" alt="" class="w-4 h-4">490K Google Docs installs</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span class="flex items-center gap-2 text-teal-700"><img src="assets/svg/trustpilot-icon.svg" alt="" class="w-4 h-4">4.7 on Trustpilot</span>
       </div>
     </div>
 
@@ -253,13 +252,13 @@ tailwind.config = {
               <span class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
                 <span class="w-3.5 h-3.5 rounded-full bg-orange-600"></span>
               </span>
-              <span class="text-[13px] font-semibold text-ink-600">Detection accuracy</span>
+              <span class="text-[13px] font-semibold text-ink-600">Plagiarism found</span>
             </div>
-            <span class="text-[10px] font-bold tracking-wide text-mint-700 bg-mint-100 rounded-full px-2 py-0.5">+2.8% Q1</span>
+            <span class="text-[10px] font-bold tracking-wide text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">14 sources</span>
           </div>
-          <div class="text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums">97.4%</div>
-          <div class="text-[12.5px] font-medium text-ink-400 mb-5">across 17 languages · ESL-aware</div>
-          <div class="flex items-end gap-1 h-9" id="accuracyBars"></div>
+          <div id="plagStat" class="text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-orange-600">0,0%</div>
+          <div class="text-[12.5px] font-medium text-ink-400 mb-5">matched against 14B indexed pages</div>
+          <div class="flex items-end gap-[3px] h-10" id="accuracyBars"></div>
         </div>
       </div>
       <!-- ESL badge -->
@@ -271,12 +270,12 @@ tailwind.config = {
       <div class="hero-float absolute right-[108px] bottom-[-12px] w-[310px] rounded-3xl bg-white ring-1 ring-black/5 p-5 shadow-diffuse-lg">
         <div class="flex items-center justify-between mb-3.5">
           <span class="text-[12.5px] font-bold">Live scan</span>
-          <span class="text-[9.5px] font-bold tracking-wider text-mint-700 bg-mint-100 rounded-full px-2 py-0.5">87.2% ORIGINAL</span>
+          <span class="text-[9.5px] font-bold tracking-wider text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">67.5% MATCHED</span>
         </div>
         <div class="grid grid-cols-3 gap-2 text-center">
-          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">PLAGIARISM</div><div class="text-[16px] font-extrabold text-orange-600 nums">0.8%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">PLAGIARISM</div><div class="text-[16px] font-extrabold text-orange-600 nums">67.5%</div></div>
           <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">AI WRITTEN</div><div class="text-[16px] font-extrabold text-teal-600 nums">12.0%</div></div>
-          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">ORIGINAL</div><div class="text-[16px] font-extrabold text-mint-600 nums">87.2%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">ORIGINAL</div><div class="text-[16px] font-extrabold text-mint-600 nums">20.5%</div></div>
         </div>
         <div class="mt-2 flex items-center gap-3 rounded-xl bg-ink-900 pl-2 pr-4 py-2">
           <span class="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-[12px] font-bold text-ink-950 nums">9.8</span>
@@ -1224,11 +1223,14 @@ if (reduceMotion) document.documentElement.classList.add('no-motion');
 (() => {
   const wrap = document.getElementById('accuracyBars');
   if (!wrap) return;
-  const hs = [32,28,36,30,34,26,32,30,28,33,31,35,29,34,32,30,33];
-  hs.forEach(h => {
+  // climbing trend with organic dips, deepening in colour as it rises
+  const hs = [9, 12, 11, 16, 19, 17, 23, 27, 25, 31, 34, 32, 37, 40];
+  const tints = ['bg-orange-200','bg-orange-300','bg-orange-400','bg-orange-500'];
+  hs.forEach((h, i) => {
     const b = document.createElement('div');
-    b.className = 'flex-1 rounded-[3px] bg-orange-200';
+    b.className = `bar-grow flex-1 rounded-[2px] ${tints[Math.floor(i / hs.length * tints.length)]}`;
     b.style.height = h + 'px';
+    b.style.transformOrigin = 'bottom';
     wrap.appendChild(b);
   });
 })();
@@ -1452,9 +1454,13 @@ if (!reduceMotion) {
   if (heroPaper) {
     const heroCards = gsap.utils.toArray('.hero-float');
     const docLines = gsap.utils.toArray('#heroPaper .doc-line');
+    const bars = gsap.utils.toArray('#accuracyBars .bar-grow');
+    const plagStat = document.getElementById('plagStat');
+    const plagCounter = { v: 0 };
     gsap.set(heroPaper, { opacity: 0, y: 70, rotation: 7, scale: .96, transformOrigin: '50% 60%' });
     gsap.set(docLines, { opacity: 0, x: -16 });
     gsap.set(heroCards, { opacity: 0, y: 28, scale: .88 });
+    gsap.set(bars, { scaleY: 0 });
     gsap.timeline({ delay: .35 })
       .to(heroPaper, { opacity: 1, y: 0, rotation: 1.2, scale: 1, duration: .6, ease: 'back.out(1.4)' })
       .to(docLines, { opacity: 1, x: 0, duration: .3, ease: 'power2.out', stagger: .07 }, '-=.18')
@@ -1464,7 +1470,13 @@ if (!reduceMotion) {
           heroCards.forEach((el, i) =>
             floatTweens.push(gsap.to(el, { y: (i % 2 ? 12 : -12), duration: 3.6 + i * .5, ease: 'sine.inOut', yoyo: true, repeat: -1 })));
         }
-      }, '-=.1');
+      }, '-=.1')
+      // bars climb left-to-right, then the figure ticks up to meet them
+      .to(bars, { scaleY: 1, duration: .5, ease: 'back.out(1.6)', stagger: .045 }, '-=.25')
+      .to(plagCounter, {
+        v: 67.5, duration: 1.1, ease: 'power2.out',
+        onUpdate: () => plagStat.textContent = plagCounter.v.toFixed(1).replace('.', ',') + '%'
+      }, '-=.75');
     ScrollTrigger.create({
       trigger: '#heroCards', start: 'top bottom', end: 'bottom top',
       onToggle: self => floatTweens.forEach(t => self.isActive ? t.play() : t.pause())
@@ -1593,6 +1605,8 @@ if (!reduceMotion) {
     s.classList.add(s.classList.contains('hl-orange') ? 'on-orange' : 'on-ai');
   });
   document.querySelectorAll('#scanLegend .lg-item').forEach(i => i.classList.add('found'));
+  const plagStatic = document.getElementById('plagStat');
+  if (plagStatic) plagStatic.textContent = '67,5%';
   ['srcCard1','srcCard2','scanDone'].forEach(id => { const el = document.getElementById(id); el.style.opacity = 1; el.style.transform = 'none'; });
   document.getElementById('cPlag').textContent = '0.8';
   document.getElementById('cAI').textContent = '12.0';
