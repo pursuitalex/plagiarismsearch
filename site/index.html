@@ -6,7 +6,7 @@
 <title>PlagiarismSearch — Plagiarism + AI detection in one</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
@@ -61,6 +61,24 @@ tailwind.config = {
   .hl.on-orange { color:#B84431; font-weight:600; }
   .hl.on-teal { color:#06748A; font-weight:600; }
 
+  /* ---------- CTA glows · tuned values ---------- */
+  #ctaOrb1 { width:1138px; height:1040px; left:-22.2%; top:-546px; background:rgba(243,111,90,.25);
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 54.1%, transparent 83.2%);
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 54.1%, transparent 83.2%); }
+  #ctaOrb2 { width:954px; height:950px; left:74.2%; top:374px; background:rgba(13,168,194,.15);
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 65%, transparent 100%);
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 65%, transparent 100%); }
+
+  /* ---------- Trustpilot review rail ---------- */
+  .tp-scroll { scrollbar-width:none; -ms-overflow-style:none; }
+  .tp-scroll::-webkit-scrollbar { display:none; }
+  .tp-star { width:16px; height:16px; background:#00B67A; display:flex; align-items:center; justify-content:center; }
+  .tp-nav { transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1), box-shadow .3s ease; }
+  .tp-nav:hover { transform:translateY(-50%) scale(1.06); }
+  .tp-nav:active { transform:translateY(-50%) scale(.96); }
+  .tp-nav[disabled] { opacity:0 !important; pointer-events:none; }
+  .tp-dot { transition:width .35s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
+
   /* ---------- language live-scan block ---------- */
   .pill-lang { transition: background-color .3s ease, color .3s ease, box-shadow .3s ease; }
   .pill-lang.active { background:#111827; color:#fff; }
@@ -68,6 +86,23 @@ tailwind.config = {
   /* ---------- pen annotations (reduced-motion: static final state) ---------- */
   .no-motion #freeWord, .no-motion #oneWord { color:#DC5A45; }
   .no-motion #oneUnderline, .no-motion #freeCirclePath { opacity:1; }
+
+  /* ---------- hero paper document (Flow font renders text as redacted bars) ---------- */
+  .font-flow { font-family:'Flow Circular', cursive; }
+  /* drop-shadow on the parent: clip-path on the sheet would eat its own box-shadow,
+     while a parent filter wraps the already-clipped silhouette (incl. the dog-ear) */
+  #heroPaper { filter: drop-shadow(0 1px 2px rgba(17,24,39,.05)) drop-shadow(0 18px 36px rgba(17,24,39,.13)); }
+  #heroPaper .paper-sheet {
+    clip-path: polygon(0 0, calc(100% - 52px) 0, 100% 52px, 100% 100%, 0 100%);
+    border: 1px solid rgba(17,24,39,.07);
+    border-radius: 16px; /* rounds 3 corners + curves the border; the 4th is cut by the clip */
+  }
+  #heroPaper .paper-fold {
+    position:absolute; top:0; right:0; width:52px; height:52px;
+    background: linear-gradient(225deg, rgba(0,0,0,0) 50%, #E9EBF0 50%, #F8F9FB 98%);
+    border-bottom-left-radius: 12px;
+    filter: drop-shadow(-5px 5px 6px rgba(17,24,39,.10));
+  }
 
   /* ---------- breathing bar ---------- */
   @keyframes breathe { 0%,100% { width:26%; } 50% { width:38%; } }
@@ -91,8 +126,9 @@ tailwind.config = {
   /* ---------- buttons ---------- */
   .btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
   .btn-press:active { transform:scale(.97); }
-  .icon-orb { transition:transform .35s cubic-bezier(.32,.72,0,1); }
-  .group:hover .icon-orb { transform:translate(3px,-1px) scale(1.05); }
+  /* circle stays put; only the arrow inside rotates 45° counter-clockwise */
+  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+  .group:hover .icon-orb svg { transform:rotate(-45deg); }
 
   .nums { font-variant-numeric: tabular-nums; }
 </style>
@@ -104,12 +140,8 @@ tailwind.config = {
 <!-- ================= FLOATING ISLAND NAV ================= -->
 <header class="fixed top-5 inset-x-0 z-50 flex justify-center px-4">
   <nav class="flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-2 py-2">
-    <a href="#top" class="flex items-center gap-2.5 pr-3">
-      <span class="relative block w-7 h-6">
-        <span class="absolute left-0 top-1 w-3.5 h-3.5 bg-orange-500 rounded-[3px] rotate-45"></span>
-        <span class="absolute left-2.5 top-1 w-3.5 h-3.5 bg-teal-500 rounded-[3px] rotate-45 mix-blend-multiply"></span>
-      </span>
-      <span class="font-bold tracking-tight text-[15px]">PlagiarismSearch</span>
+    <a href="#top" class="flex items-center pr-3">
+      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto">
     </a>
     <div class="hidden md:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
       <a href="#scan" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">How it works</a>
@@ -117,17 +149,20 @@ tailwind.config = {
       <a href="#pricing" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Pricing</a>
       <a href="#faq" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">FAQ</a>
     </div>
-    <a href="#top" class="btn-press group ml-2 flex items-center gap-2 rounded-full bg-ink-900 text-white text-[13.5px] font-semibold pl-4 pr-1.5 py-1.5">
-      Check free
-      <span class="icon-orb w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </span>
-    </a>
+    <div class="flex items-center gap-2 ml-5">
+      <a href="#" class="btn-press rounded-full ring-1 ring-black/10 text-ink-900 text-[13.5px] font-semibold px-5 py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="#top" class="btn-press group flex items-center gap-2 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] font-semibold pl-4 pr-1.5 py-1.5">
+        Check free
+        <span class="icon-orb w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </a>
+    </div>
   </nav>
 </header>
 
 <!-- ================= ACT 1 · HERO ================= -->
-<section id="top" class="relative min-h-[100dvh] flex items-center overflow-hidden pt-28 pb-16">
+<section id="top" class="relative min-h-[100dvh] flex items-center overflow-hidden pt-28 pb-16 bg-[#F2FCFC]">
   <div class="orb w-[820px] h-[780px] bg-orange-500/20 -left-52 -top-56"></div>
   <div class="orb w-[700px] h-[640px] bg-teal-500/15 right-[-180px] top-[30%]"></div>
   <div class="orb w-[480px] h-[460px] bg-orange-300/10 left-[35%] bottom-[-220px]"></div>
@@ -149,7 +184,7 @@ tailwind.config = {
       </p>
 
       <!-- Paste form -->
-      <div class="rv relative rounded-4xl bg-black/[.025] ring-1 ring-black/5 p-2 shadow-diffuse max-w-[600px]">
+      <div class="rv relative rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-2 shadow-diffuse max-w-[600px]">
         <div class="rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-6">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
@@ -175,14 +210,26 @@ tailwind.config = {
         <span>500,000+ writers</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
         <span>490K Google Docs installs</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
         <span>14B pages indexed</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
-        <span class="text-teal-700">4.9 on Trustpilot</span>
+        <span class="text-teal-700">4.7 on Trustpilot</span>
       </div>
     </div>
 
-    <!-- Right — floating abstraction cards -->
-    <div class="rv relative h-[560px] hidden lg:block" id="heroCards">
+    <!-- Right — paper document with floating stat cards layered on top -->
+    <div class="relative h-[560px] hidden lg:block" id="heroCards">
+      <!-- paper sheet (Flow font = redacted text lines) -->
+      <div id="heroPaper" class="absolute left-8 right-3 top-1 bottom-4 rotate-[1.2deg] overflow-hidden">
+        <div class="paper-sheet absolute inset-0 bg-white"></div>
+        <div class="paper-fold"></div>
+        <div class="relative font-flow select-none px-12 pt-12 pr-16 pb-12" aria-hidden="true">
+          <div class="doc-line text-[27px] leading-[1.25] text-ink-400 mb-4">Climate change impacts on global agriculture</div>
+          <p class="doc-line text-[17px] leading-[1.4] text-ink-300 mb-4">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
+          <p class="doc-line text-[17px] leading-[1.4] text-ink-300 mb-4">Recent studies have shown that rising global temperatures correlate with decreased yields, particularly in regions dependent on rain-fed farming.</p>
+          <p class="doc-line text-[17px] leading-[1.4] text-ink-300 mb-4">However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.</p>
+          <p class="doc-line text-[17px] leading-[1.4] text-ink-300">Field data from recent seasons supports this approach worldwide.</p>
+        </div>
+      </div>
       <!-- accuracy card -->
-      <div class="hero-float absolute right-6 top-8 w-[340px] rounded-4xl bg-black/[.025] ring-1 ring-black/5 p-1.5 shadow-diffuse-lg">
+      <div class="hero-float absolute right-[-20px] top-[94px] w-[340px] rounded-4xl bg-white/50 backdrop-blur-md ring-1 ring-black/[.08] p-1.5 shadow-diffuse-lg">
         <div class="rounded-[calc(2rem-0.375rem)] bg-white shadow-inner-hl p-6">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2.5">
@@ -198,21 +245,13 @@ tailwind.config = {
           <div class="flex items-end gap-1 h-9" id="accuracyBars"></div>
         </div>
       </div>
-      <!-- rating pill -->
-      <div class="hero-float absolute left-0 top-[300px] flex items-center gap-3 rounded-full bg-ink-900 pl-2 pr-6 py-2 shadow-diffuse-lg">
-        <span class="w-9 h-9 rounded-full bg-teal-400 flex items-center justify-center text-[13px] font-bold text-ink-950 nums">9.8</span>
-        <div>
-          <div class="text-[13px] font-semibold text-white leading-tight">Overall users rating</div>
-          <div class="text-[11px] font-medium text-ink-400">More than 47.2K reviews</div>
-        </div>
-      </div>
       <!-- ESL badge -->
-      <div class="hero-float absolute left-10 -top-2 flex items-center gap-2 rounded-full bg-white ring-1 ring-mint-200 px-4 py-2.5 shadow-diffuse">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-        <span class="text-[12.5px] font-semibold text-mint-700">ESL-aware · false-positive &lt; 2%</span>
+      <div class="hero-float absolute left-5 -top-[18px] flex items-center gap-2 rounded-full bg-[#CDF1DE] ring-1 ring-[#9CE3BD] px-4 py-2.5 shadow-diffuse">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F8859" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <span class="text-[12.5px] font-semibold text-[#156B45]">ESL-aware · false-positive &lt; 2%</span>
       </div>
       <!-- live scan mini -->
-      <div class="hero-float absolute right-0 bottom-2 w-[310px] rounded-3xl bg-white ring-1 ring-black/5 p-5 shadow-diffuse-lg">
+      <div class="hero-float absolute right-[108px] bottom-[-12px] w-[310px] rounded-3xl bg-white ring-1 ring-black/5 p-5 shadow-diffuse-lg">
         <div class="flex items-center justify-between mb-3.5">
           <span class="text-[12.5px] font-bold">Live scan</span>
           <span class="text-[9.5px] font-bold tracking-wider text-mint-700 bg-mint-100 rounded-full px-2 py-0.5">87.2% ORIGINAL</span>
@@ -221,6 +260,13 @@ tailwind.config = {
           <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">PLAGIARISM</div><div class="text-[16px] font-extrabold text-orange-600 nums">0.8%</div></div>
           <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">AI WRITTEN</div><div class="text-[16px] font-extrabold text-teal-600 nums">12.0%</div></div>
           <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">ORIGINAL</div><div class="text-[16px] font-extrabold text-mint-600 nums">87.2%</div></div>
+        </div>
+        <div class="mt-2 flex items-center gap-3 rounded-xl bg-ink-900 pl-2 pr-4 py-2">
+          <span class="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-[12px] font-bold text-ink-950 nums">9.8</span>
+          <div>
+            <div class="text-[12.5px] font-semibold text-white leading-tight">Overall users rating</div>
+            <div class="text-[10.5px] font-medium text-ink-400">Rated 4.7 on Trustpilot</div>
+          </div>
         </div>
       </div>
     </div>
@@ -678,6 +724,180 @@ tailwind.config = {
       </div>
     </div>
   </div>
+
+  <!-- Trustpilot rail — real reviews from trustpilot.com/review/plagiarismsearch.com -->
+  <div class="rv mt-20 max-w-[1080px] mx-auto px-6 lg:px-10">
+   <div class="group/rail">
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div class="flex items-center gap-3">
+        <img src="assets/svg/trustpilot-icon.svg" alt="" class="w-5 h-5">
+        <span class="text-[15px] font-bold tracking-tight">Trustpilot</span>
+        <span class="flex gap-0.5" aria-label="4.7 out of 5 stars">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </span>
+        <span class="text-[13px] text-ink-500"><span class="font-bold text-ink-900 nums">4.7</span> · 61 reviews</span>
+      </div>
+      <a href="https://www.trustpilot.com/review/plagiarismsearch.com" target="_blank" rel="noopener" class="group flex items-center gap-1.5 text-[13px] font-semibold text-ink-700 hover:text-ink-900 transition-colors">
+        See all reviews
+        <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="relative">
+    <div id="tpRail" class="tp-scroll flex gap-4 overflow-x-auto snap-x">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+        <div class="flex gap-0.5 mb-3">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </div>
+        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Awesome tool, can't get my job done without it.</h4>
+        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">This is a wonderful tool — I'm a professional content creator and making sure my content is unique is mission critical. PlagiarismSearch makes this task easy.</p>
+        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+          <span class="font-semibold text-ink-700">Gerry Pelser</span><span>ZA</span><span>·</span><span>May 24, 2023</span>
+        </div>
+      </article>
+
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+        <div class="flex gap-0.5 mb-3">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </div>
+        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">PlagiarismSearch is simply phenomenal.</h4>
+        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">By far the best plagiarism checker I've ever seen. And I've used quite a number of them. In fact, they are so good I had to subscribe.</p>
+        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+          <span class="font-semibold text-ink-700">Chioma Isaac Asiwaju</span><span>NG</span><span>·</span><span>May 17, 2023</span>
+        </div>
+      </article>
+
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+        <div class="flex gap-0.5 mb-3">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </div>
+        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Best plagiarism-checker around</h4>
+        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.</p>
+        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+          <span class="font-semibold text-ink-700">Tersia Gouws</span><span>ZA</span><span>·</span><span>Jul 7, 2023</span>
+        </div>
+      </article>
+
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+        <div class="flex gap-0.5 mb-3">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </div>
+        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">An excellent tool</h4>
+        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">One of the best tools in its field. The plagiarism check is very accurate and I recommend the monthly or yearly subscription.</p>
+        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+          <span class="font-semibold text-ink-700">Désirée</span><span>MU</span><span>·</span><span>May 20, 2022</span>
+        </div>
+      </article>
+
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+        <div class="flex gap-0.5 mb-3">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </div>
+        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Amazing tool</h4>
+        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">Plagiarism search is a tool I currently can't work without! It has all I need and it's very helpful. I definitely recommend it!</p>
+        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+          <span class="font-semibold text-ink-700">Kristina</span><span>BA</span><span>·</span><span>Jun 28, 2022</span>
+        </div>
+      </article>
+
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+        <div class="flex gap-0.5 mb-3">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </div>
+        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">I appreciate your hard work</h4>
+        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I use the website to check originality of my publications. I'm often afraid of unintentional plagiarism and want to stay on the safe side.</p>
+        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+          <span class="font-semibold text-ink-700">Victoria Evans</span><span>US</span><span>·</span><span>Jan 11, 2022</span>
+        </div>
+      </article>
+
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+        <div class="flex gap-0.5 mb-3">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </div>
+        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">I trust this service</h4>
+        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I trust this online plagiarism check service for its accuracy and fast results report. I've been advised to use it and now I'd love to share it with others.</p>
+        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+          <span class="font-semibold text-ink-700">Tommmaxa</span><span>UA</span><span>·</span><span>Feb 7, 2022</span>
+        </div>
+      </article>
+
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+        <div class="flex gap-0.5 mb-3">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </div>
+        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Extremely satisfied</h4>
+        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I checked works both in English and Polish, and I can say I'm extremely satisfied. The interface is much more compelling than that of other checkers.</p>
+        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+          <span class="font-semibold text-ink-700">Денис Сай</span><span>·</span><span>Aug 29, 2018</span>
+        </div>
+      </article>
+
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+        <div class="flex gap-0.5 mb-3">
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        </div>
+        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Great for academic papers</h4>
+        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I used this in writing my academic papers, it helped with my vocab and grammar. This is really great!</p>
+        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+          <span class="font-semibold text-ink-700">Paul Johnson</span><span>PH</span><span>·</span><span>Apr 21, 2023</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- nav arrows — fade in on rail hover -->
+    <button id="tpPrev" aria-label="Previous reviews" class="tp-nav absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-black/[.06] shadow-diffuse flex items-center justify-center text-ink-700 opacity-0 group-hover/rail:opacity-100 focus-visible:opacity-100">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button id="tpNext" aria-label="Next reviews" class="tp-nav absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-black/[.06] shadow-diffuse flex items-center justify-center text-ink-700 opacity-0 group-hover/rail:opacity-100 focus-visible:opacity-100">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    </div>
+
+    <!-- dots -->
+    <div id="tpDots" class="flex justify-center items-center gap-2 mt-6"></div>
+   </div>
+  </div>
 </section>
 
 <!-- ================= ACT 5 · PRICING ================= -->
@@ -861,9 +1081,9 @@ tailwind.config = {
 </section>
 
 <!-- ================= ACT 7 · CTA ================= -->
-<section class="relative py-32 lg:py-44 overflow-hidden bg-ink-50">
-  <div class="orb w-[700px] h-[640px] bg-orange-500/20 left-[10%] -top-64"></div>
-  <div class="orb w-[640px] h-[600px] bg-teal-500/16 right-[5%] -bottom-56"></div>
+<section id="cta" class="relative py-32 lg:py-44 overflow-hidden bg-[#F2FCFC]">
+  <div id="ctaOrb1" class="orb"></div>
+  <div id="ctaOrb2" class="orb"></div>
   <div class="relative max-w-[880px] mx-auto px-6 text-center">
     <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-8">
       <span class="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-dot"></span>
@@ -886,7 +1106,7 @@ tailwind.config = {
     </div>
     <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] font-semibold text-ink-400">
       <span>G2 Leader · Spring 2024</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
-      <span>Trustpilot 4.9 · 47.2K reviews</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+      <span>Trustpilot 4.7 · 61 reviews</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
       <span>Capterra 4.8</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
       <span>7-day money-back</span>
     </div>
@@ -899,16 +1119,12 @@ tailwind.config = {
   <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
     <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-12 mb-16">
       <div>
-        <a href="#top" class="flex items-center gap-2.5 mb-6">
-          <span class="relative block w-7 h-6">
-            <span class="absolute left-0 top-1 w-3.5 h-3.5 bg-orange-500 rounded-[3px] rotate-45"></span>
-            <span class="absolute left-2.5 top-1 w-3.5 h-3.5 bg-teal-500 rounded-[3px] rotate-45"></span>
-          </span>
-          <span class="font-bold tracking-tight text-[16px]">PlagiarismSearch</span>
+        <a href="#top" class="inline-flex items-center mb-6">
+          <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
         </a>
         <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
         <div class="flex gap-3">
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.9</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
           <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
           <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
         </div>
@@ -1064,6 +1280,48 @@ const langLive = (() => {
   });
 })();
 
+/* ---------- Trustpilot rail · arrows + dots ---------- */
+(() => {
+  const rail = document.getElementById('tpRail');
+  if (!rail) return;
+  const dots = document.getElementById('tpDots');
+  const prev = document.getElementById('tpPrev');
+  const next = document.getElementById('tpNext');
+  const beh = reduceMotion ? 'auto' : 'smooth';
+  const pages = () => Math.max(1, Math.round(rail.scrollWidth / rail.clientWidth));
+
+  const sync = () => {
+    const idx = Math.round(rail.scrollLeft / rail.clientWidth);
+    [...dots.children].forEach((d, i) => {
+      const on = i === idx;
+      d.className = `tp-dot h-1.5 rounded-full ${on ? 'w-5 bg-ink-800' : 'w-1.5 bg-ink-300 hover:bg-ink-400'}`;
+    });
+    prev.disabled = rail.scrollLeft < 8;
+    next.disabled = rail.scrollLeft > rail.scrollWidth - rail.clientWidth - 8;
+  };
+
+  const build = () => {
+    dots.innerHTML = '';
+    const n = pages();
+    if (n < 2) { dots.style.display = 'none'; return; }
+    dots.style.display = '';
+    for (let i = 0; i < n; i++) {
+      const b = document.createElement('button');
+      b.className = 'tp-dot h-1.5 w-1.5 rounded-full bg-ink-300';
+      b.setAttribute('aria-label', `Go to review page ${i + 1}`);
+      b.addEventListener('click', () => rail.scrollTo({ left: i * rail.clientWidth, behavior: beh }));
+      dots.appendChild(b);
+    }
+    sync();
+  };
+
+  prev.addEventListener('click', () => rail.scrollBy({ left: -rail.clientWidth, behavior: beh }));
+  next.addEventListener('click', () => rail.scrollBy({ left: rail.clientWidth, behavior: beh }));
+  rail.addEventListener('scroll', sync, { passive: true });
+  addEventListener('resize', build);
+  build();
+})();
+
 /* ---------- FAQ ---------- */
 document.querySelectorAll('.faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1138,7 +1396,7 @@ if (!reduceMotion) {
     } else {
       gsap.to(el, {
         opacity:1, y:0, duration:.8, ease:'power3.out',
-        scrollTrigger:{ trigger: el, start:'top 55%' }
+        scrollTrigger:{ trigger: el, start:'top 70%' }
       });
     }
   });
@@ -1155,12 +1413,25 @@ if (!reduceMotion) {
       .to(oneLine, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
   }
 
-  // hero floating cards drift — paused while offscreen
+  // hero right column — paper lands, text lines fill in, stat cards layer on top
+  const heroPaper = document.getElementById('heroPaper');
   const floatTweens = [];
-  document.querySelectorAll('.hero-float').forEach((el, i) => {
-    floatTweens.push(gsap.to(el, { y: (i % 2 ? 14 : -14), duration: 3.6 + i * .5, ease:'sine.inOut', yoyo:true, repeat:-1 }));
-  });
-  if (floatTweens.length) {
+  if (heroPaper) {
+    const heroCards = gsap.utils.toArray('.hero-float');
+    const docLines = gsap.utils.toArray('#heroPaper .doc-line');
+    gsap.set(heroPaper, { opacity: 0, y: 70, rotation: 7, scale: .96, transformOrigin: '50% 60%' });
+    gsap.set(docLines, { opacity: 0, x: -16 });
+    gsap.set(heroCards, { opacity: 0, y: 28, scale: .88 });
+    gsap.timeline({ delay: .35 })
+      .to(heroPaper, { opacity: 1, y: 0, rotation: 1.2, scale: 1, duration: .6, ease: 'back.out(1.4)' })
+      .to(docLines, { opacity: 1, x: 0, duration: .3, ease: 'power2.out', stagger: .07 }, '-=.18')
+      .to(heroCards, {
+        opacity: 1, y: 0, scale: 1, duration: .55, ease: 'back.out(1.8)', stagger: .13,
+        onComplete() {
+          heroCards.forEach((el, i) =>
+            floatTweens.push(gsap.to(el, { y: (i % 2 ? 12 : -12), duration: 3.6 + i * .5, ease: 'sine.inOut', yoyo: true, repeat: -1 })));
+        }
+      }, '-=.1');
     ScrollTrigger.create({
       trigger: '#heroCards', start: 'top bottom', end: 'bottom top',
       onToggle: self => floatTweens.forEach(t => self.isActive ? t.play() : t.pause())
@@ -1291,5 +1562,7 @@ if (!reduceMotion) {
   document.querySelectorAll('[data-count]').forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
 }
 </script>
+
+
 </body>
 </html>
