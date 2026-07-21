@@ -103,13 +103,13 @@ tailwind.config = {
   .font-flow { font-family:'Flow Circular', cursive; }
   /* drop-shadow on the parent: clip-path on the sheet would eat its own box-shadow,
      while a parent filter wraps the already-clipped silhouette (incl. the dog-ear) */
-  #heroPaper { filter: drop-shadow(0 1px 2px rgba(17,24,39,.05)) drop-shadow(0 18px 36px rgba(17,24,39,.13)); }
-  #heroPaper .paper-sheet {
+  .paper-doc { filter: drop-shadow(0 1px 2px rgba(17,24,39,.05)) drop-shadow(0 18px 36px rgba(17,24,39,.13)); }
+  .paper-doc .paper-sheet {
     clip-path: polygon(0 0, calc(100% - 52px) 0, 100% 52px, 100% 100%, 0 100%);
     border: 1px solid rgba(17,24,39,.07);
     border-radius: 16px; /* rounds 3 corners + curves the border; the 4th is cut by the clip */
   }
-  #heroPaper .paper-fold {
+  .paper-doc .paper-fold {
     position:absolute; top:0; right:0; width:52px; height:52px;
     background: linear-gradient(225deg, rgba(0,0,0,0) 50%, #E9EBF0 50%, #F8F9FB 98%);
     border-bottom-left-radius: 12px;
@@ -230,10 +230,98 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- Right — paper document with floating stat cards layered on top -->
+    <!-- Right — bento grid: stat · document · scan trio · rating -->
     <div class="relative h-[560px] hidden lg:block" id="heroCards">
+    <div data-variant="bento" class="relative h-full">
+      <!-- 7/5 on top, 5/7 below — the split flips between rows so no tile is square -->
+      <div class="grid grid-cols-12 grid-rows-[1.2fr_1fr] gap-3 h-full">
+
+        <!-- 1 · plagiarism stat + climbing bars -->
+        <div class="hero-tile col-span-7 rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-6 flex flex-col">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
+                <span class="w-3.5 h-3.5 rounded-full bg-orange-600"></span>
+              </span>
+              <span class="text-[13px] font-semibold text-ink-600">Plagiarism found</span>
+            </div>
+            <span class="text-[10px] font-bold tracking-wide text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">14 sources</span>
+          </div>
+          <div class="js-plag-stat text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-ink-900">0,0%</div>
+          <div class="text-[12.5px] font-medium text-ink-400">matched against 14B indexed pages</div>
+          <div class="js-bars-wrap flex items-end gap-[3px] h-10 mt-auto"></div>
+        </div>
+
+        <!-- 2 · document preview (Flow renders the copy as redacted bars) -->
+        <div class="hero-tile col-span-5 relative rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse overflow-hidden">
+          <!-- the page keeps going past the tile — fade makes the crop deliberate -->
+          <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/85 to-transparent pointer-events-none z-10"></div>
+          <div class="js-paper h-full px-5 pt-5" aria-hidden="true">
+            <div class="flex items-center gap-1.5 mb-4">
+              <span class="w-1.5 h-1.5 rounded-full bg-ink-200"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-ink-200"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-ink-200"></span>
+              <span class="ml-1 text-[9.5px] font-bold tracking-[0.14em] text-ink-300">ESSAY.DOCX</span>
+            </div>
+            <div class="font-flow select-none">
+              <div class="doc-line text-[17px] leading-[1.25] text-ink-400 mb-3">Climate change impacts on global agriculture</div>
+              <p class="doc-line text-[12px] leading-[1.45] text-ink-300 mb-2.5">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
+              <p class="doc-line text-[12px] leading-[1.45] text-ink-300 mb-2.5">Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions.</p>
+              <p class="doc-line text-[12px] leading-[1.45] text-ink-300 mb-2.5">However, smallholder farmers in West Africa have adapted through diversified cropping patterns.</p>
+              <p class="doc-line text-[12px] leading-[1.45] text-ink-300">Field data from recent seasons supports this approach across tropical zones worldwide.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 · scan breakdown -->
+        <div class="hero-tile col-span-5 rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-5 flex flex-col">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[12.5px] font-bold">Live scan</span>
+            <span class="text-[9px] font-bold tracking-wider text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">MATCHED</span>
+          </div>
+          <div class="flex flex-col gap-1.5 mt-auto">
+            <div class="flex items-center justify-between rounded-xl bg-ink-50 px-3 py-2">
+              <span class="text-[9px] font-bold tracking-widest text-ink-400">PLAGIARISM</span>
+              <span class="text-[15px] font-extrabold text-orange-600 nums">67.5%</span>
+            </div>
+            <div class="flex items-center justify-between rounded-xl bg-ink-50 px-3 py-2">
+              <span class="text-[9px] font-bold tracking-widest text-ink-400">AI WRITTEN</span>
+              <span class="text-[15px] font-extrabold text-teal-600 nums">12.0%</span>
+            </div>
+            <div class="flex items-center justify-between rounded-xl bg-ink-50 px-3 py-2">
+              <span class="text-[9px] font-bold tracking-widest text-ink-400">ORIGINAL</span>
+              <span class="text-[15px] font-extrabold text-mint-600 nums">20.5%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 · rating -->
+        <div class="hero-tile col-span-7 rounded-3xl bg-ink-900 shadow-diffuse-lg p-5 flex flex-col">
+          <div class="flex items-center gap-3.5">
+            <span class="w-12 h-12 shrink-0 rounded-full bg-teal-400 flex items-center justify-center text-[16px] font-bold text-ink-950 nums">9.8</span>
+            <div>
+              <div class="text-[13px] font-semibold text-white leading-tight">Overall users rating</div>
+              <div class="text-[11px] font-medium text-ink-400">Rated 4.7 on Trustpilot</div>
+            </div>
+            <img src="assets/svg/trustpilot-icon.svg" alt="" class="w-5 h-5 ml-auto self-start">
+          </div>
+          <!-- ESL badge sits inside the tile now: block radius, not a floating pill -->
+          <div id="eslBadge" class="mt-auto mb-4 flex items-center justify-center gap-2 rounded-xl bg-[#CDF1DE] ring-1 ring-[#9CE3BD] px-3.5 py-2.5">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F8859" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span class="text-[12px] font-semibold text-[#156B45]">ESL-aware · false-positive &lt; 2%</span>
+          </div>
+
+          <div class="flex items-center gap-3 border-t border-white/10 pt-3.5">
+            <span class="text-[11px] font-medium text-ink-400">500,000+ writers</span>
+            <span class="w-1 h-1 rounded-full bg-white/20"></span>
+            <span class="text-[11px] font-medium text-ink-400">490K on Google Docs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-variant="paper" class="relative h-full hidden">
       <!-- paper sheet (Flow font = redacted text lines) -->
-      <div id="heroPaper" class="absolute left-8 right-3 top-1 bottom-4 rotate-[1.2deg] overflow-hidden">
+      <div class="js-paper paper-doc absolute left-8 right-3 top-1 bottom-4 rotate-[1.2deg] overflow-hidden">
         <div class="paper-sheet absolute inset-0 bg-white"></div>
         <div class="paper-fold"></div>
         <div class="relative font-flow select-none px-12 pt-12 pr-16 pb-12" aria-hidden="true">
@@ -256,9 +344,9 @@ tailwind.config = {
             </div>
             <span class="text-[10px] font-bold tracking-wide text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">14 sources</span>
           </div>
-          <div id="plagStat" class="text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-orange-600">0,0%</div>
+          <div class="js-plag-stat text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-ink-900">0,0%</div>
           <div class="text-[12.5px] font-medium text-ink-400 mb-5">matched against 14B indexed pages</div>
-          <div class="flex items-end gap-[3px] h-10" id="accuracyBars"></div>
+          <div class="js-bars-wrap flex items-end gap-[3px] h-10"></div>
         </div>
       </div>
       <!-- ESL badge -->
@@ -285,6 +373,7 @@ tailwind.config = {
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -1221,17 +1310,17 @@ if (reduceMotion) document.documentElement.classList.add('no-motion');
 
 /* ---------- accuracy bars ---------- */
 (() => {
-  const wrap = document.getElementById('accuracyBars');
-  if (!wrap) return;
   // climbing trend with organic dips, deepening in colour as it rises
   const hs = [9, 12, 11, 16, 19, 17, 23, 27, 25, 31, 34, 32, 37, 40];
   const tints = ['bg-orange-200','bg-orange-300','bg-orange-400','bg-orange-500'];
-  hs.forEach((h, i) => {
-    const b = document.createElement('div');
-    b.className = `bar-grow flex-1 rounded-[2px] ${tints[Math.floor(i / hs.length * tints.length)]}`;
-    b.style.height = h + 'px';
-    b.style.transformOrigin = 'bottom';
-    wrap.appendChild(b);
+  document.querySelectorAll('.js-bars-wrap').forEach(wrap => {
+    hs.forEach((h, i) => {
+      const b = document.createElement('div');
+      b.className = `bar-grow flex-1 rounded-[2px] ${tints[Math.floor(i / hs.length * tints.length)]}`;
+      b.style.height = h + 'px';
+      b.style.transformOrigin = 'bottom';
+      wrap.appendChild(b);
+    });
   });
 })();
 
@@ -1448,40 +1537,57 @@ if (!reduceMotion) {
       .to(oneLine, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
   }
 
-  // hero right column — paper lands, text lines fill in, stat cards layer on top
-  const heroPaper = document.getElementById('heroPaper');
-  const floatTweens = [];
-  if (heroPaper) {
-    const heroCards = gsap.utils.toArray('.hero-float');
-    const docLines = gsap.utils.toArray('#heroPaper .doc-line');
-    const bars = gsap.utils.toArray('#accuracyBars .bar-grow');
-    const plagStat = document.getElementById('plagStat');
+  // hero right column — one entrance routine, replayed for whichever variant is on screen
+  window.__playHeroVariant = root => {
+    if (!root) return;
+    const paper = root.querySelector('.js-paper');
+    const tiles = gsap.utils.toArray(root.querySelectorAll('.hero-tile'));
+    const floats = gsap.utils.toArray(root.querySelectorAll('.hero-float'));
+    const eslBadge = root.querySelector('#eslBadge');
+    const docLines = gsap.utils.toArray(root.querySelectorAll('.doc-line'));
+    const bars = gsap.utils.toArray(root.querySelectorAll('.bar-grow'));
+    const plagStat = root.querySelector('.js-plag-stat');
     const plagCounter = { v: 0 };
-    gsap.set(heroPaper, { opacity: 0, y: 70, rotation: 7, scale: .96, transformOrigin: '50% 60%' });
-    gsap.set(docLines, { opacity: 0, x: -16 });
-    gsap.set(heroCards, { opacity: 0, y: 28, scale: .88 });
+    const isPaper = tiles.length === 0;
+
+    gsap.killTweensOf([...tiles, ...floats, ...docLines, ...bars, paper].filter(Boolean));
+    gsap.set(docLines, { opacity: 0, x: -12 });
     gsap.set(bars, { scaleY: 0 });
-    gsap.timeline({ delay: .35 })
-      .to(heroPaper, { opacity: 1, y: 0, rotation: 1.2, scale: 1, duration: .6, ease: 'back.out(1.4)' })
-      .to(docLines, { opacity: 1, x: 0, duration: .3, ease: 'power2.out', stagger: .07 }, '-=.18')
-      .to(heroCards, {
-        opacity: 1, y: 0, scale: 1, duration: .55, ease: 'back.out(1.8)', stagger: .13,
-        onComplete() {
-          heroCards.forEach((el, i) =>
-            floatTweens.push(gsap.to(el, { y: (i % 2 ? 12 : -12), duration: 3.6 + i * .5, ease: 'sine.inOut', yoyo: true, repeat: -1 })));
-        }
-      }, '-=.1')
-      // bars climb left-to-right, then the figure ticks up to meet them
-      .to(bars, { scaleY: 1, duration: .5, ease: 'back.out(1.6)', stagger: .045 }, '-=.25')
+    if (plagStat) plagStat.textContent = '0,0%';
+
+    const tl = gsap.timeline({ delay: .15 });
+
+    if (isPaper) {
+      // v1 — sheet flies in, cards layer on top and keep drifting
+      gsap.set(paper, { opacity: 0, y: 70, rotation: 7, scale: .96, transformOrigin: '50% 60%' });
+      gsap.set(floats, { opacity: 0, y: 28, scale: .88 });
+      tl.to(paper, { opacity: 1, y: 0, rotation: 1.2, scale: 1, duration: .6, ease: 'back.out(1.4)' })
+        .to(docLines, { opacity: 1, x: 0, duration: .3, ease: 'power2.out', stagger: .07 }, '-=.18')
+        .to(floats, {
+          opacity: 1, y: 0, scale: 1, duration: .55, ease: 'back.out(1.8)', stagger: .13,
+          onComplete() {
+            floats.forEach((el, i) =>
+              gsap.to(el, { y: (i % 2 ? 12 : -12), duration: 3.6 + i * .5, ease: 'sine.inOut', yoyo: true, repeat: -1 }));
+          }
+        }, '-=.1');
+    } else {
+      // bento — tiles cascade, grid stays locked
+      gsap.set(tiles, { opacity: 0, y: 26, scale: .95, transformOrigin: '50% 60%' });
+      if (eslBadge) gsap.set(eslBadge, { opacity: 0, scale: .94 });
+      tl.to(tiles, { opacity: 1, y: 0, scale: 1, duration: .55, ease: 'back.out(1.5)', stagger: .09 })
+        .to(docLines, { opacity: 1, x: 0, duration: .3, ease: 'power2.out', stagger: .07 }, '-=.32');
+    }
+
+    // shared beats — bars climb, then the figure ticks up to meet them
+    tl.to(bars, { scaleY: 1, duration: .5, ease: 'back.out(1.6)', stagger: .045 }, '-=.3')
       .to(plagCounter, {
         v: 67.5, duration: 1.1, ease: 'power2.out',
-        onUpdate: () => plagStat.textContent = plagCounter.v.toFixed(1).replace('.', ',') + '%'
+        onUpdate: () => { if (plagStat) plagStat.textContent = plagCounter.v.toFixed(1).replace('.', ',') + '%'; }
       }, '-=.75');
-    ScrollTrigger.create({
-      trigger: '#heroCards', start: 'top bottom', end: 'bottom top',
-      onToggle: self => floatTweens.forEach(t => self.isActive ? t.play() : t.pause())
-    });
-  }
+    if (eslBadge) tl.to(eslBadge, { opacity: 1, scale: 1, duration: .45, ease: 'back.out(2)' }, '-=.8');
+    return tl;
+  };
+  window.__playHeroVariant(document.querySelector('#heroCards [data-variant]:not(.hidden)'));
 
   // pause perpetual CSS animations (breathing bars) while offscreen
   const io = new IntersectionObserver(entries => entries.forEach(e => {
@@ -1605,8 +1711,8 @@ if (!reduceMotion) {
     s.classList.add(s.classList.contains('hl-orange') ? 'on-orange' : 'on-ai');
   });
   document.querySelectorAll('#scanLegend .lg-item').forEach(i => i.classList.add('found'));
-  const plagStatic = document.getElementById('plagStat');
-  if (plagStatic) plagStatic.textContent = '67,5%';
+  document.querySelectorAll('.js-plag-stat').forEach(el => el.textContent = '67,5%');
+  document.querySelectorAll('.bar-grow').forEach(b => b.style.transform = 'scaleY(1)');
   ['srcCard1','srcCard2','scanDone'].forEach(id => { const el = document.getElementById(id); el.style.opacity = 1; el.style.transform = 'none'; });
   document.getElementById('cPlag').textContent = '0.8';
   document.getElementById('cAI').textContent = '12.0';
@@ -1618,6 +1724,47 @@ if (!reduceMotion) {
 }
 </script>
 
+<!-- ========== TEMP · hero variant switcher for the client review (remove before production) ========== -->
+<div class="fixed left-5 top-1/2 -translate-y-1/2 z-[100] hidden lg:block">
+  <div class="rounded-2xl bg-white/95 backdrop-blur-md ring-1 ring-black/10 shadow-diffuse-lg p-2 w-[124px]">
+    <div class="text-[9px] font-bold tracking-[0.16em] uppercase text-ink-400 px-2 pt-1 pb-2">Hero</div>
+    <button data-switch="bento" class="hero-switch w-full text-left rounded-xl px-3 py-2 text-[12px] font-semibold transition-colors duration-200">Bento</button>
+    <button data-switch="paper" class="hero-switch w-full text-left rounded-xl px-3 py-2 text-[12px] font-semibold transition-colors duration-200">Paper v1</button>
+  </div>
+</div>
+<script>
+(() => {
+  const variants = [...document.querySelectorAll('#heroCards [data-variant]')];
+  const buttons = [...document.querySelectorAll('.hero-switch')];
+  if (!variants.length) return;
+  const paint = name => buttons.forEach(b => {
+    const on = b.dataset.switch === name;
+    b.className = `hero-switch w-full text-left rounded-xl px-3 py-2 text-[12px] font-semibold transition-colors duration-200 ${on ? 'bg-ink-900 text-white' : 'text-ink-600 hover:bg-ink-100'}`;
+  });
+  const show = name => {
+    variants.forEach(v => v.classList.toggle('hidden', v.dataset.variant !== name));
+    paint(name);
+    const active = variants.find(v => v.dataset.variant === name);
+    if (window.__playHeroVariant) window.__playHeroVariant(active);   // replay the entrance
+    try { localStorage.setItem('heroVariant', name); } catch (e) {}
+  };
+  buttons.forEach(b => b.addEventListener('click', () => show(b.dataset.switch)));
+  let saved = 'bento';
+  try { saved = localStorage.getItem('heroVariant') || 'bento'; } catch (e) {}
+  show(saved);
+})();
+</script>
+
+<!-- ========== TEMP · internal link to the design system (remove before production) ========== -->
+<a href="design-system.html"
+   class="fixed right-5 bottom-5 z-[100] group inline-flex items-center gap-2.5 rounded-full bg-ink-900 text-white pl-4 pr-5 h-12 shadow-diffuse-lg hover:bg-ink-800 active:bg-ink-950 transition-colors">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-500 group-hover:rotate-[18deg]">
+    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+  </svg>
+  <span class="text-[13.5px] font-semibold">Design System</span>
+</a>
 
 </body>
 </html>
