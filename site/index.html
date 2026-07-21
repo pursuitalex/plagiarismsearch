@@ -380,7 +380,9 @@ tailwind.config = {
 
 <!-- ================= ACT 2 · SCAN SCROLLYTELLING ================= -->
 <section id="scan" class="relative bg-ink-950 text-white">
-  <div id="scanWrap" class="relative" style="height:360vh;">
+  <!-- 285vh, not 360: the trigger now starts 75vh before the panel pins, so the wrap
+       shrinks by the same 75vh to keep the scrubbed distance at 260vh (see the ScrollTrigger below) -->
+  <div id="scanWrap" class="relative" style="height:285vh;">
     <div class="sticky top-0 h-[100dvh] flex flex-col justify-center overflow-hidden">
       <div class="orb w-[700px] h-[700px] bg-teal-500/10 -left-40 top-[-200px]"></div>
       <div class="orb w-[600px] h-[600px] bg-orange-500/10 right-[-150px] bottom-[-200px]"></div>
@@ -1625,7 +1627,9 @@ if (!reduceMotion) {
   gsap.set('.scan-side',     { opacity: 0, y: 44 });
 
   const tl = gsap.timeline({
-    scrollTrigger: { trigger:'#scanWrap', start:'top top', end:'bottom bottom', scrub:.4 },
+    // starts while the band is still sliding up rather than waiting for it to pin —
+    // 'top top' left a full viewport of empty dark before anything moved
+    scrollTrigger: { trigger:'#scanWrap', start:'top 75%', end:'bottom bottom', scrub:.4 },
     defaults: { ease:'none' }
   });
 
