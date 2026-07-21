@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
 <title>PlagiarismSearch — Plagiarism + AI detection in one</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,8 +60,18 @@ tailwind.config = {
         transition:color .3s ease; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
   .hl-orange { background-image:linear-gradient(to right, rgba(243,111,90,.16), rgba(243,111,90,.16)); }
   .hl-teal   { background-image:linear-gradient(to right, rgba(12,169,195,.14), rgba(12,169,195,.14)); }
+  /* AI highlight — violet, matching the product report's colour coding */
+  .hl-ai     { background-image:linear-gradient(to right, rgba(154,106,222,.18), rgba(154,106,222,.18)); }
   .hl.on-orange { color:#B84431; font-weight:600; }
   .hl.on-teal { color:#06748A; font-weight:600; }
+  .hl.on-ai { color:#6D3FB0; font-weight:600; }
+
+  /* scan legend — dots light up as each category is found */
+  .lg-item { opacity:.35; transition:opacity .45s cubic-bezier(.32,.72,0,1); }
+  .lg-item.found { opacity:1; }
+  .lg-dot { box-shadow:0 0 0 0 currentColor; transition:box-shadow .45s cubic-bezier(.32,.72,0,1); }
+  .lg-item.found .lg-dot { box-shadow:0 0 0 3px color-mix(in srgb, currentColor 22%, transparent); }
+  .no-motion .lg-item { opacity:1; }
 
   /* ---------- CTA glows · tuned values ---------- */
   #ctaOrb1 { width:1138px; height:1040px; left:-22.2%; top:-546px; background:rgba(243,111,90,.25);
@@ -194,14 +206,19 @@ tailwind.config = {
             <span class="text-[11.5px] font-medium text-ink-400">No signup · No card</span>
           </div>
           <textarea rows="3" placeholder="Paste your text here. We compare against 14B pages and detect AI-generated content in seconds." class="w-full resize-none text-[15px] leading-relaxed placeholder:text-ink-300 focus:outline-none mb-4"></textarea>
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between gap-3">
             <span class="text-[12px] font-medium text-ink-400 nums" id="wordCount">0 / 150 words</span>
-            <button class="btn-press group magnetic flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[14.5px] font-semibold pl-6 pr-2 py-2">
-              Check for free
-              <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </span>
-            </button>
+            <div class="flex items-center gap-2.5">
+              <button aria-label="Add document" title="Add document" class="btn-press w-12 h-12 shrink-0 flex items-center justify-center rounded-full bg-ink-100 hover:bg-ink-200 transition-colors duration-300 text-ink-700">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              </button>
+              <button class="btn-press group magnetic flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[14.5px] font-semibold pl-6 pr-2 py-2">
+                Check for free
+                <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -294,8 +311,8 @@ tailwind.config = {
 
         <div class="grid lg:grid-cols-[1fr_360px] gap-5">
           <!-- Document -->
-          <div class="scan-doc relative rounded-4xl bg-white/[.07] ring-1 ring-white/10 p-1.5">
-            <div class="relative rounded-[calc(2rem-0.375rem)] bg-white text-ink-900 p-8 lg:p-10 overflow-hidden">
+          <div class="scan-doc relative flex rounded-4xl bg-white/[.07] ring-1 ring-white/10 p-1.5">
+            <div class="relative flex flex-col w-full rounded-[calc(2rem-0.375rem)] bg-white text-ink-900 p-8 lg:p-10 overflow-hidden">
               <!-- scan line -->
               <div id="scanLine" class="absolute left-0 right-0 top-0 h-16 pointer-events-none" style="transform:translateY(-80px);">
                 <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
@@ -313,7 +330,7 @@ tailwind.config = {
 
               <p class="text-[15.5px] leading-[1.85] text-ink-700 mb-5">
                 The economic implications of climate change extend beyond environmental damage.
-                <span class="hl hl-teal" data-step="1">Recent studies have shown that rising global temperatures correlate with decreased agricultural yields,</span>
+                <span class="hl hl-ai" data-step="1">Recent studies have shown that rising global temperatures correlate with decreased agricultural yields,</span>
                 <span class="hl hl-orange" data-step="2">particularly in regions dependent on rain-fed farming.</span>
                 Researchers project a 47.2% drop in tropical yields by 2050.
               </p>
@@ -321,8 +338,24 @@ tailwind.config = {
                 However, smallholder farmers in West Africa have adapted through
                 <span class="hl hl-orange" data-step="3">diversified cropping patterns — a strategy that combines drought-resistant millet</span>
                 with shade-tolerant maize varieties.
-                <span class="hl hl-teal" data-step="4">Field data from 2023 supports this approach across multiple growing seasons.</span>
+                <span class="hl hl-ai" data-step="4">Field data from 2023 supports this approach across multiple growing seasons.</span>
               </p>
+
+              <!-- legend — each dot lights up when its category is first found -->
+              <div id="scanLegend" class="mt-auto pt-6 border-t border-ink-100 flex flex-wrap items-center justify-center gap-x-7 gap-y-2">
+                <span class="lg-item flex items-center gap-2 text-[12px] font-semibold text-[#B84431]" data-cat="orange">
+                  <span class="lg-dot w-3 h-3 rounded-full border-2 border-current"></span>Plagiarism
+                </span>
+                <span class="lg-item flex items-center gap-2 text-[12px] font-semibold text-[#6D3FB0]" data-cat="ai">
+                  <span class="lg-dot w-3 h-3 rounded-full border-2 border-current"></span>AI probability
+                </span>
+                <span class="lg-item flex items-center gap-2 text-[12px] font-semibold text-[#2AA46C]" data-cat="citations">
+                  <span class="lg-dot w-3 h-3 rounded-full border-2 border-current"></span>Citations
+                </span>
+                <span class="lg-item flex items-center gap-2 text-[12px] font-semibold text-[#3B82F6]" data-cat="references">
+                  <span class="lg-dot w-3 h-3 rounded-full border-2 border-current"></span>References
+                </span>
+              </div>
             </div>
           </div>
 
@@ -1486,13 +1519,20 @@ if (!reduceMotion) {
   // phase 2 — scan line traverses the document
   tl.fromTo('#scanLine', { y:-80 }, { y: () => docH() + 20, duration: 8 }, 2.6);
 
-  // highlights fire as the line passes them
+  // highlights fire as the line passes them; the matching legend dot lights up with each
   const fireAt = [4.0, 5.5, 7.6, 9.2];
+  const legendItem = cat => document.querySelector(`#scanLegend [data-cat="${cat}"]`);
   spans.forEach((span, i) => {
     if (!span) return;
+    const cat = span.classList.contains('hl-orange') ? 'orange' : 'ai';
     tl.to(span, { backgroundSize:'100% 100%', duration:.7 }, fireAt[i]);
-    tl.add(() => span.classList.add(span.classList.contains('hl-orange') ? 'on-orange' : 'on-teal'), fireAt[i] + .35);
+    tl.add(() => {
+      span.classList.add(cat === 'orange' ? 'on-orange' : 'on-ai');
+      legendItem(cat)?.classList.add('found');
+    }, fireAt[i] + .35);
   });
+  // the rest of the key resolves once the pass completes
+  tl.add(() => document.querySelectorAll('#scanLegend .lg-item').forEach(i => i.classList.add('found')), 10.6);
 
   // source cards pop after their matching orange spans
   tl.to('#srcCard1', { opacity:1, y:0, duration:.8, ease:'power2.out' }, 6.0);
@@ -1550,8 +1590,9 @@ if (!reduceMotion) {
   // reduced motion: final states
   document.querySelectorAll('[data-step]').forEach(s => {
     s.style.backgroundSize = '100% 100%';
-    s.classList.add(s.classList.contains('hl-orange') ? 'on-orange' : 'on-teal');
+    s.classList.add(s.classList.contains('hl-orange') ? 'on-orange' : 'on-ai');
   });
+  document.querySelectorAll('#scanLegend .lg-item').forEach(i => i.classList.add('found'));
   ['srcCard1','srcCard2','scanDone'].forEach(id => { const el = document.getElementById(id); el.style.opacity = 1; el.style.transform = 'none'; });
   document.getElementById('cPlag').textContent = '0.8';
   document.getElementById('cAI').textContent = '12.0';
