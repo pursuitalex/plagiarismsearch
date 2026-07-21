@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>PlagiarismSearch — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+/* Identical token set to index.html — the DS page must never drift from the product page. */
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+      },
+      colors: {
+        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
+        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
+        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
+        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
+      },
+      letterSpacing: { tightest: '-0.035em' },
+      boxShadow: {
+        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
+        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
+        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
+      },
+      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+    }
+  }
+}
+</script>
+<style>
+  html { background:#fff; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background:#F36F5A; color:#fff; }
+  [id] { scroll-margin-top: 96px; }
+
+  /* ---------- section eyebrow ---------- */
+  .eyebrow { font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:#9CA3AF; }
+
+  /* ---------- swatch ---------- */
+  .sw { cursor:pointer; transition:transform .18s cubic-bezier(.32,.72,0,1); }
+  .sw:hover { transform:translateY(-2px); }
+  .sw:active { transform:translateY(0); }
+  .sw-chip { height:56px; border-radius:10px; box-shadow:inset 0 0 0 1px rgba(17,24,39,.07); }
+
+  /* ---------- BUTTON RECIPES ----------
+     Heights + padding are the Figma spec (xs 32 / sm 40 / md 48 / lg 56).
+     Hover + active bind to deeper palette shades so white text clears WCAG AA —
+     the default 500 shades are the brand-locked exception (see Contrast notes). */
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:.5em;
+         font-weight:600; border-radius:12px; white-space:nowrap; cursor:pointer;
+         border:1px solid transparent; user-select:none;
+         transition: background-color .15s ease-out, border-color .15s ease-out, color .15s ease-out, transform .15s cubic-bezier(.32,.72,0,1); }
+  .btn:focus-visible { outline:2px solid #0CA9C3; outline-offset:2px; }
+  .btn:active { transform:translateY(1px); }
+  .btn[disabled] { opacity:.4; pointer-events:none; }
+
+  .btn-xs { height:32px; padding:0 12px; font-size:13px; }
+  .btn-sm { height:40px; padding:0 16px; font-size:14px; }
+  .btn-md { height:48px; padding:0 20px; font-size:15px; }
+  .btn-lg { height:56px; padding:0 28px; font-size:16px; }
+
+  .btn-caps { text-transform:uppercase; font-weight:700; }
+  .btn-caps.btn-xs { letter-spacing:.08em; }
+  .btn-caps.btn-sm { letter-spacing:.07em; }
+  .btn-caps.btn-md { letter-spacing:.055em; }
+  .btn-caps.btn-lg { letter-spacing:.04em; }
+
+  .btn-primary   { background:#F36F5A; color:#fff; }
+  .btn-primary:hover  { background:#B84431; }
+  .btn-primary:active { background:#8C2E1F; }
+
+  .btn-secondary { background:#fff; color:#111827; border-color:#E5E7EB; }
+  .btn-secondary:hover  { background:#F8F9FB; border-color:#D1D5DB; }
+  .btn-secondary:active { background:#F1F2F6; border-color:#9CA3AF; }
+
+  .btn-ghost     { background:transparent; color:#374151; }
+  .btn-ghost:hover  { background:#F1F2F6; color:#111827; }
+  .btn-ghost:active { background:#E5E7EB; }
+
+  .btn-danger    { background:#DC4444; color:#fff; }
+  .btn-danger:hover  { background:#A32222; }
+  .btn-danger:active { background:#7C1717; }
+
+  .btn-dark      { background:#111827; color:#fff; }
+  .btn-dark:hover  { background:#1F2937; }
+  .btn-dark:active { background:#0A0E1A; }
+
+  .btn-teal      { background:#0CA9C3; color:#fff; }
+  .btn-teal:hover  { background:#06748A; }
+  .btn-teal:active { background:#045566; }
+
+  /* ---------- badge ---------- */
+  .badge { display:inline-flex; align-items:center; gap:.35em; border-radius:999px; font-weight:700;
+           text-transform:uppercase; white-space:nowrap; }
+  .badge-sm { height:20px; padding:0 8px; font-size:9.5px; letter-spacing:.09em; }
+  .badge-md { height:26px; padding:0 11px; font-size:11px; letter-spacing:.07em; }
+
+  /* ---------- input ---------- */
+  .fld { width:100%; border-radius:8px; border:1px solid #E5E7EB; background:#fff; color:#111827;
+         font-weight:500; transition:border-color .15s ease, box-shadow .15s ease; }
+  .fld::placeholder { color:#9CA3AF; font-weight:400; }
+  .fld-sm { height:40px; padding:0 12px; font-size:14px; }
+  .fld-md { height:48px; padding:0 14px; font-size:15px; }
+  .fld-lg { height:56px; padding:0 16px; font-size:16px; }
+  .fld:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+  .fld-error { border-color:#DC4444; box-shadow:0 0 0 1px #DC4444; }
+  .fld[disabled] { background:#F1F2F6; color:#9CA3AF; cursor:not-allowed; }
+
+  /* ---------- elevation demos ---------- */
+  .el-0 { box-shadow:none; }
+  .el-1 { box-shadow:0 1px 2px rgba(0,0,0,.04); }
+  .el-2 { box-shadow:0 1px 2px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.06); }
+  .el-3 { box-shadow:0 2px 4px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.08); }
+  .el-4 { box-shadow:0 4px 8px rgba(10,14,26,.08), 0 12px 40px rgba(10,14,26,.12); }
+
+  /* ---------- nav ---------- */
+  .ds-nav a { display:block; padding:6px 12px; border-radius:8px; font-size:13.5px; font-weight:600; color:#6B7280;
+              transition:color .18s ease, background-color .18s ease; }
+  .ds-nav a:hover { color:#111827; background:#F1F2F6; }
+  .ds-nav a.active { color:#B84431; background:#FEF4F1; }
+
+  /* ---------- motion demo ---------- */
+  @keyframes ds-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.88); opacity:.55; } }
+  .demo-dur { animation:ds-pulse var(--d) cubic-bezier(.32,.72,0,1) infinite; }
+
+  /* ---------- toast ---------- */
+  #toast { transition:opacity .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior:auto; }
+    .demo-dur { animation:none; }
+    .sw:hover, .btn:active { transform:none; }
+  }
+</style>
+</head>
+<body class="font-sans text-ink-900 bg-white antialiased">
+
+<!-- ==================== TOP BAR ==================== -->
+<header class="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-ink-100">
+  <div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-16 flex items-center gap-4">
+    <a href="index.html" class="flex items-center gap-2.5 shrink-0 group">
+      <img src="assets/svg/logo.svg" alt="" class="w-7 h-7">
+      <span class="font-extrabold tracking-tightest text-[17px]">Plagiarism<span class="font-medium text-ink-500">Search</span></span>
+    </a>
+    <span class="hidden sm:block w-px h-5 bg-ink-200"></span>
+    <span class="hidden sm:block text-[13px] font-bold tracking-[0.1em] uppercase text-ink-400">Design System</span>
+    <span class="ml-auto badge badge-md bg-mint-100 text-mint-700">v1.0</span>
+    <a href="index.html" class="btn btn-sm btn-secondary hidden md:inline-flex">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+      Back to site
+    </a>
+  </div>
+</header>
+
+<div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+  <div class="xl:grid xl:grid-cols-[196px_minmax(0,1fr)] xl:gap-14">
+
+    <!-- ==================== SIDE NAV ==================== -->
+    <nav class="hidden xl:block">
+      <div class="sticky top-24 py-16 ds-nav space-y-0.5" id="dsNav">
+        <div class="eyebrow px-3 pb-3">Contents</div>
+        <a href="#foundations">Theme layers</a>
+        <a href="#color">Color</a>
+        <a href="#type">Typography</a>
+        <a href="#layout">Layout &amp; spacing</a>
+        <a href="#shape">Radii &amp; elevation</a>
+        <a href="#buttons">Buttons</a>
+        <a href="#badges">Badges</a>
+        <a href="#inputs">Inputs</a>
+        <a href="#cards">Cards &amp; table</a>
+        <a href="#icons">Icons</a>
+        <a href="#motion">Motion</a>
+        <a href="#a11y">Accessibility</a>
+        <a href="#anti">Anti-patterns</a>
+      </div>
+    </nav>
+
+    <main class="pb-40">
+
+      <!-- ==================== INTRO ==================== -->
+      <section class="pt-16 lg:pt-24 pb-16">
+        <div class="eyebrow mb-5">PlagiarismSearch · Redesign 2026</div>
+        <h1 class="text-[44px] sm:text-[64px] font-extrabold tracking-tightest leading-[.98] mb-6 max-w-[16ch]">
+          The design system
+        </h1>
+        <p class="text-[18px] leading-relaxed text-ink-600 max-w-[62ch] mb-10">
+          Every token, component and rule the redesign is built on. Components below are
+          <strong class="font-semibold text-ink-900">live markup</strong>, not screenshots — what you hover here is
+          what ships. Click any swatch or token to copy its value.
+        </p>
+        <dl class="grid sm:grid-cols-3 gap-3 max-w-3xl">
+          <div class="rounded-2xl bg-ink-50 p-5">
+            <dt class="eyebrow mb-2">Base direction</dt>
+            <dd class="text-[15px] font-semibold">D3 — Soft Productivity</dd>
+          </div>
+          <div class="rounded-2xl bg-ink-50 p-5">
+            <dt class="eyebrow mb-2">Type</dt>
+            <dd class="text-[15px] font-semibold">Manrope + Newsreader</dd>
+          </div>
+          <div class="rounded-2xl bg-ink-50 p-5">
+            <dt class="eyebrow mb-2">Accessibility floor</dt>
+            <dd class="text-[15px] font-semibold">WCAG 2.2 AA</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- ==================== 01 THEME LAYERS ==================== -->
+      <section id="foundations" class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-3">01 — Foundations</div>
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Theme layers</h2>
+        <p class="text-[16px] text-ink-500 max-w-[62ch] mb-10">
+          One set of component primitives, three surface treatments. The layer is chosen by page intent,
+          never mixed within a single screen.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <!-- D3 -->
+          <article class="rounded-3xl overflow-hidden el-2 border border-ink-100">
+            <div class="h-28 relative" style="background:linear-gradient(120deg,#FEF4F1 0%,#FFFFFF 45%,#E8F8FB 100%)">
+              <span class="absolute left-5 bottom-4 text-[13px] font-extrabold tracking-tightest text-ink-900">Aa</span>
+            </div>
+            <div class="p-5 bg-white">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="badge badge-sm bg-orange-100 text-orange-700">Base</span>
+                <h3 class="text-[15px] font-bold">D3 — Soft Productivity</h3>
+              </div>
+              <p class="text-[13.5px] leading-relaxed text-ink-500">White + orange × teal mesh. Home, Pricing, product pages. Friendly, light, modern.</p>
+            </div>
+          </article>
+          <!-- D1 -->
+          <article class="rounded-3xl overflow-hidden el-2 border border-ink-100">
+            <div class="h-28 relative" style="background:#FAF6EF">
+              <span class="absolute left-5 bottom-4 font-serif text-[15px] text-[#3B3226]">Aa</span>
+            </div>
+            <div class="p-5 bg-white">
+              <h3 class="text-[15px] font-bold mb-2">D1 — Editorial Trust</h3>
+              <p class="text-[13.5px] leading-relaxed text-ink-500">Cream surface + Newsreader H1/H2. /for-universities, /compliance. Warm, formal, institutional.</p>
+            </div>
+          </article>
+          <!-- D2 -->
+          <article class="rounded-3xl overflow-hidden el-2 border border-ink-100">
+            <div class="h-28 relative" style="background:#0A0E1A">
+              <span class="absolute left-5 bottom-4 text-[13px] font-extrabold tracking-tightest text-teal-300">Aa</span>
+            </div>
+            <div class="p-5 bg-white">
+              <h3 class="text-[15px] font-bold mb-2">D2 — AI Confident</h3>
+              <p class="text-[13.5px] leading-relaxed text-ink-500">Navy base + teal accents. /ai-detection hero, /sample-report. Sharp, technical, product-demo.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ==================== 02 COLOR ==================== -->
+      <section id="color" class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-3">02 — Color</div>
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Palette</h2>
+        <p class="text-[16px] text-ink-500 max-w-[62ch] mb-10">
+          Two brand ramps, one success ramp, one neutral ramp. Click a shade to copy its hex.
+        </p>
+
+        <div class="space-y-9" id="ramps"><!-- built by script --></div>
+
+        <h3 class="text-[22px] font-extrabold tracking-tightest mt-16 mb-3">Semantic aliases</h3>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-6">
+          Always reference the semantic name, never the raw ramp — that is what makes the theme layers swappable.
+        </p>
+
+        <div class="grid lg:grid-cols-2 gap-x-10 gap-y-8">
+          <div>
+            <div class="eyebrow mb-3">Text</div>
+            <div class="rounded-2xl border border-ink-100 divide-y divide-ink-100 overflow-hidden">
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#111827"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/primary</code><span class="text-[11.5px] text-ink-400 nums">neutral/900</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#374151"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/secondary</code><span class="text-[11.5px] text-ink-400">neutral/700</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#6B7280"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/muted</code><span class="text-[11.5px] text-ink-400">neutral/500</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#9CA3AF"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/disabled</code><span class="text-[11.5px] text-ink-400">neutral/400</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0 ring-1 ring-ink-200" style="background:#FFFFFF"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/inverse</code><span class="text-[11.5px] text-ink-400">white</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#F36F5A"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/brand</code><span class="text-[11.5px] text-ink-400">orange/500</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#0991A8"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/link</code><span class="text-[11.5px] text-ink-400">teal/600</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="eyebrow mb-3">Surface</div>
+            <div class="rounded-2xl border border-ink-100 divide-y divide-ink-100 overflow-hidden">
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0 ring-1 ring-ink-200" style="background:#FFFFFF"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/primary</code><span class="text-[11.5px] text-ink-400">white</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0 ring-1 ring-ink-200" style="background:#F8F9FB"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/subtle</code><span class="text-[11.5px] text-ink-400">neutral/50</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#F1F2F6"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/muted</code><span class="text-[11.5px] text-ink-400">neutral/100</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#111827"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/inverse</code><span class="text-[11.5px] text-ink-400">neutral/900</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#FDE5E0"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/brand-soft</code><span class="text-[11.5px] text-ink-400">orange/100</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#F36F5A"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/brand-solid</code><span class="text-[11.5px] text-ink-400">orange/500</span></div>
+              <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#0A0E1A"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/ai-base</code><span class="text-[11.5px] text-ink-400">navy/950</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- contrast notes -->
+        <div class="mt-12 grid md:grid-cols-2 gap-4">
+          <div class="rounded-2xl bg-mint-50 border border-mint-200 p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              <h3 class="text-[15px] font-bold text-mint-700">Hover / active states pass AA</h3>
+            </div>
+            <p class="text-[13.5px] leading-relaxed text-ink-600 mb-4">
+              Interactive fills bind to deeper shades so white text stays legible on press.
+            </p>
+            <ul class="space-y-1.5 text-[13px] text-ink-600">
+              <li class="flex justify-between"><code class="font-semibold">brand-solid-hover</code> <span class="nums">orange/700 · 5.37:1</span></li>
+              <li class="flex justify-between"><code class="font-semibold">brand-solid-active</code> <span class="nums">orange/800 · 8.31:1</span></li>
+              <li class="flex justify-between"><code class="font-semibold">teal-solid-hover</code> <span class="nums">teal/700</span></li>
+              <li class="flex justify-between"><code class="font-semibold">inverse-hover</code> <span class="nums">neutral/800</span></li>
+            </ul>
+          </div>
+
+          <div class="rounded-2xl bg-orange-50 border border-orange-200 p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+              <h3 class="text-[15px] font-bold text-orange-700">Brand-locked exception</h3>
+            </div>
+            <p class="text-[13.5px] leading-relaxed text-ink-600 mb-4">
+              Default <code class="font-semibold">orange/500</code> and <code class="font-semibold">teal/500</code> fills score
+              <strong class="nums">2.81–2.90:1</strong> with white text — below AA. Kept per brief §8 because the hues are the
+              brand's core recognition asset.
+            </p>
+            <p class="text-[13.5px] leading-relaxed text-ink-600">
+              <strong class="font-semibold text-ink-900">Mitigation:</strong> never use a 500 fill for the only copy of an
+              instruction; hover/active compensate; body text never sits on a 500 surface.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 03 TYPOGRAPHY ==================== -->
+      <section id="type" class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-3">03 — Typography</div>
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Type</h2>
+
+        <div class="grid md:grid-cols-2 gap-4 mb-14">
+          <div class="rounded-3xl border border-ink-100 p-7">
+            <div class="flex items-baseline justify-between mb-4">
+              <h3 class="text-[19px] font-extrabold tracking-tightest">Manrope</h3>
+              <span class="badge badge-sm bg-ink-100 text-ink-600">Primary</span>
+            </div>
+            <div class="text-[46px] leading-none tracking-tightest font-extrabold mb-4">Aa Бб Gg</div>
+            <p class="text-[13.5px] leading-relaxed text-ink-500 mb-4">Variable, Cyrillic-capable. All body, UI, buttons and default headings.</p>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-[13px] text-ink-600">
+              <span class="font-normal">400 Regular</span><span class="font-medium">500 Medium</span>
+              <span class="font-semibold">600 SemiBold</span><span class="font-bold">700 Bold</span>
+              <span class="font-extrabold">800 ExtraBold</span>
+            </div>
+          </div>
+
+          <div class="rounded-3xl border border-ink-100 p-7" style="background:#FAF6EF">
+            <div class="flex items-baseline justify-between mb-4">
+              <h3 class="text-[19px] font-extrabold tracking-tightest">Newsreader</h3>
+              <span class="badge badge-sm bg-white text-ink-600">D1 accent</span>
+            </div>
+            <div class="font-serif text-[46px] leading-none mb-4">Aa Gg</div>
+            <p class="text-[13.5px] leading-relaxed text-ink-500 mb-4">Display + H1/H2 on B2B editorial pages only. Never mixed into D3 or D2.</p>
+            <p class="text-[13px] text-ink-600"><strong class="font-semibold">No negative tracking</strong> — optical sizing handles spacing.</p>
+          </div>
+        </div>
+
+        <h3 class="text-[22px] font-extrabold tracking-tightest mb-3">Tracking ramp</h3>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-6">
+          Manrope's default spacing is loose at display sizes. Tracking tightens as size grows, and reverses to
+          <em>positive</em> for small caps — the single rule that makes the whole system feel drawn rather than defaulted.
+        </p>
+        <div class="rounded-2xl border border-ink-100 overflow-hidden mb-14">
+          <table class="w-full text-left">
+            <thead class="bg-ink-900 text-white">
+              <tr class="text-[10.5px] font-bold uppercase" style="letter-spacing:.08em">
+                <th class="px-5 py-3">Size</th><th class="px-5 py-3">Tracking</th><th class="px-5 py-3 hidden sm:table-cell">Preview</th>
+              </tr>
+            </thead>
+            <tbody class="text-[14px]">
+              <tr class="bg-white"><td class="px-5 py-3 font-semibold">≥ 60px display</td><td class="px-5 py-3 nums text-ink-500">-2.5% → -3%</td><td class="px-5 py-3 hidden sm:table-cell text-[26px] font-extrabold" style="letter-spacing:-.03em">Detection</td></tr>
+              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">≥ 40px</td><td class="px-5 py-3 nums text-ink-500">-2%</td><td class="px-5 py-3 hidden sm:table-cell text-[26px] font-extrabold" style="letter-spacing:-.02em">Detection</td></tr>
+              <tr class="bg-white"><td class="px-5 py-3 font-semibold">≥ 28px · H1</td><td class="px-5 py-3 nums text-ink-500">-1.5%</td><td class="px-5 py-3 hidden sm:table-cell text-[26px] font-bold" style="letter-spacing:-.015em">Detection</td></tr>
+              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">≥ 22px · H2</td><td class="px-5 py-3 nums text-ink-500">-1%</td><td class="px-5 py-3 hidden sm:table-cell text-[22px] font-bold" style="letter-spacing:-.01em">Detection</td></tr>
+              <tr class="bg-white"><td class="px-5 py-3 font-semibold">≤ 17px · body, UI</td><td class="px-5 py-3 nums text-ink-500">0%</td><td class="px-5 py-3 hidden sm:table-cell text-[16px]">Detection</td></tr>
+              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">UI caps, eyebrow</td><td class="px-5 py-3 nums text-ink-500">+4% → +8%</td><td class="px-5 py-3 hidden sm:table-cell text-[12px] font-bold uppercase" style="letter-spacing:.08em">Detection</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-[22px] font-extrabold tracking-tightest mb-3">Responsive scale</h3>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-6">Desktop / Tablet / Mobile. Specimens render at their desktop size.</p>
+        <div class="space-y-7" id="typeScale"><!-- built by script --></div>
+      </section>
+
+      <!-- ==================== 04 LAYOUT ==================== -->
+      <section id="layout" class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-3">04 — Layout</div>
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-10">Grid &amp; spacing</h2>
+
+        <div class="grid md:grid-cols-3 gap-4 mb-12">
+          <div class="rounded-2xl border border-ink-100 p-6">
+            <div class="eyebrow mb-3">Desktop</div>
+            <div class="text-[27px] font-extrabold tracking-tightest mb-1 nums">1280<span class="text-ink-300">px</span></div>
+            <p class="text-[13px] text-ink-500">content max · 80px gutters · device 1440+</p>
+          </div>
+          <div class="rounded-2xl border border-ink-100 p-6">
+            <div class="eyebrow mb-3">Tablet</div>
+            <div class="text-[27px] font-extrabold tracking-tightest mb-1 nums">768<span class="text-ink-300">px</span></div>
+            <p class="text-[13px] text-ink-500">content max · 48px gutters · device 768</p>
+          </div>
+          <div class="rounded-2xl border border-ink-100 p-6">
+            <div class="eyebrow mb-3">Mobile</div>
+            <div class="text-[27px] font-extrabold tracking-tightest mb-1 nums">360<span class="text-ink-300">px</span></div>
+            <p class="text-[13px] text-ink-500">content max · 24px gutters · device 375</p>
+          </div>
+        </div>
+
+        <h3 class="text-[22px] font-extrabold tracking-tightest mb-3">Hero grid patterns</h3>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-6">12-col implicit grid. Asymmetry is deliberate — an even 6:6 reads static and is reserved for balanced content.</p>
+        <div class="grid sm:grid-cols-3 gap-4 mb-12">
+          <div>
+            <div class="grid grid-cols-12 gap-1.5 h-20 mb-2.5">
+              <div class="col-span-7 rounded-lg bg-orange-200"></div>
+              <div class="col-span-5 rounded-lg bg-ink-100"></div>
+            </div>
+            <div class="text-[13px] font-semibold">7 : 5 <span class="text-ink-400 font-normal">— text + product mock</span></div>
+          </div>
+          <div>
+            <div class="grid grid-cols-12 gap-1.5 h-20 mb-2.5">
+              <div class="col-span-5 rounded-lg bg-ink-100"></div>
+              <div class="col-span-7 rounded-lg bg-teal-200"></div>
+            </div>
+            <div class="text-[13px] font-semibold">5 : 7 <span class="text-ink-400 font-normal">— inverted</span></div>
+          </div>
+          <div>
+            <div class="grid grid-cols-12 gap-1.5 h-20 mb-2.5">
+              <div class="col-span-6 rounded-lg bg-ink-200"></div>
+              <div class="col-span-6 rounded-lg bg-ink-100"></div>
+            </div>
+            <div class="text-[13px] font-semibold">6 : 6 <span class="text-ink-400 font-normal">— balanced</span></div>
+          </div>
+        </div>
+
+        <h3 class="text-[22px] font-extrabold tracking-tightest mb-3">Spacing scale</h3>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-6">
+          Three bands with different responsive behaviour — micro spacing stays fixed so components keep their
+          proportions on small screens, while layout spacing compresses.
+        </p>
+        <div class="space-y-8" id="spacing"><!-- built by script --></div>
+      </section>
+
+      <!-- ==================== 05 RADII + ELEVATION ==================== -->
+      <section id="shape" class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-3">05 — Shape</div>
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-10">Radii &amp; elevation</h2>
+
+        <h3 class="text-[22px] font-extrabold tracking-tightest mb-6">Radii</h3>
+        <div class="flex flex-wrap gap-4 mb-14" id="radii"><!-- built by script --></div>
+
+        <h3 class="text-[22px] font-extrabold tracking-tightest mb-3">Elevation</h3>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-8">
+          Five Figma effect styles. On the web build these collapse into two workhorse shadows —
+          <code class="font-semibold text-ink-700">shadow-diffuse</code> and <code class="font-semibold text-ink-700">shadow-diffuse-lg</code> —
+          which use a negative spread for a softer, further-thrown falloff than a literal token port.
+        </p>
+        <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+          <div class="rounded-2xl bg-white el-0 border border-ink-100 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/0</div><div class="text-[11px] text-ink-400">flat</div></div>
+          <div class="rounded-2xl bg-white el-1 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/1</div><div class="text-[11px] text-ink-400">cards</div></div>
+          <div class="rounded-2xl bg-white el-2 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/2</div><div class="text-[11px] text-ink-400">raised</div></div>
+          <div class="rounded-2xl bg-white el-3 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/3</div><div class="text-[11px] text-ink-400">modal</div></div>
+          <div class="rounded-2xl bg-white el-4 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/4</div><div class="text-[11px] text-ink-400">popover</div></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="rounded-2xl bg-white shadow-diffuse p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">shadow-diffuse</div><div class="text-[11px] text-ink-400">web · default card</div></div>
+          <div class="rounded-2xl bg-white shadow-diffuse-lg p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">shadow-diffuse-lg</div><div class="text-[11px] text-ink-400">web · hero, floating</div></div>
+        </div>
+      </section>
+
+      <!-- ==================== 06 BUTTONS ==================== -->
+      <section id="buttons" class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-3">06 — Components</div>
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Button</h2>
+        <p class="text-[16px] text-ink-500 max-w-[62ch] mb-10">
+          4 sizes × 6 variants × 2 cases × 4 states = 192 Figma variants. Hover and press them — the states below are real.
+        </p>
+
+        <div class="eyebrow mb-4">Variants <span class="normal-case tracking-normal font-medium text-ink-400">— hover to see the AA-safe fill</span></div>
+        <div class="rounded-3xl bg-ink-50 p-7 mb-10">
+          <div class="flex flex-wrap items-center gap-3">
+            <button class="btn btn-md btn-primary">Primary</button>
+            <button class="btn btn-md btn-secondary">Secondary</button>
+            <button class="btn btn-md btn-ghost">Ghost</button>
+            <button class="btn btn-md btn-teal">Teal</button>
+            <button class="btn btn-md btn-dark">Dark</button>
+            <button class="btn btn-md btn-danger">Danger</button>
+            <button class="btn btn-md btn-primary" disabled>Disabled</button>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-10">
+          <div>
+            <div class="eyebrow mb-4">Sizes</div>
+            <div class="rounded-3xl bg-ink-50 p-7 flex flex-wrap items-end gap-3">
+              <button class="btn btn-xs btn-primary">xs · 32</button>
+              <button class="btn btn-sm btn-primary">sm · 40</button>
+              <button class="btn btn-md btn-primary">md · 48</button>
+              <button class="btn btn-lg btn-primary">lg · 56</button>
+            </div>
+            <p class="text-[13px] text-ink-500 mt-3">Heights match Input exactly, so a field + button always align on a row.</p>
+          </div>
+          <div>
+            <div class="eyebrow mb-4">Case · caps track wider as size drops</div>
+            <div class="rounded-3xl bg-ink-50 p-7 flex flex-wrap items-end gap-3">
+              <button class="btn btn-xs btn-caps btn-dark">xs +8%</button>
+              <button class="btn btn-sm btn-caps btn-dark">sm +7%</button>
+              <button class="btn btn-md btn-caps btn-dark">md +5.5%</button>
+              <button class="btn btn-lg btn-caps btn-dark">lg +4%</button>
+            </div>
+            <p class="text-[13px] text-ink-500 mt-3">Small caps need more air to stay readable; large caps need less or they fall apart.</p>
+          </div>
+        </div>
+
+        <div class="mt-10">
+          <div class="eyebrow mb-4">With icon</div>
+          <div class="rounded-3xl bg-ink-50 p-7 flex flex-wrap items-center gap-3">
+            <button class="btn btn-md btn-primary">
+              Check my text
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+            <button class="btn btn-md btn-secondary">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+              Upload file
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 07 BADGES ==================== -->
+      <section id="badges" class="py-16 border-t border-ink-100">
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Badge</h2>
+        <p class="text-[16px] text-ink-500 max-w-[62ch] mb-8">6 colors × 2 sizes × 2 styles. Pill-shaped, SemiBold caps, progressive letter-spacing.</p>
+
+        <div class="rounded-3xl bg-ink-50 p-7 space-y-5">
+          <div>
+            <div class="eyebrow mb-3">Soft</div>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="badge badge-md bg-orange-100 text-orange-700">Brand</span>
+              <span class="badge badge-md bg-teal-100 text-teal-700">Info</span>
+              <span class="badge badge-md bg-mint-100 text-mint-700">Success</span>
+              <span class="badge badge-md" style="background:#FEF3C7;color:#92400E">Warning</span>
+              <span class="badge badge-md" style="background:#FEE2E2;color:#A32222">Danger</span>
+              <span class="badge badge-md bg-ink-100 text-ink-600">Neutral</span>
+            </div>
+          </div>
+          <div>
+            <div class="eyebrow mb-3">Solid</div>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="badge badge-md bg-orange-600 text-white">Brand</span>
+              <span class="badge badge-md bg-teal-600 text-white">Info</span>
+              <span class="badge badge-md bg-mint-600 text-white">Success</span>
+              <span class="badge badge-md" style="background:#B45309;color:#fff">Warning</span>
+              <span class="badge badge-md" style="background:#DC4444;color:#fff">Danger</span>
+              <span class="badge badge-md bg-ink-900 text-white">Neutral</span>
+            </div>
+          </div>
+          <div>
+            <div class="eyebrow mb-3">Size sm · 20px</div>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="badge badge-sm bg-orange-100 text-orange-700">14 sources</span>
+              <span class="badge badge-sm bg-mint-100 text-mint-700">Original</span>
+              <span class="badge badge-sm bg-ink-900 text-white">New</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 08 INPUTS ==================== -->
+      <section id="inputs" class="py-16 border-t border-ink-100">
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Input</h2>
+        <p class="text-[16px] text-ink-500 max-w-[62ch] mb-8">
+          3 sizes × 4 states. Border-only, 8px radius. Body text is <strong class="font-semibold text-ink-900">Medium</strong>,
+          not Regular — Regular reads thin against a field border.
+        </p>
+
+        <div class="rounded-3xl bg-ink-50 p-7 grid md:grid-cols-2 gap-6 max-w-3xl">
+          <div>
+            <label class="block text-[12.5px] font-bold text-ink-600 mb-2">Default · md 48</label>
+            <input class="fld fld-md" placeholder="name@university.edu">
+          </div>
+          <div>
+            <label class="block text-[12.5px] font-bold text-ink-600 mb-2">Focused · teal ring</label>
+            <input class="fld fld-md" value="essay-draft-3.docx" style="border-color:#0CA9C3;box-shadow:0 0 0 1px #0CA9C3">
+          </div>
+          <div>
+            <label class="block text-[12.5px] font-bold text-ink-600 mb-2">Error</label>
+            <input class="fld fld-md fld-error" value="not-an-email">
+            <p class="flex items-center gap-1.5 text-[12.5px] font-medium mt-2" style="color:#A32222">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+              Enter a valid email address
+            </p>
+          </div>
+          <div>
+            <label class="block text-[12.5px] font-bold text-ink-400 mb-2">Disabled</label>
+            <input class="fld fld-md" value="Locked field" disabled>
+          </div>
+          <div class="md:col-span-2 pt-2 space-y-3">
+            <input class="fld fld-sm" placeholder="sm · 40px">
+            <input class="fld fld-md" placeholder="md · 48px">
+            <input class="fld fld-lg" placeholder="lg · 56px">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 09 CARDS + TABLE ==================== -->
+      <section id="cards" class="py-16 border-t border-ink-100">
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-8">Card &amp; table</h2>
+
+        <div class="grid md:grid-cols-3 gap-5 mb-14">
+          <article class="rounded-2xl bg-white el-2 p-8">
+            <span class="badge badge-sm bg-orange-100 text-orange-700 mb-4">Elevated</span>
+            <h3 class="text-[17px] font-bold tracking-tightest mb-2">Default card</h3>
+            <p class="text-[14px] leading-relaxed text-ink-500">elevation/2, no border. The workhorse — feature grids, pricing, bento cells.</p>
+          </article>
+          <article class="rounded-2xl bg-white border border-ink-100 p-8">
+            <span class="badge badge-sm bg-ink-100 text-ink-600 mb-4">Bordered</span>
+            <h3 class="text-[17px] font-bold tracking-tightest mb-2">Quiet card</h3>
+            <p class="text-[14px] leading-relaxed text-ink-500">border/subtle only. For dense lists where stacked shadows would muddy the page.</p>
+          </article>
+          <article class="rounded-2xl bg-ink-100 p-8">
+            <span class="badge badge-sm bg-white text-ink-600 mb-4">Filled</span>
+            <h3 class="text-[17px] font-bold tracking-tightest mb-2">Filled card</h3>
+            <p class="text-[14px] leading-relaxed text-ink-500">surface/muted. Groups related content without adding a third elevation layer.</p>
+          </article>
+        </div>
+
+        <h3 class="text-[22px] font-extrabold tracking-tightest mb-3">Table</h3>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-6">A pattern, not a component set. Dark header, alternating rows, numerics right-aligned.</p>
+        <div class="rounded-xl border border-ink-100 overflow-hidden overflow-x-auto">
+          <table class="w-full text-left min-w-[520px]">
+            <thead class="bg-ink-900 text-white">
+              <tr class="text-[10.5px] font-bold uppercase" style="letter-spacing:.08em">
+                <th class="px-5 py-4">Plan</th><th class="px-5 py-4">Checks</th>
+                <th class="px-5 py-4 text-right">Per page</th><th class="px-5 py-4 text-right">Price</th>
+              </tr>
+            </thead>
+            <tbody class="text-[14.5px]">
+              <tr class="bg-white"><td class="px-5 py-4 font-semibold">Pay as you go</td><td class="px-5 py-4 text-ink-500">Unlimited</td><td class="px-5 py-4 text-right nums text-ink-500">$0.20</td><td class="px-5 py-4 text-right font-bold nums">$9.95</td></tr>
+              <tr class="bg-ink-50"><td class="px-5 py-4 font-semibold">Student</td><td class="px-5 py-4 text-ink-500">150 / mo</td><td class="px-5 py-4 text-right nums text-ink-500">$0.13</td><td class="px-5 py-4 text-right font-bold nums">$19.95</td></tr>
+              <tr class="bg-white"><td class="px-5 py-4 font-semibold">Institution</td><td class="px-5 py-4 text-ink-500">Unlimited</td><td class="px-5 py-4 text-right nums text-ink-500">$0.06</td><td class="px-5 py-4 text-right font-bold nums">Custom</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================== 10 ICONS ==================== -->
+      <section id="icons" class="py-16 border-t border-ink-100">
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Icons</h2>
+        <p class="text-[16px] text-ink-500 max-w-[62ch] mb-8">
+          <a href="https://lucide.dev" class="text-teal-700 font-semibold underline decoration-teal-200 underline-offset-2 hover:decoration-teal-500">Lucide</a>,
+          24×24 viewBox, 2px stroke, round caps and joins. Line icons only —
+          solid or emoji icons break the drawn, lightweight feel. Click to copy the name.
+        </p>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5" id="iconGrid"><!-- built by script --></div>
+      </section>
+
+      <!-- ==================== 11 MOTION ==================== -->
+      <section id="motion" class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-3">11 — Motion</div>
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Motion</h2>
+        <p class="text-[16px] text-ink-500 max-w-[62ch] mb-10">
+          Spring-based easing, never linear. Every animation earns its place by explaining something —
+          decorative motion is cut. <code class="font-semibold text-ink-700">prefers-reduced-motion</code> disables all of it,
+          with static end states rather than blank space.
+        </p>
+
+        <div class="grid sm:grid-cols-3 gap-4 mb-12">
+          <div class="rounded-2xl border border-ink-100 p-6">
+            <div class="w-10 h-10 rounded-xl bg-orange-500 mb-5 demo-dur" style="--d:200ms"></div>
+            <div class="text-[19px] font-extrabold tracking-tightest mb-1 nums">150–250<span class="text-ink-300 text-[14px]">ms</span></div>
+            <p class="text-[13px] text-ink-500">UI transitions — hover, focus, tab switch</p>
+          </div>
+          <div class="rounded-2xl border border-ink-100 p-6">
+            <div class="w-10 h-10 rounded-xl bg-teal-500 mb-5 demo-dur" style="--d:500ms"></div>
+            <div class="text-[19px] font-extrabold tracking-tightest mb-1 nums">400–600<span class="text-ink-300 text-[14px]">ms</span></div>
+            <p class="text-[13px] text-ink-500">Hero, scan progress, counters</p>
+          </div>
+          <div class="rounded-2xl border border-ink-100 p-6">
+            <div class="w-10 h-10 rounded-xl bg-ink-900 mb-5 demo-dur" style="--d:1000ms"></div>
+            <div class="text-[19px] font-extrabold tracking-tightest mb-1 nums">800–1200<span class="text-ink-300 text-[14px]">ms</span></div>
+            <p class="text-[13px] text-ink-500">Onboarding, page reveals</p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-ink-100 overflow-hidden">
+          <table class="w-full text-left">
+            <thead class="bg-ink-900 text-white">
+              <tr class="text-[10.5px] font-bold uppercase" style="letter-spacing:.08em">
+                <th class="px-5 py-3">Pattern</th><th class="px-5 py-3">Behaviour</th>
+              </tr>
+            </thead>
+            <tbody class="text-[14px]">
+              <tr class="bg-white"><td class="px-5 py-3 font-semibold">Hero gradient</td><td class="px-5 py-3 text-ink-500">Slow mesh shift, 10s ease loop</td></tr>
+              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">Stats counter</td><td class="px-5 py-3 text-ink-500">Spring-up 0 → value on scroll-in, 400ms</td></tr>
+              <tr class="bg-white"><td class="px-5 py-3 font-semibold">Scan widget</td><td class="px-5 py-3 text-ink-500">Scan line during processing, 1.5s loop</td></tr>
+              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">Section reveal</td><td class="px-5 py-3 text-ink-500">Fade + 12px translateY on viewport-enter, 250ms</td></tr>
+              <tr class="bg-white"><td class="px-5 py-3 font-semibold">Pricing toggle</td><td class="px-5 py-3 text-ink-500">Slide-flip, 200ms</td></tr>
+              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">Button hover</td><td class="px-5 py-3 text-ink-500">Fill transition, 150ms ease-out</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================== 12 ACCESSIBILITY ==================== -->
+      <section id="a11y" class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-3">12 — Accessibility</div>
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-8">The floor</h2>
+        <ul class="grid md:grid-cols-2 gap-3">
+          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">WCAG 2.2 AA on all P0/P1 pages</span></li>
+          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Text contrast ≥ 4.5:1, UI contrast ≥ 3:1</span></li>
+          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Visible focus ring on every interactive — 2px teal</span></li>
+          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Pinch-zoom enabled — no <code class="text-[13px] font-semibold">maximum-scale=1</code></span></li>
+          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Color-only signals always backed by icon or text</span></li>
+          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Touch targets ≥ 44×44 · reduced-motion fully supported</span></li>
+        </ul>
+
+        <div class="mt-6 rounded-2xl border border-ink-100 p-7">
+          <div class="eyebrow mb-4">Focus ring — tab into these</div>
+          <div class="flex flex-wrap gap-3">
+            <button class="btn btn-md btn-primary">Focusable</button>
+            <button class="btn btn-md btn-secondary">Focusable</button>
+            <input class="fld fld-md w-52" placeholder="Focusable field">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 13 ANTI-PATTERNS ==================== -->
+      <section id="anti" class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-3">13 — Guardrails</div>
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Do not use</h2>
+        <p class="text-[16px] text-ink-500 max-w-[62ch] mb-8">
+          Decisions already made and closed. Each one was either tested and rejected, or belongs to a category
+          of competitor the redesign deliberately moves away from.
+        </p>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5" id="antiList"><!-- built by script --></ul>
+      </section>
+
+      <!-- ==================== SOURCES ==================== -->
+      <section class="py-16 border-t border-ink-100">
+        <div class="eyebrow mb-5">Sources of truth</div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="rounded-2xl bg-ink-50 p-5">
+            <div class="text-[12.5px] font-bold mb-1">Figma</div>
+            <code class="text-[11.5px] text-ink-500 break-all">7hBJUpDs9IXzBs6opCdUiE</code>
+            <div class="text-[11.5px] text-ink-400 mt-1">DS page 5233:2</div>
+          </div>
+          <div class="rounded-2xl bg-ink-50 p-5">
+            <div class="text-[12.5px] font-bold mb-1">Brief</div>
+            <code class="text-[11.5px] text-ink-500 break-all">redesign-brief-v1.md</code>
+          </div>
+          <div class="rounded-2xl bg-ink-50 p-5">
+            <div class="text-[12.5px] font-bold mb-1">Page specs</div>
+            <code class="text-[11.5px] text-ink-500 break-all">page-specs/ · 10 files</code>
+          </div>
+          <div class="rounded-2xl bg-ink-50 p-5">
+            <div class="text-[12.5px] font-bold mb-1">System doc</div>
+            <code class="text-[11.5px] text-ink-500 break-all">DESIGN.md</code>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ==================== FLOATING BACK BUTTON ==================== -->
+<a href="index.html"
+   class="fixed right-5 bottom-5 z-[90] group inline-flex items-center gap-2.5 rounded-full bg-ink-900 text-white pl-4 pr-5 h-12 shadow-diffuse-lg hover:bg-ink-800 active:bg-ink-950 transition-colors">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:-translate-x-0.5"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+  <span class="text-[13.5px] font-semibold">Back to site</span>
+</a>
+
+<!-- copy toast -->
+<div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-8 z-[95] opacity-0 pointer-events-none
+     rounded-full bg-ink-900 text-white text-[13px] font-semibold px-4 py-2.5 shadow-diffuse-lg"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- palette ---------- */
+  var RAMPS = [
+    { name:'orange', label:'Brand — Orange', note:'500 is brand-locked', shades:{50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13'} },
+    { name:'teal',   label:'Brand — Teal',   note:'500 is brand-locked', shades:{50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744'} },
+    { name:'mint',   label:'Success — Mint', note:'originality, passed states', shades:{50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50'} },
+    { name:'ink',    label:'Neutral — Ink',  note:'text, surfaces, borders', shades:{0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A'} }
+  ];
+
+  /* Relative luminance → decide whether the shade label sits light or dark. */
+  function lum(hex) {
+    var c = [1,3,5].map(function (i) {
+      var v = parseInt(hex.substr(i,2),16) / 255;
+      return v <= .03928 ? v/12.92 : Math.pow((v+.055)/1.055, 2.4);
+    });
+    return .2126*c[0] + .7152*c[1] + .0722*c[2];
+  }
+
+  var ramps = document.getElementById('ramps');
+  RAMPS.forEach(function (r) {
+    var keys = Object.keys(r.shades);
+    var head = '<div class="flex items-baseline gap-3 mb-3">' +
+               '<h3 class="text-[17px] font-bold tracking-tightest">' + r.label + '</h3>' +
+               '<span class="text-[12.5px] text-ink-400">' + r.note + '</span></div>';
+    var cells = keys.map(function (k) {
+      var hex = r.shades[k];
+      var dark = lum(hex) < .45;
+      return '<button class="sw text-left" data-copy="' + hex + '">' +
+             '<div class="sw-chip flex items-end p-2" style="background:' + hex + '">' +
+             '<span class="text-[10.5px] font-bold ' + (dark ? 'text-white/80' : 'text-ink-900/55') + '">' + k + '</span></div>' +
+             '<div class="mt-1.5 text-[10.5px] font-semibold text-ink-500 uppercase">' + hex + '</div></button>';
+    }).join('');
+    ramps.insertAdjacentHTML('beforeend',
+      '<div>' + head + '<div class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-11 gap-2">' + cells + '</div></div>');
+  });
+
+  /* ---------- type scale ---------- */
+  var SCALE = [
+    { n:'display/xl', d:72, t:56, m:40, w:800, ls:'-.03em',  s:'Plagiarism + AI' },
+    { n:'display/lg', d:64, t:48, m:36, w:800, ls:'-.028em', s:'Detection in one' },
+    { n:'heading/h1', d:56, t:40, m:32, w:800, ls:'-.02em',  s:'Every source, checked' },
+    { n:'heading/h2', d:40, t:32, m:28, w:700, ls:'-.015em', s:'How the scan works' },
+    { n:'heading/h3', d:28, t:24, m:22, w:700, ls:'-.01em',  s:'Institution plans' },
+    { n:'body/lg',    d:18, t:17, m:16, w:400, ls:'0',       s:'We compare your text against 14 billion indexed pages and flag AI-written passages in the same pass.' },
+    { n:'body/md',    d:16, t:15, m:15, w:400, ls:'0',       s:'Plans start at $9.95 with no subscription required.' },
+    { n:'ui/md',      d:15, t:14, m:14, w:600, ls:'0',       s:'Check my text' },
+    { n:'ui/caps',    d:12, t:12, m:11, w:800, ls:'.08em',   s:'Plagiarism + AI detection', up:true }
+  ];
+  var ts = document.getElementById('typeScale');
+  SCALE.forEach(function (t) {
+    ts.insertAdjacentHTML('beforeend',
+      '<div class="grid lg:grid-cols-[180px_minmax(0,1fr)] gap-x-6 gap-y-2 items-baseline pb-6 border-b border-ink-100">' +
+        '<div><div class="text-[12.5px] font-bold text-ink-900">' + t.n + '</div>' +
+        '<div class="text-[11.5px] text-ink-400 nums">' + t.d + ' / ' + t.t + ' / ' + t.m + ' px</div></div>' +
+        '<div style="font-size:' + t.d + 'px; font-weight:' + t.w + '; letter-spacing:' + t.ls +
+        '; line-height:' + (t.d > 30 ? '1.02' : '1.5') + (t.up ? '; text-transform:uppercase' : '') +
+        '" class="text-ink-900 break-words">' + t.s + '</div>' +
+      '</div>');
+  });
+
+  /* ---------- spacing ---------- */
+  var BANDS = [
+    { label:'Micro · fixed across breakpoints', note:'component internals — icon gaps, chip padding', vals:[2,4,6,8,10,12] },
+    { label:'Component · ~80% tablet, 65% mobile', note:'card padding, stack gaps', vals:[16,20,24,28,32,36,40] },
+    { label:'Layout · ~75% tablet, 55% mobile', note:'section rhythm', vals:[48,64,80,96,128] }
+  ];
+  var sp = document.getElementById('spacing');
+  BANDS.forEach(function (b) {
+    var bars = b.vals.map(function (v) {
+      return '<button class="sw text-left" data-copy="' + v + 'px">' +
+             '<div class="rounded bg-orange-300" style="width:' + Math.min(v, 128) + 'px;height:14px"></div>' +
+             '<div class="mt-1.5 text-[11px] font-semibold text-ink-500 nums">' + v + '</div></button>';
+    }).join('');
+    sp.insertAdjacentHTML('beforeend',
+      '<div><div class="text-[13.5px] font-bold mb-1">' + b.label + '</div>' +
+      '<div class="text-[12.5px] text-ink-400 mb-4">' + b.note + '</div>' +
+      '<div class="flex flex-wrap items-end gap-x-5 gap-y-3">' + bars + '</div></div>');
+  });
+
+  /* ---------- radii ---------- */
+  var RADII = [
+    ['none',0],['xs',2],['sm',4],['md',8],['lg',12],['xl',16],['2xl',20],['3xl',24],['full',999]
+  ];
+  var rd = document.getElementById('radii');
+  RADII.forEach(function (r) {
+    var isDefault = r[0] === 'lg';
+    rd.insertAdjacentHTML('beforeend',
+      '<button class="sw text-left" data-copy="' + r[1] + 'px">' +
+      '<div class="w-20 h-20 bg-ink-100 border border-ink-200" style="border-radius:' + r[1] + 'px"></div>' +
+      '<div class="mt-2 text-[12px] font-bold">' + r[0] + '</div>' +
+      '<div class="text-[11px] text-ink-400 nums">' + (r[1] === 999 ? '999' : r[1] + 'px') +
+      (isDefault ? ' · default' : '') + '</div></button>');
+  });
+
+  /* ---------- icons (Lucide, 24×24 / 2px stroke) ---------- */
+  var ICONS = {
+    'arrow-right':'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+    'chevron-down':'<path d="m6 9 6 6 6-6"/>',
+    'menu':'<line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>',
+    'x':'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+    'search':'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+    'check':'<path d="M20 6 9 17l-5-5"/>',
+    'check-circle':'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+    'info':'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+    'alert-circle':'<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>',
+    'mail':'<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+    'globe':'<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+    'lock':'<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+    'shield-check':'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+    'file-text':'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+    'upload':'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>',
+    'download':'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>',
+    'external-link':'<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
+    'user':'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+    'users':'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    'play':'<polygon points="6 3 20 12 6 21 6 3"/>',
+    'sparkles':'<path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 3.28a2 2 0 0 0 1.872 1.36h3.443a1 1 0 0 1 .607 1.79l-2.785 2.13a2 2 0 0 0-.715 2.2l1.05 3.28a1 1 0 0 1-1.59 1.12l-2.785-2.13a2 2 0 0 0-2.302 0l-2.785 2.13a1 1 0 0 1-1.59-1.12l1.05-3.28a2 2 0 0 0-.715-2.2L3.04 9.244a1 1 0 0 1 .608-1.79h3.443a2 2 0 0 0 1.872-1.36z"/>',
+    'copy':'<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+    'eye':'<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>',
+    'zap':'<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>'
+  };
+  var ig = document.getElementById('iconGrid');
+  Object.keys(ICONS).forEach(function (n) {
+    ig.insertAdjacentHTML('beforeend',
+      '<button class="sw flex flex-col items-center justify-center gap-2.5 rounded-2xl border border-ink-100 py-5 hover:border-ink-300 hover:bg-ink-50" data-copy="icon/' + n + '">' +
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ICONS[n] + '</svg>' +
+      '<span class="text-[10.5px] font-semibold text-ink-500 text-center leading-tight px-1">' + n + '</span></button>');
+  });
+
+  /* ---------- anti-patterns ---------- */
+  var ANTI = ['Stock photos','3 evenly-stacked feature columns','Gradient on H1 text','Pure-orange background',
+              'Live chat widget','Carousel hero','12-tier pricing','Solid or emoji icons',
+              'Linear / Vercel / Stripe carbon copy'];
+  var al = document.getElementById('antiList');
+  ANTI.forEach(function (a) {
+    al.insertAdjacentHTML('beforeend',
+      '<li class="flex items-center gap-3 rounded-xl border border-ink-100 px-4 py-3.5">' +
+      '<svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC4444" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>' +
+      '<span class="text-[13.5px] font-medium text-ink-600">' + a + '</span></li>');
+  });
+
+  /* ---------- copy to clipboard ---------- */
+  var toast = document.getElementById('toast'), toastTimer;
+  function flash(msg) {
+    toast.textContent = msg;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translate(-50%, 0)';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translate(-50%, 8px)';
+    }, 1400);
+  }
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-copy]');
+    if (!el) return;
+    var val = el.getAttribute('data-copy');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(val).then(function () { flash('Copied ' + val); },
+                                             function () { flash(val); });
+    } else {
+      flash(val);
+    }
+  });
+
+  /* ---------- nav highlighting ---------- */
+  var links = [].slice.call(document.querySelectorAll('#dsNav a'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if ('IntersectionObserver' in window && targets.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
+      });
+    }, { rootMargin: '-88px 0px -70% 0px', threshold: 0 });
+    targets.forEach(function (t) { io.observe(t); });
+  }
+})();
+</script>
+</body>
+</html>
