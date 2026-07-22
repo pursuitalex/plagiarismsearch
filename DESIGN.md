@@ -208,7 +208,7 @@ Dark header (surface/inverse) + white Bold caps text +8% LS. Alternating rows (n
 - **Flat card** (pricing/tiles): `rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-8 lg:p-9`
 - **Dark accent card**: `bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg` + one masked orb inside
 - Highlighted pricing tier additionally `lg:-my-6` (physically taller in an `items-center` grid)
-- **Illustration card**: raster illustrations sit on a uniform white plate that IS the image background, stretched **edge-to-edge** (`w-full`, no side margins, no max-w) with the card clipping corners (`overflow-hidden`); text follows in its own padded block. Never float an illustration as a centered inset box
+- **Illustration card**: grey card (`bg-ink-50 p-6 lg:p-7`) → white plate spanning the content width (`rounded-2xl bg-white py-6`, card padding visible around it) → illustration modest and centered inside (`max-w-[260px]`). Standalone illustrations (hero) instead get their background removed and sit directly on the section tint — no plate. Generated series keep ONE line-weight family: thin ink outlines, white objects, small coral/teal accents, no big solid color tiles
 
 ### Decoration
 - **Orbs** (mesh glow): `.orb` = masked radial gradient, NEVER `filter: blur()`. Solid low-alpha bg (`bg-teal-500/8`), position off-canvas partially. 1–2 per section max
