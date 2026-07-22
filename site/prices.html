@@ -116,8 +116,7 @@ tailwind.config = {
 
     <!-- period switcher -->
     <div class="rv flex justify-center mb-3">
-      <!-- ink-200: one ramp step darker than the section tints (#F2FCFC / ink-50) so the pill reads on both -->
-      <div class="inline-flex items-center rounded-full bg-ink-200 p-1" id="periodTabs">
+      <div class="inline-flex items-center rounded-full bg-ink-100 p-1" id="periodTabs">
         <button data-period="onetime" class="period-btn rounded-full px-4 sm:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">One-time</button>
         <button data-period="monthly" class="period-btn active rounded-full px-4 sm:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">Monthly</button>
         <button data-period="quarterly" class="period-btn rounded-full px-4 sm:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">3-Months</button>
@@ -212,19 +211,116 @@ tailwind.config = {
       <p class="text-[15.5px] text-ink-600 leading-relaxed">No feature-gating between tiers — the difference is volume, not capability.</p>
     </div>
 
-    <ul class="rv grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5 max-w-[1080px] mx-auto text-[14px] font-medium text-ink-700">
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Publications checking — 500M+ indexed texts</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Homoglyph &amp; sentence-structure detection</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Full internet checking</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Detailed plagiarism analysis</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>PDF report — download &amp; print</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Detection in all 17 languages</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Multiple file uploads</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Every text format accepted</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Free Google Docs add-on</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Telegram &amp; Viber chat bots</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Instant customer support</li>
-      <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Safe detection &amp; data protection</li>
+    <!-- 12 features as icon cards; mint strokes = the "included" accent used by checkmarks sitewide -->
+    <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5 max-w-[1080px] mx-auto">
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Publications checking</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">500M+ indexed academic texts</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Homoglyph detection</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">Catches disguised characters &amp; rewrites</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Full internet checking</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">14B live web pages</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><circle cx="5" cy="14" r="3"/><path d="m9 18-1.5-1.5"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Plagiarism analysis</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">Source-by-source match breakdown</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">PDF reports</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">Download, print or share</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">All 17 languages</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">ESL-aware, no translation shortcuts</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Multiple file uploads</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">Batch-check several documents at once</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Every text format</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">DOCX, PDF, TXT, ODT and more</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <img src="assets/svg/google-icon.svg" alt="" class="w-[19px] h-[19px]">
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Google Docs add-on</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">490K installs — check inside your doc</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Telegram &amp; Viber bots</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">Run checks straight from your phone</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Instant support</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">Real humans, ~4-hour reply</span>
+        </span>
+      </li>
+      <li class="rv flex items-start gap-4 rounded-2xl bg-ink-50 p-5">
+        <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <span>
+          <span class="block text-[14px] font-bold tracking-tight mb-0.5">Data protection</span>
+          <span class="block text-[12.5px] leading-snug text-ink-500">Deleted after scanning — never indexed</span>
+        </span>
+      </li>
     </ul>
   </div>
 </section>
