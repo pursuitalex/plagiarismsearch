@@ -69,6 +69,16 @@ tailwind.config = {
   /* rows highlight in the AI table */
   .ai-row { transition:background-color .15s ease; }
   .ai-row:hover { background:#F2FAFB; }
+
+  /* ---------- feature flow diagram ----------
+     HTML nodes and SVG share one coordinate space: the container keeps the
+     1080×380 aspect, nodes sit at (x/1080, y/380) percents, paths end at node
+     CENTERS — nodes paint above the lines, so no endpoint precision needed. */
+  .flow-node { transition:transform .3s cubic-bezier(.32,.72,0,1), box-shadow .3s ease; }
+  .flow-node:hover { transform:translate(-50%,-50%) scale(1.12); }
+  @keyframes hub-pulse { 0% { transform:scale(1); opacity:.45; } 75% { transform:scale(1.9); opacity:0; } 100% { transform:scale(1.9); opacity:0; } }
+  .hub-ring { animation:hub-pulse 3.2s ease-out infinite; }
+  .no-motion .hub-ring, .no-motion .flow-dot { display:none; }
 </style>
 </head>
 <body class="font-sans text-ink-900 bg-white overflow-x-hidden">
@@ -322,6 +332,94 @@ tailwind.config = {
         </span>
       </li>
     </ul>
+
+    <!-- ===== feature flow — capabilities converge into one engine (desktop flourish) ===== -->
+    <div class="rv mt-16 hidden sm:block" aria-hidden="true">
+      <div class="relative aspect-[1080/380] max-w-[1080px] mx-auto">
+
+        <!-- connector paths + travelling dots (SMIL — no JS, hidden under .no-motion) -->
+        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1080 380" fill="none" preserveAspectRatio="xMidYMid meet">
+          <path d="M 90 55 C 320 55, 400 190, 540 190"    stroke="#E5E7EB" stroke-width="1.5"/>
+          <path d="M 55 160 C 280 160, 360 190, 540 190"  stroke="#E5E7EB" stroke-width="1.5"/>
+          <path d="M 90 265 C 320 265, 400 190, 540 190"  stroke="#E5E7EB" stroke-width="1.5"/>
+          <path d="M 170 335 C 380 335, 430 190, 540 190" stroke="#E5E7EB" stroke-width="1.5"/>
+          <path d="M 990 55 C 760 55, 680 190, 540 190"   stroke="#E5E7EB" stroke-width="1.5"/>
+          <path d="M 1025 160 C 800 160, 720 190, 540 190" stroke="#E5E7EB" stroke-width="1.5"/>
+          <path d="M 990 265 C 760 265, 680 190, 540 190" stroke="#E5E7EB" stroke-width="1.5"/>
+          <path d="M 910 335 C 700 335, 650 190, 540 190" stroke="#E5E7EB" stroke-width="1.5"/>
+
+          <!-- left side flies in orange, right side teal — the two brand hues -->
+          <circle class="flow-dot" r="4" fill="#F36F5A">
+            <animateMotion dur="3s" begin="0s" repeatCount="indefinite" path="M 90 55 C 320 55, 400 190, 540 190"/>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3s" begin="0s" repeatCount="indefinite"/>
+          </circle>
+          <circle class="flow-dot" r="4" fill="#F36F5A">
+            <animateMotion dur="3s" begin="0.75s" repeatCount="indefinite" path="M 55 160 C 280 160, 360 190, 540 190"/>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3s" begin="0.75s" repeatCount="indefinite"/>
+          </circle>
+          <circle class="flow-dot" r="4" fill="#F36F5A">
+            <animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M 90 265 C 320 265, 400 190, 540 190"/>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle class="flow-dot" r="4" fill="#F36F5A">
+            <animateMotion dur="3s" begin="2.25s" repeatCount="indefinite" path="M 170 335 C 380 335, 430 190, 540 190"/>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3s" begin="2.25s" repeatCount="indefinite"/>
+          </circle>
+          <circle class="flow-dot" r="4" fill="#0CA9C3">
+            <animateMotion dur="3s" begin="0.4s" repeatCount="indefinite" path="M 990 55 C 760 55, 680 190, 540 190"/>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3s" begin="0.4s" repeatCount="indefinite"/>
+          </circle>
+          <circle class="flow-dot" r="4" fill="#0CA9C3">
+            <animateMotion dur="3s" begin="1.15s" repeatCount="indefinite" path="M 1025 160 C 800 160, 720 190, 540 190"/>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3s" begin="1.15s" repeatCount="indefinite"/>
+          </circle>
+          <circle class="flow-dot" r="4" fill="#0CA9C3">
+            <animateMotion dur="3s" begin="1.9s" repeatCount="indefinite" path="M 990 265 C 760 265, 680 190, 540 190"/>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3s" begin="1.9s" repeatCount="indefinite"/>
+          </circle>
+          <circle class="flow-dot" r="4" fill="#0CA9C3">
+            <animateMotion dur="3s" begin="2.65s" repeatCount="indefinite" path="M 910 335 C 700 335, 650 190, 540 190"/>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3s" begin="2.65s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+
+        <!-- feature nodes — positions mirror the path start points -->
+        <span class="flow-node absolute z-10 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white ring-1 ring-black/5 shadow-diffuse flex items-center justify-center" style="left:8.33%;top:14.47%" title="Publications checking">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+        </span>
+        <span class="flow-node absolute z-10 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white ring-1 ring-black/5 shadow-diffuse flex items-center justify-center" style="left:5.09%;top:42.11%" title="Full internet checking">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        </span>
+        <span class="flow-node absolute z-10 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white ring-1 ring-black/5 shadow-diffuse flex items-center justify-center" style="left:8.33%;top:69.74%" title="All 17 languages">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+        </span>
+        <span class="flow-node absolute z-10 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white ring-1 ring-black/5 shadow-diffuse flex items-center justify-center" style="left:15.74%;top:88.16%" title="Multiple file uploads">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+        </span>
+        <span class="flow-node absolute z-10 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white ring-1 ring-black/5 shadow-diffuse flex items-center justify-center" style="left:91.67%;top:14.47%" title="Google Docs add-on">
+          <img src="assets/svg/google-icon.svg" alt="" class="w-[18px] h-[18px]">
+        </span>
+        <span class="flow-node absolute z-10 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white ring-1 ring-black/5 shadow-diffuse flex items-center justify-center" style="left:94.91%;top:42.11%" title="Telegram &amp; Viber bots">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg>
+        </span>
+        <span class="flow-node absolute z-10 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white ring-1 ring-black/5 shadow-diffuse flex items-center justify-center" style="left:91.67%;top:69.74%" title="PDF reports">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+        </span>
+        <span class="flow-node absolute z-10 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white ring-1 ring-black/5 shadow-diffuse flex items-center justify-center" style="left:84.26%;top:88.16%" title="Data protection">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+
+        <!-- central hub — the service itself (wide pill: logo.svg is the full 200×28 lockup) -->
+        <span class="absolute z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <span class="hub-ring absolute inset-0 rounded-full bg-teal-500/15"></span>
+          <span class="relative flex items-center rounded-full bg-white ring-1 ring-black/5 shadow-diffuse-lg h-16 px-8">
+            <img src="assets/svg/logo.svg" alt="" class="h-7 w-auto">
+          </span>
+        </span>
+      </div>
+
+      <p class="text-center text-[13px] font-semibold text-ink-500 mt-6">Every feature, one engine.</p>
+    </div>
   </div>
 </section>
 
