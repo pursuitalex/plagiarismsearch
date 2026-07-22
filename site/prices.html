@@ -76,6 +76,26 @@ tailwind.config = {
      CENTERS — nodes paint above the lines, so no endpoint precision needed. */
   .flow-node { transition:transform .3s cubic-bezier(.32,.72,0,1), box-shadow .3s ease; }
   .flow-node:hover { transform:translate(-50%,-50%) scale(1.12); }
+
+  /* dotted field behind the diagram — transparent bg, dots only.
+     Base layer = faint grid; spot layers = the SAME grid darker, each masked to a
+     soft blob and pulsing OPACITY only (mask rasterizes once, compositor does the rest).
+     Spots span the full container so both grids align by construction. */
+  .dot-field, .dot-spot {
+    background-image: radial-gradient(circle, rgba(17,24,39,.09) 1.2px, transparent 1.3px);
+    background-size: 20px 20px;
+  }
+  .dot-field {
+    -webkit-mask-image: radial-gradient(ellipse 78% 88% at 50% 50%, #000 52%, transparent 98%);
+            mask-image: radial-gradient(ellipse 78% 88% at 50% 50%, #000 52%, transparent 98%);
+  }
+  .dot-spot {
+    background-image: radial-gradient(circle, rgba(17,24,39,.32) 1.2px, transparent 1.3px);
+    opacity: 0;
+    animation: spot-breathe var(--dur, 9s) ease-in-out var(--delay, 0s) infinite;
+  }
+  @keyframes spot-breathe { 0%, 100% { opacity:0; } 40% { opacity:1; } 58% { opacity:1; } }
+  .no-motion .dot-spot { animation:none; opacity:0; }
   @keyframes hub-pulse { 0% { transform:scale(1); opacity:.45; } 75% { transform:scale(1.9); opacity:0; } 100% { transform:scale(1.9); opacity:0; } }
   .hub-ring { animation:hub-pulse 4.6s ease-out infinite; }
   .no-motion .hub-ring, .no-motion .flow-dot { display:none; }
@@ -336,6 +356,13 @@ tailwind.config = {
     <!-- ===== feature flow — capabilities converge into one engine (desktop flourish) ===== -->
     <div class="rv mt-16 hidden sm:block" aria-hidden="true">
       <div class="relative aspect-[1080/380] max-w-[1080px] mx-auto">
+
+        <!-- breathing dot field — contrast blooms wander the grid, one place after another -->
+        <span class="dot-field absolute inset-0"></span>
+        <span class="dot-spot absolute inset-0" style="--delay:0s;   --dur:8.5s; -webkit-mask-image:radial-gradient(circle 200px at 22% 30%, #000, transparent 72%); mask-image:radial-gradient(circle 200px at 22% 30%, #000, transparent 72%)"></span>
+        <span class="dot-spot absolute inset-0" style="--delay:2.4s; --dur:9.5s; -webkit-mask-image:radial-gradient(circle 180px at 76% 24%, #000, transparent 72%); mask-image:radial-gradient(circle 180px at 76% 24%, #000, transparent 72%)"></span>
+        <span class="dot-spot absolute inset-0" style="--delay:4.8s; --dur:8.8s; -webkit-mask-image:radial-gradient(circle 210px at 30% 76%, #000, transparent 72%); mask-image:radial-gradient(circle 210px at 30% 76%, #000, transparent 72%)"></span>
+        <span class="dot-spot absolute inset-0" style="--delay:7s;   --dur:9.2s; -webkit-mask-image:radial-gradient(circle 190px at 78% 72%, #000, transparent 72%); mask-image:radial-gradient(circle 190px at 78% 72%, #000, transparent 72%)"></span>
 
         <!-- connector paths + travelling dots (SMIL — no JS, hidden under .no-motion) -->
         <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1080 380" fill="none" preserveAspectRatio="xMidYMid meet">
