@@ -116,7 +116,8 @@ tailwind.config = {
 
     <!-- period switcher -->
     <div class="rv flex justify-center mb-3">
-      <div class="inline-flex items-center rounded-full bg-ink-100 p-1" id="periodTabs">
+      <!-- ink-200: one ramp step darker than the section tints (#F2FCFC / ink-50) so the pill reads on both -->
+      <div class="inline-flex items-center rounded-full bg-ink-200 p-1" id="periodTabs">
         <button data-period="onetime" class="period-btn rounded-full px-4 sm:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">One-time</button>
         <button data-period="monthly" class="period-btn active rounded-full px-4 sm:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">Monthly</button>
         <button data-period="quarterly" class="period-btn rounded-full px-4 sm:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">3-Months</button>
