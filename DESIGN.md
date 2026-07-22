@@ -186,6 +186,47 @@ Dark header (surface/inverse) + white Bold caps text +8% LS. Alternating rows (n
 
 ---
 
+## Web build — layout conventions (site/*.html)
+
+> How the live prototype implements the system. Established on Home (`site/index.html`), reuse verbatim on every internal page. Tokens live in the inline `tailwind.config` — **copy it unchanged from index.html; design-system.html holds the same copy** (three files must never drift).
+
+### Page scaffold
+1. `<body class="font-sans text-ink-900 bg-white overflow-x-hidden">` + `<div class="grain">` noise overlay
+2. **Floating island nav** (shared chrome): `fixed top-5`, pill `bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse`. Internal pages link back to `index.html` anchors
+3. Sections stack; **dark footer** `bg-ink-950` (shared chrome, copy from index.html)
+4. First section gets `pt-28`+ to clear the fixed nav
+
+### Section rhythm
+- Vertical padding: `py-28 lg:py-36` every section; hero-type sections may go `min-h-[100dvh] flex items-center`
+- Background alternation: white → `bg-ink-50` → white…; **max one dark band** (`bg-ink-950`) per view as accent; hero tint `#F2FCFC`
+- Container: `max-w-[1280px] mx-auto px-6 lg:px-10` (narrower content: 1180px)
+- Section header pattern: eyebrow chip → `h2 text-[clamp(2rem,4vw,3.4rem)]` → 15–16px `text-ink-600` subline
+- Eyebrow chip: `inline-flex gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5` + 1.5px colored dot + `text-[10.5px] uppercase tracking-[0.22em]` (on ink-50 sections the chip is `bg-white`)
+
+### Card recipes
+- **Double-bezel** (feature/bento): outer `rounded-4xl|5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse` + inner `rounded-[calc(outer-0.5rem)] bg-white shadow-inner-hl`
+- **Flat card** (pricing/tiles): `rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-8 lg:p-9`
+- **Dark accent card**: `bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg` + one masked orb inside
+- Highlighted pricing tier additionally `lg:-my-6` (physically taller in an `items-center` grid)
+
+### Decoration
+- **Orbs** (mesh glow): `.orb` = masked radial gradient, NEVER `filter: blur()`. Solid low-alpha bg (`bg-teal-500/8`), position off-canvas partially. 1–2 per section max
+- Grain overlay is global — don't re-add per section
+- `::selection` orange; `.nums` = tabular numerals for any changing/aligned numbers
+
+### Motion (GSAP + ScrollTrigger via CDN)
+- **Reveal**: `.rv` class = `opacity:0 translateY(40px)`; batch-triggered at `start:'top 70%'`, `y:0 opacity:1 .7s power2.out`, stagger ~.08; elements already in first viewport animate on load with top-down cascade
+- Buttons: `.btn-press` scale feedback; `.icon-orb svg` rotates -45° on group hover
+- Counters: tween object + `onUpdate` with cached writes, `.nums` on the element
+- **`prefers-reduced-motion`**: add `.no-motion` to `<html>`, all `.rv` forced visible, final states set statically — every scripted animation needs its static fallback
+- Perf floor: animate only `transform`/`opacity`; no `backdrop-blur` on elements that repaint per frame; `will-change` only on continuously-moving nodes
+
+### Page-level SEO/meta (prototype)
+- `noindex, nofollow` meta on every page + `robots.txt` disallow (WIP site)
+- Title pattern: `PlagiarismSearch — {Page}`; Manrope/Newsreader/Flow Circular from Google Fonts (Flow only where redacted-text mock is used)
+
+---
+
 ## File locations
 - **Figma:** `7hBJUpDs9IXzBs6opCdUiE`
   - Design System: page `5233:2` → root frame `5233:3`
