@@ -116,6 +116,10 @@ tailwind.config = {
     filter: drop-shadow(-5px 5px 6px rgba(17,24,39,.10));
   }
 
+  /* ---------- hero avatar stack (Figma 5379:2064 — 32px circles on a 22px step) ---------- */
+  .avatar-stack img { filter: drop-shadow(-1px 0 2px rgba(17,24,39,.07)); }
+  .avatar-stack img + img { margin-left: -10px; }
+
   /* ---------- breathing bar ---------- */
   @keyframes breathe { 0%,100% { width:26%; } 50% { width:38%; } }
   .breathe { animation:breathe 4.5s cubic-bezier(.45,0,.25,1) infinite; }
@@ -224,7 +228,16 @@ tailwind.config = {
       </div>
 
       <div class="rv flex flex-wrap items-center gap-x-5 gap-y-2 mt-8 text-[12.5px] font-semibold text-ink-500">
-        <span>500,000+ writers</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span class="flex items-center gap-2.5">
+          <span class="avatar-stack flex items-center shrink-0" aria-hidden="true">
+            <img src="assets/avatars/avatar-1.webp" alt="" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8 rounded-full object-cover ring-2 ring-white">
+            <img src="assets/avatars/avatar-2.webp" alt="" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8 rounded-full object-cover ring-2 ring-white">
+            <img src="assets/avatars/avatar-3.webp" alt="" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8 rounded-full object-cover ring-2 ring-white">
+            <img src="assets/avatars/avatar-4.webp" alt="" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8 rounded-full object-cover ring-2 ring-white">
+            <img src="assets/avatars/avatar-5.webp" alt="" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8 rounded-full object-cover ring-2 ring-white">
+          </span>
+          500,000+ writers
+        </span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
         <span class="flex items-center gap-2"><img src="assets/svg/google-icon.svg" alt="" class="w-4 h-4">490K Google Docs installs</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
         <span class="flex items-center gap-2 text-teal-700"><img src="assets/svg/trustpilot-icon.svg" alt="" class="w-4 h-4">4.7 on Trustpilot</span>
       </div>
@@ -553,6 +566,26 @@ tailwind.config = {
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ===== PARTNERS · integrations we plug into ===== -->
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 mt-20">
+    <p class="rv text-center text-[12px] font-bold uppercase tracking-[0.14em] text-ink-500 mb-8">Cooperate with the following services</p>
+    <!-- cards hold the Figma 324×113 ratio at every width; the logos carry their own padding inside a 600×270 canvas -->
+    <ul class="rv grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+      <li class="rounded-xl bg-ink-50 aspect-[324/113] flex items-center justify-center overflow-hidden">
+        <img src="assets/svg/partners/bbb.svg" alt="BBB Accredited Business" loading="lazy" decoding="async" class="w-full h-full object-contain">
+      </li>
+      <li class="rounded-xl bg-ink-50 aspect-[324/113] flex items-center justify-center overflow-hidden">
+        <img src="assets/svg/partners/canvas.svg" alt="Canvas LMS" loading="lazy" decoding="async" class="w-full h-full object-contain">
+      </li>
+      <li class="rounded-xl bg-ink-50 aspect-[324/113] flex items-center justify-center overflow-hidden">
+        <img src="assets/svg/partners/google-docs.svg" alt="Google Docs" loading="lazy" decoding="async" class="w-full h-full object-contain">
+      </li>
+      <li class="rounded-xl bg-ink-50 aspect-[324/113] flex items-center justify-center overflow-hidden">
+        <img src="assets/svg/partners/moodle.svg" alt="Moodle" loading="lazy" decoding="async" class="w-full h-full object-contain">
+      </li>
+    </ul>
   </div>
 
   <!-- GDocs wide -->
