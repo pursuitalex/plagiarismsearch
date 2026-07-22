@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>PlagiarismSearch — VIP Package</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+      },
+      colors: {
+        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
+        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
+        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
+        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
+      },
+      letterSpacing: { tightest: '-0.035em' },
+      boxShadow: {
+        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
+        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
+        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
+      },
+      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+    }
+  }
+}
+</script>
+<style>
+  html { background:#fff; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background:#F36F5A; color:#fff; }
+  .nums { font-variant-numeric: tabular-nums; }
+
+  /* ---------- grain overlay ---------- */
+  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:256px 256px; }
+
+  /* ---------- mesh orbs ---------- */
+  .orb { position:absolute; border-radius:9999px; pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+  /* ---------- reveal ---------- */
+  .rv { opacity:0; transform:translateY(40px); }
+  .no-motion .rv { opacity:1 !important; transform:none !important; }
+
+  /* ---------- shared micro-interactions ---------- */
+  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .btn-press:active { transform:scale(.97); }
+  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+  .group:hover .icon-orb svg { transform:rotate(-45deg); }
+
+  /* ---------- form fields (DS input recipe: border-only, 8px radius, teal focus) ---------- */
+  .fld { width:100%; height:48px; padding:0 14px; border-radius:8px; border:1px solid #E5E7EB;
+         background:#fff; color:#111827; font-size:15px; font-weight:500;
+         transition:border-color .15s ease, box-shadow .15s ease; }
+  .fld::placeholder { color:#9CA3AF; font-weight:400; }
+  .fld:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+  textarea.fld { height:auto; padding:12px 14px; resize:vertical; min-height:96px; }
+
+  .step-btn { transition:background-color .15s ease, color .15s ease; }
+</style>
+</head>
+<body class="font-sans text-ink-900 bg-white overflow-x-hidden">
+
+<div class="grain"></div>
+
+<!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
+<header class="fixed top-5 inset-x-0 z-50 flex justify-center px-4">
+  <nav class="flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-2 py-2">
+    <a href="index.html" class="flex items-center pr-3">
+      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto">
+    </a>
+    <div class="hidden md:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+      <a href="index.html#scan" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">How it works</a>
+      <a href="index.html#capabilities" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Capabilities</a>
+      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Pricing</a>
+      <a href="index.html#faq" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">FAQ</a>
+    </div>
+    <div class="flex items-center gap-2 ml-5">
+      <a href="#" class="btn-press rounded-full ring-1 ring-black/10 text-ink-900 text-[13.5px] font-semibold px-5 py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press group flex items-center gap-2 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] font-semibold pl-4 pr-1.5 py-1.5">
+        Check free
+        <span class="icon-orb w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= 01 · HERO ================= -->
+<section class="relative overflow-hidden pt-36 pb-20 lg:pb-24 bg-[#F2FCFC]">
+  <div class="orb w-[640px] h-[640px] bg-orange-500/10 -left-52 -top-40"></div>
+  <div class="orb w-[560px] h-[560px] bg-teal-500/10 right-[-160px] top-40"></div>
+
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[1.05fr_.95fr] gap-14 items-center">
+    <div>
+      <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">VIP package</span>
+      </div>
+      <h1 class="rv text-[clamp(2.4rem,4.6vw,3.9rem)] font-extrabold tracking-tightest leading-[1.02] mb-6">Built for serious<br>checking volume.</h1>
+      <p class="rv text-[16.5px] text-ink-600 leading-relaxed max-w-[52ch] mb-9">
+        A million-plus words a month, a personal client manager, a 24×7 priority line and long-term
+        report storage — one flat subscription, no per-check anxiety.
+      </p>
+      <div class="rv flex flex-wrap items-center gap-3">
+        <a href="#plans" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-orange-500 hover:bg-orange-700 active:bg-orange-800 transition-colors duration-300 text-white text-[15px] font-semibold py-2.5 pl-7 pr-2.5">
+          See VIP plans
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+        <a href="#trial" class="btn-press inline-flex items-center rounded-full ring-1 ring-ink-200 bg-white/60 text-[15px] font-semibold px-7 py-3.5 hover:bg-white transition-colors duration-300">Request a free trial</a>
+      </div>
+      <div class="rv flex flex-wrap items-center gap-x-5 gap-y-2 mt-8 text-[12.5px] font-semibold text-ink-500">
+        <span>Individual customers only</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span>Try monthly before committing yearly</span>
+      </div>
+    </div>
+
+    <div class="rv hidden lg:block">
+      <img src="assets/img/vip/hero.webp" alt="" width="1120" height="840" class="w-full max-w-[520px] mx-auto rounded-4xl shadow-diffuse" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 · WHAT VIP GETS YOU ================= -->
+<section class="relative py-24 lg:py-32 bg-white">
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[620px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">What's inside</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Four things the regular plans don't do.</h2>
+      <p class="text-[15.5px] text-ink-600 leading-relaxed">Everything from Standard stays. VIP adds scale, priority and a human on your side.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5 max-w-[1080px] mx-auto">
+      <!-- volume -->
+      <article class="rv rounded-4xl bg-ink-50 p-8 lg:p-9">
+        <img src="assets/img/vip/volume.webp" alt="" width="960" height="640" loading="lazy" decoding="async" class="w-full max-w-[320px] mx-auto mb-7 rounded-2xl">
+        <h3 class="text-[19px] font-extrabold tracking-tightest mb-2.5">Volume that fits your workload</h3>
+        <p class="text-[14.5px] leading-relaxed text-ink-600">Light and Standard top out at 3,000 checks a year. VIP starts where they end — built for a million-plus words every month, at the lowest per-word rate we offer.</p>
+      </article>
+      <!-- support -->
+      <article class="rv rounded-4xl bg-ink-50 p-8 lg:p-9">
+        <img src="assets/img/vip/support.webp" alt="" width="960" height="640" loading="lazy" decoding="async" class="w-full max-w-[320px] mx-auto mb-7 rounded-2xl">
+        <h3 class="text-[19px] font-extrabold tracking-tightest mb-2.5">A priority line, staffed 24×7</h3>
+        <p class="text-[14.5px] leading-relaxed text-ink-600">A separate phone line just for VIP customers. Login trouble, submission issues, detection questions — someone picks up at any hour, every day of the year.</p>
+      </article>
+      <!-- storage -->
+      <article class="rv rounded-4xl bg-ink-50 p-8 lg:p-9">
+        <img src="assets/img/vip/storage.webp" alt="" width="960" height="640" loading="lazy" decoding="async" class="w-full max-w-[320px] mx-auto mb-7 rounded-2xl">
+        <h3 class="text-[19px] font-extrabold tracking-tightest mb-2.5">Your own long-term report storage</h3>
+        <p class="text-[14.5px] leading-relaxed text-ink-600">Reports normally live for 30 days. VIP accounts keep a personal, protected repository with reports sorted into monthly folders — reviewable from your account whenever you need them.</p>
+      </article>
+      <!-- manager -->
+      <article class="rv rounded-4xl bg-ink-50 p-8 lg:p-9">
+        <img src="assets/img/vip/manager.webp" alt="" width="960" height="640" loading="lazy" decoding="async" class="w-full max-w-[320px] mx-auto mb-7 rounded-2xl">
+        <h3 class="text-[19px] font-extrabold tracking-tightest mb-2.5">A personal client manager</h3>
+        <p class="text-[14.5px] leading-relaxed text-ink-600">One person who knows your account. Renewals, cancellations, system updates, eligible discounts — you talk to your manager, not a ticket queue.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 · VIP PLANS ================= -->
+<section id="plans" class="relative py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <div class="orb w-[520px] h-[520px] bg-orange-500/8 right-[-140px] top-10"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[560px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">VIP plans</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Two terms. Same treatment.</h2>
+      <p class="text-[15.5px] text-ink-600 leading-relaxed">Start monthly, switch to yearly when the volume proves itself — checks drop from 5.0¢ to 4.2¢ apiece.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6 items-center max-w-[900px] mx-auto">
+      <!-- monthly -->
+      <div class="rv rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-8 lg:p-9">
+        <div class="text-[11px] font-bold tracking-[0.16em] text-orange-600 mb-1.5">VIP MONTHLY</div>
+        <div class="text-[13.5px] text-ink-500 mb-6">Test the treatment for a month</div>
+        <div class="flex items-end gap-1.5 mb-3">
+          <span class="text-[46px] font-extrabold tracking-tightest leading-none nums">$99.95</span>
+          <span class="text-[12.5px] font-medium text-ink-400 pb-1.5">/ month</span>
+        </div>
+        <div class="inline-flex items-center rounded-full bg-ink-50 px-3 py-1 text-[11.5px] font-bold text-ink-500 nums mb-7">2,000 checks · 30 days</div>
+        <div class="h-px bg-ink-100 mb-7"></div>
+        <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 mb-9">
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>2,000 plagiarism checks</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Personal client manager</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>24×7 priority support line</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Personal report storage</li>
+          <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>API access &amp; storage</li>
+        </ul>
+        <a href="#" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-[14.5px] font-semibold py-3.5 hover:bg-ink-50 transition-colors duration-300">Buy monthly</a>
+      </div>
+
+      <!-- yearly — highlighted -->
+      <div class="rv relative rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-8 lg:p-10 lg:-my-6 overflow-hidden">
+        <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>
+        <div class="relative">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-[11px] font-bold tracking-[0.16em] text-teal-300">VIP YEARLY</span>
+            <span class="flex items-center gap-1.5 text-[9.5px] font-bold tracking-widest bg-orange-500 rounded-full px-2.5 py-1">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+              BEST VALUE
+            </span>
+          </div>
+          <div class="text-[13.5px] text-white/50 mb-6">For a steady year-round workload</div>
+          <div class="flex items-end gap-1.5 mb-3">
+            <span class="text-[52px] font-extrabold tracking-tightest leading-none nums">$499.95</span>
+            <span class="text-[12.5px] font-medium text-white/40 pb-1.5">/ year</span>
+          </div>
+          <div class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-[11.5px] font-bold text-white/70 nums mb-7">12,000 checks · 365 days</div>
+          <div class="h-px bg-white/10 mb-7"></div>
+          <ul class="space-y-3.5 text-[13.5px] font-medium text-white/85 mb-9">
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>12,000 plagiarism checks</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Personal client manager</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>24×7 priority support line</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Personal report storage</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>API access &amp; storage</li>
+          </ul>
+          <a href="#" class="btn-press group flex items-center justify-center gap-2.5 rounded-full bg-white text-ink-900 text-[14.5px] font-semibold py-2 pl-6 pr-2">
+            Buy yearly
+            <span class="icon-orb w-8 h-8 rounded-full bg-ink-900/5 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p class="rv text-center text-[13px] font-medium text-ink-500 mt-12">
+      Available only for individual customers · Institution-wide volume lives on the
+      <a href="index.html#capabilities" class="font-semibold text-teal-700 hover:text-teal-800 transition-colors">university plans</a>
+    </p>
+  </div>
+</section>
+
+<!-- ================= 04 · FREE TRIAL REQUEST ================= -->
+<section id="trial" class="relative py-24 lg:py-32 bg-white overflow-hidden">
+  <div class="orb w-[560px] h-[560px] bg-teal-500/8 -left-44 bottom-[-200px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[400px_1fr] gap-14 items-start">
+
+      <div class="rv lg:sticky lg:top-32">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-mint-500"></span>
+          <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Free trial</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-5">Try VIP before<br>you commit.</h2>
+        <p class="text-[15px] text-ink-600 leading-relaxed mb-7">
+          Tell us roughly how much you check each month — we'll size a trial to match and call you
+          back within a few minutes during business hours.
+        </p>
+        <a href="mailto:services@plagiarismsearch.com" class="inline-flex items-center gap-2.5 rounded-full bg-ink-50 ring-1 ring-black/5 px-5 py-3 text-[13.5px] font-semibold text-ink-700 hover:bg-ink-100 transition-colors duration-300">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          services@plagiarismsearch.com
+        </a>
+      </div>
+
+      <div class="rv rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
+        <form class="rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-8 lg:p-10" onsubmit="return false">
+          <div class="grid sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="fName">Name <span class="text-orange-600">*</span></label>
+              <input class="fld" id="fName" name="name" autocomplete="name" placeholder="Jordan Reeves" required>
+            </div>
+            <div>
+              <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="fEmail">Email <span class="text-orange-600">*</span></label>
+              <input class="fld" id="fEmail" name="email" type="email" autocomplete="email" placeholder="name@company.com" required>
+            </div>
+            <div>
+              <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="fPhone">Phone <span class="text-orange-600">*</span></label>
+              <input class="fld" id="fPhone" name="phone" type="tel" autocomplete="tel" placeholder="+1 555 000 0000" required>
+            </div>
+            <div>
+              <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="fOrg">Organization</label>
+              <input class="fld" id="fOrg" name="organization" autocomplete="organization" placeholder="Optional">
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="fDocs">Documents per month</label>
+              <div class="flex items-center gap-2">
+                <button type="button" class="step-btn shrink-0 w-12 h-12 rounded-lg ring-1 ring-ink-200 text-[18px] font-bold text-ink-600 hover:bg-ink-50" data-step="-1" data-for="fDocs" aria-label="Fewer documents">−</button>
+                <input class="fld text-center nums" id="fDocs" name="docs" type="number" value="50" min="1" step="1" inputmode="numeric">
+                <button type="button" class="step-btn shrink-0 w-12 h-12 rounded-lg ring-1 ring-ink-200 text-[18px] font-bold text-ink-600 hover:bg-ink-50" data-step="1" data-for="fDocs" aria-label="More documents">+</button>
+              </div>
+            </div>
+            <div>
+              <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="fPages">Avg pages per document <span class="font-medium text-ink-400">(300 words/page)</span></label>
+              <div class="flex items-center gap-2">
+                <button type="button" class="step-btn shrink-0 w-12 h-12 rounded-lg ring-1 ring-ink-200 text-[18px] font-bold text-ink-600 hover:bg-ink-50" data-step="-1" data-for="fPages" aria-label="Fewer pages">−</button>
+                <input class="fld text-center nums" id="fPages" name="pages" type="number" value="10" min="1" step="1" inputmode="numeric">
+                <button type="button" class="step-btn shrink-0 w-12 h-12 rounded-lg ring-1 ring-ink-200 text-[18px] font-bold text-ink-600 hover:bg-ink-50" data-step="1" data-for="fPages" aria-label="More pages">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="fMsg">Message <span class="text-orange-600">*</span></label>
+            <textarea class="fld" id="fMsg" name="message" rows="4" placeholder="What are you checking, and what does a good trial look like for you?" required></textarea>
+          </div>
+
+          <label class="flex items-start gap-3 text-[13px] font-medium text-ink-600 mb-7 cursor-pointer">
+            <input type="checkbox" required class="mt-0.5 w-4 h-4 rounded border-ink-300 text-teal-600 focus:ring-teal-500">
+            I accept the <a href="#" class="font-semibold text-teal-700 hover:text-teal-800">Terms of Use</a> and <a href="#" class="font-semibold text-teal-700 hover:text-teal-800">Privacy Policy</a>
+          </label>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <button type="submit" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-orange-500 hover:bg-orange-700 active:bg-orange-800 transition-colors duration-300 text-white text-[15px] font-semibold py-2.5 pl-7 pr-2.5">
+              Get a free trial
+              <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </button>
+            <span class="text-[12.5px] font-medium text-ink-400">We'll call back within a few minutes</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER (shared chrome) ================= -->
+<footer class="relative bg-ink-950 text-white pt-20 pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-12 mb-16">
+      <div>
+        <a href="index.html" class="inline-flex items-center mb-6">
+          <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+        </a>
+        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+        <div class="flex gap-3">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">PRODUCT</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Sample Report</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Students</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Teachers</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Universities</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">API docs</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">About</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Compliance</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="h-px bg-white/10 mb-8"></div>
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>© 2026 PlagiarismSearch. All rights reserved.</span>
+      <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
+      <a href="#" class="hover:text-white/70 transition-colors">DPA</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Cookies</a>
+      <span class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) document.documentElement.classList.add('no-motion');
+
+  /* ================= steppers ================= */
+  document.querySelectorAll('.step-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(btn.dataset.for);
+      const next = (parseInt(input.value, 10) || 1) + parseInt(btn.dataset.step, 10);
+      input.value = Math.max(parseInt(input.min, 10) || 1, next);
+    });
+  });
+
+  /* ================= reveals ================= */
+  if (!reduceMotion && window.gsap) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const rvs = gsap.utils.toArray('.rv');
+    const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
+    const later = rvs.filter(el => !inView.includes(el));
+
+    inView.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+    });
+    later.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 70%' } });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
