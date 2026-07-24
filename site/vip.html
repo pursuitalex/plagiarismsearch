@@ -70,7 +70,18 @@ tailwind.config = {
   .fld:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
   textarea.fld { height:auto; padding:12px 14px; resize:vertical; min-height:96px; }
 
-  .step-btn { transition:background-color .15s ease, color .15s ease; }
+  /* stepper — one shared field border, buttons live inside it */
+  .stepper { display:flex; align-items:stretch; height:48px; border-radius:8px; border:1px solid #E5E7EB;
+             background:#fff; overflow:hidden; transition:border-color .15s ease, box-shadow .15s ease; }
+  .stepper:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+  .stepper input { flex:1 1 0; min-width:0; border:0; outline:none; background:transparent; text-align:center;
+                   font-size:15px; font-weight:500; color:#111827; }
+  .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+  .stepper input[type=number] { -moz-appearance:textfield; appearance:textfield; }
+  .step-btn { width:52px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; color:#4B5563;
+              transition:background-color .15s ease, color .15s ease; }
+  .step-btn:hover { background:#F8F9FB; }
+  .step-btn:active { background:#F1F2F6; }
 </style>
 </head>
 <body class="font-sans text-ink-900 bg-white overflow-x-hidden">
@@ -320,18 +331,26 @@ tailwind.config = {
           <div class="grid sm:grid-cols-2 gap-5 mb-5">
             <div>
               <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="fDocs">Documents per month</label>
-              <div class="flex items-center gap-2">
-                <button type="button" class="step-btn shrink-0 w-12 h-12 rounded-lg ring-1 ring-ink-200 text-[18px] font-bold text-ink-600 hover:bg-ink-50" data-step="-1" data-for="fDocs" aria-label="Fewer documents">−</button>
-                <input class="fld text-center nums" id="fDocs" name="docs" type="number" value="50" min="1" step="1" inputmode="numeric">
-                <button type="button" class="step-btn shrink-0 w-12 h-12 rounded-lg ring-1 ring-ink-200 text-[18px] font-bold text-ink-600 hover:bg-ink-50" data-step="1" data-for="fDocs" aria-label="More documents">+</button>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1" data-for="fDocs" aria-label="Fewer documents">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                </button>
+                <input class="nums" id="fDocs" name="docs" type="number" value="50" min="1" step="1" inputmode="numeric">
+                <button type="button" class="step-btn" data-step="1" data-for="fDocs" aria-label="More documents">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                </button>
               </div>
             </div>
             <div>
               <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="fPages">Avg pages per document <span class="font-medium text-ink-400">(300 words/page)</span></label>
-              <div class="flex items-center gap-2">
-                <button type="button" class="step-btn shrink-0 w-12 h-12 rounded-lg ring-1 ring-ink-200 text-[18px] font-bold text-ink-600 hover:bg-ink-50" data-step="-1" data-for="fPages" aria-label="Fewer pages">−</button>
-                <input class="fld text-center nums" id="fPages" name="pages" type="number" value="10" min="1" step="1" inputmode="numeric">
-                <button type="button" class="step-btn shrink-0 w-12 h-12 rounded-lg ring-1 ring-ink-200 text-[18px] font-bold text-ink-600 hover:bg-ink-50" data-step="1" data-for="fPages" aria-label="More pages">+</button>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1" data-for="fPages" aria-label="Fewer pages">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                </button>
+                <input class="nums" id="fPages" name="pages" type="number" value="10" min="1" step="1" inputmode="numeric">
+                <button type="button" class="step-btn" data-step="1" data-for="fPages" aria-label="More pages">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                </button>
               </div>
             </div>
           </div>
