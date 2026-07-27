@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>PlagiarismSearch — Mission &amp; Core Values</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+      },
+      colors: {
+        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
+        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
+        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
+        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
+      },
+      letterSpacing: { tightest: '-0.035em' },
+      boxShadow: {
+        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
+        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
+        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
+      },
+      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+    }
+  }
+}
+</script>
+<style>
+  html { background:#fff; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background:#F36F5A; color:#fff; }
+  .nums { font-variant-numeric: tabular-nums; }
+
+  /* ---------- grain overlay ---------- */
+  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:256px 256px; }
+
+  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
+  .orb { position:absolute; border-radius:9999px; pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+  /* ---------- reveal (transform/opacity only) ---------- */
+  .rv { opacity:0; transform:translateY(40px); }
+  .no-motion .rv { opacity:1 !important; transform:none !important; }
+
+  /* ---------- shared micro-interactions ---------- */
+  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .btn-press:active { transform:scale(.97); }
+  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+  .group:hover .icon-orb svg { transform:rotate(-45deg); }
+
+
+  /* ---------- island nav dropdowns ---------- */
+  .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
+  .nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
+    transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
+  .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
+  @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
+</style>
+</head>
+<body class="font-sans text-ink-900 bg-white overflow-x-hidden">
+
+<div class="grain"></div>
+
+<!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
+<header class="fixed top-5 inset-x-0 z-50 flex justify-center px-4">
+  <nav class="flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-2 py-2">
+    <a href="index.html" class="flex items-center pr-3">
+      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto">
+    </a>
+    <div class="hidden md:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-5">
+          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <a href="plagiarism-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+            <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Paper analysis</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Readability check</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Spell check</span>
+            <a href="vip.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">API</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Chat bot</span>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-5">
+          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For universities</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For teachers</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For students</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For organizations</span>
+          </div>
+        </div>
+      </div>
+      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Prices</a>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-ink-900/5 text-ink-900 font-semibold" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-5">
+          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+            <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Scholarship</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Reviews</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Contact us</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Blog</span>
+            <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 ml-5">
+      <a href="#" class="btn-press rounded-full ring-1 ring-black/10 text-ink-900 text-[13.5px] font-semibold px-5 py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press group flex items-center gap-2 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] font-semibold pl-4 pr-1.5 py-1.5">
+        Check free
+        <span class="icon-orb w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= 01 · HERO ================= -->
+<section class="relative overflow-hidden pt-36 pb-24 lg:pb-28 bg-[#F2FCFC]">
+  <div class="orb w-[640px] h-[640px] bg-orange-500/10 -left-52 -top-40"></div>
+  <div class="orb w-[560px] h-[560px] bg-teal-500/10 right-[-160px] top-48"></div>
+
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[1.05fr_.95fr] gap-14 items-center">
+    <div>
+      <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Mission &amp; values</span>
+      </div>
+      <h1 class="rv text-[clamp(2.4rem,4.6vw,3.9rem)] font-extrabold tracking-tightest leading-[1.02] mb-6">Our mission and<br>core values</h1>
+      <p class="rv text-[16.5px] text-ink-600 leading-relaxed max-w-[52ch] mb-5">
+        PlagiarismSearch is a team of innovation enthusiasts who acknowledge the value of
+        authenticity and integrity.
+      </p>
+      <p class="rv text-[16.5px] text-ink-600 leading-relaxed max-w-[52ch] mb-9">
+        We believe that our checker makes the world a little more educated about plagiarism.
+      </p>
+      <div class="rv flex flex-wrap items-center gap-3">
+        <a href="#values" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-orange-500 hover:bg-orange-700 active:bg-orange-800 transition-colors duration-300 text-white text-[15px] font-semibold py-2.5 pl-7 pr-2.5">
+          Our core values
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+        <a href="why-us.html" class="btn-press inline-flex items-center rounded-full ring-1 ring-ink-200 bg-white/60 text-[15px] font-semibold h-14 px-7 hover:bg-white transition-colors duration-300">Why people stay</a>
+      </div>
+      <div class="rv flex flex-wrap items-center gap-x-5 gap-y-2 mt-8 text-[12.5px] font-semibold text-ink-500">
+        <span>Independent since 2010</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span>Plagiarism Prevention Day · February 19</span>
+      </div>
+    </div>
+
+    <!-- photo is a plain full-bleed frame; the radius and the chip live in CSS/HTML, so the
+         image drops onto any section background — see IMAGES.md → ЗАКОН ФОНУ -->
+    <div class="rv hidden lg:block relative">
+      <img src="assets/img/mission/hero.webp" alt="" width="1000" height="1339" class="w-full rounded-4xl shadow-diffuse" fetchpriority="high">
+      <span class="absolute -left-6 bottom-16 flex items-center gap-2.5 rounded-full bg-white shadow-diffuse pl-2 pr-5 py-2">
+        <span class="w-9 h-9 rounded-full bg-teal-500 flex items-center justify-center shrink-0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <span class="text-[12.5px] font-bold tracking-tight text-ink-800">Attribution, not accusation</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 · TEACH FIRST ================= -->
+<section class="relative py-24 lg:py-32 bg-white">
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+    <!-- image sits LEFT here — the hero above has its image on the right, so the page
+         alternates side to side (see DESIGN.md → Web build → Section rhythm) -->
+    <div class="grid lg:grid-cols-2 gap-14 lg:gap-16 items-center">
+
+      <div class="rv lg:order-2">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+          <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Our mission</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-3">Our mission</h2>
+        <p class="text-[15.5px] font-semibold text-ink-800 leading-relaxed mb-5">
+          To make the world a better place, where words and ideas are appreciated and given credit to.
+        </p>
+        <p class="text-[15.5px] text-ink-600 leading-relaxed mb-5">
+          Our goal lies in educating the wide public about plagiarism and its prevention. Therefore,
+          we compiled a great stack of tips both for students and professors regarding plagiarism.
+        </p>
+        <p class="text-[15.5px] text-ink-600 leading-relaxed mb-8">
+          As a part of our mission, we acknowledge Plagiarism Prevention Day, celebrated on
+          February 19. This year we decided to run an essay contest in order to spread awareness
+          regarding our educational mission — and at the same time give everyone a chance to win
+          one of three accounts at PlagiarismSearch.
+        </p>
+        <a href="why-us.html" class="inline-flex items-center gap-2.5 rounded-full bg-ink-50 ring-1 ring-black/5 px-5 py-3 text-[13.5px] font-semibold text-ink-700 hover:bg-ink-100 transition-colors duration-300">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+          Learn more
+        </a>
+      </div>
+
+      <!-- collage = photo element + HTML panels on top (IMAGES.md → ЗАКОН СКЛАДЕНОГО КОЛАЖУ).
+           Panels carry their own shadow, otherwise white-on-white loses its edge. -->
+      <div class="rv lg:order-1 relative">
+        <img src="assets/img/mission/teaching.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-4xl">
+
+        <!-- panels sit over the QUIET zones only: bookshelves top-right, table bottom-left.
+             Never over a face — here the lecturer is the subject of the frame. -->
+        <div class="hidden lg:block absolute -right-8 top-5 w-[52%] rounded-2xl bg-white shadow-diffuse-lg px-5 py-4">
+          <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-2.5">Our guides cover</div>
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span class="rounded-full bg-teal-400 text-white text-[11px] font-bold px-2.5 py-1">Quoting</span>
+            <span class="rounded-full bg-ink-100 text-ink-600 text-[11px] font-bold px-2.5 py-1">Paraphrasing</span>
+            <span class="rounded-full bg-ink-100 text-ink-600 text-[11px] font-bold px-2.5 py-1">Citing</span>
+          </div>
+        </div>
+
+        <div class="hidden lg:block absolute -left-8 bottom-8 w-[46%] rounded-2xl bg-white shadow-diffuse-lg px-5 py-4">
+          <div class="flex items-center gap-3.5">
+            <span class="shrink-0 text-center">
+              <span class="block text-[10px] font-bold tracking-widest uppercase text-orange-600">Feb</span>
+              <span class="block text-[26px] font-extrabold tracking-tightest leading-none nums text-ink-900">19</span>
+            </span>
+            <span class="w-px h-9 bg-ink-100 shrink-0"></span>
+            <span class="text-[12.5px] font-bold leading-tight text-ink-800">Plagiarism<br>Prevention Day</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 · WHY PLAGIARISM HAPPENS ================= -->
+<section class="relative py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <div class="orb w-[520px] h-[520px] bg-orange-500/8 right-[-140px] top-10"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[620px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">The honest picture</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Why plagiarism occurs anyway</h2>
+      <p class="text-[15.5px] text-ink-600 leading-relaxed">
+        Most of the time plagiarism happens due to confusion regarding the assignment, improper
+        citing of the source, and rarely for the purpose of stealing someone else's work.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5 max-w-[1080px] mx-auto">
+      <article class="rv rounded-4xl bg-white p-8">
+        <span class="w-11 h-11 rounded-2xl bg-orange-100 flex items-center justify-center mb-5">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        </span>
+        <h3 class="text-[17px] font-bold tracking-tightest mb-2">Confusion about the assignment</h3>
+        <p class="text-[14px] leading-relaxed text-ink-600">The most common cause. The requirements were never clear enough for the writer to know what counts as borrowed material.</p>
+      </article>
+      <article class="rv rounded-4xl bg-white p-8">
+        <span class="w-11 h-11 rounded-2xl bg-teal-100 flex items-center justify-center mb-5">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </span>
+        <h3 class="text-[17px] font-bold tracking-tightest mb-2">Improper citing of the source</h3>
+        <p class="text-[14px] leading-relaxed text-ink-600">The source is credited somewhere, but not the way the passage itself required — so the text still reads as unattributed.</p>
+      </article>
+      <article class="rv rounded-4xl bg-white p-8">
+        <span class="w-11 h-11 rounded-2xl bg-ink-100 flex items-center justify-center mb-5">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <h3 class="text-[17px] font-bold tracking-tightest mb-2">Stealing someone else's work</h3>
+        <p class="text-[14px] leading-relaxed text-ink-600">The rare case — and in both the academic and the digital world, the one that can destroy a career in a moment.</p>
+      </article>
+    </div>
+
+    <p class="rv text-center text-[15px] leading-relaxed text-ink-600 mt-10 max-w-[68ch] mx-auto">
+      By citing properly and following basic rules of courtesy and integrity, we at
+      PlagiarismSearch believe we can educate a new, honest generation of conscious Internet
+      users. Most plagiarism happens unintentionally — therefore
+      <span class="font-semibold text-ink-800">an extra check before final submission could be a
+      life savior</span>.
+    </p>
+  </div>
+</section>
+
+<!-- ================= 04 · CORE VALUES ================= -->
+<section id="values" class="relative py-24 lg:py-32 bg-white">
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[560px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-mint-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Core values</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Our core values</h2>
+      <p class="text-[15.5px] text-ink-600 leading-relaxed">The principles the team is built on — and the ones the product is judged by.</p>
+    </div>
+
+    <!-- illustration convention: grey card, white plate at content width, icon modest inside -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[1080px] mx-auto">
+      <article class="rv rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/mission/val-difference.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[72px] h-[72px]">
+        </div>
+        <h3 class="text-[17px] font-bold tracking-tightest mb-2">Making a difference</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Spreading awareness about plagiarism and the ways to avoid it.</p>
+      </article>
+      <article class="rv rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/mission/val-authentic.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[72px] h-[72px]">
+        </div>
+        <h3 class="text-[17px] font-bold tracking-tightest mb-2">Empowering to be authentic</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Protecting a writer's own voice, including the non-native one.</p>
+      </article>
+      <article class="rv rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/mission/val-integrity.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[72px] h-[72px]">
+        </div>
+        <h3 class="text-[17px] font-bold tracking-tightest mb-2">Integrity</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Your text is never added to any database and never appears online.</p>
+      </article>
+      <article class="rv rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/mission/val-innovation.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[72px] h-[72px]">
+        </div>
+        <h3 class="text-[17px] font-bold tracking-tightest mb-2">Innovation</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Multi-layer algorithms that keep pace with how copying changes.</p>
+      </article>
+      <article class="rv rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/mission/val-responsibility.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[72px] h-[72px]">
+        </div>
+        <h3 class="text-[17px] font-bold tracking-tightest mb-2">Responsibility</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Securing a reputation — we explain every match rather than just assert it.</p>
+      </article>
+      <article class="rv rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/mission/val-teamwork.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[72px] h-[72px]">
+        </div>
+        <h3 class="text-[17px] font-bold tracking-tightest mb-2">Teamwork</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Students, educators and institutions want the same outcome. We build for all three.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 · TALK TO US ================= -->
+<section id="contact" class="relative py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <div class="orb w-[560px] h-[560px] bg-teal-500/8 -left-44 bottom-[-200px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv rounded-5xl bg-ink-950 text-white p-2 ring-1 ring-white/10 shadow-diffuse-lg overflow-hidden">
+      <div class="relative rounded-[calc(2.5rem-0.5rem)] px-8 py-10 lg:px-14 lg:py-14 grid lg:grid-cols-[1.1fr_.9fr] gap-10 items-center overflow-hidden">
+        <div class="orb w-[420px] h-[420px] bg-orange-500/15 -right-24 -top-40"></div>
+        <div class="relative">
+          <div class="text-[10.5px] font-bold tracking-[0.22em] text-teal-300 mb-3">OUR BROCHURE</div>
+          <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-4">The wide range of our services, in one file.</h2>
+          <p class="text-[14.5px] text-white/60 leading-relaxed max-w-[52ch] mb-8">
+            If you are looking for a good plagiarism checker, timely service and affordable prices —
+            remember us, and we would be there for you.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#" class="btn-press group inline-flex items-center gap-3 rounded-full bg-white text-ink-900 text-[14.5px] font-semibold py-2.5 pl-7 pr-2.5">
+              Download brochure
+              <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/5 flex items-center justify-center">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              </span>
+            </a>
+            <a href="mailto:services@plagiarismsearch.com" class="btn-press inline-flex items-center rounded-full ring-1 ring-white/20 text-white text-[14.5px] font-semibold h-14 px-7 hover:bg-white/10 transition-colors duration-300">Send a free inquiry</a>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-7">
+            <div class="text-[11.5px] font-semibold uppercase tracking-wider text-white/40 mb-4">For more information contact us at</div>
+            <a href="mailto:services@plagiarismsearch.com" class="flex items-center gap-3 text-[15px] font-semibold hover:text-teal-300 transition-colors duration-300 mb-3">
+              <svg class="shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              services@plagiarismsearch.com
+            </a>
+            <a href="mailto:support@plagiarismsearch.com" class="flex items-center gap-3 text-[15px] font-semibold hover:text-teal-300 transition-colors duration-300">
+              <svg class="shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
+              support@plagiarismsearch.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 · FREE CHECK CTA ================= -->
+<section class="relative py-24 lg:py-28 overflow-hidden bg-[#F2FCFC]">
+  <div class="orb w-[700px] h-[640px] bg-orange-500/12 left-[-180px] -top-64"></div>
+  <div class="orb w-[600px] h-[600px] bg-teal-500/10 right-[-140px] -bottom-72"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 text-center">
+    <h2 class="rv text-[clamp(1.9rem,3.6vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4">Start with the free check.</h2>
+    <p class="rv text-[16px] text-ink-600 mb-8 max-w-[46ch] mx-auto">150 words through the full engine — no account, no card. The mission starts with you seeing what it actually finds.</p>
+    <a href="index.html#top" class="rv btn-press group inline-flex items-center gap-3 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[15px] font-semibold py-2.5 pl-8 pr-2.5">
+      Try the free check
+      <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </span>
+    </a>
+  </div>
+</section>
+
+<footer class="relative bg-ink-950 text-white pt-20 pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-12 mb-16">
+      <div>
+        <a href="index.html" class="inline-flex items-center mb-6">
+          <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+        </a>
+        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+        <div class="flex gap-3">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">PRODUCT</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Sample Report</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Students</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Teachers</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Universities</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">API docs</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">About</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Compliance</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="h-px bg-white/10 mb-8"></div>
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>© 2026 PlagiarismSearch. All rights reserved.</span>
+      <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
+      <a href="#" class="hover:text-white/70 transition-colors">DPA</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Cookies</a>
+      <span class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) document.documentElement.classList.add('no-motion');
+
+  if (!reduceMotion && window.gsap) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ================= reveals ================= */
+    const rvs = gsap.utils.toArray('.rv');
+    const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
+    const later = rvs.filter(el => !inView.includes(el));
+
+    // first viewport: top-down cascade on load
+    inView.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+    });
+    // the rest reveal as they reach mid-screen
+    later.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 70%' } });
+    });
+
+    /* ================= counters (mission stats) — cached writes ================= */
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const obj = { v: 0 };
+      let lastText = '';
+      gsap.to(obj, {
+        v: target, duration: 1.6, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        onUpdate: () => {
+          const text = Math.round(obj.v) + suffix;
+          if (text !== lastText) { lastText = text; el.textContent = text; }
+        }
+      });
+    });
+  } else {
+    // reduced motion: final states, no tweens
+    document.querySelectorAll('[data-count]').forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
+  }
+})();
+</script>
+
+
+</body>
+</html>
