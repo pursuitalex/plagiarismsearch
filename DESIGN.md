@@ -201,6 +201,8 @@ Dark header (surface/inverse) + white Bold caps text +8% LS. Alternating rows (n
 - Background alternation: white → `bg-ink-50` → white…; **max one dark band** (`bg-ink-950`) per view as accent; hero tint `#F2FCFC`
 - Container: `max-w-[1280px] mx-auto px-6 lg:px-10` (narrower content: 1180px)
 - Section header pattern: eyebrow chip → `h2 text-[clamp(2rem,4vw,3.4rem)]` → 15–16px `text-ink-600` subline
+- **Checkerboard imagery**: consecutive two-column sections must alternate which side the image sits on — image right, then image left, then right. Never two in a row on the same side. Keep the text block first in the DOM (mobile reads text → image) and flip with `lg:order-1` / `lg:order-2`, not by reordering markup
+- **No tall portraits**: images cap at roughly 1 : 1.25 (portrait) — a 3:4 or taller frame forces the column to stretch and starves the section of horizontal room
 - Eyebrow chip: `inline-flex gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5` + 1.5px colored dot + `text-[10.5px] uppercase tracking-[0.22em]` (on ink-50 sections the chip is `bg-white`)
 
 ### Card recipes
@@ -218,6 +220,15 @@ Dark header (surface/inverse) + white Bold caps text +8% LS. Alternating rows (n
 ### Motion (GSAP + ScrollTrigger via CDN)
 - **Reveal**: `.rv` class = `opacity:0 translateY(40px)`; batch-triggered at `start:'top 70%'`, `y:0 opacity:1 .7s power2.out`, stagger ~.08; elements already in first viewport animate on load with top-down cascade
 - Buttons: `.btn-press` scale feedback; `.icon-orb svg` rotates -45° on group hover
+- **Pen mark** (accent word in a heading — reusable on every page): wrap the word in
+  `<span class="pen-word relative inline-block">word<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span>`.
+  JS loops `.pen-word`: word tweens to `#DC5A45` (orange-600), then the path draws via
+  `strokeDashoffset` measured with `getTotalLength()`. Marks in the first viewport wait out the
+  reveal cascade (`delay: 1`); lower ones fire on `top 80%`, `once: true`. Reduced-motion CSS
+  fallback is mandatory: `.no-motion .pen-word { color:#DC5A45 } .no-motion .pen-underline { opacity:1 }`.
+  Use **one** pen mark per heading — it is emphasis, not decoration.
+  *(index.html's hero `one.` and CTA `free` predate the class and use IDs with bespoke timing tied
+  to the hero cascade; the class pattern above is the standard for all new work.)*
 - Counters: tween object + `onUpdate` with cached writes, `.nums` on the element
 - **`prefers-reduced-motion`**: add `.no-motion` to `<html>`, all `.rv` forced visible, final states set statically — every scripted animation needs its static fallback
 - Perf floor: animate only `transform`/`opacity`; no `backdrop-blur` on elements that repaint per frame; `will-change` only on continuously-moving nodes
@@ -236,3 +247,4 @@ Dark header (surface/inverse) + white Bold caps text +8% LS. Alternating rows (n
   - Moodboard: page `5205:2`
 - **Brief:** `redesign-brief-v1.md`
 - **Page specs:** `page-specs/` (10 files)
+- **Image style guide:** `IMAGES.md` — generation system for photo-UI collages, masked heroes, duotone spot icons (Magnific / Nano Banana Pro); validated samples in `site/assets/img/style-tests/`
