@@ -202,7 +202,8 @@ tailwind.config = {
   #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
   #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
 
-  .nav-panel { opacity:0; visibility:hidden; transform:translateY(-8px);
+  .nav-panel { position:absolute; left:1rem; right:1rem; top:100%;
+    opacity:0; visibility:hidden; transform:translateY(-8px);
     transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
   .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
   @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
@@ -214,9 +215,9 @@ tailwind.config = {
 <div class="grain"></div>
 
 <!-- ================= FLOATING ISLAND NAV ================= -->
-<header class="fixed top-5 inset-x-0 z-50 px-4">
+<header class="fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
   <div class="flex justify-center">
-  <nav class="flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+  <nav class="pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
     <a href="#top" class="flex items-center shrink-0 pr-4 lg:pr-6">
       <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto max-w-none">
     </a>
@@ -274,7 +275,7 @@ tailwind.config = {
   </nav>
   </div>
 
-  <div id="navPanel" class="nav-panel lg:hidden mx-auto mt-3 w-full max-w-[560px]">
+  <div id="navPanel" class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
     <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products</div>
       <a href="plagiarism-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
