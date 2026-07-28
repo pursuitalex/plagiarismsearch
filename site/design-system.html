@@ -140,6 +140,59 @@ tailwind.config = {
     .demo-dur { animation:none; }
     .sw:hover, .btn:active { transform:none; }
   }
+  /* ================= CONTROLS · checkbox, radio, groups =================
+     The native box is replaced, not hidden: appearance:none keeps the real input
+     in the layout, so the label, keyboard focus and :checked state all still work. */
+  .ck, .rd { appearance:none; -webkit-appearance:none; flex:none; margin:0;
+    width:18px; height:18px; border:1.5px solid #D1D5DB; background-color:#fff; cursor:pointer;
+    background-repeat:no-repeat; background-position:center;
+    transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }
+  .ck { border-radius:5px; }
+  .rd { border-radius:50%; }
+  .ck:hover, .rd:hover { border-color:#9CA3AF; }
+  .ck:checked { background-color:#0991A8; border-color:#0991A8;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-9'/%3E%3C/svg%3E"); background-size:12px 12px; }
+  .rd:checked { background-color:#0991A8; border-color:#0991A8;
+    background-image:radial-gradient(circle at center, #fff 0 3px, transparent 3.5px); }
+  .ck:focus-visible, .rd:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(12,169,195,.28); }
+  .ck[disabled], .rd[disabled] { background-color:#F1F2F6; border-color:#E5E7EB; cursor:not-allowed; }
+  .ck[disabled]:checked, .rd[disabled]:checked { background-color:#D1D5DB; border-color:#D1D5DB; }
+
+  /* the clickable row — the whole label is the hit area, not just the 18px box */
+  .ctl { display:flex; align-items:center; gap:10px; cursor:pointer;
+    font-size:14px; font-weight:500; color:#374151; }
+  .ctl.ctl-top { align-items:flex-start; }
+  .ctl.ctl-top .ck, .ctl.ctl-top .rd { margin-top:1px; }
+  .ctl:has(input[disabled]) { cursor:not-allowed; color:#9CA3AF; }
+
+  /* quiet group — a plain list of options */
+  .ctl-group { display:flex; flex-direction:column; gap:2px; }
+  .ctl-group > .ctl { padding:8px 10px; border-radius:10px; transition:background-color .15s ease; }
+  .ctl-group > .ctl:hover { background:#F8F9FB; }
+
+  /* boxed group — for a prominent either/or, where the option itself is the target */
+  .ctl-group-boxed { display:flex; flex-direction:column; gap:8px; }
+  .ctl-group-boxed > .ctl { padding:14px 16px; border-radius:12px; border:1px solid #E5E7EB;
+    background:#fff; transition:border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+  .ctl-group-boxed > .ctl:hover { border-color:#D1D5DB; }
+  .ctl-group-boxed > .ctl:has(input:checked) { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; background:#F8FDFE; }
+
+  /* chipset — compact single-choice pills; radio semantics, no visible box */
+  .chipset { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip-opt { position:relative; display:inline-flex; cursor:pointer; }
+  .chip-opt input { position:absolute; opacity:0; width:0; height:0; }
+  .chip-opt span { display:inline-flex; align-items:center; height:32px; padding:0 12px;
+    border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12px; font-weight:600;
+    transition:background-color .2s ease, color .2s ease, box-shadow .15s ease; }
+  .chip-opt:hover span { background:#E5E7EB; color:#111827; }
+  .chip-opt input:checked + span { background:#0A0E1A; color:#fff; }
+  .chip-opt input:focus-visible + span { box-shadow:0 0 0 3px rgba(12,169,195,.35); }
+  .chip-opt input[disabled] + span { background:#F8F9FB; color:#D1D5DB; cursor:not-allowed; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ck, .rd, .ctl-group > .ctl, .ctl-group-boxed > .ctl, .chip-opt span { transition:none; }
+  }
+
 </style>
 </head>
 <body class="font-sans text-ink-900 bg-white antialiased">
@@ -176,6 +229,7 @@ tailwind.config = {
         <a href="#buttons">Buttons</a>
         <a href="#badges">Badges</a>
         <a href="#inputs">Inputs</a>
+        <a href="#controls">Controls</a>
         <a href="#cards">Cards &amp; table</a>
         <a href="#icons">Icons</a>
         <a href="#motion">Motion</a>
@@ -612,6 +666,61 @@ tailwind.config = {
             <input class="fld fld-sm" placeholder="sm · 40px">
             <input class="fld fld-md" placeholder="md · 48px">
             <input class="fld fld-lg" placeholder="lg · 56px">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 08b CONTROLS ==================== -->
+      <section id="controls" class="py-16 border-t border-ink-100">
+        <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Checkbox, radio &amp; groups</h2>
+        <p class="text-[16px] text-ink-500 max-w-[62ch] mb-8">
+          The native control is replaced with <code class="text-[14px] font-semibold text-ink-700">appearance:none</code>,
+          never hidden behind a fake box — so the label, keyboard focus and
+          <code class="text-[14px] font-semibold text-ink-700">:checked</code> keep working for free.
+          18px box, teal-600 fill, 3px focus halo. Never ship a browser-default checkbox.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6 max-w-4xl mb-6">
+          <div class="rounded-3xl bg-ink-50 p-7">
+            <div class="text-[12.5px] font-bold text-ink-600 mb-4">Checkbox &middot; <code>.ck</code></div>
+            <div class="ctl-group">
+              <label class="ctl"><input type="checkbox" class="ck" checked><span>Checked</span></label>
+              <label class="ctl"><input type="checkbox" class="ck"><span>Unchecked</span></label>
+              <label class="ctl"><input type="checkbox" class="ck" checked disabled><span>Disabled, checked</span></label>
+              <label class="ctl"><input type="checkbox" class="ck" disabled><span>Disabled</span></label>
+            </div>
+          </div>
+
+          <div class="rounded-3xl bg-ink-50 p-7">
+            <div class="text-[12.5px] font-bold text-ink-600 mb-4">Radio &middot; <code>.rd</code></div>
+            <div class="ctl-group">
+              <label class="ctl"><input type="radio" name="dsr" class="rd" checked><span>Selected</span></label>
+              <label class="ctl"><input type="radio" name="dsr" class="rd"><span>Not selected</span></label>
+              <label class="ctl"><input type="radio" name="dsr2" class="rd" checked disabled><span>Disabled, selected</span></label>
+              <label class="ctl"><input type="radio" name="dsr2" class="rd" disabled><span>Disabled</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 max-w-4xl">
+          <div class="rounded-3xl bg-ink-50 p-7">
+            <div class="text-[12.5px] font-bold text-ink-600 mb-1">Boxed group &middot; <code>.ctl-group-boxed</code></div>
+            <p class="text-[12.5px] text-ink-500 mb-4">For a prominent either/or, where the whole option is the target.</p>
+            <div class="ctl-group-boxed">
+              <label class="ctl"><input type="radio" name="dsb" class="rd" checked><span class="flex-1">Standard delivery</span><span class="nums font-semibold text-[13px]">$5.00</span></label>
+              <label class="ctl"><input type="radio" name="dsb" class="rd"><span class="flex-1">Rush &middot; 24 hours</span><span class="nums font-semibold text-[13px]">$8.50</span></label>
+            </div>
+          </div>
+
+          <div class="rounded-3xl bg-ink-50 p-7">
+            <div class="text-[12.5px] font-bold text-ink-600 mb-1">Chipset &middot; <code>.chipset</code> + <code>.chip-opt</code></div>
+            <p class="text-[12.5px] text-ink-500 mb-4">Single choice, compact. Radio semantics with no visible box &mdash; use when the options are short and scanned side by side.</p>
+            <div class="chipset">
+              <label class="chip-opt"><input type="radio" name="dsc"><span>1 day</span></label>
+              <label class="chip-opt"><input type="radio" name="dsc" checked><span>3 days</span></label>
+              <label class="chip-opt"><input type="radio" name="dsc"><span>7 days</span></label>
+              <label class="chip-opt"><input type="radio" name="dsc" disabled><span>11 days</span></label>
+            </div>
           </div>
         </div>
       </section>

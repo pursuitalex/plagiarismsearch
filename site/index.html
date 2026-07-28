@@ -73,13 +73,55 @@ tailwind.config = {
   .lg-item.found .lg-dot { box-shadow:0 0 0 3px color-mix(in srgb, currentColor 22%, transparent); }
   .no-motion .lg-item { opacity:1; }
 
-  /* ---------- CTA glows · tuned values ---------- */
-  #ctaOrb1 { width:1138px; height:1040px; left:-22.2%; top:-546px; background:rgba(243,111,90,.25);
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 54.1%, transparent 83.2%);
-            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 54.1%, transparent 83.2%); }
-  #ctaOrb2 { width:954px; height:950px; left:74.2%; top:374px; background:rgba(13,168,194,.15);
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 65%, transparent 100%);
-            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 65%, transparent 100%); }
+  /* ================= CTA SECTION · single source of truth =================
+     Every visual knob of the closing CTA lives here as a custom property.
+     Edit these numbers (or drive them live with ?tune=cta) — nothing else needs touching.
+     Breakpoint overrides go in the two media queries at the bottom of this block. */
+  #cta {
+    /* base plate */
+    --cta-bg:          #F2FCFC;
+    /* wash: a soft directional gradient laid over the plate */
+    --cta-wash-angle:  180deg;
+    --cta-wash-from:   rgba(255,255,255,0);
+    --cta-wash-mid:    rgba(255,255,255,0);
+    --cta-wash-midpos: 50%;
+    --cta-wash-to:     rgba(255,255,255,0);
+    /* glow 1 — warm, upper left */
+    --cta-o1-rgb:   243,111,90;
+    --cta-o1-alpha: .25;
+    --cta-o1-w:     1138px;
+    --cta-o1-h:     1040px;
+    --cta-o1-x:     -22.2%;
+    --cta-o1-y:     -546px;
+    --cta-o1-mid:   54.1%;   /* where the mask drops to 50% */
+    --cta-o1-end:   83.2%;   /* where it reaches full transparency */
+    /* glow 2 — cool, lower right */
+    --cta-o2-rgb:   13,168,194;
+    --cta-o2-alpha: .15;
+    --cta-o2-w:     954px;
+    --cta-o2-h:     950px;
+    --cta-o2-x:     74.2%;
+    --cta-o2-y:     374px;
+    --cta-o2-mid:   65%;
+    --cta-o2-end:   100%;
+
+    background-color: var(--cta-bg);
+    background-image: linear-gradient(var(--cta-wash-angle),
+      var(--cta-wash-from) 0%, var(--cta-wash-mid) var(--cta-wash-midpos), var(--cta-wash-to) 100%);
+  }
+  #ctaOrb1 { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+  #ctaOrb2 { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+  /* ---- CTA · tablet (max 1023px) ---- */
+  @media (max-width:1023px) { #cta { } }
+  /* ---- CTA · mobile (max 639px) ---- */
+  @media (max-width:639px)  { #cta { } }
 
   /* ---------- Trustpilot review rail ---------- */
   .tp-scroll { scrollbar-width:none; -ms-overflow-style:none; }
@@ -155,6 +197,16 @@ tailwind.config = {
     transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
   .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
   @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
+  /* ---------- header below lg: burger + panel ---------- */
+  .nav-burger-close { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
+
+  .nav-panel { opacity:0; visibility:hidden; transform:translateY(-8px);
+    transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
+  .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
+
 </style>
 </head>
 <body class="font-sans text-ink-900 bg-white overflow-x-hidden">
@@ -162,24 +214,25 @@ tailwind.config = {
 <div class="grain"></div>
 
 <!-- ================= FLOATING ISLAND NAV ================= -->
-<header class="fixed top-5 inset-x-0 z-50 flex justify-center px-4">
-  <nav class="flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-2 py-2">
-    <a href="#top" class="flex items-center pr-3">
-      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto">
+<header class="fixed top-5 inset-x-0 z-50 px-4">
+  <div class="flex justify-center">
+  <nav class="flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+    <a href="#top" class="flex items-center shrink-0 pr-4 lg:pr-6">
+      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto max-w-none">
     </a>
-    <div class="hidden md:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+    <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="nav-drop absolute left-1/2 top-full pt-5">
           <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
             <a href="plagiarism-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
             <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Paper analysis</span>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Readability check</span>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Spell check</span>
+            <a href="paper-analysis.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+            <a href="readability-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+            <a href="spell-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
             <a href="vip.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">API</span>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Chat bot</span>
+            <a href="api.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+            <a href="chat-bot.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
           </div>
         </div>
       </div>
@@ -203,32 +256,64 @@ tailwind.config = {
             <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Scholarship</span>
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Reviews</span>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Contact us</span>
+            <a href="contact-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Blog</span>
             <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
           </div>
         </div>
       </div>
     </div>
-    <div class="flex items-center gap-2 ml-5">
-      <a href="#" class="btn-press rounded-full ring-1 ring-black/10 text-ink-900 text-[13.5px] font-semibold px-5 py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
-      <a href="#top" class="btn-press group flex items-center gap-2 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] font-semibold pl-4 pr-1.5 py-1.5">
-        Check free
-        <span class="icon-orb w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </span>
-      </a>
+    <div class="flex items-center gap-2 ml-auto lg:ml-8 shrink-0">
+      <a href="#" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13.5px] font-semibold px-5 py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Check free</a>
+      <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+        <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
+        <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
+      </button>
     </div>
   </nav>
+  </div>
+
+  <div id="navPanel" class="nav-panel lg:hidden mx-auto mt-3 w-full max-w-[560px]">
+    <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products</div>
+      <a href="plagiarism-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+      <a href="ai-detector.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+      <a href="paper-analysis.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+      <a href="readability-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+      <a href="spell-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
+      <a href="vip.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+      <a href="api.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+      <a href="chat-bot.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions</div>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For universities</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For teachers</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For students</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For organizations</span>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
+      <a href="why-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+      <a href="mission.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Scholarship</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Reviews</span>
+      <a href="contact-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Blog</span>
+      <a href="help-center.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+      <a href="prices.html" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Prices</a>
+      <div class="sm:hidden mt-3 pt-3 border-t border-ink-100 space-y-2">
+        <a href="#" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
+        <a href="#top" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
+      </div>
+    </div>
+  </div>
 </header>
 
 <!-- ================= ACT 1 · HERO ================= -->
-<section id="top" class="relative min-h-[100dvh] flex items-center overflow-hidden pt-28 pb-16 bg-[#F2FCFC]">
+<section id="top" class="relative min-h-[100dvh] flex items-center overflow-hidden pt-28 sm:pt-36 pb-12 sm:pb-16 bg-[#F2FCFC]">
   <div class="orb w-[820px] h-[780px] bg-orange-500/20 -left-52 -top-56"></div>
   <div class="orb w-[700px] h-[640px] bg-teal-500/15 right-[-180px] top-[30%]"></div>
   <div class="orb w-[480px] h-[460px] bg-orange-300/10 left-[35%] bottom-[-220px]"></div>
 
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 w-full grid lg:grid-cols-[1.1fr_.9fr] gap-16 items-center">
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 w-full grid lg:grid-cols-[1.1fr_.9fr] gap-10 sm:gap-16 items-center">
     <!-- Left -->
     <div>
       <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-7">
@@ -236,17 +321,17 @@ tailwind.config = {
         <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Plagiarism + AI detection</span>
       </div>
 
-      <h1 class="rv text-[clamp(2.6rem,5.2vw,4.35rem)] font-extrabold leading-[1.02] tracking-tightest mb-6">
+      <h1 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold leading-[1.02] tracking-tightest mb-6">
         Plagiarism + AI<br>detection in <span id="oneWord" class="relative inline-block">one.<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none"><path id="oneUnderline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span>
       </h1>
 
-      <p class="rv text-[17px] leading-relaxed text-ink-600 max-w-[52ch] mb-9">
+      <p class="rv text-[16px] sm:text-[17px] leading-relaxed text-ink-600 max-w-[52ch] mb-9">
         Catch copied passages and AI-written paragraphs in 17 languages — without false positives on non-native English. Plans from $9.95.
       </p>
 
       <!-- Paste form -->
-      <div class="rv relative rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-2 shadow-diffuse max-w-[600px]">
-        <div class="rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-6">
+      <div class="rv relative rounded-3xl sm:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-2 shadow-diffuse max-w-[600px]">
+        <div class="rounded-2xl sm:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
@@ -295,7 +380,7 @@ tailwind.config = {
       <div class="grid grid-cols-12 grid-rows-[1.2fr_1fr] gap-3 h-full">
 
         <!-- 1 · plagiarism stat + climbing bars -->
-        <div class="hero-tile col-span-7 rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-6 flex flex-col">
+        <div class="hero-tile col-span-7 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-6 flex flex-col">
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2.5">
               <span class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
@@ -305,13 +390,13 @@ tailwind.config = {
             </div>
             <span class="text-[10px] font-bold tracking-wide text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">14 sources</span>
           </div>
-          <div class="js-plag-stat text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-ink-900">0,0%</div>
+          <div class="js-plag-stat text-[36px] sm:text-[43px] lg:text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-ink-900">0,0%</div>
           <div class="text-[12.5px] font-medium text-ink-400">matched against 14B indexed pages</div>
           <div class="js-bars-wrap flex items-end gap-[3px] h-10 mt-auto"></div>
         </div>
 
         <!-- 2 · document preview (Flow renders the copy as redacted bars) -->
-        <div class="hero-tile col-span-5 relative rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse overflow-hidden">
+        <div class="hero-tile col-span-5 relative rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse overflow-hidden">
           <!-- the page keeps going past the tile — fade makes the crop deliberate -->
           <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/85 to-transparent pointer-events-none z-10"></div>
           <div class="js-paper h-full px-5 pt-5" aria-hidden="true">
@@ -322,7 +407,7 @@ tailwind.config = {
               <span class="ml-1 text-[9.5px] font-bold tracking-[0.14em] text-ink-300">ESSAY.DOCX</span>
             </div>
             <div class="font-flow select-none">
-              <div class="doc-line text-[17px] leading-[1.25] text-ink-400 mb-3">Climate change impacts on global agriculture</div>
+              <div class="doc-line text-[16px] sm:text-[17px] leading-[1.25] text-ink-400 mb-3">Climate change impacts on global agriculture</div>
               <p class="doc-line text-[12px] leading-[1.45] text-ink-300 mb-2.5">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
               <p class="doc-line text-[12px] leading-[1.45] text-ink-300 mb-2.5">Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions.</p>
               <p class="doc-line text-[12px] leading-[1.45] text-ink-300 mb-2.5">However, smallholder farmers in West Africa have adapted through diversified cropping patterns.</p>
@@ -332,7 +417,7 @@ tailwind.config = {
         </div>
 
         <!-- 3 · scan breakdown -->
-        <div class="hero-tile col-span-5 rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-5 flex flex-col">
+        <div class="hero-tile col-span-5 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-5 flex flex-col">
           <div class="flex items-center justify-between mb-3">
             <span class="text-[12.5px] font-bold">Live scan</span>
             <span class="text-[9px] font-bold tracking-wider text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">MATCHED</span>
@@ -354,9 +439,9 @@ tailwind.config = {
         </div>
 
         <!-- 4 · rating -->
-        <div class="hero-tile col-span-7 rounded-3xl bg-ink-900 shadow-diffuse-lg p-5 flex flex-col">
+        <div class="hero-tile col-span-7 rounded-2xl sm:rounded-3xl bg-ink-900 shadow-diffuse-lg p-5 flex flex-col">
           <div class="flex items-center gap-3.5">
-            <span class="w-12 h-12 shrink-0 rounded-full bg-teal-400 flex items-center justify-center text-[16px] font-bold text-ink-950 nums">9.8</span>
+            <span class="w-12 h-12 shrink-0 rounded-full bg-teal-400 flex items-center justify-center text-[15px] sm:text-[16px] font-bold text-ink-950 nums">9.8</span>
             <div>
               <div class="text-[13px] font-semibold text-white leading-tight">Overall users rating</div>
               <div class="text-[11px] font-medium text-ink-400">Rated 4.7 on Trustpilot</div>
@@ -382,17 +467,17 @@ tailwind.config = {
       <div class="js-paper paper-doc absolute left-8 right-3 top-1 bottom-4 rotate-[1.2deg] overflow-hidden">
         <div class="paper-sheet absolute inset-0 bg-white"></div>
         <div class="paper-fold"></div>
-        <div class="relative font-flow select-none px-12 pt-12 pr-16 pb-12" aria-hidden="true">
-          <div class="doc-line text-[27px] leading-[1.25] text-ink-400 mb-4">Climate change impacts on global agriculture</div>
-          <p class="doc-line text-[17px] leading-[1.4] text-ink-300 mb-4">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
-          <p class="doc-line text-[17px] leading-[1.4] text-ink-300 mb-4">Recent studies have shown that rising global temperatures correlate with decreased yields, particularly in regions dependent on rain-fed farming.</p>
-          <p class="doc-line text-[17px] leading-[1.4] text-ink-300 mb-4">However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.</p>
-          <p class="doc-line text-[17px] leading-[1.4] text-ink-300">Field data from recent seasons supports this approach worldwide.</p>
+        <div class="relative font-flow select-none px-6 sm:px-12 pt-12 pr-16 pb-12" aria-hidden="true">
+          <div class="doc-line text-[22px] sm:text-[24px] lg:text-[27px] leading-[1.25] text-ink-400 mb-4">Climate change impacts on global agriculture</div>
+          <p class="doc-line text-[16px] sm:text-[17px] leading-[1.4] text-ink-300 mb-4">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
+          <p class="doc-line text-[16px] sm:text-[17px] leading-[1.4] text-ink-300 mb-4">Recent studies have shown that rising global temperatures correlate with decreased yields, particularly in regions dependent on rain-fed farming.</p>
+          <p class="doc-line text-[16px] sm:text-[17px] leading-[1.4] text-ink-300 mb-4">However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.</p>
+          <p class="doc-line text-[16px] sm:text-[17px] leading-[1.4] text-ink-300">Field data from recent seasons supports this approach worldwide.</p>
         </div>
       </div>
       <!-- accuracy card -->
-      <div class="hero-float absolute right-[-20px] top-[94px] w-[340px] rounded-4xl bg-white/50 backdrop-blur-md ring-1 ring-black/[.08] p-1.5 shadow-diffuse-lg">
-        <div class="rounded-[calc(2rem-0.375rem)] bg-white shadow-inner-hl p-6">
+      <div class="hero-float absolute right-[-20px] top-[94px] w-[340px] rounded-3xl sm:rounded-4xl bg-white/50 backdrop-blur-md ring-1 ring-black/[.08] p-1.5 shadow-diffuse-lg">
+        <div class="rounded-[18px] sm:rounded-[calc(2rem-0.375rem)] bg-white shadow-inner-hl p-5 sm:p-6">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2.5">
               <span class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
@@ -402,7 +487,7 @@ tailwind.config = {
             </div>
             <span class="text-[10px] font-bold tracking-wide text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">14 sources</span>
           </div>
-          <div class="js-plag-stat text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-ink-900">0,0%</div>
+          <div class="js-plag-stat text-[36px] sm:text-[43px] lg:text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-ink-900">0,0%</div>
           <div class="text-[12.5px] font-medium text-ink-400 mb-5">matched against 14B indexed pages</div>
           <div class="js-bars-wrap flex items-end gap-[3px] h-10"></div>
         </div>
@@ -413,15 +498,15 @@ tailwind.config = {
         <span class="text-[12.5px] font-semibold text-[#156B45]">ESL-aware · false-positive &lt; 2%</span>
       </div>
       <!-- live scan mini -->
-      <div class="hero-float absolute right-[108px] bottom-[-12px] w-[310px] rounded-3xl bg-white ring-1 ring-black/5 p-5 shadow-diffuse-lg">
+      <div class="hero-float absolute right-[108px] bottom-[-12px] w-[310px] rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-5 shadow-diffuse-lg">
         <div class="flex items-center justify-between mb-3.5">
           <span class="text-[12.5px] font-bold">Live scan</span>
           <span class="text-[9.5px] font-bold tracking-wider text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">67.5% MATCHED</span>
         </div>
         <div class="grid grid-cols-3 gap-2 text-center">
-          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">PLAGIARISM</div><div class="text-[16px] font-extrabold text-orange-600 nums">67.5%</div></div>
-          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">AI WRITTEN</div><div class="text-[16px] font-extrabold text-teal-600 nums">12.0%</div></div>
-          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">ORIGINAL</div><div class="text-[16px] font-extrabold text-mint-600 nums">20.5%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">PLAGIARISM</div><div class="text-[15px] sm:text-[16px] font-extrabold text-orange-600 nums">67.5%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">AI WRITTEN</div><div class="text-[15px] sm:text-[16px] font-extrabold text-teal-600 nums">12.0%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">ORIGINAL</div><div class="text-[15px] sm:text-[16px] font-extrabold text-mint-600 nums">20.5%</div></div>
         </div>
         <div class="mt-2 flex items-center gap-3 rounded-xl bg-ink-900 pl-2 pr-4 py-2">
           <span class="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-[12px] font-bold text-ink-950 nums">9.8</span>
@@ -459,8 +544,8 @@ tailwind.config = {
 
         <div class="grid lg:grid-cols-[1fr_360px] gap-5">
           <!-- Document -->
-          <div class="scan-doc relative flex rounded-4xl bg-white/[.07] ring-1 ring-white/10 p-1.5">
-            <div class="relative flex flex-col w-full rounded-[calc(2rem-0.375rem)] bg-white text-ink-900 p-8 lg:p-10 overflow-hidden">
+          <div class="scan-doc relative flex rounded-3xl sm:rounded-4xl bg-white/[.07] ring-1 ring-white/10 p-1.5">
+            <div class="relative flex flex-col w-full rounded-[18px] sm:rounded-[calc(2rem-0.375rem)] bg-white text-ink-900 p-6 sm:p-8 lg:p-10 overflow-hidden">
               <!-- scan line -->
               <div id="scanLine" class="absolute left-0 right-0 top-0 h-16 pointer-events-none" style="transform:translateY(-80px);">
                 <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
@@ -473,7 +558,7 @@ tailwind.config = {
                 <span id="scanStatus" class="ml-auto text-[9.5px] font-bold tracking-widest rounded-full px-2.5 py-1 bg-teal-100 text-teal-700 nums">SCANNING · 0%</span>
               </div>
 
-              <h3 class="text-[20px] font-bold tracking-tight mb-1.5">Climate change impacts on global agriculture</h3>
+              <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-1.5">Climate change impacts on global agriculture</h3>
               <div class="text-[10.5px] font-bold tracking-[0.18em] text-ink-400 mb-6">PARAGRAPH 1 OF 2 · 247 WORDS</div>
 
               <p class="text-[15.5px] leading-[1.85] text-ink-700 mb-5">
@@ -509,12 +594,12 @@ tailwind.config = {
 
           <!-- Sidebar -->
           <div class="flex flex-col gap-4">
-            <div class="scan-side rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-6">
+            <div class="scan-side rounded-2xl sm:rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-6">
               <div class="text-[10px] font-bold tracking-[0.2em] text-white/40 mb-4">DETECTION SUMMARY</div>
               <div class="grid grid-cols-3 gap-2.5 text-center">
-                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">PLAGIARISM</div><div class="text-[19px] font-extrabold text-orange-400 nums"><span id="cPlag">0.0</span>%</div></div>
-                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">AI WRITTEN</div><div class="text-[19px] font-extrabold text-teal-400 nums"><span id="cAI">0.0</span>%</div></div>
-                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">ORIGINAL</div><div class="text-[19px] font-extrabold text-mint-400 nums"><span id="cOrig">100</span>%</div></div>
+                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">PLAGIARISM</div><div class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold text-orange-400 nums"><span id="cPlag">0.0</span>%</div></div>
+                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">AI WRITTEN</div><div class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold text-teal-400 nums"><span id="cAI">0.0</span>%</div></div>
+                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">ORIGINAL</div><div class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold text-mint-400 nums"><span id="cOrig">100</span>%</div></div>
               </div>
               <div class="mt-5">
                 <div class="flex justify-between text-[11.5px] font-medium text-white/50 mb-2"><span>AI-generated probability</span><span class="text-teal-400 font-bold nums" id="probLabel">0%</span></div>
@@ -522,7 +607,7 @@ tailwind.config = {
               </div>
             </div>
 
-            <div id="srcCard1" class="rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-5 opacity-0 translate-y-6">
+            <div id="srcCard1" class="rounded-2xl sm:rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-5 opacity-0 translate-y-6">
               <div class="flex items-center justify-between mb-2.5">
                 <span class="text-[9px] font-bold tracking-widest text-orange-300 bg-orange-500/15 rounded-full px-2 py-0.5">94% MATCH</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
@@ -531,7 +616,7 @@ tailwind.config = {
               <div class="text-[11px] text-white/40">Nature Climate Change · 2023</div>
             </div>
 
-            <div id="srcCard2" class="rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-5 opacity-0 translate-y-6">
+            <div id="srcCard2" class="rounded-2xl sm:rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-5 opacity-0 translate-y-6">
               <div class="flex items-center justify-between mb-2.5">
                 <span class="text-[9px] font-bold tracking-widest text-orange-300 bg-orange-500/15 rounded-full px-2 py-0.5">67% MATCH</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
@@ -540,7 +625,7 @@ tailwind.config = {
               <div class="text-[11px] text-white/40">Cambridge J. Agricultural Econ. · 2022</div>
             </div>
 
-            <div id="scanDone" class="rounded-3xl bg-mint-500/10 ring-1 ring-mint-400/20 p-5 opacity-0 translate-y-6">
+            <div id="scanDone" class="rounded-2xl sm:rounded-3xl bg-mint-500/10 ring-1 ring-mint-400/20 p-5 opacity-0 translate-y-6">
               <div class="flex items-center gap-3">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ED2A0" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
                 <div>
@@ -557,9 +642,9 @@ tailwind.config = {
 </section>
 
 <!-- ================= KINETIC BREAK ================= -->
-<section class="relative py-28 lg:py-36 overflow-hidden bg-white">
+<section class="relative py-16 sm:py-28 lg:py-36 overflow-hidden bg-white">
   <div class="max-w-[1280px] mx-auto px-6 lg:px-10 text-center mb-16">
-    <h2 class="rv text-[clamp(2.6rem,6vw,5rem)] font-extrabold tracking-tightest leading-[1.0]">
+    <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02]">
       One scan.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-teal-600">Two detections.</span>
     </h2>
   </div>
@@ -569,7 +654,7 @@ tailwind.config = {
     <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="17" data-suffix="">0</div><div class="text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Languages</div></div>
   </div>
   <!-- ===== LANGUAGES · live scan demo with explainer ===== -->
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[420px_1fr] gap-12 lg:gap-16 items-center">
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[420px_1fr] gap-8 sm:gap-12 lg:gap-16 items-center">
 
     <!-- Explainer (matches capabilities header style) -->
     <div class="rv">
@@ -578,7 +663,7 @@ tailwind.config = {
         <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">17 languages</span>
       </div>
       <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05] mb-5">Same accuracy,<br>any language.</h2>
-      <p class="text-[16.5px] text-ink-600 leading-relaxed mb-7">One sentence, re-scanned across all 17 supported languages. The highlight lands on the same claim every time — and accuracy holds between 94.2% and 98.2%, because each language runs its own trained model, not a translation shortcut.</p>
+      <p class="text-[15.5px] sm:text-[16.5px] text-ink-600 leading-relaxed mb-7">One sentence, re-scanned across all 17 supported languages. The highlight lands on the same claim every time — and accuracy holds between 94.2% and 98.2%, because each language runs its own trained model, not a translation shortcut.</p>
       <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px] font-semibold text-ink-500">
         <span class="flex items-center gap-2">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
@@ -591,8 +676,8 @@ tailwind.config = {
 
     <!-- Live scan cycler -->
     <div id="langLive" class="rv">
-      <div class="rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
-        <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-8 lg:p-10">
+      <div class="rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
+        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 lg:p-10">
           <div class="flex flex-wrap items-center justify-between gap-3 mb-8">
             <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-teal-500 pulse-dot"></span>
@@ -635,8 +720,8 @@ tailwind.config = {
 
   <!-- GDocs wide -->
   <div class="max-w-[1280px] mx-auto px-6 lg:px-10 mt-20">
-    <div class="rv rounded-5xl bg-ink-950 text-white p-2 ring-1 ring-white/10 shadow-diffuse-lg overflow-hidden">
-      <div class="relative rounded-[calc(2.5rem-0.5rem)] p-8 lg:p-12 grid lg:grid-cols-[1.2fr_.8fr] gap-10 items-center overflow-hidden">
+    <div class="rv rounded-3xl sm:rounded-5xl bg-ink-950 text-white p-2 ring-1 ring-white/10 shadow-diffuse-lg overflow-hidden">
+      <div class="relative rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] p-6 sm:p-8 lg:p-12 grid lg:grid-cols-[1.2fr_.8fr] gap-8 sm:gap-10 items-center overflow-hidden">
         <div class="orb w-[500px] h-[500px] bg-teal-500/15 -right-32 -bottom-48"></div>
         <div class="relative">
           <div class="inline-flex items-center gap-2 rounded-full bg-white/[.07] ring-1 ring-white/10 px-3.5 py-1.5 mb-6">
@@ -655,7 +740,7 @@ tailwind.config = {
             <a href="#" class="btn-press rounded-full text-[14px] font-semibold text-white/60 hover:text-white px-5 py-3.5 transition-colors duration-300">Install add-on free</a>
           </div>
         </div>
-        <div class="relative rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5">
+        <div class="relative rounded-2xl sm:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5">
           <div class="flex items-center gap-1.5 mb-4">
             <span class="w-2 h-2 rounded-full bg-[#FF5F57]/60"></span><span class="w-2 h-2 rounded-full bg-[#FEBC2E]/60"></span><span class="w-2 h-2 rounded-full bg-[#28C840]/60"></span>
             <span class="ml-auto text-[10.5px] text-white/40">Climate change essay.docx</span>
@@ -680,7 +765,7 @@ tailwind.config = {
 </section>
 
 <!-- ================= ACT 3 · CAPABILITIES BENTO ================= -->
-<section id="capabilities" class="relative py-28 lg:py-36 bg-ink-50 overflow-hidden">
+<section id="capabilities" class="relative py-16 sm:py-28 lg:py-36 bg-ink-50 overflow-hidden">
   <div class="orb w-[600px] h-[600px] bg-orange-500/8 -left-40 top-20"></div>
   <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
     <div class="rv max-w-[560px] mb-16">
@@ -689,19 +774,19 @@ tailwind.config = {
         <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Capabilities</span>
       </div>
       <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05] mb-5">Built for honesty,<br>not gotchas.</h2>
-      <p class="text-[16.5px] text-ink-600 leading-relaxed">Plagiarism and AI-generated content checked in the same pass — with sources you can verify yourself.</p>
+      <p class="text-[15.5px] sm:text-[16.5px] text-ink-600 leading-relaxed">Plagiarism and AI-generated content checked in the same pass — with sources you can verify yourself.</p>
     </div>
 
     <div class="grid lg:grid-cols-5 gap-5">
       <!-- Plagiarism BIG -->
-      <div class="rv lg:col-span-3 rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
-        <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-8 lg:p-10 h-full">
+      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
+        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 lg:p-10 h-full">
           <span class="inline-flex w-12 h-12 rounded-2xl bg-orange-100 items-center justify-center mb-6">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
           </span>
-          <h3 class="text-[26px] font-bold tracking-tight mb-3">Plagiarism check — with receipts.</h3>
+          <h3 class="text-[21px] sm:text-[23px] lg:text-[26px] font-bold tracking-tight mb-3">Plagiarism check — with receipts.</h3>
           <p class="text-[15px] text-ink-600 leading-relaxed max-w-[48ch] mb-8">14B+ pages indexed across academic journals, news archives, and open web. Every match links back to the source.</p>
-          <div class="rounded-3xl bg-ink-50 p-6">
+          <div class="rounded-2xl sm:rounded-3xl bg-ink-50 p-6">
             <div class="text-[10px] font-bold tracking-[0.18em] text-orange-700 mb-3">EXCERPT · MATCH FOUND</div>
             <p class="text-[14px] leading-[1.8] text-ink-700 mb-4">Climate change impacts have intensified over the past decade, <span class="text-orange-700 font-semibold bg-orange-100/70 rounded px-1">particularly in regions dependent on rain-fed farming</span>. Recent studies suggest yield variability increased by 47.2%.</p>
             <div class="flex items-center gap-3 rounded-xl bg-white ring-1 ring-black/5 px-4 py-3">
@@ -715,31 +800,31 @@ tailwind.config = {
 
       <!-- Right column -->
       <div class="lg:col-span-2 flex flex-col gap-5">
-        <div class="rv rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse flex-1">
-          <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-8 h-full">
+        <div class="rv rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse flex-1">
+          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
             <span class="inline-flex w-11 h-11 rounded-2xl bg-teal-100 items-center justify-center mb-5">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
             </span>
-            <h3 class="text-[20px] font-bold tracking-tight mb-2">AI detection</h3>
+            <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">AI detection</h3>
             <p class="text-[14px] text-ink-600 leading-relaxed mb-5">ChatGPT, Claude, Gemini, Llama — flagged with probability per paragraph. 97.4% accuracy.</p>
             <div class="flex justify-between text-[11px] font-medium text-ink-400 mb-2"><span>Probability</span><span class="text-teal-700 font-bold">live</span></div>
             <div class="h-1.5 rounded-full bg-ink-100 overflow-hidden"><div class="breathe h-full rounded-full bg-gradient-to-r from-teal-400 to-orange-400"></div></div>
           </div>
         </div>
-        <div class="rv rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse flex-1">
-          <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-8 h-full">
+        <div class="rv rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse flex-1">
+          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
             <span class="inline-flex w-11 h-11 rounded-2xl bg-ink-100 items-center justify-center mb-5">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
             </span>
-            <h3 class="text-[20px] font-bold tracking-tight mb-2">17 languages · ESL-aware</h3>
+            <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">17 languages · ESL-aware</h3>
             <p class="text-[14px] text-ink-600 leading-relaxed">Native-quality detection in EN, ES, FR, DE, UA + 12 more. False positives &lt;2% on non-native English.</p>
           </div>
         </div>
       </div>
 
       <!-- GDocs wide · v2 — Report details product mock (from Figma 5379:2309) -->
-      <div class="rv lg:col-span-5 rounded-5xl text-white shadow-diffuse-lg overflow-hidden">
-        <div class="relative rounded-5xl bg-ink-950 p-8 lg:p-12 grid lg:grid-cols-[1fr_420px] gap-10 overflow-hidden">
+      <div class="rv lg:col-span-5 rounded-3xl sm:rounded-5xl text-white shadow-diffuse-lg overflow-hidden">
+        <div class="relative rounded-3xl sm:rounded-5xl bg-ink-950 p-6 sm:p-8 lg:p-12 grid lg:grid-cols-[1fr_420px] gap-8 sm:gap-10 overflow-hidden">
           <img src="assets/gdocs-bg.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
           <div class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/50"></div>
           <div class="relative flex flex-col justify-end items-start">
@@ -769,7 +854,7 @@ tailwind.config = {
             <div class="rounded-xl bg-white text-ink-900 overflow-hidden">
               <!-- header -->
               <div class="flex items-center gap-1 px-5 pt-3 pb-2">
-                <span class="text-[18px] font-semibold tracking-tight mr-auto">Report details</span>
+                <span class="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold tracking-tight mr-auto">Report details</span>
                 <span class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></span>
                 <span class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></span>
                 <span class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span>
@@ -836,7 +921,7 @@ tailwind.config = {
 </section>
 
 <!-- ================= ACT 4 · PERSONAS ================= -->
-<section class="relative py-28 lg:py-36 bg-white overflow-hidden">
+<section class="relative py-16 sm:py-28 lg:py-36 bg-white overflow-hidden">
   <div class="max-w-[1080px] mx-auto px-6 lg:px-10">
     <div class="rv text-center mb-12">
       <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
@@ -858,8 +943,8 @@ tailwind.config = {
     <div class="rv relative min-h-[380px]" id="personaPanels">
       <!-- Student -->
       <div class="persona-panel" data-panel="0">
-        <div class="rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
-          <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-8 py-12 lg:px-16 text-center">
+        <div class="rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
+          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-5 sm:px-8 py-12 lg:px-16 text-center">
             <div class="flex justify-center gap-1 mb-8" aria-hidden="true">
               <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -880,8 +965,8 @@ tailwind.config = {
       </div>
       <!-- Teacher -->
       <div class="persona-panel hidden-panel" data-panel="1">
-        <div class="rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
-          <div class="rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-8 py-12 lg:px-16 text-center">
+        <div class="rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
+          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-5 sm:px-8 py-12 lg:px-16 text-center">
             <div class="flex justify-center gap-1 mb-8" aria-hidden="true">
               <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -902,8 +987,8 @@ tailwind.config = {
       </div>
       <!-- University -->
       <div class="persona-panel hidden-panel" data-panel="2">
-        <div class="rounded-5xl bg-ink-950 ring-1 ring-white/10 p-2 shadow-diffuse-lg">
-          <div class="relative rounded-[calc(2.5rem-0.5rem)] px-8 py-12 lg:px-16 text-center overflow-hidden">
+        <div class="rounded-3xl sm:rounded-5xl bg-ink-950 ring-1 ring-white/10 p-2 shadow-diffuse-lg">
+          <div class="relative rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] px-5 sm:px-8 py-12 lg:px-16 text-center overflow-hidden">
             <div class="orb w-[400px] h-[400px] bg-teal-500/15 -right-24 -top-32"></div>
             <div class="relative flex justify-center gap-1 mb-8" aria-hidden="true">
               <svg class="text-teal-400" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -1102,7 +1187,7 @@ tailwind.config = {
 </section>
 
 <!-- ================= ACT 5 · PRICING ================= -->
-<section id="pricing" class="relative py-28 lg:py-36 bg-ink-50 overflow-hidden">
+<section id="pricing" class="relative py-16 sm:py-28 lg:py-36 bg-ink-50 overflow-hidden">
   <div class="orb w-[520px] h-[520px] bg-teal-500/8 right-[-140px] top-10"></div>
   <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
     <div class="rv text-center max-w-[560px] mx-auto mb-12">
@@ -1111,7 +1196,7 @@ tailwind.config = {
         <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Pricing</span>
       </div>
       <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05] mb-5">3 simple plans.<br>No hidden tiers.</h2>
-      <p class="text-[16px] text-ink-600 leading-relaxed">Pay only for what you need. Cancel anytime. 7-day money-back guarantee.</p>
+      <p class="text-[15px] sm:text-[16px] text-ink-600 leading-relaxed">Pay only for what you need. Cancel anytime. 7-day money-back guarantee.</p>
     </div>
 
     <!-- toggle -->
@@ -1124,11 +1209,11 @@ tailwind.config = {
 
     <div class="grid lg:grid-cols-3 gap-6 items-center max-w-[1180px] mx-auto">
       <!-- Light -->
-      <div class="rv rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 lg:p-7">
+      <div class="rv rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 lg:p-7">
         <div class="text-[11px] font-bold tracking-[0.16em] text-orange-600 mb-1.5">LIGHT</div>
         <div class="text-[13.5px] text-ink-500 mb-6">For occasional checks</div>
         <div class="flex items-end gap-1.5 mb-7">
-          <span class="text-[40px] font-extrabold tracking-tightest leading-none nums price" data-monthly="$9.95" data-yearly="$7.96">$7.96</span>
+          <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums price" data-monthly="$9.95" data-yearly="$7.96">$7.96</span>
           <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 period">/ mo · billed yearly</span>
         </div>
         <div class="h-px bg-ink-100 mb-7"></div>
@@ -1142,7 +1227,7 @@ tailwind.config = {
       </div>
 
       <!-- Standard -->
-      <div class="rv relative rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-6 lg:p-8 lg:-my-6 overflow-hidden">
+      <div class="rv relative rounded-3xl sm:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-6 lg:p-8 lg:-my-6 overflow-hidden">
         <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>
         <div class="relative">
           <div class="flex items-center justify-between mb-1.5">
@@ -1154,7 +1239,7 @@ tailwind.config = {
           </div>
           <div class="text-[13.5px] text-white/50 mb-6">For active writers and students</div>
           <div class="flex items-end gap-1.5 mb-7">
-            <span class="text-[44px] font-extrabold tracking-tightest leading-none nums price" data-monthly="$19.95" data-yearly="$15.96">$15.96</span>
+            <span class="text-[31px] sm:text-[37px] lg:text-[44px] font-extrabold tracking-tightest leading-none nums price" data-monthly="$19.95" data-yearly="$15.96">$15.96</span>
             <span class="text-[12.5px] font-medium text-white/40 pb-1.5 period">/ mo · billed yearly</span>
           </div>
           <div class="h-px bg-white/10 mb-7"></div>
@@ -1175,11 +1260,11 @@ tailwind.config = {
       </div>
 
       <!-- Pro -->
-      <div class="rv rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 lg:p-7">
+      <div class="rv rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 lg:p-7">
         <div class="text-[11px] font-bold tracking-[0.16em] text-orange-600 mb-1.5">PRO</div>
         <div class="text-[13.5px] text-ink-500 mb-6">For teams and educators</div>
         <div class="flex items-end gap-1.5 mb-7">
-          <span class="text-[40px] font-extrabold tracking-tightest leading-none nums price" data-monthly="$39.95" data-yearly="$31.96">$31.96</span>
+          <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums price" data-monthly="$39.95" data-yearly="$31.96">$31.96</span>
           <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 period">/ mo · billed yearly</span>
         </div>
         <div class="h-px bg-ink-100 mb-7"></div>
@@ -1205,8 +1290,8 @@ tailwind.config = {
 </section>
 
 <!-- ================= ACT 6 · FAQ ================= -->
-<section id="faq" class="relative py-28 lg:py-36 bg-white">
-  <div class="max-w-[1180px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[400px_1fr] gap-14 items-start">
+<section id="faq" class="relative py-16 sm:py-28 lg:py-36 bg-white">
+  <div class="max-w-[1180px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[400px_1fr] gap-10 sm:gap-14 items-start">
     <div class="rv lg:sticky lg:top-32">
       <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
@@ -1220,8 +1305,8 @@ tailwind.config = {
       </a>
     </div>
 
-    <div class="rv rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse" id="faqList">
-      <div class="rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+    <div class="rv rounded-3xl sm:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse" id="faqList">
+      <div class="rounded-2xl sm:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
         <div class="faq-item open">
           <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
             <span class="text-[15.5px] font-bold tracking-tight">Is the free check really free? No card, no email gate?</span>
@@ -1282,7 +1367,7 @@ tailwind.config = {
 </section>
 
 <!-- ================= ACT 7 · CTA ================= -->
-<section id="cta" class="relative py-32 lg:py-44 overflow-hidden bg-[#F2FCFC]">
+<section id="cta" class="relative py-20 sm:py-32 lg:py-44 overflow-hidden">
   <div id="ctaOrb1" class="orb"></div>
   <div id="ctaOrb2" class="orb"></div>
   <div class="relative max-w-[880px] mx-auto px-6 text-center">
@@ -1290,17 +1375,17 @@ tailwind.config = {
       <span class="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-dot"></span>
       <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Stop guessing — start checking</span>
     </div>
-    <h2 class="rv text-[clamp(2.6rem,6vw,4.6rem)] font-extrabold tracking-tightest leading-[1.0] mb-7">Your first check<br>is <span id="freeWord" class="relative inline-block">free<svg class="absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-16%; top:-24%; width:132%; height:150%; transform:rotate(-2deg);"><path id="freeCirclePath" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span>.</h2>
-    <p class="rv text-[17px] text-ink-600 leading-relaxed max-w-[46ch] mx-auto mb-11">150 words. No signup. No card. Plagiarism + AI detection across 17 languages. ESL-aware.</p>
+    <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-7">Your first check<br>is <span id="freeWord" class="relative inline-block">free<svg class="absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-16%; top:-24%; width:132%; height:150%; transform:rotate(-2deg);"><path id="freeCirclePath" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span>.</h2>
+    <p class="rv text-[16px] sm:text-[17px] text-ink-600 leading-relaxed max-w-[46ch] mx-auto mb-11">150 words. No signup. No card. Plagiarism + AI detection across 17 languages. ESL-aware.</p>
     <div class="rv flex flex-wrap justify-center gap-4 mb-12">
-      <a href="#top" class="btn-press group magnetic flex items-center gap-3 rounded-full bg-ink-900 text-white text-[16px] font-semibold pl-8 pr-2.5 py-2.5">
+      <a href="#top" class="btn-press group magnetic flex items-center gap-3 rounded-full bg-ink-900 text-white text-[15px] sm:text-[16px] font-semibold pl-8 pr-2.5 py-2.5">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
         Check 150 words free
         <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </span>
       </a>
-      <a href="#" class="btn-press flex items-center gap-2.5 rounded-full bg-white ring-1 ring-ink-200 text-[16px] font-semibold px-7 py-4 hover:bg-ink-50 transition-colors duration-300">
+      <a href="#" class="btn-press flex items-center gap-2.5 rounded-full bg-white ring-1 ring-ink-200 text-[15px] sm:text-[16px] font-semibold px-7 py-4 hover:bg-ink-50 transition-colors duration-300">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Talk to sales · universities
       </a>
@@ -1318,7 +1403,7 @@ tailwind.config = {
 <footer class="relative bg-ink-950 text-white pt-20 pb-10 overflow-hidden">
   <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
   <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
-    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-12 mb-16">
+    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-12 mb-16">
       <div>
         <a href="#top" class="inline-flex items-center mb-6">
           <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
@@ -1333,9 +1418,9 @@ tailwind.config = {
       <div>
         <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">PRODUCT</div>
         <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
-          <li><a href="#" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
-          <li><a href="#" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
-          <li><a href="#" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="plagiarism-check.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="ai-detector.html" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="paper-analysis.html" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
           <li><a href="#" class="hover:text-white transition-colors duration-300">Sample Report</a></li>
         </ul>
       </div>
@@ -1350,7 +1435,7 @@ tailwind.config = {
       <div>
         <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">RESOURCES</div>
         <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
-          <li><a href="#" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="help-center.html" class="hover:text-white transition-colors duration-300">Help Center</a></li>
           <li><a href="#" class="hover:text-white transition-colors duration-300">API docs</a></li>
           <li><a href="#" class="hover:text-white transition-colors duration-300">Blog</a></li>
         </ul>
@@ -1358,8 +1443,8 @@ tailwind.config = {
       <div>
         <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">COMPANY</div>
         <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
-          <li><a href="#" class="hover:text-white transition-colors duration-300">About</a></li>
-          <li><a href="#" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">About</a></li>
+          <li><a href="contact-us.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
           <li><a href="#" class="hover:text-white transition-colors duration-300">Compliance</a></li>
           <li><a href="#" class="hover:text-white transition-colors duration-300">Careers</a></li>
         </ul>
@@ -1847,6 +1932,39 @@ if (!reduceMotion) {
   </svg>
   <span class="text-[13.5px] font-semibold">Design System</span>
 </a>
+
+<!-- dev-only: the CTA tuner exists solely when ?tune=cta is on the URL -->
+<script>
+if (new URLSearchParams(location.search).get("tune") === "cta") {
+  const t = document.createElement("script");
+  t.src = "assets/dev/cta-tuner.js";
+  document.body.appendChild(t);
+}
+</script>
+
+<script>
+(() => {
+  'use strict';
+  const btn = document.getElementById('navBurger');
+  const panel = document.getElementById('navPanel');
+  if (!btn || !panel) return;
+
+  const setOpen = on => {
+    btn.setAttribute('aria-expanded', String(on));
+    panel.classList.toggle('open', on);
+    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
+  };
+
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => {
+    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+  // the desktop menu takes over at lg — never leave the panel hanging open across it
+  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
+})();
+</script>
 
 </body>
 </html>
