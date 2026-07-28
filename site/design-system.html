@@ -37,7 +37,12 @@ tailwind.config = {
 }
 </script>
 <style>
-  html { background:#fff; }
+  /* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
+     disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
+     grain sheet and the header render 150px wider than the page and open a white gutter that
+     no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
+     creates no scroll container, so position:sticky in the scan scene keeps working. */
+  html { background:#fff; overflow-x: clip; }
   body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   ::selection { background:#F36F5A; color:#fff; }
   [id] { scroll-margin-top: 96px; }
@@ -252,15 +257,15 @@ tailwind.config = {
           what ships. Click any swatch or token to copy its value.
         </p>
         <dl class="grid sm:grid-cols-3 gap-3 max-w-3xl">
-          <div class="rounded-2xl bg-ink-50 p-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
             <dt class="eyebrow mb-2">Base direction</dt>
             <dd class="text-[15px] font-semibold">D3 — Soft Productivity</dd>
           </div>
-          <div class="rounded-2xl bg-ink-50 p-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
             <dt class="eyebrow mb-2">Type</dt>
             <dd class="text-[15px] font-semibold">Manrope + Newsreader</dd>
           </div>
-          <div class="rounded-2xl bg-ink-50 p-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
             <dt class="eyebrow mb-2">Accessibility floor</dt>
             <dd class="text-[15px] font-semibold">WCAG 2.2 AA</dd>
           </div>
@@ -282,7 +287,7 @@ tailwind.config = {
             <div class="h-28 relative" style="background:linear-gradient(120deg,#FEF4F1 0%,#FFFFFF 45%,#E8F8FB 100%)">
               <span class="absolute left-5 bottom-4 text-[13px] font-extrabold tracking-tightest text-ink-900">Aa</span>
             </div>
-            <div class="p-5 bg-white">
+            <div class="p-4 lg:p-5 bg-white">
               <div class="flex items-center gap-2 mb-2">
                 <span class="badge badge-sm bg-orange-100 text-orange-700">Base</span>
                 <h3 class="text-[15px] font-bold">D3 — Soft Productivity</h3>
@@ -295,7 +300,7 @@ tailwind.config = {
             <div class="h-28 relative" style="background:#FAF6EF">
               <span class="absolute left-5 bottom-4 font-serif text-[15px] text-[#3B3226]">Aa</span>
             </div>
-            <div class="p-5 bg-white">
+            <div class="p-4 lg:p-5 bg-white">
               <h3 class="text-[15px] font-bold mb-2">D1 — Editorial Trust</h3>
               <p class="text-[13.5px] leading-relaxed text-ink-500">Cream surface + Newsreader H1/H2. /for-universities, /compliance. Warm, formal, institutional.</p>
             </div>
@@ -305,7 +310,7 @@ tailwind.config = {
             <div class="h-28 relative" style="background:#0A0E1A">
               <span class="absolute left-5 bottom-4 text-[13px] font-extrabold tracking-tightest text-teal-300">Aa</span>
             </div>
-            <div class="p-5 bg-white">
+            <div class="p-4 lg:p-5 bg-white">
               <h3 class="text-[15px] font-bold mb-2">D2 — AI Confident</h3>
               <p class="text-[13.5px] leading-relaxed text-ink-500">Navy base + teal accents. /ai-detection hero, /sample-report. Sharp, technical, product-demo.</p>
             </div>
@@ -328,10 +333,10 @@ tailwind.config = {
           Always reference the semantic name, never the raw ramp — that is what makes the theme layers swappable.
         </p>
 
-        <div class="grid lg:grid-cols-2 gap-x-10 gap-y-8">
+        <div class="grid lg:grid-cols-2 gap-x-6 sm:gap-x-8 lg:gap-x-10 gap-y-6 sm:gap-y-7 lg:gap-y-8">
           <div>
             <div class="eyebrow mb-3">Text</div>
-            <div class="rounded-2xl border border-ink-100 divide-y divide-ink-100 overflow-hidden">
+            <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 divide-y divide-ink-100 overflow-hidden">
               <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#111827"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/primary</code><span class="text-[11.5px] text-ink-400 nums">neutral/900</span></div>
               <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#374151"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/secondary</code><span class="text-[11.5px] text-ink-400">neutral/700</span></div>
               <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#6B7280"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">text/muted</code><span class="text-[11.5px] text-ink-400">neutral/500</span></div>
@@ -344,7 +349,7 @@ tailwind.config = {
 
           <div>
             <div class="eyebrow mb-3">Surface</div>
-            <div class="rounded-2xl border border-ink-100 divide-y divide-ink-100 overflow-hidden">
+            <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 divide-y divide-ink-100 overflow-hidden">
               <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0 ring-1 ring-ink-200" style="background:#FFFFFF"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/primary</code><span class="text-[11.5px] text-ink-400">white</span></div>
               <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0 ring-1 ring-ink-200" style="background:#F8F9FB"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/subtle</code><span class="text-[11.5px] text-ink-400">neutral/50</span></div>
               <div class="flex items-center gap-3 px-4 py-2.5"><span class="w-5 h-5 rounded shrink-0" style="background:#F1F2F6"></span><code class="text-[12.5px] font-semibold text-ink-700 flex-1">surface/muted</code><span class="text-[11.5px] text-ink-400">neutral/100</span></div>
@@ -358,7 +363,7 @@ tailwind.config = {
 
         <!-- contrast notes -->
         <div class="mt-12 grid md:grid-cols-2 gap-4">
-          <div class="rounded-2xl bg-mint-50 border border-mint-200 p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-50 border border-mint-200 p-4 sm:p-5 lg:p-6">
             <div class="flex items-center gap-2 mb-3">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
               <h3 class="text-[15px] font-bold text-mint-700">Hover / active states pass AA</h3>
@@ -374,7 +379,7 @@ tailwind.config = {
             </ul>
           </div>
 
-          <div class="rounded-2xl bg-orange-50 border border-orange-200 p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-50 border border-orange-200 p-4 sm:p-5 lg:p-6">
             <div class="flex items-center gap-2 mb-3">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
               <h3 class="text-[15px] font-bold text-orange-700">Brand-locked exception</h3>
@@ -398,7 +403,7 @@ tailwind.config = {
         <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Type</h2>
 
         <div class="grid md:grid-cols-2 gap-4 mb-14">
-          <div class="rounded-3xl border border-ink-100 p-7">
+          <div class="rounded-3xl border border-ink-100 p-5 sm:p-6 lg:p-7">
             <div class="flex items-baseline justify-between mb-4">
               <h3 class="text-[19px] font-extrabold tracking-tightest">Manrope</h3>
               <span class="badge badge-sm bg-ink-100 text-ink-600">Primary</span>
@@ -412,7 +417,7 @@ tailwind.config = {
             </div>
           </div>
 
-          <div class="rounded-3xl border border-ink-100 p-7" style="background:#FAF6EF">
+          <div class="rounded-3xl border border-ink-100 p-5 sm:p-6 lg:p-7" style="background:#FAF6EF">
             <div class="flex items-baseline justify-between mb-4">
               <h3 class="text-[19px] font-extrabold tracking-tightest">Newsreader</h3>
               <span class="badge badge-sm bg-white text-ink-600">D1 accent</span>
@@ -428,20 +433,20 @@ tailwind.config = {
           Manrope's default spacing is loose at display sizes. Tracking tightens as size grows, and reverses to
           <em>positive</em> for small caps — the single rule that makes the whole system feel drawn rather than defaulted.
         </p>
-        <div class="rounded-2xl border border-ink-100 overflow-hidden mb-14">
+        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 overflow-hidden mb-14">
           <table class="w-full text-left">
             <thead class="bg-ink-900 text-white">
               <tr class="text-[10.5px] font-bold uppercase" style="letter-spacing:.08em">
-                <th class="px-5 py-3">Size</th><th class="px-5 py-3">Tracking</th><th class="px-5 py-3 hidden sm:table-cell">Preview</th>
+                <th class="px-4 lg:px-5 py-3">Size</th><th class="px-4 lg:px-5 py-3">Tracking</th><th class="px-4 lg:px-5 py-3 hidden sm:table-cell">Preview</th>
               </tr>
             </thead>
             <tbody class="text-[14px]">
-              <tr class="bg-white"><td class="px-5 py-3 font-semibold">≥ 60px display</td><td class="px-5 py-3 nums text-ink-500">-2.5% → -3%</td><td class="px-5 py-3 hidden sm:table-cell text-[26px] font-extrabold" style="letter-spacing:-.03em">Detection</td></tr>
-              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">≥ 40px</td><td class="px-5 py-3 nums text-ink-500">-2%</td><td class="px-5 py-3 hidden sm:table-cell text-[26px] font-extrabold" style="letter-spacing:-.02em">Detection</td></tr>
-              <tr class="bg-white"><td class="px-5 py-3 font-semibold">≥ 28px · H1</td><td class="px-5 py-3 nums text-ink-500">-1.5%</td><td class="px-5 py-3 hidden sm:table-cell text-[26px] font-bold" style="letter-spacing:-.015em">Detection</td></tr>
-              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">≥ 22px · H2</td><td class="px-5 py-3 nums text-ink-500">-1%</td><td class="px-5 py-3 hidden sm:table-cell text-[22px] font-bold" style="letter-spacing:-.01em">Detection</td></tr>
-              <tr class="bg-white"><td class="px-5 py-3 font-semibold">≤ 17px · body, UI</td><td class="px-5 py-3 nums text-ink-500">0%</td><td class="px-5 py-3 hidden sm:table-cell text-[16px]">Detection</td></tr>
-              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">UI caps, eyebrow</td><td class="px-5 py-3 nums text-ink-500">+4% → +8%</td><td class="px-5 py-3 hidden sm:table-cell text-[12px] font-bold uppercase" style="letter-spacing:.08em">Detection</td></tr>
+              <tr class="bg-white"><td class="px-4 lg:px-5 py-3 font-semibold">≥ 60px display</td><td class="px-4 lg:px-5 py-3 nums text-ink-500">-2.5% → -3%</td><td class="px-4 lg:px-5 py-3 hidden sm:table-cell text-[26px] font-extrabold" style="letter-spacing:-.03em">Detection</td></tr>
+              <tr class="bg-ink-50"><td class="px-4 lg:px-5 py-3 font-semibold">≥ 40px</td><td class="px-4 lg:px-5 py-3 nums text-ink-500">-2%</td><td class="px-4 lg:px-5 py-3 hidden sm:table-cell text-[26px] font-extrabold" style="letter-spacing:-.02em">Detection</td></tr>
+              <tr class="bg-white"><td class="px-4 lg:px-5 py-3 font-semibold">≥ 28px · H1</td><td class="px-4 lg:px-5 py-3 nums text-ink-500">-1.5%</td><td class="px-4 lg:px-5 py-3 hidden sm:table-cell text-[26px] font-bold" style="letter-spacing:-.015em">Detection</td></tr>
+              <tr class="bg-ink-50"><td class="px-4 lg:px-5 py-3 font-semibold">≥ 22px · H2</td><td class="px-4 lg:px-5 py-3 nums text-ink-500">-1%</td><td class="px-4 lg:px-5 py-3 hidden sm:table-cell text-[22px] font-bold" style="letter-spacing:-.01em">Detection</td></tr>
+              <tr class="bg-white"><td class="px-4 lg:px-5 py-3 font-semibold">≤ 17px · body, UI</td><td class="px-4 lg:px-5 py-3 nums text-ink-500">0%</td><td class="px-4 lg:px-5 py-3 hidden sm:table-cell text-[16px]">Detection</td></tr>
+              <tr class="bg-ink-50"><td class="px-4 lg:px-5 py-3 font-semibold">UI caps, eyebrow</td><td class="px-4 lg:px-5 py-3 nums text-ink-500">+4% → +8%</td><td class="px-4 lg:px-5 py-3 hidden sm:table-cell text-[12px] font-bold uppercase" style="letter-spacing:.08em">Detection</td></tr>
             </tbody>
           </table>
         </div>
@@ -457,17 +462,17 @@ tailwind.config = {
         <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-10">Grid &amp; spacing</h2>
 
         <div class="grid md:grid-cols-3 gap-4 mb-12">
-          <div class="rounded-2xl border border-ink-100 p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 p-4 sm:p-5 lg:p-6">
             <div class="eyebrow mb-3">Desktop</div>
             <div class="text-[27px] font-extrabold tracking-tightest mb-1 nums">1280<span class="text-ink-300">px</span></div>
             <p class="text-[13px] text-ink-500">content max · 80px gutters · device 1440+</p>
           </div>
-          <div class="rounded-2xl border border-ink-100 p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 p-4 sm:p-5 lg:p-6">
             <div class="eyebrow mb-3">Tablet</div>
             <div class="text-[27px] font-extrabold tracking-tightest mb-1 nums">768<span class="text-ink-300">px</span></div>
             <p class="text-[13px] text-ink-500">content max · 48px gutters · device 768</p>
           </div>
-          <div class="rounded-2xl border border-ink-100 p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 p-4 sm:p-5 lg:p-6">
             <div class="eyebrow mb-3">Mobile</div>
             <div class="text-[27px] font-extrabold tracking-tightest mb-1 nums">360<span class="text-ink-300">px</span></div>
             <p class="text-[13px] text-ink-500">content max · 24px gutters · device 375</p>
@@ -523,15 +528,15 @@ tailwind.config = {
           which use a negative spread for a softer, further-thrown falloff than a literal token port.
         </p>
         <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-          <div class="rounded-2xl bg-white el-0 border border-ink-100 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/0</div><div class="text-[11px] text-ink-400">flat</div></div>
-          <div class="rounded-2xl bg-white el-1 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/1</div><div class="text-[11px] text-ink-400">cards</div></div>
-          <div class="rounded-2xl bg-white el-2 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/2</div><div class="text-[11px] text-ink-400">raised</div></div>
-          <div class="rounded-2xl bg-white el-3 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/3</div><div class="text-[11px] text-ink-400">modal</div></div>
-          <div class="rounded-2xl bg-white el-4 p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/4</div><div class="text-[11px] text-ink-400">popover</div></div>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white el-0 border border-ink-100 p-4 lg:p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/0</div><div class="text-[11px] text-ink-400">flat</div></div>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white el-1 p-4 lg:p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/1</div><div class="text-[11px] text-ink-400">cards</div></div>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white el-2 p-4 lg:p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/2</div><div class="text-[11px] text-ink-400">raised</div></div>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white el-3 p-4 lg:p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/3</div><div class="text-[11px] text-ink-400">modal</div></div>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white el-4 p-4 lg:p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">elevation/4</div><div class="text-[11px] text-ink-400">popover</div></div>
         </div>
         <div class="grid sm:grid-cols-2 gap-4">
-          <div class="rounded-2xl bg-white shadow-diffuse p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">shadow-diffuse</div><div class="text-[11px] text-ink-400">web · default card</div></div>
-          <div class="rounded-2xl bg-white shadow-diffuse-lg p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">shadow-diffuse-lg</div><div class="text-[11px] text-ink-400">web · hero, floating</div></div>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white shadow-diffuse p-4 lg:p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">shadow-diffuse</div><div class="text-[11px] text-ink-400">web · default card</div></div>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white shadow-diffuse-lg p-4 lg:p-5 h-28 flex flex-col justify-end"><div class="text-[12.5px] font-bold">shadow-diffuse-lg</div><div class="text-[11px] text-ink-400">web · hero, floating</div></div>
         </div>
       </section>
 
@@ -544,7 +549,7 @@ tailwind.config = {
         </p>
 
         <div class="eyebrow mb-4">Variants <span class="normal-case tracking-normal font-medium text-ink-400">— hover to see the AA-safe fill</span></div>
-        <div class="rounded-3xl bg-ink-50 p-7 mb-10">
+        <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7 mb-10">
           <div class="flex flex-wrap items-center gap-3">
             <button class="btn btn-md btn-primary">Primary</button>
             <button class="btn btn-md btn-secondary">Secondary</button>
@@ -556,10 +561,10 @@ tailwind.config = {
           </div>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-10">
+        <div class="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
           <div>
             <div class="eyebrow mb-4">Sizes</div>
-            <div class="rounded-3xl bg-ink-50 p-7 flex flex-wrap items-end gap-3">
+            <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7 flex flex-wrap items-end gap-3">
               <button class="btn btn-xs btn-primary">xs · 32</button>
               <button class="btn btn-sm btn-primary">sm · 40</button>
               <button class="btn btn-md btn-primary">md · 48</button>
@@ -569,7 +574,7 @@ tailwind.config = {
           </div>
           <div>
             <div class="eyebrow mb-4">Case · caps track wider as size drops</div>
-            <div class="rounded-3xl bg-ink-50 p-7 flex flex-wrap items-end gap-3">
+            <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7 flex flex-wrap items-end gap-3">
               <button class="btn btn-xs btn-caps btn-dark">xs +8%</button>
               <button class="btn btn-sm btn-caps btn-dark">sm +7%</button>
               <button class="btn btn-md btn-caps btn-dark">md +5.5%</button>
@@ -581,7 +586,7 @@ tailwind.config = {
 
         <div class="mt-10">
           <div class="eyebrow mb-4">With icon</div>
-          <div class="rounded-3xl bg-ink-50 p-7 flex flex-wrap items-center gap-3">
+          <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7 flex flex-wrap items-center gap-3">
             <button class="btn btn-md btn-primary">
               Check my text
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -599,7 +604,7 @@ tailwind.config = {
         <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-3">Badge</h2>
         <p class="text-[16px] text-ink-500 max-w-[62ch] mb-8">6 colors × 2 sizes × 2 styles. Pill-shaped, SemiBold caps, progressive letter-spacing.</p>
 
-        <div class="rounded-3xl bg-ink-50 p-7 space-y-5">
+        <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7 space-y-5">
           <div>
             <div class="eyebrow mb-3">Soft</div>
             <div class="flex flex-wrap items-center gap-2.5">
@@ -641,7 +646,7 @@ tailwind.config = {
           not Regular — Regular reads thin against a field border.
         </p>
 
-        <div class="rounded-3xl bg-ink-50 p-7 grid md:grid-cols-2 gap-6 max-w-3xl">
+        <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7 grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 max-w-3xl">
           <div>
             <label class="block text-[12.5px] font-bold text-ink-600 mb-2">Default · md 48</label>
             <input class="fld fld-md" placeholder="name@university.edu">
@@ -680,8 +685,8 @@ tailwind.config = {
           18px box, teal-600 fill, 3px focus halo. Never ship a browser-default checkbox.
         </p>
 
-        <div class="grid md:grid-cols-2 gap-6 max-w-4xl mb-6">
-          <div class="rounded-3xl bg-ink-50 p-7">
+        <div class="grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 max-w-4xl mb-6">
+          <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7">
             <div class="text-[12.5px] font-bold text-ink-600 mb-4">Checkbox &middot; <code>.ck</code></div>
             <div class="ctl-group">
               <label class="ctl"><input type="checkbox" class="ck" checked><span>Checked</span></label>
@@ -691,7 +696,7 @@ tailwind.config = {
             </div>
           </div>
 
-          <div class="rounded-3xl bg-ink-50 p-7">
+          <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7">
             <div class="text-[12.5px] font-bold text-ink-600 mb-4">Radio &middot; <code>.rd</code></div>
             <div class="ctl-group">
               <label class="ctl"><input type="radio" name="dsr" class="rd" checked><span>Selected</span></label>
@@ -702,8 +707,8 @@ tailwind.config = {
           </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6 max-w-4xl">
-          <div class="rounded-3xl bg-ink-50 p-7">
+        <div class="grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 max-w-4xl">
+          <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7">
             <div class="text-[12.5px] font-bold text-ink-600 mb-1">Boxed group &middot; <code>.ctl-group-boxed</code></div>
             <p class="text-[12.5px] text-ink-500 mb-4">For a prominent either/or, where the whole option is the target.</p>
             <div class="ctl-group-boxed">
@@ -712,7 +717,7 @@ tailwind.config = {
             </div>
           </div>
 
-          <div class="rounded-3xl bg-ink-50 p-7">
+          <div class="rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7">
             <div class="text-[12.5px] font-bold text-ink-600 mb-1">Chipset &middot; <code>.chipset</code> + <code>.chip-opt</code></div>
             <p class="text-[12.5px] text-ink-500 mb-4">Single choice, compact. Radio semantics with no visible box &mdash; use when the options are short and scanned side by side.</p>
             <div class="chipset">
@@ -729,18 +734,18 @@ tailwind.config = {
       <section id="cards" class="py-16 border-t border-ink-100">
         <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-8">Card &amp; table</h2>
 
-        <div class="grid md:grid-cols-3 gap-5 mb-14">
-          <article class="rounded-2xl bg-white el-2 p-8">
+        <div class="grid md:grid-cols-3 gap-4 lg:gap-5 mb-14">
+          <article class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white el-2 p-6 sm:p-7 lg:p-8">
             <span class="badge badge-sm bg-orange-100 text-orange-700 mb-4">Elevated</span>
             <h3 class="text-[17px] font-bold tracking-tightest mb-2">Default card</h3>
             <p class="text-[14px] leading-relaxed text-ink-500">elevation/2, no border. The workhorse — feature grids, pricing, bento cells.</p>
           </article>
-          <article class="rounded-2xl bg-white border border-ink-100 p-8">
+          <article class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white border border-ink-100 p-6 sm:p-7 lg:p-8">
             <span class="badge badge-sm bg-ink-100 text-ink-600 mb-4">Bordered</span>
             <h3 class="text-[17px] font-bold tracking-tightest mb-2">Quiet card</h3>
             <p class="text-[14px] leading-relaxed text-ink-500">border/subtle only. For dense lists where stacked shadows would muddy the page.</p>
           </article>
-          <article class="rounded-2xl bg-ink-100 p-8">
+          <article class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 p-6 sm:p-7 lg:p-8">
             <span class="badge badge-sm bg-white text-ink-600 mb-4">Filled</span>
             <h3 class="text-[17px] font-bold tracking-tightest mb-2">Filled card</h3>
             <p class="text-[14px] leading-relaxed text-ink-500">surface/muted. Groups related content without adding a third elevation layer.</p>
@@ -753,14 +758,14 @@ tailwind.config = {
           <table class="w-full text-left min-w-[520px]">
             <thead class="bg-ink-900 text-white">
               <tr class="text-[10.5px] font-bold uppercase" style="letter-spacing:.08em">
-                <th class="px-5 py-4">Plan</th><th class="px-5 py-4">Checks</th>
-                <th class="px-5 py-4 text-right">Per page</th><th class="px-5 py-4 text-right">Price</th>
+                <th class="px-4 lg:px-5 py-4">Plan</th><th class="px-4 lg:px-5 py-4">Checks</th>
+                <th class="px-4 lg:px-5 py-4 text-right">Per page</th><th class="px-4 lg:px-5 py-4 text-right">Price</th>
               </tr>
             </thead>
             <tbody class="text-[14.5px]">
-              <tr class="bg-white"><td class="px-5 py-4 font-semibold">Pay as you go</td><td class="px-5 py-4 text-ink-500">Unlimited</td><td class="px-5 py-4 text-right nums text-ink-500">$0.20</td><td class="px-5 py-4 text-right font-bold nums">$9.95</td></tr>
-              <tr class="bg-ink-50"><td class="px-5 py-4 font-semibold">Student</td><td class="px-5 py-4 text-ink-500">150 / mo</td><td class="px-5 py-4 text-right nums text-ink-500">$0.13</td><td class="px-5 py-4 text-right font-bold nums">$19.95</td></tr>
-              <tr class="bg-white"><td class="px-5 py-4 font-semibold">Institution</td><td class="px-5 py-4 text-ink-500">Unlimited</td><td class="px-5 py-4 text-right nums text-ink-500">$0.06</td><td class="px-5 py-4 text-right font-bold nums">Custom</td></tr>
+              <tr class="bg-white"><td class="px-4 lg:px-5 py-4 font-semibold">Pay as you go</td><td class="px-4 lg:px-5 py-4 text-ink-500">Unlimited</td><td class="px-4 lg:px-5 py-4 text-right nums text-ink-500">$0.20</td><td class="px-4 lg:px-5 py-4 text-right font-bold nums">$9.95</td></tr>
+              <tr class="bg-ink-50"><td class="px-4 lg:px-5 py-4 font-semibold">Student</td><td class="px-4 lg:px-5 py-4 text-ink-500">150 / mo</td><td class="px-4 lg:px-5 py-4 text-right nums text-ink-500">$0.13</td><td class="px-4 lg:px-5 py-4 text-right font-bold nums">$19.95</td></tr>
+              <tr class="bg-white"><td class="px-4 lg:px-5 py-4 font-semibold">Institution</td><td class="px-4 lg:px-5 py-4 text-ink-500">Unlimited</td><td class="px-4 lg:px-5 py-4 text-right nums text-ink-500">$0.06</td><td class="px-4 lg:px-5 py-4 text-right font-bold nums">Custom</td></tr>
             </tbody>
           </table>
         </div>
@@ -788,37 +793,37 @@ tailwind.config = {
         </p>
 
         <div class="grid sm:grid-cols-3 gap-4 mb-12">
-          <div class="rounded-2xl border border-ink-100 p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 p-4 sm:p-5 lg:p-6">
             <div class="w-10 h-10 rounded-xl bg-orange-500 mb-5 demo-dur" style="--d:200ms"></div>
             <div class="text-[19px] font-extrabold tracking-tightest mb-1 nums">150–250<span class="text-ink-300 text-[14px]">ms</span></div>
             <p class="text-[13px] text-ink-500">UI transitions — hover, focus, tab switch</p>
           </div>
-          <div class="rounded-2xl border border-ink-100 p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 p-4 sm:p-5 lg:p-6">
             <div class="w-10 h-10 rounded-xl bg-teal-500 mb-5 demo-dur" style="--d:500ms"></div>
             <div class="text-[19px] font-extrabold tracking-tightest mb-1 nums">400–600<span class="text-ink-300 text-[14px]">ms</span></div>
             <p class="text-[13px] text-ink-500">Hero, scan progress, counters</p>
           </div>
-          <div class="rounded-2xl border border-ink-100 p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 p-4 sm:p-5 lg:p-6">
             <div class="w-10 h-10 rounded-xl bg-ink-900 mb-5 demo-dur" style="--d:1000ms"></div>
             <div class="text-[19px] font-extrabold tracking-tightest mb-1 nums">800–1200<span class="text-ink-300 text-[14px]">ms</span></div>
             <p class="text-[13px] text-ink-500">Onboarding, page reveals</p>
           </div>
         </div>
 
-        <div class="rounded-2xl border border-ink-100 overflow-hidden">
+        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 overflow-hidden">
           <table class="w-full text-left">
             <thead class="bg-ink-900 text-white">
               <tr class="text-[10.5px] font-bold uppercase" style="letter-spacing:.08em">
-                <th class="px-5 py-3">Pattern</th><th class="px-5 py-3">Behaviour</th>
+                <th class="px-4 lg:px-5 py-3">Pattern</th><th class="px-4 lg:px-5 py-3">Behaviour</th>
               </tr>
             </thead>
             <tbody class="text-[14px]">
-              <tr class="bg-white"><td class="px-5 py-3 font-semibold">Hero gradient</td><td class="px-5 py-3 text-ink-500">Slow mesh shift, 10s ease loop</td></tr>
-              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">Stats counter</td><td class="px-5 py-3 text-ink-500">Spring-up 0 → value on scroll-in, 400ms</td></tr>
-              <tr class="bg-white"><td class="px-5 py-3 font-semibold">Scan widget</td><td class="px-5 py-3 text-ink-500">Scan line during processing, 1.5s loop</td></tr>
-              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">Section reveal</td><td class="px-5 py-3 text-ink-500">Fade + 12px translateY on viewport-enter, 250ms</td></tr>
-              <tr class="bg-white"><td class="px-5 py-3 font-semibold">Pricing toggle</td><td class="px-5 py-3 text-ink-500">Slide-flip, 200ms</td></tr>
-              <tr class="bg-ink-50"><td class="px-5 py-3 font-semibold">Button hover</td><td class="px-5 py-3 text-ink-500">Fill transition, 150ms ease-out</td></tr>
+              <tr class="bg-white"><td class="px-4 lg:px-5 py-3 font-semibold">Hero gradient</td><td class="px-4 lg:px-5 py-3 text-ink-500">Slow mesh shift, 10s ease loop</td></tr>
+              <tr class="bg-ink-50"><td class="px-4 lg:px-5 py-3 font-semibold">Stats counter</td><td class="px-4 lg:px-5 py-3 text-ink-500">Spring-up 0 → value on scroll-in, 400ms</td></tr>
+              <tr class="bg-white"><td class="px-4 lg:px-5 py-3 font-semibold">Scan widget</td><td class="px-4 lg:px-5 py-3 text-ink-500">Scan line during processing, 1.5s loop</td></tr>
+              <tr class="bg-ink-50"><td class="px-4 lg:px-5 py-3 font-semibold">Section reveal</td><td class="px-4 lg:px-5 py-3 text-ink-500">Fade + 12px translateY on viewport-enter, 250ms</td></tr>
+              <tr class="bg-white"><td class="px-4 lg:px-5 py-3 font-semibold">Pricing toggle</td><td class="px-4 lg:px-5 py-3 text-ink-500">Slide-flip, 200ms</td></tr>
+              <tr class="bg-ink-50"><td class="px-4 lg:px-5 py-3 font-semibold">Button hover</td><td class="px-4 lg:px-5 py-3 text-ink-500">Fill transition, 150ms ease-out</td></tr>
             </tbody>
           </table>
         </div>
@@ -829,15 +834,15 @@ tailwind.config = {
         <div class="eyebrow mb-3">12 — Accessibility</div>
         <h2 class="text-[34px] font-extrabold tracking-tightest leading-tight mb-8">The floor</h2>
         <ul class="grid md:grid-cols-2 gap-3">
-          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">WCAG 2.2 AA on all P0/P1 pages</span></li>
-          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Text contrast ≥ 4.5:1, UI contrast ≥ 3:1</span></li>
-          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Visible focus ring on every interactive — 2px teal</span></li>
-          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Pinch-zoom enabled — no <code class="text-[13px] font-semibold">maximum-scale=1</code></span></li>
-          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Color-only signals always backed by icon or text</span></li>
-          <li class="flex gap-3 rounded-2xl bg-ink-50 p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Touch targets ≥ 44×44 · reduced-motion fully supported</span></li>
+          <li class="flex gap-3 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">WCAG 2.2 AA on all P0/P1 pages</span></li>
+          <li class="flex gap-3 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Text contrast ≥ 4.5:1, UI contrast ≥ 3:1</span></li>
+          <li class="flex gap-3 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Visible focus ring on every interactive — 2px teal</span></li>
+          <li class="flex gap-3 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Pinch-zoom enabled — no <code class="text-[13px] font-semibold">maximum-scale=1</code></span></li>
+          <li class="flex gap-3 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Color-only signals always backed by icon or text</span></li>
+          <li class="flex gap-3 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="text-[14.5px] leading-relaxed">Touch targets ≥ 44×44 · reduced-motion fully supported</span></li>
         </ul>
 
-        <div class="mt-6 rounded-2xl border border-ink-100 p-7">
+        <div class="mt-6 rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 p-5 sm:p-6 lg:p-7">
           <div class="eyebrow mb-4">Focus ring — tab into these</div>
           <div class="flex flex-wrap gap-3">
             <button class="btn btn-md btn-primary">Focusable</button>
@@ -862,20 +867,20 @@ tailwind.config = {
       <section class="py-16 border-t border-ink-100">
         <div class="eyebrow mb-5">Sources of truth</div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <div class="rounded-2xl bg-ink-50 p-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
             <div class="text-[12.5px] font-bold mb-1">Figma</div>
             <code class="text-[11.5px] text-ink-500 break-all">7hBJUpDs9IXzBs6opCdUiE</code>
             <div class="text-[11.5px] text-ink-400 mt-1">DS page 5233:2</div>
           </div>
-          <div class="rounded-2xl bg-ink-50 p-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
             <div class="text-[12.5px] font-bold mb-1">Brief</div>
             <code class="text-[11.5px] text-ink-500 break-all">redesign-brief-v1.md</code>
           </div>
-          <div class="rounded-2xl bg-ink-50 p-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
             <div class="text-[12.5px] font-bold mb-1">Page specs</div>
             <code class="text-[11.5px] text-ink-500 break-all">page-specs/ · 10 files</code>
           </div>
-          <div class="rounded-2xl bg-ink-50 p-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
             <div class="text-[12.5px] font-bold mb-1">System doc</div>
             <code class="text-[11.5px] text-ink-500 break-all">DESIGN.md</code>
           </div>
@@ -888,7 +893,7 @@ tailwind.config = {
 
 <!-- ==================== FLOATING BACK BUTTON ==================== -->
 <a href="index.html"
-   class="fixed right-5 bottom-5 z-[90] group inline-flex items-center gap-2.5 rounded-full bg-ink-900 text-white pl-4 pr-5 h-12 shadow-diffuse-lg hover:bg-ink-800 active:bg-ink-950 transition-colors">
+   class="fixed right-5 bottom-5 z-[90] group inline-flex items-center gap-2.5 rounded-full bg-ink-900 text-white pl-4 pr-4 lg:pr-5 h-12 shadow-diffuse-lg hover:bg-ink-800 active:bg-ink-950 transition-colors">
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:-translate-x-0.5"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
   <span class="text-[13.5px] font-semibold">Back to site</span>
 </a>
@@ -951,7 +956,7 @@ tailwind.config = {
   var ts = document.getElementById('typeScale');
   SCALE.forEach(function (t) {
     ts.insertAdjacentHTML('beforeend',
-      '<div class="grid lg:grid-cols-[180px_minmax(0,1fr)] gap-x-6 gap-y-2 items-baseline pb-6 border-b border-ink-100">' +
+      '<div class="grid lg:grid-cols-[180px_minmax(0,1fr)] gap-x-4 sm:gap-x-5 lg:gap-x-6 gap-y-2 items-baseline pb-4 sm:pb-5 lg:pb-6 border-b border-ink-100">' +
         '<div><div class="text-[12.5px] font-bold text-ink-900">' + t.n + '</div>' +
         '<div class="text-[11.5px] text-ink-400 nums">' + t.d + ' / ' + t.t + ' / ' + t.m + ' px</div></div>' +
         '<div style="font-size:' + t.d + 'px; font-weight:' + t.w + '; letter-spacing:' + t.ls +
@@ -976,7 +981,7 @@ tailwind.config = {
     sp.insertAdjacentHTML('beforeend',
       '<div><div class="text-[13.5px] font-bold mb-1">' + b.label + '</div>' +
       '<div class="text-[12.5px] text-ink-400 mb-4">' + b.note + '</div>' +
-      '<div class="flex flex-wrap items-end gap-x-5 gap-y-3">' + bars + '</div></div>');
+      '<div class="flex flex-wrap items-end gap-x-4 lg:gap-x-5 gap-y-3">' + bars + '</div></div>');
   });
 
   /* ---------- radii ---------- */
@@ -1024,7 +1029,7 @@ tailwind.config = {
   var ig = document.getElementById('iconGrid');
   Object.keys(ICONS).forEach(function (n) {
     ig.insertAdjacentHTML('beforeend',
-      '<button class="sw flex flex-col items-center justify-center gap-2.5 rounded-2xl border border-ink-100 py-5 hover:border-ink-300 hover:bg-ink-50" data-copy="icon/' + n + '">' +
+      '<button class="sw flex flex-col items-center justify-center gap-2.5 rounded-xl sm:rounded-[14px] lg:rounded-2xl border border-ink-100 py-4 lg:py-5 hover:border-ink-300 hover:bg-ink-50" data-copy="icon/' + n + '">' +
       '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ICONS[n] + '</svg>' +
       '<span class="text-[10.5px] font-semibold text-ink-500 text-center leading-tight px-1">' + n + '</span></button>');
   });

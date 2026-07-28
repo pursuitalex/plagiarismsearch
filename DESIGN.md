@@ -97,6 +97,8 @@ Same component primitives, three surface treatments:
 ### Spacing scale (responsive)
 2, 4, 6, 8, 10, 12 (don't scale across breakpoints) | 16, 20, 24, 28, 32, 36, 40 (scale ~80% at tablet, 65% at mobile) | 48, 64, 80, 96, 128 (scale ~75% tablet, 55% mobile)
 
+→ For the exact utility triples this maps to in the web build, see **Web build → Responsive ramp**.
+
 ---
 
 ## Radii + Elevation
@@ -236,6 +238,48 @@ Dark header (surface/inverse) + white Bold caps text +8% LS. Alternating rows (n
 - Container: `max-w-[1280px] mx-auto px-6 lg:px-10` (narrower content: 1180px)
 - Section header pattern: eyebrow chip → `h2 text-[clamp(2rem,4vw,3.4rem)]` → 15–16px `text-ink-600` subline
 
+### Responsive ramp — three steps, never two
+
+Spacing and radii carry **three** values, not two: phone (bare utility) → tablet (`sm:`) →
+desktop (`lg:`). Writing `p-4 sm:p-6` looks responsive but gives a 390px phone and a 900px
+tablet the same 24px, and writing a bare `px-6` gives every screen 24px.
+
+| desktop | tablet | phone | example |
+|---|---|---|---|
+| 48 | 40 | 32 | `py-8 sm:py-10 lg:py-12` |
+| 40 | 32 | 24 | `p-6 sm:p-8 lg:p-10` |
+| 32 | 28 | 24 | `p-6 sm:p-7 lg:p-8` |
+| 28 | 24 | 20 | `px-5 sm:px-6 lg:px-7` |
+| **24** | **20** | **16** | `p-4 sm:p-5 lg:p-6` |
+| 20 | — | 16 | `p-4 lg:p-5` |
+| 16 | 14 | 12 | `rounded-xl sm:rounded-[14px] lg:rounded-2xl` |
+
+**Floor: 20px.** Below that a third step is 2px of nothing and only makes the control
+cramped — `py-3` on a button is `py-3` everywhere. **Gaps** follow the same table from 20px up.
+
+**Radii of a double-bezel must stay concentric at all three steps, not just the ends.**
+The inner radius is always outer − frame padding, so a ramped shell forces a ramped inner:
+
+| | phone | tablet | desktop |
+|---|---|---|---|
+| frame padding | 6 | 8 | 8 |
+| outer | 24 | 32 | 40 |
+| inner | 18 | 24 | 32 |
+
+A shell written with a flat `p-2` breaks this on the phone (24 − 8 = 16, not 18) — the frame
+thins with the card, so bezels are `p-1.5 sm:p-2`.
+
+### Mock-UI type is its own scale
+
+The schematic interface blocks (report mock, scan document, hero bento tiles, language
+strip) are miniatures. On desktop the mock has ~600px; on a phone the same mock has ~358px,
+so its labels are proportionally 40% too large and rows stop fitting — the report's tab strip
+needed 380px of text in a 278px box. Inside a mock, type runs **phone 0.85 / tablet 0.93 /
+desktop 1.00**, snapped to half a pixel, floor 8px.
+
+This scale applies *only inside mocks*. Real sub-13px UI elsewhere — nav items, the Trustpilot
+badge, pricing captions, the footer line — is already at its floor and must not be shrunk again.
+
 ### Hero H1 scale — three ceilings, one curve
 
 Every hero H1 is `font-extrabold tracking-tightest leading-[1.02]` plus one of exactly three sizes.
@@ -268,11 +312,33 @@ at ≥1057px as each tier reaches its ceiling — 69.6 / 64 / 57.6px by 1280px.
 - **Flat card** (pricing/tiles): `rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-8 lg:p-9`
 - **Dark accent card**: `bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg` + one masked orb inside
 - Highlighted pricing tier additionally `lg:-my-6` (physically taller in an `items-center` grid)
+- **Photo card** (a card whose background is a photograph): the photo is a **band at the top**, not a
+  fill. It is dissolved into the card's own colour by a vertical gradient, so it has no bottom edge to
+  crop — `transparent 0% → transparent ~38% → ink-950/72 at ~74% → #0A0E1A 100%`, on a wrapper of
+  `absolute inset-x-0 top-0`. The plate underneath is solid `bg-ink-950`, so body copy and secondary
+  links sit on ink and stay readable; a photo stretched over the whole card puts them on whatever the
+  image happens to show. Band height `330px / 380px / 70%` of the card.
+  **The band ends mid-heading on purpose**: eyebrow and opening lines read against the photograph, the
+  closing line and everything below sit on ink. Below `lg` the text column needs `pt-[210px] sm:pt-[240px]`
+  so there is clear photograph above the eyebrow — without it the image has no room to read as a
+  photograph at all. (Reference: Figma `5524:479`.)
 - **Illustration card**: grey card (`bg-ink-50 p-6 lg:p-7`) → white plate spanning the content width (`rounded-2xl bg-white py-6`, card padding visible around it) → illustration modest and centered inside (`max-w-[260px]`). Standalone illustrations (hero) instead get their background removed and sit directly on the section tint — no plate. Generated series keep ONE line-weight family: thin ink outlines, white objects, small coral/teal accents, no big solid color tiles
 
 ### Decoration
 - **Orbs** (mesh glow): `.orb` = masked radial gradient, NEVER `filter: blur()`. Solid low-alpha bg (`bg-teal-500/8`), position off-canvas partially. 1–2 per section max
+- **An orb's clipper must be positioned, not just `overflow-hidden`.** `overflow` only clips
+  descendants whose containing block is the clipper or lives inside it. An `absolute` orb resolves
+  its containing block against the nearest *positioned* ancestor, so a `static` wrapper is skipped
+  entirely and the orb is measured against whatever is further up. The scan panel is
+  `lg:sticky … overflow-hidden`: positioned on desktop, `static` below `lg` — so its two orbs
+  escaped and reached 540px inside a 390px viewport, on phones only. Any `overflow-hidden` that
+  exists to contain decoration needs `relative` alongside it.
 - Grain overlay is global — don't re-add per section
+- **Root clip, not body clip.** Horizontal containment belongs on `html` as `overflow-x: clip`,
+  and `<body>` must stay `visible`. Two traps: `overflow-x: hidden` creates a scroll container and
+  kills `position: sticky` inside it, whereas `clip` does not; and once `html` is non-`visible`,
+  `body`'s own overflow stops propagating to the viewport, so a leftover `overflow-x-hidden` on
+  `<body>` turns body itself into the scroll container — which silently unpinned the scan scene.
 - `::selection` orange; `.nums` = tabular numerals for any changing/aligned numbers
 
 ### Motion (GSAP + ScrollTrigger via CDN)

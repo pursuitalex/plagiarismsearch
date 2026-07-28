@@ -36,7 +36,12 @@ tailwind.config = {
 }
 </script>
 <style>
-  html { background:#fff; }
+  /* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
+     disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
+     grain sheet and the header render 150px wider than the page and open a white gutter that
+     no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
+     creates no scroll container, so position:sticky in the scan scene keeps working. */
+  html { background:#fff; overflow-x: clip; }
   body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   ::selection { background:#F36F5A; color:#fff; }
 
@@ -208,24 +213,52 @@ tailwind.config = {
   .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
   @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
 
+
+  /* ---------- controls on phones ----------
+     These sizes are declared in CSS rather than as utility classes, so they need
+     their own breakpoint. Field heights come down with the text so the controls
+     keep their proportions instead of turning into tall boxes with small labels. */
+  @media (max-width: 639px) {
+    .qc-area, .rc-area, .sp-area { font-size: 14px; }
+    .fld, .cf-field { height: 44px; font-size: 14px; }
+    textarea.fld { height: auto; }
+    .stepper { height: 44px; }
+    .stepper input { font-size: 14px; }
+    .stepper button { width: 34px; font-size: 16px; }
+    .pa-select { height: 40px; font-size: 13px; }
+    .pa-step { height: 40px; }
+    .pa-step input { font-size: 13px; }
+    .pa-step button { width: 32px; font-size: 15px; }
+    .sp-select { height: 36px; font-size: 12px; }
+    .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
+    .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
+    .rc-stat b { font-size: 17px; }
+    .sp-row { font-size: 12px; }
+    .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
+    .cf-label { font-size: 11.5px; }
+    .ctl { font-size: 13.5px; }
+  }
+  /* the scan scene pins and scrubs only from lg up; below that it is a normal section */
+  @media (min-width: 1024px) { #scanWrap { height: 285vh; } }
+
 </style>
 </head>
-<body class="font-sans text-ink-900 bg-white overflow-x-hidden">
+<body class="font-sans text-ink-900 bg-white">
 
 <div class="grain"></div>
 
 <!-- ================= FLOATING ISLAND NAV ================= -->
 <header class="fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
   <div class="flex justify-center">
-  <nav class="pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+  <nav class="pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
     <a href="#top" class="flex items-center shrink-0 pr-4 lg:pr-6">
       <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto max-w-none">
     </a>
     <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="nav-drop absolute left-1/2 top-full pt-5">
-          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
             <a href="plagiarism-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
             <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
             <a href="paper-analysis.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
@@ -239,8 +272,8 @@ tailwind.config = {
       </div>
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="nav-drop absolute left-1/2 top-full pt-5">
-          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For universities</span>
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For teachers</span>
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For students</span>
@@ -251,8 +284,8 @@ tailwind.config = {
       <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Prices</a>
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="nav-drop absolute left-1/2 top-full pt-5">
-          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
             <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
             <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Scholarship</span>
@@ -264,9 +297,9 @@ tailwind.config = {
         </div>
       </div>
     </div>
-    <div class="flex items-center gap-2 ml-auto lg:ml-8 shrink-0">
-      <a href="#" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13.5px] font-semibold px-5 py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
-      <a href="#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Check free</a>
+    <div class="min-w-0 flex items-center gap-2 ml-auto lg:ml-8 shrink-0">
+      <a href="#" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5">Check free</a>
       <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
         <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
         <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
@@ -276,50 +309,50 @@ tailwind.config = {
   </div>
 
   <div id="navPanel" class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
-    <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+    <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products</div>
-      <a href="plagiarism-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
-      <a href="ai-detector.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
-      <a href="paper-analysis.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
-      <a href="readability-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
-      <a href="spell-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
-      <a href="vip.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
-      <a href="api.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
-      <a href="chat-bot.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+      <a href="plagiarism-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+      <a href="ai-detector.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+      <a href="paper-analysis.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+      <a href="readability-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+      <a href="spell-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
+      <a href="vip.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+      <a href="api.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+      <a href="chat-bot.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions</div>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For universities</span>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For teachers</span>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For students</span>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For organizations</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For universities</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For teachers</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For students</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For organizations</span>
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
-      <a href="why-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
-      <a href="mission.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Scholarship</span>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Reviews</span>
-      <a href="contact-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Blog</span>
-      <a href="help-center.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
-      <a href="prices.html" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Prices</a>
+      <a href="why-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+      <a href="mission.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Scholarship</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Reviews</span>
+      <a href="contact-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Blog</span>
+      <a href="help-center.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+      <a href="prices.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Prices</a>
       <div class="sm:hidden mt-3 pt-3 border-t border-ink-100 space-y-2">
-        <a href="#" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
-        <a href="#top" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
+        <a href="#" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
+        <a href="#top" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
       </div>
     </div>
   </div>
 </header>
 
 <!-- ================= ACT 1 · HERO ================= -->
-<section id="top" class="relative min-h-[100dvh] flex items-center overflow-hidden pt-28 sm:pt-36 pb-12 sm:pb-16 bg-[#F2FCFC]">
+<section id="top" class="relative min-h-[100dvh] flex items-center overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-14 lg:pb-16 bg-[#F2FCFC]">
   <div class="orb w-[820px] h-[780px] bg-orange-500/20 -left-52 -top-56"></div>
   <div class="orb w-[700px] h-[640px] bg-teal-500/15 right-[-180px] top-[30%]"></div>
   <div class="orb w-[480px] h-[460px] bg-orange-300/10 left-[35%] bottom-[-220px]"></div>
 
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 w-full grid lg:grid-cols-[1.1fr_.9fr] gap-10 sm:gap-16 items-center">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 w-full grid lg:grid-cols-[1.1fr_.9fr] gap-10 sm:gap-12 lg:gap-16 items-center">
     <!-- Left -->
     <div>
       <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-7">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-dot"></span>
-        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Plagiarism + AI detection</span>
+        <span class="text-[9px] sm:text-[10px] lg:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Plagiarism + AI detection</span>
       </div>
 
       <h1 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold leading-[1.02] tracking-tightest mb-6">
@@ -331,23 +364,23 @@ tailwind.config = {
       </p>
 
       <!-- Paste form -->
-      <div class="rv relative rounded-3xl sm:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-2 shadow-diffuse max-w-[600px]">
-        <div class="rounded-2xl sm:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6">
+      <div class="rv relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse max-w-[600px]">
+        <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
-              <span class="text-[13px] font-bold">Free check — up to 150 words</span>
+              <span class="text-[11px] sm:text-[12px] lg:text-[13px] font-bold">Free check — up to 150 words</span>
             </div>
-            <span class="text-[11.5px] font-medium text-ink-400">No signup · No card</span>
+            <span class="text-[10px] sm:text-[10.5px] lg:text-[11.5px] font-medium text-ink-400">No signup · No card</span>
           </div>
-          <textarea rows="3" placeholder="Paste your text here. We compare against 14B pages and detect AI-generated content in seconds." class="w-full resize-none text-[15px] leading-relaxed placeholder:text-ink-300 focus:outline-none mb-4"></textarea>
+          <textarea rows="3" placeholder="Paste your text here. We compare against 14B pages and detect AI-generated content in seconds." class="w-full resize-none text-[13px] sm:text-[14px] lg:text-[15px] leading-relaxed placeholder:text-ink-300 focus:outline-none mb-4"></textarea>
           <div class="flex items-center justify-between gap-3">
-            <span class="text-[12px] font-medium text-ink-400 nums" id="wordCount">0 / 150 words</span>
+            <span class="text-[10px] sm:text-[11px] lg:text-[12px] font-medium text-ink-400 nums" id="wordCount">0 / 150 words</span>
             <div class="flex items-center gap-2.5">
-              <button aria-label="Add document" title="Add document" class="btn-press w-12 h-12 shrink-0 flex items-center justify-center rounded-full bg-ink-100 hover:bg-ink-200 transition-colors duration-300 text-ink-700">
+              <button aria-label="Add document" title="Add document" class="btn-press w-12 h-11 sm:h-12 shrink-0 flex items-center justify-center rounded-full bg-ink-100 hover:bg-ink-200 transition-colors duration-300 text-ink-700">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
               </button>
-              <button class="btn-press group magnetic flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[14.5px] font-semibold pl-6 pr-2 py-2">
+              <button class="btn-press group magnetic flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
                 Check for free
                 <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -358,7 +391,7 @@ tailwind.config = {
         </div>
       </div>
 
-      <div class="rv flex flex-wrap items-center gap-x-5 gap-y-2 mt-8 text-[12.5px] font-semibold text-ink-500">
+      <div class="rv flex flex-wrap items-center gap-x-4 lg:gap-x-5 gap-y-2 mt-8 text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] font-semibold text-ink-500">
         <span class="flex items-center gap-2.5">
           <span class="avatar-stack flex items-center shrink-0" aria-hidden="true">
             <img src="assets/avatars/avatar-1.webp" alt="" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8 rounded-full object-cover ring-2 ring-white">
@@ -381,84 +414,84 @@ tailwind.config = {
       <div class="grid grid-cols-12 grid-rows-[1.2fr_1fr] gap-3 h-full">
 
         <!-- 1 · plagiarism stat + climbing bars -->
-        <div class="hero-tile col-span-7 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-6 flex flex-col">
+        <div class="hero-tile col-span-7 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-4 sm:p-5 lg:p-6 flex flex-col">
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2.5">
               <span class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
                 <span class="w-3.5 h-3.5 rounded-full bg-orange-600"></span>
               </span>
-              <span class="text-[13px] font-semibold text-ink-600">Plagiarism found</span>
+              <span class="text-[11px] sm:text-[12px] lg:text-[13px] font-semibold text-ink-600">Plagiarism found</span>
             </div>
-            <span class="text-[10px] font-bold tracking-wide text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">14 sources</span>
+            <span class="text-[8.5px] sm:text-[9.5px] lg:text-[10px] font-bold tracking-wide text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">14 sources</span>
           </div>
           <div class="js-plag-stat text-[36px] sm:text-[43px] lg:text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-ink-900">0,0%</div>
-          <div class="text-[12.5px] font-medium text-ink-400">matched against 14B indexed pages</div>
+          <div class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] font-medium text-ink-400">matched against 14B indexed pages</div>
           <div class="js-bars-wrap flex items-end gap-[3px] h-10 mt-auto"></div>
         </div>
 
         <!-- 2 · document preview (Flow renders the copy as redacted bars) -->
-        <div class="hero-tile col-span-5 relative rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse overflow-hidden">
+        <div class="hero-tile col-span-5 relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse overflow-hidden">
           <!-- the page keeps going past the tile — fade makes the crop deliberate -->
           <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/85 to-transparent pointer-events-none z-10"></div>
-          <div class="js-paper h-full px-5 pt-5" aria-hidden="true">
+          <div class="js-paper h-full px-4 lg:px-5 pt-4 lg:pt-5" aria-hidden="true">
             <div class="flex items-center gap-1.5 mb-4">
               <span class="w-1.5 h-1.5 rounded-full bg-ink-200"></span>
               <span class="w-1.5 h-1.5 rounded-full bg-ink-200"></span>
               <span class="w-1.5 h-1.5 rounded-full bg-ink-200"></span>
-              <span class="ml-1 text-[9.5px] font-bold tracking-[0.14em] text-ink-300">ESSAY.DOCX</span>
+              <span class="ml-1 text-[8px] sm:text-[9px] lg:text-[9.5px] font-bold tracking-[0.14em] text-ink-300">ESSAY.DOCX</span>
             </div>
             <div class="font-flow select-none">
               <div class="doc-line text-[16px] sm:text-[17px] leading-[1.25] text-ink-400 mb-3">Climate change impacts on global agriculture</div>
-              <p class="doc-line text-[12px] leading-[1.45] text-ink-300 mb-2.5">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
-              <p class="doc-line text-[12px] leading-[1.45] text-ink-300 mb-2.5">Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions.</p>
-              <p class="doc-line text-[12px] leading-[1.45] text-ink-300 mb-2.5">However, smallholder farmers in West Africa have adapted through diversified cropping patterns.</p>
-              <p class="doc-line text-[12px] leading-[1.45] text-ink-300">Field data from recent seasons supports this approach across tropical zones worldwide.</p>
+              <p class="doc-line text-[10px] sm:text-[11px] lg:text-[12px] leading-[1.45] text-ink-300 mb-2.5">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
+              <p class="doc-line text-[10px] sm:text-[11px] lg:text-[12px] leading-[1.45] text-ink-300 mb-2.5">Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions.</p>
+              <p class="doc-line text-[10px] sm:text-[11px] lg:text-[12px] leading-[1.45] text-ink-300 mb-2.5">However, smallholder farmers in West Africa have adapted through diversified cropping patterns.</p>
+              <p class="doc-line text-[10px] sm:text-[11px] lg:text-[12px] leading-[1.45] text-ink-300">Field data from recent seasons supports this approach across tropical zones worldwide.</p>
             </div>
           </div>
         </div>
 
         <!-- 3 · scan breakdown -->
-        <div class="hero-tile col-span-5 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-5 flex flex-col">
+        <div class="hero-tile col-span-5 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/[.07] shadow-diffuse p-4 lg:p-5 flex flex-col">
           <div class="flex items-center justify-between mb-3">
-            <span class="text-[12.5px] font-bold">Live scan</span>
-            <span class="text-[9px] font-bold tracking-wider text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">MATCHED</span>
+            <span class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] font-bold">Live scan</span>
+            <span class="text-[8px] sm:text-[8.5px] lg:text-[9px] font-bold tracking-wider text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">MATCHED</span>
           </div>
           <div class="flex flex-col gap-1.5 mt-auto">
             <div class="flex items-center justify-between rounded-xl bg-ink-50 px-3 py-2">
-              <span class="text-[9px] font-bold tracking-widest text-ink-400">PLAGIARISM</span>
-              <span class="text-[15px] font-extrabold text-orange-600 nums">67.5%</span>
+              <span class="text-[8px] sm:text-[8.5px] lg:text-[9px] font-bold tracking-widest text-ink-400">PLAGIARISM</span>
+              <span class="text-[13px] sm:text-[14px] lg:text-[15px] font-extrabold text-orange-600 nums">67.5%</span>
             </div>
             <div class="flex items-center justify-between rounded-xl bg-ink-50 px-3 py-2">
-              <span class="text-[9px] font-bold tracking-widest text-ink-400">AI WRITTEN</span>
-              <span class="text-[15px] font-extrabold text-teal-600 nums">12.0%</span>
+              <span class="text-[8px] sm:text-[8.5px] lg:text-[9px] font-bold tracking-widest text-ink-400">AI WRITTEN</span>
+              <span class="text-[13px] sm:text-[14px] lg:text-[15px] font-extrabold text-teal-600 nums">12.0%</span>
             </div>
             <div class="flex items-center justify-between rounded-xl bg-ink-50 px-3 py-2">
-              <span class="text-[9px] font-bold tracking-widest text-ink-400">ORIGINAL</span>
-              <span class="text-[15px] font-extrabold text-mint-600 nums">20.5%</span>
+              <span class="text-[8px] sm:text-[8.5px] lg:text-[9px] font-bold tracking-widest text-ink-400">ORIGINAL</span>
+              <span class="text-[13px] sm:text-[14px] lg:text-[15px] font-extrabold text-mint-600 nums">20.5%</span>
             </div>
           </div>
         </div>
 
         <!-- 4 · rating -->
-        <div class="hero-tile col-span-7 rounded-2xl sm:rounded-3xl bg-ink-900 shadow-diffuse-lg p-5 flex flex-col">
+        <div class="hero-tile col-span-7 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 shadow-diffuse-lg p-4 lg:p-5 flex flex-col">
           <div class="flex items-center gap-3.5">
             <span class="w-12 h-12 shrink-0 rounded-full bg-teal-400 flex items-center justify-center text-[15px] sm:text-[16px] font-bold text-ink-950 nums">9.8</span>
             <div>
-              <div class="text-[13px] font-semibold text-white leading-tight">Overall users rating</div>
-              <div class="text-[11px] font-medium text-ink-400">Rated 4.7 on Trustpilot</div>
+              <div class="text-[11px] sm:text-[12px] lg:text-[13px] font-semibold text-white leading-tight">Overall users rating</div>
+              <div class="text-[9.5px] sm:text-[10px] lg:text-[11px] font-medium text-ink-400">Rated 4.7 on Trustpilot</div>
             </div>
             <img src="assets/svg/trustpilot-icon.svg" alt="" class="w-5 h-5 ml-auto self-start">
           </div>
           <!-- ESL badge sits inside the tile now: block radius, not a floating pill -->
           <div id="eslBadge" class="mt-auto mb-4 flex items-center justify-center gap-2 rounded-xl bg-[#CDF1DE] ring-1 ring-[#9CE3BD] px-3.5 py-2.5">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F8859" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-            <span class="text-[12px] font-semibold text-[#156B45]">ESL-aware · false-positive &lt; 2%</span>
+            <span class="text-[10px] sm:text-[11px] lg:text-[12px] font-semibold text-[#156B45]">ESL-aware · false-positive &lt; 2%</span>
           </div>
 
           <div class="flex items-center gap-3 border-t border-white/10 pt-3.5">
-            <span class="text-[11px] font-medium text-ink-400">500,000+ writers</span>
+            <span class="text-[9.5px] sm:text-[10px] lg:text-[11px] font-medium text-ink-400">500,000+ writers</span>
             <span class="w-1 h-1 rounded-full bg-white/20"></span>
-            <span class="text-[11px] font-medium text-ink-400">490K on Google Docs</span>
+            <span class="text-[9.5px] sm:text-[10px] lg:text-[11px] font-medium text-ink-400">490K on Google Docs</span>
           </div>
         </div>
       </div>
@@ -468,7 +501,7 @@ tailwind.config = {
       <div class="js-paper paper-doc absolute left-8 right-3 top-1 bottom-4 rotate-[1.2deg] overflow-hidden">
         <div class="paper-sheet absolute inset-0 bg-white"></div>
         <div class="paper-fold"></div>
-        <div class="relative font-flow select-none px-6 sm:px-12 pt-12 pr-16 pb-12" aria-hidden="true">
+        <div class="relative font-flow select-none px-6 sm:px-8 lg:px-12 pt-8 sm:pt-10 lg:pt-12 pr-16 pb-8 sm:pb-10 lg:pb-12" aria-hidden="true">
           <div class="doc-line text-[22px] sm:text-[24px] lg:text-[27px] leading-[1.25] text-ink-400 mb-4">Climate change impacts on global agriculture</div>
           <p class="doc-line text-[16px] sm:text-[17px] leading-[1.4] text-ink-300 mb-4">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
           <p class="doc-line text-[16px] sm:text-[17px] leading-[1.4] text-ink-300 mb-4">Recent studies have shown that rising global temperatures correlate with decreased yields, particularly in regions dependent on rain-fed farming.</p>
@@ -477,43 +510,43 @@ tailwind.config = {
         </div>
       </div>
       <!-- accuracy card -->
-      <div class="hero-float absolute right-[-20px] top-[94px] w-[340px] rounded-3xl sm:rounded-4xl bg-white/50 backdrop-blur-md ring-1 ring-black/[.08] p-1.5 shadow-diffuse-lg">
-        <div class="rounded-[18px] sm:rounded-[calc(2rem-0.375rem)] bg-white shadow-inner-hl p-5 sm:p-6">
+      <div class="hero-float absolute right-[-20px] top-[94px] w-[340px] rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white/50 backdrop-blur-md ring-1 ring-black/[.08] p-1.5 shadow-diffuse-lg">
+        <div class="rounded-[18px] sm:rounded-[22px] lg:rounded-[calc(2rem-0.375rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2.5">
               <span class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
                 <span class="w-3.5 h-3.5 rounded-full bg-orange-600"></span>
               </span>
-              <span class="text-[13px] font-semibold text-ink-600">Plagiarism found</span>
+              <span class="text-[11px] sm:text-[12px] lg:text-[13px] font-semibold text-ink-600">Plagiarism found</span>
             </div>
-            <span class="text-[10px] font-bold tracking-wide text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">14 sources</span>
+            <span class="text-[8.5px] sm:text-[9.5px] lg:text-[10px] font-bold tracking-wide text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">14 sources</span>
           </div>
           <div class="js-plag-stat text-[36px] sm:text-[43px] lg:text-[52px] font-extrabold tracking-tightest leading-none mb-1 nums text-ink-900">0,0%</div>
-          <div class="text-[12.5px] font-medium text-ink-400 mb-5">matched against 14B indexed pages</div>
+          <div class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] font-medium text-ink-400 mb-5">matched against 14B indexed pages</div>
           <div class="js-bars-wrap flex items-end gap-[3px] h-10"></div>
         </div>
       </div>
       <!-- ESL badge -->
       <div class="hero-float absolute left-5 -top-[18px] flex items-center gap-2 rounded-full bg-[#CDF1DE] ring-1 ring-[#9CE3BD] px-4 py-2.5 shadow-diffuse">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F8859" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-        <span class="text-[12.5px] font-semibold text-[#156B45]">ESL-aware · false-positive &lt; 2%</span>
+        <span class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] font-semibold text-[#156B45]">ESL-aware · false-positive &lt; 2%</span>
       </div>
       <!-- live scan mini -->
-      <div class="hero-float absolute right-[108px] bottom-[-12px] w-[310px] rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-5 shadow-diffuse-lg">
+      <div class="hero-float absolute right-[108px] bottom-[-12px] w-[310px] rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 p-4 lg:p-5 shadow-diffuse-lg">
         <div class="flex items-center justify-between mb-3.5">
-          <span class="text-[12.5px] font-bold">Live scan</span>
-          <span class="text-[9.5px] font-bold tracking-wider text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">67.5% MATCHED</span>
+          <span class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] font-bold">Live scan</span>
+          <span class="text-[8px] sm:text-[9px] lg:text-[9.5px] font-bold tracking-wider text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">67.5% MATCHED</span>
         </div>
         <div class="grid grid-cols-3 gap-2 text-center">
-          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">PLAGIARISM</div><div class="text-[15px] sm:text-[16px] font-extrabold text-orange-600 nums">67.5%</div></div>
-          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">AI WRITTEN</div><div class="text-[15px] sm:text-[16px] font-extrabold text-teal-600 nums">12.0%</div></div>
-          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">ORIGINAL</div><div class="text-[15px] sm:text-[16px] font-extrabold text-mint-600 nums">20.5%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8px] lg:text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">PLAGIARISM</div><div class="text-[15px] sm:text-[16px] font-extrabold text-orange-600 nums">67.5%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8px] lg:text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">AI WRITTEN</div><div class="text-[15px] sm:text-[16px] font-extrabold text-teal-600 nums">12.0%</div></div>
+          <div class="rounded-xl bg-ink-50 py-2.5"><div class="text-[8px] lg:text-[8.5px] font-bold tracking-widest text-ink-400 mb-0.5">ORIGINAL</div><div class="text-[15px] sm:text-[16px] font-extrabold text-mint-600 nums">20.5%</div></div>
         </div>
         <div class="mt-2 flex items-center gap-3 rounded-xl bg-ink-900 pl-2 pr-4 py-2">
-          <span class="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-[12px] font-bold text-ink-950 nums">9.8</span>
+          <span class="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-[10px] sm:text-[11px] lg:text-[12px] font-bold text-ink-950 nums">9.8</span>
           <div>
-            <div class="text-[12.5px] font-semibold text-white leading-tight">Overall users rating</div>
-            <div class="text-[10.5px] font-medium text-ink-400">Rated 4.7 on Trustpilot</div>
+            <div class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] font-semibold text-white leading-tight">Overall users rating</div>
+            <div class="text-[9px] sm:text-[10px] lg:text-[10.5px] font-medium text-ink-400">Rated 4.7 on Trustpilot</div>
           </div>
         </div>
       </div>
@@ -526,49 +559,53 @@ tailwind.config = {
 <section id="scan" class="relative bg-ink-950 text-white">
   <!-- 285vh, not 360: the trigger now starts 75vh before the panel pins, so the wrap
        shrinks by the same 75vh to keep the scrubbed distance at 260vh (see the ScrollTrigger below) -->
-  <div id="scanWrap" class="relative" style="height:285vh;">
-    <div class="sticky top-0 h-[100dvh] flex flex-col justify-center overflow-hidden">
+  <div id="scanWrap" class="relative">
+    <!-- `relative` is load-bearing, not decoration: below lg the panel is static, so the
+           orbs inside it resolve their containing block against #scanWrap instead and escape
+           this overflow-hidden entirely, reaching 540px in a 390px viewport. Positioning the
+           panel at every breakpoint makes it the clipper it was always meant to be. -->
+      <div class="relative lg:sticky lg:top-0 lg:h-[100dvh] flex flex-col justify-center py-16 lg:py-0 overflow-hidden">
       <div class="orb w-[700px] h-[700px] bg-teal-500/10 -left-40 top-[-200px]"></div>
       <div class="orb w-[600px] h-[600px] bg-orange-500/10 right-[-150px] bottom-[-200px]"></div>
 
-      <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 w-full">
+      <div class="min-w-0 relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 w-full">
         <div class="scan-head flex items-end justify-between mb-8">
           <div>
             <div class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/10 px-3.5 py-1.5 mb-5">
               <span class="w-1.5 h-1.5 rounded-full bg-teal-400 pulse-dot"></span>
-              <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/70">Watch it work</span>
+              <span class="text-[9px] sm:text-[10px] lg:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/70">Watch it work</span>
             </div>
             <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.04]">Scroll. We scan.</h2>
           </div>
-          <p class="hidden md:block text-[15px] text-white/50 leading-relaxed max-w-[34ch] pb-1">Every flagged passage links to its source. Every AI paragraph shows probability. No black-box scoring.</p>
+          <p class="hidden md:block text-[13px] sm:text-[14px] lg:text-[15px] text-white/50 leading-relaxed max-w-[34ch] pb-1">Every flagged passage links to its source. Every AI paragraph shows probability. No black-box scoring.</p>
         </div>
 
-        <div class="grid lg:grid-cols-[1fr_360px] gap-5">
+        <div class="min-w-0 grid lg:grid-cols-[1fr_360px] gap-4 lg:gap-5">
           <!-- Document -->
-          <div class="scan-doc relative flex rounded-3xl sm:rounded-4xl bg-white/[.07] ring-1 ring-white/10 p-1.5">
-            <div class="relative flex flex-col w-full rounded-[18px] sm:rounded-[calc(2rem-0.375rem)] bg-white text-ink-900 p-6 sm:p-8 lg:p-10 overflow-hidden">
+          <div class="scan-doc relative flex min-w-0 rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white/[.07] ring-1 ring-white/10 p-1.5">
+            <div id="scanDoc" class="relative flex flex-col w-full rounded-[18px] sm:rounded-[22px] lg:rounded-[calc(2rem-0.375rem)] bg-white text-ink-900 p-5 sm:p-8 lg:p-10 overflow-hidden">
               <!-- scan line -->
               <div id="scanLine" class="absolute left-0 right-0 top-0 h-16 pointer-events-none" style="transform:translateY(-80px);">
                 <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
                 <div class="h-16 w-full bg-gradient-to-b from-teal-400/10 to-transparent"></div>
               </div>
 
-              <div class="flex items-center gap-2 mb-6">
+              <div class="flex items-center gap-2 mb-6 min-w-0">
                 <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></span><span class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></span><span class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></span>
-                <span class="ml-3 text-[12px] font-medium text-ink-400">Marshall_2024_climate_essay.docx</span>
-                <span id="scanStatus" class="ml-auto text-[9.5px] font-bold tracking-widest rounded-full px-2.5 py-1 bg-teal-100 text-teal-700 nums">SCANNING · 0%</span>
+                <span class="ml-3 min-w-0 truncate text-[10px] sm:text-[11px] lg:text-[12px] font-medium text-ink-400">Marshall_2024_climate_essay.docx</span>
+                <span id="scanStatus" class="ml-auto shrink-0 whitespace-nowrap text-[8px] sm:text-[9px] lg:text-[9.5px] font-bold tracking-widest rounded-full px-2.5 py-1 bg-teal-100 text-teal-700 nums">SCANNING · 0%</span>
               </div>
 
               <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-1.5">Climate change impacts on global agriculture</h3>
-              <div class="text-[10.5px] font-bold tracking-[0.18em] text-ink-400 mb-6">PARAGRAPH 1 OF 2 · 247 WORDS</div>
+              <div class="text-[9px] sm:text-[10px] lg:text-[10.5px] font-bold tracking-[0.18em] text-ink-400 mb-6">PARAGRAPH 1 OF 2 · 247 WORDS</div>
 
-              <p class="text-[15.5px] leading-[1.85] text-ink-700 mb-5">
+              <p class="text-[13px] sm:text-[14.5px] lg:text-[15.5px] leading-[1.85] text-ink-700 mb-5">
                 The economic implications of climate change extend beyond environmental damage.
                 <span class="hl hl-ai" data-step="1">Recent studies have shown that rising global temperatures correlate with decreased agricultural yields,</span>
                 <span class="hl hl-orange" data-step="2">particularly in regions dependent on rain-fed farming.</span>
                 Researchers project a 47.2% drop in tropical yields by 2050.
               </p>
-              <p class="text-[15.5px] leading-[1.85] text-ink-700">
+              <p class="text-[13px] sm:text-[14.5px] lg:text-[15.5px] leading-[1.85] text-ink-700">
                 However, smallholder farmers in West Africa have adapted through
                 <span class="hl hl-orange" data-step="3">diversified cropping patterns — a strategy that combines drought-resistant millet</span>
                 with shade-tolerant maize varieties.
@@ -576,17 +613,17 @@ tailwind.config = {
               </p>
 
               <!-- legend — each dot lights up when its category is first found -->
-              <div id="scanLegend" class="mt-auto pt-6 border-t border-ink-100 flex flex-wrap items-center justify-center gap-x-7 gap-y-2">
-                <span class="lg-item flex items-center gap-2 text-[12px] font-semibold text-[#B84431]" data-cat="orange">
+              <div id="scanLegend" class="mt-auto pt-4 sm:pt-5 lg:pt-6 border-t border-ink-100 flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-6 lg:gap-x-7 gap-y-2">
+                <span class="lg-item flex items-center gap-2 text-[10px] sm:text-[11px] lg:text-[12px] font-semibold text-[#B84431]" data-cat="orange">
                   <span class="lg-dot w-3 h-3 rounded-full border-2 border-current"></span>Plagiarism
                 </span>
-                <span class="lg-item flex items-center gap-2 text-[12px] font-semibold text-[#6D3FB0]" data-cat="ai">
+                <span class="lg-item flex items-center gap-2 text-[10px] sm:text-[11px] lg:text-[12px] font-semibold text-[#6D3FB0]" data-cat="ai">
                   <span class="lg-dot w-3 h-3 rounded-full border-2 border-current"></span>AI probability
                 </span>
-                <span class="lg-item flex items-center gap-2 text-[12px] font-semibold text-[#2AA46C]" data-cat="citations">
+                <span class="lg-item flex items-center gap-2 text-[10px] sm:text-[11px] lg:text-[12px] font-semibold text-[#2AA46C]" data-cat="citations">
                   <span class="lg-dot w-3 h-3 rounded-full border-2 border-current"></span>Citations
                 </span>
-                <span class="lg-item flex items-center gap-2 text-[12px] font-semibold text-[#3B82F6]" data-cat="references">
+                <span class="lg-item flex items-center gap-2 text-[10px] sm:text-[11px] lg:text-[12px] font-semibold text-[#3B82F6]" data-cat="references">
                   <span class="lg-dot w-3 h-3 rounded-full border-2 border-current"></span>References
                 </span>
               </div>
@@ -595,43 +632,43 @@ tailwind.config = {
 
           <!-- Sidebar -->
           <div class="flex flex-col gap-4">
-            <div class="scan-side rounded-2xl sm:rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-6">
-              <div class="text-[10px] font-bold tracking-[0.2em] text-white/40 mb-4">DETECTION SUMMARY</div>
+            <div class="scan-side min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-4 sm:p-5 lg:p-6">
+              <div class="text-[8.5px] sm:text-[9.5px] lg:text-[10px] font-bold tracking-[0.2em] text-white/40 mb-4">DETECTION SUMMARY</div>
               <div class="grid grid-cols-3 gap-2.5 text-center">
-                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">PLAGIARISM</div><div class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold text-orange-400 nums"><span id="cPlag">0.0</span>%</div></div>
-                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">AI WRITTEN</div><div class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold text-teal-400 nums"><span id="cAI">0.0</span>%</div></div>
-                <div class="rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8.5px] font-bold tracking-widest text-white/40 mb-1">ORIGINAL</div><div class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold text-mint-400 nums"><span id="cOrig">100</span>%</div></div>
+                <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8px] lg:text-[8.5px] font-bold tracking-widest text-white/40 mb-1">PLAGIARISM</div><div class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold text-orange-400 nums"><span id="cPlag">0.0</span>%</div></div>
+                <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8px] lg:text-[8.5px] font-bold tracking-widest text-white/40 mb-1">AI WRITTEN</div><div class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold text-teal-400 nums"><span id="cAI">0.0</span>%</div></div>
+                <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white/[.06] py-3.5"><div class="text-[8px] lg:text-[8.5px] font-bold tracking-widest text-white/40 mb-1">ORIGINAL</div><div class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold text-mint-400 nums"><span id="cOrig">100</span>%</div></div>
               </div>
               <div class="mt-5">
-                <div class="flex justify-between text-[11.5px] font-medium text-white/50 mb-2"><span>AI-generated probability</span><span class="text-teal-400 font-bold nums" id="probLabel">0%</span></div>
+                <div class="flex justify-between text-[10px] sm:text-[10.5px] lg:text-[11.5px] font-medium text-white/50 mb-2"><span>AI-generated probability</span><span class="text-teal-400 font-bold nums" id="probLabel">0%</span></div>
                 <div class="h-1.5 rounded-full bg-white/10 overflow-hidden"><div id="probBar" class="h-full rounded-full bg-gradient-to-r from-teal-400 to-orange-500 origin-left" style="transform:scaleX(0)"></div></div>
               </div>
             </div>
 
-            <div id="srcCard1" class="rounded-2xl sm:rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-5 opacity-0 translate-y-6">
+            <div id="srcCard1" class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-4 lg:p-5 opacity-0 translate-y-6">
               <div class="flex items-center justify-between mb-2.5">
-                <span class="text-[9px] font-bold tracking-widest text-orange-300 bg-orange-500/15 rounded-full px-2 py-0.5">94% MATCH</span>
+                <span class="text-[8px] sm:text-[8.5px] lg:text-[9px] font-bold tracking-widest text-orange-300 bg-orange-500/15 rounded-full px-2 py-0.5">94% MATCH</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
               </div>
-              <div class="text-[13.5px] font-semibold mb-1">Rain-fed agriculture vulnerability</div>
-              <div class="text-[11px] text-white/40">Nature Climate Change · 2023</div>
+              <div class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-semibold mb-1">Rain-fed agriculture vulnerability</div>
+              <div class="text-[9.5px] sm:text-[10px] lg:text-[11px] text-white/40">Nature Climate Change · 2023</div>
             </div>
 
-            <div id="srcCard2" class="rounded-2xl sm:rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-5 opacity-0 translate-y-6">
+            <div id="srcCard2" class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.07] ring-1 ring-white/10 p-4 lg:p-5 opacity-0 translate-y-6">
               <div class="flex items-center justify-between mb-2.5">
-                <span class="text-[9px] font-bold tracking-widest text-orange-300 bg-orange-500/15 rounded-full px-2 py-0.5">67% MATCH</span>
+                <span class="text-[8px] sm:text-[8.5px] lg:text-[9px] font-bold tracking-widest text-orange-300 bg-orange-500/15 rounded-full px-2 py-0.5">67% MATCH</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
               </div>
-              <div class="text-[13.5px] font-semibold mb-1">Climate-yield correlation analysis</div>
-              <div class="text-[11px] text-white/40">Cambridge J. Agricultural Econ. · 2022</div>
+              <div class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-semibold mb-1">Climate-yield correlation analysis</div>
+              <div class="text-[9.5px] sm:text-[10px] lg:text-[11px] text-white/40">Cambridge J. Agricultural Econ. · 2022</div>
             </div>
 
-            <div id="scanDone" class="rounded-2xl sm:rounded-3xl bg-mint-500/10 ring-1 ring-mint-400/20 p-5 opacity-0 translate-y-6">
+            <div id="scanDone" class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-mint-500/10 ring-1 ring-mint-400/20 p-4 lg:p-5 opacity-0 translate-y-6">
               <div class="flex items-center gap-3">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ED2A0" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
                 <div>
-                  <div class="text-[13.5px] font-bold text-mint-400">Scan complete in 3.2s</div>
-                  <div class="text-[11.5px] text-white/40">2 sources · 2 AI-likely passages · verifiable</div>
+                  <div class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold text-mint-400">Scan complete in 3.2s</div>
+                  <div class="text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-white/40">2 sources · 2 AI-likely passages · verifiable</div>
                 </div>
               </div>
             </div>
@@ -644,28 +681,28 @@ tailwind.config = {
 
 <!-- ================= KINETIC BREAK ================= -->
 <section class="relative py-16 sm:py-28 lg:py-36 overflow-hidden bg-white">
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 text-center mb-16">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 text-center mb-16">
     <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02]">
       One scan.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-teal-600">Two detections.</span>
     </h2>
   </div>
-  <div class="rv grid grid-cols-3 max-w-[880px] mx-auto px-6 text-center mb-20">
-    <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="500" data-suffix="K">0</div><div class="text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Writers</div></div>
-    <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="14" data-suffix="B">0</div><div class="text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Pages indexed</div></div>
-    <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="17" data-suffix="">0</div><div class="text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Languages</div></div>
+  <div class="rv grid grid-cols-3 max-w-[880px] mx-auto px-4 sm:px-5 lg:px-6 text-center mb-20">
+    <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="500" data-suffix="K">0</div><div class="text-[10px] sm:text-[11px] lg:text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Writers</div></div>
+    <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="14" data-suffix="B">0</div><div class="text-[10px] sm:text-[11px] lg:text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Pages indexed</div></div>
+    <div><div class="text-[clamp(1.8rem,3.4vw,3rem)] font-extrabold tracking-tightest nums" data-count="17" data-suffix="">0</div><div class="text-[10px] sm:text-[11px] lg:text-[12px] font-semibold tracking-wider text-ink-400 uppercase mt-1">Languages</div></div>
   </div>
   <!-- ===== LANGUAGES · live scan demo with explainer ===== -->
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[420px_1fr] gap-8 sm:gap-12 lg:gap-16 items-center">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 grid lg:grid-cols-[420px_1fr] gap-8 sm:gap-12 lg:gap-16 items-center">
 
     <!-- Explainer (matches capabilities header style) -->
     <div class="rv">
       <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">17 languages</span>
+        <span class="text-[9px] sm:text-[10px] lg:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">17 languages</span>
       </div>
       <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05] mb-5">Same accuracy,<br>any language.</h2>
       <p class="text-[15.5px] sm:text-[16.5px] text-ink-600 leading-relaxed mb-7">One sentence, re-scanned across all 17 supported languages. The highlight lands on the same claim every time — and accuracy holds between 94.2% and 98.2%, because each language runs its own trained model, not a translation shortcut.</p>
-      <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px] font-semibold text-ink-500">
+      <div class="flex flex-wrap items-center gap-x-4 lg:gap-x-5 gap-y-2 text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] font-semibold text-ink-500">
         <span class="flex items-center gap-2">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
           ESL-aware · false positives under 2%
@@ -677,16 +714,16 @@ tailwind.config = {
 
     <!-- Live scan cycler -->
     <div id="langLive" class="rv">
-      <div class="rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
-        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 lg:p-10">
+      <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-8 lg:p-10">
           <div class="flex flex-wrap items-center justify-between gap-3 mb-8">
             <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-teal-500 pulse-dot"></span>
-              <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Live demo</span>
+              <span class="text-[9px] sm:text-[10px] lg:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Live demo</span>
             </div>
             <div class="flex items-center gap-2.5">
-              <span id="laName" class="text-[13px] font-bold text-ink-700">English</span>
-              <span id="laChip" class="text-[11px] font-bold tracking-wide text-mint-700 bg-mint-100 rounded-full px-2.5 py-1 nums">98.2% accuracy</span>
+              <span id="laName" class="text-[11px] sm:text-[12px] lg:text-[13px] font-bold text-ink-700">English</span>
+              <span id="laChip" class="text-[9.5px] sm:text-[10px] lg:text-[11px] font-bold tracking-wide text-mint-700 bg-mint-100 rounded-full px-2.5 py-1 nums">98.2% accuracy</span>
             </div>
           </div>
           <p id="laSentence" class="text-[clamp(1.25rem,2.3vw,1.8rem)] font-semibold leading-[1.55] tracking-tight text-ink-800 min-h-[5.6em] sm:min-h-[4.2em]">
@@ -700,8 +737,8 @@ tailwind.config = {
   </div>
 
   <!-- ===== PARTNERS · integrations we plug into ===== -->
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 mt-20">
-    <p class="rv text-center text-[12px] font-bold uppercase tracking-[0.14em] text-ink-500 mb-8">Cooperate with the following services</p>
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 mt-20">
+    <p class="rv text-center text-[10px] sm:text-[11px] lg:text-[12px] font-bold uppercase tracking-[0.14em] text-ink-500 mb-8">Cooperate with the following services</p>
     <!-- cards hold the Figma 324×113 ratio at every width; the logos carry their own padding inside a 600×270 canvas -->
     <ul class="rv grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
       <li class="rounded-xl bg-ink-50 aspect-[324/113] flex items-center justify-center overflow-hidden">
@@ -720,40 +757,40 @@ tailwind.config = {
   </div>
 
   <!-- GDocs wide -->
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-10 mt-20">
-    <div class="rv rounded-3xl sm:rounded-5xl bg-ink-950 text-white p-2 ring-1 ring-white/10 shadow-diffuse-lg overflow-hidden">
-      <div class="relative rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] p-6 sm:p-8 lg:p-12 grid lg:grid-cols-[1.2fr_.8fr] gap-8 sm:gap-10 items-center overflow-hidden">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 mt-20">
+    <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-ink-950 text-white p-1.5 sm:p-2 ring-1 ring-white/10 shadow-diffuse-lg overflow-hidden">
+      <div class="relative rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] p-5 sm:p-8 lg:p-12 grid lg:grid-cols-[1.2fr_.8fr] gap-8 sm:gap-9 lg:gap-10 items-center overflow-hidden">
         <div class="orb w-[500px] h-[500px] bg-teal-500/15 -right-32 -bottom-48"></div>
         <div class="relative">
           <div class="inline-flex items-center gap-2 rounded-full bg-white/[.07] ring-1 ring-white/10 px-3.5 py-1.5 mb-6">
             <span class="w-1.5 h-1.5 rounded-full bg-teal-400 pulse-dot"></span>
-            <span class="text-[10px] font-bold tracking-[0.18em] text-teal-300">GOOGLE DOCS ADD-ON · 490K INSTALLS</span>
+            <span class="text-[8.5px] sm:text-[9.5px] lg:text-[10px] font-bold tracking-[0.18em] text-teal-300">GOOGLE DOCS ADD-ON · 490K INSTALLS</span>
           </div>
           <h3 class="text-[clamp(1.6rem,2.8vw,2.3rem)] font-extrabold tracking-tightest leading-[1.1] mb-4">Already a Google Docs user?<br>Claim your account.</h3>
-          <p class="text-[15px] text-white/50 leading-relaxed max-w-[46ch] mb-8">490K educators and writers run checks inside the document — no app switching. Pull your past scans into a web account in one click.</p>
+          <p class="text-[13px] sm:text-[14px] lg:text-[15px] text-white/50 leading-relaxed max-w-[46ch] mb-8">490K educators and writers run checks inside the document — no app switching. Pull your past scans into a web account in one click.</p>
           <div class="flex flex-wrap gap-3">
-            <a href="#" class="btn-press group flex items-center gap-2.5 rounded-full bg-white text-ink-900 text-[14px] font-semibold pl-6 pr-2 py-2">
+            <a href="#" class="btn-press group flex items-center gap-2.5 rounded-full bg-white text-ink-900 text-[12px] sm:text-[13px] lg:text-[14px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
               Claim my account
               <span class="icon-orb w-8 h-8 rounded-full bg-ink-900/5 flex items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </span>
             </a>
-            <a href="#" class="btn-press rounded-full text-[14px] font-semibold text-white/60 hover:text-white px-5 py-3.5 transition-colors duration-300">Install add-on free</a>
+            <a href="#" class="btn-press rounded-full text-[12px] sm:text-[13px] lg:text-[14px] font-semibold text-white/60 hover:text-white px-4 sm:px-5 py-3 sm:py-3.5 transition-colors duration-300">Install add-on free</a>
           </div>
         </div>
-        <div class="relative rounded-2xl sm:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5">
+        <div class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-4 lg:p-5">
           <div class="flex items-center gap-1.5 mb-4">
             <span class="w-2 h-2 rounded-full bg-[#FF5F57]/60"></span><span class="w-2 h-2 rounded-full bg-[#FEBC2E]/60"></span><span class="w-2 h-2 rounded-full bg-[#28C840]/60"></span>
-            <span class="ml-auto text-[10.5px] text-white/40">Climate change essay.docx</span>
+            <span class="ml-auto text-[9px] sm:text-[10px] lg:text-[10.5px] text-white/40">Climate change essay.docx</span>
           </div>
-          <div class="rounded-2xl bg-white/[.04] p-4">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white/[.04] p-4">
             <div class="flex items-center justify-between mb-4">
-              <span class="text-[11.5px] font-bold tracking-wide text-white/85">PlagiarismSearch</span>
-              <span class="text-[8.5px] font-bold tracking-widest text-mint-400 bg-mint-500/10 rounded-full px-2 py-0.5 flex items-center gap-1">
+              <span class="text-[10px] sm:text-[10.5px] lg:text-[11.5px] font-bold tracking-wide text-white/85">PlagiarismSearch</span>
+              <span class="text-[8px] lg:text-[8.5px] font-bold tracking-widest text-mint-400 bg-mint-500/10 rounded-full px-2 py-0.5 flex items-center gap-1">
                 <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>CHECKED
               </span>
             </div>
-            <div class="space-y-2.5 text-[12px]">
+            <div class="space-y-2.5 text-[10px] sm:text-[11px] lg:text-[12px]">
               <div class="flex justify-between"><span class="text-white/50">Plagiarism</span><span class="font-bold text-orange-400 nums">0.8%</span></div>
               <div class="flex justify-between"><span class="text-white/50">AI written</span><span class="font-bold text-teal-400 nums">12.0%</span></div>
               <div class="flex justify-between"><span class="text-white/50">Original</span><span class="font-bold text-mint-400 nums">87.2%</span></div>
@@ -768,31 +805,31 @@ tailwind.config = {
 <!-- ================= ACT 3 · CAPABILITIES BENTO ================= -->
 <section id="capabilities" class="relative py-16 sm:py-28 lg:py-36 bg-ink-50 overflow-hidden">
   <div class="orb w-[600px] h-[600px] bg-orange-500/8 -left-40 top-20"></div>
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
     <div class="rv max-w-[560px] mb-16">
       <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Capabilities</span>
+        <span class="text-[9px] sm:text-[10px] lg:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Capabilities</span>
       </div>
       <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05] mb-5">Built for honesty,<br>not gotchas.</h2>
       <p class="text-[15.5px] sm:text-[16.5px] text-ink-600 leading-relaxed">Plagiarism and AI-generated content checked in the same pass — with sources you can verify yourself.</p>
     </div>
 
-    <div class="grid lg:grid-cols-5 gap-5">
+    <div class="grid lg:grid-cols-5 gap-4 lg:gap-5">
       <!-- Plagiarism BIG -->
-      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
-        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 lg:p-10 h-full">
-          <span class="inline-flex w-12 h-12 rounded-2xl bg-orange-100 items-center justify-center mb-6">
+      <div class="min-w-0 rv lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+        <div class="min-w-0 rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-8 lg:p-10 h-full">
+          <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center mb-6">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
           </span>
           <h3 class="text-[21px] sm:text-[23px] lg:text-[26px] font-bold tracking-tight mb-3">Plagiarism check — with receipts.</h3>
-          <p class="text-[15px] text-ink-600 leading-relaxed max-w-[48ch] mb-8">14B+ pages indexed across academic journals, news archives, and open web. Every match links back to the source.</p>
-          <div class="rounded-2xl sm:rounded-3xl bg-ink-50 p-6">
-            <div class="text-[10px] font-bold tracking-[0.18em] text-orange-700 mb-3">EXCERPT · MATCH FOUND</div>
-            <p class="text-[14px] leading-[1.8] text-ink-700 mb-4">Climate change impacts have intensified over the past decade, <span class="text-orange-700 font-semibold bg-orange-100/70 rounded px-1">particularly in regions dependent on rain-fed farming</span>. Recent studies suggest yield variability increased by 47.2%.</p>
-            <div class="flex items-center gap-3 rounded-xl bg-white ring-1 ring-black/5 px-4 py-3">
-              <span class="text-[9px] font-bold tracking-widest text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">94% MATCH</span>
-              <span class="text-[12px] font-medium text-ink-600 truncate">Nature Climate Change · "Rain-fed agriculture vulnerability" · 2023</span>
+          <p class="text-[13px] sm:text-[14px] lg:text-[15px] text-ink-600 leading-relaxed max-w-[48ch] mb-8">14B+ pages indexed across academic journals, news archives, and open web. Every match links back to the source.</p>
+          <div class="min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-50 p-4 sm:p-5 lg:p-6">
+            <div class="text-[8.5px] sm:text-[9.5px] lg:text-[10px] font-bold tracking-[0.18em] text-orange-700 mb-3">EXCERPT · MATCH FOUND</div>
+            <p class="text-[12px] sm:text-[13px] lg:text-[14px] leading-[1.8] text-ink-700 mb-4">Climate change impacts have intensified over the past decade, <span class="text-orange-700 font-semibold bg-orange-100/70 rounded px-1">particularly in regions dependent on rain-fed farming</span>. Recent studies suggest yield variability increased by 47.2%.</p>
+            <div class="min-w-0 flex items-center gap-2 sm:gap-2.5 lg:gap-3 rounded-xl bg-white ring-1 ring-black/5 px-2.5 sm:px-3 lg:px-3.5 py-1.5 sm:py-2 lg:py-2.5">
+              <span class="shrink-0 whitespace-nowrap text-[8px] sm:text-[8.5px] lg:text-[9px] font-bold tracking-widest text-orange-700 bg-orange-100 rounded-full px-2 py-0.5">94% MATCH</span>
+              <span class="text-[10px] sm:text-[11px] lg:text-[12px] font-medium text-ink-600 truncate">Nature Climate Change · "Rain-fed agriculture vulnerability" · 2023</span>
               <svg class="ml-auto shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
             </div>
           </div>
@@ -800,61 +837,71 @@ tailwind.config = {
       </div>
 
       <!-- Right column -->
-      <div class="lg:col-span-2 flex flex-col gap-5">
-        <div class="rv rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse flex-1">
-          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
-            <span class="inline-flex w-11 h-11 rounded-2xl bg-teal-100 items-center justify-center mb-5">
+      <div class="lg:col-span-2 flex flex-col gap-4 lg:gap-5">
+        <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse flex-1">
+          <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8 h-full">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-5">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
             </span>
             <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">AI detection</h3>
-            <p class="text-[14px] text-ink-600 leading-relaxed mb-5">ChatGPT, Claude, Gemini, Llama — flagged with probability per paragraph. 97.4% accuracy.</p>
-            <div class="flex justify-between text-[11px] font-medium text-ink-400 mb-2"><span>Probability</span><span class="text-teal-700 font-bold">live</span></div>
+            <p class="text-[12px] sm:text-[13px] lg:text-[14px] text-ink-600 leading-relaxed mb-5">ChatGPT, Claude, Gemini, Llama — flagged with probability per paragraph. 97.4% accuracy.</p>
+            <div class="flex justify-between text-[9.5px] sm:text-[10px] lg:text-[11px] font-medium text-ink-400 mb-2"><span>Probability</span><span class="text-teal-700 font-bold">live</span></div>
             <div class="h-1.5 rounded-full bg-ink-100 overflow-hidden"><div class="breathe h-full rounded-full bg-gradient-to-r from-teal-400 to-orange-400"></div></div>
           </div>
         </div>
-        <div class="rv rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse flex-1">
-          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
-            <span class="inline-flex w-11 h-11 rounded-2xl bg-ink-100 items-center justify-center mb-5">
+        <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse flex-1">
+          <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8 h-full">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-5">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
             </span>
             <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">17 languages · ESL-aware</h3>
-            <p class="text-[14px] text-ink-600 leading-relaxed">Native-quality detection in EN, ES, FR, DE, UA + 12 more. False positives &lt;2% on non-native English.</p>
+            <p class="text-[12px] sm:text-[13px] lg:text-[14px] text-ink-600 leading-relaxed">Native-quality detection in EN, ES, FR, DE, UA + 12 more. False positives &lt;2% on non-native English.</p>
           </div>
         </div>
       </div>
 
       <!-- GDocs wide · v2 — Report details product mock (from Figma 5379:2309) -->
-      <div class="rv lg:col-span-5 rounded-3xl sm:rounded-5xl text-white shadow-diffuse-lg overflow-hidden">
-        <div class="relative rounded-3xl sm:rounded-5xl bg-ink-950 p-6 sm:p-8 lg:p-12 grid lg:grid-cols-[1fr_420px] gap-8 sm:gap-10 overflow-hidden">
-          <img src="assets/gdocs-bg.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/50"></div>
-          <div class="relative flex flex-col justify-end items-start">
+      <div class="min-w-0 rv lg:col-span-5 rounded-3xl sm:rounded-4xl lg:rounded-5xl text-white shadow-diffuse-lg overflow-hidden">
+        <div class="min-w-0 relative rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-ink-950 p-5 sm:p-8 lg:p-12 grid lg:grid-cols-[1fr_420px] gap-8 sm:gap-9 lg:gap-10 overflow-hidden">
+          <!-- Photograph sits at the TOP of the card and is dissolved into the plate rather than
+               cropped: the gradient runs transparent -> #0A0E1A (ink-950, the card colour) so the
+               image has no bottom edge at all. It used to cover the whole card, which left the
+               body copy and the secondary link sitting on a bright patch of the photo.
+               The band ends mid-heading on purpose — eyebrow and first lines read against the
+               photo, the closing line and everything below sit on solid ink. -->
+          <div class="pointer-events-none absolute inset-x-0 top-0 h-[330px] sm:h-[380px] lg:h-[70%]">
+            <img src="assets/gdocs-bg.jpg" alt="" class="w-full h-full object-cover object-[center_38%]">
+            <div class="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,transparent_38%,rgba(10,14,26,.72)_74%,#0A0E1A_100%)]"></div>
+          </div>
+          <!-- the top padding is the clear photo above the eyebrow; on lg the two-column grid
+               already leaves that room, so it drops to 0 -->
+          <div class="relative flex flex-col justify-end items-start pt-[210px] sm:pt-[240px] lg:pt-0">
             <div class="inline-flex items-center gap-2 rounded-full bg-white/[.07] backdrop-blur-md ring-1 ring-white/10 px-3.5 py-1.5 mb-6">
               <span class="w-1.5 h-1.5 rounded-full bg-teal-400 pulse-dot"></span>
-              <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-300">Google Docs add-on</span>
+              <span class="text-[9px] sm:text-[10px] lg:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-300">Google Docs add-on</span>
             </div>
             <h3 class="text-[clamp(1.6rem,2.8vw,2.3rem)] font-extrabold tracking-tightest leading-[1.1] mb-4">Already a Google Docs user?<br>Claim your account.</h3>
-            <p class="text-[15px] text-ink-300 leading-relaxed max-w-[46ch] mb-8">490K educators and writers run checks inside the document — no app switching, no copy-paste. Pull your past scans into a web account in one click.</p>
-            <div class="flex flex-wrap gap-3">
-              <a href="#" class="btn-press group flex items-center gap-2.5 rounded-full bg-white text-ink-900 text-[14px] font-semibold pl-6 pr-2 py-2">
+            <p class="text-[13px] sm:text-[14px] lg:text-[15px] text-ink-300 leading-relaxed max-w-[46ch] mb-8">490K educators and writers run checks inside the document — no app switching, no copy-paste. Pull your past scans into a web account in one click.</p>
+            <div class="flex flex-wrap gap-1.5 sm:gap-3">
+              <a href="#" class="btn-press group flex items-center gap-2 sm:gap-2.5 rounded-full bg-white text-ink-900 text-[12px] sm:text-[13px] lg:text-[14px] font-semibold pl-3.5 sm:pl-6 pr-1 sm:pr-2 py-2">
                 Claim my account
-                <span class="icon-orb w-8 h-8 rounded-full bg-ink-900/5 flex items-center justify-center">
+                <span class="icon-orb w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-ink-900/5 flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
               </a>
-              <a href="#" class="btn-press rounded-full text-[14px] font-semibold text-ink-50/80 hover:text-white px-5 py-3.5 transition-colors duration-300">Install add-on free</a>
+              <a href="#" class="btn-press rounded-full text-[12px] sm:text-[13px] lg:text-[14px] font-semibold text-ink-50/80 hover:text-white px-2 sm:px-5 py-3 sm:py-3.5 transition-colors duration-300">Install add-on free</a>
             </div>
           </div>
 
           <!-- Report details mock -->
-          <div class="relative rounded-[20px] bg-white/[.12] backdrop-blur-xl ring-1 ring-white/10 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.12),0_16px_40px_-12px_rgba(0,0,0,.35)]">
+          <div class="min-w-0 relative rounded-[20px] bg-white/[.12] backdrop-blur-xl ring-1 ring-white/10 p-4 lg:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.12),0_16px_40px_-12px_rgba(0,0,0,.35)]">
             <div class="flex items-center gap-2 mb-3.5">
               <span class="w-2 h-2 rounded-full bg-[#FF5F57]"></span><span class="w-2 h-2 rounded-full bg-[#FEBC2E]"></span><span class="w-2 h-2 rounded-full bg-[#28C840]"></span>
-              <span class="ml-auto text-[13px] font-medium text-white">Climate change essay.docx</span>
+              <span class="ml-auto text-[11px] sm:text-[12px] lg:text-[13px] font-medium text-white">Climate change essay.docx</span>
             </div>
-            <div class="rounded-xl bg-white text-ink-900 overflow-hidden">
+            <div class="min-w-0 rounded-xl bg-white text-ink-900 overflow-hidden">
               <!-- header -->
-              <div class="flex items-center gap-1 px-5 pt-3 pb-2">
+              <div class="flex items-center gap-1 px-4 lg:px-5 pt-3 pb-2">
                 <span class="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold tracking-tight mr-auto">Report details</span>
                 <span class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></span>
                 <span class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></span>
@@ -865,20 +912,22 @@ tailwind.config = {
               <div class="mx-5 mb-2 flex items-center gap-4 rounded-xl bg-teal-500/[.08] px-4 py-3.5">
                 <svg width="24" height="28" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
                 <div class="mr-auto">
-                  <div class="text-[13px] font-semibold leading-tight">Climate change essay.docx</div>
-                  <div class="text-[13px] text-ink-500">13.37 Kb</div>
+                  <div class="text-[11px] sm:text-[12px] lg:text-[13px] font-semibold leading-tight">Climate change essay.docx</div>
+                  <div class="text-[11px] sm:text-[12px] lg:text-[13px] text-ink-500">13.37 Kb</div>
                 </div>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
               </div>
               <!-- scan option chips -->
-              <div class="flex flex-wrap gap-1.5 px-5 pb-4 pt-1">
-                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Search for AI text</span>
-                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Search on the web</span>
-                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Exclude references</span>
-                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Only latin characters</span>
+              <div class="flex flex-wrap gap-1.5 px-4 lg:px-5 pb-4 pt-1">
+                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[10px] sm:text-[11px] lg:text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Search for AI text</span>
+                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[10px] sm:text-[11px] lg:text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Search on the web</span>
+                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[10px] sm:text-[11px] lg:text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Exclude references</span>
+                <span class="inline-flex items-center gap-1.5 rounded-lg bg-ink-50 px-2 py-1 text-[10px] sm:text-[11px] lg:text-[12px] font-medium text-ink-800"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3AC184" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Only latin characters</span>
               </div>
               <!-- tabs -->
-              <div class="bg-ink-50 border-y border-ink-100 px-6 flex gap-4 text-[13px] font-medium">
+              <!-- five labels on one line: this strip needs a tighter step than the
+                   standard card ramp, or the last tab falls off a 390px screen -->
+              <div class="bg-ink-50 border-y border-ink-100 px-3 sm:px-5 lg:px-6 flex gap-2 sm:gap-3 lg:gap-4 text-[10px] sm:text-[12px] lg:text-[13px] font-medium">
                 <span class="py-3 text-teal-600 border-b-2 border-teal-500 -mb-px">Plagiarism</span>
                 <span class="py-3 text-ink-500">AI</span>
                 <span class="py-3 text-ink-500">Citations</span>
@@ -886,30 +935,30 @@ tailwind.config = {
                 <span class="py-3 text-ink-500">Comments</span>
               </div>
               <!-- sources list -->
-              <div class="px-5 py-2 divide-y divide-ink-100">
-                <div class="flex items-center gap-3 py-3">
+              <div class="min-w-0 px-4 lg:px-5 py-2 divide-y divide-ink-100">
+                <div class="min-w-0 flex items-center gap-3 py-3">
                   <div class="min-w-0 mr-auto">
-                    <div class="text-[13px] font-semibold leading-tight">simplylivingwell.com</div>
-                    <div class="text-[12.5px] text-ink-500 truncate max-w-[210px]">https://simplylivingwell.com/blog-bath-body/natural-shower-spray</div>
+                    <div class="text-[11px] sm:text-[12px] lg:text-[13px] font-semibold leading-tight">simplylivingwell.com</div>
+                    <div class="min-w-0 text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] text-ink-500 truncate max-w-[210px]">https://simplylivingwell.com/blog-bath-body/natural-shower-spray</div>
                   </div>
-                  <span class="w-6 h-6 shrink-0 rounded-full bg-[#DCDFE4] flex items-center justify-center text-[10px] font-medium text-ink-800">OP</span>
-                  <span class="shrink-0 rounded-lg bg-orange-100 px-2.5 h-8 flex items-center text-[13px] font-semibold text-orange-800 nums">3.20%</span>
+                  <span class="w-6 h-6 shrink-0 rounded-full bg-[#DCDFE4] flex items-center justify-center text-[8.5px] sm:text-[9.5px] lg:text-[10px] font-medium text-ink-800">OP</span>
+                  <span class="shrink-0 rounded-lg bg-orange-100 px-2.5 h-8 flex items-center text-[11px] sm:text-[12px] lg:text-[13px] font-semibold text-orange-800 nums">3.20%</span>
                 </div>
-                <div class="flex items-center gap-3 py-3">
+                <div class="min-w-0 flex items-center gap-3 py-3">
                   <div class="min-w-0 mr-auto">
-                    <div class="text-[13px] font-semibold leading-tight">bataviail.gov</div>
-                    <div class="text-[12.5px] text-ink-500 truncate max-w-[210px]">https://bataviail.gov/1103/DIY-Natural-Household-Cleaning-Product-R</div>
+                    <div class="text-[11px] sm:text-[12px] lg:text-[13px] font-semibold leading-tight">bataviail.gov</div>
+                    <div class="min-w-0 text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] text-ink-500 truncate max-w-[210px]">https://bataviail.gov/1103/DIY-Natural-Household-Cleaning-Product-R</div>
                   </div>
-                  <span class="w-6 h-6 shrink-0 rounded-full bg-[#DCDFE4] flex items-center justify-center text-[10px] font-medium text-ink-800">OP</span>
-                  <span class="shrink-0 rounded-lg bg-orange-100 px-2.5 h-8 flex items-center text-[13px] font-semibold text-orange-800 nums">1.26%</span>
+                  <span class="w-6 h-6 shrink-0 rounded-full bg-[#DCDFE4] flex items-center justify-center text-[8.5px] sm:text-[9.5px] lg:text-[10px] font-medium text-ink-800">OP</span>
+                  <span class="shrink-0 rounded-lg bg-orange-100 px-2.5 h-8 flex items-center text-[11px] sm:text-[12px] lg:text-[13px] font-semibold text-orange-800 nums">1.26%</span>
                 </div>
-                <div class="flex items-center gap-3 py-3">
+                <div class="min-w-0 flex items-center gap-3 py-3">
                   <div class="min-w-0 mr-auto">
-                    <div class="text-[13px] font-semibold leading-tight">puracy.com</div>
-                    <div class="text-[12.5px] text-ink-500 truncate max-w-[210px]">https://puracy.com/blogs/puracy-blog/how-to-remove-years-of-soap-scum</div>
+                    <div class="text-[11px] sm:text-[12px] lg:text-[13px] font-semibold leading-tight">puracy.com</div>
+                    <div class="min-w-0 text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] text-ink-500 truncate max-w-[210px]">https://puracy.com/blogs/puracy-blog/how-to-remove-years-of-soap-scum</div>
                   </div>
-                  <span class="w-6 h-6 shrink-0 rounded-full bg-[#DCDFE4] flex items-center justify-center text-[10px] font-medium text-ink-800">OP</span>
-                  <span class="shrink-0 rounded-lg bg-orange-100 px-2.5 h-8 flex items-center text-[13px] font-semibold text-orange-800 nums">0.96%</span>
+                  <span class="w-6 h-6 shrink-0 rounded-full bg-[#DCDFE4] flex items-center justify-center text-[8.5px] sm:text-[9.5px] lg:text-[10px] font-medium text-ink-800">OP</span>
+                  <span class="shrink-0 rounded-lg bg-orange-100 px-2.5 h-8 flex items-center text-[11px] sm:text-[12px] lg:text-[13px] font-semibold text-orange-800 nums">0.96%</span>
                 </div>
               </div>
             </div>
@@ -923,11 +972,11 @@ tailwind.config = {
 
 <!-- ================= ACT 4 · PERSONAS ================= -->
 <section class="relative py-16 sm:py-28 lg:py-36 bg-white overflow-hidden">
-  <div class="max-w-[1080px] mx-auto px-6 lg:px-10">
+  <div class="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-10">
     <div class="rv text-center mb-12">
       <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Who it's for</span>
+        <span class="text-[9px] sm:text-[10px] lg:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Who it's for</span>
       </div>
       <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05]">Students. Teachers.<br>Universities.</h2>
     </div>
@@ -935,17 +984,17 @@ tailwind.config = {
     <!-- tabs -->
     <div class="rv flex justify-center mb-12">
       <div class="inline-flex rounded-full bg-ink-100 p-1" id="personaTabs">
-        <button data-persona="0" class="persona-tab rounded-full px-6 py-2.5 text-[14px] font-semibold bg-white shadow-sm transition-all duration-300">Student</button>
-        <button data-persona="1" class="persona-tab rounded-full px-6 py-2.5 text-[14px] font-semibold text-ink-500 transition-all duration-300">Teacher</button>
-        <button data-persona="2" class="persona-tab rounded-full px-6 py-2.5 text-[14px] font-semibold text-ink-500 transition-all duration-300">University</button>
+        <button data-persona="0" class="persona-tab rounded-full px-4 sm:px-5 lg:px-6 py-2.5 text-[12px] sm:text-[13px] lg:text-[14px] font-semibold bg-white shadow-sm transition-all duration-300">Student</button>
+        <button data-persona="1" class="persona-tab rounded-full px-4 sm:px-5 lg:px-6 py-2.5 text-[12px] sm:text-[13px] lg:text-[14px] font-semibold text-ink-500 transition-all duration-300">Teacher</button>
+        <button data-persona="2" class="persona-tab rounded-full px-4 sm:px-5 lg:px-6 py-2.5 text-[12px] sm:text-[13px] lg:text-[14px] font-semibold text-ink-500 transition-all duration-300">University</button>
       </div>
     </div>
 
     <div class="rv relative min-h-[380px]" id="personaPanels">
       <!-- Student -->
       <div class="persona-panel" data-panel="0">
-        <div class="rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
-          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-5 sm:px-8 py-12 lg:px-16 text-center">
+        <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-5 sm:px-8 py-8 sm:py-10 lg:py-12 lg:px-16 text-center">
             <div class="flex justify-center gap-1 mb-8" aria-hidden="true">
               <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -955,10 +1004,10 @@ tailwind.config = {
             </div>
             <blockquote class="font-serif italic text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.35] text-ink-800 max-w-[30ch] mx-auto mb-10">"Other checkers flag my voice as AI because I write differently. PlagiarismSearch reads my actual sentences — not patterns."</blockquote>
             <div class="flex items-center justify-center gap-4">
-              <span class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-[14px] font-bold">PV</span>
+              <span class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-[12px] sm:text-[13px] lg:text-[14px] font-bold">PV</span>
               <div class="text-left">
-                <div class="text-[14.5px] font-bold">Priya Venkataraman</div>
-                <div class="text-[12.5px] text-ink-500">Junior · Brown University · 47 scans</div>
+                <div class="text-[12.5px] sm:text-[13.5px] lg:text-[14.5px] font-bold">Priya Venkataraman</div>
+                <div class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] text-ink-500">Junior · Brown University · 47 scans</div>
               </div>
             </div>
           </div>
@@ -966,8 +1015,8 @@ tailwind.config = {
       </div>
       <!-- Teacher -->
       <div class="persona-panel hidden-panel" data-panel="1">
-        <div class="rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse">
-          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-5 sm:px-8 py-12 lg:px-16 text-center">
+        <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl px-5 sm:px-8 py-8 sm:py-10 lg:py-12 lg:px-16 text-center">
             <div class="flex justify-center gap-1 mb-8" aria-hidden="true">
               <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               <svg class="text-orange-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -977,10 +1026,10 @@ tailwind.config = {
             </div>
             <blockquote class="font-serif italic text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.35] text-ink-800 max-w-[30ch] mx-auto mb-10">"I check 32 essays a week inside Google Docs. Sources I can click. AI flags I can defend. My weekends are mine again."</blockquote>
             <div class="flex items-center justify-center gap-4">
-              <span class="w-12 h-12 rounded-full bg-gradient-to-br from-mint-400 to-mint-600 flex items-center justify-center text-white text-[14px] font-bold">DB</span>
+              <span class="w-12 h-12 rounded-full bg-gradient-to-br from-mint-400 to-mint-600 flex items-center justify-center text-white text-[12px] sm:text-[13px] lg:text-[14px] font-bold">DB</span>
               <div class="text-left">
-                <div class="text-[14.5px] font-bold">Daniel Boyko</div>
-                <div class="text-[12.5px] text-ink-500">AP English Lit · Cleveland Heights HS · 1,287 essays</div>
+                <div class="text-[12.5px] sm:text-[13.5px] lg:text-[14.5px] font-bold">Daniel Boyko</div>
+                <div class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] text-ink-500">AP English Lit · Cleveland Heights HS · 1,287 essays</div>
               </div>
             </div>
           </div>
@@ -988,8 +1037,8 @@ tailwind.config = {
       </div>
       <!-- University -->
       <div class="persona-panel hidden-panel" data-panel="2">
-        <div class="rounded-3xl sm:rounded-5xl bg-ink-950 ring-1 ring-white/10 p-2 shadow-diffuse-lg">
-          <div class="relative rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] px-5 sm:px-8 py-12 lg:px-16 text-center overflow-hidden">
+        <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-ink-950 ring-1 ring-white/10 p-1.5 sm:p-2 shadow-diffuse-lg">
+          <div class="relative rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] px-5 sm:px-8 py-8 sm:py-10 lg:py-12 lg:px-16 text-center overflow-hidden">
             <div class="orb w-[400px] h-[400px] bg-teal-500/15 -right-24 -top-32"></div>
             <div class="relative flex justify-center gap-1 mb-8" aria-hidden="true">
               <svg class="text-teal-400" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -1000,10 +1049,10 @@ tailwind.config = {
             </div>
             <blockquote class="relative font-serif italic text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.35] text-white max-w-[32ch] mx-auto mb-10">"We compared 14 vendors. PlagiarismSearch matched Turnitin's hit-rate on AI submissions — for one-third of the per-student cost. We migrated 3,400 students in one term."</blockquote>
             <div class="relative flex items-center justify-center gap-4">
-              <span class="w-12 h-12 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-[14px] font-bold">MA</span>
+              <span class="w-12 h-12 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-[12px] sm:text-[13px] lg:text-[14px] font-bold">MA</span>
               <div class="text-left">
-                <div class="text-[14.5px] font-bold text-white">Dr. Margaret Achebe</div>
-                <div class="text-[12.5px] text-white/50">Academic Integrity Office · U. of Manchester</div>
+                <div class="text-[12.5px] sm:text-[13.5px] lg:text-[14.5px] font-bold text-white">Dr. Margaret Achebe</div>
+                <div class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] text-white/50">Academic Integrity Office · U. of Manchester</div>
               </div>
             </div>
           </div>
@@ -1013,12 +1062,12 @@ tailwind.config = {
   </div>
 
   <!-- Trustpilot rail — real reviews from trustpilot.com/review/plagiarismsearch.com -->
-  <div class="rv mt-20 max-w-[1080px] mx-auto px-6 lg:px-10">
+  <div class="rv mt-20 max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-10">
    <div class="group/rail">
     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
       <div class="flex items-center gap-3">
         <img src="assets/svg/trustpilot-icon.svg" alt="" class="w-5 h-5">
-        <span class="text-[15px] font-bold tracking-tight">Trustpilot</span>
+        <span class="text-[13px] sm:text-[14px] lg:text-[15px] font-bold tracking-tight">Trustpilot</span>
         <span class="flex gap-0.5" aria-label="4.7 out of 5 stars">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1026,9 +1075,9 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </span>
-        <span class="text-[13px] text-ink-500"><span class="font-bold text-ink-900 nums">4.7</span> · 61 reviews</span>
+        <span class="text-[11px] sm:text-[12px] lg:text-[13px] text-ink-500"><span class="font-bold text-ink-900 nums">4.7</span> · 61 reviews</span>
       </div>
-      <a href="https://www.trustpilot.com/review/plagiarismsearch.com" target="_blank" rel="noopener" class="group flex items-center gap-1.5 text-[13px] font-semibold text-ink-700 hover:text-ink-900 transition-colors">
+      <a href="https://www.trustpilot.com/review/plagiarismsearch.com" target="_blank" rel="noopener" class="group flex items-center gap-1.5 text-[11px] sm:text-[12px] lg:text-[13px] font-semibold text-ink-700 hover:text-ink-900 transition-colors">
         See all reviews
         <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
@@ -1036,7 +1085,7 @@ tailwind.config = {
 
     <div class="relative">
     <div id="tpRail" class="tp-scroll flex gap-4 overflow-x-auto snap-x">
-      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 flex flex-col">
         <div class="flex gap-0.5 mb-3">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1044,14 +1093,14 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </div>
-        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Awesome tool, can't get my job done without it.</h4>
-        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">This is a wonderful tool — I'm a professional content creator and making sure my content is unique is mission critical. PlagiarismSearch makes this task easy.</p>
-        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+        <h4 class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Awesome tool, can't get my job done without it.</h4>
+        <p class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">This is a wonderful tool — I'm a professional content creator and making sure my content is unique is mission critical. PlagiarismSearch makes this task easy.</p>
+        <div class="mt-auto flex items-center gap-2 text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-ink-400">
           <span class="font-semibold text-ink-700">Gerry Pelser</span><span>ZA</span><span>·</span><span>May 24, 2023</span>
         </div>
       </article>
 
-      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 flex flex-col">
         <div class="flex gap-0.5 mb-3">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1059,14 +1108,14 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </div>
-        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">PlagiarismSearch is simply phenomenal.</h4>
-        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">By far the best plagiarism checker I've ever seen. And I've used quite a number of them. In fact, they are so good I had to subscribe.</p>
-        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+        <h4 class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold tracking-tight mb-1.5 truncate">PlagiarismSearch is simply phenomenal.</h4>
+        <p class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">By far the best plagiarism checker I've ever seen. And I've used quite a number of them. In fact, they are so good I had to subscribe.</p>
+        <div class="mt-auto flex items-center gap-2 text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-ink-400">
           <span class="font-semibold text-ink-700">Chioma Isaac Asiwaju</span><span>NG</span><span>·</span><span>May 17, 2023</span>
         </div>
       </article>
 
-      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 flex flex-col">
         <div class="flex gap-0.5 mb-3">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1074,14 +1123,14 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </div>
-        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Best plagiarism-checker around</h4>
-        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.</p>
-        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+        <h4 class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Best plagiarism-checker around</h4>
+        <p class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.</p>
+        <div class="mt-auto flex items-center gap-2 text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-ink-400">
           <span class="font-semibold text-ink-700">Tersia Gouws</span><span>ZA</span><span>·</span><span>Jul 7, 2023</span>
         </div>
       </article>
 
-      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 flex flex-col">
         <div class="flex gap-0.5 mb-3">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1089,14 +1138,14 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </div>
-        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">An excellent tool</h4>
-        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">One of the best tools in its field. The plagiarism check is very accurate and I recommend the monthly or yearly subscription.</p>
-        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+        <h4 class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold tracking-tight mb-1.5 truncate">An excellent tool</h4>
+        <p class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">One of the best tools in its field. The plagiarism check is very accurate and I recommend the monthly or yearly subscription.</p>
+        <div class="mt-auto flex items-center gap-2 text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-ink-400">
           <span class="font-semibold text-ink-700">Désirée</span><span>MU</span><span>·</span><span>May 20, 2022</span>
         </div>
       </article>
 
-      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 flex flex-col">
         <div class="flex gap-0.5 mb-3">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1104,14 +1153,14 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </div>
-        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Amazing tool</h4>
-        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">Plagiarism search is a tool I currently can't work without! It has all I need and it's very helpful. I definitely recommend it!</p>
-        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+        <h4 class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Amazing tool</h4>
+        <p class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">Plagiarism search is a tool I currently can't work without! It has all I need and it's very helpful. I definitely recommend it!</p>
+        <div class="mt-auto flex items-center gap-2 text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-ink-400">
           <span class="font-semibold text-ink-700">Kristina</span><span>BA</span><span>·</span><span>Jun 28, 2022</span>
         </div>
       </article>
 
-      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 flex flex-col">
         <div class="flex gap-0.5 mb-3">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1119,14 +1168,14 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </div>
-        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">I appreciate your hard work</h4>
-        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I use the website to check originality of my publications. I'm often afraid of unintentional plagiarism and want to stay on the safe side.</p>
-        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+        <h4 class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold tracking-tight mb-1.5 truncate">I appreciate your hard work</h4>
+        <p class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I use the website to check originality of my publications. I'm often afraid of unintentional plagiarism and want to stay on the safe side.</p>
+        <div class="mt-auto flex items-center gap-2 text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-ink-400">
           <span class="font-semibold text-ink-700">Victoria Evans</span><span>US</span><span>·</span><span>Jan 11, 2022</span>
         </div>
       </article>
 
-      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 flex flex-col">
         <div class="flex gap-0.5 mb-3">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1134,14 +1183,14 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </div>
-        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">I trust this service</h4>
-        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I trust this online plagiarism check service for its accuracy and fast results report. I've been advised to use it and now I'd love to share it with others.</p>
-        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+        <h4 class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold tracking-tight mb-1.5 truncate">I trust this service</h4>
+        <p class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I trust this online plagiarism check service for its accuracy and fast results report. I've been advised to use it and now I'd love to share it with others.</p>
+        <div class="mt-auto flex items-center gap-2 text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-ink-400">
           <span class="font-semibold text-ink-700">Tommmaxa</span><span>UA</span><span>·</span><span>Feb 7, 2022</span>
         </div>
       </article>
 
-      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 flex flex-col">
         <div class="flex gap-0.5 mb-3">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1149,14 +1198,14 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </div>
-        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Extremely satisfied</h4>
-        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I checked works both in English and Polish, and I can say I'm extremely satisfied. The interface is much more compelling than that of other checkers.</p>
-        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+        <h4 class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Extremely satisfied</h4>
+        <p class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I checked works both in English and Polish, and I can say I'm extremely satisfied. The interface is much more compelling than that of other checkers.</p>
+        <div class="mt-auto flex items-center gap-2 text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-ink-400">
           <span class="font-semibold text-ink-700">Денис Сай</span><span>·</span><span>Aug 29, 2018</span>
         </div>
       </article>
 
-      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-2xl bg-ink-50 p-5 flex flex-col">
+      <article class="snap-start shrink-0 w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 flex flex-col">
         <div class="flex gap-0.5 mb-3">
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
@@ -1164,9 +1213,9 @@ tailwind.config = {
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <span class="tp-star rounded-[2px]"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         </div>
-        <h4 class="text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Great for academic papers</h4>
-        <p class="text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I used this in writing my academic papers, it helped with my vocab and grammar. This is really great!</p>
-        <div class="mt-auto flex items-center gap-2 text-[11.5px] text-ink-400">
+        <h4 class="text-[11.5px] sm:text-[12.5px] lg:text-[13.5px] font-bold tracking-tight mb-1.5 truncate">Great for academic papers</h4>
+        <p class="text-[10.5px] sm:text-[11.5px] lg:text-[12.5px] leading-[1.55] text-ink-600 line-clamp-3 mb-4">I used this in writing my academic papers, it helped with my vocab and grammar. This is really great!</p>
+        <div class="mt-auto flex items-center gap-2 text-[10px] sm:text-[10.5px] lg:text-[11.5px] text-ink-400">
           <span class="font-semibold text-ink-700">Paul Johnson</span><span>PH</span><span>·</span><span>Apr 21, 2023</span>
         </div>
       </article>
@@ -1190,7 +1239,7 @@ tailwind.config = {
 <!-- ================= ACT 5 · PRICING ================= -->
 <section id="pricing" class="relative py-16 sm:py-28 lg:py-36 bg-ink-50 overflow-hidden">
   <div class="orb w-[520px] h-[520px] bg-teal-500/8 right-[-140px] top-10"></div>
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
     <div class="rv text-center max-w-[560px] mx-auto mb-12">
       <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
@@ -1203,14 +1252,14 @@ tailwind.config = {
     <!-- toggle -->
     <div class="rv flex justify-center mb-14">
       <div class="inline-flex items-center rounded-full bg-ink-100 p-1" id="billingToggle">
-        <button data-billing="monthly" class="billing-btn rounded-full px-6 py-2.5 text-[14px] font-semibold text-ink-500 transition-all duration-300">Monthly</button>
-        <button data-billing="yearly" class="billing-btn rounded-full px-5 py-2.5 text-[14px] font-semibold bg-white shadow-sm transition-all duration-300 flex items-center gap-2">Yearly <span class="text-[9.5px] font-bold tracking-wide text-mint-700 bg-mint-100 rounded-full px-2 py-0.5">SAVE 20%</span></button>
+        <button data-billing="monthly" class="billing-btn rounded-full px-4 sm:px-5 lg:px-6 py-2.5 text-[14px] font-semibold text-ink-500 transition-all duration-300">Monthly</button>
+        <button data-billing="yearly" class="billing-btn rounded-full px-4 lg:px-5 py-2.5 text-[14px] font-semibold bg-white shadow-sm transition-all duration-300 flex items-center gap-2">Yearly <span class="text-[9.5px] font-bold tracking-wide text-mint-700 bg-mint-100 rounded-full px-2 py-0.5">SAVE 20%</span></button>
       </div>
     </div>
 
-    <div class="grid lg:grid-cols-3 gap-6 items-center max-w-[1180px] mx-auto">
+    <div class="grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto">
       <!-- Light -->
-      <div class="rv rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 lg:p-7">
+      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 lg:p-7">
         <div class="text-[11px] font-bold tracking-[0.16em] text-orange-600 mb-1.5">LIGHT</div>
         <div class="text-[13.5px] text-ink-500 mb-6">For occasional checks</div>
         <div class="flex items-end gap-1.5 mb-7">
@@ -1224,11 +1273,11 @@ tailwind.config = {
           <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Plagiarism + AI detection</li>
           <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Web report · share link</li>
         </ul>
-        <a href="#" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-[14.5px] font-semibold py-3.5 hover:bg-ink-50 transition-colors duration-300">Start Light</a>
+        <a href="#" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 hover:bg-ink-50 transition-colors duration-300">Start Light</a>
       </div>
 
       <!-- Standard -->
-      <div class="rv relative rounded-3xl sm:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-6 lg:p-8 lg:-my-6 overflow-hidden">
+      <div class="rv relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-6 lg:p-8 lg:-my-6 overflow-hidden">
         <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>
         <div class="relative">
           <div class="flex items-center justify-between mb-1.5">
@@ -1251,7 +1300,7 @@ tailwind.config = {
             <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>PDF report export</li>
             <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Priority email support</li>
           </ul>
-          <a href="#" class="btn-press group flex items-center justify-center gap-2.5 rounded-full bg-white text-ink-900 text-[14.5px] font-semibold py-2 pl-6 pr-2">
+          <a href="#" class="btn-press group flex items-center justify-center gap-2.5 rounded-full bg-white text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold py-2 pl-5 sm:pl-6 pr-2">
             Start Standard
             <span class="icon-orb w-8 h-8 rounded-full bg-ink-900/5 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -1261,7 +1310,7 @@ tailwind.config = {
       </div>
 
       <!-- Pro -->
-      <div class="rv rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 lg:p-7">
+      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 lg:p-7">
         <div class="text-[11px] font-bold tracking-[0.16em] text-orange-600 mb-1.5">PRO</div>
         <div class="text-[13.5px] text-ink-500 mb-6">For teams and educators</div>
         <div class="flex items-end gap-1.5 mb-7">
@@ -1276,11 +1325,11 @@ tailwind.config = {
           <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>API access · 10K calls/mo</li>
           <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dedicated support</li>
         </ul>
-        <a href="#" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-[14.5px] font-semibold py-3.5 hover:bg-ink-50 transition-colors duration-300">Start Pro</a>
+        <a href="#" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 hover:bg-ink-50 transition-colors duration-300">Start Pro</a>
       </div>
     </div>
 
-    <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-12 text-[13px] font-medium text-ink-500">
+    <div class="rv flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-5 lg:gap-x-6 gap-y-2 mt-12 text-[13px] font-medium text-ink-500">
       <span>Need a single check? <span class="font-semibold text-teal-700">Pay-as-you-go $1.95</span></span>
       <span class="w-1 h-1 rounded-full bg-ink-200"></span>
       <a href="#" class="font-semibold text-ink-900 hover:text-orange-600 transition-colors">See full comparison</a>
@@ -1292,7 +1341,7 @@ tailwind.config = {
 
 <!-- ================= ACT 6 · FAQ ================= -->
 <section id="faq" class="relative py-16 sm:py-28 lg:py-36 bg-white">
-  <div class="max-w-[1180px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[400px_1fr] gap-10 sm:gap-14 items-start">
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 grid lg:grid-cols-[400px_1fr] gap-10 sm:gap-12 lg:gap-14 items-start">
     <div class="rv lg:sticky lg:top-32">
       <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
@@ -1300,67 +1349,67 @@ tailwind.config = {
       </div>
       <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-5">Common questions —<br>straight answers.</h2>
       <p class="text-[15px] text-ink-600 leading-relaxed mb-7">No marketing fluff. If you don't see your question, ping our team — we usually reply within 4 hours.</p>
-      <a href="#" class="inline-flex items-center gap-2.5 rounded-full bg-ink-50 ring-1 ring-black/5 px-5 py-3 text-[13.5px] font-semibold text-ink-700 hover:bg-ink-100 transition-colors duration-300">
+      <a href="#" class="inline-flex items-center gap-2.5 rounded-full bg-ink-50 ring-1 ring-black/5 px-4 lg:px-5 py-3 text-[13.5px] font-semibold text-ink-700 hover:bg-ink-100 transition-colors duration-300">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         Contact support · 4-hour avg reply
       </a>
     </div>
 
-    <div class="rv rounded-3xl sm:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse" id="faqList">
-      <div class="rounded-2xl sm:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+    <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse" id="faqList">
+      <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
         <div class="faq-item open">
-          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+          <button class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-5 sm:px-6 lg:px-7 py-4 sm:py-5 lg:py-6">
             <span class="text-[15.5px] font-bold tracking-tight">Is the free check really free? No card, no email gate?</span>
             <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </button>
-          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Yes. Up to 150 words, no signup, no credit card. We rate-limit to prevent abuse (3 anonymous checks per IP per day), but you can use it as many times as you need across days. Paid plans start at $7.96/mo.</p></div></div>
+          <div class="faq-a"><div><p class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Yes. Up to 150 words, no signup, no credit card. We rate-limit to prevent abuse (3 anonymous checks per IP per day), but you can use it as many times as you need across days. Paid plans start at $7.96/mo.</p></div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+          <button class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-5 sm:px-6 lg:px-7 py-4 sm:py-5 lg:py-6">
             <span class="text-[15.5px] font-semibold tracking-tight">How accurate is AI-detection on ChatGPT and Claude?</span>
             <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </button>
-          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">97.4% detection rate across GPT-4, Claude, Gemini and Llama outputs, measured on a 40K-document benchmark. False-positive rate on human ESL writing is under 2% — the lowest in independent comparisons.</p></div></div>
+          <div class="faq-a"><div><p class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">97.4% detection rate across GPT-4, Claude, Gemini and Llama outputs, measured on a 40K-document benchmark. False-positive rate on human ESL writing is under 2% — the lowest in independent comparisons.</p></div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+          <button class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-5 sm:px-6 lg:px-7 py-4 sm:py-5 lg:py-6">
             <span class="text-[15.5px] font-semibold tracking-tight">What's the difference between plagiarism and AI detection?</span>
             <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </button>
-          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Plagiarism detection compares your text against 14B indexed pages and returns exact source matches. AI detection analyzes the writing itself for machine-generation patterns. One scan runs both — flagged orange and teal respectively.</p></div></div>
+          <div class="faq-a"><div><p class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Plagiarism detection compares your text against 14B indexed pages and returns exact source matches. AI detection analyzes the writing itself for machine-generation patterns. One scan runs both — flagged orange and teal respectively.</p></div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+          <button class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-5 sm:px-6 lg:px-7 py-4 sm:py-5 lg:py-6">
             <span class="text-[15.5px] font-semibold tracking-tight">Which 17 languages do you support — and what about ESL writing?</span>
             <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </button>
-          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">English, Spanish, French, German, Ukrainian, Polish, Italian, Portuguese, Dutch, Czech, Romanian, Turkish, Swedish, Danish, Norwegian, Finnish and Greek. Our ESL-aware filter is trained on non-native writing so it doesn't confuse an accent in style with machine generation.</p></div></div>
+          <div class="faq-a"><div><p class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">English, Spanish, French, German, Ukrainian, Polish, Italian, Portuguese, Dutch, Czech, Romanian, Turkish, Swedish, Danish, Norwegian, Finnish and Greek. Our ESL-aware filter is trained on non-native writing so it doesn't confuse an accent in style with machine generation.</p></div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+          <button class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-5 sm:px-6 lg:px-7 py-4 sm:py-5 lg:py-6">
             <span class="text-[15.5px] font-semibold tracking-tight">Is my text saved anywhere? Privacy policy?</span>
             <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </button>
-          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Anonymous checks are processed in memory and deleted after the scan. Account-based scans are stored encrypted so you can revisit reports — deletable anytime. We never add your text to our index and never train models on it. GDPR-compliant, EU data residency available.</p></div></div>
+          <div class="faq-a"><div><p class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Anonymous checks are processed in memory and deleted after the scan. Account-based scans are stored encrypted so you can revisit reports — deletable anytime. We never add your text to our index and never train models on it. GDPR-compliant, EU data residency available.</p></div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q w-full flex items-center justify-between gap-6 text-left px-7 py-6">
+          <button class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-5 sm:px-6 lg:px-7 py-4 sm:py-5 lg:py-6">
             <span class="text-[15.5px] font-semibold tracking-tight">Can I cancel my plan anytime? Money-back guarantee?</span>
             <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </button>
-          <div class="faq-a"><div><p class="px-7 pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Yes — cancel in two clicks from your account, no retention calls. Every plan carries a 7-day money-back guarantee: if it's not what you expected, write to support and we refund in full.</p></div></div>
+          <div class="faq-a"><div><p class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7 text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">Yes — cancel in two clicks from your account, no retention calls. Every plan carries a 7-day money-back guarantee: if it's not what you expected, write to support and we refund in full.</p></div></div>
         </div>
       </div>
     </div>
@@ -1371,7 +1420,7 @@ tailwind.config = {
 <section id="cta" class="relative py-20 sm:py-32 lg:py-44 overflow-hidden">
   <div id="ctaOrb1" class="orb"></div>
   <div id="ctaOrb2" class="orb"></div>
-  <div class="relative max-w-[880px] mx-auto px-6 text-center">
+  <div class="relative max-w-[880px] mx-auto px-4 sm:px-5 lg:px-6 text-center">
     <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-8">
       <span class="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-dot"></span>
       <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Stop guessing — start checking</span>
@@ -1379,19 +1428,19 @@ tailwind.config = {
     <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-7">Your first check<br>is <span id="freeWord" class="relative inline-block">free<svg class="absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-16%; top:-24%; width:132%; height:150%; transform:rotate(-2deg);"><path id="freeCirclePath" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span>.</h2>
     <p class="rv text-[16px] sm:text-[17px] text-ink-600 leading-relaxed max-w-[46ch] mx-auto mb-11">150 words. No signup. No card. Plagiarism + AI detection across 17 languages. ESL-aware.</p>
     <div class="rv flex flex-wrap justify-center gap-4 mb-12">
-      <a href="#top" class="btn-press group magnetic flex items-center gap-3 rounded-full bg-ink-900 text-white text-[15px] sm:text-[16px] font-semibold pl-8 pr-2.5 py-2.5">
+      <a href="#top" class="btn-press group magnetic flex items-center gap-3 rounded-full bg-ink-900 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-2 sm:py-2.5">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
         Check 150 words free
         <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </span>
       </a>
-      <a href="#" class="btn-press flex items-center gap-2.5 rounded-full bg-white ring-1 ring-ink-200 text-[15px] sm:text-[16px] font-semibold px-7 py-4 hover:bg-ink-50 transition-colors duration-300">
+      <a href="#" class="btn-press flex items-center gap-2.5 rounded-full bg-white ring-1 ring-ink-200 text-[15px] sm:text-[16px] font-semibold px-5 sm:px-6 lg:px-7 py-3 sm:py-4 hover:bg-ink-50 transition-colors duration-300">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Talk to sales · universities
       </a>
     </div>
-    <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] font-semibold text-ink-400">
+    <div class="rv flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-5 lg:gap-x-6 gap-y-2 text-[12.5px] font-semibold text-ink-400">
       <span>G2 Leader · Spring 2024</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
       <span>Trustpilot 4.7 · 61 reviews</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
       <span>Capterra 4.8</span><span class="w-1 h-1 rounded-full bg-ink-200"></span>
@@ -1401,10 +1450,10 @@ tailwind.config = {
 </section>
 
 <!-- ================= FOOTER ================= -->
-<footer class="relative bg-ink-950 text-white pt-20 pb-10 overflow-hidden">
+<footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
   <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
-    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-12 mb-16">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-10 lg:gap-12 mb-16">
       <div>
         <a href="#top" class="inline-flex items-center mb-6">
           <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
@@ -1452,7 +1501,7 @@ tailwind.config = {
       </div>
     </div>
     <div class="h-px bg-white/10 mb-8"></div>
-    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+    <div class="flex flex-wrap items-center gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
       <span>© 2026 PlagiarismSearch. All rights reserved.</span>
       <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
       <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
@@ -1782,7 +1831,7 @@ if (!reduceMotion) {
   const status = document.getElementById('scanStatus');
   const probBar = document.getElementById('probBar');
   const probLabel = document.getElementById('probLabel');
-  const doc = document.querySelector('#scanWrap .rounded-\\[calc\\(2rem-0\\.375rem\\)\\]');
+  const doc = document.getElementById('scanDoc');
   const docH = () => doc ? doc.offsetHeight : 600;
 
   // initial states — the scene builds itself as you scroll in
@@ -1790,6 +1839,12 @@ if (!reduceMotion) {
   gsap.set('.scan-doc',      { opacity: 0, y: 56, scale: .98 });
   gsap.set('.scan-side',     { opacity: 0, y: 44 });
 
+  // The scene scrubs on every screen. Below lg it simply does not pin — but it is still
+  // 1313px of section against an 844px viewport, so there is ~1100px of scroll for the
+  // timeline to read, which is all a scrub needs. An earlier version special-cased mobile
+  // by jumping to an end state instead; it only ever set three selectors, so the source
+  // cards, the done card, the counters, the status pill and the probability bar stayed at
+  // their opening values and left a block of empty dark where they should have been.
   const tl = gsap.timeline({
     // starts while the band is still sliding up rather than waiting for it to pin —
     // 'top top' left a full viewport of empty dark before anything moved
@@ -1894,7 +1949,7 @@ if (!reduceMotion) {
 
 <!-- ========== TEMP · hero variant switcher for the client review (remove before production) ========== -->
 <div class="fixed left-5 top-1/2 -translate-y-1/2 z-[100] hidden lg:block">
-  <div class="rounded-2xl bg-white/95 backdrop-blur-md ring-1 ring-black/10 shadow-diffuse-lg p-2 w-[124px]">
+  <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white/95 backdrop-blur-md ring-1 ring-black/10 shadow-diffuse-lg p-2 w-[124px]">
     <div class="text-[9px] font-bold tracking-[0.16em] uppercase text-ink-400 px-2 pt-1 pb-2">Hero</div>
     <button data-switch="bento" class="hero-switch w-full text-left rounded-xl px-3 py-2 text-[12px] font-semibold transition-colors duration-200">Bento</button>
     <button data-switch="paper" class="hero-switch w-full text-left rounded-xl px-3 py-2 text-[12px] font-semibold transition-colors duration-200">Paper v1</button>
@@ -1923,16 +1978,6 @@ if (!reduceMotion) {
 })();
 </script>
 
-<!-- ========== TEMP · internal link to the design system (remove before production) ========== -->
-<a href="design-system.html"
-   class="fixed right-5 bottom-5 z-[100] group inline-flex items-center gap-2.5 rounded-full bg-ink-900 text-white pl-4 pr-5 h-12 shadow-diffuse-lg hover:bg-ink-800 active:bg-ink-950 transition-colors">
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-500 group-hover:rotate-[18deg]">
-    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
-    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
-    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
-  </svg>
-  <span class="text-[13.5px] font-semibold">Design System</span>
-</a>
 
 <!-- dev-only: the CTA tuner exists solely when ?tune=cta is on the URL -->
 <script>

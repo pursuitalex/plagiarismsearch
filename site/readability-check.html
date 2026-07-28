@@ -37,7 +37,12 @@ tailwind.config = {
 }
 </script>
 <style>
-  html { background:#fff; }
+  /* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
+     disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
+     grain sheet and the header render 150px wider than the page and open a white gutter that
+     no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
+     creates no scroll container, so position:sticky in the scan scene keeps working. */
+  html { background:#fff; overflow-x: clip; }
   body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   ::selection { background:#F36F5A; color:#fff; }
   .nums { font-variant-numeric: tabular-nums; }
@@ -208,24 +213,49 @@ tailwind.config = {
   .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
   @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
 
+
+  /* ---------- controls on phones ----------
+     These sizes are declared in CSS rather than as utility classes, so they need
+     their own breakpoint. Field heights come down with the text so the controls
+     keep their proportions instead of turning into tall boxes with small labels. */
+  @media (max-width: 639px) {
+    .qc-area, .rc-area, .sp-area { font-size: 14px; }
+    .fld, .cf-field { height: 44px; font-size: 14px; }
+    textarea.fld { height: auto; }
+    .stepper { height: 44px; }
+    .stepper input { font-size: 14px; }
+    .stepper button { width: 34px; font-size: 16px; }
+    .pa-select { height: 40px; font-size: 13px; }
+    .pa-step { height: 40px; }
+    .pa-step input { font-size: 13px; }
+    .pa-step button { width: 32px; font-size: 15px; }
+    .sp-select { height: 36px; font-size: 12px; }
+    .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
+    .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
+    .rc-stat b { font-size: 17px; }
+    .sp-row { font-size: 12px; }
+    .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
+    .cf-label { font-size: 11.5px; }
+    .ctl { font-size: 13.5px; }
+  }
 </style>
 </head>
-<body class="font-sans text-ink-900 bg-white overflow-x-hidden">
+<body class="font-sans text-ink-900 bg-white">
 
 <div class="grain"></div>
 
 <!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
 <header class="fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
   <div class="flex justify-center">
-  <nav class="pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+  <nav class="pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
     <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-6">
       <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto max-w-none">
     </a>
     <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="nav-drop absolute left-1/2 top-full pt-5">
-          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
             <a href="plagiarism-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
             <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
             <a href="paper-analysis.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
@@ -239,8 +269,8 @@ tailwind.config = {
       </div>
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="nav-drop absolute left-1/2 top-full pt-5">
-          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For universities</span>
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For teachers</span>
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For students</span>
@@ -251,8 +281,8 @@ tailwind.config = {
       <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Prices</a>
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-ink-900/5 text-ink-900 font-semibold" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="nav-drop absolute left-1/2 top-full pt-5">
-          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
             <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
             <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
             <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Scholarship</span>
@@ -264,9 +294,9 @@ tailwind.config = {
         </div>
       </div>
     </div>
-    <div class="flex items-center gap-2 ml-auto lg:ml-8 shrink-0">
-      <a href="#" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13.5px] font-semibold px-5 py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
-      <a href="index.html#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Check free</a>
+    <div class="min-w-0 flex items-center gap-2 ml-auto lg:ml-8 shrink-0">
+      <a href="#" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5">Check free</a>
       <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
         <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
         <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
@@ -276,33 +306,33 @@ tailwind.config = {
   </div>
 
   <div id="navPanel" class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
-    <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+    <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products</div>
-      <a href="plagiarism-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
-      <a href="ai-detector.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
-      <a href="paper-analysis.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
-      <a href="readability-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
-      <a href="spell-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
-      <a href="vip.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
-      <a href="api.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
-      <a href="chat-bot.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+      <a href="plagiarism-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+      <a href="ai-detector.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+      <a href="paper-analysis.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+      <a href="readability-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+      <a href="spell-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
+      <a href="vip.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+      <a href="api.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+      <a href="chat-bot.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions</div>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For universities</span>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For teachers</span>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For students</span>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For organizations</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For universities</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For teachers</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For students</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For organizations</span>
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
-      <a href="why-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
-      <a href="mission.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Scholarship</span>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Reviews</span>
-      <a href="contact-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
-      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Blog</span>
-      <a href="help-center.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
-      <a href="prices.html" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Prices</a>
+      <a href="why-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+      <a href="mission.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Scholarship</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Reviews</span>
+      <a href="contact-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Blog</span>
+      <a href="help-center.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+      <a href="prices.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Prices</a>
       <div class="sm:hidden mt-3 pt-3 border-t border-ink-100 space-y-2">
-        <a href="#" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
-        <a href="index.html#top" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
+        <a href="#" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
+        <a href="index.html#top" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
       </div>
     </div>
   </div>
@@ -313,11 +343,11 @@ tailwind.config = {
 
 
 <!-- ================= 01 · HERO ================= -->
-<section class="relative overflow-hidden pt-28 sm:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F2FCFC]">
+<section class="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F2FCFC]">
   <div class="orb w-[640px] h-[640px] bg-orange-500/10 -left-52 -top-40"></div>
   <div class="orb w-[560px] h-[560px] bg-teal-500/10 right-[-160px] top-48"></div>
 
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[.94fr_1.06fr] gap-10 sm:gap-14 lg:gap-16 items-center">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 grid lg:grid-cols-[.94fr_1.06fr] gap-10 sm:gap-14 lg:gap-16 items-center">
     <div>
       <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
@@ -331,7 +361,7 @@ tailwind.config = {
         Please copy and paste your text into the box or upload a file for scanning.
       </p>
 
-      <div class="rv flex flex-wrap items-center gap-x-6 gap-y-3">
+      <div class="rv flex flex-wrap items-center gap-x-4 sm:gap-x-5 lg:gap-x-6 gap-y-3">
         <span class="flex items-baseline gap-1.5">
           <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="4.9" data-decimals="1">0</span>
           <span class="text-[12px] font-semibold text-ink-500">Trustpilot</span>
@@ -351,8 +381,8 @@ tailwind.config = {
     </div>
 
     <!-- live calculator: the Flesch formulas are plain arithmetic, so this really runs -->
-    <div class="rv relative rounded-3xl sm:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-2 shadow-diffuse">
-      <form id="rcForm" class="rounded-2xl sm:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6" onsubmit="return false">
+    <div class="rv relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+      <form id="rcForm" class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
         <div class="flex items-center justify-between gap-3 mb-4">
           <h2 class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest leading-tight">Check text</h2>
@@ -366,7 +396,7 @@ tailwind.config = {
         <textarea id="rcText" class="rc-area mb-4" aria-label="Text to score for readability"
           placeholder="Paste your text here. A few full paragraphs give a far steadier score than a single sentence."></textarea>
 
-        <div class="rounded-2xl bg-ink-50 p-5 mb-4">
+        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5 mb-4">
           <div class="flex items-end justify-between gap-4 mb-3">
             <div>
               <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-2">Reading ease</div>
@@ -390,7 +420,7 @@ tailwind.config = {
           </div>
         </div>
 
-        <div class="grid grid-cols-4 gap-3 mb-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
           <span class="rc-stat"><b id="rcWords" class="nums">0</b><span>words</span></span>
           <span class="rc-stat"><b id="rcSents" class="nums">0</b><span>sentences</span></span>
           <span class="rc-stat"><b id="rcAsl" class="nums">0</b><span>words / sentence</span></span>
@@ -399,7 +429,7 @@ tailwind.config = {
 
         <div class="flex items-center justify-between gap-3 pt-4 border-t border-ink-100">
           <span id="rcHint" class="text-[11.5px] font-medium text-ink-400">Paste at least two sentences.</span>
-          <button type="submit" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[14px] font-semibold pl-5 pr-2 py-2 shrink-0">
+          <button type="submit" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[14px] font-semibold pl-4 lg:pl-5 pr-2 py-2 shrink-0">
             Get full access
             <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -413,7 +443,7 @@ tailwind.config = {
 
 <!-- ================= 02 · WAYS TO CHECK ================= -->
 <section class="relative py-16 sm:py-24 lg:py-32 bg-white">
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
     <div class="rv text-center max-w-[620px] mx-auto mb-14">
       <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
@@ -427,29 +457,29 @@ tailwind.config = {
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-[1080px] mx-auto">
-      <div class="hc-card rv rounded-3xl sm:rounded-4xl bg-ink-50 p-6">
-        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
+        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
           <img src="assets/img/rc/text.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
         </div>
         <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Simple text</h3>
         <p class="text-[13.5px] leading-relaxed text-ink-600">Paste your text into our web-based software to get instant analysis and recommended improvements.</p>
       </div>
-      <div class="hc-card rv rounded-3xl sm:rounded-4xl bg-ink-50 p-6">
-        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
+        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
           <img src="assets/img/rc/files.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
         </div>
         <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Your files</h3>
         <p class="text-[13.5px] leading-relaxed text-ink-600">Check your documents in all available formats &mdash; doc, docx, txt, RTF, PDF, xls, xlsx, html, epub, xml, odt.</p>
       </div>
-      <div class="hc-card rv rounded-3xl sm:rounded-4xl bg-ink-50 p-6">
-        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
+        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
           <img src="assets/img/rc/url.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
         </div>
         <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Website URL</h3>
         <p class="text-[13.5px] leading-relaxed text-ink-600">Insert the link into the software to check readability score of the entire website page.</p>
       </div>
-      <div class="hc-card rv rounded-3xl sm:rounded-4xl bg-ink-50 p-6">
-        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
+        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
           <img src="assets/img/rc/cloud.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
         </div>
         <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Dropbox &amp; OneDrive</h3>
@@ -462,7 +492,7 @@ tailwind.config = {
 <!-- ================= 03 · UPGRADED CHECKER ================= -->
 <section class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
   <div class="orb w-[520px] h-[520px] bg-orange-500/8 right-[-140px] top-10"></div>
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
     <!-- photo RIGHT — the reader photo further down sits on the left -->
     <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-10 sm:gap-14 lg:gap-16 items-center">
 
@@ -493,8 +523,8 @@ tailwind.config = {
       </div>
 
       <div class="rv relative">
-        <img src="assets/img/rc/writer.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-4xl shadow-diffuse">
-        <div class="hidden lg:block absolute -left-9 bottom-9 w-[43%] rounded-2xl bg-white shadow-diffuse-lg px-5 py-4">
+        <img src="assets/img/rc/writer.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse">
+        <div class="hidden lg:block absolute -left-9 bottom-9 w-[43%] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white shadow-diffuse-lg px-4 lg:px-5 py-4">
           <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">Two formulas</div>
           <div class="text-[13px] font-bold tracking-tight mb-1">Flesch Reading Ease</div>
           <div class="text-[13px] font-bold tracking-tight text-ink-500">Flesch&ndash;Kincaid Grade Level</div>
@@ -507,7 +537,7 @@ tailwind.config = {
 <!-- ================= 04 · WHAT THE REPORT LOOKS LIKE ================= -->
 <section class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
   <div class="orb w-[600px] h-[600px] bg-teal-500/8 -left-44 top-24"></div>
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
     <div class="rv text-center max-w-[640px] mx-auto mb-14">
       <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
@@ -523,10 +553,10 @@ tailwind.config = {
     </div>
 
     <!-- schematic report window — hand-built HTML, so every figure stays sharp and editable -->
-    <div class="rv max-w-[1080px] mx-auto rounded-3xl sm:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-2 shadow-diffuse-lg">
-      <div class="rounded-2xl sm:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden">
+    <div class="rv max-w-[1080px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse-lg">
+      <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden">
 
-        <div class="flex items-center gap-2 px-5 py-3.5 border-b border-ink-100">
+        <div class="flex items-center gap-2 px-4 lg:px-5 py-3.5 border-b border-ink-100">
           <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></span>
           <span class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></span>
           <span class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></span>
@@ -543,7 +573,7 @@ tailwind.config = {
               <span class="hl hl-passive">It was decided by the board</span> that the timeline would remain unchanged.
               The <span class="hl hl-term">implementation methodology</span> follows last year's plan.
             </p>
-            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 pt-4 border-t border-ink-100">
+            <div class="flex flex-wrap items-center gap-x-4 sm:gap-x-5 lg:gap-x-6 gap-y-2 pt-4 border-t border-ink-100">
               <span class="flex items-center gap-2 text-[11.5px] font-semibold" style="color:#B84431">
                 <span class="w-2.5 h-2.5 rounded-full bg-current"></span>Long sentence
               </span>
@@ -584,7 +614,7 @@ tailwind.config = {
               <div class="mt-bar"><i style="width:18%;background:#9A6ADE"></i></div>
             </div>
 
-            <div class="space-y-2.5 pt-5 border-t border-ink-100">
+            <div class="space-y-2.5 pt-4 lg:pt-5 border-t border-ink-100">
               <div class="flex items-baseline justify-between gap-3">
                 <span class="text-[12px] text-ink-500">Words per sentence</span>
                 <span class="text-[12px] font-bold nums text-ink-700">24.1</span>
@@ -612,7 +642,7 @@ tailwind.config = {
 
 <!-- ================= 05 · WHO NEEDS IT ================= -->
 <section class="relative pb-16 sm:pb-24 lg:pb-32 bg-white overflow-hidden">
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
     <div class="rv text-center max-w-[620px] mx-auto mb-14">
       <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
@@ -621,31 +651,31 @@ tailwind.config = {
       <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Who needs to check readability score?</h2>
     </div>
 
-    <div class="grid lg:grid-cols-5 gap-5 max-w-[1080px] mx-auto">
-      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
-        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
-          <span class="inline-flex w-11 h-11 rounded-2xl bg-orange-100 items-center justify-center mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+    <div class="grid lg:grid-cols-5 gap-4 lg:gap-5 max-w-[1080px] mx-auto">
+      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8 h-full">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
           <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Students</h3>
           <p class="text-[14px] text-ink-600 leading-relaxed">If you barely cope with your academic load, our Readability Checker can turn into your life-saver. You will instantly see the drawbacks in your essays and learn to eliminate those flaws.</p>
         </div>
       </div>
-      <div class="rv lg:col-span-2 rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
-        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
-          <span class="inline-flex w-11 h-11 rounded-2xl bg-teal-100 items-center justify-center mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
+      <div class="rv lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8 h-full">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
           <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Website owners</h3>
           <p class="text-[14px] text-ink-600 leading-relaxed">You will lose potential customers if the content on your pages looks vague. Although it may seem people rarely read your texts, they actually notice all the unusual sentences.</p>
         </div>
       </div>
-      <div class="rv lg:col-span-2 rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
-        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
-          <span class="inline-flex w-11 h-11 rounded-2xl bg-mint-100 items-center justify-center mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+      <div class="rv lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8 h-full">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-100 items-center justify-center mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
           <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Marketers</h3>
           <p class="text-[14px] text-ink-600 leading-relaxed">Will a modern busy audience ever read lengthy and intricate texts? Of course not. Using our Readability Checker will make your marketing illuminating even to the most demanding clients.</p>
         </div>
       </div>
-      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
-        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
-          <span class="inline-flex w-11 h-11 rounded-2xl bg-ink-100 items-center justify-center mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4-14 14H4v-4z"/><path d="m14.5 5.5 4 4"/></svg></span>
+      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8 h-full">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4-14 14H4v-4z"/><path d="m14.5 5.5 4 4"/></svg></span>
           <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Content writers</h3>
           <p class="text-[14px] text-ink-600 leading-relaxed">You may generate unique content &mdash; but can you make it concise? If you do not check readability, there is a risk your articles will be declined by stringent editors.</p>
         </div>
@@ -656,14 +686,14 @@ tailwind.config = {
 
 <!-- ================= 06 · HOW THE SCORE WORKS ================= -->
 <section class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
     <!-- photo LEFT — the writer photo above sits on the right -->
     <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-10 sm:gap-14 lg:gap-16 items-center">
 
       <div class="rv lg:order-1 relative">
-        <img src="assets/img/rc/reader.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-4xl shadow-diffuse">
+        <img src="assets/img/rc/reader.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse">
         <!-- the score band, as the tool renders it -->
-        <div class="hidden lg:block absolute -right-9 bottom-9 w-[52%] rounded-2xl bg-white shadow-diffuse-lg px-5 py-4">
+        <div class="hidden lg:block absolute -right-9 bottom-9 w-[52%] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white shadow-diffuse-lg px-4 lg:px-5 py-4">
           <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">Reading ease</div>
           <div class="rc-scale mb-2"><span class="rc-needle" style="left:66%"></span></div>
           <div class="flex justify-between text-[10px] font-semibold text-ink-400 nums"><span>0</span><span>100</span></div>
@@ -705,7 +735,7 @@ tailwind.config = {
         </ul>
 
         <!-- only the bands the source page actually states -->
-        <div class="rv rounded-2xl bg-white ring-1 ring-black/5 p-5">
+        <div class="rv rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 p-4 lg:p-5">
           <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">What the number means</div>
           <div class="space-y-2.5">
             <div class="flex items-baseline gap-3">
@@ -730,7 +760,7 @@ tailwind.config = {
 <!-- ================= 07 · TWO SUGGESTIONS ================= -->
 <section class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
   <div class="orb w-[520px] h-[520px] bg-teal-500/8 -left-40 top-20"></div>
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
     <div class="rv text-center max-w-[640px] mx-auto mb-14">
       <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
@@ -739,9 +769,9 @@ tailwind.config = {
       <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Two suggestions that make the score useful</h2>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-5 max-w-[1080px] mx-auto">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 p-5 sm:p-7 lg:p-9">
-        <span class="w-11 h-11 rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5">
+    <div class="grid md:grid-cols-2 gap-4 lg:gap-5 max-w-[1080px] mx-auto">
+      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7 lg:p-9">
+        <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 6H3"/><path d="M15 12H3"/><path d="M17 18H3"/></svg>
         </span>
         <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-3">Make your sentences more succinct</h3>
@@ -752,8 +782,8 @@ tailwind.config = {
           writing.
         </p>
       </div>
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 p-5 sm:p-7 lg:p-9">
-        <span class="w-11 h-11 rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5">
+      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7 lg:p-9">
+        <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4-14 14H4v-4z"/><path d="m14.5 5.5 4 4"/></svg>
         </span>
         <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-3">Do not misuse complicated terms</h3>
@@ -770,7 +800,7 @@ tailwind.config = {
 <!-- ================= 08 · ADD-ONS ================= -->
 <section id="addons" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
   <div class="orb w-[560px] h-[560px] bg-orange-500/8 right-[-150px] top-16"></div>
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
     <div class="rv text-center max-w-[620px] mx-auto mb-14">
       <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
@@ -781,28 +811,28 @@ tailwind.config = {
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-[1080px] mx-auto">
-      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 p-4 sm:p-5 lg:p-6">
         <div class="flex items-baseline justify-between gap-3 mb-2">
           <h3 class="text-[15px] font-bold tracking-tight">Readability score</h3>
           <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$0.99</span>
         </div>
         <p class="text-[13px] leading-relaxed text-ink-600">Check whether your text is easy or difficult to understand for your target audience.</p>
       </div>
-      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 p-4 sm:p-5 lg:p-6">
         <div class="flex items-baseline justify-between gap-3 mb-2">
           <h3 class="text-[15px] font-bold tracking-tight">Score recommendations</h3>
           <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$1.99</span>
         </div>
         <p class="text-[13px] leading-relaxed text-ink-600">Get suggestions regarding the readability score of your text.</p>
       </div>
-      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 p-4 sm:p-5 lg:p-6">
         <div class="flex items-baseline justify-between gap-3 mb-2">
           <h3 class="text-[15px] font-bold tracking-tight">Plagiarism check</h3>
           <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$4.99</span>
         </div>
         <p class="text-[13px] leading-relaxed text-ink-600">You can additionally check your text for plagiarism and get a detailed report.</p>
       </div>
-      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 p-4 sm:p-5 lg:p-6">
         <div class="flex items-baseline justify-between gap-3 mb-2">
           <h3 class="text-[15px] font-bold tracking-tight">Paper analysis</h3>
           <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$3.50</span>
@@ -817,12 +847,12 @@ tailwind.config = {
 <section class="relative py-16 sm:py-24 lg:py-28 overflow-hidden bg-[#F2FCFC]">
   <div class="orb w-[700px] h-[640px] bg-orange-500/12 left-[-180px] -top-64"></div>
   <div class="orb w-[600px] h-[600px] bg-teal-500/10 right-[-140px] -bottom-72"></div>
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 text-center">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
     <h2 class="rv text-[clamp(1.9rem,3.6vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4">Are you interested in finding out your readability score?</h2>
     <p class="rv text-[15px] sm:text-[16px] text-ink-600 mb-8 max-w-[52ch] mx-auto">
       Check your text for readability right away. The result will surprise you.
     </p>
-    <a href="#top" class="rv btn-press group inline-flex items-center gap-3 rounded-full bg-orange-500 hover:bg-orange-600 transition-colors duration-300 text-white text-[15px] font-semibold py-2.5 pl-8 pr-2.5">
+    <a href="#top" class="rv btn-press group inline-flex items-center gap-3 rounded-full bg-orange-500 hover:bg-orange-600 transition-colors duration-300 text-white text-[14px] sm:text-[15px] font-semibold py-2 sm:py-2.5 pl-6 sm:pl-7 lg:pl-8 pr-2.5">
       Start checking
       <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -831,10 +861,10 @@ tailwind.config = {
   </div>
 </section>
 
-<footer class="relative bg-ink-950 text-white pt-20 pb-10 overflow-hidden">
+<footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
   <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
-  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
-    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-12 mb-16">
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-10 lg:gap-12 mb-16">
       <div>
         <a href="index.html" class="inline-flex items-center mb-6">
           <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
@@ -882,7 +912,7 @@ tailwind.config = {
       </div>
     </div>
     <div class="h-px bg-white/10 mb-8"></div>
-    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+    <div class="flex flex-wrap items-center gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
       <span>© 2026 PlagiarismSearch. All rights reserved.</span>
       <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
       <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
