@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>PlagiarismSearch — Spell Checker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+      },
+      colors: {
+        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
+        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
+        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
+        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
+      },
+      letterSpacing: { tightest: '-0.035em' },
+      boxShadow: {
+        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
+        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
+        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
+      },
+      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+    }
+  }
+}
+</script>
+<style>
+  html { background:#fff; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background:#F36F5A; color:#fff; }
+  .nums { font-variant-numeric: tabular-nums; }
+
+  /* ---------- grain overlay ---------- */
+  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:256px 256px; }
+
+  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
+  .orb { position:absolute; border-radius:9999px; pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+  /* ---------- reveal (transform/opacity only) ---------- */
+  .rv { opacity:0; transform:translateY(40px); }
+  .no-motion .rv { opacity:1 !important; transform:none !important; }
+
+  /* ---------- shared micro-interactions ---------- */
+  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .btn-press:active { transform:scale(.97); }
+  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+  .group:hover .icon-orb svg { transform:rotate(-45deg); }
+
+
+  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
+  .no-motion .pen-word { color:#DC5A45; }
+  .no-motion .pen-underline { opacity:1; }
+
+  /* ---------- lift cards ---------- */
+  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
+  @media (prefers-reduced-motion: reduce) { .hc-card { transition:none; } .hc-card:hover { transform:none; } }
+
+  /* ---------- pulse dot ---------- */
+  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
+  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
+  .no-motion .pulse-dot { animation:none; }
+
+  /* ---------- spotlight: the bento hover from the home page ---------- */
+  .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
+  .spotlight:hover { transform:translateY(-4px); }
+  @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
+
+  /* ---------- price matrix ---------- */
+  .pm-row { transition:background-color .15s ease; }
+  .pm-row:hover { background:#F2FAFB; }
+  .pm-best { position:relative; }
+  .pm-best::after { content:''; position:absolute; inset:0; border:1.5px solid #2CC3DB;
+    border-radius:14px; pointer-events:none; }
+
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+
+
+  /* stepper: buttons sit inside the field, matching the VIP trial control */
+
+
+
+  /* ---------- island nav dropdowns ---------- */
+  .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
+  .nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
+    transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
+  .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
+  @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
+
+  /* ---------- lift cards (same recipe as the help-center category tiles) ---------- */
+  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
+  @media (prefers-reduced-motion: reduce) { .hc-card { transition:none; } .hc-card:hover { transform:none; } }
+
+  /* ---------- pulse dot (bot status) ---------- */
+  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
+  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
+  .no-motion .pulse-dot { animation:none; }
+  /* ---------- text analyser ---------- */
+  .sp-area { width:100%; border:0; outline:none; background:transparent; resize:vertical;
+    min-height:190px; font-size:15px; line-height:1.7; font-weight:500; color:#111827; }
+  .sp-area::placeholder { color:#9CA3AF; font-weight:400; }
+
+  .sp-select { height:38px; padding:0 34px 0 12px; border-radius:10px; border:1px solid #E5E7EB;
+    background:#fff; font:inherit; font-size:12.5px; font-weight:600; color:#111827;
+    appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 11px center; background-size:13px; }
+  .sp-select:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
+
+  /* one measured value in a result column */
+  .sp-row { display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+    padding:5px 0; font-size:12.5px; }
+  .sp-row span { color:#6B7280; }
+  .sp-row b { font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; color:#111827; }
+  .sp-col-h { font-size:10px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase;
+    color:#9CA3AF; margin-bottom:8px; }
+
+  /* the locked column — real product feature, not computable in the browser */
+  .sp-locked { position:relative; }
+  .sp-locked .sp-row b { color:#D1D5DB; }
+
+  /* ---------- report mock: highlight + legend, same colour coding as the product report ---------- */
+  .hl { background-repeat:no-repeat; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
+        box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .hl-long    { background-image:linear-gradient(rgba(243,111,90,.16), rgba(243,111,90,.16)); color:#B84431; font-weight:600; }
+  .hl-passive { background-image:linear-gradient(rgba(154,106,222,.18), rgba(154,106,222,.18)); color:#6D3FB0; font-weight:600; }
+  .hl-term    { background-image:linear-gradient(rgba(12,169,195,.14), rgba(12,169,195,.14)); color:#06748A; font-weight:600; }
+
+  /* metric row inside the report panel */
+  .mt-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:6px; }
+  .mt-bar { height:6px; border-radius:9999px; background:#F1F2F6; overflow:hidden; }
+  .mt-bar i { display:block; height:100%; border-radius:9999px; }
+
+  /* ================= CONTROLS · checkbox, radio, groups =================
+     The native box is replaced, not hidden: appearance:none keeps the real input
+     in the layout, so the label, keyboard focus and :checked state all still work. */
+  .ck, .rd { appearance:none; -webkit-appearance:none; flex:none; margin:0;
+    width:18px; height:18px; border:1.5px solid #D1D5DB; background-color:#fff; cursor:pointer;
+    background-repeat:no-repeat; background-position:center;
+    transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }
+  .ck { border-radius:5px; }
+  .rd { border-radius:50%; }
+  .ck:hover, .rd:hover { border-color:#9CA3AF; }
+  .ck:checked { background-color:#0991A8; border-color:#0991A8;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-9'/%3E%3C/svg%3E"); background-size:12px 12px; }
+  .rd:checked { background-color:#0991A8; border-color:#0991A8;
+    background-image:radial-gradient(circle at center, #fff 0 3px, transparent 3.5px); }
+  .ck:focus-visible, .rd:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(12,169,195,.28); }
+  .ck[disabled], .rd[disabled] { background-color:#F1F2F6; border-color:#E5E7EB; cursor:not-allowed; }
+  .ck[disabled]:checked, .rd[disabled]:checked { background-color:#D1D5DB; border-color:#D1D5DB; }
+
+  /* the clickable row — the whole label is the hit area, not just the 18px box */
+  .ctl { display:flex; align-items:center; gap:10px; cursor:pointer;
+    font-size:14px; font-weight:500; color:#374151; }
+  .ctl.ctl-top { align-items:flex-start; }
+  .ctl.ctl-top .ck, .ctl.ctl-top .rd { margin-top:1px; }
+  .ctl:has(input[disabled]) { cursor:not-allowed; color:#9CA3AF; }
+
+  /* quiet group — a plain list of options */
+  .ctl-group { display:flex; flex-direction:column; gap:2px; }
+  .ctl-group > .ctl { padding:8px 10px; border-radius:10px; transition:background-color .15s ease; }
+  .ctl-group > .ctl:hover { background:#F8F9FB; }
+
+  /* boxed group — for a prominent either/or, where the option itself is the target */
+  .ctl-group-boxed { display:flex; flex-direction:column; gap:8px; }
+  .ctl-group-boxed > .ctl { padding:14px 16px; border-radius:12px; border:1px solid #E5E7EB;
+    background:#fff; transition:border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+  .ctl-group-boxed > .ctl:hover { border-color:#D1D5DB; }
+  .ctl-group-boxed > .ctl:has(input:checked) { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; background:#F8FDFE; }
+
+  /* chipset — compact single-choice pills; radio semantics, no visible box */
+  .chipset { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip-opt { position:relative; display:inline-flex; cursor:pointer; }
+  .chip-opt input { position:absolute; opacity:0; width:0; height:0; }
+  .chip-opt span { display:inline-flex; align-items:center; height:32px; padding:0 12px;
+    border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12px; font-weight:600;
+    transition:background-color .2s ease, color .2s ease, box-shadow .15s ease; }
+  .chip-opt:hover span { background:#E5E7EB; color:#111827; }
+  .chip-opt input:checked + span { background:#0A0E1A; color:#fff; }
+  .chip-opt input:focus-visible + span { box-shadow:0 0 0 3px rgba(12,169,195,.35); }
+  .chip-opt input[disabled] + span { background:#F8F9FB; color:#D1D5DB; cursor:not-allowed; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ck, .rd, .ctl-group > .ctl, .ctl-group-boxed > .ctl, .chip-opt span { transition:none; }
+  }
+
+  /* ---------- header below lg: burger + panel ---------- */
+  .nav-burger-close { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
+
+  .nav-panel { opacity:0; visibility:hidden; transform:translateY(-8px);
+    transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
+  .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
+
+</style>
+</head>
+<body class="font-sans text-ink-900 bg-white overflow-x-hidden">
+
+<div class="grain"></div>
+
+<!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
+<header class="fixed top-5 inset-x-0 z-50 px-4">
+  <div class="flex justify-center">
+  <nav class="flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+    <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-6">
+      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto max-w-none">
+    </a>
+    <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-5">
+          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <a href="plagiarism-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+            <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+            <a href="paper-analysis.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+            <a href="readability-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+            <a href="spell-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
+            <a href="vip.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+            <a href="api.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+            <a href="chat-bot.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-5">
+          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For universities</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For teachers</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For students</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For organizations</span>
+          </div>
+        </div>
+      </div>
+      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Prices</a>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-ink-900/5 text-ink-900 font-semibold" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-5">
+          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+            <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Scholarship</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Reviews</span>
+            <a href="contact-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Blog</span>
+            <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 ml-auto lg:ml-8 shrink-0">
+      <a href="#" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13.5px] font-semibold px-5 py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Check free</a>
+      <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+        <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
+        <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
+      </button>
+    </div>
+  </nav>
+  </div>
+
+  <div id="navPanel" class="nav-panel lg:hidden mx-auto mt-3 w-full max-w-[560px]">
+    <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products</div>
+      <a href="plagiarism-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+      <a href="ai-detector.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+      <a href="paper-analysis.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+      <a href="readability-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+      <a href="spell-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
+      <a href="vip.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+      <a href="api.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+      <a href="chat-bot.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions</div>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For universities</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For teachers</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For students</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For organizations</span>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
+      <a href="why-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+      <a href="mission.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Scholarship</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Reviews</span>
+      <a href="contact-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Blog</span>
+      <a href="help-center.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+      <a href="prices.html" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Prices</a>
+      <div class="sm:hidden mt-3 pt-3 border-t border-ink-100 space-y-2">
+        <a href="#" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
+        <a href="index.html#top" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+
+
+
+<!-- ================= 01 · HERO + LIVE ANALYSER ================= -->
+<section class="relative overflow-hidden pt-28 sm:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F2FCFC]">
+  <div class="orb w-[640px] h-[640px] bg-orange-500/10 -left-52 -top-40"></div>
+  <div class="orb w-[560px] h-[560px] bg-teal-500/10 right-[-160px] top-48"></div>
+
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="text-center max-w-[720px] mx-auto mb-12">
+      <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Spell check</span>
+      </div>
+      <h1 class="rv text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-5">
+        Grammar, Style, and
+        <span class="pen-word relative inline-block">Spell Checker<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 220 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c60-7 150-7 214-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span>
+      </h1>
+      <p class="rv text-[15.5px] sm:text-[16.5px] text-ink-600 leading-relaxed max-w-[52ch] mx-auto">
+        The service is free of charge. Paste your text and the statistics and readability
+        indices below update as you type.
+      </p>
+    </div>
+
+    <!-- live analyser: counting and the readability indices are published arithmetic, so this really runs -->
+    <div class="rv max-w-[1080px] mx-auto rounded-3xl sm:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-2 shadow-diffuse-lg">
+      <form id="spForm" class="rounded-2xl sm:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden" onsubmit="return false">
+
+        <div class="p-5 sm:p-6 lg:p-7">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <label for="spLang" class="sr-only">Language</label>
+            <select id="spLang" class="sp-select">
+              <option selected>Detect language</option>
+              <option>Arabic</option>
+              <option>Arabic (Algeria)</option>
+              <option>Asturian</option>
+              <option>Belarusian</option>
+              <option>Breton</option>
+              <option>Catalan</option>
+              <option>Catalan (Valencian)</option>
+              <option>Chinese</option>
+              <option>Danish</option>
+              <option>Dutch</option>
+              <option>English</option>
+              <option>English (Australian)</option>
+              <option>English (Canadian)</option>
+              <option>English (GB)</option>
+              <option>English (New Zealand)</option>
+              <option>English (South African)</option>
+              <option>English (US)</option>
+              <option>Esperanto</option>
+              <option>French</option>
+              <option>Galician</option>
+              <option>German</option>
+              <option>German (Austria)</option>
+              <option>German (Germany)</option>
+              <option>German (Swiss)</option>
+              <option>Greek</option>
+              <option>Irish</option>
+              <option>Italian</option>
+              <option>Japanese</option>
+              <option>Khmer</option>
+              <option>Persian</option>
+              <option>Polish</option>
+              <option>Portuguese</option>
+              <option>Portuguese (Angola preAO)</option>
+              <option>Portuguese (Brazil)</option>
+              <option>Portuguese (Moçambique preAO)</option>
+              <option>Portuguese (Portugal)</option>
+              <option>Romanian</option>
+              <option>Russian</option>
+              <option>Simple German</option>
+              <option>Slovak</option>
+              <option>Slovenian</option>
+              <option>Spanish</option>
+              <option>Swedish</option>
+              <option>Tagalog</option>
+              <option>Tamil</option>
+              <option>Ukrainian</option>
+            </select>
+            <label class="btn-press inline-flex items-center gap-2 rounded-full bg-ink-50 hover:bg-ink-100 transition-colors duration-200 text-[12px] font-semibold text-ink-700 px-3.5 py-2 cursor-pointer">
+              <input type="file" id="spFile" class="sr-only" accept=".txt,.md,text/plain">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+              Upload a .txt file
+            </label>
+            <span id="spCount" class="ml-auto text-[11.5px] font-semibold text-ink-400 nums">0 words</span>
+          </div>
+
+          <textarea id="spText" class="sp-area" aria-label="Text to analyse"
+            placeholder="Type your text here..."></textarea>
+        </div>
+
+        <div class="grid sm:grid-cols-3 border-t border-ink-100">
+          <!-- Mistakes needs a language model, so it is the one column the browser cannot fill -->
+          <div class="sp-locked p-6 border-b sm:border-b-0 sm:border-r border-ink-100">
+            <div class="sp-col-h flex items-center gap-1.5">
+              Mistakes
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="sp-row"><span>Grammar</span><b id="spGrammar">&mdash;</b></div>
+            <div class="sp-row"><span>Punctuation</span><b id="spPunct">&mdash;</b></div>
+            <div class="sp-row"><span>Spelling</span><b id="spSpell">&mdash;</b></div>
+            <div class="sp-row"><span>Style</span><b id="spStyle">&mdash;</b></div>
+            <div class="mt-3 text-[11px] leading-relaxed text-ink-400">Checked server-side &mdash; press Free check.</div>
+          </div>
+
+          <div class="p-6 border-b sm:border-b-0 sm:border-r border-ink-100">
+            <div class="sp-col-h">Statistics</div>
+            <div class="sp-row"><span>Paragraphs</span><b id="spPara">&mdash;</b></div>
+            <div class="sp-row"><span>Sentences</span><b id="spSent">&mdash;</b></div>
+            <div class="sp-row"><span>Syllables</span><b id="spSyl">&mdash;</b></div>
+            <div class="sp-row"><span>Words</span><b id="spWords">&mdash;</b></div>
+            <div class="sp-row"><span>Characters</span><b id="spChars">&mdash;</b></div>
+            <div class="sp-row"><span>Spaces</span><b id="spSpaces">&mdash;</b></div>
+          </div>
+
+          <div class="p-6">
+            <div class="sp-col-h">Readability</div>
+            <div class="sp-row"><span>Read time</span><b id="spRead">&mdash;</b></div>
+            <div class="sp-row"><span>Speak time</span><b id="spSpeak">&mdash;</b></div>
+            <div class="sp-row"><span>Automated readability index</span><b id="spAri">&mdash;</b></div>
+            <div class="sp-row"><span>Coleman&ndash;Liau index</span><b id="spCli">&mdash;</b></div>
+            <div class="sp-row"><span>Flesch reading ease</span><b id="spFre">&mdash;</b></div>
+            <div class="sp-row"><span>Flesch&ndash;Kincaid grade level</span><b id="spFkg">&mdash;</b></div>
+            <div class="sp-row"><span>SMOG grade</span><b id="spSmog">&mdash;</b></div>
+            <div class="sp-row"><span>Gunning fog index</span><b id="spFog">&mdash;</b></div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3 px-6 py-5 border-t border-ink-100 bg-ink-50/60">
+          <button type="submit" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[14px] font-semibold pl-5 pr-2 py-2">
+            Free check
+            <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </button>
+          <a href="paper-analysis.html" class="btn-press inline-flex items-center rounded-full ring-1 ring-black/10 text-ink-900 text-[14px] font-semibold h-11 px-5 hover:bg-ink-900/5 transition-colors duration-300">Order analysis</a>
+          <span class="text-[11.5px] font-medium text-ink-400 sm:ml-auto">Counting and indices run in your browser &mdash; syllables are estimated.</span>
+        </div>
+      </form>
+    </div>
+
+    <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mt-10">
+      <span class="flex items-baseline gap-1.5">
+        <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="4.9" data-decimals="1">0</span>
+        <span class="text-[12px] font-semibold text-ink-500">Trustpilot</span>
+      </span>
+      <span class="w-1 h-1 rounded-full bg-ink-200"></span>
+      <span class="flex items-baseline gap-1.5">
+        <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="5.0" data-decimals="1">0</span>
+        <span class="text-[12px] font-semibold text-ink-500">Sitejabber</span>
+      </span>
+      <span class="w-1 h-1 rounded-full bg-ink-200"></span>
+      <span class="flex items-baseline gap-1.5">
+        <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="490" data-suffix="K+">0</span>
+        <span class="text-[12px] font-semibold text-ink-500">texts checked</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 · FOUR THINGS IT REPORTS ================= -->
+<section class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[620px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">What it reports</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Four readings of the same text</h2>
+      <p class="text-[15.5px] text-ink-600 leading-relaxed">
+        This is not just an automated program that has a limited set of functions.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-[1080px] mx-auto">
+      <div class="hc-card rv rounded-3xl sm:rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/sp/mistakes.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+        </div>
+        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Mistakes</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Grammar, punctuation, spelling and style &mdash; each flagged in place with an explanation beside it.</p>
+      </div>
+      <div class="hc-card rv rounded-3xl sm:rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/sp/stats.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+        </div>
+        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Statistics</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Paragraphs, sentences, syllables, words, characters and spaces, counted as you type.</p>
+      </div>
+      <div class="hc-card rv rounded-3xl sm:rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/sp/readability.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+        </div>
+        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Readability</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Eight indices at once, from Flesch reading ease to SMOG grade and Gunning fog.</p>
+      </div>
+      <div class="hc-card rv rounded-3xl sm:rounded-4xl bg-ink-50 p-6">
+        <div class="rounded-2xl bg-white mb-5 py-6 flex items-center justify-center">
+          <img src="assets/img/sp/language.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+        </div>
+        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Language</h3>
+        <p class="text-[13.5px] leading-relaxed text-ink-600">Detected automatically, or pick from 46 languages and regional variants.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 · FREE ESSAY GRADER ================= -->
+<section class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <div class="orb w-[520px] h-[520px] bg-orange-500/8 right-[-140px] top-10"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <!-- photo RIGHT — first photo on the page -->
+    <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-10 sm:gap-14 lg:gap-16 items-center">
+
+      <div>
+        <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-mint-500"></span>
+          <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Free essay grader</span>
+        </div>
+        <h2 class="rv text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-5">
+          A way to ensure top quality of writing
+        </h2>
+        <p class="rv text-[15.5px] text-ink-600 leading-relaxed mb-4 max-w-[50ch]">
+          Our company&rsquo;s online essay grader will help you submit a premium-quality academic paper
+          even if you are a non-native speaker of English. Handing in your paper without proper editing
+          and proofreading is not a good option &mdash; the numerous mistakes, even petty ones, may pose a
+          negative impression on your readers.
+        </p>
+        <p class="rv text-[15.5px] text-ink-600 leading-relaxed mb-8 max-w-[50ch]">
+          With our help, students can check grammar, punctuation, stylistic, and spelling mistakes, and
+          thus upgrade the quality of their writing. The greatest asset is that we provide a free online
+          essay grader.
+        </p>
+
+        <div class="rv flex items-center gap-3 rounded-2xl bg-white px-5 py-4 max-w-[44ch]">
+          <span class="w-2 h-2 rounded-full bg-mint-500 pulse-dot shrink-0"></span>
+          <span class="text-[13.5px] font-semibold text-ink-700">An editor looks through your order in about 24 hours</span>
+        </div>
+      </div>
+
+      <div class="rv relative">
+        <img src="assets/img/sp/proofreader.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-4xl shadow-diffuse">
+        <div class="hidden lg:block absolute -left-9 bottom-9 w-[43%] rounded-2xl bg-white shadow-diffuse-lg px-5 py-4">
+          <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">Free check</div>
+          <div class="flex items-end gap-2 mb-1.5">
+            <span class="text-[24px] sm:text-[26px] lg:text-[30px] font-extrabold tracking-tightest leading-none nums text-ink-900">46</span>
+            <span class="text-[13px] font-bold text-ink-400 pb-1">languages</span>
+          </div>
+          <div class="text-[11.5px] font-semibold text-ink-500">including regional variants</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 · WHAT THE CHECK RETURNS ================= -->
+<section class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
+  <div class="orb w-[600px] h-[600px] bg-teal-500/8 -left-44 top-24"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[640px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">The check</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">
+        Every mistake, with the
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-teal-600">reason beside it</span>
+      </h2>
+      <p class="text-[15.5px] text-ink-600 leading-relaxed">
+        The explanations going alongside the corrections help you see the made mistakes and avoid them next time.
+      </p>
+    </div>
+
+    <!-- schematic check screen — hand-built HTML, so the text stays sharp -->
+    <div class="rv max-w-[1080px] mx-auto rounded-3xl sm:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-2 shadow-diffuse-lg">
+      <div class="rounded-2xl sm:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden">
+
+        <div class="flex items-center gap-2 px-5 py-3.5 border-b border-ink-100">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></span>
+          <span class="ml-3 text-[11.5px] font-medium text-ink-400">essay_draft_3.docx</span>
+          <span class="ml-auto text-[9.5px] font-bold tracking-widest rounded-full px-2.5 py-1 bg-mint-100 text-mint-700">CHECK COMPLETE</span>
+        </div>
+
+        <div class="grid md:grid-cols-[1.35fr_1fr]">
+          <div class="p-6 lg:p-8 border-b md:border-b-0 md:border-r border-ink-100">
+            <div class="text-[10px] font-bold tracking-[0.18em] uppercase text-ink-400 mb-4">Paragraph 1 of 9</div>
+            <p class="text-[14.5px] leading-[1.9] text-ink-700 mb-5">
+              The research <span class="hl hl-long">show</span> that student engagement rises when feedback arrives quickly<span class="hl hl-passive">,</span> however the effect fades within a term. Many of the participants
+              <span class="hl hl-term">recieved</span> their results late.
+            </p>
+
+            <div class="space-y-2.5">
+              <div class="flex items-start gap-3 rounded-xl bg-ink-50 px-4 py-3">
+                <span class="text-[9px] font-bold tracking-widest rounded-full px-2 py-0.5 shrink-0 mt-0.5" style="background:#FDE5E0;color:#B84431">GRAMMAR</span>
+                <span class="text-[12.5px] leading-relaxed text-ink-600"><b class="font-bold text-ink-900">show</b> &rarr; <b class="font-bold text-ink-900">shows</b> &mdash; the subject &ldquo;research&rdquo; is singular.</span>
+              </div>
+              <div class="flex items-start gap-3 rounded-xl bg-ink-50 px-4 py-3">
+                <span class="text-[9px] font-bold tracking-widest rounded-full px-2 py-0.5 shrink-0 mt-0.5" style="background:#EDE4FA;color:#6D3FB0">PUNCTUATION</span>
+                <span class="text-[12.5px] leading-relaxed text-ink-600">A comma cannot join two independent clauses. Use a semicolon before &ldquo;however&rdquo;.</span>
+              </div>
+              <div class="flex items-start gap-3 rounded-xl bg-ink-50 px-4 py-3">
+                <span class="text-[9px] font-bold tracking-widest rounded-full px-2 py-0.5 shrink-0 mt-0.5" style="background:#D3F1F6;color:#06748A">SPELLING</span>
+                <span class="text-[12.5px] leading-relaxed text-ink-600"><b class="font-bold text-ink-900">recieved</b> &rarr; <b class="font-bold text-ink-900">received</b>.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 lg:p-8 bg-ink-50/50">
+            <div class="text-[10px] font-bold tracking-[0.18em] uppercase text-ink-400 mb-5">Mistakes</div>
+            <div class="mb-5">
+              <div class="mt-row"><span class="text-[13px] font-semibold text-ink-700">Grammar</span><span class="text-[13px] font-extrabold nums">4</span></div>
+              <div class="mt-bar"><i style="width:40%;background:#F36F5A"></i></div>
+            </div>
+            <div class="mb-5">
+              <div class="mt-row"><span class="text-[13px] font-semibold text-ink-700">Punctuation</span><span class="text-[13px] font-extrabold nums">6</span></div>
+              <div class="mt-bar"><i style="width:60%;background:#9A6ADE"></i></div>
+            </div>
+            <div class="mb-5">
+              <div class="mt-row"><span class="text-[13px] font-semibold text-ink-700">Spelling</span><span class="text-[13px] font-extrabold nums">2</span></div>
+              <div class="mt-bar"><i style="width:20%;background:#0CA9C3"></i></div>
+            </div>
+            <div class="mb-6">
+              <div class="mt-row"><span class="text-[13px] font-semibold text-ink-700">Style</span><span class="text-[13px] font-extrabold nums">3</span></div>
+              <div class="mt-bar"><i style="width:30%;background:#3AC184"></i></div>
+            </div>
+
+            <div class="space-y-2.5 pt-5 border-t border-ink-100">
+              <div class="flex items-baseline justify-between gap-3">
+                <span class="text-[12px] text-ink-500">Language</span>
+                <span class="text-[12px] font-bold text-ink-700">English (GB)</span>
+              </div>
+              <div class="flex items-baseline justify-between gap-3">
+                <span class="text-[12px] text-ink-500">Words</span>
+                <span class="text-[12px] font-bold nums text-ink-700">1,842</span>
+              </div>
+              <div class="flex items-baseline justify-between gap-3">
+                <span class="text-[12px] text-ink-500">Read time</span>
+                <span class="text-[12px] font-bold nums text-ink-700">8 min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 · WHAT IT GIVES YOU ================= -->
+<section class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[.92fr_1.08fr] gap-10 sm:gap-14 lg:gap-16 items-center">
+    <div>
+      <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Advantages</span>
+      </div>
+      <h2 class="rv text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-5">
+        Our online grader is your perfect opportunity to:
+      </h2>
+      <p class="rv text-[15.5px] text-ink-600 leading-relaxed max-w-[46ch]">
+        With the help of our online essay grader, you will be able to get expert assistance of an editor
+        who will review your paper and improve it depending on the requirements.
+      </p>
+    </div>
+
+    <ul class="space-y-3">
+      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-3xl bg-white p-5">
+        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">1</span>
+        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Get to know what professors think about your writing style and manner</span>
+      </li>
+      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-3xl bg-white p-5">
+        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">2</span>
+        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Become a better writing with in-depth skills</span>
+      </li>
+      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-3xl bg-white p-5">
+        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">3</span>
+        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Fix errors in grammar, punctuation, and spelling before handing in your paper</span>
+      </li>
+      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-3xl bg-white p-5">
+        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">4</span>
+        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Improve your overall academic performance</span>
+      </li>
+      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-3xl bg-white p-5">
+        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">5</span>
+        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Reveal your real potential</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 06 · ADD-ONS ================= -->
+<section id="addons" class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
+  <div class="orb w-[560px] h-[560px] bg-orange-500/8 right-[-150px] top-16"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[620px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Go further</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Add to the check</h2>
+      <p class="text-[15.5px] text-ink-600 leading-relaxed">The spell check is free. These stack on the same text.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-[1080px] mx-auto">
+      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-2">
+          <h3 class="text-[15px] font-bold tracking-tight">Readability score</h3>
+          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$0.99</span>
+        </div>
+        <p class="text-[13px] leading-relaxed text-ink-600">Check whether your text is easy or difficult to understand for your target audience.</p>
+      </div>
+      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-2">
+          <h3 class="text-[15px] font-bold tracking-tight">Score recommendations</h3>
+          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$1.99</span>
+        </div>
+        <p class="text-[13px] leading-relaxed text-ink-600">Get suggestions regarding the readability score of your text.</p>
+      </div>
+      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-2">
+          <h3 class="text-[15px] font-bold tracking-tight">Plagiarism check</h3>
+          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$4.99</span>
+        </div>
+        <p class="text-[13px] leading-relaxed text-ink-600">You can additionally check your text for plagiarism and get a detailed report.</p>
+      </div>
+      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-2">
+          <h3 class="text-[15px] font-bold tracking-tight">Paper analysis</h3>
+          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$3.50</span>
+        </div>
+        <p class="text-[13px] leading-relaxed text-ink-600">Get expert assistance to improve grammar, stylistic, and punctuation errors in your text. Per page.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 · CTA ================= -->
+<section class="relative py-16 sm:py-24 lg:py-28 overflow-hidden bg-[#F2FCFC]">
+  <div class="orb w-[700px] h-[640px] bg-orange-500/12 left-[-180px] -top-64"></div>
+  <div class="orb w-[600px] h-[600px] bg-teal-500/10 right-[-140px] -bottom-72"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 text-center">
+    <h2 class="rv text-[clamp(1.9rem,3.6vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4">How to improve writing skills before submitting your paper</h2>
+    <p class="rv text-[15px] sm:text-[16px] text-ink-600 mb-8 max-w-[54ch] mx-auto">
+      Do not waste your time before the paper submission. Just upload your paper now and wait for excellent results.
+    </p>
+    <a href="#top" class="rv btn-press group inline-flex items-center gap-3 rounded-full bg-orange-500 hover:bg-orange-600 transition-colors duration-300 text-white text-[15px] font-semibold py-2.5 pl-8 pr-2.5">
+      Check my text
+      <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </span>
+    </a>
+  </div>
+</section>
+
+<footer class="relative bg-ink-950 text-white pt-20 pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-12 mb-16">
+      <div>
+        <a href="index.html" class="inline-flex items-center mb-6">
+          <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+        </a>
+        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+        <div class="flex gap-3">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">PRODUCT</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="plagiarism-check.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="ai-detector.html" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="paper-analysis.html" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Sample Report</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Students</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Teachers</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Universities</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="help-center.html" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">API docs</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">About</a></li>
+          <li><a href="contact-us.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Compliance</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="h-px bg-white/10 mb-8"></div>
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>© 2026 PlagiarismSearch. All rights reserved.</span>
+      <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
+      <a href="#" class="hover:text-white/70 transition-colors">DPA</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Cookies</a>
+      <span class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) document.documentElement.classList.add('no-motion');
+
+  if (!reduceMotion && window.gsap) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ================= reveals ================= */
+    const rvs = gsap.utils.toArray('.rv');
+    const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
+    const later = rvs.filter(el => !inView.includes(el));
+
+    // first viewport: top-down cascade on load
+    inView.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+    });
+    // the rest reveal as they reach mid-screen
+    later.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 70%' } });
+    });
+
+    /* ================= pen marks — word colours in, then its underline draws =================
+       Reusable: any number per page. In-view marks wait out the reveal cascade;
+       lower ones fire when scrolled to. See DESIGN.md → Web build → Motion. */
+    gsap.utils.toArray('.pen-word').forEach(word => {
+      const line = word.querySelector('.pen-underline');
+      if (!line) return;
+      const len = line.getTotalLength();
+      gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+      const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
+      const tl = gsap.timeline(inFirstView
+        ? { delay: 1 }
+        : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
+      tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+        .set(line, { opacity: 1 }, .35)
+        .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
+    });
+
+    /* ================= counters (mission stats) — cached writes ================= */
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const dp = parseInt(el.dataset.decimals, 10) || 0;   // ratings need one decimal
+      const obj = { v: 0 };
+      let lastText = '';
+      gsap.to(obj, {
+        v: target, duration: 1.6, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        onUpdate: () => {
+          const text = obj.v.toFixed(dp) + suffix;
+          if (text !== lastText) { lastText = text; el.textContent = text; }
+        }
+      });
+    });
+  } else {
+    // reduced motion: final states, no tweens
+    document.querySelectorAll('[data-count]').forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
+  }
+})();
+</script>
+
+
+
+
+<script>
+(() => {
+  'use strict';
+  // same counter the home page uses, with decimals for the rating figures
+  if (!window.gsap || !window.ScrollTrigger) return;
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const dp = parseInt(el.dataset.decimals, 10) || 0;
+    const obj = { v: 0 };
+    gsap.to(obj, {
+      v: target, duration: 1.6, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%' },
+      onUpdate: () => el.textContent = obj.v.toFixed(dp) + suffix,
+    });
+  });
+})();
+</script>
+
+<script>
+(() => {
+  'use strict';
+  const form = document.getElementById('spForm');
+  if (!form) return;
+
+  // Every index below is published arithmetic over four counts: characters, words,
+  // sentences and syllables. Syllables use the usual vowel-group heuristic, so the
+  // grade-style figures are indicative rather than exact.
+  function syllables(w) {
+    w = w.toLowerCase().replace(/[^a-z]/g, '');
+    if (!w) return 0;
+    if (w.length <= 3) return 1;
+    w = w.replace(/(?:[^laeiouy]es|[^laeiouy]e)$/, '').replace(/^y/, '');
+    const m = w.match(/[aeiouy]{1,2}/g);
+    return m ? m.length : 1;
+  }
+
+  const $ = id => document.getElementById(id);
+  const area = $('spText');
+  const DASH = '\u2014';
+  const set = (id, v) => $(id).textContent = v;
+  const mins = n => {
+    if (n < 1) return "<1 min";
+    return Math.round(n) + " min";
+  };
+
+  function analyse() {
+    const text = area.value;
+    const trimmed = text.trim();
+    const words = trimmed ? trimmed.split(/\s+/).filter(w => /[a-z0-9]/i.test(w)) : [];
+    const sentences = trimmed ? trimmed.split(/[.!?]+(?:\s|$)/).filter(x => /\S/.test(x)) : [];
+    const paras = trimmed ? trimmed.split(/\n\s*\n/).filter(x => /\S/.test(x)) : [];
+    const letters = (text.match(/[a-z]/gi) || []).length;
+    const spaces = (text.match(/ /g) || []).length;
+    const syl = words.reduce((n, w) => n + syllables(w), 0);
+    const poly = words.filter(w => syllables(w) >= 3).length;
+
+    const n = v => v.toLocaleString("en-US");
+    set('spPara', n(paras.length));
+    set('spSent', n(sentences.length));
+    set('spSyl', n(syl));
+    set('spWords', n(words.length));
+    set('spChars', n(text.length));
+    set('spSpaces', n(spaces));
+    $('spCount').textContent = n(words.length) + (words.length === 1 ? ' word' : ' words');
+
+    // the indices need enough text to mean anything
+    const ids = ['spRead','spSpeak','spAri','spCli','spFre','spFkg','spSmog','spFog'];
+    if (words.length < 20 || sentences.length < 2) { ids.forEach(i => set(i, DASH)); return; }
+
+    const asl = words.length / sentences.length;      // words per sentence
+    const asw = syl / words.length;                   // syllables per word
+    const L = letters / words.length * 100;           // letters per 100 words
+    const S = sentences.length / words.length * 100;  // sentences per 100 words
+
+    set('spRead', mins(words.length / 225));           // average silent reading pace
+    set('spSpeak', mins(words.length / 150));          // average speaking pace
+    set('spAri', (4.71 * (letters / words.length) + 0.5 * asl - 21.43).toFixed(1));
+    set('spCli', (0.0588 * L - 0.296 * S - 15.8).toFixed(1));
+    set('spFre', Math.max(0, Math.min(100, 206.835 - 1.015 * asl - 84.6 * asw)).toFixed(1));
+    set('spFkg', Math.max(0, 0.39 * asl + 11.8 * asw - 15.59).toFixed(1));
+    set('spSmog', (1.0430 * Math.sqrt(poly * 30 / sentences.length) + 3.1291).toFixed(1));
+    set('spFog', (0.4 * (asl + 100 * (poly / words.length))).toFixed(1));
+  }
+
+  area.addEventListener('input', analyse);
+  $('spFile').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => { area.value = r.result; analyse(); };
+    r.readAsText(f);
+  });
+  analyse();
+})();
+</script>
+
+<script>
+(() => {
+  'use strict';
+  const btn = document.getElementById('navBurger');
+  const panel = document.getElementById('navPanel');
+  if (!btn || !panel) return;
+
+  const setOpen = on => {
+    btn.setAttribute('aria-expanded', String(on));
+    panel.classList.toggle('open', on);
+    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
+  };
+
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => {
+    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+  // the desktop menu takes over at lg — never leave the panel hanging open across it
+  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
+})();
+</script>
+
+</body>
+</html>

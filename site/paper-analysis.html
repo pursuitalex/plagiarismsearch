@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>PlagiarismSearch — Paper Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+      },
+      colors: {
+        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
+        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
+        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
+        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
+      },
+      letterSpacing: { tightest: '-0.035em' },
+      boxShadow: {
+        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
+        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
+        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
+      },
+      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+    }
+  }
+}
+</script>
+<style>
+  html { background:#fff; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background:#F36F5A; color:#fff; }
+  .nums { font-variant-numeric: tabular-nums; }
+
+  /* ---------- grain overlay ---------- */
+  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:256px 256px; }
+
+  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
+  .orb { position:absolute; border-radius:9999px; pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+  /* ---------- reveal (transform/opacity only) ---------- */
+  .rv { opacity:0; transform:translateY(40px); }
+  .no-motion .rv { opacity:1 !important; transform:none !important; }
+
+  /* ---------- shared micro-interactions ---------- */
+  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .btn-press:active { transform:scale(.97); }
+  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+  .group:hover .icon-orb svg { transform:rotate(-45deg); }
+
+
+  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
+  .no-motion .pen-word { color:#DC5A45; }
+  .no-motion .pen-underline { opacity:1; }
+
+  /* ---------- lift cards ---------- */
+  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
+  @media (prefers-reduced-motion: reduce) { .hc-card { transition:none; } .hc-card:hover { transform:none; } }
+
+  /* ---------- pulse dot ---------- */
+  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
+  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
+  .no-motion .pulse-dot { animation:none; }
+
+  /* ---------- spotlight: the bento hover from the home page ---------- */
+  .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
+  .spotlight:hover { transform:translateY(-4px); }
+  @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
+
+  /* ---------- price matrix ---------- */
+  .pm-row { transition:background-color .15s ease; }
+  .pm-row:hover { background:#F2FAFB; }
+  .pm-best { position:relative; }
+  .pm-best::after { content:''; position:absolute; inset:0; border:1.5px solid #2CC3DB;
+    border-radius:14px; pointer-events:none; }
+
+  /* ---------- order form ---------- */
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+  .pa-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
+    transition:border-color .2s ease, background-color .2s ease; }
+  .pa-drop:hover, .pa-drop.drag { border-color:#2CC3DB; background:#F0FAFC; }
+  .pa-drop:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
+
+  .pa-select { width:100%; height:42px; padding:0 36px 0 14px; border-radius:12px;
+    border:1px solid #E5E7EB; background:#fff; font:inherit; font-size:13.5px; font-weight:600;
+    color:#111827; appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 12px center; background-size:14px; }
+  .pa-select:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
+
+  /* stepper: buttons sit inside the field, matching the VIP trial control */
+  .pa-step { display:flex; align-items:center; height:42px; border-radius:12px; border:1px solid #E5E7EB;
+    background:#fff; overflow:hidden; }
+  .pa-step:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
+  .pa-step button { width:34px; height:100%; flex:none; font-size:16px; font-weight:700; color:#6B7280;
+    background:none; border:0; cursor:pointer; transition:color .15s ease, background-color .15s ease; }
+  .pa-step button:hover { color:#111827; background:#F1F2F6; }
+  .pa-step input { flex:1; min-width:0; height:100%; border:0; outline:none; text-align:center;
+    font:inherit; font-size:13.5px; font-weight:700; color:#111827; -moz-appearance:textfield; }
+  .pa-step input::-webkit-outer-spin-button, .pa-step input::-webkit-inner-spin-button {
+    -webkit-appearance:none; margin:0; }
+
+
+
+  /* ---------- island nav dropdowns ---------- */
+  .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
+  .nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
+    transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
+  .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
+  @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
+
+  /* ---------- lift cards (same recipe as the help-center category tiles) ---------- */
+  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
+  @media (prefers-reduced-motion: reduce) { .hc-card { transition:none; } .hc-card:hover { transform:none; } }
+
+  /* ---------- pulse dot (bot status) ---------- */
+  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
+  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
+  .no-motion .pulse-dot { animation:none; }
+  /* ================= CONTROLS · checkbox, radio, groups =================
+     The native box is replaced, not hidden: appearance:none keeps the real input
+     in the layout, so the label, keyboard focus and :checked state all still work. */
+  .ck, .rd { appearance:none; -webkit-appearance:none; flex:none; margin:0;
+    width:18px; height:18px; border:1.5px solid #D1D5DB; background-color:#fff; cursor:pointer;
+    background-repeat:no-repeat; background-position:center;
+    transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }
+  .ck { border-radius:5px; }
+  .rd { border-radius:50%; }
+  .ck:hover, .rd:hover { border-color:#9CA3AF; }
+  .ck:checked { background-color:#0991A8; border-color:#0991A8;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-9'/%3E%3C/svg%3E"); background-size:12px 12px; }
+  .rd:checked { background-color:#0991A8; border-color:#0991A8;
+    background-image:radial-gradient(circle at center, #fff 0 3px, transparent 3.5px); }
+  .ck:focus-visible, .rd:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(12,169,195,.28); }
+  .ck[disabled], .rd[disabled] { background-color:#F1F2F6; border-color:#E5E7EB; cursor:not-allowed; }
+  .ck[disabled]:checked, .rd[disabled]:checked { background-color:#D1D5DB; border-color:#D1D5DB; }
+
+  /* the clickable row — the whole label is the hit area, not just the 18px box */
+  .ctl { display:flex; align-items:center; gap:10px; cursor:pointer;
+    font-size:14px; font-weight:500; color:#374151; }
+  .ctl.ctl-top { align-items:flex-start; }
+  .ctl.ctl-top .ck, .ctl.ctl-top .rd { margin-top:1px; }
+  .ctl:has(input[disabled]) { cursor:not-allowed; color:#9CA3AF; }
+
+  /* quiet group — a plain list of options */
+  .ctl-group { display:flex; flex-direction:column; gap:2px; }
+  .ctl-group > .ctl { padding:8px 10px; border-radius:10px; transition:background-color .15s ease; }
+  .ctl-group > .ctl:hover { background:#F8F9FB; }
+
+  /* boxed group — for a prominent either/or, where the option itself is the target */
+  .ctl-group-boxed { display:flex; flex-direction:column; gap:8px; }
+  .ctl-group-boxed > .ctl { padding:14px 16px; border-radius:12px; border:1px solid #E5E7EB;
+    background:#fff; transition:border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+  .ctl-group-boxed > .ctl:hover { border-color:#D1D5DB; }
+  .ctl-group-boxed > .ctl:has(input:checked) { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; background:#F8FDFE; }
+
+  /* chipset — compact single-choice pills; radio semantics, no visible box */
+  .chipset { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip-opt { position:relative; display:inline-flex; cursor:pointer; }
+  .chip-opt input { position:absolute; opacity:0; width:0; height:0; }
+  .chip-opt span { display:inline-flex; align-items:center; height:32px; padding:0 12px;
+    border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12px; font-weight:600;
+    transition:background-color .2s ease, color .2s ease, box-shadow .15s ease; }
+  .chip-opt:hover span { background:#E5E7EB; color:#111827; }
+  .chip-opt input:checked + span { background:#0A0E1A; color:#fff; }
+  .chip-opt input:focus-visible + span { box-shadow:0 0 0 3px rgba(12,169,195,.35); }
+  .chip-opt input[disabled] + span { background:#F8F9FB; color:#D1D5DB; cursor:not-allowed; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ck, .rd, .ctl-group > .ctl, .ctl-group-boxed > .ctl, .chip-opt span { transition:none; }
+  }
+
+  /* ---------- step rail: joins the numbered badges so the sequence reads ---------- */
+  .rail > li { position:relative; }
+  .rail > li:not(:last-child)::before {
+    content:''; position:absolute; left:38px; top:56px; bottom:-12px; width:2px;
+    background:#E5E7EB; border-radius:9999px; }
+  .rail > li > :first-child { position:relative; z-index:1; }
+
+  /* ---------- header below lg: burger + panel ---------- */
+  .nav-burger-close { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
+
+  .nav-panel { opacity:0; visibility:hidden; transform:translateY(-8px);
+    transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
+  .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
+
+</style>
+</head>
+<body class="font-sans text-ink-900 bg-white overflow-x-hidden">
+
+<div class="grain"></div>
+
+<!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
+<header class="fixed top-5 inset-x-0 z-50 px-4">
+  <div class="flex justify-center">
+  <nav class="flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+    <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-6">
+      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto max-w-none">
+    </a>
+    <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-5">
+          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <a href="plagiarism-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+            <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+            <a href="paper-analysis.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+            <a href="readability-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+            <a href="spell-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
+            <a href="vip.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+            <a href="api.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+            <a href="chat-bot.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-5">
+          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For universities</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For teachers</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For students</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For organizations</span>
+          </div>
+        </div>
+      </div>
+      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Prices</a>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-ink-900/5 text-ink-900 font-semibold" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-5">
+          <div class="rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+            <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Scholarship</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Reviews</span>
+            <a href="contact-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Blog</span>
+            <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 ml-auto lg:ml-8 shrink-0">
+      <a href="#" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13.5px] font-semibold px-5 py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Check free</a>
+      <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+        <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
+        <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
+      </button>
+    </div>
+  </nav>
+  </div>
+
+  <div id="navPanel" class="nav-panel lg:hidden mx-auto mt-3 w-full max-w-[560px]">
+    <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products</div>
+      <a href="plagiarism-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+      <a href="ai-detector.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+      <a href="paper-analysis.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+      <a href="readability-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+      <a href="spell-check.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
+      <a href="vip.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+      <a href="api.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+      <a href="chat-bot.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions</div>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For universities</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For teachers</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For students</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For organizations</span>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
+      <a href="why-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+      <a href="mission.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Scholarship</span>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Reviews</span>
+      <a href="contact-us.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+      <span class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Blog</span>
+      <a href="help-center.html" class="block rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+      <a href="prices.html" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Prices</a>
+      <div class="sm:hidden mt-3 pt-3 border-t border-ink-100 space-y-2">
+        <a href="#" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
+        <a href="index.html#top" class="block rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+
+<!-- ================= 01 · HERO ================= -->
+<section class="relative overflow-hidden pt-28 sm:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F2FCFC]">
+  <div class="orb w-[640px] h-[640px] bg-orange-500/10 -left-52 -top-40"></div>
+  <div class="orb w-[560px] h-[560px] bg-teal-500/10 right-[-160px] top-48"></div>
+
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[1.02fr_.98fr] gap-10 sm:gap-14 lg:gap-16 items-center">
+    <div>
+      <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Paper analysis</span>
+      </div>
+      <h1 class="rv text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-5">
+        Rate my
+        <span class="pen-word relative inline-block">paper<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span>
+      </h1>
+      <p class="rv text-[15.5px] sm:text-[16.5px] text-ink-600 leading-relaxed max-w-[46ch] mb-8">
+        The in-depth analysis and correction of grammar, stylistic, and punctuation errors from our
+        experienced editors.
+      </p>
+
+      <div class="rv flex flex-wrap gap-3 mb-9">
+        <a href="#pricing" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-orange-500 hover:bg-orange-600 transition-colors duration-300 text-white text-[14.5px] font-semibold pl-6 pr-2 py-2">
+          See what it costs
+          <span class="icon-orb w-8 h-8 rounded-full bg-white/15 flex items-center justify-center">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+        <a href="#how" class="btn-press inline-flex items-center gap-2.5 rounded-full ring-1 ring-black/10 text-ink-900 text-[14.5px] font-semibold h-12 px-6 hover:bg-ink-900/5 transition-colors duration-300">
+          How it works
+        </a>
+      </div>
+
+      <!-- verified ratings, same figures the live site publishes -->
+      <div class="rv flex flex-wrap items-center gap-x-6 gap-y-3">
+        <span class="flex items-baseline gap-1.5">
+          <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums">4.9</span>
+          <span class="text-[12px] font-semibold text-ink-500">Trustpilot</span>
+        </span>
+        <span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span class="flex items-baseline gap-1.5">
+          <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums">5.0</span>
+          <span class="text-[12px] font-semibold text-ink-500">Sitejabber</span>
+        </span>
+        <span class="w-1 h-1 rounded-full bg-ink-200"></span>
+        <span class="flex items-baseline gap-1.5">
+          <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums">490K+</span>
+          <span class="text-[12px] font-semibold text-ink-500">papers checked</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- order form — the total is computed from the same matrix published in section 05 -->
+    <div class="rv relative rounded-3xl sm:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-2 shadow-diffuse">
+      <form id="paForm" class="rounded-2xl sm:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6" onsubmit="return false">
+
+        <h2 class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest leading-tight mb-4">Get a price for your paper</h2>
+
+        <!-- drop zone and the uploaded-file card are alternate states, never both at once -->
+        <label id="paDrop" class="pa-drop flex items-center gap-4 px-4 py-3.5 mb-4 cursor-pointer">
+          <input type="file" id="paFile" class="sr-only" accept=".doc,.docx,.pdf,.txt,.rtf,.odt">
+          <span class="w-10 h-10 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+            <span class="block text-[12px] text-ink-500">or click to choose &mdash; optional, the price works without it</span>
+          </span>
+        </label>
+
+        <div id="paDoc" class="hidden items-center gap-3 rounded-2xl bg-ink-50 px-4 py-3 mb-4">
+          <span class="w-8 h-8 rounded-lg bg-white ring-1 ring-black/5 flex items-center justify-center shrink-0">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+          </span>
+          <span class="min-w-0 flex-1">
+            <span id="paName" class="block text-[12.5px] font-bold truncate"></span>
+            <span id="paSize" class="block text-[11px] text-ink-400 nums"></span>
+          </span>
+          <button type="button" id="paClear" class="text-[11.5px] font-semibold text-teal-700 hover:text-teal-800 shrink-0 transition-colors">Change</button>
+        </div>
+
+        <label for="paType" class="block text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-2">Type of assignment</label>
+        <select id="paType" class="pa-select mb-4">
+          <option>Article Review</option>
+          <option>Article Writing</option>
+          <option>Book Report</option>
+          <option>Business Report</option>
+          <option>Case Study</option>
+          <option>Coursework</option>
+          <option>Discussion Board Post</option>
+          <option>Dissertation</option>
+          <option>Essay</option>
+          <option>Interview</option>
+          <option>Movie Review</option>
+          <option>PowerPoint Presentation</option>
+          <option>Reaction Paper</option>
+          <option selected>Research Paper</option>
+          <option>Response Paper</option>
+          <option>Research Proposal</option>
+          <option>Scholarship Essay</option>
+          <option>Term Paper</option>
+          <option>Thesis</option>
+          <option>Thesis Proposal</option>
+          <option>Other</option>
+        </select>
+
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="paPages" class="block text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-2">Pages</label>
+            <div class="pa-step">
+              <button type="button" data-step="-1" aria-label="One page fewer">&minus;</button>
+              <input type="number" id="paPages" value="4" min="1" max="200" inputmode="numeric">
+              <button type="button" data-step="1" aria-label="One page more">+</button>
+            </div>
+          </div>
+          <div>
+            <span class="block text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-2">Words</span>
+            <div class="flex items-center h-[42px] px-3.5 rounded-xl bg-ink-50 text-[13.5px] font-semibold text-ink-500 nums">
+              <span id="paWords">1,100</span>
+            </div>
+          </div>
+        </div>
+
+        <fieldset class="mb-4">
+          <legend class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-2">Academic level</legend>
+          <div class="chipset">
+            <label class="chip-opt"><input type="radio" name="paLevel" value="hs"><span>High School</span></label>
+            <label class="chip-opt"><input type="radio" name="paLevel" value="col"><span>College</span></label>
+            <label class="chip-opt"><input type="radio" name="paLevel" value="uni" checked><span>University</span></label>
+            <label class="chip-opt"><input type="radio" name="paLevel" value="ma"><span>Master&rsquo;s</span></label>
+            <label class="chip-opt"><input type="radio" name="paLevel" value="phd"><span>PHD</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="mb-5">
+          <legend class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-2">Deadline</legend>
+          <div class="chipset">
+            <label class="chip-opt"><input type="radio" name="paDl" value="1"><span>1 day</span></label>
+            <label class="chip-opt"><input type="radio" name="paDl" value="2"><span>2 days</span></label>
+            <label class="chip-opt"><input type="radio" name="paDl" value="3" checked><span>3 days</span></label>
+            <label class="chip-opt"><input type="radio" name="paDl" value="5"><span>5 days</span></label>
+            <label class="chip-opt"><input type="radio" name="paDl" value="7"><span>7 days</span></label>
+            <label class="chip-opt"><input type="radio" name="paDl" value="11"><span>11 days</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="mb-5 pt-5 border-t border-ink-100">
+          <legend class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-2.5">Add to the order</legend>
+          <div class="ctl-group">
+            <label class="ctl"><input type="checkbox" class="ck" data-price="4.99"><span class="flex-1">Plagiarism check</span><span class="nums font-semibold">$4.99</span></label>
+            <label class="ctl"><input type="checkbox" class="ck" data-price="0.99"><span class="flex-1">Readability score</span><span class="nums font-semibold">$0.99</span></label>
+            <label class="ctl"><input type="checkbox" class="ck" data-price="1.99"><span class="flex-1">Score recommendations</span><span class="nums font-semibold">$1.99</span></label>
+          </div>
+        </fieldset>
+
+        <div class="flex items-end justify-between gap-3 pt-5 border-t border-ink-100">
+          <span>
+            <span class="block text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-1">Total price</span>
+            <span class="flex items-baseline gap-1.5">
+              <span id="paTotal" class="text-[22px] sm:text-[25px] lg:text-[28px] font-extrabold tracking-tightest leading-none nums">$20.00</span>
+              <span id="paRate" class="text-[12px] font-semibold text-ink-400 nums">$5.00 / page</span>
+            </span>
+          </span>
+          <button type="submit" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[14px] font-semibold pl-5 pr-2 py-2 shrink-0">
+            Check your text
+            <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 · WHAT WE CHECK (bento) ================= -->
+<section class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
+  <div class="orb w-[600px] h-[600px] bg-orange-500/8 -left-40 top-20"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[600px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">What you get</span>
+      </div>
+      <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-[1.05] mb-5">What can one get<br>from our company?</h2>
+      <p class="text-[15.5px] sm:text-[16.5px] text-ink-600 leading-relaxed">
+        Our trained specialists will scrutinize your piece of writing thoroughly to detect any possible
+        mistakes. When analyzing papers, close attention is paid to the following aspects.
+      </p>
+    </div>
+
+    <!-- bento: one big card carries a worked example, the rest sit around it -->
+    <div class="grid lg:grid-cols-5 gap-5">
+
+      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
+        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 lg:p-10 h-full">
+          <span class="inline-flex w-12 h-12 rounded-2xl bg-orange-100 items-center justify-center mb-6">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 13h6"/><path d="M9 17h3"/></svg>
+          </span>
+          <h3 class="text-[21px] sm:text-[23px] lg:text-[26px] font-bold tracking-tight mb-3">Content</h3>
+          <p class="text-[15px] text-ink-600 leading-relaxed max-w-[52ch] mb-8">
+            Our specialists always comment on the points that require some modifications. They also state
+            whether the piece of writing is quality enough to catch readers&rsquo; attention. Additionally,
+            they ensure the text is comprehensible.
+          </p>
+
+          <!-- worked example: the editor's mark-up, rendered as real text so it stays sharp -->
+          <div class="rounded-2xl sm:rounded-3xl bg-ink-50 p-6">
+            <div class="text-[10px] font-bold tracking-[0.18em] text-orange-700 mb-3">EXCERPT · EDITOR&rsquo;S NOTE</div>
+            <p class="text-[14px] leading-[1.8] text-ink-700 mb-4">
+              The results of the study were very good and showed that
+              <span class="text-orange-700 font-semibold bg-orange-100/70 rounded px-1">a lot of different factors played a part in</span>
+              the outcome, which is something that future researchers should probably look at more.
+            </p>
+            <div class="flex items-start gap-3 rounded-xl bg-white ring-1 ring-black/5 px-4 py-3">
+              <span class="text-[9px] font-bold tracking-widest text-orange-700 bg-orange-100 rounded-full px-2 py-0.5 shrink-0 mt-0.5">STYLE</span>
+              <span class="text-[12.5px] leading-relaxed text-ink-600">
+                Vague quantifiers weaken a findings paragraph. Name the factors and state the effect size.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2 flex flex-col gap-5">
+        <div class="rv rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight flex-1">
+          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
+            <span class="inline-flex w-11 h-11 rounded-2xl bg-teal-100 items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </span>
+            <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Grammar</h3>
+            <p class="text-[14px] text-ink-600 leading-relaxed">
+              The errors available in the text will be highlighted. The explanations going alongside the
+              corrections will help you see the made mistakes and avoid them when producing your next work.
+            </p>
+          </div>
+        </div>
+        <div class="rv rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight flex-1">
+          <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
+            <span class="inline-flex w-11 h-11 rounded-2xl bg-mint-100 items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </span>
+            <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Research</h3>
+            <p class="text-[14px] text-ink-600 leading-relaxed">
+              Our experts will make comments on the validity of the carried out investigation. They will
+              state whether the conducted research is extensive enough to cover the subject.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rv lg:col-span-2 rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
+        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full">
+          <span class="inline-flex w-11 h-11 rounded-2xl bg-teal-100 items-center justify-center mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+          </span>
+          <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Organizational mode</h3>
+          <p class="text-[14px] text-ink-600 leading-relaxed">
+            Our pros will make a thorough analysis of your paper structure and spell out if any changes
+            are required.
+          </p>
+        </div>
+      </div>
+
+      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse spotlight">
+        <div class="rounded-2xl sm:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 h-full flex flex-col sm:flex-row sm:items-center gap-6">
+          <div class="min-w-0">
+            <span class="inline-flex w-11 h-11 rounded-2xl bg-orange-100 items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4-14 14H4v-4z"/><path d="m14.5 5.5 4 4"/></svg>
+            </span>
+            <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Style</h3>
+            <p class="text-[14px] text-ink-600 leading-relaxed">
+              Our editors will assess your writing style and explain whether all stylistic standards are met.
+            </p>
+          </div>
+          <!-- the four automated passes that run before an editor opens the file -->
+          <div class="shrink-0 grid grid-cols-2 gap-2 sm:w-[210px]">
+            <span class="rounded-xl bg-ink-50 px-3 py-2 text-[11.5px] font-semibold text-ink-600 text-center">Grammar</span>
+            <span class="rounded-xl bg-ink-50 px-3 py-2 text-[11.5px] font-semibold text-ink-600 text-center">Spell</span>
+            <span class="rounded-xl bg-ink-50 px-3 py-2 text-[11.5px] font-semibold text-ink-600 text-center">Plagiarism</span>
+            <span class="rounded-xl bg-ink-50 px-3 py-2 text-[11.5px] font-semibold text-ink-600 text-center">Punctuation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 · HOW IT WORKS ================= -->
+<section id="how" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <!-- photo LEFT — the editor photo below sits on the right -->
+    <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-10 sm:gap-14 lg:gap-16 items-center">
+
+      <div class="rv lg:order-1 relative">
+        <img src="assets/img/pa/student.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-4xl shadow-diffuse">
+        <!-- panel low-right, clear of his face -->
+        <div class="hidden lg:block absolute -right-9 bottom-9 w-[43%] rounded-2xl bg-white shadow-diffuse-lg px-5 py-4">
+          <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">Turnaround</div>
+          <div class="flex items-end gap-2 mb-1.5">
+            <span class="text-[24px] sm:text-[26px] lg:text-[30px] font-extrabold tracking-tightest leading-none nums text-ink-900">24</span>
+            <span class="text-[13px] font-bold text-ink-400 pb-1">hours</span>
+          </div>
+          <div class="text-[11.5px] font-semibold text-ink-500">fastest delivery option</div>
+        </div>
+      </div>
+
+      <div class="lg:order-2">
+        <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-mint-500"></span>
+          <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Four steps</span>
+        </div>
+        <h2 class="rv text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-5">Specifics of using our services</h2>
+        <p class="rv text-[15.5px] text-ink-600 leading-relaxed mb-8 max-w-[46ch]">
+          When dealing with our online paper rater, you will be able to save much time when proofreading
+          your writing projects. The procedure is not complicated:
+        </p>
+
+        <ol class="rail space-y-3">
+        <li class="rv flex gap-4 rounded-2xl bg-white p-5">
+          <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[14px] font-extrabold nums text-orange-600">1</span>
+          <span class="pt-1">
+            <span class="block text-[15.5px] font-bold tracking-tight mb-1">Set up an account</span>
+            <span class="block text-[13.5px] leading-relaxed text-ink-600">Create your account on our site using your email</span>
+          </span>
+        </li>
+        <li class="rv flex gap-4 rounded-2xl bg-white p-5">
+          <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[14px] font-extrabold nums text-orange-600">2</span>
+          <span class="pt-1">
+            <span class="block text-[15.5px] font-bold tracking-tight mb-1">Submit your order</span>
+            <span class="block text-[13.5px] leading-relaxed text-ink-600">Provide us with guidelines and set the due date</span>
+          </span>
+        </li>
+        <li class="rv flex gap-4 rounded-2xl bg-white p-5">
+          <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[14px] font-extrabold nums text-orange-600">3</span>
+          <span class="pt-1">
+            <span class="block text-[15.5px] font-bold tracking-tight mb-1">Pay for your order</span>
+            <span class="block text-[13.5px] leading-relaxed text-ink-600">Conduct a financial transaction using the suggested methods</span>
+          </span>
+        </li>
+        <li class="rv flex gap-4 rounded-2xl bg-white p-5">
+          <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[14px] font-extrabold nums text-orange-600">4</span>
+          <span class="pt-1">
+            <span class="block text-[15.5px] font-bold tracking-tight mb-1">Get your work</span>
+            <span class="block text-[13.5px] leading-relaxed text-ink-600">Receive your piece of writing on the due date</span>
+          </span>
+        </li>
+      </ol>
+      </div>
+
+      <div class="rv relative">
+        <img src="assets/img/pa/editor.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-4xl shadow-diffuse">
+        <!-- panel low-left, over the desk rather than her face -->
+        <div class="hidden lg:block absolute -left-9 bottom-9 w-[43%] rounded-2xl bg-white shadow-diffuse-lg px-5 py-4">
+          <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">Every paper</div>
+          <div class="flex items-end gap-2 mb-1.5">
+            <span class="text-[24px] sm:text-[26px] lg:text-[30px] font-extrabold tracking-tightest leading-none nums text-ink-900">2</span>
+            <span class="text-[13px] font-bold text-ink-400 pb-1">passes</span>
+          </div>
+          <div class="text-[11.5px] font-semibold text-ink-500">automatic scan, then a human editor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 · WHO CHECKS IT ================= -->
+<section class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
+  <div class="orb w-[520px] h-[520px] bg-teal-500/8 left-[-140px] bottom-10"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <!-- photo RIGHT — the student photo above sits on the left -->
+    <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-10 sm:gap-14 lg:gap-16 items-center">
+
+      <div>
+        <div class="rv inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+          <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Who checks it</span>
+        </div>
+        <h2 class="rv text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-5">Who will rate my paper?</h2>
+        <p class="rv text-[15.5px] text-ink-600 leading-relaxed mb-4 max-w-[48ch]">
+          When collaborating with our specialists, you can be confident that your papers will be checked
+          carefully. First, we use a special grammar, plagiarism and punctuation checker that helps us
+          ensure the scanned text is free from both errors and copied material. Then, our editors begin
+          working on the given paper.
+        </p>
+        <p class="rv text-[15.5px] text-ink-600 leading-relaxed mb-8 max-w-[48ch]">
+          Note that our service is provided 24/7 &mdash; meaning you can use it at any time convenient
+          for you.
+        </p>
+
+        <div class="rv flex items-center gap-3 rounded-2xl bg-ink-50 px-5 py-4 max-w-[46ch]">
+          <span class="w-2 h-2 rounded-full bg-mint-500 pulse-dot shrink-0"></span>
+          <span class="text-[13.5px] font-semibold text-ink-700">Editors available 24/7, every day of the year</span>
+        </div>
+      </div>
+
+      <div class="rv relative">
+        <img src="assets/img/pa/editor.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-4xl shadow-diffuse">
+        <!-- panel low-left, over the desk rather than her face -->
+        <div class="hidden lg:block absolute -left-9 bottom-9 w-[43%] rounded-2xl bg-white shadow-diffuse-lg px-5 py-4">
+          <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">Every paper</div>
+          <div class="flex items-end gap-2 mb-1.5">
+            <span class="text-[24px] sm:text-[26px] lg:text-[30px] font-extrabold tracking-tightest leading-none nums text-ink-900">2</span>
+            <span class="text-[13px] font-bold text-ink-400 pb-1">passes</span>
+          </div>
+          <div class="text-[11.5px] font-semibold text-ink-500">automatic scan, then a human editor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 · PRICING ================= -->
+<section id="pricing" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <div class="orb w-[560px] h-[560px] bg-orange-500/8 right-[-150px] top-16"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[620px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Pricing</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Price per page</h2>
+      <p class="text-[15.5px] text-ink-600 leading-relaxed">The longer you give us, the less it costs. Every price below is per page.</p>
+    </div>
+
+    <div class="rv rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse overflow-hidden max-w-[1080px] mx-auto mb-5">
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[640px]">
+          <caption class="sr-only">Paper analysis price per page by deadline and academic level</caption>
+          <thead>
+            <tr class="bg-ink-50">
+              <th scope="col" class="text-left text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 py-3.5 pl-5 pr-3">Deadline</th>
+              <th scope="col" class="text-center text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 py-3.5 px-3 whitespace-nowrap">High School</th>
+              <th scope="col" class="text-center text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 py-3.5 px-3 whitespace-nowrap">College</th>
+              <th scope="col" class="text-center text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 py-3.5 px-3 whitespace-nowrap">University</th>
+              <th scope="col" class="text-center text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 py-3.5 px-3 whitespace-nowrap">Master&rsquo;s</th>
+              <th scope="col" class="text-center text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 py-3.5 px-3 whitespace-nowrap">PHD</th>
+            </tr>
+          </thead>
+          <tbody>
+        <tr class="pm-row border-t border-ink-100">
+          <th scope="row" class="text-left text-[13.5px] font-bold py-3.5 pl-5 pr-3 whitespace-nowrap">1 day</th>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$7.50</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$8.00</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$8.50</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$9.00</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$9.50</td>
+        </tr>
+        <tr class="pm-row border-t border-ink-100">
+          <th scope="row" class="text-left text-[13.5px] font-bold py-3.5 pl-5 pr-3 whitespace-nowrap">2 days</th>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$6.00</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$6.25</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$6.50</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$7.00</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$8.00</td>
+        </tr>
+        <tr class="pm-row border-t border-ink-100">
+          <th scope="row" class="text-left text-[13.5px] font-bold py-3.5 pl-5 pr-3 whitespace-nowrap">3 days</th>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.50</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.70</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$5.00</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$5.50</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$6.00</td>
+        </tr>
+        <tr class="pm-row border-t border-ink-100">
+          <th scope="row" class="text-left text-[13.5px] font-bold py-3.5 pl-5 pr-3 whitespace-nowrap">5 days</th>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.00</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.20</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.50</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$5.00</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$5.50</td>
+        </tr>
+        <tr class="pm-row border-t border-ink-100">
+          <th scope="row" class="text-left text-[13.5px] font-bold py-3.5 pl-5 pr-3 whitespace-nowrap">7 days</th>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$3.80</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.00</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.20</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.50</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$5.00</td>
+        </tr>
+        <tr class="pm-row border-t border-ink-100">
+          <th scope="row" class="text-left text-[13.5px] font-bold py-3.5 pl-5 pr-3 whitespace-nowrap">11 days</th>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$3.50</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$3.70</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$3.80</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.00</td>
+          <td class="text-center text-[14px] font-semibold nums py-3.5 px-3 text-ink-700">$4.20</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-4 max-w-[1080px] mx-auto">
+      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-2">
+          <h3 class="text-[15px] font-bold tracking-tight">Plagiarism check</h3>
+          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$4.99</span>
+        </div>
+        <p class="text-[13px] leading-relaxed text-ink-600">You can additionally check your text for plagiarism and get a detailed report.</p>
+      </div>
+      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-2">
+          <h3 class="text-[15px] font-bold tracking-tight">Readability score</h3>
+          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$0.99</span>
+        </div>
+        <p class="text-[13px] leading-relaxed text-ink-600">Check whether your text is easy or difficult to understand for your target audience.</p>
+      </div>
+      <div class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-2">
+          <h3 class="text-[15px] font-bold tracking-tight">Score recommendations</h3>
+          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$1.99</span>
+        </div>
+        <p class="text-[13px] leading-relaxed text-ink-600">Get suggestions regarding the readability score of your text.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 · ADVANTAGES ================= -->
+<section class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="rv text-center max-w-[620px] mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+        <span class="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Our advantages</span>
+      </div>
+      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Why hand it to us</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1080px] mx-auto">
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 p-5 sm:p-7 lg:p-8">
+        <span class="w-11 h-11 rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Any kinds of papers</h3>
+        <p class="text-[14px] leading-relaxed text-ink-600">We can handle any business projects, academic works, and other types of writing.</p>
+      </div>
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 p-5 sm:p-7 lg:p-8">
+        <span class="w-11 h-11 rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Quality testing</h3>
+        <p class="text-[14px] leading-relaxed text-ink-600">All papers go through several checks once they are written &mdash; grammar, punctuation, plagiarism, and other issues.</p>
+      </div>
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 p-5 sm:p-7 lg:p-8">
+        <span class="w-11 h-11 rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+        <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Privacy</h3>
+        <p class="text-[14px] leading-relaxed text-ink-600">We do not share the data about our customers with anyone. No one will find out that you are using our services.</p>
+      </div>
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 p-5 sm:p-7 lg:p-8">
+        <span class="w-11 h-11 rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Qualified specialists</h3>
+        <p class="text-[14px] leading-relaxed text-ink-600">Our team consists of highly professional experts who have considerable expertise in both editing and proofreading.</p>
+      </div>
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 p-5 sm:p-7 lg:p-8">
+        <span class="w-11 h-11 rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+        <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Round-the-clock support</h3>
+        <p class="text-[14px] leading-relaxed text-ink-600">Our support representatives are available 24/7 by phone, live chat, or email. Even if your deadline is short, we will help you meet it.</p>
+      </div>
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 p-5 sm:p-7 lg:p-8">
+        <span class="w-11 h-11 rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+        <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Reasonable prices</h3>
+        <p class="text-[14px] leading-relaxed text-ink-600">We understand that students have limited finance. You will not cut your budget when dealing with us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 · CTA ================= -->
+<section class="relative py-16 sm:py-24 lg:py-28 overflow-hidden bg-[#F2FCFC]">
+  <div class="orb w-[700px] h-[640px] bg-orange-500/12 left-[-180px] -top-64"></div>
+  <div class="orb w-[600px] h-[600px] bg-teal-500/10 right-[-140px] -bottom-72"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10 text-center">
+    <h2 class="rv text-[clamp(1.9rem,3.6vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4">Checking your work is easy</h2>
+    <p class="rv text-[15px] sm:text-[16px] text-ink-600 mb-8 max-w-[46ch] mx-auto">Press the button and enjoy our service.</p>
+    <a href="#top" class="rv btn-press group inline-flex items-center gap-3 rounded-full bg-orange-500 hover:bg-orange-600 transition-colors duration-300 text-white text-[15px] font-semibold py-2.5 pl-8 pr-2.5">
+      Check your text
+      <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </span>
+    </a>
+  </div>
+</section>
+
+<footer class="relative bg-ink-950 text-white pt-20 pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-12 mb-16">
+      <div>
+        <a href="index.html" class="inline-flex items-center mb-6">
+          <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+        </a>
+        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+        <div class="flex gap-3">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">PRODUCT</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="plagiarism-check.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="ai-detector.html" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="paper-analysis.html" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Sample Report</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Students</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Teachers</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Universities</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="help-center.html" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">API docs</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">About</a></li>
+          <li><a href="contact-us.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Compliance</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="h-px bg-white/10 mb-8"></div>
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>© 2026 PlagiarismSearch. All rights reserved.</span>
+      <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
+      <a href="#" class="hover:text-white/70 transition-colors">DPA</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Cookies</a>
+      <span class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) document.documentElement.classList.add('no-motion');
+
+  if (!reduceMotion && window.gsap) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ================= reveals ================= */
+    const rvs = gsap.utils.toArray('.rv');
+    const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
+    const later = rvs.filter(el => !inView.includes(el));
+
+    // first viewport: top-down cascade on load
+    inView.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+    });
+    // the rest reveal as they reach mid-screen
+    later.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 70%' } });
+    });
+
+    /* ================= pen marks — word colours in, then its underline draws =================
+       Reusable: any number per page. In-view marks wait out the reveal cascade;
+       lower ones fire when scrolled to. See DESIGN.md → Web build → Motion. */
+    gsap.utils.toArray('.pen-word').forEach(word => {
+      const line = word.querySelector('.pen-underline');
+      if (!line) return;
+      const len = line.getTotalLength();
+      gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+      const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
+      const tl = gsap.timeline(inFirstView
+        ? { delay: 1 }
+        : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
+      tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+        .set(line, { opacity: 1 }, .35)
+        .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
+    });
+
+    /* ================= counters (mission stats) — cached writes ================= */
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const dp = parseInt(el.dataset.decimals, 10) || 0;   // ratings need one decimal
+      const obj = { v: 0 };
+      let lastText = '';
+      gsap.to(obj, {
+        v: target, duration: 1.6, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        onUpdate: () => {
+          const text = obj.v.toFixed(dp) + suffix;
+          if (text !== lastText) { lastText = text; el.textContent = text; }
+        }
+      });
+    });
+  } else {
+    // reduced motion: final states, no tweens
+    document.querySelectorAll('[data-count]').forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
+  }
+})();
+</script>
+
+
+
+
+<script>
+(() => {
+  'use strict';
+  const form = document.getElementById('paForm');
+  if (!form) return;
+
+  // the published matrix, verbatim — section 05 renders the same numbers
+  const RATE = {
+    '1':  { hs:7.50, col:8.00, uni:8.50, ma:9.00, phd:9.50 },
+    '2':  { hs:6.00, col:6.25, uni:6.50, ma:7.00, phd:8.00 },
+    '3':  { hs:4.50, col:4.70, uni:5.00, ma:5.50, phd:6.00 },
+    '5':  { hs:4.00, col:4.20, uni:4.50, ma:5.00, phd:5.50 },
+    '7':  { hs:3.80, col:4.00, uni:4.20, ma:4.50, phd:5.00 },
+    '11': { hs:3.50, col:3.70, uni:3.80, ma:4.00, phd:4.20 },
+  };
+  const WORDS_PER_PAGE = 275;
+
+  const $ = id => document.getElementById(id);
+  const pages = $('paPages'), total = $('paTotal'), rate = $('paRate'), words = $('paWords');
+  const drop = $('paDrop'), doc = $('paDoc'), file = $('paFile');
+  const money = n => '$' + n.toFixed(2);
+
+  function recalc() {
+    const n = Math.min(200, Math.max(1, parseInt(pages.value, 10) || 1));
+    const dl = form.querySelector('input[name=paDl]:checked').value;
+    const lv = form.querySelector('input[name=paLevel]:checked').value;
+    const per = RATE[dl][lv];
+    let sum = per * n;
+    form.querySelectorAll('.ck:checked[data-price]').forEach(c => sum += parseFloat(c.dataset.price));
+    total.textContent = money(sum);
+    rate.textContent = money(per) + ' / page';
+    words.textContent = (n * WORDS_PER_PAGE).toLocaleString('en-US');
+  }
+
+  form.addEventListener('change', recalc);
+  pages.addEventListener('input', recalc);
+
+  form.querySelectorAll('.pa-step button').forEach(b => b.addEventListener('click', () => {
+    pages.value = Math.min(200, Math.max(1, (parseInt(pages.value, 10) || 1) + Number(b.dataset.step)));
+    recalc();
+  }));
+  pages.addEventListener('blur', () => {
+    pages.value = Math.min(200, Math.max(1, parseInt(pages.value, 10) || 1));
+    recalc();
+  });
+
+  // drop zone and document card are alternate states — showing one hides the other
+  function showFile(f) {
+    if (!f) return;
+    $('paName').textContent = f.name;
+    $('paSize').textContent = (f.size / 1024).toFixed(2) + ' Kb';
+    drop.classList.add('hidden');
+    doc.classList.remove('hidden');
+    doc.classList.add('flex');
+  }
+  function clearFile() {
+    file.value = '';
+    doc.classList.add('hidden');
+    doc.classList.remove('flex');
+    drop.classList.remove('hidden');
+  }
+  file.addEventListener('change', () => showFile(file.files[0]));
+  $('paClear').addEventListener('click', clearFile);
+
+  ['dragenter', 'dragover'].forEach(e => drop.addEventListener(e, ev => {
+    ev.preventDefault(); drop.classList.add('drag');
+  }));
+  ['dragleave', 'drop'].forEach(e => drop.addEventListener(e, ev => {
+    ev.preventDefault(); drop.classList.remove('drag');
+  }));
+  drop.addEventListener('drop', ev => {
+    const f = ev.dataTransfer && ev.dataTransfer.files[0];
+    if (f) { file.files = ev.dataTransfer.files; showFile(f); }
+  });
+
+  recalc();
+})();
+</script>
+
+<script>
+(() => {
+  'use strict';
+  const btn = document.getElementById('navBurger');
+  const panel = document.getElementById('navPanel');
+  if (!btn || !panel) return;
+
+  const setOpen = on => {
+    btn.setAttribute('aria-expanded', String(on));
+    panel.classList.toggle('open', on);
+    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
+  };
+
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => {
+    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+  // the desktop menu takes over at lg — never leave the panel hanging open across it
+  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
+})();
+</script>
+
+</body>
+</html>
