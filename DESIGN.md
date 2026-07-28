@@ -127,6 +127,32 @@ Same component primitives, three surface treatments:
 ### Input — 12 variants
 3 sizes (sm=40, md=48, lg=56) × 4 states (default/focused/error/disabled). Border-only style, `radius/md` (8px). Focus = teal 2px stroke. Error = danger/500 stroke. **Body text is Medium** (Regular reads thin in input).
 
+### Checkbox, radio & groups
+
+**Never ship a browser-default checkbox or radio.** Tinting a native box with `accent-color` is not
+a component — it still renders with the browser's own shape, size and animation, and looks different
+on every platform. Equally, do not reach for Tailwind's `form-*` classes (`text-teal-600`,
+`focus:ring-*` on an input): the CDN build has no forms plugin, so those classes silently do nothing.
+
+The box is **replaced, not hidden**: `appearance:none` on the real input, styled directly. Hiding the
+input behind a decorative `<span>` breaks label association and keyboard focus unless it is rebuilt
+by hand — this way `:checked`, `:focus-visible`, `[disabled]` and the label hit area all work for free.
+
+| class | what it is |
+|---|---|
+| `.ck` | checkbox — 18px, `radius/xs` 5px, teal-600 fill, white SVG check |
+| `.rd` | radio — 18px circle, teal-600 fill, white centre dot |
+| `.ctl` | the clickable row wrapping an input + its label (`.ctl-top` aligns to the first line for multi-line labels) |
+| `.ctl-group` | quiet list of options, hover tint per row |
+| `.ctl-group-boxed` | each option is a bordered card; the checked one takes a teal ring — for a prominent either/or |
+| `.chipset` + `.chip-opt` | compact single choice as pills, radio semantics, no visible box |
+
+The check glyph and radio dot are **background images**, not a rotated `::after` box — centring is
+then exact by construction rather than tuned by eye at one size. Focus is a 3px teal halo
+(`rgba(12,169,195,.28)`), not the 1px stroke used on Input: on an 18px control a 1px ring is invisible.
+
+Live examples: `site/design-system.html#controls`.
+
 ### Card — 3 variants
 elevated (elevation/2), bordered (border/subtle), filled (surface/muted). 380w, padding 32, `radius/xl` (16px).
 
@@ -199,8 +225,40 @@ Dark header (surface/inverse) + white Bold caps text +8% LS. Alternating rows (n
 ### Section rhythm
 - Vertical padding: `py-28 lg:py-36` every section; hero-type sections may go `min-h-[100dvh] flex items-center`
 - Background alternation: white → `bg-ink-50` → white…; **max one dark band** (`bg-ink-950`) per view as accent; hero tint `#F2FCFC`
+- **Two sections on the same background = one padding, not two.** Where the alternation
+  breaks and two neighbours share a background, their facing paddings stack and the gap
+  doubles. Collapse it: **keep the larger padding, strip the smaller one** — `py-24 lg:py-32`
+  becomes `pb-24 lg:pb-32` on the second (or `pt-…` on the first, whichever is being kept).
+  Keep the larger rather than always the first: a closing CTA is deliberately roomier
+  (`py-32 lg:py-44`) and truncating it would cost the breathing space before the footer.
+  This is easy to reintroduce by inserting a section without re-checking the sequence —
+  after any insert, re-read the whole page's background chain, not just the neighbours.
 - Container: `max-w-[1280px] mx-auto px-6 lg:px-10` (narrower content: 1180px)
 - Section header pattern: eyebrow chip → `h2 text-[clamp(2rem,4vw,3.4rem)]` → 15–16px `text-ink-600` subline
+
+### Hero H1 scale — three ceilings, one curve
+
+Every hero H1 is `font-extrabold tracking-tightest leading-[1.02]` plus one of exactly three sizes.
+**Only the ceiling changes.** The minimum and the growth rate are shared, so all pages render the
+*same* size on every phone and tablet width and separate only on desktop:
+
+| tier | class | when |
+|---|---|---|
+| Home | `text-[clamp(2.4rem,5.5vw,4.35rem)]` | `index.html` only |
+| **L** | `text-[clamp(2.4rem,5.5vw,4rem)]` | longest authored line ≤ 25 characters |
+| **S** | `text-[clamp(2.4rem,5.5vw,3.6rem)]` | longest authored line > 25 characters |
+
+**How to pick:** count the longest line the headline actually has to fit — that is, split on any
+hard `<br>` and take the longest piece, not the total character count. A headline you break
+yourself stays in L however long it is overall; a long sentence that must wrap on its own goes to S.
+Never eyeball it against the rendered page.
+
+Measured result: identical at 375 / 430 / 768 / 1024px (38.4 → 56.3px, all pages), separating only
+at ≥1057px as each tier reaches its ceiling — 69.6 / 64 / 57.6px by 1280px.
+
+> Before this rule the site carried six different hero sizes for two actual situations, drifting a
+> little more with each new page. If a headline looks wrong at its tier, fix the copy or the line
+> break — do not invent a fourth size.
 - **Checkerboard imagery**: consecutive two-column sections must alternate which side the image sits on — image right, then image left, then right. Never two in a row on the same side. Keep the text block first in the DOM (mobile reads text → image) and flip with `lg:order-1` / `lg:order-2`, not by reordering markup
 - **No tall portraits**: images cap at roughly 1 : 1.25 (portrait) — a 3:4 or taller frame forces the column to stretch and starves the section of horizontal room
 - Eyebrow chip: `inline-flex gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5` + 1.5px colored dot + `text-[10.5px] uppercase tracking-[0.22em]` (on ink-50 sections the chip is `bg-white`)
