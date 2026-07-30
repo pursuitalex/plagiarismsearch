@@ -254,10 +254,29 @@ tablet the same 24px, and writing a bare `px-6` gives every screen 24px.
 | 20 | — | 16 | `p-4 lg:p-5` |
 | 16 | 14 | 12 | `rounded-xl sm:rounded-[14px] lg:rounded-2xl` |
 
-**Floor: 20px.** Below that a third step is 2px of nothing and only makes the control
-cramped — `py-3` on a button is `py-3` everywhere. **Gaps and vertical margins** (`m`, `my`,
-`mt`, `mb`) follow the same table from 20px up. Horizontal margins are usually doing layout work
-(`mx-auto`, small negative nudges) rather than rhythm, so they stay flat.
+**A spacing value is a semantic step, never a number.** Pick the step, take all three of its
+values — do not invent a pair, and do not leave a spacing utility bare:
+
+| step | phone | tablet | desktop | utility |
+|---|---|---|---|---|
+| 2XS | 6 | 8 | 8 | `p-1.5 sm:p-2` (bezel frames only) |
+| XS | 8 | 10 | 12 | `p-2 sm:p-2.5 lg:p-3` |
+| S | 12 | 14 | 16 | `p-3 sm:p-3.5 lg:p-4` |
+| **M** | **16** | **20** | **24** | `p-4 sm:p-5 lg:p-6` |
+| L | 20 | 24 | 28 | `p-5 sm:p-6 lg:p-7` |
+| XL | 24 | 28 | 32 | `p-6 sm:p-7 lg:p-8` |
+| 2XL | 32 | 40 | 48 | `p-8 sm:p-10 lg:p-12` |
+| 3XL | 48 | 64 | 80 | `p-12 sm:p-16 lg:p-20` |
+| 4XL | 64 | 80 | 96 | `p-16 sm:p-20 lg:p-24` |
+
+**The bare utility is the phone value.** When a block reads too tight on a phone, move it down a
+step — the whole triple moves with it, and desktop follows. The FAQ rows were L (20/24/28) and went
+to M (16/20/24); desktop came down to 24 as a consequence, which is the point of stepping rather
+than patching one breakpoint.
+
+**Gaps and vertical margins** (`m`, `my`, `mt`, `mb`) use the same table. Horizontal margins are
+usually doing layout work (`mx-auto`, small negative nudges) rather than rhythm, so they stay flat.
+Values of 4px and under are hairlines — a ring offset, a dot inset — and do not step.
 
 **Reserve height with a grid stack, never a magic `min-h`.** A switcher whose panels are absolutely
 positioned inside a `min-h-[380px]` holder is holding a number measured on one breakpoint: the

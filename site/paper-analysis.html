@@ -497,9 +497,10 @@ tailwind.config = {
         <div class="flex items-end justify-between gap-3 pt-4 lg:pt-5 border-t border-ink-100">
           <span>
             <span class="block text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-1">Total price</span>
-            <span class="flex items-baseline gap-1.5">
-              <span id="paTotal" class="text-[22px] sm:text-[25px] lg:text-[28px] font-extrabold tracking-tightest leading-none nums">$20.00</span>
-              <span id="paRate" class="text-[12px] font-semibold text-ink-400 nums">$5.00 / page</span>
+            <!-- side by side from sm up; on a phone the rate drops under the total -->
+            <span class="flex flex-col items-start gap-0.5 sm:flex-row sm:items-baseline sm:gap-1.5">
+              <span id="paTotal" class="text-[20px] sm:text-[25px] lg:text-[28px] font-extrabold tracking-tightest leading-none nums">$20.00</span>
+              <span id="paRate" class="text-[11.5px] sm:text-[12px] font-semibold text-ink-400 nums">$5.00 / page</span>
             </span>
           </span>
           <button type="submit" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[14px] font-semibold pl-4 lg:pl-5 pr-2 py-2 shrink-0">
@@ -539,7 +540,7 @@ tailwind.config = {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 13h6"/><path d="M9 17h3"/></svg>
           </span>
           <h3 class="text-[21px] sm:text-[23px] lg:text-[26px] font-bold tracking-tight mb-3">Content</h3>
-          <p class="text-[15px] text-ink-600 leading-relaxed max-w-[52ch] mb-6 sm:mb-7 lg:mb-8">
+          <p class="text-[13.5px] sm:text-[14.5px] text-ink-600 leading-relaxed max-w-[52ch] mb-6 sm:mb-7 lg:mb-8">
             Our specialists always comment on the points that require some modifications. They also state
             whether the piece of writing is quality enough to catch readers&rsquo; attention. Additionally,
             they ensure the text is comprehensible.
@@ -570,7 +571,7 @@ tailwind.config = {
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             </span>
             <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Grammar</h3>
-            <p class="text-[14px] text-ink-600 leading-relaxed">
+            <p class="text-[13.5px] sm:text-[14.5px] text-ink-600 leading-relaxed">
               The errors available in the text will be highlighted. The explanations going alongside the
               corrections will help you see the made mistakes and avoid them when producing your next work.
             </p>
@@ -582,7 +583,7 @@ tailwind.config = {
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             </span>
             <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Research</h3>
-            <p class="text-[14px] text-ink-600 leading-relaxed">
+            <p class="text-[13.5px] sm:text-[14.5px] text-ink-600 leading-relaxed">
               Our experts will make comments on the validity of the carried out investigation. They will
               state whether the conducted research is extensive enough to cover the subject.
             </p>
@@ -596,7 +597,7 @@ tailwind.config = {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
           </span>
           <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Organizational mode</h3>
-          <p class="text-[14px] text-ink-600 leading-relaxed">
+          <p class="text-[13.5px] sm:text-[14.5px] text-ink-600 leading-relaxed">
             Our pros will make a thorough analysis of your paper structure and spell out if any changes
             are required.
           </p>
@@ -610,7 +611,7 @@ tailwind.config = {
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4-14 14H4v-4z"/><path d="m14.5 5.5 4 4"/></svg>
             </span>
             <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight mb-2">Style</h3>
-            <p class="text-[14px] text-ink-600 leading-relaxed">
+            <p class="text-[13.5px] sm:text-[14.5px] text-ink-600 leading-relaxed">
               Our editors will assess your writing style and explain whether all stylistic standards are met.
             </p>
           </div>
@@ -688,19 +689,7 @@ tailwind.config = {
         </li>
       </ol>
       </div>
-
-      <div class="rv relative">
-        <img src="assets/img/pa/editor.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse">
-        <!-- panel low-left, over the desk rather than her face -->
-        <div class="hidden lg:block absolute -left-9 bottom-9 w-[43%] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white shadow-diffuse-lg px-4 lg:px-5 py-4">
-          <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">Every paper</div>
-          <div class="flex items-end gap-2 mb-1.5">
-            <span class="text-[24px] sm:text-[26px] lg:text-[30px] font-extrabold tracking-tightest leading-none nums text-ink-900">2</span>
-            <span class="text-[13px] font-bold text-ink-400 pb-1">passes</span>
-          </div>
-          <div class="text-[11.5px] font-semibold text-ink-500">automatic scan, then a human editor</div>
-        </div>
-      </div>
+      
     </div>
   </div>
 </section>
@@ -764,7 +753,7 @@ tailwind.config = {
       <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed">The longer you give us, the less it costs. Every price below is per page.</p>
     </div>
 
-    <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse overflow-hidden max-w-[1080px] mx-auto mb-4 lg:mb-5">
+    <div class="min-w-0 rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse overflow-hidden max-w-[1080px] mx-auto mb-4 lg:mb-5">
       <div class="overflow-x-auto">
         <table class="w-full min-w-[640px]">
           <caption class="sr-only">Paper analysis price per page by deadline and academic level</caption>
@@ -873,32 +862,32 @@ tailwind.config = {
       <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7 lg:p-8">
         <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-4 lg:mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
         <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Any kinds of papers</h3>
-        <p class="text-[14px] leading-relaxed text-ink-600">We can handle any business projects, academic works, and other types of writing.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">We can handle any business projects, academic works, and other types of writing.</p>
       </div>
       <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7 lg:p-8">
         <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-4 lg:mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
         <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Quality testing</h3>
-        <p class="text-[14px] leading-relaxed text-ink-600">All papers go through several checks once they are written &mdash; grammar, punctuation, plagiarism, and other issues.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">All papers go through several checks once they are written &mdash; grammar, punctuation, plagiarism, and other issues.</p>
       </div>
       <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7 lg:p-8">
         <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-4 lg:mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
         <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Privacy</h3>
-        <p class="text-[14px] leading-relaxed text-ink-600">We do not share the data about our customers with anyone. No one will find out that you are using our services.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">We do not share the data about our customers with anyone. No one will find out that you are using our services.</p>
       </div>
       <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7 lg:p-8">
         <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-4 lg:mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
         <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Qualified specialists</h3>
-        <p class="text-[14px] leading-relaxed text-ink-600">Our team consists of highly professional experts who have considerable expertise in both editing and proofreading.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Our team consists of highly professional experts who have considerable expertise in both editing and proofreading.</p>
       </div>
       <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7 lg:p-8">
         <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-4 lg:mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
         <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Round-the-clock support</h3>
-        <p class="text-[14px] leading-relaxed text-ink-600">Our support representatives are available 24/7 by phone, live chat, or email. Even if your deadline is short, we will help you meet it.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Our support representatives are available 24/7 by phone, live chat, or email. Even if your deadline is short, we will help you meet it.</p>
       </div>
       <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7 lg:p-8">
         <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center mb-4 lg:mb-5"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
         <h3 class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest mb-2">Reasonable prices</h3>
-        <p class="text-[14px] leading-relaxed text-ink-600">We understand that students have limited finance. You will not cut your budget when dealing with us.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">We understand that students have limited finance. You will not cut your budget when dealing with us.</p>
       </div>
     </div>
   </div>
@@ -923,16 +912,18 @@ tailwind.config = {
 <footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
   <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
   <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
-      <div>
-        <a href="index.html" class="inline-flex items-center mb-4 sm:mb-5 lg:mb-6">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
+      <div class="sm:col-span-2 md:col-span-4 lg:col-span-1 sm:grid sm:grid-cols-2 md:grid-cols-4 sm:gap-10 sm:items-center lg:block">
+        <div class="md:col-span-2">
+          <a href="index.html" class="inline-flex items-center mb-4 sm:mb-5 lg:mb-6">
           <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
         </a>
-        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-5 sm:mb-6 lg:mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
-        <div class="flex gap-3">
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
+        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-5 sm:mb-0 lg:mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+        </div>
+        <div class="flex gap-3 md:col-span-2">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
         </div>
       </div>
       <div>

@@ -329,9 +329,10 @@ tailwind.config = {
           <textarea class="cf-field" id="cf-message" rows="4" placeholder="Tell us what you need — the more detail, the faster we can help."></textarea>
         </div>
 
-        <div class="flex items-center justify-between gap-3">
-          <span class="text-[11.5px] font-medium text-ink-400">Fields marked <span class="text-orange-500 font-bold">*</span> are required</span>
-          <button type="submit" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
+        <!-- phone: button first at full width, the note centred underneath -->
+        <div class="flex flex-col-reverse sm:flex-row items-center sm:justify-between gap-3">
+          <span class="text-[11.5px] font-medium text-ink-400 whitespace-nowrap text-center sm:text-left">Fields marked <span class="text-orange-500 font-bold">*</span> are required</span>
+          <button type="submit" class="btn-press group flex items-center justify-center sm:justify-start gap-2.5 w-full sm:w-auto rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
             Send Message
             <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -361,7 +362,7 @@ tailwind.config = {
           <img src="assets/img/contact/support.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
         </div>
         <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Technical support</h3>
-        <p class="text-[13.5px] leading-relaxed text-ink-600 mb-4">Scans, reports, uploads and anything happening inside your account.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-4">Scans, reports, uploads and anything happening inside your account.</p>
         <span class="hc-go inline-flex items-center gap-1.5 text-[12.5px] font-bold text-teal-700">Email support
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </span>
@@ -371,7 +372,7 @@ tailwind.config = {
           <img src="assets/img/contact/email.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
         </div>
         <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Services &amp; billing</h3>
-        <p class="text-[13.5px] leading-relaxed text-ink-600 mb-4">Plans, invoices, VIP services and partnership inquiries.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-4">Plans, invoices, VIP services and partnership inquiries.</p>
         <span class="hc-go inline-flex items-center gap-1.5 text-[12.5px] font-bold text-teal-700">Email services
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </span>
@@ -381,7 +382,7 @@ tailwind.config = {
           <img src="assets/img/contact/chat.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
         </div>
         <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Live chat</h3>
-        <p class="text-[13.5px] leading-relaxed text-ink-600 mb-4">The fastest route — a human in the corner of the page.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-4">The fastest route — a human in the corner of the page.</p>
         <span class="hc-go inline-flex items-center gap-1.5 text-[12.5px] font-bold text-teal-700">Start a chat
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </span>
@@ -391,7 +392,7 @@ tailwind.config = {
           <img src="assets/img/contact/guides.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
         </div>
         <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Help center</h3>
-        <p class="text-[13.5px] leading-relaxed text-ink-600 mb-4">Guides, tutorials and answers you can read right now.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-4">Guides, tutorials and answers you can read right now.</p>
         <span class="hc-go inline-flex items-center gap-1.5 text-[12.5px] font-bold text-teal-700">Open help center
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </span>
@@ -557,16 +558,18 @@ tailwind.config = {
 <footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
   <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
   <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="grid lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
-      <div>
-        <a href="index.html" class="inline-flex items-center mb-4 sm:mb-5 lg:mb-6">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
+      <div class="sm:col-span-2 md:col-span-4 lg:col-span-1 sm:grid sm:grid-cols-2 md:grid-cols-4 sm:gap-10 sm:items-center lg:block">
+        <div class="md:col-span-2">
+          <a href="index.html" class="inline-flex items-center mb-4 sm:mb-5 lg:mb-6">
           <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
         </a>
-        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-5 sm:mb-6 lg:mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
-        <div class="flex gap-3">
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-center"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
+        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-5 sm:mb-0 lg:mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+        </div>
+        <div class="flex gap-3 md:col-span-2">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
         </div>
       </div>
       <div>
