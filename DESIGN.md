@@ -236,11 +236,11 @@ Dark header (surface/inverse) + white Bold caps text +8% LS. Alternating rows (n
   This is easy to reintroduce by inserting a section without re-checking the sequence —
   after any insert, re-read the whole page's background chain, not just the neighbours.
 - Container: `max-w-[1280px] mx-auto px-6 lg:px-10` (narrower content: 1180px)
-- Section header pattern: eyebrow chip → `h2 text-[clamp(2rem,4vw,3.4rem)]` → 15–16px `text-ink-600` subline
+- Section header pattern: eyebrow chip → `h2 text-[clamp(2rem,4vw,3.4rem)]` → the section support line (see **Support lines — two roles, two sizes**)
 
 ### Responsive ramp — three steps, never two
 
-Spacing and radii carry **three** values, not two: phone (bare utility) → tablet (`sm:`) →
+Spacing, margins and radii carry **three** values, not two: phone (bare utility) → tablet (`sm:`) →
 desktop (`lg:`). Writing `p-4 sm:p-6` looks responsive but gives a 390px phone and a 900px
 tablet the same 24px, and writing a bare `px-6` gives every screen 24px.
 
@@ -255,7 +255,15 @@ tablet the same 24px, and writing a bare `px-6` gives every screen 24px.
 | 16 | 14 | 12 | `rounded-xl sm:rounded-[14px] lg:rounded-2xl` |
 
 **Floor: 20px.** Below that a third step is 2px of nothing and only makes the control
-cramped — `py-3` on a button is `py-3` everywhere. **Gaps** follow the same table from 20px up.
+cramped — `py-3` on a button is `py-3` everywhere. **Gaps and vertical margins** (`m`, `my`,
+`mt`, `mb`) follow the same table from 20px up. Horizontal margins are usually doing layout work
+(`mx-auto`, small negative nudges) rather than rhythm, so they stay flat.
+
+**Reserve height with a grid stack, never a magic `min-h`.** A switcher whose panels are absolutely
+positioned inside a `min-h-[380px]` holder is holding a number measured on one breakpoint: the
+persona panel needs 371px on desktop and 311px on a phone, so the phone carried 69px of dead space
+that read as a broken gap. Put every panel in the same grid cell (`grid` + `grid-area:1/1`) and the
+holder is exactly as tall as the tallest panel at any width, with no jump when switching.
 
 **Radii of a double-bezel must stay concentric at all three steps, not just the ends.**
 The inner radius is always outer − frame padding, so a ramped shell forces a ramped inner:
@@ -268,6 +276,18 @@ The inner radius is always outer − frame padding, so a ramped shell forces a r
 
 A shell written with a flat `p-2` breaks this on the phone (24 − 8 = 16, not 18) — the frame
 thins with the card, so bezels are `p-1.5 sm:p-2`.
+
+### Three columns do not survive a phone
+
+A row of icon + text + action is comfortable at 600px and cramped at 280. Measured on the
+plagiarism-check upload row: the middle column collapsed to **112px**, breaking a 25-character
+title over two lines and its support line over three, inside a 314px card.
+
+Don't shrink the type to fit — **drop the action to its own row**. Put `flex-wrap` on the row and
+`w-full sm:w-auto` on the button: below `sm` it cannot share a line, so it takes the full width and
+returns the space to the text (112px → 227px, title back to one line); from `sm` up it sits inline
+again and the desktop layout is untouched. The same move fixes a `justify-between` label/note pair —
+`flex-wrap` + `gap-x-3 gap-y-1` lets the note fall to its own line instead of both halves wrapping.
 
 ### Mock-UI type is its own scale
 
@@ -297,15 +317,77 @@ hard `<br>` and take the longest piece, not the total character count. A headlin
 yourself stays in L however long it is overall; a long sentence that must wrap on its own goes to S.
 Never eyeball it against the rendered page.
 
+
 Measured result: identical at 375 / 430 / 768 / 1024px (38.4 → 56.3px, all pages), separating only
 at ≥1057px as each tier reaches its ceiling — 69.6 / 64 / 57.6px by 1280px.
 
 > Before this rule the site carried six different hero sizes for two actual situations, drifting a
 > little more with each new page. If a headline looks wrong at its tier, fix the copy or the line
 > break — do not invent a fourth size.
+
+### Support lines — two roles, two sizes
+
+Copy under a heading takes its size from the heading's rank, never from the page it happens to be
+on. There are exactly two sizes on the whole site:
+
+| role | phone | tablet | desktop | class |
+|---|---|---|---|---|
+| **hero** — under the page `h1` | 15.5 | 16 | 16.5 | `text-[15.5px] sm:text-[16px] lg:text-[16.5px]` |
+| **heading block** — under any `h2`: section intros **and** CTA banners alike | 14.5 | 15 | 15.5 | `text-[14.5px] sm:text-[15px] lg:text-[15.5px]` |
+
+> Before this rule the site carried 4 sizes across 34 lead lines and 6 across 40 section lines, and
+> the most common one (`text-[15.5px]`, 32 uses) had no phone step at all. Three sub-headings a
+> screen apart could read 16.5, 15.5 and 15px.
+
+**One size per block, not per paragraph.** A heading block often runs to two paragraphs. Size the
+first and you get two sizes a line apart — 16.5 then 14.5 in the API banner, and on phones a
+*backwards* pair where the continuation (flat 15.5) outweighed the intro (14.5). Every direct `<p>`
+of the block takes the same size. A gap that small is not hierarchy; it reads as a mistake.
+
+**A CTA banner is not a bigger section.** It was briefly given the hero size — the extra point of
+size did nothing except break the rule above. Banners are heading blocks.
+
+**A card title is not a heading.** The rule applies to headings sized with `clamp()`. A card or form
+title uses a fixed size (`h2 text-[17px]` "Send a Free Inquiry"), and the small print under it is a
+form hint, not a support line — promoting it to 15.5px would be wrong.
+
+**Scope the pass by container, not by keyword.** Selecting banners by `text-teal-300` swept in 12
+unrelated paragraphs, because the Google Docs bento card and the pricing cards carry teal eyebrows
+too. Walk out to the block that holds the heading and take its direct `<p>` children.
+
+### Standalone button — one shape
+
+A standalone button is a section-level call to action: not a control inside a form, a pricing card,
+a bento tile, or a segmented switcher. Every one of them is **48px on a phone, 56px from `sm` up**,
+set with `h-12 sm:h-14` — a height, never padding.
+
+| | plain | with a trailing icon orb |
+|---|---|---|
+| height | `h-12 sm:h-14` | `h-12 sm:h-14` |
+| padding | `px-5 sm:px-6 lg:px-7` | `pl-5 sm:pl-7 pr-2.5` |
+| label | `text-[14px] sm:text-[15px]` | `text-[14px] sm:text-[15px]` |
+| orb | — | `icon-orb w-9 h-9` |
+
+The orb variant keeps its asymmetric padding: the circle sits tight against the right edge, so
+`px-*` would break it. `w-9` + `pr-2.5` is the 56px orb; `w-8` + `pr-2` is the 48px one and belongs
+to card buttons.
+
+**Set the height, don't imply it.** 13 buttons sat at 44 or 48px purely because they used
+`py-2` / `py-3` / `py-3.5`, and 24 more reached 56px on desktop through padding but rendered 52px on
+a phone — a set that looks uniform on the machine you designed it on and ragged everywhere else.
+
+**Not every pill is a button.** Segmented switchers (Student/Teacher/University, Monthly/Yearly) are
+`rounded-full` too and sit at 38–41px. They are a control, not a call to action; leave them.
+
+### Section furniture
+
 - **Checkerboard imagery**: consecutive two-column sections must alternate which side the image sits on — image right, then image left, then right. Never two in a row on the same side. Keep the text block first in the DOM (mobile reads text → image) and flip with `lg:order-1` / `lg:order-2`, not by reordering markup
 - **No tall portraits**: images cap at roughly 1 : 1.25 (portrait) — a 3:4 or taller frame forces the column to stretch and starves the section of horizontal room
-- Eyebrow chip: `inline-flex gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5` + 1.5px colored dot + `text-[10.5px] uppercase tracking-[0.22em]` (on ink-50 sections the chip is `bg-white`)
+- Eyebrow chip: `inline-flex gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5` + 1.5px colored dot + `text-[10px] sm:text-[10.5px] uppercase tracking-[0.22em]` (on ink-50 sections the chip is `bg-white`)
+- **One scale for every eyebrow**, chipped or bare — the uppercase labels in CTA bands are the same
+  component and take the same two sizes. This is the exception to "sub-13px type does not step":
+  eyebrows step 10 → 10.5 by design. Sitewide passes that rescale type by *region* must skip them,
+  or a handful drift to another size purely because they sat inside a mock-up zone.
 
 ### Card recipes
 - **Double-bezel** (feature/bento): outer `rounded-4xl|5xl bg-black/[.02] ring-1 ring-black/5 p-2 shadow-diffuse` + inner `rounded-[calc(outer-0.5rem)] bg-white shadow-inner-hl`
