@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>PlagiarismSearch — Log in or create an account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+      },
+      colors: {
+        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
+        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
+        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
+        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
+      },
+      letterSpacing: { tightest: '-0.035em' },
+      boxShadow: {
+        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
+        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
+        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
+      },
+      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+    }
+  }
+}
+</script>
+<style>
+  /* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
+     disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
+     grain sheet and the header render 150px wider than the page and open a white gutter that
+     no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
+     creates no scroll container, so position:sticky in the scan scene keeps working. */
+  html { background:#fff; overflow-x: clip; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background:#F36F5A; color:#fff; }
+  .nums { font-variant-numeric: tabular-nums; }
+
+  /* ---------- grain overlay ---------- */
+  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:256px 256px; }
+
+  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
+  .orb { position:absolute; border-radius:9999px; pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+  /* ---------- reveal (transform/opacity only) ---------- */
+  .rv { opacity:0; transform:translateY(40px); }
+  .no-motion .rv { opacity:1 !important; transform:none !important; }
+
+  /* ---------- shared micro-interactions ---------- */
+  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .btn-press:active { transform:scale(.97); }
+  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+  .group:hover .icon-orb svg { transform:rotate(-45deg); }
+
+
+  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
+  .no-motion .pen-word { color:#DC5A45; }
+  .no-motion .pen-underline { opacity:1; }
+
+  /* ---------- island nav dropdowns ---------- */
+  .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
+  .nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
+    transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
+  .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
+  @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
+
+  .ck, .rd { appearance:none; -webkit-appearance:none; flex:none; margin:0;
+    width:18px; height:18px; border:1.5px solid #D1D5DB; background-color:#fff; cursor:pointer;
+    background-repeat:no-repeat; background-position:center;
+    transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }
+  .ck { border-radius:5px; }
+  .rd { border-radius:50%; }
+  .ck:hover, .rd:hover { border-color:#9CA3AF; }
+  .ck:checked { background-color:#0991A8; border-color:#0991A8;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-9'/%3E%3C/svg%3E"); background-size:12px 12px; }
+  .rd:checked { background-color:#0991A8; border-color:#0991A8;
+    background-image:radial-gradient(circle at center, #fff 0 3px, transparent 3.5px); }
+  .ck:focus-visible, .rd:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(12,169,195,.28); }
+  .ck[disabled], .rd[disabled] { background-color:#F1F2F6; border-color:#E5E7EB; cursor:not-allowed; }
+  .ck[disabled]:checked, .rd[disabled]:checked { background-color:#D1D5DB; border-color:#D1D5DB; }
+
+  /* ---------- contact form (DS input recipe, md = 48) ---------- */
+  .cf-label { display:block; font-size:12px; font-weight:700; letter-spacing:.01em; color:#4B5563; margin-bottom:7px; }
+  .cf-label i { font-style:normal; color:#F36F5A; }
+  .cf-field { width:100%; height:48px; padding:0 14px; border-radius:10px; border:1px solid #E5E7EB;
+    background:#fff; color:#111827; font-size:14.5px; font-weight:500; font-family:inherit;
+    transition:border-color .15s ease, box-shadow .15s ease; }
+  .cf-field::placeholder { color:#9CA3AF; font-weight:400; }
+  .cf-field:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+  textarea.cf-field { height:auto; padding:12px 14px; line-height:1.6; resize:none; }
+
+  /* the drop zone is the only dashed edge on the site — it has to read as "put a file here" */
+  .qc-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
+    transition:border-color .2s ease, background-color .2s ease; }
+  .qc-drop:hover { border-color:#2CC3DB; background:#F0FAFC; }
+
+  /* ---------- lift cards (same recipe as the help-center category tiles) ---------- */
+  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
+  .hc-go svg { transition:transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover .hc-go svg { transform:translateX(3px); }
+  @media (prefers-reduced-motion: reduce) { .hc-card, .hc-go svg { transition:none; } .hc-card:hover { transform:none; } }
+
+  /* ---------- pulse dot (support status) ---------- */
+  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
+  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
+  .no-motion .pulse-dot { animation:none; }
+  /* ---------- header below lg: burger + panel ---------- */
+  .nav-burger-close { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
+
+  .nav-panel { position:absolute; left:1rem; right:1rem; top:100%;
+    opacity:0; visibility:hidden; transform:translateY(-8px);
+    transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
+  .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
+
+
+  /* ---------- controls on phones ----------
+     These sizes are declared in CSS rather than as utility classes, so they need
+     their own breakpoint. Field heights come down with the text so the controls
+     keep their proportions instead of turning into tall boxes with small labels. */
+  @media (max-width: 639px) {
+    .qc-area, .rc-area, .sp-area { font-size: 14px; }
+    .fld, .cf-field { height: 44px; font-size: 14px; }
+    textarea.fld { height: auto; }
+    .stepper { height: 44px; }
+    .stepper input { font-size: 14px; }
+    .stepper button { width: 34px; font-size: 16px; }
+    .pa-select { height: 40px; font-size: 13px; }
+    .pa-step { height: 40px; }
+    .pa-step input { font-size: 13px; }
+    .pa-step button { width: 32px; font-size: 15px; }
+    .sp-select { height: 36px; font-size: 12px; }
+    .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
+    .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
+    .rc-stat b { font-size: 17px; }
+    .sp-row { font-size: 12px; }
+    .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
+    .cf-label { font-size: 11.5px; }
+    .ctl { font-size: 13.5px; }
+  }
+
+  /* ---------- account panels ---------- */
+  .auth-panel { animation:authIn .3s cubic-bezier(.32,.72,0,1); }
+  .auth-panel.hidden-panel { display:none; }
+  @keyframes authIn { from { opacity:0; transform:translateY(8px); } }
+  @media (prefers-reduced-motion: reduce) { .auth-panel { animation:none; } }
+  .auth-tab { transition:background-color .25s ease, color .25s ease; }
+  .auth-tab.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+</style>
+</head>
+<body class="font-sans text-ink-900 bg-white">
+
+<div class="grain"></div>
+
+<!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
+
+  <!-- ================= 01 · ACCOUNT ================= -->
+  <section class="relative pt-5 sm:pt-6 lg:pt-8 pb-16 sm:pb-24 lg:pb-28 bg-[#F2FCFC]">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
+      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
+    </div>
+
+    <!-- outside the 1280 container on purpose: inside it, the logo and the close would
+         stop at the container edge — 120px from the window on a 1440 screen — instead of
+         sitting in the corner. Its own gutter ramps 20 / 32 / 40. -->
+    <div class="relative flex items-center justify-between px-5 sm:px-8 lg:px-10 mb-5 sm:mb-6 lg:mb-7">
+      <a href="index.html" class="inline-flex items-center shrink-0" aria-label="PlagiarismSearch home">
+        <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 sm:h-7 w-auto max-w-none">
+      </a>
+      <a href="index.html" class="btn-press flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-full text-ink-700 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Close">
+        <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
+      </a>
+    </div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+
+      <div class="max-w-[560px] mx-auto">
+
+        <div class="rv text-center mb-6 sm:mb-8 lg:mb-10">
+          <!-- sized to the section-h2 step; the tag stays h1 because it is still the page title -->
+          <h1 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Your account</h1>
+          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">One account for every check &mdash; plagiarism, AI detection, reports and history.</p>
+        </div>
+
+        <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8">
+
+            <!-- the same segmented control the pricing period switcher uses -->
+            <div class="flex justify-center mb-6 sm:mb-7 lg:mb-8">
+              <div class="inline-flex items-center rounded-full bg-ink-100 p-1" id="authTabs" role="tablist">
+                <button type="button" role="tab" aria-selected="true" aria-controls="panelLogin" data-panel="login" class="auth-tab active rounded-full px-4 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">Log in</button>
+                <button type="button" role="tab" aria-selected="false" aria-controls="panelSignup" data-panel="signup" class="auth-tab rounded-full px-4 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">Create account</button>
+              </div>
+            </div>
+
+            <!-- the hidden form is removed from flow, so the card fits the one on show -->
+            <div>
+
+              <!-- ---------- log in ---------- -->
+              <form id="panelLogin" class="auth-panel" onsubmit="return false" novalidate>
+                <div class="space-y-4 sm:space-y-5">
+
+              <div>
+                <label class="cf-label" for="loginEmail">Email<i> *</i></label>
+                <div class="relative">
+                  <input id="loginEmail" name="loginEmail" type="email"  class="cf-field pr-11" placeholder="Email" autocomplete="off">
+                  <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 7 13.03 12.7a1.94 1.94 0 0 1-2.06 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+                </div>
+              </div>
+
+              <div>
+                <label class="cf-label" for="loginPass">Password<i> *</i></label>
+                <div class="relative">
+                  <input id="loginPass" name="loginPass" type="password"  class="cf-field pr-11" placeholder="Password" autocomplete="off">
+                  <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+              </div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 mt-4 sm:mt-5">
+                  <label class="inline-flex items-center gap-2.5 cursor-pointer">
+                    <input type="checkbox" class="ck" checked>
+                    <span class="text-[13.5px] font-medium text-ink-700">Remember me</span>
+                  </label>
+                  <a href="#" class="text-[13.5px] font-semibold text-teal-700 hover:text-teal-800 transition-colors">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-press w-full inline-flex items-center justify-center rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white h-12 sm:h-14 text-[14px] sm:text-[15px] font-semibold mt-6 sm:mt-7">Log in</button>
+
+                <p class="text-center text-[13.5px] font-medium text-ink-500 mt-4 sm:mt-5">Need a PlagiarismSearch account?
+                  <button type="button" data-goto="signup" class="font-bold text-teal-700 hover:text-teal-800 transition-colors">Create account</button>
+                </p>
+
+            <div class="flex items-center gap-3 mt-6 sm:mt-7 lg:mt-8 mb-4 sm:mb-5 lg:mb-6">
+              <span class="h-px flex-1 bg-ink-100"></span>
+              <span class="text-[12.5px] font-medium text-ink-400 whitespace-nowrap">You can log in using your social profile</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <a href="#" class="btn-press inline-flex items-center justify-center gap-2.5 rounded-full ring-1 ring-black/10 bg-white h-12 sm:h-14 px-4 text-[14px] sm:text-[15px] font-semibold text-ink-800 hover:bg-ink-50 transition-colors duration-300">
+                <img src="assets/svg/google-icon.svg" alt="" width="18" height="18" class="w-[18px] h-[18px]">
+                Sign in with Google
+              </a>
+              <a href="#" class="btn-press inline-flex items-center justify-center gap-2.5 rounded-full ring-1 ring-black/10 bg-white h-12 sm:h-14 px-4 text-[14px] sm:text-[15px] font-semibold text-ink-800 hover:bg-ink-50 transition-colors duration-300">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+                Sign in with LinkedIn
+              </a>
+            </div>
+              </form>
+
+              <!-- ---------- create account ---------- -->
+              <form id="panelSignup" class="auth-panel hidden-panel" onsubmit="return false" novalidate>
+                <div class="space-y-4 sm:space-y-5">
+
+              <div>
+                <label class="cf-label" for="suEmail">Email<i> *</i></label>
+                <div class="relative">
+                  <input id="suEmail" name="suEmail" type="email"  class="cf-field pr-11" placeholder="Email" autocomplete="off">
+                  <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 7 13.03 12.7a1.94 1.94 0 0 1-2.06 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+                </div>
+              </div>
+                  <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
+
+              <div>
+                <label class="cf-label" for="suPass">Password<i> *</i></label>
+                <div class="relative">
+                  <input id="suPass" name="suPass" type="password"  class="cf-field pr-11" placeholder="Password" autocomplete="off">
+                  <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+              </div>
+
+              <div>
+                <label class="cf-label" for="suPass2">Confirm password<i> *</i></label>
+                <div class="relative">
+                  <input id="suPass2" name="suPass2" type="password"  class="cf-field pr-11" placeholder="Confirm password" autocomplete="off">
+                  <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+              </div>
+                  </div>
+                  <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
+
+              <div>
+                <label class="cf-label" for="suName">Name<i> *</i></label>
+                <div class="relative">
+                  <input id="suName" name="suName" type="text"  class="cf-field pr-11" placeholder="Name" autocomplete="off">
+                  <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+              </div>
+
+              <div>
+                <label class="cf-label" for="suPhone">Phone<i> *</i></label>
+                <div class="relative">
+                  <input id="suPhone" name="suPhone" type="tel"  class="cf-field pr-11" placeholder="Phone" autocomplete="off">
+                  <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+              </div>
+                  </div>
+                </div>
+
+                <label class="flex items-start gap-2.5 cursor-pointer mt-4 sm:mt-5">
+                  <input type="checkbox" class="ck mt-0.5">
+                  <span class="text-[13.5px] font-medium text-ink-600 leading-relaxed">I accept
+                    <a href="#" class="font-bold text-teal-700 hover:text-teal-800 transition-colors">Terms of Use</a>,
+                    <a href="#" class="font-bold text-teal-700 hover:text-teal-800 transition-colors">Privacy Policy</a>,
+                    <a href="#" class="font-bold text-teal-700 hover:text-teal-800 transition-colors">Google API policy</a>
+                  </span>
+                </label>
+
+                <button type="submit" class="btn-press w-full inline-flex items-center justify-center rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white h-12 sm:h-14 text-[14px] sm:text-[15px] font-semibold mt-6 sm:mt-7">Create my account</button>
+
+                <p class="text-center text-[13.5px] font-medium text-ink-500 mt-4 sm:mt-5">Already have an account?
+                  <button type="button" data-goto="login" class="font-bold text-teal-700 hover:text-teal-800 transition-colors">Log in</button>
+                </p>
+
+            <div class="flex items-center gap-3 mt-6 sm:mt-7 lg:mt-8 mb-4 sm:mb-5 lg:mb-6">
+              <span class="h-px flex-1 bg-ink-100"></span>
+              <span class="text-[12.5px] font-medium text-ink-400 whitespace-nowrap">You can sign up using your social profile</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <a href="#" class="btn-press inline-flex items-center justify-center gap-2.5 rounded-full ring-1 ring-black/10 bg-white h-12 sm:h-14 px-4 text-[14px] sm:text-[15px] font-semibold text-ink-800 hover:bg-ink-50 transition-colors duration-300">
+                <img src="assets/svg/google-icon.svg" alt="" width="18" height="18" class="w-[18px] h-[18px]">
+                Sign in with Google
+              </a>
+              <a href="#" class="btn-press inline-flex items-center justify-center gap-2.5 rounded-full ring-1 ring-black/10 bg-white h-12 sm:h-14 px-4 text-[14px] sm:text-[15px] font-semibold text-ink-800 hover:bg-ink-50 transition-colors duration-300">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+                Sign in with LinkedIn
+              </a>
+            </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+<footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
+      <div class="sm:col-span-2 md:col-span-4 lg:col-span-1 sm:grid sm:grid-cols-2 md:grid-cols-4 sm:gap-10 sm:items-center lg:block">
+        <div class="md:col-span-2">
+          <a href="index.html" class="inline-flex items-center mb-4 sm:mb-5 lg:mb-6">
+          <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+        </a>
+        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-5 sm:mb-0 lg:mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+        </div>
+        <div class="flex gap-3 md:col-span-2">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PRODUCT</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="plagiarism-check.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="ai-detector.html" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="paper-analysis.html" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Sample Report</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Students</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Teachers</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Universities</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="help-center.html" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">API docs</a></li>
+          <li><a href="blog.html" class="hover:text-white transition-colors duration-300">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">About</a></li>
+          <li><a href="contact-us.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Compliance</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="h-px bg-white/10 mb-6 sm:mb-7 lg:mb-8"></div>
+    <div class="flex flex-wrap items-center gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>© 2026 PlagiarismSearch. All rights reserved.</span>
+      <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
+      <a href="#" class="hover:text-white/70 transition-colors">DPA</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Cookies</a>
+      <span class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) document.documentElement.classList.add('no-motion');
+
+  if (!reduceMotion && window.gsap) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ================= reveals ================= */
+    const rvs = gsap.utils.toArray('.rv');
+    const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
+    const later = rvs.filter(el => !inView.includes(el));
+
+    // first viewport: top-down cascade on load
+    inView.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+    });
+    // the rest reveal as they reach mid-screen
+    later.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 70%' } });
+    });
+
+    /* ================= pen marks — word colours in, then its underline draws =================
+       Reusable: any number per page. In-view marks wait out the reveal cascade;
+       lower ones fire when scrolled to. See DESIGN.md → Web build → Motion. */
+    gsap.utils.toArray('.pen-word').forEach(word => {
+      const line = word.querySelector('.pen-underline');
+      if (!line) return;
+      const len = line.getTotalLength();
+      gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+      const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
+      const tl = gsap.timeline(inFirstView
+        ? { delay: 1 }
+        : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
+      tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+        .set(line, { opacity: 1 }, .35)
+        .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
+    });
+
+    /* ================= counters (mission stats) — cached writes ================= */
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const dp = parseInt(el.dataset.decimals, 10) || 0;   // ratings need one decimal
+      const obj = { v: 0 };
+      let lastText = '';
+      gsap.to(obj, {
+        v: target, duration: 1.6, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        onUpdate: () => {
+          const text = obj.v.toFixed(dp) + suffix;
+          if (text !== lastText) { lastText = text; el.textContent = text; }
+        }
+      });
+    });
+  } else {
+    // reduced motion: final states, no tweens
+    document.querySelectorAll('[data-count]').forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
+  }
+})();
+</script>
+
+
+
+
+<script>
+(() => {
+  'use strict';
+  const btn = document.getElementById('navBurger');
+  const panel = document.getElementById('navPanel');
+  if (!btn || !panel) return;
+
+  const setOpen = on => {
+    btn.setAttribute('aria-expanded', String(on));
+    panel.classList.toggle('open', on);
+    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
+  };
+
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => {
+    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+  // the desktop menu takes over at lg — never leave the panel hanging open across it
+  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
+})();
+</script>
+
+
+<script>
+  /* the tabs and the two "switch to the other form" links drive the same state */
+  (() => {
+    const tabs = [...document.querySelectorAll('.auth-tab')];
+    const panels = { login: document.getElementById('panelLogin'), signup: document.getElementById('panelSignup') };
+    function show(which) {
+      tabs.forEach(t => {
+        const on = t.dataset.panel === which;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      Object.entries(panels).forEach(([k, p]) => p.classList.toggle('hidden-panel', k !== which));
+      const first = panels[which].querySelector('input');
+      if (first && document.activeElement !== document.body) first.focus({ preventScroll: true });
+    }
+    tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.panel)));
+    document.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => show(b.dataset.goto)));
+  })();
+</script>
+</body>
+</html>
