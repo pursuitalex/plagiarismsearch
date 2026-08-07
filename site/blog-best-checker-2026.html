@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>PlagiarismSearch — Best Plagiarism Checker in 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+      },
+      colors: {
+        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
+        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
+        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
+        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
+      },
+      letterSpacing: { tightest: '-0.035em' },
+      boxShadow: {
+        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
+        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
+        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
+      },
+      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+    }
+  }
+}
+</script>
+<style>
+  /* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
+     disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
+     grain sheet and the header render 150px wider than the page and open a white gutter that
+     no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
+     creates no scroll container, so position:sticky in the scan scene keeps working. */
+  html { background:#fff; overflow-x: clip; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background:#F36F5A; color:#fff; }
+  .nums { font-variant-numeric: tabular-nums; }
+
+  /* ---------- grain overlay ---------- */
+  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:256px 256px; }
+
+  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
+  .orb { position:absolute; border-radius:9999px; pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+  /* ---------- reveal (transform/opacity only) ---------- */
+  .rv { opacity:0; transform:translateY(40px); }
+  .no-motion .rv { opacity:1 !important; transform:none !important; }
+
+  /* ---------- shared micro-interactions ---------- */
+  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .btn-press:active { transform:scale(.97); }
+  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+  .group:hover .icon-orb svg { transform:rotate(-45deg); }
+
+
+  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
+  .no-motion .pen-word { color:#DC5A45; }
+  .no-motion .pen-underline { opacity:1; }
+
+  /* ---------- AI pricing rows ---------- */
+  .ai-row { transition:background-color .15s ease; }
+  .ai-row:hover { background:#F2FAFB; }
+
+  /* ---------- island nav dropdowns ---------- */
+  .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
+  .nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
+    transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
+  .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
+  @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
+
+  /* ---------- help-center search (DS input recipe, pill variant) ---------- */
+  .hc-search { width:100%; height:56px; padding:0 116px 0 50px; border-radius:9999px;
+    border:1px solid #E5E7EB; background:#fff; color:#111827; font-size:15px; font-weight:500;
+    transition:border-color .15s ease, box-shadow .15s ease; }
+  .hc-search::placeholder { color:#9CA3AF; font-weight:400; }
+  .hc-search:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+  .hc-search::-webkit-search-cancel-button { -webkit-appearance:none; }
+
+  /* ---------- category cards ---------- */
+  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
+  .hc-go svg { transition:transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover .hc-go svg { transform:translateX(3px); }
+  @media (prefers-reduced-motion: reduce) { .hc-card, .hc-go svg { transition:none; } .hc-card:hover { transform:none; } }
+
+  /* ---------- pulse dot (support status) ---------- */
+  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
+  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
+  .no-motion .pulse-dot { animation:none; }
+  /* ---------- header below lg: burger + panel ---------- */
+  .nav-burger-close { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
+
+  .nav-panel { position:absolute; left:1rem; right:1rem; top:100%;
+    opacity:0; visibility:hidden; transform:translateY(-8px);
+    transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
+  .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
+
+
+  /* ---------- controls on phones ----------
+     These sizes are declared in CSS rather than as utility classes, so they need
+     their own breakpoint. Field heights come down with the text so the controls
+     keep their proportions instead of turning into tall boxes with small labels. */
+  @media (max-width: 639px) {
+    .qc-area, .rc-area, .sp-area { font-size: 14px; }
+    .fld, .cf-field { height: 44px; font-size: 14px; }
+    textarea.fld { height: auto; }
+    .stepper { height: 44px; }
+    .stepper input { font-size: 14px; }
+    .stepper button { width: 34px; font-size: 16px; }
+    .pa-select { height: 40px; font-size: 13px; }
+    .pa-step { height: 40px; }
+    .pa-step input { font-size: 13px; }
+    .pa-step button { width: 32px; font-size: 15px; }
+    .sp-select { height: 36px; font-size: 12px; }
+    .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
+    .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
+    .rc-stat b { font-size: 17px; }
+    .sp-row { font-size: 12px; }
+    .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
+    .cf-label { font-size: 11.5px; }
+    .ctl { font-size: 13.5px; }
+  }
+</style>
+</head>
+<body class="font-sans text-ink-900 bg-white">
+
+<div class="grain"></div>
+
+<!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
+<header class="fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
+  <div class="flex justify-center">
+  <nav class="pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+    <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-6">
+      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto max-w-none">
+    </a>
+    <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <a href="plagiarism-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+            <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+            <a href="paper-analysis.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+            <a href="readability-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+            <a href="spell-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
+            <a href="vip.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+            <a href="api.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+            <a href="chat-bot.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For universities</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For teachers</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For students</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For organizations</span>
+          </div>
+        </div>
+      </div>
+      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Prices</a>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-ink-900/5 text-ink-900 font-semibold" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
+            <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+            <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Scholarship</span>
+            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Reviews</span>
+            <a href="contact-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+            <a href="blog.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
+            <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="min-w-0 flex items-center gap-2 ml-auto lg:ml-8 shrink-0">
+      <a href="#" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5">Check free</a>
+      <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+        <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
+        <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
+      </button>
+    </div>
+  </nav>
+  </div>
+
+  <div id="navPanel" class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
+    <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products</div>
+      <a href="plagiarism-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
+      <a href="ai-detector.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
+      <a href="paper-analysis.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
+      <a href="readability-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
+      <a href="spell-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
+      <a href="vip.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+      <a href="api.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+      <a href="chat-bot.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions</div>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For universities</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For teachers</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For students</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For organizations</span>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
+      <a href="why-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
+      <a href="mission.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Scholarship</span>
+      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Reviews</span>
+      <a href="contact-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+      <a href="blog.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
+      <a href="help-center.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+      <a href="prices.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Prices</a>
+      <div class="sm:hidden mt-3 pt-3 border-t border-ink-100 space-y-2">
+        <a href="#" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
+        <a href="index.html#top" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
+      </div>
+    </div>
+  </div>
+</header>
+  <!-- ================= 01 · ARTICLE ================= -->
+  <!-- No overflow-hidden on this section: it would become the scroll container and the
+       sticky contents would lose its range. The orb gets its own clipped layer instead. -->
+  <section class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-white">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
+    </div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+
+      <!-- masthead -->
+      <div class="rv max-w-[68ch] mb-6 sm:mb-8 lg:mb-10">
+        <nav class="flex items-center gap-2 text-[12.5px] font-medium text-ink-400 mb-4 sm:mb-5 lg:mb-6" aria-label="Breadcrumb">
+          <a href="blog.html" class="hover:text-ink-700 transition-colors duration-300">Blog</a>
+          <span class="text-ink-300">/</span>
+          <span class="text-ink-700">Avoiding Plagiarism</span>
+        </nav>
+        <h1 class="text-[clamp(2.4rem,5.5vw,3.6rem)] font-extrabold tracking-tightest leading-[1.06] mb-5 sm:mb-6 lg:mb-7">Best Plagiarism Checker in 2026: How to Choose a Safe and Accurate Tool</h1>
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <span class="w-9 h-9 shrink-0 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-[12px] font-bold">KA</span>
+          <span class="text-[13.5px] font-bold text-ink-900">Kelsey Ayton</span>
+          <span class="w-1 h-1 rounded-full bg-ink-300"></span>
+          <span class="text-[12.5px] font-medium text-ink-400">November 29, 2025</span>
+          <span class="w-1 h-1 rounded-full bg-ink-300"></span>
+          <span class="text-[12.5px] font-medium text-ink-400"><span class="nums">18</span> min read</span>
+        </div>
+      </div>
+
+      <!-- Everything rides one 68ch column: the measure stays readable and the photo never
+           exceeds the 740px it was stored at, so nothing upscales. -->
+      <div class="max-w-[68ch]">
+
+        <div class="rv overflow-hidden rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse mb-8 sm:mb-10 lg:mb-12">
+          <img src="assets/img/blog/post-02.webp" alt="" width="740" height="550" fetchpriority="high" decoding="async" class="w-full aspect-[740/550] object-cover">
+        </div>
+
+        <!-- contents sits above the text rather than beside it; a side rail would either
+             squeeze the measure or strand itself in empty space -->
+        <nav class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6 mb-8 sm:mb-10 lg:mb-12" aria-label="On this page">
+          <div class="flex items-center gap-3 mb-4 lg:mb-5">
+            <span class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] uppercase text-ink-400">On this page</span>
+            <span class="ml-auto text-[11.5px] font-medium text-ink-400"><span class="nums">3,527</span> words</span>
+          </div>
+          <ol class="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+            <li class="flex gap-2.5">
+              <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">01</span>
+              <a href="#why-best-plagiarism-checker-looks-differ" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Why &ldquo;Best Plagiarism Checker&rdquo; Looks Different in 2026</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">02</span>
+              <a href="#what-best-plagiarism-checker-actually-me" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">What &ldquo;Best Plagiarism Checker&rdquo; Actually Means in 2026</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">03</span>
+              <a href="#a-quick-checklist-to-narrow-down-your-op" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">A Quick Checklist to Narrow Down Your Options</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">04</span>
+              <a href="#how-to-evaluate-plagiarism-checkers-in-2" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">How to Evaluate Plagiarism Checkers in 2026 (Deep Buyer&rsquo;s Guide)</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">05</span>
+              <a href="#a-simple-diy-test-to-compare-plagiarism-" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">A Simple DIY Test to Compare Plagiarism Checkers</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">06</span>
+              <a href="#the-best-plagiarism-checker-depends-on-w" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">The &ldquo;Best&rdquo; Plagiarism Checker Depends on Who You Are</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">07</span>
+              <a href="#red-flags-plagiarism-checkers-to-be-care" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Red Flags: Plagiarism Checkers to Be Careful With</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">08</span>
+              <a href="#looking-ahead-plagiarism-detection-beyon" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Looking Ahead: Plagiarism Detection Beyond 2026</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">09</span>
+              <a href="#final-thoughts-there-is-no-one-click-bes" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Final Thoughts: There Is No One-Click &ldquo;Best&rdquo; &ndash; But There Is a Best Fit</a>
+            </li>
+          </ol>
+        </nav>
+
+        <article class="rv min-w-0">
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Between 2023 and 2025, the way we write and submit text changed dramatically. Generative AI tools can draft essays, blog posts and research summaries in seconds, while universities and companies are rewriting their policies on academic integrity and acceptable use of AI. In this new landscape, choosing the best plagiarism checker is no longer just about catching obvious copy-paste from the web. In 2026, the tool you use also has to deal with paraphrased content, translated passages, AI-assisted writing and strict data-protection rules.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">The problem is that there are now dozens of online plagiarism checkers, all promising high accuracy and &ldquo;advanced AI&rdquo; with very little transparency. Some focus only on student papers, others on SEO content, and some quietly store every document you upload. This guide is designed to cut through the noise. Instead of giving you a random top-10 list, it explains what &ldquo;best plagiarism checker&rdquo; really means in 2026, which criteria actually matter, and how you can test any tool yourself before you trust it with your work.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">By the end of this article, you will have a practical checklist, a simple DIY comparison test and clear recommendations for students, teachers and content teams who want a safe and accurate solution.</p>
+        <h2 id="why-best-plagiarism-checker-looks-differ" class="text-[21px] sm:text-[23px] lg:text-[26px] font-extrabold tracking-tightest leading-[1.2] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-4 lg:mb-5">Why &ldquo;Best Plagiarism Checker&rdquo; Looks Different in 2026</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">A few years ago, plagiarism detection was mostly about finding direct copying: students pasting paragraphs from Wikipedia, bloggers reusing someone else&rsquo;s article, or researchers recycling parts of older papers. Traditional checkers that compared text against large web indexes and academic databases were usually good enough. That is no longer the case.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">First, the explosion of AI-generated text has blurred the line between original and copied content. Large language models can produce paragraphs that are structurally similar to existing sources without matching them word-for-word. They can also paraphrase existing text so heavily that older checkers see nothing suspicious, even though the underlying ideas and structure have been lifted. The &ldquo;best plagiarism checker&rdquo; in 2026 must therefore handle subtle paraphrasing and AI-assisted writing, not only obvious duplication.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Second, academic and corporate policies have evolved. Many universities now distinguish between acceptable, transparent use of AI tools and unethical ghostwriting. Companies increasingly require documentation showing that marketing content is both original and compliant with copyright and data-protection rules. The report from your plagiarism checker is no longer just a private reassurance; it can be part of a formal integrity or compliance process.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Third, the risks around privacy and data security are higher than ever. Uploading a thesis, a client report or a confidential whitepaper to a random &ldquo;free plagiarism checker&rdquo; can mean that the text ends up stored on servers you know nothing about, or even reused as training data. Some tools still add your document to their internal comparison database by default, which may be unacceptable for sensitive work. In 2026, the best plagiarism checker is the one that balances detection power with clear, verifiable safeguards for your data.</p>
+        <h2 id="what-best-plagiarism-checker-actually-me" class="text-[21px] sm:text-[23px] lg:text-[26px] font-extrabold tracking-tightest leading-[1.2] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-4 lg:mb-5">What &ldquo;Best Plagiarism Checker&rdquo; Actually Means in 2026</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Because of these changes, &ldquo;best&rdquo; cannot be reduced to a single score or brand name. A tool can be excellent for English-language student essays and still be a poor choice for a multilingual research project or a marketing agency. However, most trustworthy options share the same foundations. In 2026, a strong contender for the best plagiarism checker should combine high accuracy with AI awareness, robust databases, clear privacy practices and a report that humans can actually work with.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">At a minimum, you should expect the following: solid detection of both copy-paste and paraphrased passages, some level of AI content analysis or easy integration with an AI detector, transparent information about which databases are used, a clear promise about what happens to your documents after scanning, support for the languages and file types you need, an understandable similarity report and a pricing model that matches your usage. In the next sections, we will turn these ideas into a quick checklist and then a deeper buyer&rsquo;s guide.</p>
+        <h2 id="a-quick-checklist-to-narrow-down-your-op" class="text-[21px] sm:text-[23px] lg:text-[26px] font-extrabold tracking-tightest leading-[1.2] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-4 lg:mb-5">A Quick Checklist to Narrow Down Your Options</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">If you do not have time to read the entire guide right now, use this short checklist to immediately filter out weak candidates. The best plagiarism checker for you in 2026 should meet most, if not all, of these points:</p>
+        <ul class="space-y-3 mb-4 sm:mb-5 lg:mb-6">
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>It clearly states in the privacy policy what happens to your documents after scanning and offers a way to remove them or avoid archiving altogether.</span>
+          </li>
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>It supports the language, document format and length you actually use, including long theses, articles or multi-page reports.</span>
+          </li>
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>It gives a detailed report with highlighted passages, sources and explanations, not just a single percentage score.</span>
+          </li>
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>It can handle paraphrased text and AI-assisted writing, either through built-in AI detection or integration with a reputable AI content detector.</span>
+          </li>
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>It allows you to test the service on a few sample documents before committing to a long subscription or institutional contract.</span>
+          </li>
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>It belongs to a real, identifiable company with contact information and at least a basic track record, not an anonymous landing page.</span>
+          </li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Any checker that fails on several of these points is unlikely to be a safe or reliable choice in 2026, regardless of how impressive its marketing claims look.</p>
+        <h2 id="how-to-evaluate-plagiarism-checkers-in-2" class="text-[21px] sm:text-[23px] lg:text-[26px] font-extrabold tracking-tightest leading-[1.2] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-4 lg:mb-5">How to Evaluate Plagiarism Checkers in 2026 (Deep Buyer&rsquo;s Guide)</h2>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Accuracy on Different Types of Plagiarism</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Accuracy is still the core requirement for any plagiarism checker, but it is more complex than simply &ldquo;how many percent of plagiarism it shows.&rdquo; A modern system has to deal with at least four main patterns. The first is straightforward copy-paste, where sentences or paragraphs are taken verbatim from online sources or previous work. Almost every checker can detect this reliably.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">The second type is smart paraphrasing, often assisted by AI. Here the writer keeps the same ideas and structure but rewrites sentences using synonyms, changed word order or different phrasing. Many older tools struggle with this because they rely heavily on exact or near-exact matches. In 2026, the best plagiarism checker should recognise these deeper similarities and still flag the passage for review.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">The third pattern is translation plagiarism. A student might, for example, take a German or Spanish article, translate it into English using a machine translator and lightly edit the result. If the checker only compares within one language, this theft can slip through. Advanced systems use cross-lingual similarity models or include multilingual indexes to mitigate this risk.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">The fourth pattern is so-called mosaic plagiarism, where small fragments from many sources are stitched together into a new text. In such cases, you need a checker that not only finds individual matches but also helps you see how heavily the document relies on external material. When you evaluate tools, do not just ask if they &ldquo;catch plagiarism&rdquo;; ask how well they handle these four patterns and whether the report helps you interpret them.</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Database Coverage: Where Does the Tool Look?</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">No matter how good an algorithm is, it cannot find overlap with sources it cannot see. That is why database coverage is a key factor when comparing plagiarism checkers. A solid solution should scan a broad slice of the public web, but that is only the starting point. For academic work, it is crucial that the system also checks against scholarly journals, dissertations, conference proceedings and other research materials. Some vendors license content from large academic publishers or maintain partnerships with universities; others rely only on what is freely available.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">For businesses and agencies, internal databases can be just as important. If your organisation produces a large volume of reports, blog posts or product descriptions, a private repository of your own content prevents accidental self-plagiarism and duplication across clients. When you look at any &ldquo;best plagiarism checker&rdquo; candidate, try to answer two questions: which kinds of sources are covered today, and how easy is it to add or exclude specific collections in the future?</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">AI Content Detection and Compatibility</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Plagiarism and AI-generated text are not the same problem, but they are now tightly linked. Many institutions want to know not only whether a passage matches an external source, but also whether it was likely produced by a language model. The difficulty is that AI detectors are never perfect. They can mislabel original human writing as AI-generated, especially for non-native speakers or highly formal styles, and they can be fooled by heavily edited or mixed texts.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">The best plagiarism checker in 2026 does not promise magic certainty. Instead, it offers a realistic approach: combined plagiarism and AI analysis in a single report, or at least a frictionless way to send text to a trusted AI detector. Ideally, the checker marks segments where both high similarity and AI-like patterns appear, so that reviewers know where to take a closer look. When you compare tools, pay attention to how they talk about AI. Honest language that acknowledges limitations is usually a better sign than confident claims of &ldquo;100% AI detection accuracy.&rdquo;</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Privacy, Security and Compliance</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Uploading a thesis, legal document or confidential strategy paper to an unknown server is risky. That is why privacy and security are now defining criteria instead of afterthoughts. Before you trust any online plagiarism checker, look for a clear statement on whether your documents are stored, for how long and for what purpose. Many reputable vendors offer a &ldquo;no archive&rdquo; or &ldquo;repository optional&rdquo; mode, where documents are deleted after scanning and are never used to train models or populate shared databases.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Compliance with regulations such as the GDPR in Europe or FERPA-related expectations in education is equally important. You should be able to identify the legal entity behind the tool, its location, and how you can exercise your data rights. If the privacy policy is vague, contradictory or simply missing, treat it as a red flag. A slightly less sophisticated detector with excellent privacy practices can be a safer overall choice than a powerful but opaque service.</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Language and File Support</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">For many users, English is only one of several working languages. Researchers collaborate across borders, and businesses localise content into multiple markets. A high-quality plagiarism checker must therefore go beyond &ldquo;English only.&rdquo; Check whether the tool explicitly supports the languages you need, and look for user examples or documentation that confirm this in practice. Some systems claim to support dozens of languages, but in reality only work well for a few.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">File support matters just as much. Students often submit DOCX documents, but researchers may use LaTeX-generated PDFs, and marketers may work with HTML or text pasted from CMS exports. If you handle scanned PDFs, you will need reliable OCR built into the workflow. When you evaluate potential candidates, verify that the checker can process your typical file types without corrupting formatting or dropping sections of text.</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Reports, UX and Workflow Integration</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">A single similarity percentage does not tell the whole story. Two papers with 20% overlap can be very different: one might consist mostly of correctly quoted literature with a long reference list, while the other is a patchwork of poorly paraphrased sources. The best plagiarism checker in 2026 provides a clear, interactive report that shows where matches were found, which sources they came from and how serious they are likely to be. It should help you filter out common phrases, bibliography entries and quoted passages, so you can focus on genuine issues.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Usability and integration also affect how valuable a checker is. Teachers and academic integrity officers often rely on learning management systems such as Moodle or Canvas. Content teams live in Google Docs, Word, Notion or dedicated CMS platforms. Look for tools that offer plugins, add-ons or APIs, so that checking becomes a natural part of your workflow rather than a separate chore that people skip when they are busy.</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Pricing, Scalability and Support</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Finally, consider how pricing and support align with your needs. Some services charge per document or per number of words; others use monthly subscriptions or institutional licences. A free tier can be helpful for occasional use, but serious work often requires consistent access and predictable costs. Calculate the effective price per document or per thousand words based on your real workload, not just the headline subscription fee.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Support quality can save you hours when something goes wrong or when you need help interpreting a complex report. Look for knowledge bases, onboarding guides, response times and the ability to speak with a real person if necessary. The best plagiarism checker for a university or agency is not only a piece of software; it is also a partner that helps you build sustainable integrity processes.</p>
+        <h2 id="a-simple-diy-test-to-compare-plagiarism-" class="text-[21px] sm:text-[23px] lg:text-[26px] font-extrabold tracking-tightest leading-[1.2] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-4 lg:mb-5">A Simple DIY Test to Compare Plagiarism Checkers</h2>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Step 1: Prepare Your Test Texts</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Instead of trusting marketing pages or generic &ldquo;top 10&rdquo; lists, you can run a small experiment yourself. Start by preparing four short sample texts. The first should be a fully original piece of writing on a topic you know well. The second should be the same text but with a few obvious copy-paste insertions from online sources. The third should paraphrase one of those sources more heavily, changing wording and structure while keeping the same meaning. The fourth should be a paragraph generated by an AI tool using a common prompt such as &ldquo;write a short explanation of&hellip;&rdquo;</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Step 2: Run the Same Samples in Every Tool</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Create accounts with the plagiarism checkers you want to compare and run these four samples in each of them. Try to keep settings as similar as possible: for instance, exclude bibliographies everywhere or include them everywhere. Save screenshots or download the reports so you can review them side by side later. If a tool makes it difficult to run even a small test without paying or providing a credit card, consider whether this lack of transparency is acceptable for you.</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Step 3: Evaluate the Results Objectively</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Now, compare how each checker performed. Did the tool correctly flag the obvious copy-paste passages? How did it treat the original text without any copied content? A good system should not show alarmingly high similarity percentages for a clearly unique paragraph. Next, look at the paraphrased and AI-generated samples. Even if the checker does not mark them as direct plagiarism, does it highlight them as similar, unusual or AI-like? Is the report clear enough for you to understand why each segment was flagged?</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">Step 4: Decide What &ldquo;Good Enough&rdquo; Looks Like for Your Context</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">There is no universal pass mark for this experiment. A student working on a single thesis might prioritise a tool that is affordable, easy to understand and very strict about privacy. A teacher responsible for hundreds of submissions may prefer a system that integrates tightly with the campus LMS and provides consistent reporting. A content agency may choose a solution with strong API access and batch-checking features, even if the interface is more technical. The goal of your DIY test is not to crown one absolute winner, but to identify which checker behaves reliably and transparently for your specific use case.</p>
+        <h2 id="the-best-plagiarism-checker-depends-on-w" class="text-[21px] sm:text-[23px] lg:text-[26px] font-extrabold tracking-tightest leading-[1.2] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-4 lg:mb-5">The &ldquo;Best&rdquo; Plagiarism Checker Depends on Who You Are</h2>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">If You Are a Student or PhD Candidate</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">For students, the key priorities are usually accuracy, fairness and privacy. You want to make sure your work does not contain accidental plagiarism, but you also do not want your thesis to end up permanently stored in a commercial database. Look for a plagiarism checker that offers clear deletion options or a dedicated no-archive mode. Make a habit of running drafts well before the submission deadline, so you have time to fix issues and improve your referencing rather than panicking on the final day.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">A common mistake is chasing a &ldquo;0% similarity&rdquo; score. In reality, legitimate quotes, technical terms and standard phrases will always create some overlap. Use the report to understand what those matches are, not just to chase a number. If your university provides an official checker, learn how it works and use it as your primary reference; third-party tools can be useful for extra reassurance but should not contradict institutional guidelines.</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">If You Are a Teacher or Academic Integrity Officer</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Educators have a different perspective. You rarely work with a single document; instead, you need to manage many submissions across multiple courses and semesters. Your best plagiarism checker in 2026 will be the one that scales with that workload. Deep integration with your learning management system can save hours every week by automating uploads, synchronising grades and storing reports in a consistent place. Look for features that allow you to compare submissions within a class, ignore standard assignment prompts and annotate reports for feedback discussions with students.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Clear communication is equally important. A checker that generates confusing or overly aggressive reports can damage trust and escalate conflicts. Tools that let you adjust sensitivity, filter out bibliographies and add comments make it easier to distinguish between minor citation errors and deliberate misconduct.</p>
+        <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mt-8 sm:mt-9 lg:mt-10 mb-3 lg:mb-4">If You Run a Blog, Agency or In-House Content Team</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">For content teams, plagiarism detection is tightly linked to brand reputation and SEO performance. Duplicate or heavily reused articles can hurt search rankings, weaken your voice and even create legal problems if you accidentally reuse protected material. In this environment, the best plagiarism checker is one that fits into your publishing pipeline. Batch-checking of many articles, integration with CMS platforms, and API access for custom workflows are often more valuable than a highly polished student-oriented dashboard.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Because agencies often employ multiple writers, you may also want features for internal comparison, so that you can detect unintentional overlaps between different client projects. When AI tools are part of your content strategy, choose a checker that either includes an AI content analysis view or works smoothly alongside a separate AI detector, so you can document how and where AI was used.</p>
+        <h2 id="red-flags-plagiarism-checkers-to-be-care" class="text-[21px] sm:text-[23px] lg:text-[26px] font-extrabold tracking-tightest leading-[1.2] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-4 lg:mb-5">Red Flags: Plagiarism Checkers to Be Careful With</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Not every tool that appears in search results under &ldquo;best plagiarism checker&rdquo; is a safe bet. Some sites exist mainly to harvest text or email addresses, while others exaggerate their capabilities. Watch for the following warning signs when you evaluate new services:</p>
+        <ul class="space-y-3 mb-4 sm:mb-5 lg:mb-6">
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>The site does not clearly identify the company behind the tool, its location or any contact details.</span>
+          </li>
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>The privacy policy is missing, extremely short or contradicts itself about how documents are stored and used.</span>
+          </li>
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>The checker claims near-perfect detection of AI-generated text without offering any explanation of methods or limitations.</span>
+          </li>
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>Uploading a document triggers aggressive pop-ups, unrelated ads or requests for unnecessary browser permissions.</span>
+          </li>
+          <li class="flex gap-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]">
+            <svg class="shrink-0 mt-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>The service is completely free with no visible business model, yet promises unlimited checks and storage.</span>
+          </li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">None of these signs prove that a tool is malicious, but they should make you pause. When in doubt, do not test sensitive or unpublished work on platforms that do not inspire confidence. There are enough reputable options that you do not need to gamble with your data.</p>
+        <h2 id="looking-ahead-plagiarism-detection-beyon" class="text-[21px] sm:text-[23px] lg:text-[26px] font-extrabold tracking-tightest leading-[1.2] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-4 lg:mb-5">Looking Ahead: Plagiarism Detection Beyond 2026</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Plagiarism detection will continue to evolve alongside advances in generative AI and changes in education and publishing. As language models become better at imitating individual styles and blending multiple sources, detection tools will likely rely more on statistical patterns, cross-document comparisons and collaboration with institutions that set clear usage rules. At the same time, regulators are paying closer attention to how educational and workplace technologies handle personal data, which will push vendors toward more transparent policies and stronger security.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">For users, this means that there may never be a single, fixed &ldquo;best plagiarism checker&rdquo; that solves the problem forever. Instead, the most reliable choice will be a tool that openly explains what it does, updates its technology regularly and lets you stay in control of your documents. If you combine such a tool with good citation habits, clear communication about AI use and a willingness to review reports critically, you will be well prepared for whatever the next few years bring.</p>
+        <h2 id="final-thoughts-there-is-no-one-click-bes" class="text-[21px] sm:text-[23px] lg:text-[26px] font-extrabold tracking-tightest leading-[1.2] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-4 lg:mb-5">Final Thoughts: There Is No One-Click &ldquo;Best&rdquo; &ndash; But There Is a Best Fit</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">The phrase &ldquo;best plagiarism checker&rdquo; makes it sound as if one perfect tool is hiding at the top of a ranking list. In reality, 2026 is a world of mixed workflows, AI-assisted writing and strict privacy expectations. The best option for a first-year student is not necessarily the best one for a journal editor, a high-school teacher or a global content team. What they all share, however, is the need for accuracy across different plagiarism patterns, honest handling of AI-generated text, robust database coverage and transparent data-protection practices.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Use the criteria and DIY test from this guide to evaluate any checker you are considering. Read the privacy policy, try sample documents and assess not only the similarity percentage but also the clarity of the report and the quality of support. If you want a concrete starting point, you can look at services like PlagiarismSearch, which combine plagiarism detection with AI-aware analysis and transparent, GDPR-focused data handling, and then compare them with other tools using the same checklist. When you find a solution that fits your context and respects your data, stick with it and build it into your regular writing routine. In the long run, a thoughtful choice of plagiarism checker is less about chasing a trendy brand name and more about protecting your integrity, your reputation and the people who rely on your work.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 · KEEP READING ================= -->
+  <section class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv flex flex-wrap items-center justify-between gap-3 mb-8 sm:mb-10 lg:mb-12">
+        <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Keep reading</h2>
+        <a href="blog.html" class="group inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700 hover:text-ink-900 transition-colors">All articles <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+        <article class="rv min-w-0 rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse overflow-hidden flex flex-col">
+          <a href="#" class="block overflow-hidden">
+            <img src="assets/img/blog/post-03.webp" alt="" width="740" height="550" loading="lazy" decoding="async" class="w-full aspect-[740/550] object-cover transition-transform duration-500 hover:scale-[1.03]">
+          </a>
+          <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
+            <a href="#" class="group flex flex-col">
+              <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Plagiarism Quiz: 24 Tricky Questions Most People Get Wrong</h3>
+              <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </a>
+            <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
+              <span class="w-7 h-7 shrink-0 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-[10px] font-bold">MA</span>
+              <span class="min-w-0 text-[11.5px] font-semibold text-ink-700 truncate">Melissa Anderson</span>
+              <span class="ml-auto shrink-0 text-[11.5px] font-medium text-ink-400 whitespace-nowrap">August 26, 2025</span>
+            </div>
+          </div>
+        </article>
+        <article class="rv min-w-0 rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse overflow-hidden flex flex-col">
+          <a href="#" class="block overflow-hidden">
+            <img src="assets/img/blog/post-04.webp" alt="" width="740" height="550" loading="lazy" decoding="async" class="w-full aspect-[740/550] object-cover transition-transform duration-500 hover:scale-[1.03]">
+          </a>
+          <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
+            <a href="#" class="group flex flex-col">
+              <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">How to Avoid Plagiarism: A Comprehensive Guide to Writing Original Content</h3>
+              <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </a>
+            <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
+              <span class="w-7 h-7 shrink-0 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-[10px] font-bold">KA</span>
+              <span class="min-w-0 text-[11.5px] font-semibold text-ink-700 truncate">Kelsey Ayton</span>
+              <span class="ml-auto shrink-0 text-[11.5px] font-medium text-ink-400 whitespace-nowrap">July 18, 2025</span>
+            </div>
+          </div>
+        </article>
+        <article class="rv min-w-0 rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse overflow-hidden flex flex-col">
+          <a href="#" class="block overflow-hidden">
+            <img src="assets/img/blog/post-07.webp" alt="" width="740" height="550" loading="lazy" decoding="async" class="w-full aspect-[740/550] object-cover transition-transform duration-500 hover:scale-[1.03]">
+          </a>
+          <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
+            <a href="#" class="group flex flex-col">
+              <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">At What Point Does AI Help Become Academic Dishonesty?</h3>
+              <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </a>
+            <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
+              <span class="w-7 h-7 shrink-0 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-[10px] font-bold">KA</span>
+              <span class="min-w-0 text-[11.5px] font-semibold text-ink-700 truncate">Kelsey Ayton</span>
+              <span class="ml-auto shrink-0 text-[11.5px] font-medium text-ink-400 whitespace-nowrap">June 10, 2025</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 · CTA ================= -->
+  <section class="relative py-16 sm:py-24 lg:py-28 overflow-hidden bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-ink-950 text-white ring-1 ring-white/10 p-1.5 sm:p-2 shadow-diffuse-lg overflow-hidden">
+        <div class="relative rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] p-5 sm:p-8 lg:p-14 grid lg:grid-cols-[1.05fr_.95fr] gap-8 sm:gap-9 lg:gap-10 items-center overflow-hidden">
+          <div class="orb w-[420px] h-[420px] bg-teal-500/15 -right-24 -top-40"></div>
+          <div class="relative">
+            <div class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] text-teal-300 mb-3">RUN THE CHECKLIST</div>
+            <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-4">Test it on your own text, not on a demo.</h2>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-white/60 leading-relaxed max-w-[52ch] mb-6 sm:mb-7 lg:mb-8">150 words through the full engine &mdash; plagiarism and AI detection in one pass. No account, no card.</p>
+            <div class="flex flex-wrap gap-3">
+              <a href="index.html#top" class="btn-press group inline-flex items-center gap-3 rounded-full bg-white text-ink-900 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 text-[14px] sm:text-[15px] font-semibold">
+                Check your text
+                <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/5 flex items-center justify-center">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+              <a href="prices.html" class="btn-press inline-flex items-center justify-center rounded-full ring-1 ring-white/20 text-white h-12 sm:h-14 px-5 sm:px-6 lg:px-7 text-[14px] sm:text-[15px] font-semibold hover:bg-white/5 transition-colors duration-300">See pricing</a>
+            </div>
+          </div>
+
+          <div class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-4 lg:p-5">
+            <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-white/40 mb-4">What one pass returns</div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3"><span class="min-w-0 text-[12.5px] font-medium text-white/70 truncate">Copy-paste matches</span><span class="ml-auto shrink-0 text-[12.5px] font-bold text-white">with sources</span></div>
+              <div class="flex items-center gap-3"><span class="min-w-0 text-[12.5px] font-medium text-white/70 truncate">Paraphrased passages</span><span class="ml-auto shrink-0 text-[12.5px] font-bold text-white">flagged</span></div>
+              <div class="flex items-center gap-3"><span class="min-w-0 text-[12.5px] font-medium text-white/70 truncate">AI-written probability</span><span class="ml-auto shrink-0 text-[12.5px] font-bold text-white">per paragraph</span></div>
+            </div>
+            <div class="flex items-center gap-2 mt-5 pt-4 border-t border-white/10">
+              <span class="text-[11.5px] font-semibold text-white/50">Languages</span>
+              <span class="ml-auto text-[13px] font-extrabold nums text-teal-300">17</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
+      <div class="sm:col-span-2 md:col-span-4 lg:col-span-1 sm:grid sm:grid-cols-2 md:grid-cols-4 sm:gap-10 sm:items-center lg:block">
+        <div class="md:col-span-2">
+          <a href="index.html" class="inline-flex items-center mb-4 sm:mb-5 lg:mb-6">
+          <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+        </a>
+        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-5 sm:mb-0 lg:mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+        </div>
+        <div class="flex gap-3 md:col-span-2">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PRODUCT</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="plagiarism-check.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="ai-detector.html" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="paper-analysis.html" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Sample Report</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Students</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Teachers</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">For Universities</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="help-center.html" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">API docs</a></li>
+          <li><a href="blog.html" class="hover:text-white transition-colors duration-300">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">About</a></li>
+          <li><a href="contact-us.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Compliance</a></li>
+          <li><a href="#" class="hover:text-white transition-colors duration-300">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="h-px bg-white/10 mb-6 sm:mb-7 lg:mb-8"></div>
+    <div class="flex flex-wrap items-center gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>© 2026 PlagiarismSearch. All rights reserved.</span>
+      <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
+      <a href="#" class="hover:text-white/70 transition-colors">DPA</a>
+      <a href="#" class="hover:text-white/70 transition-colors">Cookies</a>
+      <span class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) document.documentElement.classList.add('no-motion');
+
+  if (!reduceMotion && window.gsap) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ================= reveals ================= */
+    const rvs = gsap.utils.toArray('.rv');
+    const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
+    const later = rvs.filter(el => !inView.includes(el));
+
+    // first viewport: top-down cascade on load
+    inView.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+    });
+    // the rest reveal as they reach mid-screen
+    later.forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 70%' } });
+    });
+
+    /* ================= pen marks — word colours in, then its underline draws =================
+       Reusable: any number per page. In-view marks wait out the reveal cascade;
+       lower ones fire when scrolled to. See DESIGN.md → Web build → Motion. */
+    gsap.utils.toArray('.pen-word').forEach(word => {
+      const line = word.querySelector('.pen-underline');
+      if (!line) return;
+      const len = line.getTotalLength();
+      gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+      const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
+      const tl = gsap.timeline(inFirstView
+        ? { delay: 1 }
+        : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
+      tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+        .set(line, { opacity: 1 }, .35)
+        .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
+    });
+
+    /* ================= counters (mission stats) — cached writes ================= */
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const dp = parseInt(el.dataset.decimals, 10) || 0;   // ratings need one decimal
+      const obj = { v: 0 };
+      let lastText = '';
+      gsap.to(obj, {
+        v: target, duration: 1.6, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        onUpdate: () => {
+          const text = obj.v.toFixed(dp) + suffix;
+          if (text !== lastText) { lastText = text; el.textContent = text; }
+        }
+      });
+    });
+  } else {
+    // reduced motion: final states, no tweens
+    document.querySelectorAll('[data-count]').forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
+  }
+})();
+</script>
+
+
+
+
+<script>
+(() => {
+  'use strict';
+  const btn = document.getElementById('navBurger');
+  const panel = document.getElementById('navPanel');
+  if (!btn || !panel) return;
+
+  const setOpen = on => {
+    btn.setAttribute('aria-expanded', String(on));
+    panel.classList.toggle('open', on);
+    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
+  };
+
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => {
+    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+  // the desktop menu takes over at lg — never leave the panel hanging open across it
+  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
+})();
+</script>
+
+</body>
+</html>
