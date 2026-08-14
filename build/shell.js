@@ -60,6 +60,12 @@ const PAGES = {
   'account.html':                { active: null, header: false },
 };
 
+/* Placeholder pages for approved destinations that are not built yet. Read from
+   build/stubs.js rather than listed again here, so adding a stub is one edit.
+   They carry no active state: the current menu does not link to them yet — the new
+   navigation does that, and it will set their groups then. */
+for (const s of require('./stubs')) PAGES[s.slug + '.html'] = { active: null };
+
 /* design-system.html has its own shell and is not part of the site's navigation */
 const SKIP = new Set(['design-system.html']);
 
