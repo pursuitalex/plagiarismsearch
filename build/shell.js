@@ -34,27 +34,27 @@ const LANG_CHEV = '        <svg width="11" height="11" viewBox="0 0 24 24" fill=
    active   which top-level nav item is highlighted, or null
    home     the page IS the homepage, so logo and CTA become same-page anchors
    header   false for pages that deliberately have none
-   langChev the footer language pill carries a chevron
 
-   `active` values below reproduce the state as committed, INCLUDING the bug noted
-   at the bottom. Fixing it here is a one-word edit per row — which was the point. */
+   `active` must match the dropdown the page actually sits in. Blog, the blog article
+   and Help center belong to Company in the current menu — that is where the markup
+   lists them — so they are not exceptions. */
 const PAGES = {
-  'index.html':                  { active: null,       home: true, langChev: true },
-  'ai-detector.html':            { active: 'products' },
+  'index.html':                  { active: null, home: true },
   'plagiarism-check.html':       { active: 'products' },
+  'ai-detector.html':            { active: 'products' },
+  'paper-analysis.html':         { active: 'products' },
+  'readability-check.html':      { active: 'products' },
+  'spell-check.html':            { active: 'products' },
   'vip.html':                    { active: 'products' },
+  'api.html':                    { active: 'products' },
+  'chat-bot.html':               { active: 'products' },
   'prices.html':                 { active: 'prices' },
-  'api.html':                    { active: 'company' },
+  'why-us.html':                 { active: 'company' },
+  'mission.html':                { active: 'company' },
+  'contact-us.html':             { active: 'company' },
   'blog.html':                   { active: 'company' },
   'blog-best-checker-2026.html': { active: 'company' },
-  'chat-bot.html':               { active: 'company' },
-  'contact-us.html':             { active: 'company' },
   'help-center.html':            { active: 'company' },
-  'mission.html':                { active: 'company' },
-  'paper-analysis.html':         { active: 'company' },
-  'readability-check.html':      { active: 'company' },
-  'spell-check.html':            { active: 'company' },
-  'why-us.html':                 { active: 'company' },
   /* the account screen drops the menu bar on purpose — a header invites you to leave
      a page whose only job is to get you in. It keeps the footer. */
   'account.html':                { active: null, header: false },
@@ -72,8 +72,10 @@ function render(tpl, page) {
     .split('{{NAV_SOLUTIONS}}').join(at('solutions'))
     .split('{{NAV_PRICES}}').join(at('prices'))
     .split('{{NAV_COMPANY}}').join(at('company'))
-    /* a line placeholder: when empty the whole line goes, not just its contents */
-    .replace(/\{\{LANG_CHEV\}\}\n/, page.langChev ? LANG_CHEV + '\n' : '');
+    /* The pill opens a language menu, so it shows the chevron that says so — on every
+       page. It used to appear only on the homepage, which was drift, not a decision.
+       A line placeholder: when empty the whole line goes, not just its contents. */
+    .replace(/\{\{LANG_CHEV\}\}\n/, page.langChev === false ? '' : LANG_CHEV + '\n');
 }
 
 /* Replace one element by its tag boundaries. Every page was verified to hold at most
