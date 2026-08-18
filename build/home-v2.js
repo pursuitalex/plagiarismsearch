@@ -230,6 +230,21 @@ const STYLE = `
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
   /* ---------- hero variant B: the quick-check form from the v1 product pages ---------- */
+  /* The base .qc-chip rule, brought over from the product pages. The shared head has
+     only the small-breakpoint override for it, so without this the chips lose their
+     pill entirely and fall back to plain text. */
+  /* Same story as .qc-chip: the head carries only the small-breakpoint override for
+     .qc-area, so without the base rule the field ignores width:100% and falls back to
+     its default column count — 285px inside an 796px form, with the placeholder
+     wrapping mid-phrase and the word count stranded far to its right. */
+  .qc-area { width:100%; border:0; outline:none; background:transparent; resize:none;
+    font-size:15px; line-height:1.6; font-weight:500; color:#111827; }
+  .qc-area::placeholder { color:#9CA3AF; font-weight:400; }
+
+  .qc-chip { display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 14px;
+    border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12.5px; font-weight:600;
+    transition:background-color .2s ease, color .2s ease; }
+  .qc-chip:hover { background:#E5E7EB; color:#111827; }
   .qc-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
     transition:border-color .2s ease, background-color .2s ease; }
   .qc-drop:hover { border-color:#2CC3DB; background:#F0FAFC; }
@@ -611,7 +626,12 @@ const section1 = () => `
             </div>
 
             <label for="checkTextAlt" class="sr-only">${S.s1.placeholder}</label>
-            <textarea id="checkTextAlt" rows="4" class="qc-area mb-4" placeholder="${S.s1.placeholder}"></textarea>
+            <!-- the count belongs to the text, so it sits in the corner of the field
+                 rather than in the footer two rows away from what it counts -->
+            <div class="relative mb-4">
+              <textarea id="checkTextAlt" rows="4" class="qc-area block pr-24" placeholder="${S.s1.placeholder}"></textarea>
+              <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span id="wordCountAlt">0</span> / 150 words</span>
+            </div>
 
             <div class="qc-drop flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
               <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
@@ -627,21 +647,20 @@ const section1 = () => `
               ${S.s1.inputs.map(chipGlyph).join(NL18)}
             </div>
 
-            <div class="flex flex-wrap items-center gap-x-6 gap-y-3 pb-4 mb-4 border-b border-ink-100">
-              <label class="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" id="optPlagAlt" checked class="sr-only peer">
-                <span class="sw on" data-for="optPlagAlt"></span>
-                <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">${S.s1.checkPlagiarism}</span>
-              </label>
-              <label class="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" id="optAIAlt" class="sr-only peer">
-                <span class="sw" data-for="optAIAlt"></span>
-                <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">${S.s1.checkAI}</span>
-              </label>
-            </div>
-
-            <div class="flex items-center justify-between gap-3">
-              <span class="text-[12px] font-medium text-ink-400 nums"><span id="wordCountAlt">0</span> / 150 words</span>
+            <!-- the two checks sit beside the button they modify, not in a row of their own -->
+            <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-4">
+              <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" id="optPlagAlt" checked class="sr-only peer">
+                  <span class="sw on" data-for="optPlagAlt"></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">${S.s1.checkPlagiarism}</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" id="optAIAlt" class="sr-only peer">
+                  <span class="sw" data-for="optAIAlt"></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">${S.s1.checkAI}</span>
+                </label>
+              </div>
               <a href="#checker" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
                 ${S.s1.cta}
                 <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
