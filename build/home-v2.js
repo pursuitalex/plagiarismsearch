@@ -507,26 +507,31 @@ const section1 = () => `
 const section2 = () => `
   <!-- ================= 02 · COMPACT TRUST RAIL =================
        Compact, as the brief requires, but the numerals carry weight. The approved
-       sentences are unbroken in the DOM — the emphasis sits inside them. -->
+       sentences are unbroken in the DOM — the emphasis sits inside them, so
+       "Plagiarism checking in 80+ languages" is still one string to any reader.
+
+       NOTE: the brief lists a fourth item here, the verified review-platform
+       rating and count. Olex removed its placeholder on 2026-08-18. The slot goes
+       with it, so re-adding the item when production figures arrive means putting
+       the fourth column back, not just filling a blank. -->
   <section class="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 items-center">
-        <div class="text-center lg:text-left">
+      <div class="rv flex flex-wrap items-center justify-center gap-x-12 sm:gap-x-16 lg:gap-x-24 gap-y-8">
+        <div class="text-center">
           <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">500,000+</div>
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">users</div>
         </div>
-        <div class="text-center lg:text-left">
+        <div class="text-center">
           <div class="text-[11px] sm:text-[11.5px] font-medium text-ink-400 mb-1">Plagiarism checking in</div>
           <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">80+</div>
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">languages</div>
         </div>
-        <div class="flex items-center justify-center lg:justify-start gap-3">
-          <span class="w-16 h-11 rounded-xl bg-ink-50 flex items-center justify-center overflow-hidden shrink-0">
-            <img src="assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="w-full h-full object-contain">
-          </span>
-          <span class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">BBB Accredited</span>
+        <!-- sized to stand as tall as a stat column rather than sitting as a chip
+             beside one; the mark is the proof here, so it carries the same weight -->
+        <div class="flex flex-col items-center text-center">
+          <img src="assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="h-14 sm:h-16 lg:h-[68px] w-auto object-contain">
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">BBB Accredited</div>
         </div>
-        <div class="flex justify-center lg:justify-start">${placeholder(S.s2.dynamic)}</div>
       </div>
     </div>
   </section>`;
