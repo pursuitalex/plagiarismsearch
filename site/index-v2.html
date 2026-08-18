@@ -271,6 +271,17 @@ tailwind.config = {
   .sw.on { background:#0D9488; }
   .sw.on::after { transform:translateX(16px); }
 
+  /* ---------- FAQ chevron ----------
+     Grey until its answer is open. v1 baked the two states into the markup per item,
+     which meant the colour never followed a click; driving it from .faq-item.open keeps
+     the accent on the question you are actually reading.
+     The transform stays in the transition list — the shared head sets it, and redeclaring
+     transition here would otherwise drop the chevron's rotation. */
+  .faq-chev { background:#F1F2F6; color:#4B5563;
+              transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
+  .faq-item.open .faq-chev { background:#FDE5E0; color:#B84431; }
+  .faq-item.open .faq-q > span:first-child { font-weight:700; }
+
   /* ---------- placeholder chrome — anything wearing this waits on production data ---------- */
   .ph { border:1px dashed rgba(16,24,40,.22); border-radius:.75rem; }
   .ph-dark { border:1px dashed rgba(255,255,255,.22); border-radius:.75rem; }
@@ -1022,11 +1033,20 @@ tailwind.config = {
   </section>
 
   <!-- ================= 11 · PRICING PREVIEW =================
-       One-time only. Monthly / 3-month / yearly matrices belong on the pricing page,
-       and no number is hardcoded here: the backend is the source. -->
+       v1's card architecture: three columns, the middle one dark and overhanging.
+       What could not come across, and why:
+         · the Monthly / Yearly toggle and its SAVE 20% badge — the brief previews
+           one-time plans only and forbids billing matrices on the homepage;
+         · the real prices and the per-plan quotas — the brief forbids hardcoding
+           either, and names the backend as the source;
+         · "3 simple plans. No hidden tiers." — the approved H2 is "Choose a one-time
+           plan", and "no hidden" is on the forbidden-claims list;
+         · "Cancel anytime. 7-day money-back guarantee." — not supplied by the brief.
+       Everything else — the layout, the tier eyebrow, the divider, the featured card
+       — is v1 unchanged. -->
   <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
+      <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-11 lg:mb-14">
         <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
           <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">One-time plans</span>
@@ -1035,43 +1055,40 @@ tailwind.config = {
         <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Need more than the free check? Choose a one-time plan, or compare all available pricing options.</p>
       </div>
 
-      <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <div class="flex items-center gap-3 mb-5">
-            <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-teal-50 ring-1 ring-teal-500/15 text-teal-700 flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
-          </span>
-            <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight">Light</p>
+      <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
+        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-4 sm:mb-5 lg:mb-6">Light</div>
+          <div class="ph flex items-center justify-center text-center px-4 py-8 mb-5 sm:mb-6 lg:mb-7">
+            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400">Price</span>
           </div>
+          <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
           <div class="ph flex items-center justify-center text-center px-4 py-10">
             <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400 max-w-[26ch]">BACKEND-SUPPLIED CURRENT PRICE / WORD QUOTA / APPROVED ENTITLEMENT FIELDS</span>
           </div>
         </div>
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7">
-          <div class="flex items-center gap-3 mb-5">
-            <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 text-white flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
-          </span>
-            <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight">Standard</p>
+        <div class="relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6">
+          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-400 mb-4 sm:mb-5 lg:mb-6">Standard</div>
+          <div class="ph-dark flex items-center justify-center text-center px-4 py-8 mb-5 sm:mb-6 lg:mb-7">
+            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/45">Price</span>
           </div>
+          <div class="h-px bg-white/10 mb-5 sm:mb-6 lg:mb-7"></div>
           <div class="ph-dark flex items-center justify-center text-center px-4 py-10">
             <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/45 max-w-[26ch]">BACKEND-SUPPLIED CURRENT PRICE / WORD QUOTA / APPROVED ENTITLEMENT FIELDS</span>
           </div>
         </div>
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <div class="flex items-center gap-3 mb-5">
-            <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-mint-100 ring-1 ring-mint-500/20 text-mint-700 flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
-          </span>
-            <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight">Premium</p>
+        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-4 sm:mb-5 lg:mb-6">Premium</div>
+          <div class="ph flex items-center justify-center text-center px-4 py-8 mb-5 sm:mb-6 lg:mb-7">
+            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400">Price</span>
           </div>
+          <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
           <div class="ph flex items-center justify-center text-center px-4 py-10">
             <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400 max-w-[26ch]">BACKEND-SUPPLIED CURRENT PRICE / WORD QUOTA / APPROVED ENTITLEMENT FIELDS</span>
           </div>
         </div>
       </div>
 
-      <div class="rv"><a href="prices.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-ink-900 text-white hover:bg-ink-800 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
+      <div class="rv text-center"><a href="prices.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-ink-900 text-white hover:bg-ink-800 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
           See all pricing options
           <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -1083,7 +1100,11 @@ tailwind.config = {
   <!-- ================= 12 · FAQ ================= -->
   <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
+      <!-- Heading left, questions right: a long accordion under a centred heading pushes
+           the last question a screen and a half from its own title. The left column sticks,
+           so the section keeps its name in view while you read down the list. -->
+      <div class="grid lg:grid-cols-[380px_1fr] gap-10 sm:gap-12 lg:gap-14 items-start">
+      <div class="rv lg:sticky lg:top-32">
         <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
           <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
@@ -1097,8 +1118,8 @@ tailwind.config = {
           <div class="faq-item open">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">What does PlagiarismSearch check for?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">PlagiarismSearch compares the text you submit with the source collections enabled for your check and highlights matching or similar passages in the report. Depending on your settings, the check can include web sources, academic databases, personal storage, or organization storage. The report gives you evidence to review rather than an automatic plagiarism verdict.</p></div></div>
@@ -1106,8 +1127,8 @@ tailwind.config = {
           <div class="faq-item">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">Does similarity automatically mean plagiarism?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. Similarity means that some text matches or closely resembles text found in the sources checked. A match can come from a quotation, reference, common phrasing, or material that needs closer review, so source context and citation information matter.</p></div></div>
@@ -1115,8 +1136,8 @@ tailwind.config = {
           <div class="faq-item">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">What sources can the plagiarism checker search?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Depending on your settings and access, the checker can search web sources, academic databases, personal storage, and organization storage. When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts. Not every source collection is necessarily included in every check.</p></div></div>
@@ -1124,8 +1145,8 @@ tailwind.config = {
           <div class="faq-item">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">Can I exclude references and in-text citations?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. The checker includes settings to exclude references and in-text citations when appropriate. Because exclusions change what is checked and reported, review your settings before interpreting the result.</p></div></div>
@@ -1133,8 +1154,8 @@ tailwind.config = {
           <div class="faq-item">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">Is my uploaded document stored?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Uploaded source documents are not retained as documents after processing. Generated reports may remain in your account for convenience, and you can permanently delete them. If you choose Add to storage, that is a separate action you control.</p></div></div>
@@ -1142,8 +1163,8 @@ tailwind.config = {
           <div class="faq-item">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">Can I check for AI-written text at the same time?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Keep Check for plagiarism on and optionally add Check for AI writing. The two analyses answer different questions: plagiarism checking looks for source matches and similarity, while AI detection provides a separate AI-writing indicator. An AI result does not by itself mean plagiarism or prove authorship.</p></div></div>
@@ -1151,8 +1172,8 @@ tailwind.config = {
           <div class="faq-item">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">Which languages does the plagiarism checker support?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">PlagiarismSearch supports plagiarism checking in 80+ languages.</p></div></div>
@@ -1160,8 +1181,8 @@ tailwind.config = {
           <div class="faq-item">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">Which file types can I upload?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">The checker accepts common file types such as DOC/DOCX, PDF, TXT, PPT/PPTX, and XLS/XLSX, along with other supported document formats. The uploader shows the formats accepted by the current checker.</p></div></div>
@@ -1169,13 +1190,14 @@ tailwind.config = {
           <div class="faq-item">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">Can I try the plagiarism checker without registration?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. You can check up to 150 words for plagiarism without registering.</p></div></div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </section>

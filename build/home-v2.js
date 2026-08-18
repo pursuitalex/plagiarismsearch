@@ -194,6 +194,17 @@ const STYLE = `
   .sw.on { background:#0D9488; }
   .sw.on::after { transform:translateX(16px); }
 
+  /* ---------- FAQ chevron ----------
+     Grey until its answer is open. v1 baked the two states into the markup per item,
+     which meant the colour never followed a click; driving it from .faq-item.open keeps
+     the accent on the question you are actually reading.
+     The transform stays in the transition list — the shared head sets it, and redeclaring
+     transition here would otherwise drop the chevron's rotation. */
+  .faq-chev { background:#F1F2F6; color:#4B5563;
+              transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
+  .faq-item.open .faq-chev { background:#FDE5E0; color:#B84431; }
+  .faq-item.open .faq-q > span:first-child { font-weight:700; }
+
   /* ---------- placeholder chrome — anything wearing this waits on production data ---------- */
   .ph { border:1px dashed rgba(16,24,40,.22); border-radius:.75rem; }
   .ph-dark { border:1px dashed rgba(255,255,255,.22); border-radius:.75rem; }
@@ -679,32 +690,46 @@ const section10 = () => `
 
 const section11 = () => `
   <!-- ================= 11 · PRICING PREVIEW =================
-       One-time only. Monthly / 3-month / yearly matrices belong on the pricing page,
-       and no number is hardcoded here: the backend is the source. -->
+       v1's card architecture: three columns, the middle one dark and overhanging.
+       What could not come across, and why:
+         · the Monthly / Yearly toggle and its SAVE 20% badge — the brief previews
+           one-time plans only and forbids billing matrices on the homepage;
+         · the real prices and the per-plan quotas — the brief forbids hardcoding
+           either, and names the backend as the source;
+         · "3 simple plans. No hidden tiers." — the approved H2 is "Choose a one-time
+           plan", and "no hidden" is on the forbidden-claims list;
+         · "Cancel anytime. 7-day money-back guarantee." — not supplied by the brief.
+       Everything else — the layout, the tier eyebrow, the divider, the featured card
+       — is v1 unchanged. -->
   <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
+      <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-11 lg:mb-14">
         ${eyebrow('One-time plans')}
         <h2 class="${H2} mb-4 lg:mb-5">${S.s11.h2}</h2>
         <p class="${LEAD} text-ink-600">${S.s11.intro}</p>
       </div>
 
-      <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
+      <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
         ${S.s11.tiers.map((t, i) => {
           const mid = i === 1;
-          return `<div class="${mid ? 'rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7' : CARD}">
-          <div class="flex items-center gap-3 mb-5">
-            ${chip(I.tag, i, mid)}
-            <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight">${t}</p>
+          const slot = mid ? 'ph-dark' : 'ph';
+          const muted = mid ? 'text-white/45' : 'text-ink-400';
+          return `<div class="${mid
+            ? 'relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6'
+            : 'rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7'}">
+          <div class="text-[11px] font-bold tracking-[0.16em] uppercase ${mid ? 'text-orange-400' : 'text-orange-600'} mb-4 sm:mb-5 lg:mb-6">${t}</div>
+          <div class="${slot} flex items-center justify-center text-center px-4 py-8 mb-5 sm:mb-6 lg:mb-7">
+            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] ${muted}">Price</span>
           </div>
-          <div class="${mid ? 'ph-dark' : 'ph'} flex items-center justify-center text-center px-4 py-10">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] ${mid ? 'text-white/45' : 'text-ink-400'} max-w-[26ch]">${S.s11.placeholder}</span>
+          <div class="h-px ${mid ? 'bg-white/10' : 'bg-ink-100'} mb-5 sm:mb-6 lg:mb-7"></div>
+          <div class="${slot} flex items-center justify-center text-center px-4 py-10">
+            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] ${muted} max-w-[26ch]">${S.s11.placeholder}</span>
           </div>
         </div>`;
         }).join('\n        ')}
       </div>
 
-      <div class="rv">${btn(S.s11.cta, S.s11.ctaHref)}</div>
+      <div class="rv text-center">${btn(S.s11.cta, S.s11.ctaHref)}</div>
     </div>
   </section>`;
 
@@ -712,7 +737,11 @@ const section12 = () => `
   <!-- ================= 12 · FAQ ================= -->
   <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
+      <!-- Heading left, questions right: a long accordion under a centred heading pushes
+           the last question a screen and a half from its own title. The left column sticks,
+           so the section keeps its name in view while you read down the list. -->
+      <div class="grid lg:grid-cols-[380px_1fr] gap-10 sm:gap-12 lg:gap-14 items-start">
+      <div class="rv lg:sticky lg:top-32">
         ${eyebrow('Questions')}
         <h2 class="${H2}">${S.s12.h2}</h2>
       </div>
@@ -723,13 +752,14 @@ const section12 = () => `
           ${S.s12.items.map(([q, a], i) => `<div class="faq-item${i === 0 ? ' open' : ''}">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-semibold tracking-tight">${q}</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
             <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
           </div>`).join('\n          ')}
         </div>
+      </div>
       </div>
     </div>
   </section>`;
