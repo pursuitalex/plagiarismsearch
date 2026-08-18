@@ -281,53 +281,67 @@ tailwind.config = {
 <header class="fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
   <div class="flex justify-center">
   <nav class="pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
-    <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-6">
+    <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-5 xl:pr-6">
       <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto max-w-none">
     </a>
     <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-ink-900/5 text-ink-900 font-semibold" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
-            <a href="plagiarism-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
-            <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
-            <a href="paper-analysis.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
-            <a href="readability-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
-            <a href="spell-check.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
-            <a href="vip.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[230px]">
+            <div class="px-3 pt-2 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Core Products</div>
+            <a href="index.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
+            <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI Detector</a>
             <a href="api.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
-            <a href="chat-bot.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Integrations</div>
+            <a href="integration-guide.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Moodle</a>
+            <a href="canvas-integration.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Canvas</a>
+            <a href="how-to-use-plagiarismsearch-google-add-on.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Google Docs</a>
           </div>
         </div>
       </div>
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For universities</span>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For teachers</span>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For students</span>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">For organizations</span>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[240px]">
+            <div class="px-3 pt-2 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">For organizations</div>
+            <a href="university-plagiarism-checker.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Education &amp; Institutions</a>
+            <a href="plagiarism-checker-for-organization.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">For individuals</div>
+            <a href="plagiarism-checker-for-students.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
+            <a href="educators.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
           </div>
         </div>
       </div>
-      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Prices</a>
+      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Pricing</a>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Resources<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[190px]">
+            <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
+            <a href="blog.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
+          </div>
+        </div>
+      </div>
       <div class="nav-item relative">
         <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[210px]">
-            <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
-            <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Scholarship</span>
-            <span class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-300 cursor-default">Reviews</span>
-            <a href="contact-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
-            <a href="blog.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
-            <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[220px]">
+            <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why PlagiarismSearch</a>
+            <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Mission &amp; Values</a>
+            <a href="testimonials.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Reviews</a>
+            <a href="contact-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact</a>
           </div>
         </div>
       </div>
     </div>
-    <div class="min-w-0 flex items-center gap-2 ml-auto lg:ml-8 shrink-0">
+    <div class="min-w-0 flex items-center gap-2 ml-auto lg:ml-6 shrink-0">
+      <div class="nav-item relative hidden xl:block">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13.5px] font-medium text-ink-600 hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true" aria-label="Language">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          EN<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
       <a href="account.html" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
       <a href="index.html#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5">Check free</a>
       <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
@@ -340,32 +354,39 @@ tailwind.config = {
 
   <div id="navPanel" class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
     <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
-      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products</div>
-      <a href="plagiarism-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism check</a>
-      <a href="ai-detector.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI detection</a>
-      <a href="paper-analysis.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Paper analysis</a>
-      <a href="readability-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Readability check</a>
-      <a href="spell-check.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Spell check</a>
-      <a href="vip.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">VIP services</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Core</div>
+      <a href="index.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
+      <a href="ai-detector.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI Detector</a>
       <a href="api.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
-      <a href="chat-bot.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Chat bot</a>
-      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions</div>
-      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For universities</span>
-      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For teachers</span>
-      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For students</span>
-      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">For organizations</span>
-      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
-      <a href="why-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why us</a>
-      <a href="mission.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Our mission</a>
-      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Scholarship</span>
-      <span class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-300 cursor-default">Reviews</span>
-      <a href="contact-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact us</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Integrations</div>
+      <a href="integration-guide.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Moodle</a>
+      <a href="canvas-integration.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Canvas</a>
+      <a href="how-to-use-plagiarismsearch-google-add-on.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Google Docs</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions &middot; For organizations</div>
+      <a href="university-plagiarism-checker.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Education &amp; Institutions</a>
+      <a href="plagiarism-checker-for-organization.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions &middot; For individuals</div>
+      <a href="plagiarism-checker-for-students.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
+      <a href="educators.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Resources</div>
+      <a href="help-center.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
       <a href="blog.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
-      <a href="help-center.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help center</a>
-      <a href="prices.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Prices</a>
-      <div class="sm:hidden mt-3 pt-3 border-t border-ink-100 space-y-2">
-        <a href="account.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
-        <a href="index.html#top" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
+      <a href="why-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why PlagiarismSearch</a>
+      <a href="mission.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Mission &amp; Values</a>
+      <a href="testimonials.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Reviews</a>
+      <a href="contact-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact</a>
+      <a href="prices.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 mt-1 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Pricing</a>
+      <div class="mt-3 pt-3 border-t border-ink-100 space-y-2">
+        <button type="button" class="w-full flex items-center justify-center gap-2 rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14px] font-medium text-ink-700 hover:bg-ink-50 transition-colors duration-200" aria-label="Language">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          English
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="sm:hidden space-y-2">
+          <a href="account.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
+          <a href="index.html#top" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
+        </div>
       </div>
     </div>
   </div>
@@ -780,67 +801,99 @@ tailwind.config = {
 <footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
   <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
   <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-[1.2fr_repeat(4,minmax(0,.7fr))] gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
-      <div class="sm:col-span-2 md:col-span-4 lg:col-span-1 sm:grid sm:grid-cols-2 md:grid-cols-4 sm:gap-10 sm:items-center lg:block">
-        <div class="md:col-span-2">
-          <a href="index.html" class="inline-flex items-center mb-4 sm:mb-5 lg:mb-6">
-          <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
-        </a>
-        <p class="text-[13.5px] leading-relaxed text-white/40 max-w-[36ch] mb-5 sm:mb-0 lg:mb-7">Plagiarism and AI-detection in one pass — across 17 languages. Trusted by 500,000 writers and university integrity offices since 2010.</p>
+
+    <!-- Brand row. The blurb that used to sit here carried "17 languages" and "500,000
+         writers"; DEC-0027 forbids marketing claims it does not supply, and supplies
+         none, so nothing replaces it. The rating tiles are review data, which the briefs
+         treat as a dynamic field — they hold a placeholder until production values are
+         frozen. Both are restored the moment approved copy and figures arrive. -->
+    <div class="grid sm:grid-cols-2 gap-8 sm:gap-10 items-center mb-10 sm:mb-13 lg:mb-16">
+      <a href="index.html" class="inline-flex items-center">
+        <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+      </a>
+      <div class="sm:justify-self-end">
+        <div class="flex gap-3">
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-dashed ring-white/15 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold text-white/30 nums">&mdash;</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-dashed ring-white/15 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold text-white/30 nums">&mdash;</span></span>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-dashed ring-white/15 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold text-white/30 nums">&mdash;</span></span>
         </div>
-        <div class="flex gap-3 md:col-span-2">
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold nums">4.7</span></span>
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold nums">4.8</span></span>
-        </div>
+        <p class="mt-2.5 text-[11px] font-medium text-white/30">Verified ratings pending.</p>
       </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
       <div>
-        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PRODUCT</div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PRODUCTS</div>
         <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
-          <li><a href="plagiarism-check.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="index.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
           <li><a href="ai-detector.html" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
-          <li><a href="paper-analysis.html" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
-          <li><a href="#" class="hover:text-white transition-colors duration-300">Sample Report</a></li>
+          <li><a href="api.html" class="hover:text-white transition-colors duration-300">API</a></li>
+          <li><a href="integration-guide.html" class="hover:text-white transition-colors duration-300">Moodle Integration</a></li>
+          <li><a href="canvas-integration.html" class="hover:text-white transition-colors duration-300">Canvas Integration</a></li>
+          <li><a href="how-to-use-plagiarismsearch-google-add-on.html" class="hover:text-white transition-colors duration-300">Google Docs Add-on</a></li>
         </ul>
       </div>
       <div>
         <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">SOLUTIONS</div>
         <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
-          <li><a href="#" class="hover:text-white transition-colors duration-300">For Students</a></li>
-          <li><a href="#" class="hover:text-white transition-colors duration-300">For Teachers</a></li>
-          <li><a href="#" class="hover:text-white transition-colors duration-300">For Universities</a></li>
+          <li><a href="university-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">Education &amp; Institutions</a></li>
+          <li><a href="plagiarism-checker-for-organization.html" class="hover:text-white transition-colors duration-300">Business &amp; Teams</a></li>
+          <li><a href="plagiarism-checker-for-students.html" class="hover:text-white transition-colors duration-300">Students</a></li>
+          <li><a href="educators.html" class="hover:text-white transition-colors duration-300">Educators</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">POPULAR CHECKS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="powerpoint-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PowerPoint Plagiarism Checker</a></li>
+          <li><a href="pdf-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PDF Plagiarism Checker</a></li>
+          <li><a href="quote-checker-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Quote Checker</a></li>
+          <li><a href="turnitin-checker-alternative.html" class="hover:text-white transition-colors duration-300">Turnitin Alternative</a></li>
         </ul>
       </div>
       <div>
         <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">RESOURCES</div>
         <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
           <li><a href="help-center.html" class="hover:text-white transition-colors duration-300">Help Center</a></li>
-          <li><a href="#" class="hover:text-white transition-colors duration-300">API docs</a></li>
+          <li><a href="user-manuals.html" class="hover:text-white transition-colors duration-300">User Guide</a></li>
           <li><a href="blog.html" class="hover:text-white transition-colors duration-300">Blog</a></li>
+          <li><a href="newsroom.html" class="hover:text-white transition-colors duration-300">News</a></li>
+          <li><a href="originality-badges.html" class="hover:text-white transition-colors duration-300">Originality Badges</a></li>
         </ul>
       </div>
       <div>
         <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">COMPANY</div>
         <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
-          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">About</a></li>
+          <li><a href="why-us.html" class="hover:text-white transition-colors duration-300">Why PlagiarismSearch</a></li>
+          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">Mission &amp; Values</a></li>
+          <li><a href="testimonials.html" class="hover:text-white transition-colors duration-300">Reviews</a></li>
           <li><a href="contact-us.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
-          <li><a href="#" class="hover:text-white transition-colors duration-300">Compliance</a></li>
-          <li><a href="#" class="hover:text-white transition-colors duration-300">Careers</a></li>
+          <li><a href="scholarship.html" class="hover:text-white transition-colors duration-300">Scholarship</a></li>
+          <li><a href="affiliate-program-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Affiliate Program</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PLANS &amp; LEGAL</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="prices.html" class="hover:text-white transition-colors duration-300">Pricing</a></li>
+          <li><a href="vip.html" class="hover:text-white transition-colors duration-300">VIP / High-volume</a></li>
+          <li><a href="policy.html" class="hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+          <li><a href="terms-of-use.html" class="hover:text-white transition-colors duration-300">Terms of Use</a></li>
+          <li><a href="cookie-policy.html" class="hover:text-white transition-colors duration-300">Cookie Policy</a></li>
         </ul>
       </div>
     </div>
+
     <div class="h-px bg-white/10 mb-6 sm:mb-7 lg:mb-8"></div>
+    <!-- The legal links live in the Plans & Legal column now, so this bar no longer
+         repeats them. DPA was never in the brief and is gone with them. -->
     <div class="flex flex-wrap items-center gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
-      <span>© 2026 PlagiarismSearch. All rights reserved.</span>
-      <a href="#" class="hover:text-white/70 transition-colors">Privacy</a>
-      <a href="#" class="hover:text-white/70 transition-colors">Terms</a>
-      <a href="#" class="hover:text-white/70 transition-colors">DPA</a>
-      <a href="#" class="hover:text-white/70 transition-colors">Cookies</a>
-      <span class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      <span>&copy; 2026 PlagiarismSearch. All rights reserved.</span>
+      <button type="button" class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70 hover:text-white transition-colors duration-300" aria-label="Language">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         EN
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-      </span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
     </div>
   </div>
 </footer>

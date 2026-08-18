@@ -1,0 +1,11 @@
+# The build scripts write LF. With core.autocrlf=true and no attributes file, every
+# checkout rewrote the working tree as CRLF, the builders then wrote LF into the
+# header and footer regions, and 37 pages ended up with mixed line endings — which
+# made "the diff is empty" impossible to rely on as proof.
+#
+# Pin LF everywhere. The repository already stores LF, so this changes no content.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.webp binary
+*.woff2 binary
