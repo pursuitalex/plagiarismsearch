@@ -29,7 +29,15 @@ const COPY = {
     h1: 'Plagiarism Checker',
     support: 'Find matching passages and sources, review similarity in context, and see citations and references in a clear report.',
     placeholder: 'Paste or type your text here',
-    inputs: ['Attach file', 'Dropbox', 'OneDrive', 'By URL'],
+    /* The brief fixes the labels; the icons are ours. Dropbox and OneDrive carry their
+       own marks because recognising a service you already use is the whole point of
+       listing it — the other two are actions, not brands, so they stay in UI ink. */
+    inputs: [
+      { label: 'Attach file', icon: 'lucide', path: '<path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/>' },
+      { label: 'Dropbox',     icon: 'brand',  file: 'dropbox.svg' },
+      { label: 'OneDrive',    icon: 'brand',  file: 'onedrive.svg' },
+      { label: 'By URL',      icon: 'lucide', path: '<path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/>' },
+    ],
     checkPlagiarism: 'Check for plagiarism',
     checkAI: 'Check for AI writing',
     cta: 'Check for plagiarism',
@@ -248,7 +256,14 @@ const section1 = () => `
             <textarea id="checkText" rows="5" placeholder="${S.s1.placeholder}" class="w-full resize-none bg-transparent text-[14.5px] sm:text-[15.5px] leading-relaxed text-ink-800 placeholder:text-ink-300 focus:outline-none"></textarea>
 
             <div class="flex flex-wrap items-center gap-2 pt-3 mt-3 border-t border-ink-100">
-              ${S.s1.inputs.map(i => `<button type="button" class="btn-press inline-flex items-center gap-1.5 rounded-full ring-1 ring-black/10 px-3 py-1.5 text-[12.5px] sm:text-[13px] font-semibold text-ink-700 hover:bg-ink-900/5 transition-colors duration-300">${i}</button>`).join('\n              ')}
+              ${S.s1.inputs.map(i => {
+                const glyph = i.icon === 'brand'
+                  /* an <img> rather than an inlined path, so replacing a mark with an
+                     official vector is a file swap and touches no markup */
+                  ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">`
+                  : `<svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
+                return `<button type="button" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 pl-2.5 pr-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold text-ink-700 hover:bg-ink-900/5 transition-colors duration-300">${glyph}${i.label}</button>`;
+              }).join('\n              ')}
             </div>
 
             <div class="flex flex-wrap items-center gap-x-6 gap-y-3 pt-4 mt-4 border-t border-ink-100">
