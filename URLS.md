@@ -12,6 +12,7 @@ driven by this table.
 | Prototype file | Production path | Status | Note |
 |---|---|---|---|
 | `index.html` | `/` | built | The Plagiarism Checker page. DEC-0030 governs its content. |
+| `index-v2.html` | — | no approved path | The DEC-0030 rebuild of the homepage, alongside the current one. Takes over `/` once approved; the old index is retired then, not before. |
 | `ai-detector.html` | `/ai-content-detector` | built |  |
 | `api.html` | `/plagiarism-api` | built |  |
 | `prices.html` | `/prices` | built |  |
@@ -54,8 +55,8 @@ driven by this table.
 
 - 18 × stub
 - 11 × built
+- 4 × no approved path
 - 4 × built · out of global nav
-- 3 × no approved path
 - 2 × stub · path NOT approved
 
 ## Open

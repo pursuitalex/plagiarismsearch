@@ -57,7 +57,9 @@ console.log('\nlinks');
   const broken = [];
   let n = 0;
   for (const f of pages) {
-    for (const m of read(f).matchAll(/(?:href|src)="([^"]+)"/g)) {
+    /* the boundary matters: without it, data-src="0" reads as src="0" and the check
+       reports four broken links on a page whose links are all fine */
+    for (const m of read(f).matchAll(/(?:^|[\s"'])(?:href|src)="([^"]+)"/g)) {
       const t = m[1];
       if (EXTERNAL.test(t)) continue;
       n++;

@@ -18,6 +18,7 @@ const STUBS = require('./stubs');
    null means the briefs give this page no approved path. */
 const BUILT = [
   { file: 'index.html',                  path: '/',                                         note: 'The Plagiarism Checker page. DEC-0030 governs its content.' },
+  { file: 'index-v2.html',               path: null, note: 'The DEC-0030 rebuild of the homepage, alongside the current one. Takes over `/` once approved; the old index is retired then, not before.' },
   { file: 'ai-detector.html',            path: '/ai-content-detector' },
   { file: 'api.html',                    path: '/plagiarism-api' },
   { file: 'prices.html',                 path: '/prices' },

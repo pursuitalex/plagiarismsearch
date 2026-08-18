@@ -54,6 +54,9 @@ const LANG_CHEV = '        <svg width="11" height="11" viewBox="0 0 24 24" fill=
    header   false for pages that deliberately have none                          */
 const PAGES = {
   'index.html':                  { active: null, home: true },
+  /* the DEC-0030 homepage, built alongside the current one so the two can be compared
+     before either is retired. It is the checker page, so it anchors its own CTAs. */
+  'index-v2.html':               { active: null, home: true },
   'ai-detector.html':            { active: 'products' },
   'api.html':                    { active: 'products' },
   'prices.html':                 { active: 'pricing' },
