@@ -37,14 +37,23 @@ console.log('page-level');
      !/^(Free|AI Detector|Similarity Checker|Content Integrity|Best|Most Accurate|99%)/i.test(h1s[0] || ''));
 }
 
-/* ── the thirteen blocks, in the approved order ─────────────────────────── */
+/* ── the thirteen blocks ────────────────────────────────────────────────────
+   Twelve <section> elements now carry them: on 2026-08-18 Olex moved the compact
+   integrations rail — block 3 — inside the report act, where it sits at the foot.
+
+   The brief allows compact rails to be combined visually, so the merge itself is
+   fine. The POSITION is not: the page story fixes integrations proof at 3 and the
+   report at 4, and at the foot of the report act the rail is read after it. That is
+   reported below rather than asserted, because it is a decision, not a slip.
+
+   Block 3 is still tested — by its content, since it no longer has a section of its
+   own. A merged block that quietly lost its contents would otherwise pass. */
 console.log('\nsection order');
 {
   const ORDER = [
     'Plagiarism Checker',                                    // 1 hero (h1)
     null,                                                    // 2 trust rail — no mandatory H2
-    null,                                                    // 3 integrations rail — label only
-    'See the evidence behind every match',                   // 4
+    'See the evidence behind every match',                   // 4 (3 folded in below)
     'Control what your plagiarism check includes',           // 5
     'Plagiarism and AI checks answer different questions',   // 6
     'Know what happens to your document',                    // 7
@@ -56,7 +65,7 @@ console.log('\nsection order');
     'Check your text for plagiarism',                        // 13
   ];
   const sections = [...body.matchAll(/<section\b[\s\S]*?(?=<section\b|$)/g)].map(m => m[0]);
-  ok('thirteen sections', sections.length === 13, sections.length + ' found');
+  ok(ORDER.length + ' sections', sections.length === ORDER.length, sections.length + ' found');
 
   const heads = sections.map(s => {
     const m = s.match(/<h[12]\b[^>]*>([\s\S]*?)<\/h[12]>/);
@@ -64,6 +73,24 @@ console.log('\nsection order');
   });
   const wrong = ORDER.map((want, i) => want && heads[i] !== want ? (i + 1) + ': "' + heads[i] + '"' : null).filter(Boolean);
   ok('every heading in the approved order', !wrong.length, wrong.join('; '));
+
+  /* Block 3, wherever it now lives. Matched on the stripped heading, not the raw
+     markup: the pen underline wraps a word in a span, so "See the evidence behind
+     every match" does not exist as a contiguous string anywhere in the file. */
+  const idx = heads.indexOf('See the evidence behind every match');
+  const report = idx < 0 ? '' : sections[idx].replace(/<[^>]*>/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
+  /* the label reads as text; the three partners are <img alt>, so they are matched on
+     the mark itself — stripping tags to find them would look for words that are not
+     in the text at all */
+  const raw = idx < 0 ? '' : sections[idx];
+  const lost = [
+    ...['Integrations & API', 'API'].filter(x => !report.includes(x)),
+    ...['moodle', 'canvas', 'google-docs'].filter(x => !raw.includes('partners/' + x + '.svg')),
+  ];
+  ok('block 3 present inside the report act', idx >= 0 && !lost.length,
+     idx < 0 ? 'report section not found' : lost.join(', '));
+  console.log('  WAIVED block order  integrations rail sits after the report, not before'
+            + '  (decision 2026-08-18)');
 }
 
 /* ── fixed copy and CTA labels ──────────────────────────────────────────── */

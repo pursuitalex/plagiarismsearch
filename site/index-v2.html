@@ -513,34 +513,6 @@ tailwind.config = {
     </div>
   </section>
 
-  <!-- ================= 03 · COMPACT INTEGRATIONS RAIL =================
-       Product-maturity proof, so the marks do the talking. Order is the brief's. -->
-  <section class="relative py-12 sm:py-14 lg:py-16 bg-white">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv flex items-center gap-4 mb-6 sm:mb-7 lg:mb-8">
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 shrink-0">Integrations & API</span>
-        <span class="h-px flex-1 bg-ink-100"></span>
-      </div>
-      <ul class="rv grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-        <li><span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
-            <img src="assets/svg/partners/moodle.svg" alt="Moodle" loading="lazy" decoding="async" class="w-full h-full object-contain">
-          </span></li>
-        <li>
-          <span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center gap-2 text-ink-700">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
-          </span>
-        </li>
-        <li><span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
-            <img src="assets/svg/partners/canvas.svg" alt="Canvas" loading="lazy" decoding="async" class="w-full h-full object-contain">
-          </span></li>
-        <li><span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
-            <img src="assets/svg/partners/google-docs.svg" alt="Google Docs" loading="lazy" decoding="async" class="w-full h-full object-contain">
-          </span></li>
-      </ul>
-    </div>
-  </section>
-
   <!-- ================= 04 · SIGNATURE · INTERACTIVE REPORT =================
        The first dark act. This is the page's centrepiece, so it gets the break in
        rhythm and the accent colour on the matched text. -->
@@ -651,11 +623,41 @@ tailwind.config = {
         </div>
       </div>
 
-      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5">
-        <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-orange-100 ring-1 ring-orange-500/15 text-orange-700 flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
-          </span>
-        <p class="text-[14.5px] sm:text-[15.5px] lg:text-[16px] font-semibold leading-relaxed max-w-[72ch]">PlagiarismSearch surfaces matching text and sources for review. It does not make the final plagiarism judgment for you.</p>
+      <!-- Demoted from a white card to a footnote. It is a caveat about how to read the
+           report, not a claim, and as a full-width white slab on a dark act it was
+           shouting louder than the report it qualifies. -->
+      <p class="rv flex items-start gap-2.5 text-[12.5px] sm:text-[13px] leading-relaxed text-white/45 max-w-[76ch] mb-10 sm:mb-12 lg:mb-14">
+        <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+        PlagiarismSearch surfaces matching text and sources for review. It does not make the final plagiarism judgment for you.
+      </p>
+
+      <!-- The integrations rail, moved here from its own section at Olex's request.
+           NOTE: the brief's page story puts the integrations proof at block 3 and the
+           report at block 4, so sitting at the foot of the report act reverses the two.
+           Moving this above the report heading would restore the order and keep the
+           visual merge — one move of this block. -->
+      <div class="rv pt-8 sm:pt-10 lg:pt-12 border-t border-white/10">
+        <div class="flex items-center gap-4 mb-6 sm:mb-7 lg:mb-8">
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/40 shrink-0">Integrations & API</span>
+          <span class="h-px flex-1 bg-white/10"></span>
+        </div>
+        <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+          <li><span class="rounded-xl bg-white ring-1 ring-white/10 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
+            <img src="assets/svg/partners/moodle.svg" alt="Moodle" loading="lazy" decoding="async" class="w-full h-full object-contain">
+          </span></li>
+          <li>
+            <span class="rounded-xl bg-white/[.06] ring-1 ring-white/10 aspect-[324/113] w-full flex items-center justify-center gap-2 text-white/80">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
+            </span>
+          </li>
+          <li><span class="rounded-xl bg-white ring-1 ring-white/10 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
+            <img src="assets/svg/partners/canvas.svg" alt="Canvas" loading="lazy" decoding="async" class="w-full h-full object-contain">
+          </span></li>
+          <li><span class="rounded-xl bg-white ring-1 ring-white/10 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
+            <img src="assets/svg/partners/google-docs.svg" alt="Google Docs" loading="lazy" decoding="async" class="w-full h-full object-contain">
+          </span></li>
+        </ul>
       </div>
     </div>
   </section>

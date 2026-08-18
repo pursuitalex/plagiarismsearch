@@ -428,6 +428,12 @@ const SAMPLE = [
   { source: 'marketplace',   author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
 ];
 
+/* the same plate as the light sections, on a surface that can carry a colour logo
+   without the mark looking cut out of white paper */
+const partnerDark = (file, alt) => `<span class="rounded-xl bg-white ring-1 ring-white/10 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
+            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-full h-full object-contain">
+          </span>`;
+
 const S = COPY;
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -520,29 +526,6 @@ const section2 = () => `
     </div>
   </section>`;
 
-const section3 = () => `
-  <!-- ================= 03 · COMPACT INTEGRATIONS RAIL =================
-       Product-maturity proof, so the marks do the talking. Order is the brief's. -->
-  <section class="relative py-12 sm:py-14 lg:py-16 bg-white">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv flex items-center gap-4 mb-6 sm:mb-7 lg:mb-8">
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 shrink-0">${S.s3.label}</span>
-        <span class="h-px flex-1 bg-ink-100"></span>
-      </div>
-      <ul class="rv grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-        <li>${partner('moodle.svg', 'Moodle')}</li>
-        <li>
-          <span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center gap-2 text-ink-700">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg>
-            <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
-          </span>
-        </li>
-        <li>${partner('canvas.svg', 'Canvas')}</li>
-        <li>${partner('google-docs.svg', 'Google Docs')}</li>
-      </ul>
-    </div>
-  </section>`;
-
 const section4 = () => `
   <!-- ================= 04 · SIGNATURE · INTERACTIVE REPORT =================
        The first dark act. This is the page's centrepiece, so it gets the break in
@@ -615,9 +598,35 @@ const section4 = () => `
         </div>
       </div>
 
-      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5">
-        ${chip(I.shield, 1)}
-        <p class="text-[14.5px] sm:text-[15.5px] lg:text-[16px] font-semibold leading-relaxed max-w-[72ch]">${S.s4.callout}</p>
+      <!-- Demoted from a white card to a footnote. It is a caveat about how to read the
+           report, not a claim, and as a full-width white slab on a dark act it was
+           shouting louder than the report it qualifies. -->
+      <p class="rv flex items-start gap-2.5 text-[12.5px] sm:text-[13px] leading-relaxed text-white/45 max-w-[76ch] mb-10 sm:mb-12 lg:mb-14">
+        <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.shield}</svg>
+        ${S.s4.callout}
+      </p>
+
+      <!-- The integrations rail, moved here from its own section at Olex's request.
+           NOTE: the brief's page story puts the integrations proof at block 3 and the
+           report at block 4, so sitting at the foot of the report act reverses the two.
+           Moving this above the report heading would restore the order and keep the
+           visual merge — one move of this block. -->
+      <div class="rv pt-8 sm:pt-10 lg:pt-12 border-t border-white/10">
+        <div class="flex items-center gap-4 mb-6 sm:mb-7 lg:mb-8">
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/40 shrink-0">${S.s3.label}</span>
+          <span class="h-px flex-1 bg-white/10"></span>
+        </div>
+        <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+          <li>${partnerDark('moodle.svg', 'Moodle')}</li>
+          <li>
+            <span class="rounded-xl bg-white/[.06] ring-1 ring-white/10 aspect-[324/113] w-full flex items-center justify-center gap-2 text-white/80">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg>
+              <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
+            </span>
+          </li>
+          <li>${partnerDark('canvas.svg', 'Canvas')}</li>
+          <li>${partnerDark('google-docs.svg', 'Google Docs')}</li>
+        </ul>
       </div>
     </div>
   </section>`;
@@ -1240,7 +1249,8 @@ if (!/name="description"/.test(head)) {
 }
 const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
 
-const sections = [section1, section2, section3, section4, section5, section6, section7,
+/* twelve, not thirteen: the integrations rail folded into the report act */
+const sections = [section1, section2, section4, section5, section6, section7,
                   section8, section9, section10, section11, section12, section13];
 
 /* The reveal and burger behaviours are written out here rather than sliced out of
