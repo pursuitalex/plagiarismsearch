@@ -318,6 +318,7 @@ const I = {
   star:     '<path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/>',
   globe:    '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
   database: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/>',
+  info:     '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
   tag:      '<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',
 };
 
@@ -701,7 +702,18 @@ const section5 = () => `
   </section>`;
 
 const section6 = () => `
-  <!-- ================= 06 · SIGNATURE · PLAGIARISM VS AI ================= -->
+  <!-- ================= 06 · SIGNATURE · PLAGIARISM VS AI =================
+       One type size across all three blocks. They had been running at 17.5, 14.5
+       and 15.5 with nothing to explain the difference, which reads as three
+       accidents rather than a hierarchy. They are peers — two answers and the
+       sentence that ties them — so they share the section-body step.
+
+       Plagiarism stays primary, as the brief requires, but through the things that
+       actually rank a block: the dark surface and the wider column. Type size was
+       doing that job badly and inconsistently.
+
+       The bridge gets a chip of its own, so it stands beside the cards rather than
+       reading as a leftover paragraph under them. -->
   <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
@@ -709,27 +721,26 @@ const section6 = () => `
         <h2 class="${H2}">Plagiarism and AI checks answer ${grad('different questions')}</h2>
       </div>
 
-      <!-- the plagiarism card leads and is the heavier of the two, because the brief
-           keeps plagiarism visually and semantically primary -->
-      <div class="rv grid lg:grid-cols-[1.25fr_1fr] gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
+      <div class="rv grid lg:grid-cols-[1.25fr_1fr] gap-4 sm:gap-5 lg:gap-6 mb-4 sm:mb-5 lg:mb-6">
         <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-6 sm:p-7 lg:p-8">
           <div class="flex items-center gap-3 mb-5 lg:mb-6">
             ${chip(I.search, 0, true)}
             <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Plagiarism check</span>
           </div>
-          <p class="text-[15.5px] sm:text-[16.5px] lg:text-[17.5px] leading-relaxed text-white/85 max-w-[54ch]">${S.s6.plagiarism}</p>
+          <p class="${LEAD} text-white/85 max-w-[58ch]">${S.s6.plagiarism}</p>
         </div>
         <div class="${CARD} flex flex-col">
           <div class="flex items-center gap-3 mb-5 lg:mb-6">
             ${chip(I.sparkles, 1)}
             <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400">AI writing check</span>
           </div>
-          <p class="${TILE_SUB} text-ink-600 mb-6">${S.s6.ai}</p>
+          <p class="${LEAD} text-ink-600 mb-6">${S.s6.ai}</p>
           <div class="mt-auto">${btn(S.s6.cta, S.s6.ctaHref, 'light')}</div>
         </div>
       </div>
 
-      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-orange-50 ring-1 ring-orange-500/10 p-5 sm:p-6 lg:p-7">
+      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-orange-50 ring-1 ring-orange-500/10 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5">
+        ${chip(I.info, 1)}
         <p class="${LEAD} text-ink-700 max-w-[76ch]">${S.s6.bridge}</p>
       </div>
     </div>
