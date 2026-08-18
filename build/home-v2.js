@@ -34,11 +34,8 @@ const COPY = {
        listing it — the other two are actions, not brands, so they stay in UI ink. */
     inputs: [
       { label: 'Attach file', icon: 'lucide', path: '<path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/>' },
-      { label: 'Dropbox',     icon: 'brand',  file: 'dropbox.svg',  size: 'w-[14px] h-[14px] sm:w-4 sm:h-4' },
-      /* The OneDrive cloud is 1.56:1, so matching its height to the square marks would
-         make it read as the heaviest thing in the row. Matched on width instead, one
-         step up, which lands it at about the same optical mass. */
-      { label: 'OneDrive',    icon: 'brand',  file: 'onedrive.svg', size: 'w-[18px] sm:w-5 h-auto' },
+      { label: 'Dropbox',     icon: 'brand',  file: 'dropbox.svg' },
+      { label: 'OneDrive',    icon: 'brand',  file: 'onedrive.svg' },
       { label: 'By URL',      icon: 'lucide', path: '<path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/>' },
     ],
     checkPlagiarism: 'Check for plagiarism',
@@ -210,6 +207,11 @@ const STYLE = `
 /* ─────────────────────────────────────────────────────────────────────────────
    Small builders, so the sections below read as content rather than markup.
    ───────────────────────────────────────────────────────────────────────────── */
+/* One icon slot for the whole page. The rendered size never depends on what a mark
+   happens to contain — every file is drawn on a 24x24 artboard and optical weight is
+   balanced by whitespace inside it, not by handing one icon a bigger box out here. */
+const ICON = 'w-[14px] h-[14px] sm:w-4 sm:h-4';
+
 const EYEBROW = 'text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em]';
 const H2 = 'text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]';
 const LEAD = 'text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed';
@@ -263,8 +265,8 @@ const section1 = () => `
                 const glyph = i.icon === 'brand'
                   /* an <img> rather than an inlined path, so replacing a mark with an
                      official vector is a file swap and touches no markup */
-                  ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${i.size} shrink-0">`
-                  : `<svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
+                  ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${ICON} shrink-0">`
+                  : `<svg class="${ICON} shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
                 return `<button type="button" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 pl-2.5 pr-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold text-ink-700 hover:bg-ink-900/5 transition-colors duration-300">${glyph}${i.label}</button>`;
               }).join('\n              ')}
             </div>

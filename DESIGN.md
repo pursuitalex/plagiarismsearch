@@ -164,6 +164,22 @@ Dark header (surface/inverse) + white Bold caps text +8% LS. Alternating rows (n
 ### Icons — Lucide
 24 starter components named `icon/{name}` (arrow-right, chevron-down, menu, x, search, check, check-circle, info, alert-circle, mail, globe, lock, shield-check, file-text, upload, download, external-link, user, users, play, sparkles, copy + a few more). 24×24 viewBox, 2px stroke bound to `color/neutral/900`. Add more on-demand from lucide.dev.
 
+### One box for every icon
+**Every icon is drawn on a 24×24 artboard and rendered in the same slot.** A row of icons uses one size class — not one per icon. If a mark looks too heavy or too light next to its neighbours, the fix is whitespace *inside* its artboard; never a different box in the markup.
+
+Live area inside the 24 box:
+
+| shape | live width | why |
+|---|---|---|
+| square / upright | 20 | the Lucide default; leaves 2px of air each side |
+| wide (ratio > 1.3) | 22 | a short shape needs more width to carry the same visual weight |
+
+Brand marks arrive in their own proportions and must be re-boxed before use. The OneDrive cloud is 800×512 as supplied — wrapped in a `<g transform>` inside a 24×24 viewBox at 22 wide, vertically centred. Dropbox was drawn full-bleed at 24 and was inset to 20 for the same reason.
+
+Why it matters: sizing per icon means the slot changes whenever artwork is replaced, and rows silently fall out of alignment. Re-boxing keeps the substitution of an official vector a file swap with no markup change.
+
+Brand marks live in `site/assets/svg/partners/`, named after the service in lower case — `dropbox.svg`, `onedrive.svg`, `moodle.svg`. They are referenced as `<img>`, never inlined, so the file can be replaced without touching a page.
+
 ---
 
 ## Motion
