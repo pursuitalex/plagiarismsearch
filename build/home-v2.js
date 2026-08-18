@@ -436,7 +436,7 @@ const SAMPLE = [
    a node export, so each arrived carrying three background rects — the page plate, the
    section and the card. Those were removed; every glyph path is untouched. */
 const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
-            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-[65%] h-auto max-h-[62%] object-contain">
+            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-[60%] h-auto max-h-[57%] object-contain">
           </span>`;
 
 const S = COPY;
