@@ -786,9 +786,9 @@ const section8 = () => `
           const wide = i === 0 || i === 3;
           const mark = ['moodle.svg', null, 'canvas.svg', 'google-docs.svg'][i];
           return `<div class="${CARD} flex flex-col${wide ? ' lg:col-span-2' : ''}">
-          <div class="w-[104px] mb-5">${mark
+          <div class="w-[208px] mb-5">${mark
             ? partner(mark, t)
-            : `<span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center gap-2 text-ink-700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg><span class="text-[15px] font-extrabold tracking-tight">API</span></span>`}</div>
+            : `<span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center gap-3 text-ink-700"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg><span class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight">API</span></span>`}</div>
           <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mb-3">${t}</p>
           <p class="${TILE_SUB} text-ink-600 mb-6${wide ? ' max-w-[62ch]' : ''}">${d}</p>
           <div class="mt-auto">${btn(cta, href, 'light')}</div>
