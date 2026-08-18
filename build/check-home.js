@@ -120,8 +120,20 @@ console.log('\nforbidden');
   const hits = BANNED.filter(([re]) => re.test(text)).map(([, name]) => name);
   ok('no forbidden claim in the page body', !hits.length, hits.join(', '));
 
-  /* "$" anywhere in the body would be a hardcoded price */
-  ok('no hardcoded price', !/\$\s?\d/.test(text));
+  /* Prices. The brief forbids hardcoding them; Olex set that aside on 2026-08-18 so the
+     pricing block can be judged as a design. The section becomes a widget later and the
+     figures go with it.
+
+     Reported, not asserted — and reported against the whole file, not the body. The
+     figures are injected by script, so a body-only check would print a serene "ok"
+     beside a page that visibly shows $9.95, which is worse than a failure. */
+  {
+    const prices = [...new Set([...html.matchAll(/\$\d+(?:\.\d\d)?/g)].map(m => m[0]))];
+    console.log('  ' + (prices.length ? 'WAIVED' : 'ok    ') + ' hardcoded prices' +
+      (prices.length ? '  ' + prices.length + ' figures, deviation recorded 2026-08-18'
+                     + '  (' + prices.slice(0, 4).join(', ') + '…)' : ''));
+    ok('no price baked into the static body markup', !/\$\s?\d/.test(text));
+  }
 }
 
 /* ── structural rules ───────────────────────────────────────────────────── */

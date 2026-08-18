@@ -170,6 +170,51 @@ const REPORT = {
   aiProbability: 'Low',
 };
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   PLAN DATA — a deliberate departure from DEC-0030, decided by Olex on 2026-08-18.
+
+   The brief previews one-time plans only, forbids Monthly / 3-Month / Yearly matrices
+   on the homepage, and forbids hardcoding price or quota values. All three are set
+   aside here so the block can be evaluated as a design: the whole section becomes a
+   widget with live integrations later, and these numbers go with it.
+
+   Lifted verbatim from site/prices.html, which scraped plagiarismsearch.com/prices on
+   2026-07-22. Nothing below was invented. When the widget lands, delete this object and
+   the switcher markup that reads it — nothing else in the section depends on it.
+   ───────────────────────────────────────────────────────────────────────────── */
+const PLANS = {
+  onetime: {
+    note: 'One payment · packages never expire',
+    term: '/ one-time',
+    light:    { price: '$9.95',   rate: '$1.00', feats: ['1 plagiarism check', '1 AI check', 'No expiry'] },
+    standard: { price: '$17.95',  rate: '$0.90', feats: ['10 plagiarism checks', '10 AI checks', 'No expiry'] },
+    premium:  { price: '$41.95',  rate: '$0.42', feats: ['50 plagiarism checks', '50 AI checks', 'No expiry'] }
+  },
+  monthly: {
+    note: 'Recurring billing · cancel anytime',
+    term: '/ month',
+    light:    { price: '$22.95',  rate: '$0.23', feats: ['100 plagiarism checks', '30-day validity'] },
+    standard: { price: '$34.95',  rate: '$0.12', feats: ['300 plagiarism checks', 'API access', 'Report storage', '30-day validity'] },
+    premium:  { price: '$54.95',  rate: '$0.09', feats: ['300 plagiarism checks', '300 AI checks', 'API access', 'Report storage', '30-day validity'] }
+  },
+  quarterly: {
+    note: 'Recurring billing every 3 months · cancel anytime',
+    term: '/ 3 months',
+    light:    { price: '$34.95',  rate: '$0.17', feats: ['100 plagiarism checks', '100 AI checks', '90-day validity'] },
+    standard: { price: '$64.95',  rate: '$0.10', feats: ['300 plagiarism checks', '300 AI checks', 'API access', 'Report storage', '90-day validity'] },
+    premium:  { price: '$89.95',  rate: '$0.07', feats: ['500 plagiarism checks', '500 AI checks', 'API access', 'Report storage', '90-day validity'] }
+  },
+  yearly: {
+    note: 'Recurring billing yearly · best per-word rate',
+    term: '/ year',
+    light:    { price: '$114.95', rate: '$0.11', feats: ['1,000 plagiarism checks', '365-day validity'] },
+    standard: { price: '$174.95', rate: '$0.06', feats: ['3,000 plagiarism checks', 'API access', 'Report storage', '365-day validity'] },
+    premium:  { price: '$259.95', rate: '$0.04', feats: ['3,000 plagiarism checks', '3,000 AI checks', 'API access', 'Report storage', '365-day validity'] }
+  }
+};
+
+const TAGLINE = { light: 'For occasional checks', standard: 'For regular work', premium: 'For heavy use and teams' };
+
 /* ── page-specific styles ────────────────────────────────────────────────── */
 const STYLE = `
 <style>
@@ -193,6 +238,10 @@ const STYLE = `
         transition:transform .25s cubic-bezier(.32,.72,0,1); }
   .sw.on { background:#0D9488; }
   .sw.on::after { transform:translateX(16px); }
+
+  /* ---------- period switcher (same control as the pricing page) ---------- */
+  .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+  .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
 
   /* ---------- FAQ chevron ----------
      Grey until its answer is open. v1 baked the two states into the markup per item,
@@ -690,40 +739,43 @@ const section10 = () => `
 
 const section11 = () => `
   <!-- ================= 11 · PRICING PREVIEW =================
-       v1's card architecture: three columns, the middle one dark and overhanging.
-       What could not come across, and why:
-         · the Monthly / Yearly toggle and its SAVE 20% badge — the brief previews
-           one-time plans only and forbids billing matrices on the homepage;
-         · the real prices and the per-plan quotas — the brief forbids hardcoding
-           either, and names the backend as the source;
-         · "3 simple plans. No hidden tiers." — the approved H2 is "Choose a one-time
-           plan", and "no hidden" is on the forbidden-claims list;
-         · "Cancel anytime. 7-day money-back guarantee." — not supplied by the brief.
-       Everything else — the layout, the tier eyebrow, the divider, the featured card
-       — is v1 unchanged. -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-11 lg:mb-14">
+       v1's card architecture with the four-period switcher from the pricing page.
+       The header copy is the brief's; the numbers are not — see the note on PLANS. -->
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
+    <div class="orb w-[520px] h-[520px] bg-teal-500/8 right-[-140px] top-10"></div>
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-12">
         ${eyebrow('One-time plans')}
         <h2 class="${H2} mb-4 lg:mb-5">${S.s11.h2}</h2>
         <p class="${LEAD} text-ink-600">${S.s11.intro}</p>
       </div>
 
+      <div class="rv flex justify-center mb-3">
+        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
+          ${[['onetime','One-time'],['monthly','Monthly'],['quarterly','3-Months'],['yearly','Yearly']]
+            .map(([k, label]) => `<button type="button" data-period="${k}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">${label}</button>`)
+            .join('\n          ')}
+        </div>
+      </div>
+      <p class="rv text-center text-[12.5px] font-medium text-ink-400 mb-8 sm:mb-10 lg:mb-12" id="periodNote"></p>
+
       <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
-        ${S.s11.tiers.map((t, i) => {
-          const mid = i === 1;
-          const slot = mid ? 'ph-dark' : 'ph';
-          const muted = mid ? 'text-white/45' : 'text-ink-400';
-          return `<div class="${mid
-            ? 'relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6'
+        ${['light','standard','premium'].map(tier => {
+          const dark = tier === 'standard';
+          return `<div data-tier="${tier}" class="${dark
+            ? 'relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden'
             : 'rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7'}">
-          <div class="text-[11px] font-bold tracking-[0.16em] uppercase ${mid ? 'text-orange-400' : 'text-orange-600'} mb-4 sm:mb-5 lg:mb-6">${t}</div>
-          <div class="${slot} flex items-center justify-center text-center px-4 py-8 mb-5 sm:mb-6 lg:mb-7">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] ${muted}">Price</span>
-          </div>
-          <div class="h-px ${mid ? 'bg-white/10' : 'bg-ink-100'} mb-5 sm:mb-6 lg:mb-7"></div>
-          <div class="${slot} flex items-center justify-center text-center px-4 py-10">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] ${muted} max-w-[26ch]">${S.s11.placeholder}</span>
+          ${dark ? '<div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>' : ''}
+          <div class="relative">
+            <div class="text-[11px] font-bold tracking-[0.16em] uppercase ${dark ? 'text-teal-300' : 'text-orange-600'} mb-1.5">${tier}</div>
+            <div class="text-[13.5px] ${dark ? 'text-white/50' : 'text-ink-500'} mb-4 sm:mb-5 lg:mb-6">${TAGLINE[tier]}</div>
+            <div class="flex items-end gap-1.5 mb-3">
+              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price"></span>
+              <span class="text-[12.5px] font-medium ${dark ? 'text-white/40' : 'text-ink-400'} pb-1.5 js-term"></span>
+            </div>
+            <div class="inline-flex items-center rounded-full ${dark ? 'bg-white/10 text-white/70' : 'bg-ink-50 text-ink-500'} px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+            <div class="h-px ${dark ? 'bg-white/10' : 'bg-ink-100'} mb-5 sm:mb-6 lg:mb-7"></div>
+            <ul class="space-y-3.5 text-[13.5px] font-medium ${dark ? 'text-white/80' : 'text-ink-700'} min-h-[9rem] js-feats"></ul>
           </div>
         </div>`;
         }).join('\n        ')}
@@ -835,6 +887,177 @@ const SCRIPT = `
     });
   });
   if (hls.length) show(0);
+
+  /* Pricing periods. The data object is inlined below rather than fetched: this whole
+     section becomes a widget later, and until then the numbers only have to look right. */
+  const PLANS = {
+    "onetime": {
+      "note": "One payment · packages never expire",
+      "term": "/ one-time",
+      "light": {
+        "price": "$9.95",
+        "rate": "$1.00",
+        "feats": [
+          "1 plagiarism check",
+          "1 AI check",
+          "No expiry"
+        ]
+      },
+      "standard": {
+        "price": "$17.95",
+        "rate": "$0.90",
+        "feats": [
+          "10 plagiarism checks",
+          "10 AI checks",
+          "No expiry"
+        ]
+      },
+      "premium": {
+        "price": "$41.95",
+        "rate": "$0.42",
+        "feats": [
+          "50 plagiarism checks",
+          "50 AI checks",
+          "No expiry"
+        ]
+      }
+    },
+    "monthly": {
+      "note": "Recurring billing · cancel anytime",
+      "term": "/ month",
+      "light": {
+        "price": "$22.95",
+        "rate": "$0.23",
+        "feats": [
+          "100 plagiarism checks",
+          "30-day validity"
+        ]
+      },
+      "standard": {
+        "price": "$34.95",
+        "rate": "$0.12",
+        "feats": [
+          "300 plagiarism checks",
+          "API access",
+          "Report storage",
+          "30-day validity"
+        ]
+      },
+      "premium": {
+        "price": "$54.95",
+        "rate": "$0.09",
+        "feats": [
+          "300 plagiarism checks",
+          "300 AI checks",
+          "API access",
+          "Report storage",
+          "30-day validity"
+        ]
+      }
+    },
+    "quarterly": {
+      "note": "Recurring billing every 3 months · cancel anytime",
+      "term": "/ 3 months",
+      "light": {
+        "price": "$34.95",
+        "rate": "$0.17",
+        "feats": [
+          "100 plagiarism checks",
+          "100 AI checks",
+          "90-day validity"
+        ]
+      },
+      "standard": {
+        "price": "$64.95",
+        "rate": "$0.10",
+        "feats": [
+          "300 plagiarism checks",
+          "300 AI checks",
+          "API access",
+          "Report storage",
+          "90-day validity"
+        ]
+      },
+      "premium": {
+        "price": "$89.95",
+        "rate": "$0.07",
+        "feats": [
+          "500 plagiarism checks",
+          "500 AI checks",
+          "API access",
+          "Report storage",
+          "90-day validity"
+        ]
+      }
+    },
+    "yearly": {
+      "note": "Recurring billing yearly · best per-word rate",
+      "term": "/ year",
+      "light": {
+        "price": "$114.95",
+        "rate": "$0.11",
+        "feats": [
+          "1,000 plagiarism checks",
+          "365-day validity"
+        ]
+      },
+      "standard": {
+        "price": "$174.95",
+        "rate": "$0.06",
+        "feats": [
+          "3,000 plagiarism checks",
+          "API access",
+          "Report storage",
+          "365-day validity"
+        ]
+      },
+      "premium": {
+        "price": "$259.95",
+        "rate": "$0.04",
+        "feats": [
+          "3,000 plagiarism checks",
+          "3,000 AI checks",
+          "API access",
+          "Report storage",
+          "365-day validity"
+        ]
+      }
+    }
+  };
+
+  const tabs = [...document.querySelectorAll("#periodTabs .period-btn")];
+  const cards = [...document.querySelectorAll("[data-tier]")];
+  const periodNote = document.getElementById("periodNote");
+  /* concatenated rather than interpolated: this whole script is itself a template
+     literal in build/home-v2.js, so a backtick here would end it early */
+  const tick = c => '<svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+
+  if (tabs.length && cards.length) {
+    const render = (key, animate) => {
+      const period = PLANS[key];
+      periodNote.textContent = period.note;
+      cards.forEach(card => {
+        const tier = period[card.dataset.tier];
+        const dark = card.dataset.tier === "standard";
+        const feats = card.querySelector(".js-feats");
+        /* values first, motion second — a price must never wait on an animation frame */
+        card.querySelector(".js-price").textContent = tier.price;
+        card.querySelector(".js-term").textContent = period.term;
+        card.querySelector(".js-rate").textContent = tier.rate;
+        feats.innerHTML = tier.feats
+          .map(f => '<li class="flex gap-3">' + tick(dark ? "#6ED7E8" : "#2AA46C") + f + '</li>')
+          .join("");
+        if (animate && window.gsap && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          gsap.fromTo([card.querySelector(".js-price"), card.querySelector(".js-rate"), feats],
+            { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .28, ease: "power2.out", overwrite: "auto" });
+        }
+      });
+      tabs.forEach(b => b.classList.toggle("active", b.dataset.period === key));
+    };
+    tabs.forEach(b => b.addEventListener("click", () => render(b.dataset.period, true)));
+    /* one-time leads: it is the mode the brief puts on the homepage */
+    render("onetime", false);
+  }
 
   /* FAQ: answers are already in the DOM; this only opens and closes them */
   document.querySelectorAll('.faq-q').forEach(q => {

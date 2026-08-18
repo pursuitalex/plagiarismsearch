@@ -271,6 +271,10 @@ tailwind.config = {
   .sw.on { background:#0D9488; }
   .sw.on::after { transform:translateX(16px); }
 
+  /* ---------- period switcher (same control as the pricing page) ---------- */
+  .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+  .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+
   /* ---------- FAQ chevron ----------
      Grey until its answer is open. v1 baked the two states into the markup per item,
      which meant the colour never followed a click; driving it from .faq-item.open keeps
@@ -1033,20 +1037,12 @@ tailwind.config = {
   </section>
 
   <!-- ================= 11 · PRICING PREVIEW =================
-       v1's card architecture: three columns, the middle one dark and overhanging.
-       What could not come across, and why:
-         · the Monthly / Yearly toggle and its SAVE 20% badge — the brief previews
-           one-time plans only and forbids billing matrices on the homepage;
-         · the real prices and the per-plan quotas — the brief forbids hardcoding
-           either, and names the backend as the source;
-         · "3 simple plans. No hidden tiers." — the approved H2 is "Choose a one-time
-           plan", and "no hidden" is on the forbidden-claims list;
-         · "Cancel anytime. 7-day money-back guarantee." — not supplied by the brief.
-       Everything else — the layout, the tier eyebrow, the divider, the featured card
-       — is v1 unchanged. -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-11 lg:mb-14">
+       v1's card architecture with the four-period switcher from the pricing page.
+       The header copy is the brief's; the numbers are not — see the note on PLANS. -->
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
+    <div class="orb w-[520px] h-[520px] bg-teal-500/8 right-[-140px] top-10"></div>
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-12">
         <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
           <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">One-time plans</span>
@@ -1055,35 +1051,57 @@ tailwind.config = {
         <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Need more than the free check? Choose a one-time plan, or compare all available pricing options.</p>
       </div>
 
+      <div class="rv flex justify-center mb-3">
+        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
+          <button type="button" data-period="onetime" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">One-time</button>
+          <button type="button" data-period="monthly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">Monthly</button>
+          <button type="button" data-period="quarterly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">3-Months</button>
+          <button type="button" data-period="yearly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">Yearly</button>
+        </div>
+      </div>
+      <p class="rv text-center text-[12.5px] font-medium text-ink-400 mb-8 sm:mb-10 lg:mb-12" id="periodNote"></p>
+
       <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
-        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-4 sm:mb-5 lg:mb-6">Light</div>
-          <div class="ph flex items-center justify-center text-center px-4 py-8 mb-5 sm:mb-6 lg:mb-7">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400">Price</span>
-          </div>
-          <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
-          <div class="ph flex items-center justify-center text-center px-4 py-10">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400 max-w-[26ch]">BACKEND-SUPPLIED CURRENT PRICE / WORD QUOTA / APPROVED ENTITLEMENT FIELDS</span>
-          </div>
-        </div>
-        <div class="relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6">
-          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-400 mb-4 sm:mb-5 lg:mb-6">Standard</div>
-          <div class="ph-dark flex items-center justify-center text-center px-4 py-8 mb-5 sm:mb-6 lg:mb-7">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/45">Price</span>
-          </div>
-          <div class="h-px bg-white/10 mb-5 sm:mb-6 lg:mb-7"></div>
-          <div class="ph-dark flex items-center justify-center text-center px-4 py-10">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/45 max-w-[26ch]">BACKEND-SUPPLIED CURRENT PRICE / WORD QUOTA / APPROVED ENTITLEMENT FIELDS</span>
+        <div data-tier="light" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          
+          <div class="relative">
+            <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">light</div>
+            <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For occasional checks</div>
+            <div class="flex items-end gap-1.5 mb-3">
+              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price"></span>
+              <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term"></span>
+            </div>
+            <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+            <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
+            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] js-feats"></ul>
           </div>
         </div>
-        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-4 sm:mb-5 lg:mb-6">Premium</div>
-          <div class="ph flex items-center justify-center text-center px-4 py-8 mb-5 sm:mb-6 lg:mb-7">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400">Price</span>
+        <div data-tier="standard" class="relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden">
+          <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>
+          <div class="relative">
+            <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-teal-300 mb-1.5">standard</div>
+            <div class="text-[13.5px] text-white/50 mb-4 sm:mb-5 lg:mb-6">For regular work</div>
+            <div class="flex items-end gap-1.5 mb-3">
+              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price"></span>
+              <span class="text-[12.5px] font-medium text-white/40 pb-1.5 js-term"></span>
+            </div>
+            <div class="inline-flex items-center rounded-full bg-white/10 text-white/70 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+            <div class="h-px bg-white/10 mb-5 sm:mb-6 lg:mb-7"></div>
+            <ul class="space-y-3.5 text-[13.5px] font-medium text-white/80 min-h-[9rem] js-feats"></ul>
           </div>
-          <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
-          <div class="ph flex items-center justify-center text-center px-4 py-10">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400 max-w-[26ch]">BACKEND-SUPPLIED CURRENT PRICE / WORD QUOTA / APPROVED ENTITLEMENT FIELDS</span>
+        </div>
+        <div data-tier="premium" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          
+          <div class="relative">
+            <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">premium</div>
+            <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For heavy use and teams</div>
+            <div class="flex items-end gap-1.5 mb-3">
+              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price"></span>
+              <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term"></span>
+            </div>
+            <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+            <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
+            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] js-feats"></ul>
           </div>
         </div>
       </div>
@@ -1441,6 +1459,177 @@ tailwind.config = {
     });
   });
   if (hls.length) show(0);
+
+  /* Pricing periods. The data object is inlined below rather than fetched: this whole
+     section becomes a widget later, and until then the numbers only have to look right. */
+  const PLANS = {
+    "onetime": {
+      "note": "One payment · packages never expire",
+      "term": "/ one-time",
+      "light": {
+        "price": "$9.95",
+        "rate": "$1.00",
+        "feats": [
+          "1 plagiarism check",
+          "1 AI check",
+          "No expiry"
+        ]
+      },
+      "standard": {
+        "price": "$17.95",
+        "rate": "$0.90",
+        "feats": [
+          "10 plagiarism checks",
+          "10 AI checks",
+          "No expiry"
+        ]
+      },
+      "premium": {
+        "price": "$41.95",
+        "rate": "$0.42",
+        "feats": [
+          "50 plagiarism checks",
+          "50 AI checks",
+          "No expiry"
+        ]
+      }
+    },
+    "monthly": {
+      "note": "Recurring billing · cancel anytime",
+      "term": "/ month",
+      "light": {
+        "price": "$22.95",
+        "rate": "$0.23",
+        "feats": [
+          "100 plagiarism checks",
+          "30-day validity"
+        ]
+      },
+      "standard": {
+        "price": "$34.95",
+        "rate": "$0.12",
+        "feats": [
+          "300 plagiarism checks",
+          "API access",
+          "Report storage",
+          "30-day validity"
+        ]
+      },
+      "premium": {
+        "price": "$54.95",
+        "rate": "$0.09",
+        "feats": [
+          "300 plagiarism checks",
+          "300 AI checks",
+          "API access",
+          "Report storage",
+          "30-day validity"
+        ]
+      }
+    },
+    "quarterly": {
+      "note": "Recurring billing every 3 months · cancel anytime",
+      "term": "/ 3 months",
+      "light": {
+        "price": "$34.95",
+        "rate": "$0.17",
+        "feats": [
+          "100 plagiarism checks",
+          "100 AI checks",
+          "90-day validity"
+        ]
+      },
+      "standard": {
+        "price": "$64.95",
+        "rate": "$0.10",
+        "feats": [
+          "300 plagiarism checks",
+          "300 AI checks",
+          "API access",
+          "Report storage",
+          "90-day validity"
+        ]
+      },
+      "premium": {
+        "price": "$89.95",
+        "rate": "$0.07",
+        "feats": [
+          "500 plagiarism checks",
+          "500 AI checks",
+          "API access",
+          "Report storage",
+          "90-day validity"
+        ]
+      }
+    },
+    "yearly": {
+      "note": "Recurring billing yearly · best per-word rate",
+      "term": "/ year",
+      "light": {
+        "price": "$114.95",
+        "rate": "$0.11",
+        "feats": [
+          "1,000 plagiarism checks",
+          "365-day validity"
+        ]
+      },
+      "standard": {
+        "price": "$174.95",
+        "rate": "$0.06",
+        "feats": [
+          "3,000 plagiarism checks",
+          "API access",
+          "Report storage",
+          "365-day validity"
+        ]
+      },
+      "premium": {
+        "price": "$259.95",
+        "rate": "$0.04",
+        "feats": [
+          "3,000 plagiarism checks",
+          "3,000 AI checks",
+          "API access",
+          "Report storage",
+          "365-day validity"
+        ]
+      }
+    }
+  };
+
+  const tabs = [...document.querySelectorAll("#periodTabs .period-btn")];
+  const cards = [...document.querySelectorAll("[data-tier]")];
+  const periodNote = document.getElementById("periodNote");
+  /* concatenated rather than interpolated: this whole script is itself a template
+     literal in build/home-v2.js, so a backtick here would end it early */
+  const tick = c => '<svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+
+  if (tabs.length && cards.length) {
+    const render = (key, animate) => {
+      const period = PLANS[key];
+      periodNote.textContent = period.note;
+      cards.forEach(card => {
+        const tier = period[card.dataset.tier];
+        const dark = card.dataset.tier === "standard";
+        const feats = card.querySelector(".js-feats");
+        /* values first, motion second — a price must never wait on an animation frame */
+        card.querySelector(".js-price").textContent = tier.price;
+        card.querySelector(".js-term").textContent = period.term;
+        card.querySelector(".js-rate").textContent = tier.rate;
+        feats.innerHTML = tier.feats
+          .map(f => '<li class="flex gap-3">' + tick(dark ? "#6ED7E8" : "#2AA46C") + f + '</li>')
+          .join("");
+        if (animate && window.gsap && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          gsap.fromTo([card.querySelector(".js-price"), card.querySelector(".js-rate"), feats],
+            { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .28, ease: "power2.out", overwrite: "auto" });
+        }
+      });
+      tabs.forEach(b => b.classList.toggle("active", b.dataset.period === key));
+    };
+    tabs.forEach(b => b.addEventListener("click", () => render(b.dataset.period, true)));
+    /* one-time leads: it is the mode the brief puts on the homepage */
+    render("onetime", false);
+  }
 
   /* FAQ: answers are already in the DOM; this only opens and closes them */
   document.querySelectorAll('.faq-q').forEach(q => {
