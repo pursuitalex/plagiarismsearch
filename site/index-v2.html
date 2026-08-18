@@ -260,6 +260,10 @@ tailwind.config = {
   .match-panel.on { display:block; animation:mIn .3s cubic-bezier(.32,.72,0,1); }
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
+  /* ---------- closing ring ---------- */
+  .no-motion .ring-word { color:#DC5A45; }
+  .no-motion .ring-path { opacity:1; }
+
   /* ---------- the hero's two checkboxes ---------- */
   .sw { width:38px; height:22px; border-radius:999px; background:rgba(16,24,40,.14);
         position:relative; transition:background .25s cubic-bezier(.32,.72,0,1); flex:none; }
@@ -1357,25 +1361,37 @@ tailwind.config = {
   </section>
 
   <!-- ================= 13 · FINAL CTA =================
-       The closing dark act. Sends you back to the real checker in section 1; no second
-       form is rendered. -->
-  <section class="relative py-20 sm:py-28 lg:py-32 bg-ink-950 text-white overflow-hidden">
+       Built on v1's closing act: the tinted wash the hero opens on, two soft orbs,
+       a pill with a pulsing dot, an oversized heading and the word ringed rather
+       than underlined. The page opens and closes on the same colour.
+
+       What did not come across from v1: its second button (talk to sales) and its
+       trust strip (G2 Leader, Trustpilot 4.7, Capterra 4.8, 7-day money-back). The
+       brief supplies neither, and the ratings are dynamic fields besides.
+
+       Sends you back to the real checker in section 1; no second form is rendered. -->
+  <section class="relative py-20 sm:py-28 lg:py-36 bg-[#F2FCFC] overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[620px] h-[620px] bg-teal-500/14 left-[-160px] bottom-[-200px]"></div>
-      <div class="orb w-[520px] h-[520px] bg-orange-500/12 right-[-140px] top-[-160px]"></div>
+      <div class="orb w-[680px] h-[680px] bg-teal-500/14 left-[-180px] bottom-[-260px]"></div>
+      <div class="orb w-[560px] h-[560px] bg-orange-500/12 right-[-160px] top-[-200px]"></div>
     </div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mx-auto text-center">
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Check your text for <span class="pen-word relative inline-block">plagiarism<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span></h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60 mb-8 sm:mb-10">Paste your text or upload a document to review matching passages and sources in a clear report.</p>
-        <a href="#checker" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-white text-ink-900 hover:bg-white/90 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
+    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
+      <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-6 sm:mb-7 lg:mb-8">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-dot"></span>
+        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Free check</span>
+      </div>
+      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Check your text for <span class="ring-word relative inline-block">plagiarism<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span></h2>
+      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[52ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Paste your text or upload a document to review matching passages and sources in a clear report.</p>
+      <div class="rv flex justify-center mb-6 sm:mb-7">
+        <a href="#checker" class="btn-press group flex items-center gap-3 rounded-full h-13 sm:h-15 bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
           Check for plagiarism
-          <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/10 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </span>
         </a>
-        <p class="mt-5 sm:mt-6 text-[13.5px] sm:text-[14.5px] font-semibold text-white/70">150 words free — no registration required.</p>
       </div>
+      <p class="rv text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">150 words free — no registration required.</p>
     </div>
   </section>
 </main>
@@ -1502,6 +1518,19 @@ tailwind.config = {
   rvs.filter(el => !inView.includes(el)).forEach(el => {
     gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 70%' } });
+  });
+
+  /* ring marks — the closing act loops a word instead of underlining it. Same trick,
+     longer path, and it waits until the word is well inside the viewport. */
+  gsap.utils.toArray('.ring-word').forEach(word => {
+    const path = word.querySelector('.ring-path');
+    if (!path) return;
+    const len = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.timeline({ scrollTrigger: { trigger: word, start: 'top 75%', once: true } })
+      .to(word, { color: '#DC5A45', duration: .4, ease: 'power2.out' })
+      .set(path, { opacity: 1 }, .15)
+      .to(path, { strokeDashoffset: 0, duration: .9, ease: 'power2.inOut' }, .15);
   });
 
   /* pen marks — the word takes the accent colour, then its underline draws itself.
