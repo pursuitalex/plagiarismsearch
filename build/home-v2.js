@@ -229,6 +229,11 @@ const STYLE = `
   .match-panel.on { display:block; animation:mIn .3s cubic-bezier(.32,.72,0,1); }
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
+  /* ---------- hero variant B: the quick-check form from the v1 product pages ---------- */
+  .qc-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
+    transition:border-color .2s ease, background-color .2s ease; }
+  .qc-drop:hover { border-color:#2CC3DB; background:#F0FAFC; }
+
   /* ================= CLOSING CTA · one place for every knob =================
      Ported from v1's act 7, where both media queries were written and left empty. They
      are filled here, and it mattered: the warm glow is 1138px wide, which on a 390px
@@ -508,6 +513,15 @@ const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-
             <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-[60%] h-auto max-h-[57%] object-contain">
           </span>`;
 
+/* the four input methods, drawn once for both hero variants */
+const NL18 = String.fromCharCode(10) + '              ';
+const chipGlyph = i => {
+  const glyph = i.icon === 'brand'
+    ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${ICON} shrink-0">`
+    : `<svg class="${ICON} shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
+  return `<button type="button" class="qc-chip">${glyph}${i.label}</button>`;
+};
+
 const S = COPY;
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -530,6 +544,10 @@ const section1 = () => `
 
       <!-- The real checker is the page's primary object, per the hero rule: no decorative
            report stands in for it. The form is inert — this is a prototype. -->
+      <div class="rv max-w-[860px] mx-auto flex items-center gap-2 mb-4">
+        <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant A</span>
+        <span class="text-[11.5px] font-medium text-ink-400">current</span>
+      </div>
       <form class="rv max-w-[860px] mx-auto" onsubmit="return false">
         <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
           <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
@@ -567,6 +585,73 @@ const section1 = () => `
           </div>
         </div>
       </form>
+
+      <!-- ===== Variant B · the quick-check form from the v1 product pages =====
+           Sits under variant A so the two can be compared side by side. One of them
+           leaves once the choice is made, and with it the two labels and this second
+           <form> — the brief allows only one checker on the page.
+
+           It carries what the brief fixes and the v1 form never had: the placeholder,
+           both checkboxes with AI off by default, and the approved CTA label. The drop
+           zone is v1's, and its line describes an interaction rather than claiming
+           anything, so it comes across as-is. -->
+      <div class="rv max-w-[860px] mx-auto mt-14 sm:mt-16 lg:mt-20">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant B</span>
+          <span class="text-[11.5px] font-medium text-ink-400">the quick-check form from the product pages</span>
+        </div>
+
+        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+          <form class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 mb-4 pb-4 border-b border-ink-100">
+              <div class="flex items-center gap-2">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.sparkles}</svg>
+                <span class="text-[13px] font-bold">${S.s1.free}</span>
+              </div>
+            </div>
+
+            <label for="checkTextAlt" class="sr-only">${S.s1.placeholder}</label>
+            <textarea id="checkTextAlt" rows="4" class="qc-area mb-4" placeholder="${S.s1.placeholder}"></textarea>
+
+            <div class="qc-drop flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+              <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.upload}</svg>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+                <span class="block text-[12px] text-ink-500">${S.s1.formats}</span>
+              </span>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
+              ${S.s1.inputs.map(chipGlyph).join(NL18)}
+            </div>
+
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-3 pb-4 mb-4 border-b border-ink-100">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="optPlagAlt" checked class="sr-only peer">
+                <span class="sw on" data-for="optPlagAlt"></span>
+                <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">${S.s1.checkPlagiarism}</span>
+              </label>
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="optAIAlt" class="sr-only peer">
+                <span class="sw" data-for="optAIAlt"></span>
+                <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">${S.s1.checkAI}</span>
+              </label>
+            </div>
+
+            <div class="flex items-center justify-between gap-3">
+              <span class="text-[12px] font-medium text-ink-400 nums"><span id="wordCountAlt">0</span> / 150 words</span>
+              <a href="#checker" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
+                ${S.s1.cta}
+                <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
 
       <p class="mt-5 sm:mt-6 text-center text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">${S.s1.free}</p>
       <p class="mt-1.5 text-center ${BODY} text-ink-600 max-w-[56ch] mx-auto">${S.s1.formats}</p>
@@ -1082,15 +1167,16 @@ const SCRIPT = `
   'use strict';
 
   /* word counter — the free allowance is 150 words, so the count is the useful readout */
-  const ta = document.getElementById('checkText'), wc = document.getElementById('wordCount');
-  if (ta && wc) {
-    const count = () => {
+  /* both hero variants, while the chooser is on the page */
+  [['checkText', 'wordCount'], ['checkTextAlt', 'wordCountAlt']].forEach(pair => {
+    const ta = document.getElementById(pair[0]), wc = document.getElementById(pair[1]);
+    if (!ta || !wc) return;
+    ta.addEventListener('input', () => {
       const w = ta.value.trim() ? ta.value.trim().split(/\\s+/).length : 0;
       wc.textContent = w;
       wc.style.color = w > 150 ? '#B84431' : '';
-    };
-    ta.addEventListener('input', count);
-  }
+    });
+  });
 
   /* switches: the visual state follows the real checkbox, so the control stays a control */
   document.querySelectorAll('.sw[data-for]').forEach(sw => {
