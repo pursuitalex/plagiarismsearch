@@ -803,7 +803,7 @@ const section11 = () => `
 
 const section12 = () => `
   <!-- ================= 12 · FAQ ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <!-- Heading left, questions right: a long accordion under a centred heading pushes
            the last question a screen and a half from its own title. The left column sticks,
