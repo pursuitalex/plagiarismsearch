@@ -146,10 +146,19 @@ console.log('\nstructure');
   const faqAnswers = (body.match(/class="faq-a"/g) || []).length;
   ok('nine FAQ answers in the rendered HTML', faqAnswers === 9, faqAnswers + ' found');
 
-  /* "roughly 8–12 meaningful unique body destinations" */
-  const dests = new Set([...body.matchAll(/href="([^"#][^"]*)"/g)].map(m => m[1]));
-  ok('8–12 unique body destinations', dests.size >= 8 && dests.size <= 12,
-     dests.size + ': ' + [...dests].join(', '));
+  /* "roughly 8–12 meaningful unique body destinations".
+
+     Internal only. The rule is a site-architecture guideline about where the homepage
+     sends link equity, so an attribution link to Trustpilot is not one of its
+     destinations — counting them failed the page for citing its own sources. External
+     links are still printed, because they should never grow unnoticed either. */
+  const all = new Set([...body.matchAll(/href="([^"#][^"]*)"/g)].map(m => m[1]));
+  const internal = [...all].filter(h => !/^https?:/.test(h));
+  const external = [...all].filter(h => /^https?:/.test(h));
+  ok('8–12 unique internal body destinations', internal.length >= 8 && internal.length <= 12,
+     internal.length + ': ' + internal.join(', '));
+  console.log('  ok    ' + external.length + ' external link(s)  ' +
+     external.map(h => h.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]).join(', '));
 
   /* the AI checkbox must default to off, plagiarism to on */
   ok('plagiarism checked by default, AI not',

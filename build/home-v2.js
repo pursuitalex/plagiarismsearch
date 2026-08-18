@@ -341,6 +341,76 @@ const partner = (file, alt) => `<span class="rounded-xl bg-ink-50 aspect-[324/11
             <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-full h-full object-contain">
           </span>`;
 
+/* ── review sources ──────────────────────────────────────────────────────────
+   The three platforms Olex named. Quotes, names and ratings are NOT here: the brief
+   lists them as dynamic fields and forbids browsing for them, and a mistranscribed
+   review is a fabricated quote with a real person's name on it. The cards below take
+   whatever is dropped into this array; nothing else has to change.
+
+   'rating' and 'count' render whatever they are given, including halves — leave them
+   null and the card simply omits the strip. */
+const SOURCES = {
+  trustpilot: {
+    name: 'Trustpilot',
+    mark: 'assets/svg/trustpilot-icon.svg',
+    url: 'https://www.trustpilot.com/review/plagiarismsearch.com',
+    rating: null, count: null,
+  },
+  smartcustomer: {
+    name: 'SmartCustomer',
+    mark: null,                                   /* no vector yet — asked for */
+    url: 'https://www.smartcustomer.com/reviews/plagiarismsearch.com',
+    rating: null, count: null,
+  },
+  marketplace: {
+    name: 'Google Workspace Marketplace',
+    mark: 'assets/svg/google-icon.svg',           /* the Google mark, not the Marketplace one */
+    url: 'https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827',
+    rating: null, count: null,
+  },
+};
+
+/* One card, two skins. Everything a review can carry is optional, so a card with only
+   a quote still renders and a card with mark, rating, count and author renders more. */
+const stars = (value, dark) => {
+  const pct = value == null ? 0 : Math.max(0, Math.min(100, (value / 5) * 100));
+  const star = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + I.star + '</svg>';
+  return `<span class="relative inline-flex shrink-0" role="img" aria-label="${value == null ? 'Rating pending' : value + ' out of 5'}">
+            <span class="flex gap-0.5 ${dark ? 'text-white/20' : 'text-ink-200'}">${star.repeat(5)}</span>
+            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:${pct}%"><span class="flex gap-0.5">${star.repeat(5)}</span></span>
+          </span>`;
+};
+
+const reviewCard = (r, dark) => {
+  const src = SOURCES[r.source];
+  const muted = dark ? 'text-white/45' : 'text-ink-400';
+  return `<figure class="${dark ? CARD_DARK : CARD} flex flex-col">
+            <div class="flex items-center gap-2.5 mb-5">
+              ${src.mark
+                ? `<img src="${src.mark}" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">`
+                : `<span class="w-4 h-4 rounded-[5px] shrink-0 ${dark ? 'bg-white/15' : 'bg-ink-200'}"></span>`}
+              <span class="text-[11px] sm:text-[11.5px] font-semibold ${dark ? 'text-white/60' : 'text-ink-500'}">${src.name}</span>
+              ${src.rating != null ? `<span class="ml-auto flex items-center gap-2">${stars(src.rating, dark)}<span class="text-[12px] font-bold nums ${dark ? 'text-white' : 'text-ink-900'}">${src.rating}</span></span>` : `<span class="ml-auto">${stars(null, dark)}</span>`}
+            </div>
+
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed ${dark ? 'text-white/85' : 'text-ink-800'} mb-5">${r.quote}</blockquote>
+
+            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t ${dark ? 'border-white/10' : 'border-ink-100'}">
+              <span class="text-[12.5px] sm:text-[13px] font-semibold ${dark ? 'text-white/70' : 'text-ink-700'}">${r.author}</span>
+              <a href="${src.url}" rel="nofollow noopener" class="text-[11.5px] font-semibold ${muted} hover:${dark ? 'text-white' : 'text-ink-900'} underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on ${src.name.split(' ')[0]}</a>
+            </figcaption>
+          </figure>`;
+};
+
+/* Sample text, written to be unmistakable for a review: it describes the slot it sits
+   in. It is here so the card's typography can be judged at a realistic length, and it
+   goes the moment frozen quotes arrive. */
+const SAMPLE = [
+  { source: 'trustpilot',    author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
+  { source: 'smartcustomer', author: 'Reviewer name', quote: 'Sample text at the length a three-line review occupies. Cards stretch to the tallest in the row, so a short quote and a long one still align at the foot.' },
+  { source: 'marketplace',   author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
+];
+
 const S = COPY;
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -704,8 +774,16 @@ const section9 = () => `
 
 const section10 = () => `
   <!-- ================= 10 · REVIEWS =================
-       The second dark act. Structure only: the brief forbids inventing, paraphrasing
-       or browsing for reviews, so three slots wait for frozen quotes. -->
+       Both card skins are on the page at once so Olex can pick one; the losing
+       variant and the two SAMPLE labels come out the moment he does.
+
+       The card takes a source mark, a rating of any value including halves, a
+       count, a quote and an author — all optional. Nothing about it is specific to
+       Trustpilot, so SmartCustomer and the Marketplace use the same component.
+
+       No quote, name or rating is filled in. The brief lists them as dynamic and
+       forbids browsing for them, and a mistranscribed review is a fabricated quote
+       carrying a real person's name. -->
   <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[560px] h-[560px] bg-orange-500/12 left-[-160px] bottom-[-140px]"></div>
@@ -716,19 +794,26 @@ const section10 = () => `
         <h2 class="${H2}">${S.s10.h2}</h2>
       </div>
 
-      <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
-        ${[0, 1, 2].map(() => `<div class="${CARD_DARK} flex flex-col">
-          <div class="flex gap-1 mb-5 text-white/20">
-            ${[0, 1, 2, 3, 4].map(() => `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${I.star}</svg>`).join('')}
-          </div>
-          <div class="ph-dark flex-1 flex items-center justify-center text-center px-4 py-10 mb-5">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/45 max-w-[24ch]">${S.s10.placeholder}</span>
-          </div>
-          <div class="flex items-center justify-between gap-3">
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Source</span>
-            ${placeholder('Attribution', true)}
-          </div>
-        </div>`).join('\n        ')}
+      <!-- variant A · light cards on a raised plate -->
+      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white p-4 sm:p-6 lg:p-8 mb-4 sm:mb-5 lg:mb-6">
+        <div class="flex items-center gap-2 mb-5 sm:mb-6">
+          <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant A · light</span>
+          <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Sample text</span>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+          ${SAMPLE.map(r => reviewCard(r, false)).join('\n          ')}
+        </div>
+      </div>
+
+      <!-- variant B · dark cards straight on the section -->
+      <div class="rv mb-8 sm:mb-10 lg:mb-12">
+        <div class="flex items-center gap-2 mb-5 sm:mb-6">
+          <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant B · dark</span>
+          <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Sample text</span>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+          ${SAMPLE.map(r => reviewCard(r, true)).join('\n          ')}
+        </div>
       </div>
 
       <div class="rv flex flex-wrap items-center gap-5 sm:gap-8">

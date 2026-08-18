@@ -970,8 +970,16 @@ tailwind.config = {
   </section>
 
   <!-- ================= 10 · REVIEWS =================
-       The second dark act. Structure only: the brief forbids inventing, paraphrasing
-       or browsing for reviews, so three slots wait for frozen quotes. -->
+       Both card skins are on the page at once so Olex can pick one; the losing
+       variant and the two SAMPLE labels come out the moment he does.
+
+       The card takes a source mark, a rating of any value including halves, a
+       count, a quote and an author — all optional. Nothing about it is specific to
+       Trustpilot, so SmartCustomer and the Marketplace use the same component.
+
+       No quote, name or rating is filled in. The brief lists them as dynamic and
+       forbids browsing for them, and a mistranscribed review is a fabricated quote
+       carrying a real person's name. -->
   <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[560px] h-[560px] bg-orange-500/12 left-[-160px] bottom-[-140px]"></div>
@@ -985,42 +993,125 @@ tailwind.config = {
         <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">What users say about PlagiarismSearch</h2>
       </div>
 
-      <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col">
-          <div class="flex gap-1 mb-5 text-white/20">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg>
-          </div>
-          <div class="ph-dark flex-1 flex items-center justify-center text-center px-4 py-10 mb-5">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/45 max-w-[24ch]">INSERT 3–5 EXACT SHORT REVIEWS FROZEN FROM APPROVED SOURCES</span>
-          </div>
-          <div class="flex items-center justify-between gap-3">
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Source</span>
-            <span class="ph-dark text-white/45 inline-block px-3 py-2 text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em]">Attribution</span>
-          </div>
+      <!-- variant A · light cards on a raised plate -->
+      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white p-4 sm:p-6 lg:p-8 mb-4 sm:mb-5 lg:mb-6">
+        <div class="flex items-center gap-2 mb-5 sm:mb-6">
+          <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant A · light</span>
+          <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Sample text</span>
         </div>
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col">
-          <div class="flex gap-1 mb-5 text-white/20">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg>
-          </div>
-          <div class="ph-dark flex-1 flex items-center justify-center text-center px-4 py-10 mb-5">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/45 max-w-[24ch]">INSERT 3–5 EXACT SHORT REVIEWS FROZEN FROM APPROVED SOURCES</span>
-          </div>
-          <div class="flex items-center justify-between gap-3">
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Source</span>
-            <span class="ph-dark text-white/45 inline-block px-3 py-2 text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em]">Attribution</span>
-          </div>
+        <div class="grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+          <figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+            <div class="flex items-center gap-2.5 mb-5">
+              <img src="assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">
+              <span class="text-[11px] sm:text-[11.5px] font-semibold text-ink-500">Trustpilot</span>
+              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
+            <span class="flex gap-0.5 text-ink-200"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+          </span></span>
+            </div>
+
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-ink-800 mb-5">Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.</blockquote>
+
+            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-ink-100">
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-ink-700">Reviewer name</span>
+              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-ink-400 hover:text-ink-900 underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Trustpilot</a>
+            </figcaption>
+          </figure>
+          <figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+            <div class="flex items-center gap-2.5 mb-5">
+              <span class="w-4 h-4 rounded-[5px] shrink-0 bg-ink-200"></span>
+              <span class="text-[11px] sm:text-[11.5px] font-semibold text-ink-500">SmartCustomer</span>
+              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
+            <span class="flex gap-0.5 text-ink-200"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+          </span></span>
+            </div>
+
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-ink-800 mb-5">Sample text at the length a three-line review occupies. Cards stretch to the tallest in the row, so a short quote and a long one still align at the foot.</blockquote>
+
+            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-ink-100">
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-ink-700">Reviewer name</span>
+              <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-ink-400 hover:text-ink-900 underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on SmartCustomer</a>
+            </figcaption>
+          </figure>
+          <figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+            <div class="flex items-center gap-2.5 mb-5">
+              <img src="assets/svg/google-icon.svg" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">
+              <span class="text-[11px] sm:text-[11.5px] font-semibold text-ink-500">Google Workspace Marketplace</span>
+              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
+            <span class="flex gap-0.5 text-ink-200"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+          </span></span>
+            </div>
+
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-ink-800 mb-5">Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.</blockquote>
+
+            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-ink-100">
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-ink-700">Reviewer name</span>
+              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="text-[11.5px] font-semibold text-ink-400 hover:text-ink-900 underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Google</a>
+            </figcaption>
+          </figure>
         </div>
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col">
-          <div class="flex gap-1 mb-5 text-white/20">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg>
-          </div>
-          <div class="ph-dark flex-1 flex items-center justify-center text-center px-4 py-10 mb-5">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/45 max-w-[24ch]">INSERT 3–5 EXACT SHORT REVIEWS FROZEN FROM APPROVED SOURCES</span>
-          </div>
-          <div class="flex items-center justify-between gap-3">
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Source</span>
-            <span class="ph-dark text-white/45 inline-block px-3 py-2 text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em]">Attribution</span>
-          </div>
+      </div>
+
+      <!-- variant B · dark cards straight on the section -->
+      <div class="rv mb-8 sm:mb-10 lg:mb-12">
+        <div class="flex items-center gap-2 mb-5 sm:mb-6">
+          <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant B · dark</span>
+          <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Sample text</span>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+          <figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col">
+            <div class="flex items-center gap-2.5 mb-5">
+              <img src="assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">
+              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Trustpilot</span>
+              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
+            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+          </span></span>
+            </div>
+
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.</blockquote>
+
+            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
+              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Trustpilot</a>
+            </figcaption>
+          </figure>
+          <figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col">
+            <div class="flex items-center gap-2.5 mb-5">
+              <span class="w-4 h-4 rounded-[5px] shrink-0 bg-white/15"></span>
+              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">SmartCustomer</span>
+              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
+            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+          </span></span>
+            </div>
+
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Sample text at the length a three-line review occupies. Cards stretch to the tallest in the row, so a short quote and a long one still align at the foot.</blockquote>
+
+            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
+              <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on SmartCustomer</a>
+            </figcaption>
+          </figure>
+          <figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col">
+            <div class="flex items-center gap-2.5 mb-5">
+              <img src="assets/svg/google-icon.svg" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">
+              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Google Workspace Marketplace</span>
+              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
+            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+          </span></span>
+            </div>
+
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.</blockquote>
+
+            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
+              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Google</a>
+            </figcaption>
+          </figure>
         </div>
       </div>
 
