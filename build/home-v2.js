@@ -173,17 +173,17 @@ const REPORT = {
 /* ── page-specific styles ────────────────────────────────────────────────── */
 const STYLE = `
 <style>
-  /* the report demo */
+  /* ---------- the report demo, on the dark act ---------- */
   .hl { cursor:pointer; border-radius:.35rem; padding:.05em .18em; margin:-.05em -.18em;
-        background:rgba(217,119,87,.16); box-shadow:inset 0 -2px 0 rgba(217,119,87,.45);
+        background:rgba(243,111,90,.18); box-shadow:inset 0 -2px 0 rgba(243,111,90,.5);
         transition:background .25s ease, box-shadow .25s ease; }
-  .hl:hover { background:rgba(217,119,87,.26); }
-  .hl.on { background:rgba(217,119,87,.34); box-shadow:inset 0 -2px 0 rgba(217,119,87,.9); }
+  .hl:hover { background:rgba(243,111,90,.3); }
+  .hl.on { background:rgba(243,111,90,.42); box-shadow:inset 0 -2px 0 rgba(243,111,90,1); }
   .match-panel { display:none; }
   .match-panel.on { display:block; animation:mIn .3s cubic-bezier(.32,.72,0,1); }
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
-  /* scan controls */
+  /* ---------- scan controls ---------- */
   .ctl-row { transition:opacity .3s ease; }
   .ctl-row.off { opacity:.45; }
   .sw { width:38px; height:22px; border-radius:999px; background:rgba(16,24,40,.14);
@@ -194,7 +194,7 @@ const STYLE = `
   .sw.on { background:#0D9488; }
   .sw.on::after { transform:translateX(16px); }
 
-  /* placeholder chrome — anything wearing this is waiting on production data */
+  /* ---------- placeholder chrome — anything wearing this waits on production data ---------- */
   .ph { border:1px dashed rgba(16,24,40,.22); border-radius:.75rem; }
   .ph-dark { border:1px dashed rgba(255,255,255,.22); border-radius:.75rem; }
 
@@ -205,26 +205,67 @@ const STYLE = `
 </style>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Small builders, so the sections below read as content rather than markup.
+   The site's visual vocabulary, so the sections below read as content.
+   Everything here is v1's language: the eyebrow chip, the pen underline, tinted
+   icon chips, dark acts between light ones, partner marks, oversized numerals.
    ───────────────────────────────────────────────────────────────────────────── */
-/* One icon slot for the whole page. The rendered size never depends on what a mark
-   happens to contain — every file is drawn on a 24x24 artboard and optical weight is
-   balanced by whitespace inside it, not by handing one icon a bigger box out here. */
 const ICON = 'w-[14px] h-[14px] sm:w-4 sm:h-4';
-
-const EYEBROW = 'text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em]';
 const H2 = 'text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]';
-const LEAD = 'text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed';
-const BODY = 'text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600';
+const LEAD = 'text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed';
+const BODY = 'text-[13.5px] sm:text-[14.5px] leading-relaxed';
+const TILE_SUB = 'text-[13.5px] sm:text-[14.5px] leading-relaxed';
 const CARD = 'rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7';
-const TILE_SUB = 'text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600';
+const CARD_DARK = 'rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7';
+
+/* the section marker: orange dot on a white chip, wide-tracked label */
+const eyebrow = (text, dark = false) => `<div class="inline-flex items-center gap-2 rounded-full ${dark ? 'bg-white/[.07] ring-1 ring-white/10' : 'bg-white ring-1 ring-black/5'} px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] ${dark ? 'text-white/70' : 'text-ink-700'}">${text}</span>
+        </div>`;
+
+/* one word takes the accent colour, then its underline draws itself */
+const pen = w => `<span class="pen-word relative inline-block">${w}<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span>`;
+
+const grad = w => `<span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-teal-600">${w}</span>`;
+
+const I = {
+  search:   '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  sliders:  '<line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/>',
+  upload:   '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>',
+  file:     '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+  report:   '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/>',
+  trash:    '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  shield:   '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+  cap:      '<path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>',
+  building: '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/>',
+  users:    '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  code:     '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+  sparkles: '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>',
+  star:     '<path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/>',
+  globe:    '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+  database: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/>',
+  tag:      '<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',
+};
+
+/* tinted chip; the three tints rotate so a row of cards is not monotone */
+const TINTS = [
+  ['bg-teal-50', 'ring-teal-500/15', 'text-teal-700'],
+  ['bg-orange-100', 'ring-orange-500/15', 'text-orange-700'],
+  ['bg-mint-100', 'ring-mint-500/20', 'text-mint-700'],
+];
+const chip = (icon, i = 0, dark = false) => {
+  const [bg, ring, fg] = TINTS[i % TINTS.length];
+  return `<span class="w-11 h-11 rounded-xl sm:rounded-[14px] ${dark ? 'bg-white/10 ring-1 ring-white/15 text-white' : bg + ' ring-1 ' + ring + ' ' + fg} flex items-center justify-center shrink-0">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+          </span>`;
+};
 
 const btn = (label, href, tone = 'dark') => {
-  const skin = tone === 'dark'
-    ? 'bg-ink-900 text-white hover:bg-ink-800'
-    : 'ring-1 ring-black/10 text-ink-900 hover:bg-ink-900/5';
-  const orb = tone === 'dark' ? 'bg-white/15' : 'bg-ink-900/5';
-  return `<a href="${href}" class="btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full ${skin} text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
+  const skin = tone === 'dark' ? 'bg-ink-900 text-white hover:bg-ink-800'
+             : tone === 'onDark' ? 'bg-white text-ink-900 hover:bg-white/90'
+             : 'ring-1 ring-black/10 text-ink-900 hover:bg-ink-900/5';
+  const orb = tone === 'dark' ? 'bg-white/15' : tone === 'onDark' ? 'bg-ink-900/10' : 'bg-ink-900/5';
+  return `<a href="${href}" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full ${skin} text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
           ${label}
           <span class="icon-orb w-9 h-9 rounded-full ${orb} flex items-center justify-center">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -234,10 +275,17 @@ const btn = (label, href, tone = 'dark') => {
 
 const placeholder = (text, dark = false) => `<span class="${dark ? 'ph-dark text-white/45' : 'ph text-ink-400'} inline-block px-3 py-2 text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em]">${text}</span>`;
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Sections
-   ───────────────────────────────────────────────────────────────────────────── */
+/* partner mark on its own plate, the treatment already used on the current homepage */
+const partner = (file, alt) => `<span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
+            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-full h-full object-contain">
+          </span>`;
+
 const S = COPY;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Sections. Light and dark alternate so the page has a pulse rather than one
+   long scroll: the report, the reviews and the closing CTA are the dark acts.
+   ───────────────────────────────────────────────────────────────────────────── */
 
 const section1 = () => `
   <!-- ================= 01 · HERO / REAL CHECKER ================= -->
@@ -248,7 +296,7 @@ const section1 = () => `
     </div>
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="max-w-[760px] mx-auto text-center mb-8 sm:mb-10 lg:mb-12">
-        <h1 class="${H2} mb-4 lg:mb-5">${S.s1.h1}</h1>
+        <h1 class="${H2} mb-5 lg:mb-6">Plagiarism ${pen('Checker')}</h1>
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">${S.s1.support}</p>
       </div>
 
@@ -293,91 +341,134 @@ const section1 = () => `
       </form>
 
       <p class="mt-5 sm:mt-6 text-center text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">${S.s1.free}</p>
-      <p class="mt-1.5 text-center ${BODY} max-w-[56ch] mx-auto">${S.s1.formats}</p>
+      <p class="mt-1.5 text-center ${BODY} text-ink-600 max-w-[56ch] mx-auto">${S.s1.formats}</p>
     </div>
   </section>`;
 
 const section2 = () => `
-  <!-- ================= 02 · COMPACT TRUST RAIL ================= -->
-  <section class="relative py-8 sm:py-10 lg:py-12 bg-white border-y border-ink-100">
+  <!-- ================= 02 · COMPACT TRUST RAIL =================
+       Compact, as the brief requires, but the numerals carry weight. The approved
+       sentences are unbroken in the DOM — the emphasis sits inside them. -->
+  <section class="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-10 lg:gap-x-12 gap-y-4 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">
-        ${S.s2.fixed.map(x => `<span>${x}</span>`).join('\n        ')}
-        ${placeholder(S.s2.dynamic)}
+      <div class="rv grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 items-center">
+        <div class="text-center lg:text-left">
+          <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">500,000+</div>
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">users</div>
+        </div>
+        <div class="text-center lg:text-left">
+          <div class="text-[11px] sm:text-[11.5px] font-medium text-ink-400 mb-1">Plagiarism checking in</div>
+          <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">80+</div>
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">languages</div>
+        </div>
+        <div class="flex items-center justify-center lg:justify-start gap-3">
+          <span class="w-16 h-11 rounded-xl bg-ink-50 flex items-center justify-center overflow-hidden shrink-0">
+            <img src="assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="w-full h-full object-contain">
+          </span>
+          <span class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">BBB Accredited</span>
+        </div>
+        <div class="flex justify-center lg:justify-start">${placeholder(S.s2.dynamic)}</div>
       </div>
     </div>
   </section>`;
 
 const section3 = () => `
-  <!-- ================= 03 · COMPACT INTEGRATIONS RAIL ================= -->
-  <section class="relative py-8 sm:py-10 lg:py-12 bg-white">
+  <!-- ================= 03 · COMPACT INTEGRATIONS RAIL =================
+       Product-maturity proof, so the marks do the talking. Order is the brief's. -->
+  <section class="relative py-12 sm:py-14 lg:py-16 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-8 gap-y-3">
-        <span class="${EYEBROW} text-ink-400">${S.s3.label}</span>
-        <span class="hidden sm:block w-px h-4 bg-ink-200"></span>
-        ${S.s3.items.map(x => `<span class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">${x}</span>`).join('\n        ')}
+      <div class="rv flex items-center gap-4 mb-6 sm:mb-7 lg:mb-8">
+        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 shrink-0">${S.s3.label}</span>
+        <span class="h-px flex-1 bg-ink-100"></span>
       </div>
+      <ul class="rv grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+        <li>${partner('moodle.svg', 'Moodle')}</li>
+        <li>
+          <span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center gap-2 text-ink-700">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg>
+            <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
+          </span>
+        </li>
+        <li>${partner('canvas.svg', 'Canvas')}</li>
+        <li>${partner('google-docs.svg', 'Google Docs')}</li>
+      </ul>
     </div>
   </section>`;
 
 const section4 = () => `
-  <!-- ================= 04 · SIGNATURE · INTERACTIVE REPORT ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+  <!-- ================= 04 · SIGNATURE · INTERACTIVE REPORT =================
+       The first dark act. This is the page's centrepiece, so it gets the break in
+       rhythm and the accent colour on the matched text. -->
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-52 top-10"></div>
+      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-160px] bottom-[-120px]"></div>
+    </div>
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">Report</div>
-        <h2 class="${H2} mb-4 lg:mb-5">${S.s4.h2}</h2>
-        <p class="${LEAD}">${S.s4.intro}</p>
+        ${eyebrow('The report', true)}
+        <h2 class="${H2} mb-4 lg:mb-5">See the ${pen('evidence')} behind every match</h2>
+        <p class="${LEAD} text-white/60">${S.s4.intro}</p>
       </div>
 
       <div class="rv grid lg:grid-cols-[1.35fr_1fr] gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
-        <div class="${CARD}">
-          <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">${S.s4.labels[0]}</div>
-          <div class="space-y-3.5 text-[14.5px] sm:text-[15.5px] leading-relaxed text-ink-800">
+        <div class="${CARD_DARK}">
+          <div class="flex items-center gap-3 mb-5">
+            ${chip(I.file, 0, true)}
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">${S.s4.labels[0]}</span>
+          </div>
+          <div class="space-y-3.5 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85">
             ${REPORT.paragraphs.map(p => p.match === null
               ? `<p>${p.text}</p>`
               : `<p><span class="hl" role="button" tabindex="0" data-match="${p.match}">${p.text}</span></p>`).join('\n            ')}
           </div>
-          <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] sm:text-[13px] font-medium text-ink-400">Select a highlighted passage to open its source.</p>
+          <p class="mt-5 pt-4 border-t border-white/10 text-[12.5px] sm:text-[13px] font-medium text-white/40">Select a highlighted passage to open its source.</p>
         </div>
 
         <div>
           ${REPORT.matches.map((m, i) => `
-          <div class="match-panel${i === 0 ? ' on' : ''} ${CARD}" data-panel="${i}">
-            <div class="${EYEBROW} text-ink-400 mb-3">${S.s4.labels[1]}</div>
-            <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight text-ink-900 mb-1">${m.source}</p>
-            <p class="text-[12.5px] sm:text-[13px] font-medium text-ink-400 mb-5">${m.where}</p>
+          <div class="match-panel${i === 0 ? ' on' : ''} ${CARD_DARK}" data-panel="${i}">
+            <div class="flex items-center gap-3 mb-4">
+              ${chip(I.search, 1, true)}
+              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">${S.s4.labels[1]}</span>
+            </div>
+            <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-1">${m.source}</p>
+            <p class="text-[12.5px] sm:text-[13px] font-medium text-white/40 mb-5">${m.where}</p>
 
-            <div class="${EYEBROW} text-ink-400 mb-2">${S.s4.labels[2]}</div>
-            <p class="${BODY} mb-5">${m.context}</p>
+            <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-2">${S.s4.labels[2]}</div>
+            <p class="${BODY} text-white/60 mb-5">${m.context}</p>
 
-            <dl class="divide-y divide-ink-100 border-t border-ink-100">
+            <dl class="divide-y divide-white/10 border-t border-white/10">
               <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-ink-500">${S.s4.labels[3]}</dt>
-                <dd class="text-[13.5px] sm:text-[14.5px] font-bold text-ink-900 nums">${m.similarity}</dd>
+                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">${S.s4.labels[3]}</dt>
+                <dd class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest nums text-orange-400">${m.similarity}</dd>
               </div>
               <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-ink-500">${S.s4.labels[4]}</dt>
-                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-900">${m.cited ? 'Present for this passage' : 'None for this passage'}</dd>
+                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">${S.s4.labels[4]}</dt>
+                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold">${m.cited ? 'Present for this passage' : 'None for this passage'}</dd>
               </div>
               <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-ink-500">${S.s4.labels[5]}</dt>
-                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-900">Listed in the report</dd>
+                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">${S.s4.labels[5]}</dt>
+                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold">Listed in the report</dd>
               </div>
             </dl>
           </div>`).join('\n          ')}
 
-          <!-- kept in its own frame, away from the source-matching signals, because the
-               brief requires the AI signal to read as separate rather than as a verdict -->
-          <div class="mt-4 sm:mt-5 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-50 ring-1 ring-black/5 p-5 sm:p-6">
-            <div class="${EYEBROW} text-ink-400 mb-2">${S.s4.labels[6]}</div>
-            <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight text-ink-900 mb-1.5">${REPORT.aiProbability}</p>
-            <p class="${BODY}">Reported as a separate signal. It is not part of source matching.</p>
+          <!-- its own frame, away from the source-matching signals, because the brief
+               requires the AI signal to read as separate rather than as a verdict -->
+          <div class="mt-4 sm:mt-5 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-teal-500/10 ring-1 ring-teal-400/20 p-5 sm:p-6">
+            <div class="flex items-center gap-3 mb-3">
+              ${chip(I.sparkles, 0, true)}
+              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">${S.s4.labels[6]}</span>
+            </div>
+            <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tight mb-1.5">${REPORT.aiProbability}</p>
+            <p class="${BODY} text-white/55">Reported as a separate signal. It is not part of source matching.</p>
           </div>
         </div>
       </div>
 
-      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7">
+      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5">
+        ${chip(I.shield, 1)}
         <p class="text-[14.5px] sm:text-[15.5px] lg:text-[16px] font-semibold leading-relaxed max-w-[72ch]">${S.s4.callout}</p>
       </div>
     </div>
@@ -385,34 +476,47 @@ const section4 = () => `
 
 const section5 = () => `
   <!-- ================= 05 · SIGNATURE · SOURCES & SCAN CONTROLS ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">Scan controls</div>
+        ${eyebrow('Scan controls')}
         <h2 class="${H2} mb-4 lg:mb-5">${S.s5.h2}</h2>
-        <p class="${LEAD}">${S.s5.intro}</p>
+        <p class="${LEAD} text-ink-600">${S.s5.intro}</p>
       </div>
 
-      <div class="rv grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+      <!-- bento: the two control cards carry the interaction, the coverage figure sits
+           beneath them as the one number this section is allowed to claim -->
+      <div class="rv grid lg:grid-cols-[1fr_1fr_.9fr] gap-4 sm:gap-5 lg:gap-6">
         <div class="${CARD}">
-          <div class="${EYEBROW} text-ink-400 mb-5">Search sources</div>
+          <div class="flex items-center gap-3 mb-5">
+            ${chip(I.search, 0)}
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400">Search sources</span>
+          </div>
           <div class="space-y-1">
             ${S.s5.sources.map((s, i) => `<label class="ctl-row flex items-center gap-3 py-2.5 cursor-pointer">
               <span class="sw${i < 2 ? ' on' : ''}" data-src="${i}"></span>
               <span class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-800">${s}</span>
             </label>`).join('\n            ')}
           </div>
-          <p id="coverageNote" class="mt-4 pt-4 border-t border-ink-100 ${BODY}">${S.s5.coverage}</p>
         </div>
 
         <div class="${CARD}">
-          <div class="${EYEBROW} text-ink-400 mb-5">Review settings</div>
+          <div class="flex items-center gap-3 mb-5">
+            ${chip(I.sliders, 1)}
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400">Review settings</span>
+          </div>
           <div class="space-y-1">
-            ${S.s5.settings.map((s, i) => `<label class="ctl-row flex items-center gap-3 py-2.5 cursor-pointer">
-              <span class="sw${i < 2 ? ' on' : ''}"></span>
+            ${S.s5.settings.map(s => `<label class="ctl-row flex items-center gap-3 py-2.5 cursor-pointer">
+              <span class="sw on"></span>
               <span class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-800">${s}</span>
             </label>`).join('\n            ')}
           </div>
+        </div>
+
+        <div id="coverageNote" class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7 flex flex-col justify-center transition-opacity duration-300">
+          ${chip(I.database, 0, true)}
+          <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none mt-5 mb-3">500 million</div>
+          <p class="${BODY} text-white/60">${S.s5.coverage}</p>
         </div>
       </div>
     </div>
@@ -420,53 +524,67 @@ const section5 = () => `
 
 const section6 = () => `
   <!-- ================= 06 · SIGNATURE · PLAGIARISM VS AI ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">Two analyses</div>
-        <h2 class="${H2}">${S.s6.h2}</h2>
+      <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
+        ${eyebrow('Two analyses')}
+        <h2 class="${H2}">Plagiarism and AI checks answer ${grad('different questions')}</h2>
       </div>
 
       <!-- the plagiarism card leads and is the heavier of the two, because the brief
            keeps plagiarism visually and semantically primary -->
       <div class="rv grid lg:grid-cols-[1.25fr_1fr] gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
         <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-6 sm:p-7 lg:p-8">
-          <div class="${EYEBROW} text-white/40 mb-4 lg:mb-5">Plagiarism check</div>
+          <div class="flex items-center gap-3 mb-5 lg:mb-6">
+            ${chip(I.search, 0, true)}
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Plagiarism check</span>
+          </div>
           <p class="text-[15.5px] sm:text-[16.5px] lg:text-[17.5px] leading-relaxed text-white/85 max-w-[54ch]">${S.s6.plagiarism}</p>
         </div>
         <div class="${CARD} flex flex-col">
-          <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">AI writing check</div>
-          <p class="${TILE_SUB} mb-6">${S.s6.ai}</p>
+          <div class="flex items-center gap-3 mb-5 lg:mb-6">
+            ${chip(I.sparkles, 1)}
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400">AI writing check</span>
+          </div>
+          <p class="${TILE_SUB} text-ink-600 mb-6">${S.s6.ai}</p>
           <div class="mt-auto">${btn(S.s6.cta, S.s6.ctaHref, 'light')}</div>
         </div>
       </div>
 
-      <p class="rv ${LEAD} max-w-[76ch]">${S.s6.bridge}</p>
+      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-orange-50 ring-1 ring-orange-500/10 p-5 sm:p-6 lg:p-7">
+        <p class="${LEAD} text-ink-700 max-w-[76ch]">${S.s6.bridge}</p>
+      </div>
     </div>
   </section>`;
 
 const section7 = () => `
   <!-- ================= 07 · DOCUMENT & REPORT PRIVACY LIFECYCLE ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F2FCFC] overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="orb w-[540px] h-[540px] bg-teal-500/10 right-[-160px] top-20"></div>
+    </div>
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">Document handling</div>
+        ${eyebrow('Document handling')}
         <h2 class="${H2} mb-4 lg:mb-5">${S.s7.h2}</h2>
-        <p class="${LEAD}">${S.s7.intro}</p>
+        <p class="${LEAD} text-ink-600">${S.s7.intro}</p>
       </div>
 
       <ol class="rv grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
         ${S.s7.steps.map(([t, d], i) => `<li class="${CARD}">
-          <span class="${EYEBROW} text-ink-400 nums">Step ${i + 1}</span>
-          <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-900 mt-3 mb-2">${t}</p>
-          <p class="${TILE_SUB}">${d}</p>
+          ${chip([I.upload, I.file, I.report, I.trash][i], i)}
+          <div class="flex items-baseline gap-2 mt-5 mb-2">
+            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-300 nums">0${i + 1}</span>
+            <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-900">${t}</p>
+          </div>
+          <p class="${TILE_SUB} text-ink-600">${d}</p>
         </li>`).join('\n        ')}
       </ol>
 
-      <div class="rv flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
+      <div class="rv flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
         <div class="min-w-0">
-          <p class="${BODY} mb-1.5">${S.s7.storage}</p>
-          <p class="${BODY}">${S.s7.infra}</p>
+          <p class="${BODY} text-ink-600 mb-1.5">${S.s7.storage}</p>
+          <p class="${BODY} text-ink-600">${S.s7.infra}</p>
         </div>
         <div class="shrink-0 sm:ml-auto">${btn(S.s7.cta, S.s7.ctaHref, 'light')}</div>
       </div>
@@ -474,39 +592,49 @@ const section7 = () => `
   </section>`;
 
 const section8 = () => `
-  <!-- ================= 08 · FULL WORKFLOW / INTEGRATIONS ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+  <!-- ================= 08 · FULL WORKFLOW / INTEGRATIONS =================
+       Bento, weighted to the brief's visual priority: Moodle wide, then API, Canvas,
+       Google Docs. The marks come back here at full size. -->
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">Workflow</div>
+        ${eyebrow('Workflow')}
         <h2 class="${H2} mb-4 lg:mb-5">${S.s8.h2}</h2>
-        <p class="${LEAD}">${S.s8.intro}</p>
+        <p class="${LEAD} text-ink-600">${S.s8.intro}</p>
       </div>
 
-      <div class="rv grid sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
-        ${S.s8.cards.map(([t, d, cta, href]) => `<div class="${CARD} flex flex-col">
+      <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+        ${S.s8.cards.map(([t, d, cta, href], i) => {
+          const wide = i === 0;
+          const mark = ['moodle.svg', null, 'canvas.svg', 'google-docs.svg'][i];
+          return `<div class="${CARD} flex flex-col${wide ? ' lg:col-span-2' : ''}">
+          <div class="w-[104px] mb-5">${mark
+            ? partner(mark, t)
+            : `<span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center gap-2 text-ink-700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg><span class="text-[15px] font-extrabold tracking-tight">API</span></span>`}</div>
           <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mb-3">${t}</p>
-          <p class="${TILE_SUB} mb-6">${d}</p>
+          <p class="${TILE_SUB} text-ink-600 mb-6${wide ? ' max-w-[62ch]' : ''}">${d}</p>
           <div class="mt-auto">${btn(cta, href, 'light')}</div>
-        </div>`).join('\n        ')}
+        </div>`;
+        }).join('\n        ')}
       </div>
     </div>
   </section>`;
 
 const section9 = () => `
   <!-- ================= 09 · AUDIENCE PATHWAYS ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">Pathways</div>
+        ${eyebrow('Pathways')}
         <h2 class="${H2} mb-4 lg:mb-5">${S.s9.h2}</h2>
-        <p class="${LEAD}">${S.s9.intro}</p>
+        <p class="${LEAD} text-ink-600">${S.s9.intro}</p>
       </div>
 
       <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-        ${S.s9.cards.map(([t, d, cta, href]) => `<div class="${CARD} flex flex-col">
-          <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mb-3">${t}</p>
-          <p class="${TILE_SUB} mb-6">${d}</p>
+        ${S.s9.cards.map(([t, d, cta, href], i) => `<div class="${CARD} flex flex-col">
+          ${chip([I.cap, I.building, I.users][i], i)}
+          <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mt-5 mb-3">${t}</p>
+          <p class="${TILE_SUB} text-ink-600 mb-6">${d}</p>
           <div class="mt-auto">${btn(cta, href, 'light')}</div>
         </div>`).join('\n        ')}
       </div>
@@ -514,54 +642,66 @@ const section9 = () => `
   </section>`;
 
 const section10 = () => `
-  <!-- ================= 10 · REVIEWS ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+  <!-- ================= 10 · REVIEWS =================
+       The second dark act. Structure only: the brief forbids inventing, paraphrasing
+       or browsing for reviews, so three slots wait for frozen quotes. -->
+  <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="orb w-[560px] h-[560px] bg-orange-500/12 left-[-160px] bottom-[-140px]"></div>
+    </div>
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">Reviews</div>
+        ${eyebrow('Reviews', true)}
         <h2 class="${H2}">${S.s10.h2}</h2>
       </div>
 
-      <!-- Structure only. The brief forbids inventing, paraphrasing or browsing for
-           reviews; three slots wait for quotes frozen from the approved sources. -->
       <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
-        ${[0, 1, 2].map(() => `<div class="${CARD} flex flex-col">
-          <div class="ph flex-1 flex items-center justify-center text-center px-4 py-10 mb-5">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400 max-w-[24ch]">${S.s10.placeholder}</span>
+        ${[0, 1, 2].map(() => `<div class="${CARD_DARK} flex flex-col">
+          <div class="flex gap-1 mb-5 text-white/20">
+            ${[0, 1, 2, 3, 4].map(() => `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${I.star}</svg>`).join('')}
+          </div>
+          <div class="ph-dark flex-1 flex items-center justify-center text-center px-4 py-10 mb-5">
+            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/45 max-w-[24ch]">${S.s10.placeholder}</span>
           </div>
           <div class="flex items-center justify-between gap-3">
-            <span class="${EYEBROW} text-ink-400">Source</span>
-            ${placeholder('Attribution')}
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Source</span>
+            ${placeholder('Attribution', true)}
           </div>
         </div>`).join('\n        ')}
       </div>
 
       <div class="rv flex flex-wrap items-center gap-5 sm:gap-8">
-        <p class="${BODY}">Approved source pool: ${S.s10.pool}</p>
-        <div class="sm:ml-auto">${btn(S.s10.cta, S.s10.ctaHref, 'light')}</div>
+        <p class="${BODY} text-white/50">Approved source pool: ${S.s10.pool}</p>
+        <div class="sm:ml-auto">${btn(S.s10.cta, S.s10.ctaHref, 'onDark')}</div>
       </div>
     </div>
   </section>`;
 
 const section11 = () => `
-  <!-- ================= 11 · PRICING PREVIEW ================= -->
+  <!-- ================= 11 · PRICING PREVIEW =================
+       One-time only. Monthly / 3-month / yearly matrices belong on the pricing page,
+       and no number is hardcoded here: the backend is the source. -->
   <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        <div class="${EYEBROW} text-ink-400 mb-4 lg:mb-5">One-time plans</div>
+        ${eyebrow('One-time plans')}
         <h2 class="${H2} mb-4 lg:mb-5">${S.s11.h2}</h2>
-        <p class="${LEAD}">${S.s11.intro}</p>
+        <p class="${LEAD} text-ink-600">${S.s11.intro}</p>
       </div>
 
-      <!-- One-time only. Monthly / 3-month / yearly matrices belong on the pricing page,
-           and no number is hardcoded here: the backend is the source. -->
       <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
-        ${S.s11.tiers.map(t => `<div class="${CARD}">
-          <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mb-5">${t}</p>
-          <div class="ph flex items-center justify-center text-center px-4 py-10">
-            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ink-400 max-w-[26ch]">${S.s11.placeholder}</span>
+        ${S.s11.tiers.map((t, i) => {
+          const mid = i === 1;
+          return `<div class="${mid ? 'rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7' : CARD}">
+          <div class="flex items-center gap-3 mb-5">
+            ${chip(I.tag, i, mid)}
+            <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight">${t}</p>
           </div>
-        </div>`).join('\n        ')}
+          <div class="${mid ? 'ph-dark' : 'ph'} flex items-center justify-center text-center px-4 py-10">
+            <span class="text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em] ${mid ? 'text-white/45' : 'text-ink-400'} max-w-[26ch]">${S.s11.placeholder}</span>
+          </div>
+        </div>`;
+        }).join('\n        ')}
       </div>
 
       <div class="rv">${btn(S.s11.cta, S.s11.ctaHref)}</div>
@@ -573,6 +713,7 @@ const section12 = () => `
   <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
+        ${eyebrow('Questions')}
         <h2 class="${H2}">${S.s12.h2}</h2>
       </div>
 
@@ -594,18 +735,20 @@ const section12 = () => `
   </section>`;
 
 const section13 = () => `
-  <!-- ================= 13 · FINAL CTA ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-white overflow-hidden">
+  <!-- ================= 13 · FINAL CTA =================
+       The closing dark act. Sends you back to the real checker in section 1; no second
+       form is rendered. -->
+  <section class="relative py-20 sm:py-28 lg:py-32 bg-ink-950 text-white overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[520px] h-[520px] bg-teal-500/10 left-[-140px] bottom-[-180px]"></div>
+      <div class="orb w-[620px] h-[620px] bg-teal-500/14 left-[-160px] bottom-[-200px]"></div>
+      <div class="orb w-[520px] h-[520px] bg-orange-500/12 right-[-140px] top-[-160px]"></div>
     </div>
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <!-- sends you back to the real checker in section 1; no second form is rendered -->
-      <div class="rv max-w-[720px] mx-auto text-center">
-        <h2 class="${H2} mb-4 lg:mb-5">${S.s13.h2}</h2>
-        <p class="${LEAD} mb-8 sm:mb-10">${S.s13.support}</p>
-        ${btn(S.s13.cta, '#checker')}
-        <p class="mt-5 sm:mt-6 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">${S.s13.free}</p>
+      <div class="rv max-w-[760px] mx-auto text-center">
+        <h2 class="${H2} mb-4 lg:mb-5">Check your text for ${pen('plagiarism')}</h2>
+        <p class="${LEAD} text-white/60 mb-8 sm:mb-10">${S.s13.support}</p>
+        ${btn(S.s13.cta, '#checker', 'onDark')}
+        <p class="mt-5 sm:mt-6 text-[13.5px] sm:text-[14.5px] font-semibold text-white/70">${S.s13.free}</p>
       </div>
     </div>
   </section>`;
@@ -717,6 +860,22 @@ const revealBlock = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/
   rvs.filter(el => !inView.includes(el)).forEach(el => {
     gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 70%' } });
+  });
+
+  /* pen marks — the word takes the accent colour, then its underline draws itself.
+     Without this the underline stays at opacity 0 forever, since the path ships hidden. */
+  gsap.utils.toArray('.pen-word').forEach(word => {
+    const line = word.querySelector('.pen-underline');
+    if (!line) return;
+    const len = line.getTotalLength();
+    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
+    const tl = gsap.timeline(inFirstView
+      ? { delay: 1 }
+      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
+    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+      .set(line, { opacity: 1 }, .35)
+      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
   });
 })();
 </script>`;
