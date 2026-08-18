@@ -428,10 +428,15 @@ const SAMPLE = [
   { source: 'marketplace',   author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
 ];
 
-/* the same plate as the light sections, on a surface that can carry a colour logo
-   without the mark looking cut out of white paper */
-const partnerDark = (file, alt) => `<span class="rounded-xl bg-white ring-1 ring-white/10 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
-            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-full h-full object-contain">
+/* Dark-theme plate and marks, from Figma node 5545-515. The light sections keep the
+   colour logos on white; only this rail uses the reversed set — Canvas in white,
+   Moodle in orange on white, Google Docs with its grey wordmark.
+
+   The marks are Figma's own exports, not redrawn. Figma bakes every ancestor fill into
+   a node export, so each arrived carrying three background rects — the page plate, the
+   section and the card. Those were removed; every glyph path is untouched. */
+const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden px-5 sm:px-6">
+            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="max-h-[46%] w-auto max-w-full object-contain">
           </span>`;
 
 const S = COPY;
@@ -611,21 +616,21 @@ const section4 = () => `
            report at block 4, so sitting at the foot of the report act reverses the two.
            Moving this above the report heading would restore the order and keep the
            visual merge — one move of this block. -->
-      <div class="rv pt-8 sm:pt-10 lg:pt-12 border-t border-white/10">
+      <div class="rv">
         <div class="flex items-center gap-4 mb-6 sm:mb-7 lg:mb-8">
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/40 shrink-0">${S.s3.label}</span>
           <span class="h-px flex-1 bg-white/10"></span>
         </div>
         <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-          <li>${partnerDark('moodle.svg', 'Moodle')}</li>
+          <li>${partnerDark('moodle-on-dark.svg', 'Moodle')}</li>
           <li>
-            <span class="rounded-xl bg-white/[.06] ring-1 ring-white/10 aspect-[324/113] w-full flex items-center justify-center gap-2 text-white/80">
+            <span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center gap-2 text-white/80">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg>
               <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
             </span>
           </li>
-          <li>${partnerDark('canvas.svg', 'Canvas')}</li>
-          <li>${partnerDark('google-docs.svg', 'Google Docs')}</li>
+          <li>${partnerDark('canvas-on-dark.svg', 'Canvas')}</li>
+          <li>${partnerDark('google-docs-on-dark.svg', 'Google Docs')}</li>
         </ul>
       </div>
     </div>

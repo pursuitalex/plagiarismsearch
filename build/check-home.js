@@ -85,7 +85,9 @@ console.log('\nsection order');
   const raw = idx < 0 ? '' : sections[idx];
   const lost = [
     ...['Integrations & API', 'API'].filter(x => !report.includes(x)),
-    ...['moodle', 'canvas', 'google-docs'].filter(x => !raw.includes('partners/' + x + '.svg')),
+    /* prefix, not full filename: the dark rail uses the reversed exports
+       (moodle-on-dark.svg and friends) and either variant satisfies the block */
+    ...['moodle', 'canvas', 'google-docs'].filter(x => !raw.includes('partners/' + x)),
   ];
   ok('block 3 present inside the report act', idx >= 0 && !lost.length,
      idx < 0 ? 'report section not found' : lost.join(', '));
