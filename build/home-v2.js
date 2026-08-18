@@ -229,6 +229,62 @@ const STYLE = `
   .match-panel.on { display:block; animation:mIn .3s cubic-bezier(.32,.72,0,1); }
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
+  /* ================= CLOSING CTA · one place for every knob =================
+     Ported from v1's act 7, where both media queries were written and left empty. They
+     are filled here, and it mattered: the warm glow is 1138px wide, which on a 390px
+     phone is nearly three viewports of coral washing the whole screen.
+
+     Each breakpoint scales the pair and pushes them back toward the edges, so the
+     composition — warm upper left, cool lower right — survives at every width instead
+     of one glow swallowing the section. Alpha comes down on small screens as well: the
+     same opacity spread over a third of the area reads far heavier. */
+  #cta {
+    --cta-bg: #F2FCFC;
+
+    /* warm, upper left */
+    --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
+    --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
+    --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
+    --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
+
+    /* cool, lower right */
+    --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
+    --cta-o2-w: 954px;          --cta-o2-h: 950px;
+    --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
+    --cta-o2-mid: 65%;          --cta-o2-end: 100%;
+
+    background-color: var(--cta-bg);
+  }
+  #ctaGlowWarm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+  #ctaGlowCool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+  /* tablet — about three quarters of the desktop figure */
+  @media (max-width:1023px) {
+    #cta {
+      --cta-o1-w: 840px;  --cta-o1-h: 770px;
+      --cta-o1-x: -28%;   --cta-o1-y: -400px;
+      --cta-o2-w: 700px;  --cta-o2-h: 700px;
+      --cta-o2-x: 64%;    --cta-o2-y: 300px;
+    }
+  }
+  /* phone — half the size, softer, hard against the edges so the middle stays readable */
+  @media (max-width:639px) {
+    #cta {
+      --cta-o1-alpha: .20;
+      --cta-o1-w: 560px;  --cta-o1-h: 520px;
+      --cta-o1-x: -38%;   --cta-o1-y: -250px;
+      --cta-o2-alpha: .12;
+      --cta-o2-w: 470px;  --cta-o2-h: 470px;
+      --cta-o2-x: 52%;    --cta-o2-y: 210px;
+    }
+  }
+
   /* ---------- closing ring ---------- */
   .no-motion .ring-word { color:#DC5A45; }
   .no-motion .ring-path { opacity:1; }
@@ -994,10 +1050,10 @@ const section13 = () => `
        brief supplies neither, and the ratings are dynamic fields besides.
 
        Sends you back to the real checker in section 1; no second form is rendered. -->
-  <section class="relative py-20 sm:py-28 lg:py-36 bg-[#F2FCFC] overflow-hidden">
+  <section id="cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[680px] h-[680px] bg-teal-500/14 left-[-180px] bottom-[-260px]"></div>
-      <div class="orb w-[560px] h-[560px] bg-orange-500/12 right-[-160px] top-[-200px]"></div>
+      <div id="ctaGlowWarm" class="orb"></div>
+      <div id="ctaGlowCool" class="orb"></div>
     </div>
     <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
       <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-6 sm:mb-7 lg:mb-8">
