@@ -229,9 +229,7 @@ const STYLE = `
   .match-panel.on { display:block; animation:mIn .3s cubic-bezier(.32,.72,0,1); }
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
-  /* ---------- scan controls ---------- */
-  .ctl-row { transition:opacity .3s ease; }
-  .ctl-row.off { opacity:.45; }
+  /* ---------- the hero's two checkboxes ---------- */
   .sw { width:38px; height:22px; border-radius:999px; background:rgba(16,24,40,.14);
         position:relative; transition:background .25s cubic-bezier(.32,.72,0,1); flex:none; }
   .sw::after { content:''; position:absolute; top:3px; left:3px; width:16px; height:16px;
@@ -276,7 +274,7 @@ const STYLE = `
 
   @media (prefers-reduced-motion: reduce) {
     .match-panel.on { animation:none; }
-    .hl, .sw, .sw::after, .ctl-row { transition:none; }
+    .hl, .sw, .sw::after { transition:none; }
   }
 </style>`;
 
@@ -348,6 +346,12 @@ const btn = (label, href, tone = 'dark') => {
           </span>
         </a>`;
 };
+
+/* The site's tick, the one the pricing feature lists already use. */
+const tick = label => `<li class="flex items-center gap-3 py-2.5">
+              <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-800">${label}</span>
+            </li>`;
 
 const placeholder = (text, dark = false) => `<span class="${dark ? 'ph-dark text-white/45' : 'ph text-ink-400'} inline-block px-3 py-2 text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-[0.14em]">${text}</span>`;
 
@@ -662,20 +666,19 @@ const section5 = () => `
         <p class="${LEAD} text-ink-600">${S.s5.intro}</p>
       </div>
 
-      <!-- bento: the two control cards carry the interaction, the coverage figure sits
-           beneath them as the one number this section is allowed to claim -->
+      <!-- Ticks, not switches. These are a list of what a check can include, so a
+           control that moves invites you to set something the page cannot act on. The
+           coverage card no longer dims with a toggle for the same reason — its sentence
+           already carries the condition. -->
       <div class="rv grid lg:grid-cols-[1fr_1fr_.9fr] gap-4 sm:gap-5 lg:gap-6">
         <div class="${CARD}">
           <div class="flex items-center gap-3 mb-5">
             ${chip(I.search, 0)}
             <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400">Search sources</span>
           </div>
-          <div class="space-y-1">
-            ${S.s5.sources.map((s, i) => `<label class="ctl-row flex items-center gap-3 py-2.5 cursor-pointer">
-              <span class="sw${i < 2 ? ' on' : ''}" data-src="${i}"></span>
-              <span class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-800">${s}</span>
-            </label>`).join('\n            ')}
-          </div>
+          <ul class="space-y-1">
+            ${S.s5.sources.map(tick).join('\n            ')}
+          </ul>
         </div>
 
         <div class="${CARD}">
@@ -683,15 +686,12 @@ const section5 = () => `
             ${chip(I.sliders, 1)}
             <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400">Review settings</span>
           </div>
-          <div class="space-y-1">
-            ${S.s5.settings.map(s => `<label class="ctl-row flex items-center gap-3 py-2.5 cursor-pointer">
-              <span class="sw on"></span>
-              <span class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-800">${s}</span>
-            </label>`).join('\n            ')}
-          </div>
+          <ul class="space-y-1">
+            ${S.s5.settings.map(tick).join('\n            ')}
+          </ul>
         </div>
 
-        <div id="coverageNote" class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7 flex flex-col justify-center transition-opacity duration-300">
+        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7 flex flex-col justify-center">
           ${chip(I.database, 0, true)}
           <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none mt-5 mb-3">500 million</div>
           <p class="${BODY} text-white/60">${S.s5.coverage}</p>
@@ -1005,20 +1005,6 @@ const SCRIPT = `
     const input = document.getElementById(sw.dataset.for);
     if (!input) return;
     input.addEventListener('change', () => sw.classList.toggle('on', input.checked));
-  });
-  document.querySelectorAll('.ctl-row').forEach(row => {
-    const sw = row.querySelector('.sw');
-    row.addEventListener('click', e => {
-      e.preventDefault();
-      sw.classList.toggle('on');
-      row.classList.toggle('off', !sw.classList.contains('on'));
-      /* the coverage claim is true only while academic database search is on, so it
-         dims with the toggle rather than standing as an unconditional statement */
-      if (sw.dataset.src === '1') {
-        const note = document.getElementById('coverageNote');
-        if (note) note.style.opacity = sw.classList.contains('on') ? '' : '.4';
-      }
-    });
   });
 
   /* report: selecting a highlighted passage opens its source and context */
