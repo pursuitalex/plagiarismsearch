@@ -1051,7 +1051,7 @@ tailwind.config = {
         <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Need more than the free check? Choose a one-time plan, or compare all available pricing options.</p>
       </div>
 
-      <div class="rv flex justify-center mb-3">
+      <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
         <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
           <button type="button" data-period="onetime" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">One-time</button>
           <button type="button" data-period="monthly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">Monthly</button>
@@ -1059,13 +1059,15 @@ tailwind.config = {
           <button type="button" data-period="yearly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">Yearly</button>
         </div>
       </div>
-      <p class="rv text-center text-[12.5px] font-medium text-ink-400 mb-8 sm:mb-10 lg:mb-12" id="periodNote"></p>
 
       <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
         <div data-tier="light" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
           
           <div class="relative">
-            <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">light</div>
+            <div class="flex items-center justify-between gap-3 mb-1.5">
+              <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600">light</span>
+              
+            </div>
             <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For occasional checks</div>
             <div class="flex items-end gap-1.5 mb-3">
               <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price"></span>
@@ -1073,13 +1075,20 @@ tailwind.config = {
             </div>
             <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
             <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
-            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] js-feats"></ul>
+            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"></ul>
+            <a href="prices.html" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Light</a>
           </div>
         </div>
         <div data-tier="standard" class="relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden">
           <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>
           <div class="relative">
-            <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-teal-300 mb-1.5">standard</div>
+            <div class="flex items-center justify-between gap-3 mb-1.5">
+              <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-teal-300">standard</span>
+              <span class="flex items-center gap-1.5 text-[9.5px] font-bold tracking-widest bg-orange-500 rounded-full px-2.5 py-1">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+                MOST POPULAR
+              </span>
+            </div>
             <div class="text-[13.5px] text-white/50 mb-4 sm:mb-5 lg:mb-6">For regular work</div>
             <div class="flex items-end gap-1.5 mb-3">
               <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price"></span>
@@ -1087,13 +1096,17 @@ tailwind.config = {
             </div>
             <div class="inline-flex items-center rounded-full bg-white/10 text-white/70 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
             <div class="h-px bg-white/10 mb-5 sm:mb-6 lg:mb-7"></div>
-            <ul class="space-y-3.5 text-[13.5px] font-medium text-white/80 min-h-[9rem] js-feats"></ul>
+            <ul class="space-y-3.5 text-[13.5px] font-medium text-white/80 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"></ul>
+            <a href="prices.html" class="btn-press block text-center rounded-full bg-white text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Standard</a>
           </div>
         </div>
         <div data-tier="premium" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
           
           <div class="relative">
-            <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">premium</div>
+            <div class="flex items-center justify-between gap-3 mb-1.5">
+              <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600">premium</span>
+              
+            </div>
             <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For heavy use and teams</div>
             <div class="flex items-end gap-1.5 mb-3">
               <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price"></span>
@@ -1101,17 +1114,20 @@ tailwind.config = {
             </div>
             <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
             <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
-            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] js-feats"></ul>
+            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"></ul>
+            <a href="prices.html" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Premium</a>
           </div>
         </div>
       </div>
 
-      <div class="rv text-center"><a href="prices.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-ink-900 text-white hover:bg-ink-800 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
-          See all pricing options
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a></div>
+      <!-- The brief calls this the primary CTA; Olex asked for it as a quiet text link,
+           since each card now carries its own button. The label and destination are the
+           brief's, only the weight changed. -->
+      <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] sm:text-[13px] font-medium">
+        <span class="text-ink-400" id="periodNote"></span>
+        <span class="hidden sm:block w-1 h-1 rounded-full bg-ink-300"></span>
+        <a href="prices.html" class="font-semibold text-ink-700 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 hover:decoration-ink-500 transition-colors duration-300">See all pricing options</a>
+      </div>
     </div>
   </section>
 
