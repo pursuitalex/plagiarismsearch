@@ -435,8 +435,8 @@ const SAMPLE = [
    The marks are Figma's own exports, not redrawn. Figma bakes every ancestor fill into
    a node export, so each arrived carrying three background rects — the page plate, the
    section and the card. Those were removed; every glyph path is untouched. */
-const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden px-5 sm:px-6">
-            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="max-h-[46%] w-auto max-w-full object-contain">
+const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden px-6 sm:px-7">
+            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="h-[54%] w-auto max-w-full object-contain">
           </span>`;
 
 const S = COPY;
@@ -767,7 +767,7 @@ const section8 = () => `
 
       <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
         ${S.s8.cards.map(([t, d, cta, href], i) => {
-          const wide = i === 0;
+          const wide = i === 0 || i === 3;
           const mark = ['moodle.svg', null, 'canvas.svg', 'google-docs.svg'][i];
           return `<div class="${CARD} flex flex-col${wide ? ' lg:col-span-2' : ''}">
           <div class="w-[104px] mb-5">${mark
