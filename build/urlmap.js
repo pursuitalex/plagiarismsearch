@@ -36,7 +36,7 @@ const BUILT = [
   { file: 'chat-bot.html',               path: '/plagiarism-checker-app',   delisted: true },
 
   /* no approved path */
-  { file: 'plagiarism-check.html',       path: null, note: 'DEC-0027 puts Plagiarism Checker at `/`, so this separate page has no approved address. Decide whether it folds into the homepage or is retired.' },
+  { file: 'plagiarism-check.html',       path: null, note: 'Confirmed 2026-08-17: the homepage IS the Plagiarism Checker page. So this one has no approved address of its own. It stays on disk and leaves the navigation, the same treatment as the other delisted pages.' },
   { file: 'account.html',                path: null, note: 'Log in / create account. The brief says only "keep existing authentication behavior" and names no path.' },
   { file: 'design-system.html',          path: null, note: 'Internal reference sheet. Never part of the public site.' },
 ];
@@ -91,9 +91,12 @@ const md = [
   '',
   '## Open',
   '',
-  '- **Canvas** — DEC-0027 says hide until the integration is live; DEC-0030 expects it live at launch. Shown as "coming soon" pending the brief author\'s ruling.',
-  '- **Educators** — destination stays configurable until the Teachers URL audit closes.',
-  '- **plagiarism-check.html** — superseded by `/`. Fold in or retire.',
+  '- **Educators** — the destination stays configurable until the Teachers URL audit closes. The only open address left.',
+  '',
+  '## Settled',
+  '',
+  '- **Canvas** — 2026-08-17: shipping for certain, so it renders as an ordinary navigation item rather than a release gate. Only its final URL is still to be supplied.',
+  '- **plagiarism-check.html** — 2026-08-17: the homepage IS the Plagiarism Checker page, so this one keeps no address of its own and leaves the navigation.',
   '',
 ].join('\n');
 

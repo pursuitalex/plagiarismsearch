@@ -26,7 +26,7 @@ driven by this table.
 | `spell-check.html` | `/spell-checker` | built · out of global nav |  |
 | `readability-check.html` | `/readability-checker` | built · out of global nav |  |
 | `chat-bot.html` | `/plagiarism-checker-app` | built · out of global nav |  |
-| `plagiarism-check.html` | — | no approved path | DEC-0027 puts Plagiarism Checker at `/`, so this separate page has no approved address. Decide whether it folds into the homepage or is retired. |
+| `plagiarism-check.html` | — | no approved path | Confirmed 2026-08-17: the homepage IS the Plagiarism Checker page. So this one has no approved address of its own. It stays on disk and leaves the navigation, the same treatment as the other delisted pages. |
 | `account.html` | — | no approved path | Log in / create account. The brief says only "keep existing authentication behavior" and names no path. |
 | `design-system.html` | — | no approved path | Internal reference sheet. Never part of the public site. |
 | `integration-guide.html` | `/integration-guide` | stub | Approved destination, page not designed yet. |
@@ -47,7 +47,7 @@ driven by this table.
 | `policy.html` | `/policy` | stub | The homepage privacy section links here. The brief forbids inventing a new privacy URL. |
 | `terms-of-use.html` | `/terms-of-use` | stub | Approved destination, page not designed yet. |
 | `cookie-policy.html` | `/cookie-policy` | stub | Approved destination, page not designed yet. |
-| `canvas-integration.html` | — | stub · path NOT approved | Provisional filename. Release-gated. The navigation brief says hide it until the integration is live; the homepage brief expects it live at launch. We show it as coming soon and Olex is clearing that with the brief author. The final URL is supplied at implementation. |
+| `canvas-integration.html` | — | stub · path NOT approved | Provisional filename. Treated as live. Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate — which is what DEC-0030 expected all along. Only the address is still open: the final verified URL is supplied at implementation, so this filename stays provisional. |
 | `educators.html` | — | stub · path NOT approved | Provisional filename. The destination stays configurable until the Teachers URL audit closes. This filename is provisional and must not be treated as the production path. |
 
 ## Counts
@@ -60,6 +60,9 @@ driven by this table.
 
 ## Open
 
-- **Canvas** — DEC-0027 says hide until the integration is live; DEC-0030 expects it live at launch. Shown as "coming soon" pending the brief author's ruling.
-- **Educators** — destination stays configurable until the Teachers URL audit closes.
-- **plagiarism-check.html** — superseded by `/`. Fold in or retire.
+- **Educators** — the destination stays configurable until the Teachers URL audit closes. The only open address left.
+
+## Settled
+
+- **Canvas** — 2026-08-17: shipping for certain, so it renders as an ordinary navigation item rather than a release gate. Only its final URL is still to be supplied.
+- **plagiarism-check.html** — 2026-08-17: the homepage IS the Plagiarism Checker page, so this one keeps no address of its own and leaves the navigation.
