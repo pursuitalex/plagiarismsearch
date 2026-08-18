@@ -240,6 +240,21 @@ const STYLE = `
   .sw.on { background:#0D9488; }
   .sw.on::after { transform:translateX(16px); }
 
+  /* ---------- reviews carousel ---------- */
+  .no-bar { scrollbar-width:none; -ms-overflow-style:none; }
+  .no-bar::-webkit-scrollbar { display:none; }
+  /* the arrows are a hover affordance, but focus must reach them too, or the control
+     is mouse-only. Hidden entirely when there is nothing to scroll. */
+  .rev-nav { opacity:0; pointer-events:none;
+             transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1); }
+  .group:hover .rev-nav, .rev-nav:focus-visible { opacity:1; pointer-events:auto; }
+  .rev-nav[hidden] { display:none; }
+  .rev-nav:hover { transform:translateY(-50%) scale(1.06); }
+  .rev-dot { width:7px; height:7px; border-radius:999px; background:rgba(255,255,255,.22);
+             transition:width .3s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
+  .rev-dot.on { width:22px; background:#fff; }
+  @media (hover: none) { .rev-nav { opacity:1; pointer-events:auto; } }
+
   /* ---------- period switcher (same control as the pricing page) ---------- */
   .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
   .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
@@ -358,7 +373,7 @@ const SOURCES = {
   },
   smartcustomer: {
     name: 'SmartCustomer',
-    mark: null,                                   /* no vector yet — asked for */
+    mark: 'assets/svg/partners/smartcustomer-icon.svg',
     url: 'https://www.smartcustomer.com/reviews/plagiarismsearch.com',
     rating: null, count: null,
   },
@@ -384,10 +399,10 @@ const stars = (value, dark) => {
 const reviewCard = (r, dark) => {
   const src = SOURCES[r.source];
   const muted = dark ? 'text-white/45' : 'text-ink-400';
-  return `<figure class="${dark ? CARD_DARK : CARD} flex flex-col">
+  return `<figure class="${dark ? CARD_DARK : CARD} flex flex-col h-full w-full">
             <div class="flex items-center gap-2.5 mb-5">
               ${src.mark
-                ? `<img src="${src.mark}" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">`
+                ? `<img src="${src.mark}" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">`
                 : `<span class="w-4 h-4 rounded-[5px] shrink-0 ${dark ? 'bg-white/15' : 'bg-ink-200'}"></span>`}
               <span class="text-[11px] sm:text-[11.5px] font-semibold ${dark ? 'text-white/60' : 'text-ink-500'}">${src.name}</span>
               ${src.rating != null ? `<span class="ml-auto flex items-center gap-2">${stars(src.rating, dark)}<span class="text-[12px] font-bold nums ${dark ? 'text-white' : 'text-ink-900'}">${src.rating}</span></span>` : `<span class="ml-auto">${stars(null, dark)}</span>`}
@@ -407,7 +422,9 @@ const reviewCard = (r, dark) => {
    goes the moment frozen quotes arrive. */
 const SAMPLE = [
   { source: 'trustpilot',    author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
-  { source: 'smartcustomer', author: 'Reviewer name', quote: 'Sample text at the length a three-line review occupies. Cards stretch to the tallest in the row, so a short quote and a long one still align at the foot.' },
+  { source: 'smartcustomer', author: 'Reviewer name', quote: 'Sample text at the length a three-line review occupies. Cards stretch to the tallest in view, so a short quote and a long one still align at the foot.' },
+  { source: 'marketplace',   author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
+  { source: 'trustpilot',    author: 'Reviewer name', quote: 'A fourth and fifth slot exist only so the carousel has something to scroll to. They leave with the rest of the sample text.' },
   { source: 'marketplace',   author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
 ];
 
@@ -774,49 +791,49 @@ const section9 = () => `
 
 const section10 = () => `
   <!-- ================= 10 · REVIEWS =================
-       Both card skins are on the page at once so Olex can pick one; the losing
-       variant and the two SAMPLE labels come out the moment he does.
+       A carousel rather than a fixed three: the number of reviews is not ours to
+       decide, and a row that only ever holds three would have to be rebuilt the
+       moment a fourth arrives.
 
-       The card takes a source mark, a rating of any value including halves, a
-       count, a quote and an author — all optional. Nothing about it is specific to
-       Trustpilot, so SmartCustomer and the Marketplace use the same component.
+       Controls hide themselves when there is nothing to scroll — on a wide screen
+       with three reviews the arrows and dots simply do not appear.
 
        No quote, name or rating is filled in. The brief lists them as dynamic and
-       forbids browsing for them, and a mistranscribed review is a fabricated quote
-       carrying a real person's name. -->
+       says not to browse for them; beyond that, a mistranscribed review is an
+       invented quote with a real person's name under it. -->
   <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[560px] h-[560px] bg-orange-500/12 left-[-160px] bottom-[-140px]"></div>
     </div>
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        ${eyebrow('Reviews', true)}
-        <h2 class="${H2}">${S.s10.h2}</h2>
+      <div class="rv flex flex-wrap items-end justify-between gap-5 mb-8 sm:mb-10 lg:mb-12">
+        <div class="max-w-[720px]">
+          ${eyebrow('Reviews', true)}
+          <h2 class="${H2}">${S.s10.h2}</h2>
+        </div>
+        <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Sample text</span>
       </div>
 
-      <!-- variant A · light cards on a raised plate -->
-      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white p-4 sm:p-6 lg:p-8 mb-4 sm:mb-5 lg:mb-6">
-        <div class="flex items-center gap-2 mb-5 sm:mb-6">
-          <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant A · light</span>
-          <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Sample text</span>
+      <div class="rv group relative">
+        <div id="revTrack" class="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory no-bar -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10">
+          ${SAMPLE.map(r => `<div class="snap-start shrink-0 flex basis-[86%] sm:basis-[54%] lg:basis-[calc((100%-3rem)/3)]">${reviewCard(r, true)}</div>`).join('\n          ')}
         </div>
-        <div class="grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-          ${SAMPLE.map(r => reviewCard(r, false)).join('\n          ')}
-        </div>
+
+        <!-- shown on hover, and always once focused, so the control is reachable
+             from the keyboard rather than being a mouse-only affordance -->
+        <button type="button" id="revPrev" aria-label="Previous reviews"
+          class="rev-nav absolute left-0 sm:-left-2 lg:-left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-ink-900 shadow-diffuse-lg flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button type="button" id="revNext" aria-label="More reviews"
+          class="rev-nav absolute right-0 sm:-right-2 lg:-right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-ink-900 shadow-diffuse-lg flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
       </div>
 
-      <!-- variant B · dark cards straight on the section -->
-      <div class="rv mb-8 sm:mb-10 lg:mb-12">
-        <div class="flex items-center gap-2 mb-5 sm:mb-6">
-          <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant B · dark</span>
-          <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Sample text</span>
-        </div>
-        <div class="grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-          ${SAMPLE.map(r => reviewCard(r, true)).join('\n          ')}
-        </div>
-      </div>
+      <div id="revDots" class="flex justify-center items-center gap-2 mt-6 sm:mt-7 lg:mt-8"></div>
 
-      <div class="rv flex flex-wrap items-center gap-5 sm:gap-8">
+      <div class="rv flex flex-wrap items-center gap-5 sm:gap-8 mt-8 sm:mt-10 lg:mt-12">
         <p class="${BODY} text-white/50">Approved source pool: ${S.s10.pool}</p>
         <div class="sm:ml-auto">${btn(S.s10.cta, S.s10.ctaHref, 'onDark')}</div>
       </div>
@@ -1158,6 +1175,44 @@ const SCRIPT = `
     tabs.forEach(b => b.addEventListener("click", () => render(b.dataset.period, true)));
     /* one-time leads: it is the mode the brief puts on the homepage */
     render("onetime", false);
+  }
+
+  /* Reviews carousel. Pages are measured, not assumed: the card count is not ours to
+     fix, and the number visible changes with the breakpoint. */
+  const track = document.getElementById("revTrack");
+  const dots = document.getElementById("revDots");
+  if (track && dots) {
+    const prev = document.getElementById("revPrev");
+    const next = document.getElementById("revNext");
+    const pages = () => Math.max(1, Math.round(track.scrollWidth / track.clientWidth));
+    const page = () => Math.round(track.scrollLeft / track.clientWidth);
+
+    const build = () => {
+      const n = pages();
+      const scrollable = track.scrollWidth > track.clientWidth + 1;
+      prev.hidden = next.hidden = !scrollable;
+      dots.innerHTML = scrollable
+        ? Array.from({ length: n }, (_, i) =>
+            '<button type="button" class="rev-dot' + (i === page() ? ' on' : '') +
+            '" data-page="' + i + '" aria-label="Reviews page ' + (i + 1) + '"></button>').join("")
+        : "";
+    };
+
+    const mark = () => {
+      const cur = page();
+      [...dots.children].forEach((d, i) => d.classList.toggle("on", i === cur));
+    };
+
+    const go = dir => track.scrollBy({ left: dir * track.clientWidth, behavior: "smooth" });
+    prev.addEventListener("click", () => go(-1));
+    next.addEventListener("click", () => go(1));
+    dots.addEventListener("click", e => {
+      const b = e.target.closest(".rev-dot");
+      if (b) track.scrollTo({ left: b.dataset.page * track.clientWidth, behavior: "smooth" });
+    });
+    track.addEventListener("scroll", mark, { passive: true });
+    addEventListener("resize", build);
+    build();
   }
 
   /* FAQ: answers are already in the DOM; this only opens and closes them */
