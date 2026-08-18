@@ -436,7 +436,7 @@ const SAMPLE = [
    a node export, so each arrived carrying three background rects — the page plate, the
    section and the card. Those were removed; every glyph path is untouched. */
 const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
-            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-[88%] h-auto max-h-[74%] object-contain">
+            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-[65%] h-auto max-h-[62%] object-contain">
           </span>`;
 
 const S = COPY;
@@ -506,30 +506,41 @@ const section1 = () => `
 
 const section2 = () => `
   <!-- ================= 02 · COMPACT TRUST RAIL =================
-       Compact, as the brief requires, but the numerals carry weight. The approved
-       sentences are unbroken in the DOM — the emphasis sits inside them, so
-       "Plagiarism checking in 80+ languages" is still one string to any reader.
+       Each column is one element, in reading order, because the approved strings
+       have to survive as sentences: "500,000+ users" and "Plagiarism checking in
+       80+ languages" are read whole by a crawler and a screen reader, and laying
+       the rail out row-by-row across a grid shreds both.
 
-       NOTE: the brief lists a fourth item here, the verified review-platform
-       rating and count. Olex removed its placeholder on 2026-08-18. The slot goes
-       with it, so re-adding the item when production figures arrive means putting
-       the fourth column back, not just filling a blank. -->
+       The middle column carries a lead-in the other two do not — that is the copy,
+       not the layout: one sentence puts words before its number, the other does
+       not. An empty row of the same height at the top of columns 1 and 3 puts the
+       three figures on one baseline without adding a word to either.
+
+       Visible headings on all three would need three words the brief does not
+       supply. Ask before inventing them.
+
+       NOTE: the brief lists a fourth item here, the verified review-platform rating
+       and count. Olex removed its placeholder on 2026-08-18. The slot went with it,
+       so restoring the item means putting a fourth column back. -->
   <section class="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv flex flex-wrap items-center justify-center gap-x-12 sm:gap-x-16 lg:gap-x-24 gap-y-8">
-        <div class="text-center">
-          <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">500,000+</div>
+      <div class="rv flex flex-wrap items-start justify-center gap-x-12 sm:gap-x-16 lg:gap-x-24 gap-y-8 text-center">
+
+        <div class="flex flex-col items-center">
+          <div class="hidden sm:block h-[17px]" aria-hidden="true"></div>
+          <div class="h-[42px] sm:h-[52px] lg:h-[60px] flex items-center"><div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">500,000+</div></div>
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">users</div>
         </div>
-        <div class="text-center">
-          <div class="text-[11px] sm:text-[11.5px] font-medium text-ink-400 mb-1">Plagiarism checking in</div>
-          <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">80+</div>
+
+        <div class="flex flex-col items-center">
+          <div class="text-[11px] sm:text-[11.5px] font-medium text-ink-400 h-[17px] leading-[17px]">Plagiarism checking in</div>
+          <div class="h-[42px] sm:h-[52px] lg:h-[60px] flex items-center"><div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">80+</div></div>
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">languages</div>
         </div>
-        <!-- sized to stand as tall as a stat column rather than sitting as a chip
-             beside one; the mark is the proof here, so it carries the same weight -->
-        <div class="flex flex-col items-center text-center">
-          <img src="assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="h-14 sm:h-16 lg:h-[68px] w-auto object-contain">
+
+        <div class="flex flex-col items-center">
+          <div class="hidden sm:block h-[17px]" aria-hidden="true"></div>
+          <div class="h-[42px] sm:h-[52px] lg:h-[60px] flex items-center"><img src="assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="h-full w-auto object-contain"></div>
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">BBB Accredited</div>
         </div>
       </div>
