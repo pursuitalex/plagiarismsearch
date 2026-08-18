@@ -435,8 +435,8 @@ const SAMPLE = [
    The marks are Figma's own exports, not redrawn. Figma bakes every ancestor fill into
    a node export, so each arrived carrying three background rects — the page plate, the
    section and the card. Those were removed; every glyph path is untouched. */
-const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden px-6 sm:px-7">
-            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="h-[54%] w-auto max-w-full object-contain">
+const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
+            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-[88%] h-auto max-h-[74%] object-contain">
           </span>`;
 
 const S = COPY;
