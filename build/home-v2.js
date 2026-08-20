@@ -1222,9 +1222,12 @@ const section10 = () => `
 
       <div id="revDots" class="flex justify-center items-center gap-2 mt-6 sm:mt-7 lg:mt-8"></div>
 
-      <div class="rv flex flex-col items-center text-center gap-5 sm:flex-row sm:flex-wrap sm:items-center sm:text-left sm:gap-8 mt-8 sm:mt-10 lg:mt-12">
+      <!-- Stacked and centred below 768, the width Olex draws the line at for phone and
+           tablet: above it the pool line and the button share a row, below it the row
+           leaves the sentence ragged against a button pinned to the far edge. -->
+      <div class="rv flex flex-col items-center text-center gap-5 md:flex-row md:flex-wrap md:items-center md:text-left md:gap-8 mt-8 sm:mt-10 lg:mt-12">
         <p class="${BODY} text-white/50">Approved source pool: ${S.s10.pool}</p>
-        <div class="sm:ml-auto">${btn(S.s10.cta, S.s10.ctaHref, 'onDark')}</div>
+        <div class="md:ml-auto">${btn(S.s10.cta, S.s10.ctaHref, 'onDark')}</div>
       </div>
     </div>
   </section>`;

@@ -1450,9 +1450,12 @@ tailwind.config = {
 
       <div id="revDots" class="flex justify-center items-center gap-2 mt-6 sm:mt-7 lg:mt-8"></div>
 
-      <div class="rv flex flex-col items-center text-center gap-5 sm:flex-row sm:flex-wrap sm:items-center sm:text-left sm:gap-8 mt-8 sm:mt-10 lg:mt-12">
+      <!-- Stacked and centred below 768, the width Olex draws the line at for phone and
+           tablet: above it the pool line and the button share a row, below it the row
+           leaves the sentence ragged against a button pinned to the far edge. -->
+      <div class="rv flex flex-col items-center text-center gap-5 md:flex-row md:flex-wrap md:items-center md:text-left md:gap-8 mt-8 sm:mt-10 lg:mt-12">
         <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/50">Approved source pool: Trustpilot · SmartCustomer · G2 · owned testimonials</p>
-        <div class="sm:ml-auto"><a href="testimonials.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-white text-ink-900 hover:bg-white/90 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
+        <div class="md:ml-auto"><a href="testimonials.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-white text-ink-900 hover:bg-white/90 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
           Read more reviews
           <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/10 flex items-center justify-center">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
