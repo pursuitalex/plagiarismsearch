@@ -612,8 +612,10 @@ const section1 = () => `
         </form>
       </div>
 
-      <p class="mt-5 sm:mt-6 text-center text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">${S.s1.free}</p>
-      <p class="mt-1.5 text-center ${BODY} text-ink-600 max-w-[56ch] mx-auto">${S.s1.formats}</p>
+      <p class="mt-5 sm:mt-6 flex items-center justify-center gap-2 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">
+        <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.sparkles}</svg>
+        ${S.s1.free}
+      </p>
     </div>
   </section>`;
 
