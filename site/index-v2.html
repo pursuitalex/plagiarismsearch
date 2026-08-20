@@ -263,8 +263,8 @@ tailwind.config = {
   /* ---------- cabinet report mock ---------- */
   /* a selected passage darkens; the others stay at reading weight */
   .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease; }
-  .cab-plag.on { background:rgba(243,111,90,.4); }
-  .cab-ai.on   { background:rgba(168,85,247,.34); }
+  .cab-plag.on { --wash:rgba(243,111,90,.4); }
+  .cab-ai.on   { --wash:rgba(168,85,247,.34); }
   .cab-detail { display:none; }
   .cab-detail.on { display:block; animation:cabIn .3s cubic-bezier(.32,.72,0,1); }
   @keyframes cabIn { from { opacity:0; transform:translateY(6px); } }
@@ -274,9 +274,11 @@ tailwind.config = {
   .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
     pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
   .cab-mark { border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
-    box-shadow:inset 0 -2px 0 currentColor; }
-  .cab-plag { background:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
-  .cab-ai   { background:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
+    box-shadow:inset 0 -2px 0 currentColor;
+    background-image:linear-gradient(var(--wash), var(--wash));
+    background-repeat:no-repeat; background-position:left center; background-size:100% 100%; }
+  .cab-plag { --wash:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
+  .cab-ai   { --wash:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
   .cab-mark > span { color:#111827; }
   .cab-tab { padding-bottom:10px; border-bottom:2px solid transparent; color:#6B7280; }
   .cab-tab.on { color:#0991A8; border-bottom-color:#0991A8; }
@@ -678,7 +680,13 @@ tailwind.config = {
         <div class="grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
 
           <!-- document -->
-          <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+          <div id="cabDoc" class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+            <!-- the pass, borrowed from v1's #scanDoc: a line sweeps the page once and
+                 the highlights land behind it -->
+            <div id="cabScan" class="absolute left-0 right-0 top-0 h-16 z-10 pointer-events-none opacity-0" style="transform:translateY(-80px)">
+              <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
+              <div class="h-16 w-full bg-gradient-to-b from-teal-400/12 to-transparent"></div>
+            </div>
             <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100 bg-ink-50/60">
               <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight nums">#10248837</span>
               <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-500">
@@ -796,7 +804,7 @@ tailwind.config = {
                   <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
                     <span class="cab-bar block h-full rounded-full" style="width:38.2%; background:#F36F5A"></span>
                   </span>
-                  <span class="shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums">38.2%</span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="38.2">38.2%</span>
                 </div>
               </div>
               <div class="mb-4 last:mb-0">
@@ -805,7 +813,7 @@ tailwind.config = {
                   <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
                     <span class="cab-bar block h-full rounded-full" style="width:12.4%; background:#A855F7"></span>
                   </span>
-                  <span class="shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums">12.4%</span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="12.4">12.4%</span>
                 </div>
               </div>
               <div class="mb-4 last:mb-0">
@@ -814,7 +822,7 @@ tailwind.config = {
                   <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
                     <span class="cab-bar block h-full rounded-full" style="width:0%; background:#A855F7"></span>
                   </span>
-                  <span class="shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums">0%</span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="0">0%</span>
                 </div>
               </div>
             </div>
@@ -2053,6 +2061,55 @@ tailwind.config = {
     track.addEventListener("scroll", mark, { passive: true });
     addEventListener("resize", build);
     build();
+  }
+
+  /* The pass. Runs once when the block arrives, not on a scrub: this report is a
+     finished document, and scrubbing it backwards would un-find the matches.
+
+     Every value is already correct in the markup — bar widths, percentages, highlight
+     colours. The timeline animates FROM zero to what is there, so a browser with
+     reduced motion, a failed CDN or JS off shows the finished report rather than an
+     empty one. */
+  {
+    const doc = document.getElementById('cabDoc');
+    const line = document.getElementById('cabScan');
+    const marks = [...document.querySelectorAll('.cab-mark')];
+    const bars = [...document.querySelectorAll('.cab-bar')];
+    const figures = [...document.querySelectorAll('.cab-figure')];
+    const rows = [...document.querySelectorAll('.cab-src')];
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (doc && line && window.gsap && !reduce) {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: doc, start: 'top 72%', once: true }
+      });
+
+      // the line crosses the page
+      tl.set(line, { opacity: 1 })
+        .fromTo(line, { y: -80 }, { y: () => doc.offsetHeight + 20, duration: 1.9, ease: 'none' }, 0)
+        .to(line, { opacity: 0, duration: .3 }, 1.75);
+
+      // highlights land behind it, spread across the pass
+      marks.forEach((m, i) => {
+        tl.from(m, { backgroundSize: '0% 100%', duration: .45, ease: 'power2.out' }, .35 + i * .28);
+      });
+
+      // the sidebar resolves after the pass: bars fill, figures count up to what they say
+      bars.forEach(b => tl.from(b, { width: 0, duration: .9, ease: 'power2.out' }, 1.5));
+      figures.forEach(f => {
+        const target = parseFloat(f.dataset.to);
+        const suffix = f.textContent.trim().endsWith('%') ? '%' : '';
+        const dp = String(target).includes('.') ? 1 : 0;
+        const o = { v: 0 };
+        let last = null;
+        tl.to(o, { v: target, duration: .9, ease: 'power2.out',
+          onUpdate: () => {
+            const t = o.v.toFixed(dp) + suffix;
+            if (t !== last) { last = t; f.textContent = t; }
+          } }, 1.5);
+      });
+      rows.forEach((r, i) => tl.from(r, { opacity: 0, y: 8, duration: .5, ease: 'power2.out' }, 1.7 + i * .08));
+    }
   }
 
   /* Report: selecting a passage opens its source under the document and lights the
