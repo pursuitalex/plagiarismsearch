@@ -870,7 +870,7 @@ const section4 = () => `
 
           <!-- document -->
           <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-            <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 border-b border-ink-100 bg-ink-50/60">
+            <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100 bg-ink-50/60">
               <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight nums">${CAB.id}</span>
               <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-500">
                 <span>Words: <b class="font-bold text-ink-800 nums">${CAB.words}</b></span>
@@ -882,7 +882,7 @@ const section4 = () => `
               ${CAB.doc.map(cabLine).join(NL14)}
             </div>
 
-            <div class="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 border-t border-ink-100 bg-ink-50/60">
+            <div class="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50/60">
               ${CAB.legend.map(cabLegend).join(NL14)}
             </div>
           </div>
