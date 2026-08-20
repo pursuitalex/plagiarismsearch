@@ -618,12 +618,6 @@ const section1 = () => `
 
         <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
           <form class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
-            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 mb-4 pb-4 border-b border-ink-100">
-              <div class="flex items-center gap-2">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.sparkles}</svg>
-                <span class="text-[13px] font-bold">${S.s1.free}</span>
-              </div>
-            </div>
 
             <label for="checkTextAlt" class="sr-only">${S.s1.placeholder}</label>
             <!-- the count belongs to the text, so it sits in the corner of the field
