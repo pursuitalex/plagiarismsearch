@@ -272,6 +272,16 @@ tailwind.config = {
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
   /* ---------- cabinet report mock ---------- */
+  /* The wash behind the pass. v1 drew a 64px band at 10% teal, and that is what was
+     ported here — but v1's line is scrubbed to the scroll and crawls, while this one
+     crosses the page in under two seconds. At that speed a thin band at a tenth of an
+     alpha never lands on the eye. So: wider, more alpha, and the brand blue rather
+     than teal-400, which reads green next to it. Four stops instead of two so the
+     falloff is a taper rather than a straight ramp. */
+  .cab-beam { background-image:linear-gradient(to bottom,
+    rgba(13,168,194,.22) 0%, rgba(13,168,194,.13) 38%,
+    rgba(13,168,194,.05) 70%, rgba(13,168,194,0) 100%); }
+
   /* a selected passage darkens; the others stay at reading weight */
   .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease; }
   .cab-plag.on { --wash:rgba(243,111,90,.4); }
@@ -710,9 +720,9 @@ tailwind.config = {
           <div id="cabDoc" class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
             <!-- the pass, borrowed from v1's #scanDoc: a line sweeps the page once and
                  the highlights land behind it -->
-            <div id="cabScan" class="absolute left-0 right-0 top-0 h-16 z-10 pointer-events-none opacity-0" style="transform:translateY(-80px)">
+            <div id="cabScan" class="absolute left-0 right-0 top-0 z-10 pointer-events-none opacity-0" style="transform:translateY(-80px)">
               <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
-              <div class="h-16 w-full bg-gradient-to-b from-teal-400/12 to-transparent"></div>
+              <div class="cab-beam h-28 w-full"></div>
             </div>
             <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100 bg-ink-50/60">
               <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight nums">#10248837</span>
@@ -786,7 +796,7 @@ tailwind.config = {
               </div>
             </div>
 
-            <div class="cab-in shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-100 bg-ink-50/60 text-[13.5px] font-semibold">
+            <div class="cab-in shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
               <span class="cab-tab on pt-3">Plagiarism</span>
               <span class="cab-tab pt-3">AI</span>
             </div>
