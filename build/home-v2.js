@@ -434,6 +434,20 @@ const STYLE = `
   .no-bar::-webkit-scrollbar { display:none; }
   /* the arrows are a hover affordance, but focus must reach them too, or the control
      is mouse-only. Hidden entirely when there is nothing to scroll. */
+  /* The track fades at both edges instead of cutting cards on the track box. A mask
+     rather than overlay strips: the cards themselves dissolve, so the section ground
+     — orb glow included — shows through, and there is no colour to keep in sync with
+     the backdrop. The fade is exactly the bleed gutter, and scroll-padding makes the
+     snap points target the gutter edge rather than the track edge — without it,
+     snap-mandatory parks the resting card at the track border, inside the mask, and
+     it sits there half-dissolved. So at rest every card is at full strength and the
+     dissolve happens only to cards actually leaving. */
+  #revTrack { --rev-fade:16px; scroll-padding-inline:var(--rev-fade);
+    -webkit-mask-image:linear-gradient(to right, transparent, #000 var(--rev-fade), #000 calc(100% - var(--rev-fade)), transparent);
+            mask-image:linear-gradient(to right, transparent, #000 var(--rev-fade), #000 calc(100% - var(--rev-fade)), transparent); }
+  @media (min-width:640px)  { #revTrack { --rev-fade:24px; } }
+  @media (min-width:1024px) { #revTrack { --rev-fade:40px; } }
+
   .rev-nav { opacity:0; pointer-events:none;
              transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1); }
   .group:hover .rev-nav, .rev-nav:focus-visible { opacity:1; pointer-events:auto; }
