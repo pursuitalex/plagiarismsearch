@@ -654,12 +654,15 @@ const SOURCES = {
 
 /* One card, two skins. Everything a review can carry is optional, so a card with only
    a quote still renders and a card with mark, rating, count and author renders more. */
+/* Half stars matter here: the value is one person's rating, and G2 publishes halves.
+   Two rows, the lit one clipped to the exact percentage, so 4.5 renders as four and a
+   half rather than rounding to a number nobody gave. */
 const stars = (value, dark) => {
   const pct = value == null ? 0 : Math.max(0, Math.min(100, (value / 5) * 100));
   const star = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + I.star + '</svg>';
   return `<span class="relative inline-flex shrink-0" role="img" aria-label="${value == null ? 'Rating pending' : value + ' out of 5'}">
             <span class="flex gap-0.5 ${dark ? 'text-white/20' : 'text-ink-200'}">${star.repeat(5)}</span>
-            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:${pct}%"><span class="flex gap-0.5">${star.repeat(5)}</span></span>
+            <span class="absolute inset-0 overflow-hidden text-orange-500" style="width:${pct}%"><span class="flex gap-0.5">${star.repeat(5)}</span></span>
           </span>`;
 };
 
@@ -672,7 +675,7 @@ const reviewCard = (r, dark) => {
                 ? `<img src="${src.mark}" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">`
                 : ''}
               <span class="text-[11px] sm:text-[11.5px] font-semibold ${dark ? 'text-white/60' : 'text-ink-500'}">${src.name}</span>
-              ${src.rating != null ? `<span class="ml-auto flex items-center gap-2">${stars(src.rating, dark)}<span class="text-[12px] font-bold nums ${dark ? 'text-white' : 'text-ink-900'}">${src.rating}</span></span>` : ''}
+              ${r.rating != null ? `<span class="ml-auto flex items-center gap-2">${stars(r.rating, dark)}<span class="text-[12px] font-bold nums ${dark ? 'text-white' : 'text-ink-900'}">${r.rating.toFixed(1)}</span></span>` : ''}
             </div>
 
             <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed ${dark ? 'text-white/85' : 'text-ink-800'} mb-5">${r.quote}</blockquote>
@@ -701,27 +704,35 @@ const reviewCard = (r, dark) => {
    lives on their profile, which every card links to. */
 const REVIEWS = [
   { source: 'trustpilot',    author: 'Tersia Gouws',
+    rating: 5,
     quote: 'Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.' },
 
   { source: 'g2',            author: 'Verified User in Higher Education',
+    rating: 4,
     quote: 'I appreciate the accuracy and speed of the PlagiarismSearch Checker. It provides detailed reports, clearly identifying matched sources, and the user interface is intuitive, making the whole process seamless.' },
 
   { source: 'smartcustomer', author: 'Maybelle R.',
+    rating: 5,
     quote: 'One of the biggest advantages of this plagiarism checker is its ability to analyze documents in different formats. This flexibility has saved me countless hours of converting files or dealing with compatibility issues…' },
 
   { source: 'marketplace',   author: 'Carmel Smith',
+    rating: 5,
     quote: 'It is a modern multifunctional tool that I use not only to check for plagiarism in various written works, but also to identify the generated content.' },
 
   { source: 'trustpilot',    author: 'Chioma Isaac Asiwaju',
+    rating: 5,
     quote: 'PlagiarismSearch is by far the best plagiarism checkers I&rsquo;ve ever seen. And, I&rsquo;ve used quite a number of them. In fact, they are so good I had to subscribe.' },
 
   { source: 'smartcustomer', author: 'Clarissa C.',
+    rating: 5,
     quote: 'I am glad that I decided to use the tool for checking the presence of plagiarism. Thanks to the quick and high-quality review, I sent the edited term paper to my teacher on time.' },
 
   { source: 'marketplace',   author: 'Madison Lambret',
+    rating: 5,
     quote: 'The interface is user-friendly and intuitive, making it easy for even non-tech-savvy individuals to navigate effortlessly. The speed at which it scans and analyzes content is truly remarkable…' },
 
   { source: 'g2',            author: 'Sukhpreet K.',
+    rating: 4.5,
     quote: 'It is very helpful in-depth research for bloggers and content writers. The content quality seems very genuine and authentic.' },
 ];
 
