@@ -1825,14 +1825,20 @@ const revealBlock = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/
                      '<span aria-hidden="true">' + chars + '</span>';
 
       const reels = [...el.querySelectorAll('.od-r')];
-      ScrollTrigger.create({
-        trigger: el.closest('section'), start: 'top 85%', once: true,
-        onEnter: () => gsap.from(reels, {
-          yPercent: -(CELLS - 1) * (100 / CELLS),
-          duration: .8, ease: 'power3.out', stagger: .06,
-          onComplete: () => { el.textContent = text; },
-        }),
+      const roll = () => gsap.from(reels, {
+        yPercent: -(CELLS - 1) * (100 / CELLS),
+        duration: .8, ease: 'power3.out', stagger: .06,
+        onComplete: () => { el.textContent = text; },
       });
+
+      /* The rail sits just under the hero, so on a tall window it is already on screen
+         at scroll zero — and a trigger whose start is behind it fires while it is being
+         set up, rolling the figures before anyone has looked at them. Same split .rv and
+         the pen marks make: in the first view, wait for the title to finish and then
+         roll; below the fold, wait to be reached. */
+      if (el.getBoundingClientRect().top < innerHeight * .95) gsap.delayedCall(1.4, roll);
+      else ScrollTrigger.create({
+        trigger: el.closest('section'), start: 'top 85%', once: true, onEnter: roll });
     });
   }
 
