@@ -2068,8 +2068,8 @@ tailwind.config = {
     if (doc && side && line && window.gsap && !reduce) {
       const SCAN = .55;                 // the pass starts once both panels are down
       const PASS = 1.8;                 // how long the line takes to cross
-      const FILL = SCAN + PASS - .25;   // the sidebar resolves as the line leaves
-      const STEP = .075;                // one rung of the cascade
+      const FILL = SCAN + .15;          // the sidebar starts filling just behind the line
+      const STEP = .115;                // paced so the last rung lands as the line leaves
 
       const tl = gsap.timeline({
         scrollTrigger: { trigger: doc, start: 'top 72%', once: true }
@@ -2091,9 +2091,12 @@ tailwind.config = {
         tl.from(m, { backgroundSize: '0% 100%', duration: .45, ease: 'power2.out' }, SCAN + .35 + i * .28);
       });
 
-      /* Then the sidebar fills, top to bottom: the heading, each metric, the tabs,
-         then the sources. One rung of the ladder per element, in the panel's own
-         DOM order.
+      /* The sidebar fills top to bottom while the line is still crossing: the heading,
+         each metric, the tabs, then the sources, one rung per element in the panel's own
+         DOM order. It used to wait for the pass to finish, which is what the cabinet
+         does, but that left the panel white for over two seconds. Starting it behind the
+         line and pacing the rungs so the last lands exactly as the line leaves reads as
+         results accumulating during the check rather than two unrelated movements.
 
          It fades without lifting, and so does the beam next door, because both panels
          are rounded boxes that clip: while a transformed layer sits inside such a box
