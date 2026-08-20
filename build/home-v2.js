@@ -683,14 +683,14 @@ const section1 = () => `
        stands in for it. Inert — no action, submit returns false. -->
   <section id="checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <!-- The ground: a 2px dot with rounded corners on a 20px grid, drawn as a pattern
+      <!-- The ground: a 2px dot with rounded corners on a 22px grid, drawn as a pattern
            rather than loaded as an image, so it stays crisp at any pixel density, costs
            no request, and the colour is a value in the source instead of baked pixels.
            It sits under the orbs — the light lies over the surface, not beside it. -->
       <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
         <defs>
-          <pattern id="heroDots" width="20" height="20" patternUnits="userSpaceOnUse">
-            <rect width="2" height="2" rx=".65" fill="#C6DAE4"></rect>
+          <pattern id="heroDots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <rect width="2" height="2" rx=".65" fill="#E1EDF2"></rect>
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#heroDots)"></rect>
