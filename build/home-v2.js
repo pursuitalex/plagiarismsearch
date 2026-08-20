@@ -673,6 +673,22 @@ const S = COPY;
    long scroll: the report, the reviews and the closing CTA are the dark acts.
    ───────────────────────────────────────────────────────────────────────────── */
 
+/* The ground the page opens and closes on: a 2px dot with rounded corners on a 22px
+   grid, drawn as a pattern rather than tiled from an image, so it stays crisp at any
+   pixel density, costs no request, and the colour and spacing are values here instead
+   of baked pixels. The hero and the closing act share the same wash, so they share the
+   same ground — one definition, one place to change it, a separate pattern id each so
+   neither section depends on the other still being on the page. */
+const DOT = { size: 2, radius: .65, grid: 22, colour: '#DAE7ED' };
+const dots = id => `<svg class="absolute inset-0 w-full h-full" aria-hidden="true">
+        <defs>
+          <pattern id="${id}" width="${DOT.grid}" height="${DOT.grid}" patternUnits="userSpaceOnUse">
+            <rect width="${DOT.size}" height="${DOT.size}" rx="${DOT.radius}" fill="${DOT.colour}"></rect>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#${id})"></rect>
+      </svg>`;
+
 const section1 = () => `
   <!-- ================= 01 · HERO / REAL CHECKER =================
        The quick-check form from the product pages, chosen over the plainer one on
@@ -683,18 +699,7 @@ const section1 = () => `
        stands in for it. Inert — no action, submit returns false. -->
   <section id="checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <!-- The ground: a 2px dot with rounded corners on a 22px grid, drawn as a pattern
-           rather than loaded as an image, so it stays crisp at any pixel density, costs
-           no request, and the colour is a value in the source instead of baked pixels.
-           It sits under the orbs — the light lies over the surface, not beside it. -->
-      <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
-        <defs>
-          <pattern id="heroDots" width="22" height="22" patternUnits="userSpaceOnUse">
-            <rect width="2" height="2" rx=".65" fill="#DAE7ED"></rect>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#heroDots)"></rect>
-      </svg>
+      ${dots('heroDots')}
       <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
       <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
     </div>
@@ -1241,6 +1246,7 @@ const section13 = () => `
        Sends you back to the real checker in section 1; no second form is rendered. -->
   <section id="cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      ${dots('ctaDots')}
       <div id="ctaGlowWarm" class="orb"></div>
       <div id="ctaGlowCool" class="orb"></div>
     </div>

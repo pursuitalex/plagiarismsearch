@@ -548,14 +548,10 @@ tailwind.config = {
        stands in for it. Inert — no action, submit returns false. -->
   <section id="checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <!-- The ground: a 2px dot with rounded corners on a 22px grid, drawn as a pattern
-           rather than loaded as an image, so it stays crisp at any pixel density, costs
-           no request, and the colour is a value in the source instead of baked pixels.
-           It sits under the orbs — the light lies over the surface, not beside it. -->
       <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
         <defs>
           <pattern id="heroDots" width="22" height="22" patternUnits="userSpaceOnUse">
-            <rect width="2" height="2" rx=".65" fill="#DAE7ED"></rect>
+            <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#heroDots)"></rect>
@@ -1566,6 +1562,14 @@ tailwind.config = {
        Sends you back to the real checker in section 1; no second form is rendered. -->
   <section id="cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
+        <defs>
+          <pattern id="ctaDots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#ctaDots)"></rect>
+      </svg>
       <div id="ctaGlowWarm" class="orb"></div>
       <div id="ctaGlowCool" class="orb"></div>
     </div>
