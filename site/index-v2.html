@@ -265,9 +265,6 @@ tailwind.config = {
   .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease; }
   .cab-plag.on { --wash:rgba(243,111,90,.4); }
   .cab-ai.on   { --wash:rgba(168,85,247,.34); }
-  .cab-detail { display:none; }
-  .cab-detail.on { display:block; animation:cabIn .3s cubic-bezier(.32,.72,0,1); }
-  @keyframes cabIn { from { opacity:0; transform:translateY(6px); } }
   .cab-src.on { background:#F8F9FB; }
 
   /* the foot of the source list dissolves rather than ending on a cut edge */
@@ -409,7 +406,6 @@ tailwind.config = {
   @media (prefers-reduced-motion: reduce) {
     .match-panel.on { animation:none; }
     .hl, .sw, .sw::after, .cab-mark { transition:none; }
-    .cab-detail.on { animation:none; }
   }
 </style>
 <body class="font-sans text-ink-900 bg-white">
@@ -706,74 +702,6 @@ tailwind.config = {
               <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800">Further work should separate the price effect from the yield effect before either is used to guide policy.</p>
             </div>
 
-            <!-- Selecting a passage opens its source here. The four labels are the
-                 brief's, and the interaction is the one it asks for: a highlighted
-                 passage reveals the source and the context it came from. -->
-            <div class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7">
-              <div class="cab-detail on rounded-xl sm:rounded-2xl bg-ink-50 ring-1 ring-black/5 p-4 sm:p-5" data-detail="0">
-                <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
-                  <div class="sm:col-span-2 min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matched passage</p>
-                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-800">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
-                  </div>
-                  <div class="min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matching source</p>
-                    <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight truncate">Climate volatility and agriculture vulnerability</p>
-                    <p class="text-[12px] text-ink-400 truncate">nature.com/nclimate/vol-13</p>
-                  </div>
-                  <div class="min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Similarity</p>
-                    <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest text-orange-600 nums">31.6%</p>
-                  </div>
-                  <div class="sm:col-span-2 min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Source context</p>
-                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">…measurements across rain-fed systems indicate that the economic implications reach well beyond environmental damage, touching every part of modern agricultural systems…</p>
-                  </div>
-                </div>
-              </div>
-              <div class="cab-detail rounded-xl sm:rounded-2xl bg-ink-50 ring-1 ring-black/5 p-4 sm:p-5" data-detail="1">
-                <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
-                  <div class="sm:col-span-2 min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matched passage</p>
-                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-800">Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions.</p>
-                  </div>
-                  <div class="min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matching source</p>
-                    <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight truncate">Adaptation strategies in West African smallholding</p>
-                    <p class="text-[12px] text-ink-400 truncate">cambridge.org/agricultural-economics</p>
-                  </div>
-                  <div class="min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Similarity</p>
-                    <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest text-orange-600 nums">6.6%</p>
-                  </div>
-                  <div class="sm:col-span-2 min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Source context</p>
-                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">…rising global temperatures correlate with decreased yields, and the effect compounds sharply wherever irrigation is unavailable…</p>
-                  </div>
-                </div>
-              </div>
-              <div class="cab-detail rounded-xl sm:rounded-2xl bg-ink-50 ring-1 ring-black/5 p-4 sm:p-5" data-detail="2">
-                <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
-                  <div class="sm:col-span-2 min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matched passage</p>
-                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-800">Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.</p>
-                  </div>
-                  <div class="min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matching source</p>
-                    <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight truncate">Rain-fed yield variance under warming scenarios</p>
-                    <p class="text-[12px] text-ink-400 truncate">sciencedirect.com/agsy/2024</p>
-                  </div>
-                  <div class="min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Similarity</p>
-                    <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest text-orange-600 nums">4.1%</p>
-                  </div>
-                  <div class="sm:col-span-2 min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Source context</p>
-                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">…adaptation is treated as a fixed parameter in most projections rather than a decision taken season by season under uncertainty…</p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div class="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50/60">
               <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
@@ -2116,11 +2044,9 @@ tailwind.config = {
      matching row in the sidebar. Keyboard reaches it too — the passages are buttons. */
   {
     const marks = [...document.querySelectorAll('.cab-mark')];
-    const details = [...document.querySelectorAll('.cab-detail')];
     const rows = [...document.querySelectorAll('.cab-src')];
     const open = i => {
       marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
-      details.forEach(d => d.classList.toggle('on', d.dataset.detail === String(i)));
       rows.forEach(r => r.classList.toggle('on', r.dataset.src === String(i)));
     };
     marks.forEach(m => {

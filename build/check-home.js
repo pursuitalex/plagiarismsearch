@@ -123,10 +123,24 @@ console.log('\nfixed copy');
   const noCta = CTAS.filter(c => !text.includes(c));
   ok(CTAS.length + ' approved CTA labels present', !noCta.length, noCta.join(' | '));
 
-  const labels = ['Matched passage', 'Matching source', 'Source context', 'Similarity',
-                  'Citations', 'References', 'AI probability'];
-  ok('all seven report labels present', labels.every(l => text.includes(l)),
-     labels.filter(l => !text.includes(l)).join(' | '));
+  /* The brief lists seven labels for the report. Four are on the screen the product
+     actually ships — Similarity (as "Similarities"), Citations, References and AI
+     probability all appear in the legend and the metrics — and those stay asserted.
+
+     Matched passage, Matching source and Source context were on a detail strip built to
+     satisfy the list. Olex removed it on 2026-08-20: the block exists to show the real
+     interface, and the real interface has no such strip. Selecting a passage still
+     lights its source in the sidebar, which is what the cabinet itself does.
+
+     Reported, not dropped. If the three are meant to come back, this line is where it
+     will be noticed. */
+  const onScreen = ['Similarity', 'Citations', 'References', 'AI probability'];
+  ok('four report labels on the real screen', onScreen.every(l => text.includes(l)),
+     onScreen.filter(l => !text.includes(l)).join(' | '));
+
+  const dropped = ['Matched passage', 'Matching source', 'Source context'].filter(l => !text.includes(l));
+  if (dropped.length) console.log('  WAIVED report labels  ' + dropped.join(', ') +
+    ' — not on the production screen (decision 2026-08-20)');
 }
 
 /* ── what the brief forbids ─────────────────────────────────────────────── */

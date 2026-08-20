@@ -251,19 +251,6 @@ const CAB = {
     ['Smallholder decision-making under uncertainty', 'jstor.org/stable/48729103', '1.9%'],
     ['Price transmission in West African grain markets', 'ifpri.org/publication/gm-2023', '1.2%'],
   ],
-  /* what the detail strip shows when a passage is selected: the passage itself, then
-     where it came from. Both are needed — a source with no passage beside it makes the
-     reader hunt back up the document for what was actually matched. */
-  passage: [
-    'The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.',
-    'Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions.',
-    'Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.',
-  ],
-  context: [
-    '…measurements across rain-fed systems indicate that the economic implications reach well beyond environmental damage, touching every part of modern agricultural systems…',
-    '…rising global temperatures correlate with decreased yields, and the effect compounds sharply wherever irrigation is unavailable…',
-    '…adaptation is treated as a fixed parameter in most projections rather than a decision taken season by season under uncertainty…',
-  ],
   legend: [
     ['Plagiarism', '#F36F5A'],
     ['Similarities', '#EAB308'],
@@ -305,9 +292,6 @@ const STYLE = `
   .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease; }
   .cab-plag.on { --wash:rgba(243,111,90,.4); }
   .cab-ai.on   { --wash:rgba(168,85,247,.34); }
-  .cab-detail { display:none; }
-  .cab-detail.on { display:block; animation:cabIn .3s cubic-bezier(.32,.72,0,1); }
-  @keyframes cabIn { from { opacity:0; transform:translateY(6px); } }
   .cab-src.on { background:#F8F9FB; }
 
   /* the foot of the source list dissolves rather than ending on a cut edge */
@@ -449,7 +433,6 @@ const STYLE = `
   @media (prefers-reduced-motion: reduce) {
     .match-panel.on { animation:none; }
     .hl, .sw, .sw::after, .cab-mark { transition:none; }
-    .cab-detail.on { animation:none; }
   }
 </style>`;
 
@@ -647,29 +630,6 @@ const cabLine = l => {
 
 /* ring in the category colour, centre the same colour at half strength — the dot reads
    as the wash it stands for rather than as a solid bullet */
-/* one source, opened under the document when its passage is selected */
-const cabDetail = ([title, url, pct], i) => `<div class="cab-detail${i === 0 ? ' on' : ''} rounded-xl sm:rounded-2xl bg-ink-50 ring-1 ring-black/5 p-4 sm:p-5" data-detail="${i}">
-                <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
-                  <div class="sm:col-span-2 min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matched passage</p>
-                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-800">${CAB.passage[i]}</p>
-                  </div>
-                  <div class="min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matching source</p>
-                    <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight truncate">${title}</p>
-                    <p class="text-[12px] text-ink-400 truncate">${url}</p>
-                  </div>
-                  <div class="min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Similarity</p>
-                    <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest text-orange-600 nums">${pct}</p>
-                  </div>
-                  <div class="sm:col-span-2 min-w-0">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Source context</p>
-                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${CAB.context[i]}</p>
-                  </div>
-                </div>
-              </div>`;
-
 const cabLegend = ([label, colour]) => `<span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
                 <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:${colour}; background:${colour}80"></span>${label}
               </span>`;
@@ -866,12 +826,6 @@ const section4 = () => `
               ${CAB.doc.map(cabLine).join(NL14)}
             </div>
 
-            <!-- Selecting a passage opens its source here. The four labels are the
-                 brief's, and the interaction is the one it asks for: a highlighted
-                 passage reveals the source and the context it came from. -->
-            <div class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7">
-              ${CAB.sources.slice(0, 3).map(cabDetail).join(NL14)}
-            </div>
 
             <div class="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50/60">
               ${CAB.legend.map(cabLegend).join(NL14)}
@@ -1588,11 +1542,9 @@ const SCRIPT = `
      matching row in the sidebar. Keyboard reaches it too — the passages are buttons. */
   {
     const marks = [...document.querySelectorAll('.cab-mark')];
-    const details = [...document.querySelectorAll('.cab-detail')];
     const rows = [...document.querySelectorAll('.cab-src')];
     const open = i => {
       marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
-      details.forEach(d => d.classList.toggle('on', d.dataset.detail === String(i)));
       rows.forEach(r => r.classList.toggle('on', r.dataset.src === String(i)));
     };
     marks.forEach(m => {
