@@ -261,6 +261,15 @@ tailwind.config = {
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
   /* ---------- cabinet report mock ---------- */
+  /* a selected passage darkens; the others stay at reading weight */
+  .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease; }
+  .cab-plag.on { background:rgba(243,111,90,.4); }
+  .cab-ai.on   { background:rgba(168,85,247,.34); }
+  .cab-detail { display:none; }
+  .cab-detail.on { display:block; animation:cabIn .3s cubic-bezier(.32,.72,0,1); }
+  @keyframes cabIn { from { opacity:0; transform:translateY(6px); } }
+  .cab-src.on { background:#F8F9FB; }
+
   /* the foot of the source list dissolves rather than ending on a cut edge */
   .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
     pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
@@ -397,7 +406,8 @@ tailwind.config = {
 
   @media (prefers-reduced-motion: reduce) {
     .match-panel.on { animation:none; }
-    .hl, .sw, .sw::after { transition:none; }
+    .hl, .sw, .sw::after, .cab-mark { transition:none; }
+    .cab-detail.on { animation:none; }
   }
 </style>
 <body class="font-sans text-ink-900 bg-white">
@@ -656,126 +666,15 @@ tailwind.config = {
         <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60">A similarity score is only the starting point. Open a highlighted passage to see the matching source and its context, then review citations, references, and other report signals before deciding how the match should be interpreted.</p>
       </div>
 
-      <div class="rv flex items-center gap-2 mb-4">
-        <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant A</span>
-        <span class="text-[11.5px] font-medium text-white/40">current</span>
-      </div>
-      <div class="rv grid lg:grid-cols-[1.35fr_1fr] gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7">
-          <div class="flex items-center gap-3 mb-5">
-            <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 text-white flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
-          </span>
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Matched passage</span>
-          </div>
-          <div class="space-y-3.5 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85">
-            <p>The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
-            <p><span class="hl" role="button" tabindex="0" data-match="0">Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions.</span></p>
-            <p><span class="hl" role="button" tabindex="0" data-match="1">However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.</span></p>
-            <p>Field data from recent seasons supports this approach across tropical zones worldwide.</p>
-          </div>
-          <p class="mt-5 pt-4 border-t border-white/10 text-[12.5px] sm:text-[13px] font-medium text-white/40">Select a highlighted passage to open its source.</p>
-        </div>
 
-        <div>
-          
-          <div class="match-panel on rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7" data-panel="0">
-            <div class="flex items-center gap-3 mb-4">
-              <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 text-white flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          </span>
-              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Matching source</span>
-            </div>
-            <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-1">Climate volatility and agriculture vulnerability</p>
-            <p class="text-[12.5px] sm:text-[13px] font-medium text-white/40 mb-5">Nature Climate Change · 2023</p>
+      <!-- The report as the cabinet draws it, chosen over a card layout invented for
+           the page on 2026-08-20. Backdrop dark, both panels light, as on the real
+           screen. Structure, labels and colour system are the product's; the document
+           text is ours.
 
-            <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-2">Source context</div>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/60 mb-5">…measurements across rain-fed systems indicate that rising global temperatures correlate with decreased yields, particularly where irrigation is unavailable…</p>
-
-            <dl class="divide-y divide-white/10 border-t border-white/10">
-              <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">Similarity</dt>
-                <dd class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest nums text-orange-400">92%</dd>
-              </div>
-              <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">Citations</dt>
-                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold">None for this passage</dd>
-              </div>
-              <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">References</dt>
-                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold">Listed in the report</dd>
-              </div>
-            </dl>
-          </div>
-          
-          <div class="match-panel rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7" data-panel="1">
-            <div class="flex items-center gap-3 mb-4">
-              <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 text-white flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          </span>
-              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">Matching source</span>
-            </div>
-            <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-1">Adaptation strategies in West African smallholding</p>
-            <p class="text-[12.5px] sm:text-[13px] font-medium text-white/40 mb-5">Cambridge J. Agricultural Econ. · 2022</p>
-
-            <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-2">Source context</div>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/60 mb-5">…smallholder farmers have adapted through diversified cropping patterns, with drought-resistant millet varieties among the most widely adopted responses…</p>
-
-            <dl class="divide-y divide-white/10 border-t border-white/10">
-              <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">Similarity</dt>
-                <dd class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest nums text-orange-400">78%</dd>
-              </div>
-              <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">Citations</dt>
-                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold">Present for this passage</dd>
-              </div>
-              <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">References</dt>
-                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold">Listed in the report</dd>
-              </div>
-            </dl>
-          </div>
-
-          <!-- its own frame, away from the source-matching signals, because the brief
-               requires the AI signal to read as separate rather than as a verdict -->
-          <div class="mt-4 sm:mt-5 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-teal-500/10 ring-1 ring-teal-400/20 p-5 sm:p-6">
-            <div class="flex items-center gap-3 mb-3">
-              <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 text-white flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
-          </span>
-              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">AI probability</span>
-            </div>
-            <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tight mb-1.5">Low</p>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/55">Reported as a separate signal. It is not part of source matching.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Demoted from a white card to a footnote. It is a caveat about how to read the
-           report, not a claim, and as a full-width white slab on a dark act it was
-           shouting louder than the report it qualifies. -->
-      <p class="rv flex items-start gap-2.5 text-[12.5px] sm:text-[13px] leading-relaxed text-white/45 max-w-[76ch] mb-10 sm:mb-12 lg:mb-14">
-        <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
-        PlagiarismSearch surfaces matching text and sources for review. It does not make the final plagiarism judgment for you.
-      </p>
-
-      <!-- ===== Variant B · the report as the cabinet actually draws it =====
-           Kept beside the current treatment so the two can be compared. The backdrop
-           stays dark; both panels go light, as on the real screen.
-
-           Structure, labels and colour system are the product's. The document text is
-           ours. Percentages belong to this sample — a different text gives different
-           numbers, which is what a report is.
-
-           The scroll animation from v1's #scanDoc and the bar fills come after the
-           look is agreed. -->
-      <div class="rv mt-12 sm:mt-14 lg:mt-16">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant B</span>
-          <span class="text-[11.5px] font-medium text-white/40">the report screen</span>
-        </div>
-
+           Selecting a passage opens its source under the document — the interaction the
+           brief asks for, and where its four report labels live. -->
+      <div class="rv">
         <div class="grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
 
           <!-- document -->
@@ -789,14 +688,83 @@ tailwind.config = {
             </div>
 
             <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
-              <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-800"><span class="cab-mark cab-plag"><span>Climate change and the economics of food</span></span></p>
-              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag"><span>The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</span></span></p>
-              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag"><span>Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions, and that the effect compounds where irrigation is unavailable.</span></span></p>
+              <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="0" aria-label="Matched passage — open its source"><span>Climate change and the economics of food</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="0" aria-label="Matched passage — open its source"><span>The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="1" aria-label="Matched passage — open its source"><span>Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions, and that the effect compounds where irrigation is unavailable.</span></span></p>
               <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800">However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.</p>
               <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-800">What the models leave out</p>
-              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai"><span>Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.</span></span></p>
-              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai"><span>Field data from recent seasons supports this reading across tropical zones, though the sample remains too small to generalise from with confidence.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai" role="button" tabindex="0" data-match="2" aria-label="Matched passage — open its source"><span>Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai" role="button" tabindex="0" data-match="2" aria-label="Matched passage — open its source"><span>Field data from recent seasons supports this reading across tropical zones, though the sample remains too small to generalise from with confidence.</span></span></p>
               <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800">Further work should separate the price effect from the yield effect before either is used to guide policy.</p>
+            </div>
+
+            <!-- Selecting a passage opens its source here. The four labels are the
+                 brief's, and the interaction is the one it asks for: a highlighted
+                 passage reveals the source and the context it came from. -->
+            <div class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7">
+              <div class="cab-detail on rounded-xl sm:rounded-2xl bg-ink-50 ring-1 ring-black/5 p-4 sm:p-5" data-detail="0">
+                <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <div class="sm:col-span-2 min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matched passage</p>
+                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-800">The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matching source</p>
+                    <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight truncate">Climate volatility and agriculture vulnerability</p>
+                    <p class="text-[12px] text-ink-400 truncate">nature.com/nclimate/vol-13</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Similarity</p>
+                    <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest text-orange-600 nums">31.6%</p>
+                  </div>
+                  <div class="sm:col-span-2 min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Source context</p>
+                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">…measurements across rain-fed systems indicate that the economic implications reach well beyond environmental damage, touching every part of modern agricultural systems…</p>
+                  </div>
+                </div>
+              </div>
+              <div class="cab-detail rounded-xl sm:rounded-2xl bg-ink-50 ring-1 ring-black/5 p-4 sm:p-5" data-detail="1">
+                <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <div class="sm:col-span-2 min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matched passage</p>
+                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-800">Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions.</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matching source</p>
+                    <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight truncate">Adaptation strategies in West African smallholding</p>
+                    <p class="text-[12px] text-ink-400 truncate">cambridge.org/agricultural-economics</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Similarity</p>
+                    <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest text-orange-600 nums">6.6%</p>
+                  </div>
+                  <div class="sm:col-span-2 min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Source context</p>
+                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">…rising global temperatures correlate with decreased yields, and the effect compounds sharply wherever irrigation is unavailable…</p>
+                  </div>
+                </div>
+              </div>
+              <div class="cab-detail rounded-xl sm:rounded-2xl bg-ink-50 ring-1 ring-black/5 p-4 sm:p-5" data-detail="2">
+                <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <div class="sm:col-span-2 min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matched passage</p>
+                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-800">Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matching source</p>
+                    <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight truncate">Rain-fed yield variance under warming scenarios</p>
+                    <p class="text-[12px] text-ink-400 truncate">sciencedirect.com/agsy/2024</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Similarity</p>
+                    <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest text-orange-600 nums">4.1%</p>
+                  </div>
+                  <div class="sm:col-span-2 min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Source context</p>
+                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">…adaptation is treated as a fixed parameter in most projections rather than a decision taken season by season under uncertainty…</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50/60">
@@ -860,42 +828,42 @@ tailwind.config = {
                  that there are more sources, not that you can read them all here -->
             <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
               <ul class="absolute inset-0 divide-y divide-ink-100">
-                <li class="flex items-start justify-between gap-4 px-5 sm:px-6 py-4">
+                <li class="cab-src flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="0">
                 <span class="min-w-0">
                   <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Climate volatility and agriculture vulnerability</span>
                   <span class="block text-[12px] text-ink-400 truncate">nature.com/nclimate/vol-13</span>
                 </span>
                 <span class="shrink-0 rounded-full bg-orange-100 text-orange-700 px-2.5 py-1 text-[11.5px] font-bold nums">31.6%</span>
               </li>
-                <li class="flex items-start justify-between gap-4 px-5 sm:px-6 py-4">
+                <li class="cab-src flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="1">
                 <span class="min-w-0">
                   <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Adaptation strategies in West African smallholding</span>
                   <span class="block text-[12px] text-ink-400 truncate">cambridge.org/agricultural-economics</span>
                 </span>
                 <span class="shrink-0 rounded-full bg-orange-100 text-orange-700 px-2.5 py-1 text-[11.5px] font-bold nums">6.6%</span>
               </li>
-                <li class="flex items-start justify-between gap-4 px-5 sm:px-6 py-4">
+                <li class="cab-src flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="2">
                 <span class="min-w-0">
                   <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Rain-fed yield variance under warming scenarios</span>
                   <span class="block text-[12px] text-ink-400 truncate">sciencedirect.com/agsy/2024</span>
                 </span>
                 <span class="shrink-0 rounded-full bg-orange-100 text-orange-700 px-2.5 py-1 text-[11.5px] font-bold nums">4.1%</span>
               </li>
-                <li class="flex items-start justify-between gap-4 px-5 sm:px-6 py-4">
+                <li class="cab-src flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="3">
                 <span class="min-w-0">
                   <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Millet cultivars and drought tolerance trials</span>
                   <span class="block text-[12px] text-ink-400 truncate">fao.org/publications/cb9241</span>
                 </span>
                 <span class="shrink-0 rounded-full bg-orange-100 text-orange-700 px-2.5 py-1 text-[11.5px] font-bold nums">2.8%</span>
               </li>
-                <li class="flex items-start justify-between gap-4 px-5 sm:px-6 py-4">
+                <li class="cab-src flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="4">
                 <span class="min-w-0">
                   <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Smallholder decision-making under uncertainty</span>
                   <span class="block text-[12px] text-ink-400 truncate">jstor.org/stable/48729103</span>
                 </span>
                 <span class="shrink-0 rounded-full bg-orange-100 text-orange-700 px-2.5 py-1 text-[11.5px] font-bold nums">1.9%</span>
               </li>
-                <li class="flex items-start justify-between gap-4 px-5 sm:px-6 py-4">
+                <li class="cab-src flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="5">
                 <span class="min-w-0">
                   <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Price transmission in West African grain markets</span>
                   <span class="block text-[12px] text-ink-400 truncate">ifpri.org/publication/gm-2023</span>
@@ -907,6 +875,13 @@ tailwind.config = {
           </div>
         </div>
       </div>
+
+      <!-- A caveat about how to read the report, not a claim about the product, so it
+           sits under the thing it qualifies at a footnote's weight. -->
+      <p class="rv flex items-start gap-2.5 text-[12.5px] sm:text-[13px] leading-relaxed text-white/45 max-w-[76ch] mt-8 sm:mt-10 mb-10 sm:mb-12 lg:mb-14">
+        <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+        PlagiarismSearch surfaces matching text and sources for review. It does not make the final plagiarism judgment for you.
+      </p>
 
       <!-- The integrations rail, moved here from its own section at Olex's request.
            NOTE: the brief's page story puts the integrations proof at block 3 and the
@@ -2078,6 +2053,26 @@ tailwind.config = {
     track.addEventListener("scroll", mark, { passive: true });
     addEventListener("resize", build);
     build();
+  }
+
+  /* Report: selecting a passage opens its source under the document and lights the
+     matching row in the sidebar. Keyboard reaches it too — the passages are buttons. */
+  {
+    const marks = [...document.querySelectorAll('.cab-mark')];
+    const details = [...document.querySelectorAll('.cab-detail')];
+    const rows = [...document.querySelectorAll('.cab-src')];
+    const open = i => {
+      marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
+      details.forEach(d => d.classList.toggle('on', d.dataset.detail === String(i)));
+      rows.forEach(r => r.classList.toggle('on', r.dataset.src === String(i)));
+    };
+    marks.forEach(m => {
+      m.addEventListener('click', () => open(m.dataset.match));
+      m.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(m.dataset.match); }
+      });
+    });
+    if (marks.length) open(0);
   }
 
   /* FAQ: answers are already in the DOM; this only opens and closes them */

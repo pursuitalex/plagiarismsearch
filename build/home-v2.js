@@ -251,6 +251,19 @@ const CAB = {
     ['Smallholder decision-making under uncertainty', 'jstor.org/stable/48729103', '1.9%'],
     ['Price transmission in West African grain markets', 'ifpri.org/publication/gm-2023', '1.2%'],
   ],
+  /* what the detail strip shows when a passage is selected: the passage itself, then
+     where it came from. Both are needed — a source with no passage beside it makes the
+     reader hunt back up the document for what was actually matched. */
+  passage: [
+    'The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.',
+    'Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions.',
+    'Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.',
+  ],
+  context: [
+    '…measurements across rain-fed systems indicate that the economic implications reach well beyond environmental damage, touching every part of modern agricultural systems…',
+    '…rising global temperatures correlate with decreased yields, and the effect compounds sharply wherever irrigation is unavailable…',
+    '…adaptation is treated as a fixed parameter in most projections rather than a decision taken season by season under uncertainty…',
+  ],
   legend: [
     ['Plagiarism', '#F36F5A'],
     ['Similarities', '#EAB308'],
@@ -258,15 +271,18 @@ const CAB = {
     ['Citations', '#22C55E'],
     ['References', '#3B82F6'],
   ],
-  /* h — a heading line; p — body. mark: plag | ai | null */
+  /* Each marked passage points at the source it came from, so selecting one can open
+     the four fields the brief requires: Matched passage, Matching source, Source
+     context, Similarity. */
+  /* h — a heading line; p — body. mark: plag | ai | null. m — index into sources */
   doc: [
-    { t: 'h', text: 'Climate change and the economics of food', mark: 'plag' },
-    { t: 'p', text: 'The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.', mark: 'plag' },
-    { t: 'p', text: 'Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions, and that the effect compounds where irrigation is unavailable.', mark: 'plag' },
+    { t: 'h', text: 'Climate change and the economics of food', mark: 'plag', m: 0 },
+    { t: 'p', text: 'The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.', mark: 'plag', m: 0 },
+    { t: 'p', text: 'Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions, and that the effect compounds where irrigation is unavailable.', mark: 'plag', m: 1 },
     { t: 'p', text: 'However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.', mark: null },
     { t: 'h', text: 'What the models leave out', mark: null },
-    { t: 'p', text: 'Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.', mark: 'ai' },
-    { t: 'p', text: 'Field data from recent seasons supports this reading across tropical zones, though the sample remains too small to generalise from with confidence.', mark: 'ai' },
+    { t: 'p', text: 'Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.', mark: 'ai', m: 2 },
+    { t: 'p', text: 'Field data from recent seasons supports this reading across tropical zones, though the sample remains too small to generalise from with confidence.', mark: 'ai', m: 2 },
     { t: 'p', text: 'Further work should separate the price effect from the yield effect before either is used to guide policy.', mark: null },
   ],
 };
@@ -285,6 +301,15 @@ const STYLE = `
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
   /* ---------- cabinet report mock ---------- */
+  /* a selected passage darkens; the others stay at reading weight */
+  .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease; }
+  .cab-plag.on { background:rgba(243,111,90,.4); }
+  .cab-ai.on   { background:rgba(168,85,247,.34); }
+  .cab-detail { display:none; }
+  .cab-detail.on { display:block; animation:cabIn .3s cubic-bezier(.32,.72,0,1); }
+  @keyframes cabIn { from { opacity:0; transform:translateY(6px); } }
+  .cab-src.on { background:#F8F9FB; }
+
   /* the foot of the source list dissolves rather than ending on a cut edge */
   .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
     pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
@@ -421,7 +446,8 @@ const STYLE = `
 
   @media (prefers-reduced-motion: reduce) {
     .match-panel.on { animation:none; }
-    .hl, .sw, .sw::after { transition:none; }
+    .hl, .sw, .sw::after, .cab-mark { transition:none; }
+    .cab-detail.on { animation:none; }
   }
 </style>`;
 
@@ -611,12 +637,37 @@ const NL16 = String.fromCharCode(10) + '                ';
 const cabLine = l => {
   const cls = l.mark === 'plag' ? 'cab-mark cab-plag' : l.mark === 'ai' ? 'cab-mark cab-ai' : '';
   const size = l.t === 'h' ? 'text-[15.5px] sm:text-[16.5px] font-bold tracking-tight' : 'text-[13.5px] sm:text-[14.5px] leading-relaxed';
-  const inner = cls ? `<span class="${cls}"><span>${l.text}</span></span>` : l.text;
+  const inner = cls
+    ? `<span class="${cls}" role="button" tabindex="0" data-match="${l.m}" aria-label="Matched passage — open its source"><span>${l.text}</span></span>`
+    : l.text;
   return `<p class="${size} text-ink-800">${inner}</p>`;
 };
 
 /* ring in the category colour, centre the same colour at half strength — the dot reads
    as the wash it stands for rather than as a solid bullet */
+/* one source, opened under the document when its passage is selected */
+const cabDetail = ([title, url, pct], i) => `<div class="cab-detail${i === 0 ? ' on' : ''} rounded-xl sm:rounded-2xl bg-ink-50 ring-1 ring-black/5 p-4 sm:p-5" data-detail="${i}">
+                <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <div class="sm:col-span-2 min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matched passage</p>
+                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-800">${CAB.passage[i]}</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Matching source</p>
+                    <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight truncate">${title}</p>
+                    <p class="text-[12px] text-ink-400 truncate">${url}</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Similarity</p>
+                    <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest text-orange-600 nums">${pct}</p>
+                  </div>
+                  <div class="sm:col-span-2 min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-1.5">Source context</p>
+                    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${CAB.context[i]}</p>
+                  </div>
+                </div>
+              </div>`;
+
 const cabLegend = ([label, colour]) => `<span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
                 <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:${colour}; background:${colour}80"></span>${label}
               </span>`;
@@ -633,7 +684,7 @@ const cabMetric = ([label, figure, pct, colour]) => `<div class="mb-4 last:mb-0"
                 </div>
               </div>`;
 
-const cabSource = ([title, url, pct]) => `<li class="flex items-start justify-between gap-4 px-5 sm:px-6 py-4">
+const cabSource = ([title, url, pct], i) => `<li class="cab-src flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="${i}">
                 <span class="min-w-0">
                   <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">${title}</span>
                   <span class="block text-[12px] text-ink-400 truncate">${url}</span>
@@ -782,90 +833,15 @@ const section4 = () => `
         <p class="${LEAD} text-white/60">${S.s4.intro}</p>
       </div>
 
-      <div class="rv flex items-center gap-2 mb-4">
-        <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant A</span>
-        <span class="text-[11.5px] font-medium text-white/40">current</span>
-      </div>
-      <div class="rv grid lg:grid-cols-[1.35fr_1fr] gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
-        <div class="${CARD_DARK}">
-          <div class="flex items-center gap-3 mb-5">
-            ${chip(I.file, 0, true)}
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">${S.s4.labels[0]}</span>
-          </div>
-          <div class="space-y-3.5 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85">
-            ${REPORT.paragraphs.map(p => p.match === null
-              ? `<p>${p.text}</p>`
-              : `<p><span class="hl" role="button" tabindex="0" data-match="${p.match}">${p.text}</span></p>`).join('\n            ')}
-          </div>
-          <p class="mt-5 pt-4 border-t border-white/10 text-[12.5px] sm:text-[13px] font-medium text-white/40">Select a highlighted passage to open its source.</p>
-        </div>
 
-        <div>
-          ${REPORT.matches.map((m, i) => `
-          <div class="match-panel${i === 0 ? ' on' : ''} ${CARD_DARK}" data-panel="${i}">
-            <div class="flex items-center gap-3 mb-4">
-              ${chip(I.search, 1, true)}
-              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">${S.s4.labels[1]}</span>
-            </div>
-            <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-1">${m.source}</p>
-            <p class="text-[12.5px] sm:text-[13px] font-medium text-white/40 mb-5">${m.where}</p>
+      <!-- The report as the cabinet draws it, chosen over a card layout invented for
+           the page on 2026-08-20. Backdrop dark, both panels light, as on the real
+           screen. Structure, labels and colour system are the product's; the document
+           text is ours.
 
-            <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-2">${S.s4.labels[2]}</div>
-            <p class="${BODY} text-white/60 mb-5">${m.context}</p>
-
-            <dl class="divide-y divide-white/10 border-t border-white/10">
-              <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">${S.s4.labels[3]}</dt>
-                <dd class="text-[17px] sm:text-[19px] font-extrabold tracking-tightest nums text-orange-400">${m.similarity}</dd>
-              </div>
-              <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">${S.s4.labels[4]}</dt>
-                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold">${m.cited ? 'Present for this passage' : 'None for this passage'}</dd>
-              </div>
-              <div class="flex items-center justify-between py-2.5">
-                <dt class="text-[13.5px] sm:text-[14.5px] text-white/50">${S.s4.labels[5]}</dt>
-                <dd class="text-[13.5px] sm:text-[14.5px] font-semibold">Listed in the report</dd>
-              </div>
-            </dl>
-          </div>`).join('\n          ')}
-
-          <!-- its own frame, away from the source-matching signals, because the brief
-               requires the AI signal to read as separate rather than as a verdict -->
-          <div class="mt-4 sm:mt-5 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-teal-500/10 ring-1 ring-teal-400/20 p-5 sm:p-6">
-            <div class="flex items-center gap-3 mb-3">
-              ${chip(I.sparkles, 0, true)}
-              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45">${S.s4.labels[6]}</span>
-            </div>
-            <p class="text-[17px] sm:text-[19px] font-extrabold tracking-tight mb-1.5">${REPORT.aiProbability}</p>
-            <p class="${BODY} text-white/55">Reported as a separate signal. It is not part of source matching.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Demoted from a white card to a footnote. It is a caveat about how to read the
-           report, not a claim, and as a full-width white slab on a dark act it was
-           shouting louder than the report it qualifies. -->
-      <p class="rv flex items-start gap-2.5 text-[12.5px] sm:text-[13px] leading-relaxed text-white/45 max-w-[76ch] mb-10 sm:mb-12 lg:mb-14">
-        <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.shield}</svg>
-        ${S.s4.callout}
-      </p>
-
-      <!-- ===== Variant B · the report as the cabinet actually draws it =====
-           Kept beside the current treatment so the two can be compared. The backdrop
-           stays dark; both panels go light, as on the real screen.
-
-           Structure, labels and colour system are the product's. The document text is
-           ours. Percentages belong to this sample — a different text gives different
-           numbers, which is what a report is.
-
-           The scroll animation from v1's #scanDoc and the bar fills come after the
-           look is agreed. -->
-      <div class="rv mt-12 sm:mt-14 lg:mt-16">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant B</span>
-          <span class="text-[11.5px] font-medium text-white/40">the report screen</span>
-        </div>
-
+           Selecting a passage opens its source under the document — the interaction the
+           brief asks for, and where its four report labels live. -->
+      <div class="rv">
         <div class="grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
 
           <!-- document -->
@@ -880,6 +856,13 @@ const section4 = () => `
 
             <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
               ${CAB.doc.map(cabLine).join(NL14)}
+            </div>
+
+            <!-- Selecting a passage opens its source here. The four labels are the
+                 brief's, and the interaction is the one it asks for: a highlighted
+                 passage reveals the source and the context it came from. -->
+            <div class="px-5 sm:px-6 lg:px-7 pb-5 sm:pb-6 lg:pb-7">
+              ${CAB.sources.slice(0, 3).map(cabDetail).join(NL14)}
             </div>
 
             <div class="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50/60">
@@ -909,6 +892,13 @@ const section4 = () => `
           </div>
         </div>
       </div>
+
+      <!-- A caveat about how to read the report, not a claim about the product, so it
+           sits under the thing it qualifies at a footnote's weight. -->
+      <p class="rv flex items-start gap-2.5 text-[12.5px] sm:text-[13px] leading-relaxed text-white/45 max-w-[76ch] mt-8 sm:mt-10 mb-10 sm:mb-12 lg:mb-14">
+        <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.shield}</svg>
+        ${S.s4.callout}
+      </p>
 
       <!-- The integrations rail, moved here from its own section at Olex's request.
            NOTE: the brief's page story puts the integrations proof at block 3 and the
@@ -1535,6 +1525,26 @@ const SCRIPT = `
     track.addEventListener("scroll", mark, { passive: true });
     addEventListener("resize", build);
     build();
+  }
+
+  /* Report: selecting a passage opens its source under the document and lights the
+     matching row in the sidebar. Keyboard reaches it too — the passages are buttons. */
+  {
+    const marks = [...document.querySelectorAll('.cab-mark')];
+    const details = [...document.querySelectorAll('.cab-detail')];
+    const rows = [...document.querySelectorAll('.cab-src')];
+    const open = i => {
+      marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
+      details.forEach(d => d.classList.toggle('on', d.dataset.detail === String(i)));
+      rows.forEach(r => r.classList.toggle('on', r.dataset.src === String(i)));
+    };
+    marks.forEach(m => {
+      m.addEventListener('click', () => open(m.dataset.match));
+      m.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(m.dataset.match); }
+      });
+    });
+    if (marks.length) open(0);
   }
 
   /* FAQ: answers are already in the DOM; this only opens and closes them */
