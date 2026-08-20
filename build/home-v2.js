@@ -1795,53 +1795,53 @@ const revealBlock = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/
       scrollTrigger: { trigger: el, start: 'top 70%' } });
   });
 
-  /* The statistics roll up like an odometer, digit after digit.
+  /* The statistics roll like odometers: every digit spins up from zero and they
+     land left to right into the figure.
 
-     Two decisions worth keeping straight.
+     The reels are runtime-built. The page ships plain text — approved copy that has
+     to survive as a sentence for a crawler and a screen reader — the sr-only span
+     keeps that sentence while the reels exist, and the plain text goes back the
+     moment the roll lands, so the DOM ends exactly as served.
 
-     The reels are built here rather than in the markup. These figures are approved
-     copy that has to survive as a sentence — "500,000+ users" is read whole by a
-     crawler and a screen reader — and six reels of ten digits is not a sentence.
-     Shipping plain text and swapping it at runtime keeps the page as served correct,
-     and the plain text goes back the moment the roll lands, so the rendered DOM ends
-     up exactly as it started.
-
-     Each reel rests at transform:none with its own digit first, and the cells below
-     it count backwards, so rolling from the bottom cell to the top reads as counting
-     up. Resting at zero is the point: the correct figure needs no script to be true,
-     and the tween is not built until the section arrives — an earlier version set the
-     resting offset with gsap and let a from() supply the start, and every
-     ScrollTrigger refresh re-applied that start, parking the rail on 000,000+.
-
-     Nothing here is a rounded box, so a transform inside the clip is safe. */
+     Each reel is two cycles, the top cell being the digit itself, and it rests one
+     full cycle down, on a zero. Two reasons. Every reel travels at least a whole
+     turn — a zero spins 0 through 9 back to 0, a five spins fifteen cells — so the
+     roll cannot be blinked away. And a rail whose trigger never fires reads
+     000,000+, which points at the bug, instead of showing the finished figure and
+     letting a broken roll pass for a working one — the previous build rested on the
+     final digits, and a roll that fired while the eye was on the hero title was
+     indistinguishable from no roll at all. Resting on zeros is safe precisely
+     because the reels only exist where GSAP is alive: no script, no zeros. */
   {
-    const CELLS = 10;
+    const CELLS = 20, STEP = 100 / CELLS;
+    const digitAt = (d, i) => ((d - i) % 10 + 10) % 10;
     const reelFor = d => Array.from({ length: CELLS },
-      (_, i) => '<span class="od-d">' + ((d - i + CELLS) % CELLS) + '</span>').join('');
+      (_, i) => '<span class="od-d">' + digitAt(d, i) + '</span>').join('');
 
     gsap.utils.toArray('.od-num').forEach(el => {
       const text = el.textContent.trim();
       if (!/\\d/.test(text)) return;
 
       const chars = [...text].map(ch => /\\d/.test(ch)
-        ? '<span class="od"><span class="od-r">' + reelFor(+ch) + '</span></span>'
+        ? '<span class="od" data-d="' + ch + '"><span class="od-r">' + reelFor(+ch) + '</span></span>'
         : '<span class="od-s">' + ch + '</span>').join('');
       el.innerHTML = '<span class="sr-only">' + text + '</span>' +
                      '<span aria-hidden="true">' + chars + '</span>';
 
       const reels = [...el.querySelectorAll('.od-r')];
-      const roll = () => gsap.from(reels, {
-        yPercent: -(CELLS - 1) * (100 / CELLS),
-        duration: .8, ease: 'power3.out', stagger: .06,
+      gsap.set(reels, { yPercent: (i, t) => -(10 + +t.parentElement.dataset.d) * STEP });
+
+      const roll = () => gsap.to(reels, {
+        yPercent: 0, duration: .9, ease: 'power2.out', stagger: .08,
         onComplete: () => { el.textContent = text; },
       });
 
-      /* The rail sits just under the hero, so on a tall window it is already on screen
-         at scroll zero — and a trigger whose start is behind it fires while it is being
-         set up, rolling the figures before anyone has looked at them. Same split .rv and
-         the pen marks make: in the first view, wait for the title to finish and then
-         roll; below the fold, wait to be reached. */
-      if (el.getBoundingClientRect().top < innerHeight * .95) gsap.delayedCall(1.4, roll);
+      /* In the first view the roll waits out the hero title, so it spins after the
+         eye is released rather than during the one second everyone watches the
+         headline. Below the fold it rolls when scrolled to. A trigger cannot serve
+         the first case: with the rail already past the start line it fires during
+         setup and the roll runs before anyone looks. */
+      if (el.getBoundingClientRect().top < innerHeight * .95) gsap.delayedCall(2, roll);
       else ScrollTrigger.create({
         trigger: el.closest('section'), start: 'top 85%', once: true, onEnter: roll });
     });
