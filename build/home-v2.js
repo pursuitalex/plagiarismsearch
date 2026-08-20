@@ -94,12 +94,16 @@ const COPY = {
   s8: {
     h2: 'Use PlagiarismSearch in the workflow you already have',
     intro: 'Check a document in the web app, bring plagiarism checking into Moodle or Canvas, work from Google Docs, or connect your own system through the API.',
-    /* visual priority is fixed by the brief: Moodle → API → Canvas → Google Docs */
+    /* The brief fixes the visual priority as Moodle → API → Canvas → Google Docs.
+       Olex swapped the last two on 2026-08-20, so the page reads Moodle, API, Google
+       Docs, Canvas. Canvas lands in the wide slot, which weights it above Google Docs
+       as the brief intends — but it now follows Google Docs in reading order, which
+       the brief does not. Recorded rather than quietly reordered. */
     cards: [
       ['Moodle', 'Run plagiarism checks where Moodle courses and submissions already live. Keep report access, source settings, and citation/reference exclusions inside the LMS workflow.', 'View Moodle integration', 'integration-guide.html'],
       ['API', 'Connect plagiarism checking to your own product, platform, or internal workflow through the PlagiarismSearch API.', 'Explore API', 'api.html'],
-      ['Canvas', 'Bring plagiarism checking into Canvas course workflows through a full LMS integration, with the same core role as the Moodle integration.', 'Canvas integration', 'canvas-integration.html'],
       ['Google Docs', 'Use the PlagiarismSearch add-on from your Google Docs workflow when you want to check document text without switching to the main web form.', 'Google Docs add-on', 'how-to-use-plagiarismsearch-google-add-on.html'],
+      ['Canvas', 'Bring plagiarism checking into Canvas course workflows through a full LMS integration, with the same core role as the Moodle integration.', 'Canvas integration', 'canvas-integration.html'],
     ],
   },
 
