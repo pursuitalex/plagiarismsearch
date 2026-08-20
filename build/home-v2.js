@@ -507,7 +507,6 @@ const STYLE = `
   .faq-chev { background:#F1F2F6; color:#4B5563;
               transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
   .faq-item.open .faq-chev { background:#FDE5E0; color:#B84431; }
-  .faq-item.open .faq-q > span:first-child { font-weight:700; }
 
   /* ---------- placeholder chrome — anything wearing this waits on production data ---------- */
   .ph { border:1px dashed rgba(16,24,40,.22); border-radius:.75rem; }
@@ -803,7 +802,11 @@ const section1 = () => `
             <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span id="wordCount">0</span> / 150 words</span>
           </div>
 
-          <div class="qc-drop flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+          <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+               formats line it carried reappears under the input chips instead. The two
+               are exclusive — one display query, never both on screen — so the approved
+               sentence still appears exactly once at any width. -->
+          <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
             <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.upload}</svg>
             </span>
@@ -813,13 +816,17 @@ const section1 = () => `
             </span>
           </div>
 
-          <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
+          <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
             ${S.s1.inputs.map(chipGlyph).join(NL12)}
           </div>
+          <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">${S.s1.formats}</p>
 
-          <!-- the two checks sit beside the button they modify, not in a row of their own -->
-          <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 pt-4 mt-1 border-t border-ink-100">
-            <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <!-- The two checks sit beside the button they modify, not in a row of their own.
+               The row itself never wraps: the button keeps the right edge at every width,
+               and it is the checks that give — side by side where they fit, stacked below
+               640 where the pair needs about 300px and the form only has 295. -->
+          <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+            <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
               <label class="flex items-center gap-2.5 cursor-pointer">
                 <input type="checkbox" id="optPlag" checked class="sr-only peer">
                 <span class="sw on" data-for="optPlag"></span>
@@ -831,9 +838,9 @@ const section1 = () => `
                 <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">${S.s1.checkAI}</span>
               </label>
             </div>
-            <a href="#checker" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
+            <a href="#checker" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
               ${S.s1.cta}
-              <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </span>
             </a>
@@ -1215,7 +1222,7 @@ const section10 = () => `
 
       <div id="revDots" class="flex justify-center items-center gap-2 mt-6 sm:mt-7 lg:mt-8"></div>
 
-      <div class="rv flex flex-wrap items-center gap-5 sm:gap-8 mt-8 sm:mt-10 lg:mt-12">
+      <div class="rv flex flex-col items-center text-center gap-5 sm:flex-row sm:flex-wrap sm:items-center sm:text-left sm:gap-8 mt-8 sm:mt-10 lg:mt-12">
         <p class="${BODY} text-white/50">Approved source pool: ${S.s10.pool}</p>
         <div class="sm:ml-auto">${btn(S.s10.cta, S.s10.ctaHref, 'onDark')}</div>
       </div>
@@ -1303,7 +1310,7 @@ const section12 = () => `
         <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
           ${S.s12.items.map(([q, a], i) => `<div class="faq-item${i === 0 ? ' open' : ''}">
             <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-semibold tracking-tight">${q}</span>
+              <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
               <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
