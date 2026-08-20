@@ -416,6 +416,19 @@ const STYLE = `
     }
   }
 
+  /* ---------- statistics odometer ---------- */
+  /* Every character sits in a box of the same height, digits and separators alike,
+     so the comma and the plus keep their line with the reels beside them. A reel is
+     twenty cells — ten digits twice — which makes one digit exactly 5% of it and the
+     resting offset a percentage rather than a measured pixel, so it survives a font
+     swap or a change of clamp. The cell is slightly taller than an em: at leading-none
+     an extrabold digit sits tight against the box and the clip would shave it. */
+  .od-num { --od-h:1.15em; }
+  .od, .od-s { display:inline-block; height:var(--od-h); line-height:var(--od-h);
+               vertical-align:top; }
+  .od { overflow:hidden; }
+  .od-d { display:block; height:var(--od-h); line-height:var(--od-h); }
+
   /* ---------- hero title ---------- */
   .hw { display:inline-block; overflow:hidden; vertical-align:bottom;
         padding-bottom:.22em; margin-bottom:-.22em; }
@@ -854,13 +867,13 @@ const section2 = () => `
 
         <div class="flex flex-col items-center">
           <div class="hidden sm:block h-[17px]" aria-hidden="true"></div>
-          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">500,000+</div></div>
+          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><div class="od-num text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">500,000+</div></div>
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">users</div>
         </div>
 
         <div class="flex flex-col items-center">
           <div class="text-[11px] sm:text-[11.5px] font-medium text-ink-400 h-[17px] leading-[17px]">Plagiarism checking in</div>
-          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">80+</div></div>
+          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><div class="od-num text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">80+</div></div>
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">languages</div>
         </div>
 
@@ -1776,6 +1789,52 @@ const revealBlock = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/
     gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 70%' } });
   });
+
+  /* The statistics roll up like an odometer, digit after digit.
+
+     Two decisions worth keeping straight.
+
+     The reels are built here rather than in the markup. These figures are approved
+     copy that has to survive as a sentence — "500,000+ users" is read whole by a
+     crawler and a screen reader — and six reels of ten digits is not a sentence.
+     Shipping plain text and swapping it at runtime keeps the page as served correct,
+     and the plain text goes back the moment the roll lands, so the rendered DOM ends
+     up exactly as it started.
+
+     Each reel rests at transform:none with its own digit first, and the cells below
+     it count backwards, so rolling from the bottom cell to the top reads as counting
+     up. Resting at zero is the point: the correct figure needs no script to be true,
+     and the tween is not built until the section arrives — an earlier version set the
+     resting offset with gsap and let a from() supply the start, and every
+     ScrollTrigger refresh re-applied that start, parking the rail on 000,000+.
+
+     Nothing here is a rounded box, so a transform inside the clip is safe. */
+  {
+    const CELLS = 10;
+    const reelFor = d => Array.from({ length: CELLS },
+      (_, i) => '<span class="od-d">' + ((d - i + CELLS) % CELLS) + '</span>').join('');
+
+    gsap.utils.toArray('.od-num').forEach(el => {
+      const text = el.textContent.trim();
+      if (!/\\d/.test(text)) return;
+
+      const chars = [...text].map(ch => /\\d/.test(ch)
+        ? '<span class="od"><span class="od-r">' + reelFor(+ch) + '</span></span>'
+        : '<span class="od-s">' + ch + '</span>').join('');
+      el.innerHTML = '<span class="sr-only">' + text + '</span>' +
+                     '<span aria-hidden="true">' + chars + '</span>';
+
+      const reels = [...el.querySelectorAll('.od-r')];
+      ScrollTrigger.create({
+        trigger: el.closest('section'), start: 'top 85%', once: true,
+        onEnter: () => gsap.from(reels, {
+          yPercent: -(CELLS - 1) * (100 / CELLS),
+          duration: .8, ease: 'power3.out', stagger: .06,
+          onComplete: () => { el.textContent = text; },
+        }),
+      });
+    });
+  }
 
   /* The hero title rises word by word out of its clip, the support line follows it up,
      and the underline draws last — the mark you make after the words are written.
