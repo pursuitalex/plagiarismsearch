@@ -529,7 +529,7 @@ const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-
           </span>`;
 
 /* the four input methods, drawn once for both hero variants */
-const NL18 = String.fromCharCode(10) + '              ';
+const NL12 = String.fromCharCode(10) + '            ';
 const chipGlyph = i => {
   const glyph = i.icon === 'brand'
     ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${ICON} shrink-0">`
@@ -545,7 +545,13 @@ const S = COPY;
    ───────────────────────────────────────────────────────────────────────────── */
 
 const section1 = () => `
-  <!-- ================= 01 · HERO / REAL CHECKER ================= -->
+  <!-- ================= 01 · HERO / REAL CHECKER =================
+       The quick-check form from the product pages, chosen over the plainer one on
+       2026-08-20. Field with its count in the corner, drop zone, input chips, then
+       the two checks beside the button under a rule.
+
+       It is the page's primary object, per the hero rule: no decorative report
+       stands in for it. Inert — no action, submit returns false. -->
   <section id="checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
@@ -557,113 +563,53 @@ const section1 = () => `
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">${S.s1.support}</p>
       </div>
 
-      <!-- The real checker is the page's primary object, per the hero rule: no decorative
-           report stands in for it. The form is inert — this is a prototype. -->
-      <div class="rv max-w-[860px] mx-auto flex items-center gap-2 mb-4">
-        <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant A</span>
-        <span class="text-[11.5px] font-medium text-ink-400">current</span>
-      </div>
-      <form class="rv max-w-[860px] mx-auto" onsubmit="return false">
-        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
-            <label for="checkText" class="sr-only">${S.s1.placeholder}</label>
-            <textarea id="checkText" rows="5" placeholder="${S.s1.placeholder}" class="w-full resize-none bg-transparent text-[14.5px] sm:text-[15.5px] leading-relaxed text-ink-800 placeholder:text-ink-300 focus:outline-none"></textarea>
+      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+        <form class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
-            <div class="flex flex-wrap items-center gap-2 pt-3 mt-3 border-t border-ink-100">
-              ${S.s1.inputs.map(i => {
-                const glyph = i.icon === 'brand'
-                  /* an <img> rather than an inlined path, so replacing a mark with an
-                     official vector is a file swap and touches no markup */
-                  ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${ICON} shrink-0">`
-                  : `<svg class="${ICON} shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
-                return `<button type="button" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 pl-2.5 pr-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold text-ink-700 hover:bg-ink-900/5 transition-colors duration-300">${glyph}${i.label}</button>`;
-              }).join('\n              ')}
-            </div>
+          <label for="checkText" class="sr-only">${S.s1.placeholder}</label>
+          <!-- the count belongs to the text, so it sits in the corner of the field
+               rather than in a footer two rows away from what it counts -->
+          <div class="relative mb-4">
+            <textarea id="checkText" rows="4" class="qc-area block pr-24" placeholder="${S.s1.placeholder}"></textarea>
+            <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span id="wordCount">0</span> / 150 words</span>
+          </div>
 
-            <div class="flex flex-wrap items-center gap-x-6 gap-y-3 pt-4 mt-4 border-t border-ink-100">
+          <div class="qc-drop flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+            <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.upload}</svg>
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+              <span class="block text-[12px] text-ink-500">${S.s1.formats}</span>
+            </span>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
+            ${S.s1.inputs.map(chipGlyph).join(NL12)}
+          </div>
+
+          <!-- the two checks sit beside the button they modify, not in a row of their own -->
+          <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 pt-4 mt-1 border-t border-ink-100">
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
               <label class="flex items-center gap-2.5 cursor-pointer">
                 <input type="checkbox" id="optPlag" checked class="sr-only peer">
                 <span class="sw on" data-for="optPlag"></span>
-                <span class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-900">${S.s1.checkPlagiarism}</span>
+                <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">${S.s1.checkPlagiarism}</span>
               </label>
               <label class="flex items-center gap-2.5 cursor-pointer">
                 <input type="checkbox" id="optAI" class="sr-only peer">
                 <span class="sw" data-for="optAI"></span>
-                <span class="text-[13.5px] sm:text-[14.5px] font-medium text-ink-600">${S.s1.checkAI}</span>
+                <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">${S.s1.checkAI}</span>
               </label>
             </div>
-
-            <div class="flex flex-wrap items-center justify-between gap-4 pt-4 mt-4 border-t border-ink-100">
-              <span class="text-[12.5px] sm:text-[13px] font-medium text-ink-400 nums"><span id="wordCount">0</span> / 150 words</span>
-              ${btn(S.s1.cta, '#checker')}
-            </div>
+            <a href="#checker" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
+              ${S.s1.cta}
+              <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </a>
           </div>
-        </div>
-      </form>
-
-      <!-- ===== Variant B · the quick-check form from the v1 product pages =====
-           Sits under variant A so the two can be compared side by side. One of them
-           leaves once the choice is made, and with it the two labels and this second
-           <form> — the brief allows only one checker on the page.
-
-           It carries what the brief fixes and the v1 form never had: the placeholder,
-           both checkboxes with AI off by default, and the approved CTA label. The drop
-           zone is v1's, and its line describes an interaction rather than claiming
-           anything, so it comes across as-is. -->
-      <div class="rv max-w-[860px] mx-auto mt-14 sm:mt-16 lg:mt-20">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="ph text-ink-400 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant B</span>
-          <span class="text-[11.5px] font-medium text-ink-400">the quick-check form from the product pages</span>
-        </div>
-
-        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-          <form class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
-
-            <label for="checkTextAlt" class="sr-only">${S.s1.placeholder}</label>
-            <!-- the count belongs to the text, so it sits in the corner of the field
-                 rather than in the footer two rows away from what it counts -->
-            <div class="relative mb-4">
-              <textarea id="checkTextAlt" rows="4" class="qc-area block pr-24" placeholder="${S.s1.placeholder}"></textarea>
-              <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span id="wordCountAlt">0</span> / 150 words</span>
-            </div>
-
-            <div class="qc-drop flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
-              <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.upload}</svg>
-              </span>
-              <span class="min-w-0 flex-1">
-                <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
-                <span class="block text-[12px] text-ink-500">${S.s1.formats}</span>
-              </span>
-            </div>
-
-            <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
-              ${S.s1.inputs.map(chipGlyph).join(NL18)}
-            </div>
-
-            <!-- the two checks sit beside the button they modify, not in a row of their own -->
-            <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 pt-4 mt-1 border-t border-ink-100">
-              <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
-                <label class="flex items-center gap-2.5 cursor-pointer">
-                  <input type="checkbox" id="optPlagAlt" checked class="sr-only peer">
-                  <span class="sw on" data-for="optPlagAlt"></span>
-                  <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">${S.s1.checkPlagiarism}</span>
-                </label>
-                <label class="flex items-center gap-2.5 cursor-pointer">
-                  <input type="checkbox" id="optAIAlt" class="sr-only peer">
-                  <span class="sw" data-for="optAIAlt"></span>
-                  <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">${S.s1.checkAI}</span>
-                </label>
-              </div>
-              <a href="#checker" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
-                ${S.s1.cta}
-                <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </span>
-              </a>
-            </div>
-          </form>
-        </div>
+        </form>
       </div>
 
       <p class="mt-5 sm:mt-6 text-center text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">${S.s1.free}</p>
@@ -1180,8 +1126,8 @@ const SCRIPT = `
   'use strict';
 
   /* word counter — the free allowance is 150 words, so the count is the useful readout */
-  /* both hero variants, while the chooser is on the page */
-  [['checkText', 'wordCount'], ['checkTextAlt', 'wordCountAlt']].forEach(pair => {
+  /* the free allowance is 150 words, so the count is the useful readout */
+  [['checkText', 'wordCount']].forEach(pair => {
     const ta = document.getElementById(pair[0]), wc = document.getElementById(pair[1]);
     if (!ta || !wc) return;
     ta.addEventListener('input', () => {

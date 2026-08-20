@@ -168,22 +168,17 @@ console.log('\nforbidden');
 /* ── structural rules ───────────────────────────────────────────────────── */
 console.log('\nstructure');
 {
-  /* The brief allows one checker on the page. A second one is on it right now because
-     Olex asked for the v1 quick-check form as an alternative to compare against — a
-     chooser, not a shipping state, and it goes when the choice is made.
-
-     Waived rather than relaxed: the count is still printed, so a stray third form or a
-     forgotten variant cannot hide behind a green tick. What stays asserted is what the
-     rule is actually protecting — every form inert, and no checker in the final CTA. */
+  /* One checker on the page, which is the brief's rule. This was waived for two days
+     while the A/B chooser was up; the choice was made on 2026-08-20 and the assertion
+     is back, because a rule that only ever prints is not a rule. */
   {
     /* comments stripped first: this file's own notes mention <form>, and counting prose
-       as markup reported three forms where there are two */
+       as markup once reported three forms where there were two */
     const markup = body.replace(/<!--[\s\S]*?-->/g, '');
     const forms = (markup.match(/<form\b/g) || []).length;
     const areas = (markup.match(/<textarea\b/g) || []).length;
-    const chooser = /Variant B/.test(body);
-    console.log('  ' + (forms === 1 ? 'ok    ' : 'WAIVED') + ' checker forms  ' + forms +
-      ' form(s), ' + areas + ' textarea(s)' + (chooser ? '  — hero A/B chooser is live' : ''));
+    ok('one checker form', forms === 1 && areas === 1,
+       forms + ' form(s), ' + areas + ' textarea(s)');
     ok('every form is inert', !/\baction=/.test(markup) &&
        (markup.match(/onsubmit="return false"/g) || []).length === forms);
 
