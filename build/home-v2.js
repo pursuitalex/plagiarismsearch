@@ -644,13 +644,10 @@ const SOURCES = {
     url: 'https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827',
     rating: null, count: null,
   },
-  /* No G2 mark was supplied and no public profile URL is confirmed, so the card wears
-     a wordmark and omits its link. Both are one line to add once Olex supplies them —
-     guessing a g2.com product slug would be an invented URL. */
   g2: {
     name: 'G2',
-    mark: null,
-    url: null,
+    mark: 'assets/svg/partners/g2.svg',
+    url: 'https://www.g2.com/sellers/plagiarismsearch-com',
     rating: null, count: null,
   },
 };
@@ -687,19 +684,45 @@ const reviewCard = (r, dark) => {
           </figure>`;
 };
 
-/* The four verified excerpts approved 2026-08-20, quoted as written. Reviewer names
-   are as the platforms publish them and nothing beyond a name is asserted: no role,
-   no organisation, no identity we were not given. Olex may swap these for other
-   verified reviews before production; the carousel takes whatever is in this array. */
+/* Eight reviews, two from each platform, read off the live profiles on 2026-08-20:
+
+     Trustpilot   4.7 / 61 reviews   trustpilot.com/review/plagiarismsearch.com
+     G2           4.3 / 13 reviews   g2.com/sellers/plagiarismsearch-com
+     SmartCustomer 4.0 / 41 reviews  smartcustomer.com/reviews/plagiarismsearch.com
+     Google Workspace Marketplace    the add-on listing's Reviews tab
+
+   Quoted as published, names as the platforms print them. An ellipsis marks where a
+   longer review is cut and nothing else is altered — not spelling, not punctuation.
+   Reviews carrying a criticism were left out rather than trimmed down to the praise
+   inside them, which would misrepresent what the person wrote. Nothing beyond a name
+   is asserted: no role, no organisation, no identity the platform did not publish.
+
+   The G2 pair are marked by G2 as invited and incentivised reviews; that disclosure
+   lives on their profile, which every card links to. */
 const REVIEWS = [
   { source: 'trustpilot',    author: 'Tersia Gouws',
-    quote: 'User-friendly and ticks all the boxes for me as a writer.' },
-  { source: 'smartcustomer', author: 'Maybelle R.',
-    quote: 'This flexibility has saved me countless hours of converting files or dealing with compatibility issues…' },
+    quote: 'Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.' },
+
   { source: 'g2',            author: 'Verified User in Higher Education',
-    quote: 'It provides detailed reports, clearly identifying matched sources, and the user interface is intuitive, making the whole process seamless.' },
+    quote: 'I appreciate the accuracy and speed of the PlagiarismSearch Checker. It provides detailed reports, clearly identifying matched sources, and the user interface is intuitive, making the whole process seamless.' },
+
+  { source: 'smartcustomer', author: 'Maybelle R.',
+    quote: 'One of the biggest advantages of this plagiarism checker is its ability to analyze documents in different formats. This flexibility has saved me countless hours of converting files or dealing with compatibility issues…' },
+
+  { source: 'marketplace',   author: 'Carmel Smith',
+    quote: 'It is a modern multifunctional tool that I use not only to check for plagiarism in various written works, but also to identify the generated content.' },
+
+  { source: 'trustpilot',    author: 'Chioma Isaac Asiwaju',
+    quote: 'PlagiarismSearch is by far the best plagiarism checkers I&rsquo;ve ever seen. And, I&rsquo;ve used quite a number of them. In fact, they are so good I had to subscribe.' },
+
   { source: 'smartcustomer', author: 'Clarissa C.',
-    quote: 'Thanks to the quick and high-quality review, I sent the edited term paper to my teacher on time.' },
+    quote: 'I am glad that I decided to use the tool for checking the presence of plagiarism. Thanks to the quick and high-quality review, I sent the edited term paper to my teacher on time.' },
+
+  { source: 'marketplace',   author: 'Madison Lambret',
+    quote: 'The interface is user-friendly and intuitive, making it easy for even non-tech-savvy individuals to navigate effortlessly. The speed at which it scans and analyzes content is truly remarkable…' },
+
+  { source: 'g2',            author: 'Sukhpreet K.',
+    quote: 'It is very helpful in-depth research for bloggers and content writers. The content quality seems very genuine and authentic.' },
 ];
 
 /* Dark-theme plate and marks, from Figma node 5545-515. The light sections keep the
