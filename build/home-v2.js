@@ -220,6 +220,51 @@ const PLANS = {
 const LABEL = { light: 'Light', standard: 'Standard', premium: 'Premium' };
 const TAGLINE = { light: 'For occasional checks', standard: 'For regular work', premium: 'For heavy use and teams' };
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   CABINET REPORT — the second treatment of block 4, modelled on the real report
+   screen rather than on a card layout invented for the page.
+
+   Copy is ours; the structure, labels and colour system are the product's. The
+   percentages are a property of this sample document, not a claim about the tool —
+   a different text gives different numbers, which is the whole point of showing a
+   report at all.
+
+   Passages that fall under two categories are drawn in one colour, not blended.
+   Overlapping washes read as a third category that does not exist.
+   ───────────────────────────────────────────────────────────────────────────── */
+const CAB = {
+  id: '#10248837',
+  words: 214,
+  uploaded: 'May 12, 2026',
+  metrics: [
+    ['Plagiarism',    '38.2%', 38.2, '#F36F5A'],
+    ['Total AI rate', '12.4%', 12.4, '#A855F7'],
+    ['AI probability', '0%',    0,   '#A855F7'],
+  ],
+  sources: [
+    ['Climate volatility and agriculture vulnerability', 'nature.com/nclimate/vol-13', '31.6%'],
+    ['Adaptation strategies in West African smallholding', 'cambridge.org/agricultural-economics', '6.6%'],
+  ],
+  legend: [
+    ['Plagiarism', '#F36F5A'],
+    ['Similarities', '#EAB308'],
+    ['AI probability', '#A855F7'],
+    ['Citations', '#22C55E'],
+    ['References', '#3B82F6'],
+  ],
+  /* h — a heading line; p — body. mark: plag | ai | null */
+  doc: [
+    { t: 'h', text: 'Climate change and the economics of food', mark: 'plag' },
+    { t: 'p', text: 'The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.', mark: 'plag' },
+    { t: 'p', text: 'Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions, and that the effect compounds where irrigation is unavailable.', mark: 'plag' },
+    { t: 'p', text: 'However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.', mark: null },
+    { t: 'h', text: 'What the models leave out', mark: null },
+    { t: 'p', text: 'Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.', mark: 'ai' },
+    { t: 'p', text: 'Field data from recent seasons supports this reading across tropical zones, though the sample remains too small to generalise from with confidence.', mark: 'ai' },
+    { t: 'p', text: 'Further work should separate the price effect from the yield effect before either is used to guide policy.', mark: null },
+  ],
+};
+
 /* ── page-specific styles ────────────────────────────────────────────────── */
 const STYLE = `
 <style>
@@ -232,6 +277,15 @@ const STYLE = `
   .match-panel { display:none; }
   .match-panel.on { display:block; animation:mIn .3s cubic-bezier(.32,.72,0,1); }
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
+
+  /* ---------- cabinet report mock ---------- */
+  .cab-mark { border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
+    box-shadow:inset 0 -2px 0 currentColor; }
+  .cab-plag { background:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
+  .cab-ai   { background:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
+  .cab-mark > span { color:#111827; }
+  .cab-tab { padding-bottom:10px; border-bottom:2px solid transparent; color:#6B7280; }
+  .cab-tab.on { color:#0991A8; border-bottom-color:#0991A8; }
 
   /* ---------- hero variant B: the quick-check form from the v1 product pages ---------- */
   /* The base .qc-chip rule, brought over from the product pages. The shared head has
@@ -541,6 +595,40 @@ const chipGlyph = i => {
   return `<button type="button" class="qc-chip">${glyph}${i.label}</button>`;
 };
 
+const NL14 = String.fromCharCode(10) + '              ';
+
+/* one line of the document, with its category wash */
+const cabLine = l => {
+  const cls = l.mark === 'plag' ? 'cab-mark cab-plag' : l.mark === 'ai' ? 'cab-mark cab-ai' : '';
+  const size = l.t === 'h' ? 'text-[15.5px] sm:text-[16.5px] font-bold tracking-tight' : 'text-[13.5px] sm:text-[14.5px] leading-relaxed';
+  const inner = cls ? `<span class="${cls}"><span>${l.text}</span></span>` : l.text;
+  return `<p class="${size} text-ink-800">${inner}</p>`;
+};
+
+const cabLegend = ([label, colour]) => `<span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-3 h-3 rounded-full ring-2 shrink-0" style="--tw-ring-color:${colour}"></span>${label}
+              </span>`;
+
+/* a metric row: label, bar, figure. The bar carries its width inline so a fill
+   animation later has only to change one number. */
+const cabMetric = ([label, figure, pct, colour]) => `<div class="mb-4 last:mb-0">
+                <p class="text-[13px] sm:text-[13.5px] text-ink-600 mb-2">${label}</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:${pct}%; background:${colour}"></span>
+                  </span>
+                  <span class="shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums">${figure}</span>
+                </div>
+              </div>`;
+
+const cabSource = ([title, url, pct]) => `<li class="flex items-start justify-between gap-4 px-5 sm:px-6 py-4">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">${title}</span>
+                  <span class="block text-[12px] text-ink-400 truncate">${url}</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-700 px-2.5 py-1 text-[11.5px] font-bold nums">${pct}</span>
+              </li>`;
+
 const S = COPY;
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -682,6 +770,10 @@ const section4 = () => `
         <p class="${LEAD} text-white/60">${S.s4.intro}</p>
       </div>
 
+      <div class="rv flex items-center gap-2 mb-4">
+        <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant A</span>
+        <span class="text-[11.5px] font-medium text-white/40">current</span>
+      </div>
       <div class="rv grid lg:grid-cols-[1.35fr_1fr] gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
         <div class="${CARD_DARK}">
           <div class="flex items-center gap-3 mb-5">
@@ -745,6 +837,62 @@ const section4 = () => `
         <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.shield}</svg>
         ${S.s4.callout}
       </p>
+
+      <!-- ===== Variant B · the report as the cabinet actually draws it =====
+           Kept beside the current treatment so the two can be compared. The backdrop
+           stays dark; both panels go light, as on the real screen.
+
+           Structure, labels and colour system are the product's. The document text is
+           ours. Percentages belong to this sample — a different text gives different
+           numbers, which is what a report is.
+
+           The scroll animation from v1's #scanDoc and the bar fills come after the
+           look is agreed. -->
+      <div class="rv mt-12 sm:mt-14 lg:mt-16">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Variant B</span>
+          <span class="text-[11.5px] font-medium text-white/40">the report screen</span>
+        </div>
+
+        <div class="grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-start">
+
+          <!-- document -->
+          <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+            <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 border-b border-ink-100 bg-ink-50/60">
+              <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight nums">${CAB.id}</span>
+              <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-500">
+                <span>Words: <b class="font-bold text-ink-800 nums">${CAB.words}</b></span>
+                <span>Uploaded at: <b class="font-bold text-ink-800">${CAB.uploaded}</b></span>
+              </span>
+            </div>
+
+            <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
+              ${CAB.doc.map(cabLine).join(NL14)}
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 border-t border-ink-100 bg-ink-50/60">
+              ${CAB.legend.map(cabLegend).join(NL14)}
+            </div>
+          </div>
+
+          <!-- sidebar -->
+          <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+            <div class="px-5 sm:px-6 py-5 sm:py-6">
+              <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
+              ${CAB.metrics.map(cabMetric).join(NL14)}
+            </div>
+
+            <div class="flex items-center gap-6 px-5 sm:px-6 border-b border-ink-100 bg-ink-50/60 text-[13.5px] font-semibold">
+              <span class="cab-tab on pt-3">Plagiarism</span>
+              <span class="cab-tab pt-3">AI</span>
+            </div>
+
+            <ul class="divide-y divide-ink-100">
+              ${CAB.sources.map(cabSource).join(NL14)}
+            </ul>
+          </div>
+        </div>
+      </div>
 
       <!-- The integrations rail, moved here from its own section at Olex's request.
            NOTE: the brief's page story puts the integrations proof at block 3 and the

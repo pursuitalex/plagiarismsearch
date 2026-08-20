@@ -140,7 +140,6 @@ console.log('\nforbidden');
     [/17\s+languages/i,                   '17 languages'],
     [/500,?000\+?\s+(writers|customers)/i,'500,000 writers/customers'],
     [/Turnitin/i,                         'Turnitin reference'],
-    [/Plagiarism\s+\d+(\.\d)?\s*%/i,      'definitive plagiarism verdict'],
     [/100%\s+(original|authentic)/i,      'originality absolute'],
     [/\bChatGPT|Claude|Gemini|Llama\b/,   'named-model coverage'],
     [/\bVIP\b|Quote Checker|PDF Plagiarism|PowerPoint Plagiarism/, 'body link to a footer-only page'],
@@ -148,6 +147,26 @@ console.log('\nforbidden');
   ];
   const hits = BANNED.filter(([re]) => re.test(text)).map(([, name]) => name);
   ok('no forbidden claim in the page body', !hits.length, hits.join(', '));
+
+  /* "Plagiarism X%" is banned as a VERDICT — a claim the page makes. Inside the report
+     mock it is not that: it is one sample document's own figure, and a different text
+     gives a different number. Olex approved it there on 2026-08-20.
+
+     So the rule is narrowed rather than waived — it still fails anywhere else on the
+     page, which is where a verdict would actually do harm. */
+  {
+    /* anchored on a contiguous run of the heading — the pen underline splits the rest
+       of it with a span — and walking BACK to the section that contains it */
+    const at = body.indexOf('behind every match');
+    const from = body.lastIndexOf('<section', at);
+    const to = body.indexOf('<section', at);
+    const report = from < 0 || to < 0 ? '' : body.slice(from, to);
+    const flat = report.replace(/<[^>]*>/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+    const outside = flat ? text.replace(flat, '') : text;
+    const verdict = /Plagiarism\s+\d+(\.\d)?\s*%/i;
+    ok('no plagiarism verdict outside the report mock', !verdict.test(outside));
+    if (verdict.test(text)) console.log('  note   the report mock carries a Plagiarism figure, as the real screen does');
+  }
 
   /* Prices. The brief forbids hardcoding them; Olex set that aside on 2026-08-18 so the
      pricing block can be judged as a design. The section becomes a widget later and the
