@@ -655,14 +655,19 @@ const SOURCES = {
 /* One card, two skins. Everything a review can carry is optional, so a card with only
    a quote still renders and a card with mark, rating, count and author renders more. */
 /* Half stars matter here: the value is one person's rating, and G2 publishes halves.
+
+   The lit row sits in a box narrowed to the rating and must be CLIPPED by it, never
+   fitted to it: as plain flex children the stars shrank to the narrower box instead,
+   so four-and-a-half read as five squashed ones drifting off the row beneath. w-max
+   on the row and shrink-0 on each star keep the two rows in register.
    Two rows, the lit one clipped to the exact percentage, so 4.5 renders as four and a
    half rather than rounding to a number nobody gave. */
 const stars = (value, dark) => {
   const pct = value == null ? 0 : Math.max(0, Math.min(100, (value / 5) * 100));
-  const star = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + I.star + '</svg>';
+  const star = '<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + I.star + '</svg>';
   return `<span class="relative inline-flex shrink-0" role="img" aria-label="${value == null ? 'Rating pending' : value + ' out of 5'}">
             <span class="flex gap-0.5 ${dark ? 'text-white/20' : 'text-ink-200'}">${star.repeat(5)}</span>
-            <span class="absolute inset-0 overflow-hidden text-orange-500" style="width:${pct}%"><span class="flex gap-0.5">${star.repeat(5)}</span></span>
+            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:${pct}%"><span class="flex gap-0.5 w-max">${star.repeat(5)}</span></span>
           </span>`;
 };
 
