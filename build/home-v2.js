@@ -277,6 +277,17 @@ const CAB = {
 /* ── page-specific styles ────────────────────────────────────────────────── */
 const STYLE = `
 <style>
+  /* ---------- staggered reveal ----------
+     .rv moves a block as one piece. .rv-kids holds the container still and deals its
+     children in one after another, which is what a grid of cards wants: you read them
+     in order, so they should arrive in order. Same distance and easing as .rv, so the
+     two are one system rather than two.
+
+     The hidden state is CSS and the reveal is JS, exactly as .rv does it — with the
+     same consequence, that .no-motion has to put it back. */
+  .rv-kids > * { opacity:0; transform:translateY(40px); }
+  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
+
   /* ---------- the report demo, on the dark act ---------- */
   .hl { cursor:pointer; border-radius:.35rem; padding:.05em .18em; margin:-.05em -.18em;
         background:rgba(243,111,90,.18); box-shadow:inset 0 -2px 0 rgba(243,111,90,.5);
@@ -930,7 +941,7 @@ const section5 = () => `
            control that moves invites you to set something the page cannot act on. The
            coverage card no longer dims with a toggle for the same reason — its sentence
            already carries the condition. -->
-      <div class="rv grid lg:grid-cols-[1fr_1fr_.9fr] gap-4 sm:gap-5 lg:gap-6">
+      <div class="rv-kids grid lg:grid-cols-[1fr_1fr_.9fr] gap-4 sm:gap-5 lg:gap-6">
         <div class="${CARD}">
           <div class="flex items-center gap-3 mb-5">
             ${chip(I.search, 0)}
@@ -1018,7 +1029,7 @@ const section7 = () => `
         <p class="${LEAD} text-ink-600">${S.s7.intro}</p>
       </div>
 
-      <ol class="rv grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
+      <ol class="rv-kids grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
         ${S.s7.steps.map(([t, d], i) => `<li class="${CARD}">
           ${chip([I.upload, I.file, I.report, I.trash][i], i)}
           <div class="flex items-baseline gap-2 mt-5 mb-2">
@@ -1051,7 +1062,7 @@ const section8 = () => `
         <p class="${LEAD} text-ink-600">${S.s8.intro}</p>
       </div>
 
-      <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+      <div class="rv-kids grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
         ${S.s8.cards.map(([t, d, cta, href, mark], i) => {
           const wide = i === 0 || i === 3;
           return `<div class="${CARD} flex flex-col${wide ? ' lg:col-span-2' : ''}">
@@ -1077,7 +1088,7 @@ const section9 = () => `
         <p class="${LEAD} text-ink-600">${S.s9.intro}</p>
       </div>
 
-      <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+      <div class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
         ${S.s9.cards.map(([t, d, cta, href], i) => `<div class="${CARD} flex flex-col">
           ${chip([I.cap, I.building, I.users][i], i)}
           <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mt-5 mb-3">${t}</p>
@@ -1657,6 +1668,14 @@ const revealBlock = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/
   rvs.filter(el => !inView.includes(el)).forEach(el => {
     gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 70%' } });
+  });
+
+  /* the same reveal dealt across a grid's children in DOM order — left to right, then
+     down. Fires a little earlier than .rv because the last card lands a stagger later
+     and should not still be hidden once the grid is properly in view. */
+  gsap.utils.toArray('.rv-kids').forEach(box => {
+    gsap.to(box.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
+      scrollTrigger: { trigger: box, start: 'top 80%' } });
   });
 
   /* ring marks — the closing act loops a word instead of underlining it. Same trick,
