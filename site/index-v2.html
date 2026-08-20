@@ -389,9 +389,15 @@ tailwind.config = {
     }
   }
 
+  /* ---------- hero title ---------- */
+  .hw { display:inline-block; overflow:hidden; vertical-align:bottom;
+        padding-bottom:.22em; margin-bottom:-.22em; }
+  .hw-in { display:inline-block; }
+
   /* ---------- closing ring ---------- */
   .no-motion .ring-word { color:#DC5A45; }
   .no-motion .ring-path { opacity:1; }
+  .no-motion .pen-underline { opacity:1; }
 
   /* ---------- the hero's two checkboxes ---------- */
   .sw { width:38px; height:22px; border-radius:999px; background:rgba(16,24,40,.14);
@@ -608,8 +614,8 @@ tailwind.config = {
     </div>
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="max-w-[760px] mx-auto text-center mb-8 sm:mb-10 lg:mb-12">
-        <h1 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-5 lg:mb-6">Plagiarism <span class="pen-word relative inline-block">Checker<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span></h1>
-        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">Find matching passages and sources, review similarity in context, and see citations and references in a clear report.</p>
+        <h1 id="heroTitle" class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-5 lg:mb-6"><span class="hw"><span class="hw-in">Plagiarism</span></span> <span class="pen-word relative inline-block"><span class="hw"><span class="hw-in">Checker</span></span><svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span></h1>
+        <p id="heroSupport" class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">Find matching passages and sources, review similarity in context, and see citations and references in a clear report.</p>
       </div>
 
       <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
@@ -1799,6 +1805,43 @@ tailwind.config = {
       scrollTrigger: { trigger: el, start: 'top 70%' } });
   });
 
+  /* The hero title rises word by word out of its clip, the support line follows it up,
+     and the underline draws last — the mark you make after the words are written.
+
+     from(), so the markup carries the finished heading: with no GSAP, a dead CDN or
+     reduced motion the H1 is simply there. It is the page's H1; it does not get to
+     depend on a script. */
+  {
+    const title = document.getElementById('heroTitle');
+    const words = title ? [...title.querySelectorAll('.hw-in')] : [];
+    const support = document.getElementById('heroSupport');
+    const word = title && title.querySelector('.pen-word');
+    const line = title && title.querySelector('.pen-underline');
+
+    if (words.length) {
+      const tl = gsap.timeline({ delay: .15 });
+
+      /* 128, not 115: yPercent is a share of the word, and the clip box is taller than
+         the word by the descender padding — 1.30em of box against 1.08em of word. At
+         115 a three-pixel ribbon of the letters stayed above the edge. The ratio is in
+         em, so one number holds at every size. */
+      tl.from(words, { yPercent: 128, duration: .95, ease: 'expo.out', stagger: .11,
+        clearProps: 'transform' }, 0);
+
+      /* the support line rises like every other block on the page — same 40px, same
+         power2.out as .rv — rather than only fading */
+      if (support) tl.from(support, { opacity: 0, y: 40, duration: .7, ease: 'power2.out',
+        clearProps: 'transform' }, .42);
+      if (word && line) {
+        const len = line.getTotalLength();
+        gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+        tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' }, 1.0)
+          .set(line, { opacity: 1 }, 1.22)
+          .to(line, { strokeDashoffset: 0, duration: .75, ease: 'power2.inOut' }, 1.22);
+      }
+    }
+  }
+
   /* the same reveal dealt across a grid's children in DOM order — left to right, then
      down. Fires a little earlier than .rv because the last card lands a stagger later
      and should not still be hidden once the grid is properly in view. */
@@ -1822,7 +1865,7 @@ tailwind.config = {
 
   /* pen marks — the word takes the accent colour, then its underline draws itself.
      Without this the underline stays at opacity 0 forever, since the path ships hidden. */
-  gsap.utils.toArray('.pen-word').forEach(word => {
+  gsap.utils.toArray('.pen-word').filter(w => !w.closest('#heroTitle')).forEach(word => {
     const line = word.querySelector('.pen-underline');
     if (!line) return;
     const len = line.getTotalLength();
