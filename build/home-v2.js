@@ -670,7 +670,7 @@ const cabLegend = ([label, colour]) => `<span class="flex items-center gap-2 tex
 /* a metric row: label, bar, figure. The bar carries its width inline so a fill
    animation later has only to change one number. */
 const cabMetric = ([label, figure, pct, colour]) => `<div class="cab-in mb-4 last:mb-0">
-                <p class="text-[13px] sm:text-[13.5px] text-ink-600 mb-2">${label}</p>
+                <p class="text-[13.5px] sm:text-[14px] lg:text-[14.5px] font-semibold text-ink-700 mb-1.5">${label}</p>
                 <div class="flex items-center gap-3">
                   <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
                     <span class="cab-bar block h-full rounded-full" style="width:${pct}%; background:${colour}"></span>
@@ -860,7 +860,7 @@ const section4 = () => `
           <div id="cabDoc" class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
             <!-- the pass, borrowed from v1's #scanDoc: a line sweeps the page once and
                  the highlights land behind it -->
-            <div id="cabScan" class="absolute left-0 right-0 top-0 z-10 pointer-events-none opacity-0" style="transform:translateY(-80px)">
+            <div id="cabScan" class="absolute left-0 right-0 z-10 pointer-events-none opacity-0" style="top:-80px">
               <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
               <div class="cab-beam h-28 w-full"></div>
             </div>
@@ -1575,7 +1575,7 @@ const SCRIPT = `
 
       // the line crosses the page
       tl.set(line, { opacity: 1 }, SCAN)
-        .fromTo(line, { y: -80 }, { y: () => doc.offsetHeight + 20, duration: PASS, ease: 'none' }, SCAN)
+        .fromTo(line, { top: -80 }, { top: () => doc.offsetHeight + 20, duration: PASS, ease: 'none' }, SCAN)
         .to(line, { opacity: 0, duration: .3 }, SCAN + PASS - .2);
 
       // highlights land behind it, spread across the pass
@@ -1587,18 +1587,15 @@ const SCRIPT = `
          then the sources. One rung of the ladder per element, in the panel's own
          DOM order.
 
-         The rung lifts as it fades — except inside the source list, where it only
-         fades. A transformed element inside a rounded, clipped box makes Chrome drop
-         that rounded clip for as long as the layer lives, and the white dissolve at
-         the foot of the list then paints square into the panel's bottom corners. So
-         the rule is: nothing inside that clip gets a transform, and everything outside
-         it hands its transform back on landing. Same timing either way — only the
-         property being moved differs. */
+         It fades without lifting, and so does the beam next door, because both panels
+         are rounded boxes that clip: while a transformed layer sits inside such a box
+         Chrome drops the rounded clip and the corners square off. A from() writes its
+         start state the moment the timeline is built, so a 12px lift here was not a
+         flicker during the cascade — it held the corners square from page load until
+         the last card landed. Nothing inside a rounded clip gets a transform. The
+         panels may still lift: an element's own radius survives its own transform. */
       const step = el => FILL + Math.max(0, ins.indexOf(el)) * STEP;
-      ins.forEach(el => el.closest('.cab-sources')
-        ? tl.from(el, { opacity: 0, duration: .5, ease: 'power2.out' }, step(el))
-        : tl.from(el, { opacity: 0, y: 12, duration: .5, ease: 'power2.out',
-            clearProps: 'transform' }, step(el)));
+      tl.from(ins, { opacity: 0, duration: .5, ease: 'power2.out', stagger: STEP }, FILL);
 
       // each bar runs out and its figure counts up as that row arrives, not before
       const at = el => step(el) + .12;
