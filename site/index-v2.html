@@ -2092,11 +2092,24 @@ tailwind.config = {
       });
 
       /* Then the sidebar fills, top to bottom: the heading, each metric, the tabs,
-         then the sources. One stagger over the panel's own DOM order. */
-      tl.from(ins, { opacity: 0, y: 12, duration: .5, ease: 'power2.out', stagger: STEP }, FILL);
+         then the sources. One rung of the ladder per element, in the panel's own
+         DOM order.
+
+         The rung lifts as it fades — except inside the source list, where it only
+         fades. A transformed element inside a rounded, clipped box makes Chrome drop
+         that rounded clip for as long as the layer lives, and the white dissolve at
+         the foot of the list then paints square into the panel's bottom corners. So
+         the rule is: nothing inside that clip gets a transform, and everything outside
+         it hands its transform back on landing. Same timing either way — only the
+         property being moved differs. */
+      const step = el => FILL + Math.max(0, ins.indexOf(el)) * STEP;
+      ins.forEach(el => el.closest('.cab-sources')
+        ? tl.from(el, { opacity: 0, duration: .5, ease: 'power2.out' }, step(el))
+        : tl.from(el, { opacity: 0, y: 12, duration: .5, ease: 'power2.out',
+            clearProps: 'transform' }, step(el)));
 
       // each bar runs out and its figure counts up as that row arrives, not before
-      const at = el => FILL + Math.max(0, ins.indexOf(el)) * STEP + .12;
+      const at = el => step(el) + .12;
       bars.forEach(b => tl.from(b, { width: 0, duration: .8, ease: 'power2.out' }, at(b.closest('.cab-in'))));
       figures.forEach(f => {
         const target = parseFloat(f.dataset.to);
