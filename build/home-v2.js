@@ -241,9 +241,15 @@ const CAB = {
     ['Total AI rate', '12.4%', 12.4, '#A855F7'],
     ['AI probability', '0%',    0,   '#A855F7'],
   ],
+  /* more than fits: the panel is cut off at the foot on purpose, the way a real
+     report's source list runs past the fold */
   sources: [
     ['Climate volatility and agriculture vulnerability', 'nature.com/nclimate/vol-13', '31.6%'],
     ['Adaptation strategies in West African smallholding', 'cambridge.org/agricultural-economics', '6.6%'],
+    ['Rain-fed yield variance under warming scenarios', 'sciencedirect.com/agsy/2024', '4.1%'],
+    ['Millet cultivars and drought tolerance trials', 'fao.org/publications/cb9241', '2.8%'],
+    ['Smallholder decision-making under uncertainty', 'jstor.org/stable/48729103', '1.9%'],
+    ['Price transmission in West African grain markets', 'ifpri.org/publication/gm-2023', '1.2%'],
   ],
   legend: [
     ['Plagiarism', '#F36F5A'],
@@ -279,6 +285,9 @@ const STYLE = `
   @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
 
   /* ---------- cabinet report mock ---------- */
+  /* the foot of the source list dissolves rather than ending on a cut edge */
+  .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
+    pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
   .cab-mark { border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
     box-shadow:inset 0 -2px 0 currentColor; }
   .cab-plag { background:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
@@ -596,6 +605,7 @@ const chipGlyph = i => {
 };
 
 const NL14 = String.fromCharCode(10) + '              ';
+const NL16 = String.fromCharCode(10) + '                ';
 
 /* one line of the document, with its category wash */
 const cabLine = l => {
@@ -605,8 +615,10 @@ const cabLine = l => {
   return `<p class="${size} text-ink-800">${inner}</p>`;
 };
 
+/* ring in the category colour, centre the same colour at half strength — the dot reads
+   as the wash it stands for rather than as a solid bullet */
 const cabLegend = ([label, colour]) => `<span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
-                <span class="w-3 h-3 rounded-full ring-2 shrink-0" style="--tw-ring-color:${colour}"></span>${label}
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:${colour}; background:${colour}80"></span>${label}
               </span>`;
 
 /* a metric row: label, bar, figure. The bar carries its width inline so a fill
@@ -854,7 +866,7 @@ const section4 = () => `
           <span class="text-[11.5px] font-medium text-white/40">the report screen</span>
         </div>
 
-        <div class="grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-start">
+        <div class="grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
 
           <!-- document -->
           <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
@@ -876,20 +888,24 @@ const section4 = () => `
           </div>
 
           <!-- sidebar -->
-          <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-            <div class="px-5 sm:px-6 py-5 sm:py-6">
+          <div class="flex flex-col rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+            <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
               <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
               ${CAB.metrics.map(cabMetric).join(NL14)}
             </div>
 
-            <div class="flex items-center gap-6 px-5 sm:px-6 border-b border-ink-100 bg-ink-50/60 text-[13.5px] font-semibold">
+            <div class="shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-100 bg-ink-50/60 text-[13.5px] font-semibold">
               <span class="cab-tab on pt-3">Plagiarism</span>
               <span class="cab-tab pt-3">AI</span>
             </div>
 
-            <ul class="divide-y divide-ink-100">
-              ${CAB.sources.map(cabSource).join(NL14)}
-            </ul>
+            <!-- the list is longer than the panel and is cut, not scrolled: the point is
+                 that there are more sources, not that you can read them all here -->
+            <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
+              <ul class="absolute inset-0 divide-y divide-ink-100">
+                ${CAB.sources.map(cabSource).join(NL16)}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
