@@ -427,6 +427,11 @@ const STYLE = `
   .od, .od-s { display:inline-block; height:var(--od-h); line-height:var(--od-h);
                vertical-align:top; }
   .od { overflow:hidden; }
+  /* The reel must be a block. A transform does not apply to a non-replaced inline
+     element at all — the browser accepts the declaration, reports it back on the
+     style attribute and computes the matrix as identity. That is what a reel that
+     never moves looks like from the outside. */
+  .od-r { display:block; }
   .od-d { display:block; height:var(--od-h); line-height:var(--od-h); }
 
   /* ---------- hero title ---------- */
