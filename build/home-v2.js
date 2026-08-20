@@ -652,6 +652,8 @@ const SAMPLE = [
   { source: 'marketplace',   author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
   { source: 'trustpilot',    author: 'Reviewer name', quote: 'A fourth and fifth slot exist only so the carousel has something to scroll to. They leave with the rest of the sample text.' },
   { source: 'marketplace',   author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
+  { source: 'smartcustomer', author: 'Reviewer name', quote: 'A sixth and seventh slot carry the carousel past a second page, so the paging controls have somewhere to go while the real reviews are still being chosen.' },
+  { source: 'trustpilot',    author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies. Every card here leaves with the rest of the placeholder copy.' },
 ];
 
 /* Dark-theme plate and marks, from Figma node 5545-515. The light sections keep the
@@ -1535,8 +1537,48 @@ const SCRIPT = `
   if (track && dots) {
     const prev = document.getElementById("revPrev");
     const next = document.getElementById("revNext");
-    const pages = () => Math.max(1, Math.round(track.scrollWidth / track.clientWidth));
-    const page = () => Math.round(track.scrollLeft / track.clientWidth);
+    /* Geometry, not clientWidth. The rail is full-bleed, so its box is the whole
+       viewport while a page is the content zone — measuring against the box paged
+       1440px at a time through 1224px of cards, which is why the dots stopped
+       matching what was on screen. Card positions are the truth and they hold at
+       every breakpoint, whatever the track is padded by.
+
+       Read from getBoundingClientRect rather than offsetLeft: the track's
+       offsetParent is the wrapper, and the two no longer share a left edge. */
+    const pad = () => parseFloat(getComputedStyle(track).paddingLeft) || 0;
+    const cards = () => [...track.children];
+    const maxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
+
+    const perView = () => {
+      const c = cards();
+      if (!c.length) return 1;
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      const w = c[0].getBoundingClientRect().width;
+      const view = track.clientWidth - pad() * 2;
+      return Math.max(1, Math.round((view + gap) / (w + gap)));
+    };
+    const pages = () => Math.max(1, Math.ceil(cards().length / perView()));
+
+    /* where the rail must sit for card i to rest on the content edge */
+    const restFor = i => {
+      const c = cards();
+      const el = c[Math.min(i, c.length - 1)];
+      const x = el.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+      return Math.min(Math.max(0, x - pad()), maxScroll());
+    };
+    const goTo = p => track.scrollTo({ left: restFor(p * perView()), behavior: 'smooth' });
+
+    /* the page whose resting position the rail is nearest to — the last page often
+       cannot scroll all the way, so nearest beats dividing */
+    const page = () => {
+      const n = pages(), pv = perView();
+      let best = 0, bestD = Infinity;
+      for (let i = 0; i < n; i++) {
+        const d = Math.abs(track.scrollLeft - restFor(i * pv));
+        if (d < bestD) { bestD = d; best = i; }
+      }
+      return best;
+    };
 
     const build = () => {
       const n = pages();
@@ -1554,12 +1596,12 @@ const SCRIPT = `
       [...dots.children].forEach((d, i) => d.classList.toggle("on", i === cur));
     };
 
-    const go = dir => track.scrollBy({ left: dir * track.clientWidth, behavior: "smooth" });
+    const go = dir => goTo(Math.min(pages() - 1, Math.max(0, page() + dir)));
     prev.addEventListener("click", () => go(-1));
     next.addEventListener("click", () => go(1));
     dots.addEventListener("click", e => {
       const b = e.target.closest(".rev-dot");
-      if (b) track.scrollTo({ left: b.dataset.page * track.clientWidth, behavior: "smooth" });
+      if (b) goTo(+b.dataset.page);
     });
     track.addEventListener("scroll", mark, { passive: true });
     addEventListener("resize", build);
