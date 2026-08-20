@@ -119,15 +119,13 @@ const COPY = {
 
   s10: {
     h2: 'What users say about PlagiarismSearch',
-    placeholder: 'INSERT 3–5 EXACT SHORT REVIEWS FROZEN FROM APPROVED SOURCES',
-    pool: 'Trustpilot · SmartCustomer · G2 · owned testimonials',
     cta: 'Read more reviews',
     ctaHref: 'testimonials.html',
   },
 
   s11: {
-    h2: 'Choose a one-time plan',
-    intro: 'Need more than the free check? Choose a one-time plan, or compare all available pricing options.',
+    h2: 'Choose a plan',
+    intro: 'Need more than the free check? Compare one-time and subscription options, or view all pricing details.',
     tiers: ['Light', 'Standard', 'Premium'],
     placeholder: 'BACKEND-SUPPLIED CURRENT PRICE / WORD QUOTA / APPROVED ENTITLEMENT FIELDS',
     cta: 'See all pricing options',
@@ -136,6 +134,9 @@ const COPY = {
 
   s12: {
     h2: 'Plagiarism Checker FAQ',
+    intro: 'Answers to common questions about plagiarism checking, sources, privacy, AI analysis, supported languages, file types, and free use.',
+    help: 'More questions? Visit the Help Center.',
+    helpHref: 'help-center.html',
     items: [
       ['What does PlagiarismSearch check for?', 'PlagiarismSearch compares the text you submit with the source collections enabled for your check and highlights matching or similar passages in the report. Depending on your settings, the check can include web sources, academic databases, personal storage, or organization storage. The report gives you evidence to review rather than an automatic plagiarism verdict.'],
       ['Does similarity automatically mean plagiarism?', 'No. Similarity means that some text matches or closely resembles text found in the sources checked. A match can come from a quotation, reference, common phrasing, or material that needs closer review, so source context and citation information matter.'],
@@ -218,7 +219,7 @@ const PLANS = {
 };
 
 const LABEL = { light: 'Light', standard: 'Standard', premium: 'Premium' };
-const TAGLINE = { light: 'For occasional checks', standard: 'For regular work', premium: 'For heavy use and teams' };
+const TAGLINE = { light: 'For occasional checks', standard: 'For regular work', premium: 'For higher-volume checks' };
 
 /* ─────────────────────────────────────────────────────────────────────────────
    CABINET REPORT — the second treatment of block 4, modelled on the real report
@@ -558,6 +559,7 @@ const grad = w => `<span class="text-transparent bg-clip-text bg-gradient-to-r f
 
 const I = {
   search:   '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  help:     '<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/>',
   sliders:  '<line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/>',
   upload:   '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>',
   file:     '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/>',
@@ -642,6 +644,15 @@ const SOURCES = {
     url: 'https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827',
     rating: null, count: null,
   },
+  /* No G2 mark was supplied and no public profile URL is confirmed, so the card wears
+     a wordmark and omits its link. Both are one line to add once Olex supplies them —
+     guessing a g2.com product slug would be an invented URL. */
+  g2: {
+    name: 'G2',
+    mark: null,
+    url: null,
+    rating: null, count: null,
+  },
 };
 
 /* One card, two skins. Everything a review can carry is optional, so a card with only
@@ -662,31 +673,33 @@ const reviewCard = (r, dark) => {
             <div class="flex items-center gap-2.5 mb-5">
               ${src.mark
                 ? `<img src="${src.mark}" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">`
-                : `<span class="w-4 h-4 rounded-[5px] shrink-0 ${dark ? 'bg-white/15' : 'bg-ink-200'}"></span>`}
+                : ''}
               <span class="text-[11px] sm:text-[11.5px] font-semibold ${dark ? 'text-white/60' : 'text-ink-500'}">${src.name}</span>
-              ${src.rating != null ? `<span class="ml-auto flex items-center gap-2">${stars(src.rating, dark)}<span class="text-[12px] font-bold nums ${dark ? 'text-white' : 'text-ink-900'}">${src.rating}</span></span>` : `<span class="ml-auto">${stars(null, dark)}</span>`}
+              ${src.rating != null ? `<span class="ml-auto flex items-center gap-2">${stars(src.rating, dark)}<span class="text-[12px] font-bold nums ${dark ? 'text-white' : 'text-ink-900'}">${src.rating}</span></span>` : ''}
             </div>
 
             <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed ${dark ? 'text-white/85' : 'text-ink-800'} mb-5">${r.quote}</blockquote>
 
             <figcaption class="flex items-center justify-between gap-3 pt-4 border-t ${dark ? 'border-white/10' : 'border-ink-100'}">
               <span class="text-[12.5px] sm:text-[13px] font-semibold ${dark ? 'text-white/70' : 'text-ink-700'}">${r.author}</span>
-              <a href="${src.url}" rel="nofollow noopener" class="text-[11.5px] font-semibold ${muted} hover:${dark ? 'text-white' : 'text-ink-900'} underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on ${src.name.split(' ')[0]}</a>
+              ${src.url ? `<a href="${src.url}" rel="nofollow noopener" class="text-[11.5px] font-semibold ${muted} hover:${dark ? 'text-white' : 'text-ink-900'} underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on ${src.name.split(' ')[0]}</a>` : ''}
             </figcaption>
           </figure>`;
 };
 
-/* Sample text, written to be unmistakable for a review: it describes the slot it sits
-   in. It is here so the card's typography can be judged at a realistic length, and it
-   goes the moment frozen quotes arrive. */
-const SAMPLE = [
-  { source: 'trustpilot',    author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
-  { source: 'smartcustomer', author: 'Reviewer name', quote: 'Sample text at the length a three-line review occupies. Cards stretch to the tallest in view, so a short quote and a long one still align at the foot.' },
-  { source: 'marketplace',   author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
-  { source: 'trustpilot',    author: 'Reviewer name', quote: 'A fourth and fifth slot exist only so the carousel has something to scroll to. They leave with the rest of the sample text.' },
-  { source: 'marketplace',   author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.' },
-  { source: 'smartcustomer', author: 'Reviewer name', quote: 'A sixth and seventh slot carry the carousel past a second page, so the paging controls have somewhere to go while the real reviews are still being chosen.' },
-  { source: 'trustpilot',    author: 'Reviewer name', quote: 'Sample text at the length a two-line review occupies. Every card here leaves with the rest of the placeholder copy.' },
+/* The four verified excerpts approved 2026-08-20, quoted as written. Reviewer names
+   are as the platforms publish them and nothing beyond a name is asserted: no role,
+   no organisation, no identity we were not given. Olex may swap these for other
+   verified reviews before production; the carousel takes whatever is in this array. */
+const REVIEWS = [
+  { source: 'trustpilot',    author: 'Tersia Gouws',
+    quote: 'User-friendly and ticks all the boxes for me as a writer.' },
+  { source: 'smartcustomer', author: 'Maybelle R.',
+    quote: 'This flexibility has saved me countless hours of converting files or dealing with compatibility issues…' },
+  { source: 'g2',            author: 'Verified User in Higher Education',
+    quote: 'It provides detailed reports, clearly identifying matched sources, and the user interface is intuitive, making the whole process seamless.' },
+  { source: 'smartcustomer', author: 'Clarissa C.',
+    quote: 'Thanks to the quick and high-quality review, I sent the edited term paper to my teacher on time.' },
 ];
 
 /* Dark-theme plate and marks, from Figma node 5545-515. The light sections keep the
@@ -992,14 +1005,17 @@ const section4 = () => `
           <span class="h-px flex-1 bg-white/10"></span>
         </div>
         <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+          <!-- Moodle and Canvas co-primary, API next, Google Docs secondary — the
+               business priority approved 2026-08-20. Marks only, no links: the full
+               integration cards below carry the approved destinations. -->
           <li>${partnerDark('moodle-on-dark.svg', 'Moodle')}</li>
+          <li>${partnerDark('canvas-on-dark.svg', 'Canvas')}</li>
           <li>
             <span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center gap-2 text-white/80">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg>
               <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
             </span>
           </li>
-          <li>${partnerDark('canvas-on-dark.svg', 'Canvas')}</li>
           <li>${partnerDark('google-docs-on-dark.svg', 'Google Docs')}</li>
         </ul>
       </div>
@@ -1200,12 +1216,11 @@ const section10 = () => `
           ${eyebrow('Reviews', true)}
           <h2 class="${H2}">${S.s10.h2}</h2>
         </div>
-        <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Sample text</span>
       </div>
 
       <div class="rv group relative">
         <div id="revTrack" class="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory no-bar">
-          ${SAMPLE.map(r => `<div class="snap-start shrink-0 flex">${reviewCard(r, true)}</div>`).join('\n          ')}
+          ${REVIEWS.map(r => `<div class="snap-start shrink-0 flex">${reviewCard(r, true)}</div>`).join('\n          ')}
         </div>
 
         <!-- shown on hover, and always once focused, so the control is reachable
@@ -1225,10 +1240,10 @@ const section10 = () => `
       <!-- Stacked and centred below 768, the width Olex draws the line at for phone and
            tablet: above it the pool line and the button share a row, below it the row
            leaves the sentence ragged against a button pinned to the far edge. -->
-      <div class="rv flex flex-col items-center text-center gap-5 md:flex-row md:flex-wrap md:items-center md:text-left md:gap-8 mt-8 sm:mt-10 lg:mt-12">
-        <p class="${BODY} text-white/50">Approved source pool: ${S.s10.pool}</p>
-        <div class="md:ml-auto">${btn(S.s10.cta, S.s10.ctaHref, 'onDark')}</div>
-      </div>
+      <!-- The source-pool line was working copy for review, not public text, and went
+           with the placeholders. The button is centred under the centred pagination
+           rather than pushed to an edge it no longer shares with anything. -->
+      <div class="rv flex justify-center mt-8 sm:mt-10 lg:mt-12">${btn(S.s10.cta, S.s10.ctaHref, 'onDark')}</div>
     </div>
   </section>`;
 
@@ -1240,7 +1255,7 @@ const section11 = () => `
     <div class="orb w-[520px] h-[520px] bg-teal-500/8 right-[-140px] top-10"></div>
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-12">
-        ${eyebrow('One-time plans')}
+        ${eyebrow('Plans &amp; pricing')}
         <h2 class="${H2} mb-4 lg:mb-5">${S.s11.h2}</h2>
         <p class="${LEAD} text-ink-600">${S.s11.intro}</p>
       </div>
@@ -1265,7 +1280,7 @@ const section11 = () => `
               <span class="text-[11px] font-bold tracking-[0.16em] uppercase ${dark ? 'text-teal-300' : 'text-orange-600'}">${tier}</span>
               ${dark ? `<span class="flex items-center gap-1.5 text-[9.5px] font-bold tracking-widest bg-orange-500 rounded-full px-2.5 py-1">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.sparkles}</svg>
-                MOST POPULAR
+                RECOMMENDED
               </span>` : ''}
             </div>
             <div class="text-[13.5px] ${dark ? 'text-white/50' : 'text-ink-500'} mb-4 sm:mb-5 lg:mb-6">${TAGLINE[tier]}</div>
@@ -1305,7 +1320,12 @@ const section12 = () => `
       <div class="grid lg:grid-cols-[380px_1fr] gap-10 sm:gap-12 lg:gap-14 items-start">
       <div class="rv lg:sticky lg:top-32">
         ${eyebrow('Questions')}
-        <h2 class="${H2}">${S.s12.h2}</h2>
+        <h2 class="${H2} mb-4 lg:mb-5">${S.s12.h2}</h2>
+        <p class="${LEAD} text-ink-600">${S.s12.intro}</p>
+        <a href="${S.s12.helpHref}" class="inline-flex items-center gap-2 mt-5 lg:mt-6 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.help}</svg>
+          ${S.s12.help}
+        </a>
       </div>
 
       <!-- every answer is in the rendered HTML, not fetched on click -->

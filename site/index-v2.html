@@ -524,7 +524,7 @@ tailwind.config = {
             <a href="plagiarism-checker-for-organization.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
             <div class="px-3 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">For individuals</div>
             <a href="plagiarism-checker-for-students.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
-            <a href="educators.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
+            <a href="plagiarism-checker-for-teachers.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
           </div>
         </div>
       </div>
@@ -582,7 +582,7 @@ tailwind.config = {
       <a href="plagiarism-checker-for-organization.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions &middot; For individuals</div>
       <a href="plagiarism-checker-for-students.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
-      <a href="educators.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
+      <a href="plagiarism-checker-for-teachers.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Resources</div>
       <a href="help-center.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
       <a href="blog.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
@@ -928,8 +928,14 @@ tailwind.config = {
           <span class="h-px flex-1 bg-white/10"></span>
         </div>
         <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+          <!-- Moodle and Canvas co-primary, API next, Google Docs secondary — the
+               business priority approved 2026-08-20. Marks only, no links: the full
+               integration cards below carry the approved destinations. -->
           <li><span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
             <img src="assets/svg/partners/moodle-on-dark.svg" alt="Moodle" loading="lazy" decoding="async" class="w-[60%] h-auto max-h-[57%] object-contain">
+          </span></li>
+          <li><span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
+            <img src="assets/svg/partners/canvas-on-dark.svg" alt="Canvas" loading="lazy" decoding="async" class="w-[60%] h-auto max-h-[57%] object-contain">
           </span></li>
           <li>
             <span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center gap-2 text-white/80">
@@ -937,9 +943,6 @@ tailwind.config = {
               <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
             </span>
           </li>
-          <li><span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
-            <img src="assets/svg/partners/canvas-on-dark.svg" alt="Canvas" loading="lazy" decoding="async" class="w-[60%] h-auto max-h-[57%] object-contain">
-          </span></li>
           <li><span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
             <img src="assets/svg/partners/google-docs-on-dark.svg" alt="Google Docs" loading="lazy" decoding="async" class="w-[60%] h-auto max-h-[57%] object-contain">
           </span></li>
@@ -1310,7 +1313,6 @@ tailwind.config = {
         </div>
           <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">What users say about PlagiarismSearch</h2>
         </div>
-        <span class="ph-dark text-white/45 inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]">Sample text</span>
       </div>
 
       <div class="rv group relative">
@@ -1319,16 +1321,13 @@ tailwind.config = {
             <div class="flex items-center gap-2.5 mb-5">
               <img src="assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
               <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Trustpilot</span>
-              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
-            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span></span>
+              
             </div>
 
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.</blockquote>
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">User-friendly and ticks all the boxes for me as a writer.</blockquote>
 
             <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Tersia Gouws</span>
               <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Trustpilot</a>
             </figcaption>
           </figure></div>
@@ -1336,102 +1335,42 @@ tailwind.config = {
             <div class="flex items-center gap-2.5 mb-5">
               <img src="assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
               <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">SmartCustomer</span>
-              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
-            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span></span>
+              
             </div>
 
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Sample text at the length a three-line review occupies. Cards stretch to the tallest in view, so a short quote and a long one still align at the foot.</blockquote>
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">This flexibility has saved me countless hours of converting files or dealing with compatibility issues…</blockquote>
 
             <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Maybelle R.</span>
               <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on SmartCustomer</a>
             </figcaption>
           </figure></div>
           <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
             <div class="flex items-center gap-2.5 mb-5">
-              <img src="assets/svg/google-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Google Workspace Marketplace</span>
-              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
-            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span></span>
+              
+              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">G2</span>
+              
             </div>
 
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.</blockquote>
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">It provides detailed reports, clearly identifying matched sources, and the user interface is intuitive, making the whole process seamless.</blockquote>
 
             <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
-              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Google</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Trustpilot</span>
-              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
-            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">A fourth and fifth slot exist only so the carousel has something to scroll to. They leave with the rest of the sample text.</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
-              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Trustpilot</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="assets/svg/google-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Google Workspace Marketplace</span>
-              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
-            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Sample text at the length a two-line review occupies, so the measure and leading can be judged before real quotes arrive.</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
-              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Google</a>
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Verified User in Higher Education</span>
+              
             </figcaption>
           </figure></div>
           <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
             <div class="flex items-center gap-2.5 mb-5">
               <img src="assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
               <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">SmartCustomer</span>
-              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
-            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span></span>
+              
             </div>
 
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">A sixth and seventh slot carry the carousel past a second page, so the paging controls have somewhere to go while the real reviews are still being chosen.</blockquote>
+            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Thanks to the quick and high-quality review, I sent the edited term paper to my teacher on time.</blockquote>
 
             <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
+              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Clarissa C.</span>
               <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on SmartCustomer</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Trustpilot</span>
-              <span class="ml-auto"><span class="relative inline-flex shrink-0" role="img" aria-label="Rating pending">
-            <span class="flex gap-0.5 text-white/20"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-0 overflow-hidden text-[#00B67A]" style="width:0%"><span class="flex gap-0.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Sample text at the length a two-line review occupies. Every card here leaves with the rest of the placeholder copy.</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Reviewer name</span>
-              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Trustpilot</a>
             </figcaption>
           </figure></div>
         </div>
@@ -1453,15 +1392,15 @@ tailwind.config = {
       <!-- Stacked and centred below 768, the width Olex draws the line at for phone and
            tablet: above it the pool line and the button share a row, below it the row
            leaves the sentence ragged against a button pinned to the far edge. -->
-      <div class="rv flex flex-col items-center text-center gap-5 md:flex-row md:flex-wrap md:items-center md:text-left md:gap-8 mt-8 sm:mt-10 lg:mt-12">
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/50">Approved source pool: Trustpilot · SmartCustomer · G2 · owned testimonials</p>
-        <div class="md:ml-auto"><a href="testimonials.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-white text-ink-900 hover:bg-white/90 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
+      <!-- The source-pool line was working copy for review, not public text, and went
+           with the placeholders. The button is centred under the centred pagination
+           rather than pushed to an edge it no longer shares with anything. -->
+      <div class="rv flex justify-center mt-8 sm:mt-10 lg:mt-12"><a href="testimonials.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-white text-ink-900 hover:bg-white/90 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
           Read more reviews
           <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/10 flex items-center justify-center">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </span>
         </a></div>
-      </div>
     </div>
   </section>
 
@@ -1474,10 +1413,10 @@ tailwind.config = {
       <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-12">
         <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
           <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">One-time plans</span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Plans &amp; pricing</span>
         </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Choose a one-time plan</h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Need more than the free check? Choose a one-time plan, or compare all available pricing options.</p>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Choose a plan</h2>
+        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Need more than the free check? Compare one-time and subscription options, or view all pricing details.</p>
       </div>
 
       <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
@@ -1515,7 +1454,7 @@ tailwind.config = {
               <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-teal-300">standard</span>
               <span class="flex items-center gap-1.5 text-[9.5px] font-bold tracking-widest bg-orange-500 rounded-full px-2.5 py-1">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
-                MOST POPULAR
+                RECOMMENDED
               </span>
             </div>
             <div class="text-[13.5px] text-white/50 mb-4 sm:mb-5 lg:mb-6">For regular work</div>
@@ -1536,7 +1475,7 @@ tailwind.config = {
               <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600">premium</span>
               
             </div>
-            <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For heavy use and teams</div>
+            <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For higher-volume checks</div>
             <div class="flex items-end gap-1.5 mb-3">
               <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price"></span>
               <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term"></span>
@@ -1572,7 +1511,12 @@ tailwind.config = {
           <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
         </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Plagiarism Checker FAQ</h2>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Plagiarism Checker FAQ</h2>
+        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Answers to common questions about plagiarism checking, sources, privacy, AI analysis, supported languages, file types, and free use.</p>
+        <a href="help-center.html" class="inline-flex items-center gap-2 mt-5 lg:mt-6 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          More questions? Visit the Help Center.
+        </a>
       </div>
 
       <!-- every answer is in the rendered HTML, not fetched on click -->
@@ -1724,11 +1668,11 @@ tailwind.config = {
       </a>
       <div class="sm:justify-self-end">
         <div class="flex gap-3">
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-dashed ring-white/15 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold text-white/30 nums">&mdash;</span></span>
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-dashed ring-white/15 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">SITEJABBER</span><span class="text-[12.5px] font-bold text-white/30 nums">&mdash;</span></span>
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-dashed ring-white/15 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold text-white/30 nums">&mdash;</span></span>
+          <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="rounded-xl bg-white/[.05] ring-1 ring-white/10 hover:ring-white/25 hover:bg-white/[.08] px-3.5 py-2.5 text-left transition-colors duration-300"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold text-white nums">4.7</span></a>
+          <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="rounded-xl bg-white/[.05] ring-1 ring-white/10 hover:ring-white/25 hover:bg-white/[.08] px-3.5 py-2.5 text-left transition-colors duration-300"><span class="block text-[9px] font-bold tracking-widest text-white/40">SMARTCUSTOMER</span><span class="text-[12.5px] font-bold text-white nums">4.0</span></a>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold text-white nums">4.3</span></span>
         </div>
-        <p class="mt-2.5 text-[11px] font-medium text-white/30">Verified ratings pending.</p>
+        <p class="mt-2.5 text-[11px] font-medium text-white/30">Ratings on review platforms</p>
       </div>
     </div>
 
@@ -1750,7 +1694,7 @@ tailwind.config = {
           <li><a href="university-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">Education &amp; Institutions</a></li>
           <li><a href="plagiarism-checker-for-organization.html" class="hover:text-white transition-colors duration-300">Business &amp; Teams</a></li>
           <li><a href="plagiarism-checker-for-students.html" class="hover:text-white transition-colors duration-300">Students</a></li>
-          <li><a href="educators.html" class="hover:text-white transition-colors duration-300">Educators</a></li>
+          <li><a href="plagiarism-checker-for-teachers.html" class="hover:text-white transition-colors duration-300">Educators</a></li>
         </ul>
       </div>
       <div>

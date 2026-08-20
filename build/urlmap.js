@@ -92,7 +92,7 @@ const md = [
   '',
   '## Open',
   '',
-  '- **Educators** — the destination stays configurable until the Teachers URL audit closes. The only open address left.',
+  '- **Educators** — settled 2026-08-20: `/plagiarism-checker-for-teachers`. No open addresses remain.',
   '',
   '## Settled',
   '',

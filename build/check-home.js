@@ -60,7 +60,7 @@ console.log('\nsection order');
     'Use PlagiarismSearch in the workflow you already have', // 8
     'For individual checks, education, and teams',           // 9
     'What users say about PlagiarismSearch',                 // 10
-    'Choose a one-time plan',                                // 11
+    'Choose a plan',                                        // 11 — DEC-0030 said 'Choose a one-time plan'; the point-fix brief of 2026-08-20 widened it to cover all four periods
     'Plagiarism Checker FAQ',                                // 12
     'Check your text for plagiarism',                        // 13
   ];

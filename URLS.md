@@ -49,19 +49,19 @@ driven by this table.
 | `terms-of-use.html` | `/terms-of-use` | stub | Approved destination, page not designed yet. |
 | `cookie-policy.html` | `/cookie-policy` | stub | Approved destination, page not designed yet. |
 | `canvas-integration.html` | — | stub · path NOT approved | Provisional filename. Treated as live. Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate — which is what DEC-0030 expected all along. Only the address is still open: the final verified URL is supplied at implementation, so this filename stays provisional. |
-| `educators.html` | — | stub · path NOT approved | Provisional filename. The destination stays configurable until the Teachers URL audit closes. This filename is provisional and must not be treated as the production path. |
+| `plagiarism-checker-for-teachers.html` | `/plagiarism-checker-for-teachers` | stub | The Teachers URL audit closed on 2026-08-20: Educators lands here, and no second educator address is created. The page itself will be rewritten separately around real educator use cases. |
 
 ## Counts
 
-- 18 × stub
+- 19 × stub
 - 11 × built
 - 4 × no approved path
 - 4 × built · out of global nav
-- 2 × stub · path NOT approved
+- 1 × stub · path NOT approved
 
 ## Open
 
-- **Educators** — the destination stays configurable until the Teachers URL audit closes. The only open address left.
+- **Educators** — settled 2026-08-20: `/plagiarism-checker-for-teachers`. No open addresses remain.
 
 ## Settled
 

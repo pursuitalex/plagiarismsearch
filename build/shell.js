@@ -41,7 +41,7 @@ const ACTIVE = 'bg-ink-900/5 text-ink-900 font-semibold';
    neither address is settled: Canvas gets its final verified URL at implementation,
    and Educators waits on the Teachers URL audit. Changing either is one line. */
 const CANVAS = 'canvas-integration.html';
-const EDUCATORS = 'educators.html';
+const EDUCATORS = 'plagiarism-checker-for-teachers.html';
 
 const LANG_CHEV = '        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
 
