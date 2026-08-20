@@ -100,10 +100,10 @@ const COPY = {
        as the brief intends — but it now follows Google Docs in reading order, which
        the brief does not. Recorded rather than quietly reordered. */
     cards: [
-      ['Moodle', 'Run plagiarism checks where Moodle courses and submissions already live. Keep report access, source settings, and citation/reference exclusions inside the LMS workflow.', 'View Moodle integration', 'integration-guide.html'],
-      ['API', 'Connect plagiarism checking to your own product, platform, or internal workflow through the PlagiarismSearch API.', 'Explore API', 'api.html'],
-      ['Google Docs', 'Use the PlagiarismSearch add-on from your Google Docs workflow when you want to check document text without switching to the main web form.', 'Google Docs add-on', 'how-to-use-plagiarismsearch-google-add-on.html'],
-      ['Canvas', 'Bring plagiarism checking into Canvas course workflows through a full LMS integration, with the same core role as the Moodle integration.', 'Canvas integration', 'canvas-integration.html'],
+      ['Moodle', 'Run plagiarism checks where Moodle courses and submissions already live. Keep report access, source settings, and citation/reference exclusions inside the LMS workflow.', 'View Moodle integration', 'integration-guide.html', 'moodle.svg'],
+      ['API', 'Connect plagiarism checking to your own product, platform, or internal workflow through the PlagiarismSearch API.', 'Explore API', 'api.html', null],
+      ['Google Docs', 'Use the PlagiarismSearch add-on from your Google Docs workflow when you want to check document text without switching to the main web form.', 'Google Docs add-on', 'how-to-use-plagiarismsearch-google-add-on.html', 'google-docs.svg'],
+      ['Canvas', 'Bring plagiarism checking into Canvas course workflows through a full LMS integration, with the same core role as the Moodle integration.', 'Canvas integration', 'canvas-integration.html', 'canvas.svg'],
     ],
   },
 
@@ -907,9 +907,8 @@ const section8 = () => `
       </div>
 
       <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-        ${S.s8.cards.map(([t, d, cta, href], i) => {
+        ${S.s8.cards.map(([t, d, cta, href, mark], i) => {
           const wide = i === 0 || i === 3;
-          const mark = ['moodle.svg', null, 'canvas.svg', 'google-docs.svg'][i];
           return `<div class="${CARD} flex flex-col${wide ? ' lg:col-span-2' : ''}">
           <div class="w-[208px] mb-5">${mark
             ? partner(mark, t)
