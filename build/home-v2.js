@@ -294,6 +294,18 @@ const STYLE = `
   .cab-ai.on   { --wash:rgba(168,85,247,.34); }
   .cab-src.on { background:#F8F9FB; }
 
+  /* Both panels animate in, which promotes them to their own compositing layer, and
+     a layer under transform stops honouring an ancestor rounded clip — the white fade
+     below and the tinted legend bar then paint square over the corner. Giving those
+     two the corner themselves fixes it wherever the ancestor clip is dropped. */
+  .cab-sources, .cab-foot { border-bottom-left-radius:1rem; border-bottom-right-radius:1rem; }
+  @media (min-width:640px) {
+    .cab-sources, .cab-foot { border-bottom-left-radius:20px; border-bottom-right-radius:20px; }
+  }
+  @media (min-width:1024px) {
+    .cab-sources, .cab-foot { border-bottom-left-radius:1.5rem; border-bottom-right-radius:1.5rem; }
+  }
+
   /* the foot of the source list dissolves rather than ending on a cut edge */
   .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
     pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
@@ -636,7 +648,7 @@ const cabLegend = ([label, colour]) => `<span class="flex items-center gap-2 tex
 
 /* a metric row: label, bar, figure. The bar carries its width inline so a fill
    animation later has only to change one number. */
-const cabMetric = ([label, figure, pct, colour]) => `<div class="mb-4 last:mb-0">
+const cabMetric = ([label, figure, pct, colour]) => `<div class="cab-in mb-4 last:mb-0">
                 <p class="text-[13px] sm:text-[13.5px] text-ink-600 mb-2">${label}</p>
                 <div class="flex items-center gap-3">
                   <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
@@ -646,7 +658,7 @@ const cabMetric = ([label, figure, pct, colour]) => `<div class="mb-4 last:mb-0"
                 </div>
               </div>`;
 
-const cabSource = ([title, url, pct], i) => `<li class="cab-src flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="${i}">
+const cabSource = ([title, url, pct], i) => `<li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="${i}">
                 <span class="min-w-0">
                   <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">${title}</span>
                   <span class="block text-[12px] text-ink-400 truncate">${url}</span>
@@ -803,7 +815,7 @@ const section4 = () => `
 
            Selecting a passage opens its source under the document — the interaction the
            brief asks for, and where its four report labels live. -->
-      <div class="rv">
+      <div>
         <div class="grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
 
           <!-- document -->
@@ -827,19 +839,19 @@ const section4 = () => `
             </div>
 
 
-            <div class="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50/60">
+            <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50/60">
               ${CAB.legend.map(cabLegend).join(NL14)}
             </div>
           </div>
 
           <!-- sidebar -->
-          <div class="flex flex-col rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+          <div id="cabSide" class="flex flex-col rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
             <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
-              <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
+              <p class="cab-in text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
               ${CAB.metrics.map(cabMetric).join(NL14)}
             </div>
 
-            <div class="shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-100 bg-ink-50/60 text-[13.5px] font-semibold">
+            <div class="cab-in shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-100 bg-ink-50/60 text-[13.5px] font-semibold">
               <span class="cab-tab on pt-3">Plagiarism</span>
               <span class="cab-tab pt-3">AI</span>
             </div>
@@ -1498,43 +1510,59 @@ const SCRIPT = `
      empty one. */
   {
     const doc = document.getElementById('cabDoc');
+    const side = document.getElementById('cabSide');
     const line = document.getElementById('cabScan');
     const marks = [...document.querySelectorAll('.cab-mark')];
+    const ins = side ? [...side.querySelectorAll('.cab-in')] : [];
     const bars = [...document.querySelectorAll('.cab-bar')];
     const figures = [...document.querySelectorAll('.cab-figure')];
-    const rows = [...document.querySelectorAll('.cab-src')];
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (doc && line && window.gsap && !reduce) {
+    if (doc && side && line && window.gsap && !reduce) {
+      const SCAN = .55;                 // the pass starts once both panels are down
+      const PASS = 1.8;                 // how long the line takes to cross
+      const FILL = SCAN + PASS - .25;   // the sidebar resolves as the line leaves
+      const STEP = .075;                // one rung of the cascade
+
       const tl = gsap.timeline({
         scrollTrigger: { trigger: doc, start: 'top 72%', once: true }
       });
 
+      /* The panels arrive one after the other, document first. clearProps drops the
+         inline transform when each lands, so the layer is released and the corners
+         are rasterised at full quality again. */
+      tl.from(doc,  { opacity: 0, y: 24, duration: .8, ease: 'power2.out', clearProps: 'transform' }, 0)
+        .from(side, { opacity: 0, y: 24, duration: .8, ease: 'power2.out', clearProps: 'transform' }, .16);
+
       // the line crosses the page
-      tl.set(line, { opacity: 1 })
-        .fromTo(line, { y: -80 }, { y: () => doc.offsetHeight + 20, duration: 1.9, ease: 'none' }, 0)
-        .to(line, { opacity: 0, duration: .3 }, 1.75);
+      tl.set(line, { opacity: 1 }, SCAN)
+        .fromTo(line, { y: -80 }, { y: () => doc.offsetHeight + 20, duration: PASS, ease: 'none' }, SCAN)
+        .to(line, { opacity: 0, duration: .3 }, SCAN + PASS - .2);
 
       // highlights land behind it, spread across the pass
       marks.forEach((m, i) => {
-        tl.from(m, { backgroundSize: '0% 100%', duration: .45, ease: 'power2.out' }, .35 + i * .28);
+        tl.from(m, { backgroundSize: '0% 100%', duration: .45, ease: 'power2.out' }, SCAN + .35 + i * .28);
       });
 
-      // the sidebar resolves after the pass: bars fill, figures count up to what they say
-      bars.forEach(b => tl.from(b, { width: 0, duration: .9, ease: 'power2.out' }, 1.5));
+      /* Then the sidebar fills, top to bottom: the heading, each metric, the tabs,
+         then the sources. One stagger over the panel's own DOM order. */
+      tl.from(ins, { opacity: 0, y: 12, duration: .5, ease: 'power2.out', stagger: STEP }, FILL);
+
+      // each bar runs out and its figure counts up as that row arrives, not before
+      const at = el => FILL + Math.max(0, ins.indexOf(el)) * STEP + .12;
+      bars.forEach(b => tl.from(b, { width: 0, duration: .8, ease: 'power2.out' }, at(b.closest('.cab-in'))));
       figures.forEach(f => {
         const target = parseFloat(f.dataset.to);
         const suffix = f.textContent.trim().endsWith('%') ? '%' : '';
         const dp = String(target).includes('.') ? 1 : 0;
         const o = { v: 0 };
         let last = null;
-        tl.to(o, { v: target, duration: .9, ease: 'power2.out',
+        tl.to(o, { v: target, duration: .8, ease: 'power2.out',
           onUpdate: () => {
             const t = o.v.toFixed(dp) + suffix;
             if (t !== last) { last = t; f.textContent = t; }
-          } }, 1.5);
+          } }, at(f.closest('.cab-in')));
       });
-      rows.forEach((r, i) => tl.from(r, { opacity: 0, y: 8, duration: .5, ease: 'power2.out' }, 1.7 + i * .08));
     }
   }
 
