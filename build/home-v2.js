@@ -1797,19 +1797,21 @@ const revealBlock = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/
          the word by the descender padding — 1.30em of box against 1.08em of word. At
          115 a three-pixel ribbon of the letters stayed above the edge. The ratio is in
          em, so one number holds at every size. */
-      tl.from(words, { yPercent: 128, duration: .95, ease: 'expo.out', stagger: .11,
+      tl.from(words, { yPercent: 128, duration: 1, ease: 'power3.out', stagger: .09,
         clearProps: 'transform' }, 0);
 
-      /* the support line rises like every other block on the page — same 40px, same
-         power2.out as .rv — rather than only fading */
-      if (support) tl.from(support, { opacity: 0, y: 40, duration: .7, ease: 'power2.out',
-        clearProps: 'transform' }, .42);
+      /* 14px, not 40. The page uses two scales and they are not interchangeable: 40px
+         is .rv moving a whole section, while anything inside a block travels 8–14 —
+         the nav panel 10, the persona panels 14, the report cascade 12. A support line
+         under a heading is the second kind. At 40 it outran the title it belongs to. */
+      if (support) tl.from(support, { opacity: 0, y: 14, duration: .7, ease: 'power2.out',
+        clearProps: 'transform' }, .4);
       if (word && line) {
         const len = line.getTotalLength();
         gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-        tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' }, 1.0)
-          .set(line, { opacity: 1 }, 1.22)
-          .to(line, { strokeDashoffset: 0, duration: .75, ease: 'power2.inOut' }, 1.22);
+        tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' }, 1.05)
+          .set(line, { opacity: 1 }, 1.25)
+          .to(line, { strokeDashoffset: 0, duration: .75, ease: 'power2.inOut' }, 1.25);
       }
     }
   }
