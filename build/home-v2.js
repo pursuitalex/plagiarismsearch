@@ -666,8 +666,8 @@ const stars = (value, dark) => {
   const pct = value == null ? 0 : Math.max(0, Math.min(100, (value / 5) * 100));
   const star = '<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + I.star + '</svg>';
   return `<span class="relative inline-flex shrink-0" role="img" aria-label="${value == null ? 'Rating pending' : value + ' out of 5'}">
-            <span class="flex gap-0.5 ${dark ? 'text-white/20' : 'text-ink-200'}">${star.repeat(5)}</span>
-            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:${pct}%"><span class="flex gap-0.5 w-max">${star.repeat(5)}</span></span>
+            <span class="flex gap-px ${dark ? 'text-white/20' : 'text-ink-200'}">${star.repeat(5)}</span>
+            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:${pct}%"><span class="flex gap-px w-max">${star.repeat(5)}</span></span>
           </span>`;
 };
 
