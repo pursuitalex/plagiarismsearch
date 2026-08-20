@@ -407,19 +407,31 @@ tailwind.config = {
   .no-bar::-webkit-scrollbar { display:none; }
   /* the arrows are a hover affordance, but focus must reach them too, or the control
      is mouse-only. Hidden entirely when there is nothing to scroll. */
-  /* The track fades at both edges instead of cutting cards on the track box. A mask
-     rather than overlay strips: the cards themselves dissolve, so the section ground
-     — orb glow included — shows through, and there is no colour to keep in sync with
-     the backdrop. The fade is exactly the bleed gutter, and scroll-padding makes the
-     snap points target the gutter edge rather than the track edge — without it,
-     snap-mandatory parks the resting card at the track border, inside the mask, and
-     it sits there half-dissolved. So at rest every card is at full strength and the
-     dissolve happens only to cards actually leaving. */
-  #revTrack { --rev-fade:16px; scroll-padding-inline:var(--rev-fade);
-    -webkit-mask-image:linear-gradient(to right, transparent, #000 var(--rev-fade), #000 calc(100% - var(--rev-fade)), transparent);
-            mask-image:linear-gradient(to right, transparent, #000 var(--rev-fade), #000 calc(100% - var(--rev-fade)), transparent); }
-  @media (min-width:640px)  { #revTrack { --rev-fade:24px; } }
-  @media (min-width:1024px) { #revTrack { --rev-fade:40px; } }
+  /* The rail runs the full viewport; the reading zone stays the container's. A mask
+     dissolves the cards from the screen edge to where the content column starts, so
+     resting cards sit in the 1200px zone at full strength and their neighbours peek
+     from inside the fade. A mask rather than overlay strips: the cards themselves
+     dissolve, the section ground shows through, and there is no second colour to
+     keep in sync with the backdrop.
+
+     --rev-edge is screen edge to content edge: the centring gap plus the container
+     gutter, which below 1280px collapses to just the gutter — the previous
+     edge-bleed behaviour, unchanged on small screens. Card width is pinned to the
+     content zone, not the track, so three rest inside the column exactly.
+
+     scroll-padding keeps the snap points on the content edge rather than the track
+     edge — without it, snap-mandatory parks the resting card at the screen edge,
+     inside the mask, half-dissolved. */
+  #revTrack { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 16px);
+    margin-inline:calc(50% - 50vw);
+    padding-inline:var(--rev-edge); scroll-padding-inline:var(--rev-edge);
+    -webkit-mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent);
+            mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent); }
+  #revTrack > div { flex-basis:86%; }
+  @media (min-width:640px)  { #revTrack { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 24px); }
+                              #revTrack > div { flex-basis:54%; } }
+  @media (min-width:1024px) { #revTrack { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 40px); }
+                              #revTrack > div { flex-basis:calc((min(100vw, 1280px) - 80px - 3rem) / 3); } }
 
   .rev-nav { opacity:0; pointer-events:none;
              transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1); }
@@ -1271,8 +1283,8 @@ tailwind.config = {
       </div>
 
       <div class="rv group relative">
-        <div id="revTrack" class="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory no-bar -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10">
-          <div class="snap-start shrink-0 flex basis-[86%] sm:basis-[54%] lg:basis-[calc((100%-3rem)/3)]"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
+        <div id="revTrack" class="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory no-bar">
+          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
             <div class="flex items-center gap-2.5 mb-5">
               <img src="assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
               <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Trustpilot</span>
@@ -1289,7 +1301,7 @@ tailwind.config = {
               <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Trustpilot</a>
             </figcaption>
           </figure></div>
-          <div class="snap-start shrink-0 flex basis-[86%] sm:basis-[54%] lg:basis-[calc((100%-3rem)/3)]"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
+          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
             <div class="flex items-center gap-2.5 mb-5">
               <img src="assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
               <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">SmartCustomer</span>
@@ -1306,7 +1318,7 @@ tailwind.config = {
               <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on SmartCustomer</a>
             </figcaption>
           </figure></div>
-          <div class="snap-start shrink-0 flex basis-[86%] sm:basis-[54%] lg:basis-[calc((100%-3rem)/3)]"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
+          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
             <div class="flex items-center gap-2.5 mb-5">
               <img src="assets/svg/google-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
               <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Google Workspace Marketplace</span>
@@ -1323,7 +1335,7 @@ tailwind.config = {
               <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Google</a>
             </figcaption>
           </figure></div>
-          <div class="snap-start shrink-0 flex basis-[86%] sm:basis-[54%] lg:basis-[calc((100%-3rem)/3)]"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
+          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
             <div class="flex items-center gap-2.5 mb-5">
               <img src="assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
               <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Trustpilot</span>
@@ -1340,7 +1352,7 @@ tailwind.config = {
               <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Trustpilot</a>
             </figcaption>
           </figure></div>
-          <div class="snap-start shrink-0 flex basis-[86%] sm:basis-[54%] lg:basis-[calc((100%-3rem)/3)]"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
+          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
             <div class="flex items-center gap-2.5 mb-5">
               <img src="assets/svg/google-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
               <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Google Workspace Marketplace</span>
