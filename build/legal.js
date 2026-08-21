@@ -155,7 +155,11 @@ ${bodyTag}
 <header></header>
 
 <main>
-  <!-- Legal pages are reference, not reading: the text is the site's own, carried over
+  <!-- No .rv here on purpose. That class ships hidden and is revealed by a script that
+       lives in each page body, not in the shared head, so a generated page wearing it
+       would hide its own text for ever. A legal document should not fade in anyway.
+
+       Legal pages are reference, not reading: the text is the site's own, carried over
        word for word, and only its dress is new. One centred column at the site's reading
        size, a contents list built from the document's own headings, and no decoration
        competing with the clauses. -->
@@ -167,13 +171,13 @@ ${bodyTag}
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="mx-auto max-w-[720px]">
 
-        <div class="rv mb-8 sm:mb-10 lg:mb-12">
+        <div class="mb-8 sm:mb-10 lg:mb-12">
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4 lg:mb-5">${page.eyebrow}</div>
           <h1 class="text-[clamp(2.1rem,4vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4 lg:mb-5">${clean(h1 ? h1.html : page.title)}</h1>
           ${dated ? `<p class="text-[13px] sm:text-[13.5px] font-semibold text-ink-400">${clean(dated.html)}</p>` : ''}
         </div>
 
-        <nav class="rv rounded-3xl sm:rounded-[28px] bg-ink-50 p-4 sm:p-5 lg:p-6 mb-8 sm:mb-10 lg:mb-12" aria-label="On this page">
+        <nav class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-4 sm:p-5 lg:p-6 mb-8 sm:mb-10 lg:mb-12" aria-label="On this page">
           <div class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] uppercase text-ink-400 mb-4 lg:mb-5">On this page</div>
           <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
 ${sections.map(s => `            <li class="flex gap-2.5">
@@ -183,11 +187,11 @@ ${sections.map(s => `            <li class="flex gap-2.5">
           </ul>
         </nav>
 
-        <article class="rv min-w-0">
+        <article class="min-w-0">
 ${markup}
         </article>
 
-        <div class="rv mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-100">
+        <div class="mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-100">
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4">Also in legal</div>
           <div class="flex flex-wrap gap-3">
 ${others.map(o => `            <a href="${o.slug}.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
