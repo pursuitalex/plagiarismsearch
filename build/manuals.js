@@ -57,6 +57,36 @@ const doc = src.slice(m.index + m[0].length, end);
 
 const h1 = (doc.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [, 'User Guide'])[1].replace(/<[^>]+>/g, '').trim();
 
+/* The FAQ and the inquiry block sit OUTSIDE .user-manuals, in .user-manuals-content
+   further down the page. The first pass took only the first container and dropped both
+   without noticing — a whole accordion gone. Scope to a container, then check what else
+   the page holds. */
+const wrap = (() => {
+  let w = null;
+  const re = /<div\s+class="([^"]*)"[^>]*>/gi;
+  let x;
+  while ((x = re.exec(src))) {
+    if (x[1].split(/\s+/).includes('user-manuals-content')) { w = x; break; }
+  }
+  if (!w) throw new Error('no .user-manuals-content container');
+  let d = 1, e = -1;
+  const tg = /<\/?div\b[^>]*>/gi;
+  tg.lastIndex = w.index + w[0].length;
+  let y;
+  while ((y = tg.exec(src))) { d += y[0][1] === '/' ? -1 : 1; if (d === 0) { e = y.index; break; } }
+  return src.slice(w.index + w[0].length, e);
+})();
+
+const faqTitle = (wrap.match(/<h3[^>]*>([\s\S]*?)<\/h3>/i) || [, ''])[1].replace(/<[^>]+>/g, '').trim();
+const faqLead  = (wrap.match(/<h5[^>]*>([\s\S]*?)<\/h5>/i) || [, ''])[1].replace(/<[^>]+>/g, '').trim();
+const faqs = [...wrap.matchAll(/<div class="collapsible-header">([\s\S]*?)<\/div>\s*<div class="collapsible-body">([\s\S]*?)<\/div>/gi)]
+  .map(f => ({
+    q: f[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+    a: f[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+  }))
+  .filter(f => f.q && f.a);
+if (!faqs.length) throw new Error('no FAQ items found');
+
 const groups = [...doc.matchAll(/<h3[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3|$)/gi)].map(g => ({
   name: g[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(),
   links: [...g[2].matchAll(/<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)].map(a => ({
@@ -101,6 +131,14 @@ ${g.links.map(link).join('\n')}
         </div>`;
 
 const html = head.replace(/<title>[\s\S]*?<\/title>/, '<title>User Guide | PlagiarismSearch</title>') + `
+<style>
+  /* the homepage accordion, in the two rules that make it work */
+  .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .32s cubic-bezier(.32,.72,0,1); }
+  .faq-a > div { overflow:hidden; }
+  .faq-item.open .faq-a { grid-template-rows:1fr; }
+  .faq-chev { background:#F1F2F6; color:#6B7280; transition:transform .32s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
+  .faq-item.open .faq-chev { background:#FDE5E0; color:#B84431; transform:rotate(180deg); }
+</style>
 ${bodyTag}
 <div class="grain"></div>
 
@@ -127,6 +165,30 @@ ${bodyTag}
 ${groups.map(card).join('\n')}
       </div>
 
+      <!-- The page's own FAQ, questions and answers unchanged. Same accordion as the
+           homepage: every answer is in the rendered HTML, opened and closed rather than
+           fetched, and the first one starts open so the control explains itself. -->
+      <div class="mt-12 sm:mt-16 lg:mt-20">
+        <div class="max-w-[720px] mb-6 sm:mb-8">
+          <h2 class="text-[clamp(1.5rem,2.6vw,2.1rem)] font-extrabold tracking-tightest leading-[1.15] mb-3">${faqTitle}</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed">${faqLead}</p>
+        </div>
+
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-1.5 sm:p-2" id="faqList">
+          <div class="rounded-[18px] sm:rounded-[20px] bg-white divide-y divide-ink-100 overflow-hidden">
+${faqs.map((f, i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
+              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                <span class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight">${f.q}</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">${f.a}</p></div></div>
+            </div>`).join('\n')}
+          </div>
+        </div>
+      </div>
+
       <div class="mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-200/60 flex flex-wrap items-center gap-x-6 gap-y-3">
         <p class="text-[13.5px] sm:text-[14px] text-ink-500">Looking for something else?</p>
         <a href="help-center.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
@@ -144,6 +206,18 @@ ${groups.map(card).join('\n')}
 </main>
 
 <footer></footer>
+
+<script>
+(() => {
+  /* answers are already in the DOM; this only opens and closes them */
+  document.querySelectorAll('.faq-q').forEach(q => q.addEventListener('click', () => {
+    const item = q.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    item.parentElement.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }));
+})();
+<\/script>
 </body>
 </html>
 `;

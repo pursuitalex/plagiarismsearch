@@ -142,6 +142,14 @@ tailwind.config = {
 </style>
 </head>
 
+<style>
+  /* the homepage accordion, in the two rules that make it work */
+  .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .32s cubic-bezier(.32,.72,0,1); }
+  .faq-a > div { overflow:hidden; }
+  .faq-item.open .faq-a { grid-template-rows:1fr; }
+  .faq-chev { background:#F1F2F6; color:#6B7280; transition:transform .32s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
+  .faq-item.open .faq-chev { background:#FDE5E0; color:#B84431; transform:rotate(180deg); }
+</style>
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
 
@@ -443,6 +451,75 @@ tailwind.config = {
         </div>
       </div>
 
+      <!-- The page's own FAQ, questions and answers unchanged. Same accordion as the
+           homepage: every answer is in the rendered HTML, opened and closed rather than
+           fetched, and the first one starts open so the control explains itself. -->
+      <div class="mt-12 sm:mt-16 lg:mt-20">
+        <div class="max-w-[720px] mb-6 sm:mb-8">
+          <h2 class="text-[clamp(1.5rem,2.6vw,2.1rem)] font-extrabold tracking-tightest leading-[1.15] mb-3">Frequently Asked Questions</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed">Find out the answers to the most frequently asked questions about our service</p>
+        </div>
+
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-1.5 sm:p-2" id="faqList">
+          <div class="rounded-[18px] sm:rounded-[20px] bg-white divide-y divide-ink-100 overflow-hidden">
+            <div class="faq-item open">
+              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                <span class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight">Is PlagiarismSearch really able to identify plagiarism?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">PlagiarismSearch.com provides an accurate plagiarism analysis of the scanned text. Your paper will be compared to billions of web pages and sources from various databases. The plagiarized parts will be marked with different colors. Please check these sentences to see if they contain a reference to the source, if you want to eliminate possible plagiarism charges from your educator.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                <span class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight">Will my paper be saved at any databases by PlagiarismSearch?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">No. Your paper will not be added to any databases by PlagiarismSearch.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                <span class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight">How can I be sure that you are not going to use the texts I have submitted for checking?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Our rules and policies are very strict regarding your rights. You can go through them carefully, so that every aspect will be clear to you.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                <span class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight">Does PlagiarismSearch.com scan every written or printed text submitted?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Although PlagiarismSearch.com checks through a considerable number of written materials, it is impossible to check each and every document that has been written, printed, or published. Some books which have not been converted to digital format cannot be included in the in digital database of PlagiarismSearch.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                <span class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight">Is PlagiarismSearch dependable when it comes to accuracy?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">In terms of accuracy and precision in plagiarism analysis reports, PlagiarismSearch demonstrates its dependence. This tool uses the latest sophisticated software and technologies to make a comparison of the required content against numerous web pages and additional sources from a variety of databases. Thus, there is a minor likelihood of inaccuracies and inconsistencies in the plagiarism reports, but we keep upgrading the tool.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                <span class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight">Is it safe to use PlagiarismSearch for business purposes?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">We keep working on the technological advancements in PlagiarismSearch to improve the efficiency of our online tool for plagiarism check. Moreover, we ensure access of the tool to robust databases, taking the privacy issues very seriously. All of the content of personal databases is kept confidential and secure since PlagiarismSearch uses the encrypted connection SSL. You can upload the file you need by clicking on the option &ldquo;add new.&rdquo; Scanning starts when all the required documents are added.&nbsp;</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-200/60 flex flex-wrap items-center gap-x-6 gap-y-3">
         <p class="text-[13.5px] sm:text-[14px] text-ink-500">Looking for something else?</p>
         <a href="help-center.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
@@ -609,5 +686,17 @@ tailwind.config = {
   })();
   </script>
 </footer>
+
+<script>
+(() => {
+  /* answers are already in the DOM; this only opens and closes them */
+  document.querySelectorAll('.faq-q').forEach(q => q.addEventListener('click', () => {
+    const item = q.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    item.parentElement.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }));
+})();
+</script>
 </body>
 </html>
