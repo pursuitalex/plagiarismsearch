@@ -28,12 +28,22 @@ const LOCAL = {
   'how-plagiarism-checker-work': 'https://plagiarismsearch.com/how-plagiarism-checker-work',
 };
 
-/* One icon per category, Lucide, matching what the group is about. */
+/* One generated spot icon per category — type D in IMAGES.md, the duotone family the
+   ai-detector page set the benchmark for. Made as ONE sheet, never four separate
+   generations: the model holds a single stroke weight only within one canvas.
+
+   Measured against that benchmark on a true-thickness scan, not the row scan the guide
+   prescribes — a row scan runs ALONG a horizontal stroke and reports its length, which
+   put the layered-panels icon at 42px for an 8px line. Both sets rescored on the same
+   scale: benchmark 7.00, this set 7.50, spread 1.
+
+   Source sheet kept at build/legal/ug-sheet.jpg. Without it the weight cannot be
+   retuned and the set has to be generated again from nothing. */
 const ICONS = {
-  'Plagiarism Check': '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
-  'Moodle Integration': '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
-  'Services Overview': '<line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/>',
-  'Account Features and Management': '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  'Plagiarism Check':                'cat-check',
+  'Moodle Integration':              'cat-moodle',
+  'Services Overview':               'cat-services',
+  'Account Features and Management': 'cat-account',
 };
 
 /* ── the document, by div depth ───────────────────────────────────────────── */
@@ -117,11 +127,14 @@ const link = l => {
             </li>`;
 };
 
+/* The illustration convention this site already uses, taken from ai-detector: a tinted
+   plate at content width, the icon modest inside it, heading below. The icons are keyed
+   to transparency so the plate shows through their interiors rather than a white box. */
 const card = g => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <div class="flex items-center gap-3 mb-4 lg:mb-5">
-            <span class="w-10 h-10 shrink-0 rounded-xl bg-teal-50 flex items-center justify-center">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[g.name] || ICONS['Services Overview']}</svg>
-            </span>
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 mb-4 lg:mb-5 py-5 sm:py-6 flex items-center justify-center">
+            <img src="assets/img/ug/${ICONS[g.name] || 'cat-services'}.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+          </div>
+          <div class="flex items-baseline gap-3 mb-4 lg:mb-5">
             <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">${g.name}</h2>
             <span class="ml-auto text-[11.5px] font-semibold text-ink-400 tabular-nums">${g.links.length}</span>
           </div>
