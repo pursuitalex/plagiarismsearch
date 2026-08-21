@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>PlagiarismSearch — Originality Badges</title>
+<title>Trust Badges for Website | PlagiarismSearch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
@@ -141,6 +141,7 @@ tailwind.config = {
   }
 </style>
 </head>
+
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
 
@@ -181,7 +182,7 @@ tailwind.config = {
       </div>
       <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Pricing</a>
       <div class="nav-item relative">
-        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Resources<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-ink-900/5 text-ink-900 font-semibold" aria-haspopup="true">Resources<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
           <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[190px]">
             <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
@@ -259,43 +260,1116 @@ tailwind.config = {
 </header>
 
 <main>
-  <section class="relative pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 bg-[#F2FCFC] overflow-hidden">
+  <!-- The badge gallery. Artwork and copy are the site's own, carried over unchanged;
+       the images live in assets/img/badges/<lang>/ so nothing here calls the live site.
+
+       Every badge is a button rather than an image in a link: clicking one hands you the
+       embed code, which is an action on this page, not a journey to another. -->
+  <section class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-white">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
-      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
+      <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
     </div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="max-w-[620px]">
-        <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700 mb-4 lg:mb-5">Footer · Resources</div>
-        <h1 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Originality Badges</h1>
-        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed mb-8 sm:mb-10 lg:mb-12">This page is an approved destination in the navigation architecture. It is not designed yet — the link works so the navigation can be walked end to end.</p>
 
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 mb-8 sm:mb-10 lg:mb-12">
-          <dl class="divide-y divide-ink-100">
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Label</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Originality Badges</dd>
+      <div class="max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
+        <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4 lg:mb-5">Resources</div>
+        <h1 class="text-[clamp(2.1rem,4vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4 lg:mb-5">Trust Badges for Website: Mark Your Content as Protected</h1>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[17px] text-ink-600 leading-relaxed">Protect your website from content theft and build trust with your readers. Choose a PlagiarismSearch badge below and display it proudly to signal that your content is protected and monitored for originality.</p>
+      </div>
+
+      <!-- language: a row of pills rather than a select, since there are four of them
+           and they are the page's main control -->
+      <div class="flex flex-wrap items-center gap-2 mb-8 sm:mb-10">
+        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mr-1">Banner language</span>
+        <button type="button" class="badge-tab rounded-full px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold transition-colors duration-300 bg-ink-900 text-white" data-lang="en">English</button>
+        <button type="button" class="badge-tab rounded-full px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold transition-colors duration-300 bg-ink-100 text-ink-600 hover:bg-ink-200" data-lang="es">Spanish</button>
+        <button type="button" class="badge-tab rounded-full px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold transition-colors duration-300 bg-ink-100 text-ink-600 hover:bg-ink-200" data-lang="de">German</button>
+        <button type="button" class="badge-tab rounded-full px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold transition-colors duration-300 bg-ink-100 text-ink-600 hover:bg-ink-200" data-lang="pt">Portuguese</button>
+      </div>
+
+        <div class="badge-lang" data-lang="en">
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Protected</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">200 &times; 25 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
             </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Placed in</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Footer · Resources</dd>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/protected-light-white.png" data-w="200" data-h="25"
+                data-alt="Protected by PlagiarismSearch &ndash; Verified Originality" data-title="Verified by PlagiarismSearch" data-lang="en">
+                <img src="assets/img/badges/en/protected-light-white.png" alt="Protected by PlagiarismSearch &ndash; Verified Originality" title="Verified by PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/protected-light-blue.png" data-w="200" data-h="25"
+                data-alt="Protected by PlagiarismSearch &ndash; Verified Originality" data-title="Verified by PlagiarismSearch" data-lang="en">
+                <img src="assets/img/badges/en/protected-light-blue.png" alt="Protected by PlagiarismSearch &ndash; Verified Originality" title="Verified by PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/protected-light-grey.png" data-w="200" data-h="25"
+                data-alt="Protected by PlagiarismSearch &ndash; Verified Originality" data-title="Verified by PlagiarismSearch" data-lang="en">
+                <img src="assets/img/badges/en/protected-light-grey.png" alt="Protected by PlagiarismSearch &ndash; Verified Originality" title="Verified by PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/protected-light-black.png" data-w="200" data-h="25"
+                data-alt="Protected by PlagiarismSearch &ndash; Verified Originality" data-title="Verified by PlagiarismSearch" data-lang="en">
+                <img src="assets/img/badges/en/protected-light-black.png" alt="Protected by PlagiarismSearch &ndash; Verified Originality" title="Verified by PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
             </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Path</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800 nums">/originality-badges</dd>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Originality shield</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">140 &times; 36 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
             </div>
-          </dl>
-          <p class="mt-4 pt-4 border-t border-ink-100 text-[13.5px] sm:text-[14.5px] text-ink-600 leading-relaxed">Footer only — the brief keeps it out of the header.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/originality-shield-white.png" data-w="140" data-h="36"
+                data-alt="PlagiarismSearch Originality Protected &ndash; Trusted by Professionals" data-title="Originality Protection Badge" data-lang="en">
+                <img src="assets/img/badges/en/originality-shield-white.png" alt="PlagiarismSearch Originality Protected &ndash; Trusted by Professionals" title="Originality Protection Badge" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/originality-shield-blue.png" data-w="140" data-h="36"
+                data-alt="PlagiarismSearch Originality Protected &ndash; Trusted by Professionals" data-title="Originality Protection Badge" data-lang="en">
+                <img src="assets/img/badges/en/originality-shield-blue.png" alt="PlagiarismSearch Originality Protected &ndash; Trusted by Professionals" title="Originality Protection Badge" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/originality-shield-grey.png" data-w="140" data-h="36"
+                data-alt="PlagiarismSearch Originality Protected &ndash; Trusted by Professionals" data-title="Originality Protection Badge" data-lang="en">
+                <img src="assets/img/badges/en/originality-shield-grey.png" alt="PlagiarismSearch Originality Protected &ndash; Trusted by Professionals" title="Originality Protection Badge" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/originality-shield-black.png" data-w="140" data-h="36"
+                data-alt="PlagiarismSearch Originality Protected &ndash; Trusted by Professionals" data-title="Originality Protection Badge" data-lang="en">
+                <img src="assets/img/badges/en/originality-shield-black.png" alt="PlagiarismSearch Originality Protected &ndash; Trusted by Professionals" title="Originality Protection Badge" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Protected &middot; locked</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">140 &times; 40 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/protected-locked-white.png" data-w="140" data-h="40"
+                data-alt="Protected by PlagiarismSearch &ndash; Content Security Enabled" data-title="Content Security Active" data-lang="en">
+                <img src="assets/img/badges/en/protected-locked-white.png" alt="Protected by PlagiarismSearch &ndash; Content Security Enabled" title="Content Security Active" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/protected-locked-blue.png" data-w="140" data-h="40"
+                data-alt="Protected by PlagiarismSearch &ndash; Content Security Enabled" data-title="Content Security Active" data-lang="en">
+                <img src="assets/img/badges/en/protected-locked-blue.png" alt="Protected by PlagiarismSearch &ndash; Content Security Enabled" title="Content Security Active" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/protected-locked-grey.png" data-w="140" data-h="40"
+                data-alt="Protected by PlagiarismSearch &ndash; Content Security Enabled" data-title="Content Security Active" data-lang="en">
+                <img src="assets/img/badges/en/protected-locked-grey.png" alt="Protected by PlagiarismSearch &ndash; Content Security Enabled" title="Content Security Active" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/protected-locked-black.png" data-w="140" data-h="40"
+                data-alt="Protected by PlagiarismSearch &ndash; Content Security Enabled" data-title="Content Security Active" data-lang="en">
+                <img src="assets/img/badges/en/protected-locked-black.png" alt="Protected by PlagiarismSearch &ndash; Content Security Enabled" title="Content Security Active" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Smart protection</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">160 &times; 40 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/smart-protection-white.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Smart Content Protection for Digital Integrity" data-title="Smart Digital Protection" data-lang="en">
+                <img src="assets/img/badges/en/smart-protection-white.png" alt="PlagiarismSearch &ndash; Smart Content Protection for Digital Integrity" title="Smart Digital Protection" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/smart-protection-blue.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Smart Content Protection for Digital Integrity" data-title="Smart Digital Protection" data-lang="en">
+                <img src="assets/img/badges/en/smart-protection-blue.png" alt="PlagiarismSearch &ndash; Smart Content Protection for Digital Integrity" title="Smart Digital Protection" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/smart-protection-grey.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Smart Content Protection for Digital Integrity" data-title="Smart Digital Protection" data-lang="en">
+                <img src="assets/img/badges/en/smart-protection-grey.png" alt="PlagiarismSearch &ndash; Smart Content Protection for Digital Integrity" title="Smart Digital Protection" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/smart-protection-black.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Smart Content Protection for Digital Integrity" data-title="Smart Digital Protection" data-lang="en">
+                <img src="assets/img/badges/en/smart-protection-black.png" alt="PlagiarismSearch &ndash; Smart Content Protection for Digital Integrity" title="Smart Digital Protection" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Originality</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/badge-originality-black.png" data-w="90" data-h="90"
+                data-alt="Originality Protected by PlagiarismSearch &ndash; Official Badge" data-title="Official Badge of Originality" data-lang="en">
+                <img src="assets/img/badges/en/badge-originality-black.png" alt="Originality Protected by PlagiarismSearch &ndash; Official Badge" title="Official Badge of Originality" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/badge-originality-blue.png" data-w="90" data-h="90"
+                data-alt="Originality Protected by PlagiarismSearch &ndash; Official Badge" data-title="Official Badge of Originality" data-lang="en">
+                <img src="assets/img/badges/en/badge-originality-blue.png" alt="Originality Protected by PlagiarismSearch &ndash; Official Badge" title="Official Badge of Originality" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/badge-originality-color.png" data-w="90" data-h="90"
+                data-alt="Originality Protected by PlagiarismSearch &ndash; Official Badge" data-title="Official Badge of Originality" data-lang="en">
+                <img src="assets/img/badges/en/badge-originality-color.png" alt="Originality Protected by PlagiarismSearch &ndash; Official Badge" title="Official Badge of Originality" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/badge-originality-white.png" data-w="90" data-h="90"
+                data-alt="Originality Protected by PlagiarismSearch &ndash; Official Badge" data-title="Official Badge of Originality" data-lang="en">
+                <img src="assets/img/badges/en/badge-originality-white.png" alt="Originality Protected by PlagiarismSearch &ndash; Official Badge" title="Official Badge of Originality" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Think before you copy</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/think-before-you-copy-black.png" data-w="90" data-h="90"
+                data-alt="Think Before You Copy &ndash; Protected by PlagiarismSearch" data-title="Think Before You Copy" data-lang="en">
+                <img src="assets/img/badges/en/think-before-you-copy-black.png" alt="Think Before You Copy &ndash; Protected by PlagiarismSearch" title="Think Before You Copy" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/think-before-you-copy-blue.png" data-w="90" data-h="90"
+                data-alt="Think Before You Copy &ndash; Protected by PlagiarismSearch" data-title="Think Before You Copy" data-lang="en">
+                <img src="assets/img/badges/en/think-before-you-copy-blue.png" alt="Think Before You Copy &ndash; Protected by PlagiarismSearch" title="Think Before You Copy" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/think-before-you-copy-color.png" data-w="90" data-h="90"
+                data-alt="Think Before You Copy &ndash; Protected by PlagiarismSearch" data-title="Think Before You Copy" data-lang="en">
+                <img src="assets/img/badges/en/think-before-you-copy-color.png" alt="Think Before You Copy &ndash; Protected by PlagiarismSearch" title="Think Before You Copy" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/think-before-you-copy-white.png" data-w="90" data-h="90"
+                data-alt="Think Before You Copy &ndash; Protected by PlagiarismSearch" data-title="Think Before You Copy" data-lang="en">
+                <img src="assets/img/badges/en/think-before-you-copy-white.png" alt="Think Before You Copy &ndash; Protected by PlagiarismSearch" title="Think Before You Copy" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Content monitoring</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/copy-warning-circle-black.png" data-w="90" data-h="90"
+                data-alt="Content Monitoring by PlagiarismSearch &ndash; Anti-Copy Warning" data-title="Under Active Monitoring" data-lang="en">
+                <img src="assets/img/badges/en/copy-warning-circle-black.png" alt="Content Monitoring by PlagiarismSearch &ndash; Anti-Copy Warning" title="Under Active Monitoring" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/copy-warning-circle-blue.png" data-w="90" data-h="90"
+                data-alt="Content Monitoring by PlagiarismSearch &ndash; Anti-Copy Warning" data-title="Under Active Monitoring" data-lang="en">
+                <img src="assets/img/badges/en/copy-warning-circle-blue.png" alt="Content Monitoring by PlagiarismSearch &ndash; Anti-Copy Warning" title="Under Active Monitoring" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/copy-warning-circle-color.png" data-w="90" data-h="90"
+                data-alt="Content Monitoring by PlagiarismSearch &ndash; Anti-Copy Warning" data-title="Under Active Monitoring" data-lang="en">
+                <img src="assets/img/badges/en/copy-warning-circle-color.png" alt="Content Monitoring by PlagiarismSearch &ndash; Anti-Copy Warning" title="Under Active Monitoring" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/copy-warning-circle-white.png" data-w="90" data-h="90"
+                data-alt="Content Monitoring by PlagiarismSearch &ndash; Anti-Copy Warning" data-title="Under Active Monitoring" data-lang="en">
+                <img src="assets/img/badges/en/copy-warning-circle-white.png" alt="Content Monitoring by PlagiarismSearch &ndash; Anti-Copy Warning" title="Under Active Monitoring" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Monitored &amp; secured</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/monitored-secured-black.png" data-w="90" data-h="90"
+                data-alt="Monitored &amp; Secured by PlagiarismSearch &ndash; Authenticity Guaranteed" data-title="Authenticity Secured" data-lang="en">
+                <img src="assets/img/badges/en/monitored-secured-black.png" alt="Monitored &amp; Secured by PlagiarismSearch &ndash; Authenticity Guaranteed" title="Authenticity Secured" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/monitored-secured-blue.png" data-w="90" data-h="90"
+                data-alt="Monitored &amp; Secured by PlagiarismSearch &ndash; Authenticity Guaranteed" data-title="Authenticity Secured" data-lang="en">
+                <img src="assets/img/badges/en/monitored-secured-blue.png" alt="Monitored &amp; Secured by PlagiarismSearch &ndash; Authenticity Guaranteed" title="Authenticity Secured" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/monitored-secured-color.png" data-w="90" data-h="90"
+                data-alt="Monitored &amp; Secured by PlagiarismSearch &ndash; Authenticity Guaranteed" data-title="Authenticity Secured" data-lang="en">
+                <img src="assets/img/badges/en/monitored-secured-color.png" alt="Monitored &amp; Secured by PlagiarismSearch &ndash; Authenticity Guaranteed" title="Authenticity Secured" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/en/monitored-secured-white.png" data-w="90" data-h="90"
+                data-alt="Monitored &amp; Secured by PlagiarismSearch &ndash; Authenticity Guaranteed" data-title="Authenticity Secured" data-lang="en">
+                <img src="assets/img/badges/en/monitored-secured-white.png" alt="Monitored &amp; Secured by PlagiarismSearch &ndash; Authenticity Guaranteed" title="Authenticity Secured" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="badge-lang hidden" data-lang="es">
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Protected</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">200 &times; 25 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/protected-light-white.png" data-w="200" data-h="25"
+                data-alt="Protegido por PlagiarismSearch &ndash; Originalidad Verificada" data-title="Originalidad Verificada por PlagiarismSearch" data-lang="es">
+                <img src="assets/img/badges/es/protected-light-white.png" alt="Protegido por PlagiarismSearch &ndash; Originalidad Verificada" title="Originalidad Verificada por PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/protected-light-blue.png" data-w="200" data-h="25"
+                data-alt="Protegido por PlagiarismSearch &ndash; Originalidad Verificada" data-title="Originalidad Verificada por PlagiarismSearch" data-lang="es">
+                <img src="assets/img/badges/es/protected-light-blue.png" alt="Protegido por PlagiarismSearch &ndash; Originalidad Verificada" title="Originalidad Verificada por PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/protected-light-grey.png" data-w="200" data-h="25"
+                data-alt="Protegido por PlagiarismSearch &ndash; Originalidad Verificada" data-title="Originalidad Verificada por PlagiarismSearch" data-lang="es">
+                <img src="assets/img/badges/es/protected-light-grey.png" alt="Protegido por PlagiarismSearch &ndash; Originalidad Verificada" title="Originalidad Verificada por PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/protected-light-black.png" data-w="200" data-h="25"
+                data-alt="Protegido por PlagiarismSearch &ndash; Originalidad Verificada" data-title="Originalidad Verificada por PlagiarismSearch" data-lang="es">
+                <img src="assets/img/badges/es/protected-light-black.png" alt="Protegido por PlagiarismSearch &ndash; Originalidad Verificada" title="Originalidad Verificada por PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Originality shield</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">140 &times; 36 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/originality-shield-white.png" data-w="140" data-h="36"
+                data-alt="Originalidad Protegida por PlagiarismSearch &ndash; Confiado por Profesionales" data-title="Sello de Originalidad Protegida" data-lang="es">
+                <img src="assets/img/badges/es/originality-shield-white.png" alt="Originalidad Protegida por PlagiarismSearch &ndash; Confiado por Profesionales" title="Sello de Originalidad Protegida" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/originality-shield-blue.png" data-w="140" data-h="36"
+                data-alt="Originalidad Protegida por PlagiarismSearch &ndash; Confiado por Profesionales" data-title="Sello de Originalidad Protegida" data-lang="es">
+                <img src="assets/img/badges/es/originality-shield-blue.png" alt="Originalidad Protegida por PlagiarismSearch &ndash; Confiado por Profesionales" title="Sello de Originalidad Protegida" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/originality-shield-grey.png" data-w="140" data-h="36"
+                data-alt="Originalidad Protegida por PlagiarismSearch &ndash; Confiado por Profesionales" data-title="Sello de Originalidad Protegida" data-lang="es">
+                <img src="assets/img/badges/es/originality-shield-grey.png" alt="Originalidad Protegida por PlagiarismSearch &ndash; Confiado por Profesionales" title="Sello de Originalidad Protegida" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/originality-shield-black.png" data-w="140" data-h="36"
+                data-alt="Originalidad Protegida por PlagiarismSearch &ndash; Confiado por Profesionales" data-title="Sello de Originalidad Protegida" data-lang="es">
+                <img src="assets/img/badges/es/originality-shield-black.png" alt="Originalidad Protegida por PlagiarismSearch &ndash; Confiado por Profesionales" title="Sello de Originalidad Protegida" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Protected &middot; locked</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">140 &times; 40 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/protected-locked-white.png" data-w="140" data-h="40"
+                data-alt="Protegido por PlagiarismSearch &ndash; Seguridad de Contenido Activada" data-title="Seguridad de Contenido Activada" data-lang="es">
+                <img src="assets/img/badges/es/protected-locked-white.png" alt="Protegido por PlagiarismSearch &ndash; Seguridad de Contenido Activada" title="Seguridad de Contenido Activada" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/protected-locked-blue.png" data-w="140" data-h="40"
+                data-alt="Protegido por PlagiarismSearch &ndash; Seguridad de Contenido Activada" data-title="Seguridad de Contenido Activada" data-lang="es">
+                <img src="assets/img/badges/es/protected-locked-blue.png" alt="Protegido por PlagiarismSearch &ndash; Seguridad de Contenido Activada" title="Seguridad de Contenido Activada" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/protected-locked-grey.png" data-w="140" data-h="40"
+                data-alt="Protegido por PlagiarismSearch &ndash; Seguridad de Contenido Activada" data-title="Seguridad de Contenido Activada" data-lang="es">
+                <img src="assets/img/badges/es/protected-locked-grey.png" alt="Protegido por PlagiarismSearch &ndash; Seguridad de Contenido Activada" title="Seguridad de Contenido Activada" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/protected-locked-black.png" data-w="140" data-h="40"
+                data-alt="Protegido por PlagiarismSearch &ndash; Seguridad de Contenido Activada" data-title="Seguridad de Contenido Activada" data-lang="es">
+                <img src="assets/img/badges/es/protected-locked-black.png" alt="Protegido por PlagiarismSearch &ndash; Seguridad de Contenido Activada" title="Seguridad de Contenido Activada" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Smart protection</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">160 &times; 40 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/smart-protection-white.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Protecci&oacute;n Inteligente de Contenido con Integridad Digital" data-title="Protecci&oacute;n Inteligente y Confiable" data-lang="es">
+                <img src="assets/img/badges/es/smart-protection-white.png" alt="PlagiarismSearch &ndash; Protecci&oacute;n Inteligente de Contenido con Integridad Digital" title="Protecci&oacute;n Inteligente y Confiable" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/smart-protection-blue.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Protecci&oacute;n Inteligente de Contenido con Integridad Digital" data-title="Protecci&oacute;n Inteligente y Confiable" data-lang="es">
+                <img src="assets/img/badges/es/smart-protection-blue.png" alt="PlagiarismSearch &ndash; Protecci&oacute;n Inteligente de Contenido con Integridad Digital" title="Protecci&oacute;n Inteligente y Confiable" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/smart-protection-grey.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Protecci&oacute;n Inteligente de Contenido con Integridad Digital" data-title="Protecci&oacute;n Inteligente y Confiable" data-lang="es">
+                <img src="assets/img/badges/es/smart-protection-grey.png" alt="PlagiarismSearch &ndash; Protecci&oacute;n Inteligente de Contenido con Integridad Digital" title="Protecci&oacute;n Inteligente y Confiable" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/smart-protection-black.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Protecci&oacute;n Inteligente de Contenido con Integridad Digital" data-title="Protecci&oacute;n Inteligente y Confiable" data-lang="es">
+                <img src="assets/img/badges/es/smart-protection-black.png" alt="PlagiarismSearch &ndash; Protecci&oacute;n Inteligente de Contenido con Integridad Digital" title="Protecci&oacute;n Inteligente y Confiable" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Originality</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/badge-originality-black.png" data-w="90" data-h="90"
+                data-alt="Originalidad Protegida por PlagiarismSearch &ndash; Distintivo Oficial" data-title="Distintivo Oficial de Originalidad" data-lang="es">
+                <img src="assets/img/badges/es/badge-originality-black.png" alt="Originalidad Protegida por PlagiarismSearch &ndash; Distintivo Oficial" title="Distintivo Oficial de Originalidad" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/badge-originality-blue.png" data-w="90" data-h="90"
+                data-alt="Originalidad Protegida por PlagiarismSearch &ndash; Distintivo Oficial" data-title="Distintivo Oficial de Originalidad" data-lang="es">
+                <img src="assets/img/badges/es/badge-originality-blue.png" alt="Originalidad Protegida por PlagiarismSearch &ndash; Distintivo Oficial" title="Distintivo Oficial de Originalidad" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/badge-originality-color.png" data-w="90" data-h="90"
+                data-alt="Originalidad Protegida por PlagiarismSearch &ndash; Distintivo Oficial" data-title="Distintivo Oficial de Originalidad" data-lang="es">
+                <img src="assets/img/badges/es/badge-originality-color.png" alt="Originalidad Protegida por PlagiarismSearch &ndash; Distintivo Oficial" title="Distintivo Oficial de Originalidad" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/badge-originality-white.png" data-w="90" data-h="90"
+                data-alt="Originalidad Protegida por PlagiarismSearch &ndash; Distintivo Oficial" data-title="Distintivo Oficial de Originalidad" data-lang="es">
+                <img src="assets/img/badges/es/badge-originality-white.png" alt="Originalidad Protegida por PlagiarismSearch &ndash; Distintivo Oficial" title="Distintivo Oficial de Originalidad" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Think before you copy</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/think-before-you-copy-black.png" data-w="90" data-h="90"
+                data-alt="Piensa Antes de Copiar &ndash; Protegido por PlagiarismSearch" data-title="Advertencia contra Copias No Autorizadas" data-lang="es">
+                <img src="assets/img/badges/es/think-before-you-copy-black.png" alt="Piensa Antes de Copiar &ndash; Protegido por PlagiarismSearch" title="Advertencia contra Copias No Autorizadas" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/think-before-you-copy-blue.png" data-w="90" data-h="90"
+                data-alt="Piensa Antes de Copiar &ndash; Protegido por PlagiarismSearch" data-title="Advertencia contra Copias No Autorizadas" data-lang="es">
+                <img src="assets/img/badges/es/think-before-you-copy-blue.png" alt="Piensa Antes de Copiar &ndash; Protegido por PlagiarismSearch" title="Advertencia contra Copias No Autorizadas" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/think-before-you-copy-color.png" data-w="90" data-h="90"
+                data-alt="Piensa Antes de Copiar &ndash; Protegido por PlagiarismSearch" data-title="Advertencia contra Copias No Autorizadas" data-lang="es">
+                <img src="assets/img/badges/es/think-before-you-copy-color.png" alt="Piensa Antes de Copiar &ndash; Protegido por PlagiarismSearch" title="Advertencia contra Copias No Autorizadas" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/think-before-you-copy-white.png" data-w="90" data-h="90"
+                data-alt="Piensa Antes de Copiar &ndash; Protegido por PlagiarismSearch" data-title="Advertencia contra Copias No Autorizadas" data-lang="es">
+                <img src="assets/img/badges/es/think-before-you-copy-white.png" alt="Piensa Antes de Copiar &ndash; Protegido por PlagiarismSearch" title="Advertencia contra Copias No Autorizadas" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Content monitoring</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/copy-warning-circle-black.png" data-w="90" data-h="90"
+                data-alt="Supervisi&oacute;n de Contenido por PlagiarismSearch &ndash; Advertencia Anticopia" data-title="Supervisi&oacute;n Activa de Contenido" data-lang="es">
+                <img src="assets/img/badges/es/copy-warning-circle-black.png" alt="Supervisi&oacute;n de Contenido por PlagiarismSearch &ndash; Advertencia Anticopia" title="Supervisi&oacute;n Activa de Contenido" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/copy-warning-circle-blue.png" data-w="90" data-h="90"
+                data-alt="Supervisi&oacute;n de Contenido por PlagiarismSearch &ndash; Advertencia Anticopia" data-title="Supervisi&oacute;n Activa de Contenido" data-lang="es">
+                <img src="assets/img/badges/es/copy-warning-circle-blue.png" alt="Supervisi&oacute;n de Contenido por PlagiarismSearch &ndash; Advertencia Anticopia" title="Supervisi&oacute;n Activa de Contenido" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/copy-warning-circle-color.png" data-w="90" data-h="90"
+                data-alt="Supervisi&oacute;n de Contenido por PlagiarismSearch &ndash; Advertencia Anticopia" data-title="Supervisi&oacute;n Activa de Contenido" data-lang="es">
+                <img src="assets/img/badges/es/copy-warning-circle-color.png" alt="Supervisi&oacute;n de Contenido por PlagiarismSearch &ndash; Advertencia Anticopia" title="Supervisi&oacute;n Activa de Contenido" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/copy-warning-circle-white.png" data-w="90" data-h="90"
+                data-alt="Supervisi&oacute;n de Contenido por PlagiarismSearch &ndash; Advertencia Anticopia" data-title="Supervisi&oacute;n Activa de Contenido" data-lang="es">
+                <img src="assets/img/badges/es/copy-warning-circle-white.png" alt="Supervisi&oacute;n de Contenido por PlagiarismSearch &ndash; Advertencia Anticopia" title="Supervisi&oacute;n Activa de Contenido" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Monitored &amp; secured</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/monitored-secured-black.png" data-w="90" data-h="90"
+                data-alt="Supervisado y Seguro por PlagiarismSearch &ndash; Autenticidad Garantizada" data-title="Contenido Supervisado y Aut&eacute;ntico" data-lang="es">
+                <img src="assets/img/badges/es/monitored-secured-black.png" alt="Supervisado y Seguro por PlagiarismSearch &ndash; Autenticidad Garantizada" title="Contenido Supervisado y Aut&eacute;ntico" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/monitored-secured-blue.png" data-w="90" data-h="90"
+                data-alt="Supervisado y Seguro por PlagiarismSearch &ndash; Autenticidad Garantizada" data-title="Contenido Supervisado y Aut&eacute;ntico" data-lang="es">
+                <img src="assets/img/badges/es/monitored-secured-blue.png" alt="Supervisado y Seguro por PlagiarismSearch &ndash; Autenticidad Garantizada" title="Contenido Supervisado y Aut&eacute;ntico" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/monitored-secured-color.png" data-w="90" data-h="90"
+                data-alt="Supervisado y Seguro por PlagiarismSearch &ndash; Autenticidad Garantizada" data-title="Contenido Supervisado y Aut&eacute;ntico" data-lang="es">
+                <img src="assets/img/badges/es/monitored-secured-color.png" alt="Supervisado y Seguro por PlagiarismSearch &ndash; Autenticidad Garantizada" title="Contenido Supervisado y Aut&eacute;ntico" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/es/monitored-secured-white.png" data-w="90" data-h="90"
+                data-alt="Supervisado y Seguro por PlagiarismSearch &ndash; Autenticidad Garantizada" data-title="Contenido Supervisado y Aut&eacute;ntico" data-lang="es">
+                <img src="assets/img/badges/es/monitored-secured-white.png" alt="Supervisado y Seguro por PlagiarismSearch &ndash; Autenticidad Garantizada" title="Contenido Supervisado y Aut&eacute;ntico" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="badge-lang hidden" data-lang="de">
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Protected</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">200 &times; 25 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/protected-light-white.png" data-w="200" data-h="25"
+                data-alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Verifizierte Originalit&auml;t" data-title="Verifizierte Originalit&auml;t mit PlagiarismSearch-Schutz" data-lang="de">
+                <img src="assets/img/badges/de/protected-light-white.png" alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Verifizierte Originalit&auml;t" title="Verifizierte Originalit&auml;t mit PlagiarismSearch-Schutz" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/protected-light-blue.png" data-w="200" data-h="25"
+                data-alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Verifizierte Originalit&auml;t" data-title="Verifizierte Originalit&auml;t mit PlagiarismSearch-Schutz" data-lang="de">
+                <img src="assets/img/badges/de/protected-light-blue.png" alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Verifizierte Originalit&auml;t" title="Verifizierte Originalit&auml;t mit PlagiarismSearch-Schutz" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/protected-light-grey.png" data-w="200" data-h="25"
+                data-alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Verifizierte Originalit&auml;t" data-title="Verifizierte Originalit&auml;t mit PlagiarismSearch-Schutz" data-lang="de">
+                <img src="assets/img/badges/de/protected-light-grey.png" alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Verifizierte Originalit&auml;t" title="Verifizierte Originalit&auml;t mit PlagiarismSearch-Schutz" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/protected-light-black.png" data-w="200" data-h="25"
+                data-alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Verifizierte Originalit&auml;t" data-title="Verifizierte Originalit&auml;t mit PlagiarismSearch-Schutz" data-lang="de">
+                <img src="assets/img/badges/de/protected-light-black.png" alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Verifizierte Originalit&auml;t" title="Verifizierte Originalit&auml;t mit PlagiarismSearch-Schutz" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Originality shield</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">140 &times; 36 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/originality-shield-white.png" data-w="140" data-h="36"
+                data-alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Vertraut von Experten" data-title="Experten vertrauen auf PlagiarismSearch-Originalit&auml;tsschutz" data-lang="de">
+                <img src="assets/img/badges/de/originality-shield-white.png" alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Vertraut von Experten" title="Experten vertrauen auf PlagiarismSearch-Originalit&auml;tsschutz" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/originality-shield-blue.png" data-w="140" data-h="36"
+                data-alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Vertraut von Experten" data-title="Experten vertrauen auf PlagiarismSearch-Originalit&auml;tsschutz" data-lang="de">
+                <img src="assets/img/badges/de/originality-shield-blue.png" alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Vertraut von Experten" title="Experten vertrauen auf PlagiarismSearch-Originalit&auml;tsschutz" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/originality-shield-grey.png" data-w="140" data-h="36"
+                data-alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Vertraut von Experten" data-title="Experten vertrauen auf PlagiarismSearch-Originalit&auml;tsschutz" data-lang="de">
+                <img src="assets/img/badges/de/originality-shield-grey.png" alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Vertraut von Experten" title="Experten vertrauen auf PlagiarismSearch-Originalit&auml;tsschutz" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/originality-shield-black.png" data-w="140" data-h="36"
+                data-alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Vertraut von Experten" data-title="Experten vertrauen auf PlagiarismSearch-Originalit&auml;tsschutz" data-lang="de">
+                <img src="assets/img/badges/de/originality-shield-black.png" alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Vertraut von Experten" title="Experten vertrauen auf PlagiarismSearch-Originalit&auml;tsschutz" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Protected &middot; locked</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">140 &times; 40 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/protected-locked-white.png" data-w="140" data-h="40"
+                data-alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Inhaltssicherheit aktiviert" data-title="Inhaltssicherheit durch PlagiarismSearch aktiviert" data-lang="de">
+                <img src="assets/img/badges/de/protected-locked-white.png" alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Inhaltssicherheit aktiviert" title="Inhaltssicherheit durch PlagiarismSearch aktiviert" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/protected-locked-blue.png" data-w="140" data-h="40"
+                data-alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Inhaltssicherheit aktiviert" data-title="Inhaltssicherheit durch PlagiarismSearch aktiviert" data-lang="de">
+                <img src="assets/img/badges/de/protected-locked-blue.png" alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Inhaltssicherheit aktiviert" title="Inhaltssicherheit durch PlagiarismSearch aktiviert" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/protected-locked-grey.png" data-w="140" data-h="40"
+                data-alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Inhaltssicherheit aktiviert" data-title="Inhaltssicherheit durch PlagiarismSearch aktiviert" data-lang="de">
+                <img src="assets/img/badges/de/protected-locked-grey.png" alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Inhaltssicherheit aktiviert" title="Inhaltssicherheit durch PlagiarismSearch aktiviert" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/protected-locked-black.png" data-w="140" data-h="40"
+                data-alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Inhaltssicherheit aktiviert" data-title="Inhaltssicherheit durch PlagiarismSearch aktiviert" data-lang="de">
+                <img src="assets/img/badges/de/protected-locked-black.png" alt="Gesch&uuml;tzt durch PlagiarismSearch &ndash; Inhaltssicherheit aktiviert" title="Inhaltssicherheit durch PlagiarismSearch aktiviert" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Smart protection</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">160 &times; 40 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/smart-protection-white.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Intelligenter Inhaltsschutz f&uuml;r digitale Integrit&auml;t" data-title="Intelligenter Schutz f&uuml;r Ihre digitalen Inhalte" data-lang="de">
+                <img src="assets/img/badges/de/smart-protection-white.png" alt="PlagiarismSearch &ndash; Intelligenter Inhaltsschutz f&uuml;r digitale Integrit&auml;t" title="Intelligenter Schutz f&uuml;r Ihre digitalen Inhalte" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/smart-protection-blue.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Intelligenter Inhaltsschutz f&uuml;r digitale Integrit&auml;t" data-title="Intelligenter Schutz f&uuml;r Ihre digitalen Inhalte" data-lang="de">
+                <img src="assets/img/badges/de/smart-protection-blue.png" alt="PlagiarismSearch &ndash; Intelligenter Inhaltsschutz f&uuml;r digitale Integrit&auml;t" title="Intelligenter Schutz f&uuml;r Ihre digitalen Inhalte" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/smart-protection-grey.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Intelligenter Inhaltsschutz f&uuml;r digitale Integrit&auml;t" data-title="Intelligenter Schutz f&uuml;r Ihre digitalen Inhalte" data-lang="de">
+                <img src="assets/img/badges/de/smart-protection-grey.png" alt="PlagiarismSearch &ndash; Intelligenter Inhaltsschutz f&uuml;r digitale Integrit&auml;t" title="Intelligenter Schutz f&uuml;r Ihre digitalen Inhalte" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/smart-protection-black.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Intelligenter Inhaltsschutz f&uuml;r digitale Integrit&auml;t" data-title="Intelligenter Schutz f&uuml;r Ihre digitalen Inhalte" data-lang="de">
+                <img src="assets/img/badges/de/smart-protection-black.png" alt="PlagiarismSearch &ndash; Intelligenter Inhaltsschutz f&uuml;r digitale Integrit&auml;t" title="Intelligenter Schutz f&uuml;r Ihre digitalen Inhalte" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Originality</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/badge-originality-black.png" data-w="90" data-h="90"
+                data-alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Offizielles Siegel" data-title="Offizielles Siegel f&uuml;r gesch&uuml;tzte Originalit&auml;t" data-lang="de">
+                <img src="assets/img/badges/de/badge-originality-black.png" alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Offizielles Siegel" title="Offizielles Siegel f&uuml;r gesch&uuml;tzte Originalit&auml;t" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/badge-originality-blue.png" data-w="90" data-h="90"
+                data-alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Offizielles Siegel" data-title="Offizielles Siegel f&uuml;r gesch&uuml;tzte Originalit&auml;t" data-lang="de">
+                <img src="assets/img/badges/de/badge-originality-blue.png" alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Offizielles Siegel" title="Offizielles Siegel f&uuml;r gesch&uuml;tzte Originalit&auml;t" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/badge-originality-color.png" data-w="90" data-h="90"
+                data-alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Offizielles Siegel" data-title="Offizielles Siegel f&uuml;r gesch&uuml;tzte Originalit&auml;t" data-lang="de">
+                <img src="assets/img/badges/de/badge-originality-color.png" alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Offizielles Siegel" title="Offizielles Siegel f&uuml;r gesch&uuml;tzte Originalit&auml;t" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/badge-originality-white.png" data-w="90" data-h="90"
+                data-alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Offizielles Siegel" data-title="Offizielles Siegel f&uuml;r gesch&uuml;tzte Originalit&auml;t" data-lang="de">
+                <img src="assets/img/badges/de/badge-originality-white.png" alt="Originalit&auml;t gesch&uuml;tzt durch PlagiarismSearch &ndash; Offizielles Siegel" title="Offizielles Siegel f&uuml;r gesch&uuml;tzte Originalit&auml;t" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Think before you copy</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/think-before-you-copy-black.png" data-w="90" data-h="90"
+                data-alt="Denk nach, bevor du kopierst &ndash; Gesch&uuml;tzt durch PlagiarismSearch" data-title="PlagiarismSearch warnt vor unerlaubtem Kopieren" data-lang="de">
+                <img src="assets/img/badges/de/think-before-you-copy-black.png" alt="Denk nach, bevor du kopierst &ndash; Gesch&uuml;tzt durch PlagiarismSearch" title="PlagiarismSearch warnt vor unerlaubtem Kopieren" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/think-before-you-copy-blue.png" data-w="90" data-h="90"
+                data-alt="Denk nach, bevor du kopierst &ndash; Gesch&uuml;tzt durch PlagiarismSearch" data-title="PlagiarismSearch warnt vor unerlaubtem Kopieren" data-lang="de">
+                <img src="assets/img/badges/de/think-before-you-copy-blue.png" alt="Denk nach, bevor du kopierst &ndash; Gesch&uuml;tzt durch PlagiarismSearch" title="PlagiarismSearch warnt vor unerlaubtem Kopieren" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/think-before-you-copy-color.png" data-w="90" data-h="90"
+                data-alt="Denk nach, bevor du kopierst &ndash; Gesch&uuml;tzt durch PlagiarismSearch" data-title="PlagiarismSearch warnt vor unerlaubtem Kopieren" data-lang="de">
+                <img src="assets/img/badges/de/think-before-you-copy-color.png" alt="Denk nach, bevor du kopierst &ndash; Gesch&uuml;tzt durch PlagiarismSearch" title="PlagiarismSearch warnt vor unerlaubtem Kopieren" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/think-before-you-copy-white.png" data-w="90" data-h="90"
+                data-alt="Denk nach, bevor du kopierst &ndash; Gesch&uuml;tzt durch PlagiarismSearch" data-title="PlagiarismSearch warnt vor unerlaubtem Kopieren" data-lang="de">
+                <img src="assets/img/badges/de/think-before-you-copy-white.png" alt="Denk nach, bevor du kopierst &ndash; Gesch&uuml;tzt durch PlagiarismSearch" title="PlagiarismSearch warnt vor unerlaubtem Kopieren" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Content monitoring</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/copy-warning-circle-black.png" data-w="90" data-h="90"
+                data-alt="Inhalts&uuml;berwachung durch PlagiarismSearch &ndash; Kopierwarnung" data-title="Kopieraktivit&auml;t wird aktiv &uuml;berwacht" data-lang="de">
+                <img src="assets/img/badges/de/copy-warning-circle-black.png" alt="Inhalts&uuml;berwachung durch PlagiarismSearch &ndash; Kopierwarnung" title="Kopieraktivit&auml;t wird aktiv &uuml;berwacht" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/copy-warning-circle-blue.png" data-w="90" data-h="90"
+                data-alt="Inhalts&uuml;berwachung durch PlagiarismSearch &ndash; Kopierwarnung" data-title="Kopieraktivit&auml;t wird aktiv &uuml;berwacht" data-lang="de">
+                <img src="assets/img/badges/de/copy-warning-circle-blue.png" alt="Inhalts&uuml;berwachung durch PlagiarismSearch &ndash; Kopierwarnung" title="Kopieraktivit&auml;t wird aktiv &uuml;berwacht" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/copy-warning-circle-color.png" data-w="90" data-h="90"
+                data-alt="Inhalts&uuml;berwachung durch PlagiarismSearch &ndash; Kopierwarnung" data-title="Kopieraktivit&auml;t wird aktiv &uuml;berwacht" data-lang="de">
+                <img src="assets/img/badges/de/copy-warning-circle-color.png" alt="Inhalts&uuml;berwachung durch PlagiarismSearch &ndash; Kopierwarnung" title="Kopieraktivit&auml;t wird aktiv &uuml;berwacht" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/copy-warning-circle-white.png" data-w="90" data-h="90"
+                data-alt="Inhalts&uuml;berwachung durch PlagiarismSearch &ndash; Kopierwarnung" data-title="Kopieraktivit&auml;t wird aktiv &uuml;berwacht" data-lang="de">
+                <img src="assets/img/badges/de/copy-warning-circle-white.png" alt="Inhalts&uuml;berwachung durch PlagiarismSearch &ndash; Kopierwarnung" title="Kopieraktivit&auml;t wird aktiv &uuml;berwacht" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Monitored &amp; secured</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/monitored-secured-black.png" data-w="90" data-h="90"
+                data-alt="&Uuml;berwacht &amp; Gesichert durch PlagiarismSearch &ndash; Echtheit garantiert" data-title="Garantierte Echtheit dank aktiver &Uuml;berwachung" data-lang="de">
+                <img src="assets/img/badges/de/monitored-secured-black.png" alt="&Uuml;berwacht &amp; Gesichert durch PlagiarismSearch &ndash; Echtheit garantiert" title="Garantierte Echtheit dank aktiver &Uuml;berwachung" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/monitored-secured-blue.png" data-w="90" data-h="90"
+                data-alt="&Uuml;berwacht &amp; Gesichert durch PlagiarismSearch &ndash; Echtheit garantiert" data-title="Garantierte Echtheit dank aktiver &Uuml;berwachung" data-lang="de">
+                <img src="assets/img/badges/de/monitored-secured-blue.png" alt="&Uuml;berwacht &amp; Gesichert durch PlagiarismSearch &ndash; Echtheit garantiert" title="Garantierte Echtheit dank aktiver &Uuml;berwachung" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/monitored-secured-color.png" data-w="90" data-h="90"
+                data-alt="&Uuml;berwacht &amp; Gesichert durch PlagiarismSearch &ndash; Echtheit garantiert" data-title="Garantierte Echtheit dank aktiver &Uuml;berwachung" data-lang="de">
+                <img src="assets/img/badges/de/monitored-secured-color.png" alt="&Uuml;berwacht &amp; Gesichert durch PlagiarismSearch &ndash; Echtheit garantiert" title="Garantierte Echtheit dank aktiver &Uuml;berwachung" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/de/monitored-secured-white.png" data-w="90" data-h="90"
+                data-alt="&Uuml;berwacht &amp; Gesichert durch PlagiarismSearch &ndash; Echtheit garantiert" data-title="Garantierte Echtheit dank aktiver &Uuml;berwachung" data-lang="de">
+                <img src="assets/img/badges/de/monitored-secured-white.png" alt="&Uuml;berwacht &amp; Gesichert durch PlagiarismSearch &ndash; Echtheit garantiert" title="Garantierte Echtheit dank aktiver &Uuml;berwachung" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="badge-lang hidden" data-lang="pt">
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Protected</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">200 &times; 25 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/protected-light-white.png" data-w="200" data-h="25"
+                data-alt="Protegido por PlagiarismSearch &ndash; Originalidade Verificada" data-title="Originalidade verificada com prote&ccedil;&atilde;o da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/protected-light-white.png" alt="Protegido por PlagiarismSearch &ndash; Originalidade Verificada" title="Originalidade verificada com prote&ccedil;&atilde;o da PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/protected-light-blue.png" data-w="200" data-h="25"
+                data-alt="Protegido por PlagiarismSearch &ndash; Originalidade Verificada" data-title="Originalidade verificada com prote&ccedil;&atilde;o da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/protected-light-blue.png" alt="Protegido por PlagiarismSearch &ndash; Originalidade Verificada" title="Originalidade verificada com prote&ccedil;&atilde;o da PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/protected-light-grey.png" data-w="200" data-h="25"
+                data-alt="Protegido por PlagiarismSearch &ndash; Originalidade Verificada" data-title="Originalidade verificada com prote&ccedil;&atilde;o da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/protected-light-grey.png" alt="Protegido por PlagiarismSearch &ndash; Originalidade Verificada" title="Originalidade verificada com prote&ccedil;&atilde;o da PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/protected-light-black.png" data-w="200" data-h="25"
+                data-alt="Protegido por PlagiarismSearch &ndash; Originalidade Verificada" data-title="Originalidade verificada com prote&ccedil;&atilde;o da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/protected-light-black.png" alt="Protegido por PlagiarismSearch &ndash; Originalidade Verificada" title="Originalidade verificada com prote&ccedil;&atilde;o da PlagiarismSearch" width="200" height="25" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">200 &times; 25</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Originality shield</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">140 &times; 36 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/originality-shield-white.png" data-w="140" data-h="36"
+                data-alt="Originalidade protegida por PlagiarismSearch &ndash; Confiado por Profissionais" data-title="Profissionais confiam na prote&ccedil;&atilde;o de originalidade da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/originality-shield-white.png" alt="Originalidade protegida por PlagiarismSearch &ndash; Confiado por Profissionais" title="Profissionais confiam na prote&ccedil;&atilde;o de originalidade da PlagiarismSearch" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/originality-shield-blue.png" data-w="140" data-h="36"
+                data-alt="Originalidade protegida por PlagiarismSearch &ndash; Confiado por Profissionais" data-title="Profissionais confiam na prote&ccedil;&atilde;o de originalidade da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/originality-shield-blue.png" alt="Originalidade protegida por PlagiarismSearch &ndash; Confiado por Profissionais" title="Profissionais confiam na prote&ccedil;&atilde;o de originalidade da PlagiarismSearch" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/originality-shield-grey.png" data-w="140" data-h="36"
+                data-alt="Originalidade protegida por PlagiarismSearch &ndash; Confiado por Profissionais" data-title="Profissionais confiam na prote&ccedil;&atilde;o de originalidade da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/originality-shield-grey.png" alt="Originalidade protegida por PlagiarismSearch &ndash; Confiado por Profissionais" title="Profissionais confiam na prote&ccedil;&atilde;o de originalidade da PlagiarismSearch" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/originality-shield-black.png" data-w="140" data-h="36"
+                data-alt="Originalidade protegida por PlagiarismSearch &ndash; Confiado por Profissionais" data-title="Profissionais confiam na prote&ccedil;&atilde;o de originalidade da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/originality-shield-black.png" alt="Originalidade protegida por PlagiarismSearch &ndash; Confiado por Profissionais" title="Profissionais confiam na prote&ccedil;&atilde;o de originalidade da PlagiarismSearch" width="140" height="36" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 36</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Protected &middot; locked</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">140 &times; 40 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/protected-locked-white.png" data-w="140" data-h="40"
+                data-alt="Protegido por PlagiarismSearch &ndash; Seguran&ccedil;a de Conte&uacute;do Ativada" data-title="Seguran&ccedil;a de conte&uacute;do ativada por PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/protected-locked-white.png" alt="Protegido por PlagiarismSearch &ndash; Seguran&ccedil;a de Conte&uacute;do Ativada" title="Seguran&ccedil;a de conte&uacute;do ativada por PlagiarismSearch" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/protected-locked-blue.png" data-w="140" data-h="40"
+                data-alt="Protegido por PlagiarismSearch &ndash; Seguran&ccedil;a de Conte&uacute;do Ativada" data-title="Seguran&ccedil;a de conte&uacute;do ativada por PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/protected-locked-blue.png" alt="Protegido por PlagiarismSearch &ndash; Seguran&ccedil;a de Conte&uacute;do Ativada" title="Seguran&ccedil;a de conte&uacute;do ativada por PlagiarismSearch" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/protected-locked-grey.png" data-w="140" data-h="40"
+                data-alt="Protegido por PlagiarismSearch &ndash; Seguran&ccedil;a de Conte&uacute;do Ativada" data-title="Seguran&ccedil;a de conte&uacute;do ativada por PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/protected-locked-grey.png" alt="Protegido por PlagiarismSearch &ndash; Seguran&ccedil;a de Conte&uacute;do Ativada" title="Seguran&ccedil;a de conte&uacute;do ativada por PlagiarismSearch" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/protected-locked-black.png" data-w="140" data-h="40"
+                data-alt="Protegido por PlagiarismSearch &ndash; Seguran&ccedil;a de Conte&uacute;do Ativada" data-title="Seguran&ccedil;a de conte&uacute;do ativada por PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/protected-locked-black.png" alt="Protegido por PlagiarismSearch &ndash; Seguran&ccedil;a de Conte&uacute;do Ativada" title="Seguran&ccedil;a de conte&uacute;do ativada por PlagiarismSearch" width="140" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">140 &times; 40</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Smart protection</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">160 &times; 40 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/smart-protection-white.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Prote&ccedil;&atilde;o Inteligente de Conte&uacute;do para Integridade Digital" data-title="Prote&ccedil;&atilde;o inteligente para garantir integridade digital" data-lang="pt">
+                <img src="assets/img/badges/pt/smart-protection-white.png" alt="PlagiarismSearch &ndash; Prote&ccedil;&atilde;o Inteligente de Conte&uacute;do para Integridade Digital" title="Prote&ccedil;&atilde;o inteligente para garantir integridade digital" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/smart-protection-blue.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Prote&ccedil;&atilde;o Inteligente de Conte&uacute;do para Integridade Digital" data-title="Prote&ccedil;&atilde;o inteligente para garantir integridade digital" data-lang="pt">
+                <img src="assets/img/badges/pt/smart-protection-blue.png" alt="PlagiarismSearch &ndash; Prote&ccedil;&atilde;o Inteligente de Conte&uacute;do para Integridade Digital" title="Prote&ccedil;&atilde;o inteligente para garantir integridade digital" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/smart-protection-grey.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Prote&ccedil;&atilde;o Inteligente de Conte&uacute;do para Integridade Digital" data-title="Prote&ccedil;&atilde;o inteligente para garantir integridade digital" data-lang="pt">
+                <img src="assets/img/badges/pt/smart-protection-grey.png" alt="PlagiarismSearch &ndash; Prote&ccedil;&atilde;o Inteligente de Conte&uacute;do para Integridade Digital" title="Prote&ccedil;&atilde;o inteligente para garantir integridade digital" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/smart-protection-black.png" data-w="160" data-h="40"
+                data-alt="PlagiarismSearch &ndash; Prote&ccedil;&atilde;o Inteligente de Conte&uacute;do para Integridade Digital" data-title="Prote&ccedil;&atilde;o inteligente para garantir integridade digital" data-lang="pt">
+                <img src="assets/img/badges/pt/smart-protection-black.png" alt="PlagiarismSearch &ndash; Prote&ccedil;&atilde;o Inteligente de Conte&uacute;do para Integridade Digital" title="Prote&ccedil;&atilde;o inteligente para garantir integridade digital" width="160" height="40" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">160 &times; 40</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Originality</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/badge-originality-black.png" data-w="90" data-h="90"
+                data-alt="Originalidade protegida por PlagiarismSearch &ndash; Selo Oficial" data-title="Selo oficial de originalidade protegida pela PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/badge-originality-black.png" alt="Originalidade protegida por PlagiarismSearch &ndash; Selo Oficial" title="Selo oficial de originalidade protegida pela PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/badge-originality-blue.png" data-w="90" data-h="90"
+                data-alt="Originalidade protegida por PlagiarismSearch &ndash; Selo Oficial" data-title="Selo oficial de originalidade protegida pela PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/badge-originality-blue.png" alt="Originalidade protegida por PlagiarismSearch &ndash; Selo Oficial" title="Selo oficial de originalidade protegida pela PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/badge-originality-color.png" data-w="90" data-h="90"
+                data-alt="Originalidade protegida por PlagiarismSearch &ndash; Selo Oficial" data-title="Selo oficial de originalidade protegida pela PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/badge-originality-color.png" alt="Originalidade protegida por PlagiarismSearch &ndash; Selo Oficial" title="Selo oficial de originalidade protegida pela PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/badge-originality-white.png" data-w="90" data-h="90"
+                data-alt="Originalidade protegida por PlagiarismSearch &ndash; Selo Oficial" data-title="Selo oficial de originalidade protegida pela PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/badge-originality-white.png" alt="Originalidade protegida por PlagiarismSearch &ndash; Selo Oficial" title="Selo oficial de originalidade protegida pela PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Think before you copy</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/think-before-you-copy-black.png" data-w="90" data-h="90"
+                data-alt="Pense antes de copiar &ndash; Protegido por PlagiarismSearch" data-title="Aviso: Pense antes de copiar &ndash; conte&uacute;do protegido" data-lang="pt">
+                <img src="assets/img/badges/pt/think-before-you-copy-black.png" alt="Pense antes de copiar &ndash; Protegido por PlagiarismSearch" title="Aviso: Pense antes de copiar &ndash; conte&uacute;do protegido" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/think-before-you-copy-blue.png" data-w="90" data-h="90"
+                data-alt="Pense antes de copiar &ndash; Protegido por PlagiarismSearch" data-title="Aviso: Pense antes de copiar &ndash; conte&uacute;do protegido" data-lang="pt">
+                <img src="assets/img/badges/pt/think-before-you-copy-blue.png" alt="Pense antes de copiar &ndash; Protegido por PlagiarismSearch" title="Aviso: Pense antes de copiar &ndash; conte&uacute;do protegido" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/think-before-you-copy-color.png" data-w="90" data-h="90"
+                data-alt="Pense antes de copiar &ndash; Protegido por PlagiarismSearch" data-title="Aviso: Pense antes de copiar &ndash; conte&uacute;do protegido" data-lang="pt">
+                <img src="assets/img/badges/pt/think-before-you-copy-color.png" alt="Pense antes de copiar &ndash; Protegido por PlagiarismSearch" title="Aviso: Pense antes de copiar &ndash; conte&uacute;do protegido" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/think-before-you-copy-white.png" data-w="90" data-h="90"
+                data-alt="Pense antes de copiar &ndash; Protegido por PlagiarismSearch" data-title="Aviso: Pense antes de copiar &ndash; conte&uacute;do protegido" data-lang="pt">
+                <img src="assets/img/badges/pt/think-before-you-copy-white.png" alt="Pense antes de copiar &ndash; Protegido por PlagiarismSearch" title="Aviso: Pense antes de copiar &ndash; conte&uacute;do protegido" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Content monitoring</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/copy-warning-circle-black.png" data-w="90" data-h="90"
+                data-alt="Monitoramento de Conte&uacute;do por PlagiarismSearch &ndash; Aviso Antic&oacute;pia" data-title="Atividade de c&oacute;pia monitorada &ndash; aviso da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/copy-warning-circle-black.png" alt="Monitoramento de Conte&uacute;do por PlagiarismSearch &ndash; Aviso Antic&oacute;pia" title="Atividade de c&oacute;pia monitorada &ndash; aviso da PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/copy-warning-circle-blue.png" data-w="90" data-h="90"
+                data-alt="Monitoramento de Conte&uacute;do por PlagiarismSearch &ndash; Aviso Antic&oacute;pia" data-title="Atividade de c&oacute;pia monitorada &ndash; aviso da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/copy-warning-circle-blue.png" alt="Monitoramento de Conte&uacute;do por PlagiarismSearch &ndash; Aviso Antic&oacute;pia" title="Atividade de c&oacute;pia monitorada &ndash; aviso da PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/copy-warning-circle-color.png" data-w="90" data-h="90"
+                data-alt="Monitoramento de Conte&uacute;do por PlagiarismSearch &ndash; Aviso Antic&oacute;pia" data-title="Atividade de c&oacute;pia monitorada &ndash; aviso da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/copy-warning-circle-color.png" alt="Monitoramento de Conte&uacute;do por PlagiarismSearch &ndash; Aviso Antic&oacute;pia" title="Atividade de c&oacute;pia monitorada &ndash; aviso da PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/copy-warning-circle-white.png" data-w="90" data-h="90"
+                data-alt="Monitoramento de Conte&uacute;do por PlagiarismSearch &ndash; Aviso Antic&oacute;pia" data-title="Atividade de c&oacute;pia monitorada &ndash; aviso da PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/copy-warning-circle-white.png" alt="Monitoramento de Conte&uacute;do por PlagiarismSearch &ndash; Aviso Antic&oacute;pia" title="Atividade de c&oacute;pia monitorada &ndash; aviso da PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8 sm:mb-10">
+            <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
+              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">Monitored &amp; secured</h3>
+              <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">90 &times; 90 px</span>
+              <span class="h-px flex-1 bg-ink-100"></span>
+            </div>
+            <div class="grid grid-cols-1 grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-100 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/monitored-secured-black.png" data-w="90" data-h="90"
+                data-alt="Monitorado e Seguro por PlagiarismSearch &ndash; Autenticidade Garantida" data-title="Conte&uacute;do monitorado e autenticidade garantida pela PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/monitored-secured-black.png" alt="Monitorado e Seguro por PlagiarismSearch &ndash; Autenticidade Garantida" title="Conte&uacute;do monitorado e autenticidade garantida pela PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/monitored-secured-blue.png" data-w="90" data-h="90"
+                data-alt="Monitorado e Seguro por PlagiarismSearch &ndash; Autenticidade Garantida" data-title="Conte&uacute;do monitorado e autenticidade garantida pela PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/monitored-secured-blue.png" alt="Monitorado e Seguro por PlagiarismSearch &ndash; Autenticidade Garantida" title="Conte&uacute;do monitorado e autenticidade garantida pela PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-white ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/monitored-secured-color.png" data-w="90" data-h="90"
+                data-alt="Monitorado e Seguro por PlagiarismSearch &ndash; Autenticidade Garantida" data-title="Conte&uacute;do monitorado e autenticidade garantida pela PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/monitored-secured-color.png" alt="Monitorado e Seguro por PlagiarismSearch &ndash; Autenticidade Garantida" title="Conte&uacute;do monitorado e autenticidade garantida pela PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-ink-400">90 &times; 90</span>
+              </button>
+              <button type="button" class="badge-pick group flex flex-col items-center justify-center gap-3 rounded-2xl p-4 sm:p-5 bg-ink-800 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                data-file="assets/img/badges/pt/monitored-secured-white.png" data-w="90" data-h="90"
+                data-alt="Monitorado e Seguro por PlagiarismSearch &ndash; Autenticidade Garantida" data-title="Conte&uacute;do monitorado e autenticidade garantida pela PlagiarismSearch" data-lang="pt">
+                <img src="assets/img/badges/pt/monitored-secured-white.png" alt="Monitorado e Seguro por PlagiarismSearch &ndash; Autenticidade Garantida" title="Conte&uacute;do monitorado e autenticidade garantida pela PlagiarismSearch" width="90" height="90" loading="lazy" decoding="async" class="max-w-full h-auto">
+                <span class="text-[10.5px] font-semibold tabular-nums text-white/50">90 &times; 90</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        <a href="index.html" class="btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-ink-900 text-white text-[14px] sm:text-[15px] font-semibold hover:bg-ink-800 transition-colors duration-300">
-          Back to the homepage
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a>
+      <!-- the embed code, revealed by picking a badge rather than living in a modal -->
+      <div id="badgeEmbed" class="hidden mt-10 sm:mt-12 rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
+        <div class="flex flex-wrap items-baseline gap-3 mb-4">
+          <h2 class="text-[16px] sm:text-[17px] font-bold tracking-tight">Embed this badge</h2>
+          <span id="badgeSize" class="text-[12px] font-semibold text-ink-400 tabular-nums"></span>
+        </div>
+        <p class="text-[14px] sm:text-[14.5px] text-ink-600 leading-relaxed mb-4">Copy the HTML code below and paste it into your website where you'd like the banner to appear. It works on both HTTP and HTTPS pages.</p>
+        <textarea id="badgeCode" readonly rows="3" class="w-full rounded-2xl bg-white ring-1 ring-black/5 p-4 text-[12.5px] font-mono text-ink-700 resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"></textarea>
+        <div class="flex flex-wrap items-center gap-3 mt-4">
+          <button type="button" id="badgeCopy" class="btn-press inline-flex items-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 text-white px-5 py-2.5 text-[13.5px] font-semibold transition-colors duration-300">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span id="badgeCopyLabel">Copy code</span>
+          </button>
+          <p class="text-[13px] text-ink-500">Feel free to contact our support team if you need assistance with banner integration.</p>
+        </div>
       </div>
+
     </div>
   </section>
 </main>
@@ -450,5 +1524,53 @@ tailwind.config = {
   })();
   </script>
 </footer>
+
+<script>
+(() => {
+  const tabs = [...document.querySelectorAll('.badge-tab')];
+  const panels = [...document.querySelectorAll('.badge-lang')];
+  const embed = document.getElementById('badgeEmbed');
+  const code = document.getElementById('badgeCode');
+  const size = document.getElementById('badgeSize');
+  const copy = document.getElementById('badgeCopy');
+  const label = document.getElementById('badgeCopyLabel');
+
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => {
+      const on = x === t;
+      x.classList.toggle('bg-ink-900', on);
+      x.classList.toggle('text-white', on);
+      x.classList.toggle('bg-ink-100', !on);
+      x.classList.toggle('text-ink-600', !on);
+      x.classList.toggle('hover:bg-ink-200', !on);
+    });
+    panels.forEach(p => p.classList.toggle('hidden', p.dataset.lang !== t.dataset.lang));
+    embed.classList.add('hidden');
+  }));
+
+  /* The embed code points at the live site, because a badge on someone else's page has
+     to: a relative path would resolve against their domain, not ours. */
+  const HOST = 'https://plagiarismsearch.com';
+  document.querySelectorAll('.badge-pick').forEach(b => b.addEventListener('click', () => {
+    const d = b.dataset;
+    const href = d.lang === 'en' ? HOST + '/' : HOST + '/' + d.lang + '/';
+    code.value = '<a href="' + href + '"><img src="' + HOST + '/files/images/originality-badges/'
+      + d.lang + '/' + d.file.split('/').pop() + '" alt="' + d.alt + '" title="' + d.title
+      + '" width="' + d.w + '" height="' + d.h + '"></a>';
+    size.textContent = d.w + ' \u00d7 ' + d.h + ' pixels';
+    embed.classList.remove('hidden');
+    embed.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    label.textContent = 'Copy code';
+  }));
+
+  copy.addEventListener('click', async () => {
+    code.select();
+    try { await navigator.clipboard.writeText(code.value); }
+    catch { document.execCommand('copy'); }
+    label.textContent = 'Copied';
+    setTimeout(() => { label.textContent = 'Copy code'; }, 1800);
+  });
+})();
+</script>
 </body>
 </html>

@@ -34,7 +34,6 @@ const STUBS = [
   { slug: 'turnitin-checker-alternative',          label: 'Turnitin Alternative',      group: 'Footer · Popular Checks',       note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
   { slug: 'user-manuals',                          label: 'User Guide',                group: 'Footer · Resources' },
   { slug: 'newsroom',                              label: 'News',                      group: 'Footer · Resources' },
-  { slug: 'originality-badges',                    label: 'Originality Badges',        group: 'Footer · Resources',            note: 'Footer only — the brief keeps it out of the header.' },
   { slug: 'scholarship',                           label: 'Scholarship',               group: 'Footer · Company' },
   { slug: 'affiliate-program-at-plagiarismsearch', label: 'Affiliate Program',         group: 'Footer · Company' },
 

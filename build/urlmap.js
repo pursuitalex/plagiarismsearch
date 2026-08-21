@@ -25,6 +25,7 @@ const BUILT = [
   { file: 'terms-of-use.html',            path: '/terms-of-use',                             note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },
   { file: 'policy.html',                 path: '/policy',                                   note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },
   { file: 'cookie-policy.html',          path: '/cookie-policy',                            note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },
+  { file: 'originality-badges.html',      path: '/originality-badges',                       note: 'Copy and artwork carried over from the live page unchanged; the 129 badge images live in site/assets/img/badges/. Built by build/badges.js.' },
   { file: 'why-us.html',                 path: '/why-us' },
   { file: 'mission.html',                path: '/plagiarismsearch-mission-and-core-values' },
   { file: 'contact-us.html',             path: '/contact-us' },

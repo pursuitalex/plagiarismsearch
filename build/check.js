@@ -59,7 +59,13 @@ console.log('\nlinks');
   for (const f of pages) {
     /* the boundary matters: without it, data-src="0" reads as src="0" and the check
        reports four broken links on a page whose links are all fine */
-    for (const m of read(f).matchAll(/(?:^|[\s"'])(?:href|src)="([^"]+)"/g)) {
+    /* Script bodies are dropped first, opening tags kept. A page that assembles markup
+       in JavaScript writes href=" inside a string, and a string is not a link — the
+       badge page builds its embed code that way and was reported broken for it.
+       Nothing is lost: the only references inside script tags anywhere on this site are
+       the CDN sources on the tags themselves, which this keeps and skips as external. */
+    const markup = read(f).replace(/(<script\b[^>]*>)[\s\S]*?<\/script>/gi, '$1<\/script>');
+    for (const m of markup.matchAll(/(?:^|[\s"'])(?:href|src)="([^"]+)"/g)) {
       const t = m[1];
       if (EXTERNAL.test(t)) continue;
       n++;

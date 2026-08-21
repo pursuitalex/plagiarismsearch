@@ -74,6 +74,7 @@ const PAGES = {
   'terms-of-use.html':           { active: null },
   'policy.html':                 { active: null },
   'cookie-policy.html':          { active: null },
+  'originality-badges.html':     { active: 'resources' },
   'paper-analysis.html':         { active: null },
   'readability-check.html':      { active: null },
   'spell-check.html':            { active: null },
