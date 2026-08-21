@@ -133,8 +133,10 @@ ${bodyTag}
   <!-- The badge gallery. Artwork and copy are the site's own, carried over unchanged;
        the images live in assets/img/badges/<lang>/ so nothing here calls the live site.
 
-       Every badge is a button rather than an image in a link: clicking one hands you the
-       embed code, which is an action on this page, not a journey to another. -->
+       Every badge is a button rather than an image in a link: clicking one opens the
+       embed code, which is an action on this page, not a journey to another. The popup
+       is what the live site does, and it was kept after comparing it against a panel
+       below the gallery on 2026-08-21. -->
   <section class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-white">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
@@ -148,15 +150,6 @@ ${bodyTag}
         <p class="text-[15.5px] sm:text-[16px] lg:text-[17px] text-ink-600 leading-relaxed">${paras[0]}</p>
       </div>
 
-      <!-- Two ways to hand over the embed code, side by side so they can be compared:
-           a popup over the gallery, which is what the live site does, or a panel below
-           it. The choice is a review control and goes once one of them wins. -->
-      <div class="flex flex-wrap items-center gap-2 mb-5 sm:mb-6">
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mr-1">Code opens</span>
-        <button type="button" class="mode-tab rounded-full px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold bg-ink-900 text-white transition-colors duration-300" data-mode="popup">In a popup</button>
-        <button type="button" class="mode-tab rounded-full px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold bg-ink-100 text-ink-600 hover:bg-ink-200 transition-colors duration-300" data-mode="panel">In a panel below</button>
-      </div>
-
       <!-- language: a row of pills rather than a select, since there are four of them
            and they are the page's main control -->
       <div class="flex flex-wrap items-center gap-2 mb-8 sm:mb-10">
@@ -165,23 +158,6 @@ ${LANGS.map(l => `        <button type="button" class="badge-tab rounded-full px
       </div>
 
 ${LANGS.map(panel).join('\n')}
-
-      <!-- the embed code, revealed by picking a badge rather than living in a modal -->
-      <div id="badgeEmbed" class="hidden mt-10 sm:mt-12 rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
-        <div class="flex flex-wrap items-baseline gap-3 mb-4">
-          <h2 class="text-[16px] sm:text-[17px] font-bold tracking-tight">Embed this badge</h2>
-          <span id="badgeSize" class="text-[12px] font-semibold text-ink-400 tabular-nums"></span>
-        </div>
-        <p class="text-[14px] sm:text-[14.5px] text-ink-600 leading-relaxed mb-4">${paras[1]}</p>
-        <textarea id="badgeCode" readonly rows="3" class="w-full rounded-2xl bg-white ring-1 ring-black/5 p-4 text-[12.5px] font-mono text-ink-700 resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"></textarea>
-        <div class="flex flex-wrap items-center gap-3 mt-4">
-          <button type="button" id="badgeCopy" class="btn-press inline-flex items-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 text-white px-5 py-2.5 text-[13.5px] font-semibold transition-colors duration-300">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-            <span id="badgeCopyLabel">Copy code</span>
-          </button>
-          <p class="text-[13px] text-ink-500">${paras[2]}</p>
-        </div>
-      </div>
 
     </div>
   </section>
@@ -221,11 +197,7 @@ ${LANGS.map(panel).join('\n')}
 (() => {
   const tabs = [...document.querySelectorAll('.badge-tab')];
   const panels = [...document.querySelectorAll('.badge-lang')];
-  const embed = document.getElementById('badgeEmbed');
-  const code = document.getElementById('badgeCode');
-  const size = document.getElementById('badgeSize');
-  const copy = document.getElementById('badgeCopy');
-  const label = document.getElementById('badgeCopyLabel');
+
 
   tabs.forEach(t => t.addEventListener('click', () => {
     tabs.forEach(x => {
@@ -237,14 +209,12 @@ ${LANGS.map(panel).join('\n')}
       x.classList.toggle('hover:bg-ink-200', !on);
     });
     panels.forEach(p => p.classList.toggle('hidden', p.dataset.lang !== t.dataset.lang));
-    embed.classList.add('hidden');
+    closeModal();
   }));
 
   /* The embed code points at the live site, because a badge on someone else's page has
      to: a relative path would resolve against their domain, not ours. */
   const HOST = 'https://plagiarismsearch.com';
-  /* One builder, two destinations: the panel and the popup show the same string, so
-     whichever wins there is nothing to reconcile. */
   const buildCode = d => {
     const href = d.lang === 'en' ? HOST + '/' : HOST + '/' + d.lang + '/';
     return '<a href="' + href + '"><img src="' + HOST + '/files/images/originality-badges/'
@@ -258,22 +228,8 @@ ${LANGS.map(panel).join('\n')}
   const mCode = document.getElementById('modalCode');
   const mCopy = document.getElementById('modalCopy');
   const mLabel = document.getElementById('modalCopyLabel');
-  let mode = 'popup';
   let opener = null;
 
-  document.querySelectorAll('.mode-tab').forEach(t => t.addEventListener('click', () => {
-    mode = t.dataset.mode;
-    document.querySelectorAll('.mode-tab').forEach(x => {
-      const on = x === t;
-      x.classList.toggle('bg-ink-900', on);
-      x.classList.toggle('text-white', on);
-      x.classList.toggle('bg-ink-100', !on);
-      x.classList.toggle('text-ink-600', !on);
-      x.classList.toggle('hover:bg-ink-200', !on);
-    });
-    embed.classList.add('hidden');
-    closeModal();
-  }));
 
   function closeModal() {
     modal.classList.add('hidden');
@@ -288,16 +244,6 @@ ${LANGS.map(panel).join('\n')}
     const d = b.dataset;
     const text = buildCode(d);
     const px = d.w + ' \\u00d7 ' + d.h + ' pixels';
-
-    if (mode === 'panel') {
-      code.value = text;
-      size.textContent = px;
-      embed.classList.remove('hidden');
-      embed.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-      label.textContent = 'Copy code';
-      return;
-    }
-
     opener = b;
     /* the badge keeps the plate it was shown on, or a white variant vanishes here too */
     mPlate.className = 'inline-flex items-center justify-center rounded-2xl px-6 py-5 ' +
@@ -321,13 +267,6 @@ ${LANGS.map(panel).join('\n')}
     setTimeout(() => { mLabel.textContent = 'Copy code'; }, 1800);
   });
 
-  copy.addEventListener('click', async () => {
-    code.select();
-    try { await navigator.clipboard.writeText(code.value); }
-    catch { document.execCommand('copy'); }
-    label.textContent = 'Copied';
-    setTimeout(() => { label.textContent = 'Copy code'; }, 1800);
-  });
 })();
 <\/script>
 </body>
