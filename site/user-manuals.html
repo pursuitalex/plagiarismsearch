@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>PlagiarismSearch — User Guide</title>
+<title>User Guide | PlagiarismSearch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
@@ -141,6 +141,7 @@ tailwind.config = {
   }
 </style>
 </head>
+
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
 
@@ -181,7 +182,7 @@ tailwind.config = {
       </div>
       <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Pricing</a>
       <div class="nav-item relative">
-        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Resources<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-ink-900/5 text-ink-900 font-semibold" aria-haspopup="true">Resources<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
           <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[190px]">
             <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
@@ -259,43 +260,201 @@ tailwind.config = {
 </header>
 
 <main>
-  <section class="relative pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 bg-[#F2FCFC] overflow-hidden">
+  <!-- The guide index. Category names and guide titles are the live page's own, unchanged;
+       the arrangement is new. Four cards rather than four stacked lists, each showing how
+       many guides it holds, and an outbound mark on the links that leave this prototype
+       for the live site — which most of them do, because the guides live there. -->
+  <section class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F7F9FA]">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
-      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
+      <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
     </div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="max-w-[620px]">
-        <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700 mb-4 lg:mb-5">Footer · Resources</div>
-        <h1 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">User Guide</h1>
-        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed mb-8 sm:mb-10 lg:mb-12">This page is an approved destination in the navigation architecture. It is not designed yet — the link works so the navigation can be walked end to end.</p>
 
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 mb-8 sm:mb-10 lg:mb-12">
-          <dl class="divide-y divide-ink-100">
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Label</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">User Guide</dd>
-            </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Placed in</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Footer · Resources</dd>
-            </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Path</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800 nums">/user-manuals</dd>
-            </div>
-          </dl>
-          
+      <div class="max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
+        <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4 lg:mb-5">Resources</div>
+        <h1 class="text-[clamp(2.1rem,4vw,3rem)] font-extrabold tracking-tightest leading-[1.06]">User Guide</h1>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 items-start">
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <div class="flex items-center gap-3 mb-4 lg:mb-5">
+            <span class="w-10 h-10 shrink-0 rounded-xl bg-teal-50 flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </span>
+            <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Plagiarism Check</h2>
+            <span class="ml-auto text-[11.5px] font-semibold text-ink-400 tabular-nums">6</span>
+          </div>
+          <ul class="divide-y divide-ink-100">
+            <li>
+              <a href="https://plagiarismsearch.com/how-plagiarism-checker-work" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">How Plagiarism Checker Works</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/how-to-use-plagiarismsearch-checker" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">How to Use Plagiarism Checker</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/interpreting-plagiarismsearch-similarity-report" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Interpreting PlagiarismSearch Report</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/languages-and-file-types" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Languages and File Types</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/different-options-in-search-filters" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Different Options in Search Filters</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/plagiarism-and-ai-check-report" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Plagiarism and AI Check Report</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+          </ul>
         </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <div class="flex items-center gap-3 mb-4 lg:mb-5">
+            <span class="w-10 h-10 shrink-0 rounded-xl bg-teal-50 flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </span>
+            <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Moodle Integration</h2>
+            <span class="ml-auto text-[11.5px] font-semibold text-ink-400 tabular-nums">5</span>
+          </div>
+          <ul class="divide-y divide-ink-100">
+            <li>
+              <a href="https://marketplace.moodle.com/plugins/plagiarism_plagiarismsearch" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Moodle Plugins Directory</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://marketplace.moodle.com/plugins/1697/versions?show=all" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">API Versions</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/docs/" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">PlagiarismSearch.com REST API Documentation</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="integration-guide.html" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Moodle Integration Guide</span>
+                <svg class="shrink-0 mt-1 text-ink-300 group-hover:text-teal-600 transition-colors duration-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/plagiarismsearch-api-questions-and-answers" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">PlagiarismSearch API FAQs</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <div class="flex items-center gap-3 mb-4 lg:mb-5">
+            <span class="w-10 h-10 shrink-0 rounded-xl bg-teal-50 flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg>
+            </span>
+            <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Services Overview</h2>
+            <span class="ml-auto text-[11.5px] font-semibold text-ink-400 tabular-nums">4</span>
+          </div>
+          <ul class="divide-y divide-ink-100">
+            <li>
+              <a href="https://plagiarismsearch.com/spell-checker-manual" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Grammar and Spell Check</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/what-is-paper-analysis-service" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Paper Analysis</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/interpretation-of-plagiarismsearch-readability-checker" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Readability Checker</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="chat-bot.html" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Telegram &amp; Viber Chatbot</span>
+                <svg class="shrink-0 mt-1 text-ink-300 group-hover:text-teal-600 transition-colors duration-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <div class="flex items-center gap-3 mb-4 lg:mb-5">
+            <span class="w-10 h-10 shrink-0 rounded-xl bg-teal-50 flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Account Features and Management</h2>
+            <span class="ml-auto text-[11.5px] font-semibold text-ink-400 tabular-nums">5</span>
+          </div>
+          <ul class="divide-y divide-ink-100">
+            <li>
+              <a href="how-to-use-plagiarismsearch-google-add-on.html" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Google Add-On</span>
+                <svg class="shrink-0 mt-1 text-ink-300 group-hover:text-teal-600 transition-colors duration-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/plagiarism-database" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Personal Storage</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/features-of-user-account" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Features of User Account, Balance and Payments</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/privacy-and-data-security-guarantees" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Privacy and Data Security Guarantees</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://plagiarismsearch.com/organization-management" rel="noopener" class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
+                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">Organization Management</span>
+                <svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-        <a href="index.html" class="btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-ink-900 text-white text-[14px] sm:text-[15px] font-semibold hover:bg-ink-800 transition-colors duration-300">
-          Back to the homepage
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
+      <div class="mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-200/60 flex flex-wrap items-center gap-x-6 gap-y-3">
+        <p class="text-[13.5px] sm:text-[14px] text-ink-500">Looking for something else?</p>
+        <a href="help-center.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
+          Help Center
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="contact-us.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
+          Contact us
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
       </div>
+
     </div>
   </section>
 </main>

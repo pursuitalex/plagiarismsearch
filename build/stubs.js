@@ -32,7 +32,6 @@ const STUBS = [
   { slug: 'pdf-plagiarism-checker',                label: 'PDF Plagiarism Checker',    group: 'Footer · Popular Checks',       note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
   { slug: 'quote-checker-at-plagiarismsearch',     label: 'Quote Checker',             group: 'Footer · Popular Checks',       note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
   { slug: 'turnitin-checker-alternative',          label: 'Turnitin Alternative',      group: 'Footer · Popular Checks',       note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
-  { slug: 'user-manuals',                          label: 'User Guide',                group: 'Footer · Resources' },
   { slug: 'newsroom',                              label: 'News',                      group: 'Footer · Resources' },
   { slug: 'scholarship',                           label: 'Scholarship',               group: 'Footer · Company' },
   { slug: 'affiliate-program-at-plagiarismsearch', label: 'Affiliate Program',         group: 'Footer · Company' },
