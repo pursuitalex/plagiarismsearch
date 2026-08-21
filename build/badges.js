@@ -148,6 +148,15 @@ ${bodyTag}
         <p class="text-[15.5px] sm:text-[16px] lg:text-[17px] text-ink-600 leading-relaxed">${paras[0]}</p>
       </div>
 
+      <!-- Two ways to hand over the embed code, side by side so they can be compared:
+           a popup over the gallery, which is what the live site does, or a panel below
+           it. The choice is a review control and goes once one of them wins. -->
+      <div class="flex flex-wrap items-center gap-2 mb-5 sm:mb-6">
+        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mr-1">Code opens</span>
+        <button type="button" class="mode-tab rounded-full px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold bg-ink-900 text-white transition-colors duration-300" data-mode="popup">In a popup</button>
+        <button type="button" class="mode-tab rounded-full px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold bg-ink-100 text-ink-600 hover:bg-ink-200 transition-colors duration-300" data-mode="panel">In a panel below</button>
+      </div>
+
       <!-- language: a row of pills rather than a select, since there are four of them
            and they are the page's main control -->
       <div class="flex flex-wrap items-center gap-2 mb-8 sm:mb-10">
@@ -176,6 +185,34 @@ ${LANGS.map(panel).join('\n')}
 
     </div>
   </section>
+  <!-- The popup. Same copy and the same generated markup as the panel; only the way it
+       reaches you differs. Closes on the backdrop, on the button and on Escape, and puts
+       focus back on the badge that opened it. -->
+  <div id="badgeModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="badgeModalTitle">
+    <div class="absolute inset-0 bg-ink-950/60 backdrop-blur-sm" data-close></div>
+    <div class="relative w-full max-w-[560px] max-h-[88vh] overflow-y-auto rounded-3xl sm:rounded-[28px] bg-white shadow-diffuse-lg p-6 sm:p-8 text-center">
+      <button type="button" data-close aria-label="Close" class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-ink-400 hover:bg-ink-100 hover:text-ink-900 transition-colors duration-300">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+
+      <h2 id="badgeModalTitle" class="text-[19px] sm:text-[22px] font-extrabold tracking-tightest leading-tight mb-3">Embed this badge on your website</h2>
+      <p class="text-[14px] sm:text-[14.5px] text-ink-600 leading-relaxed max-w-[46ch] mx-auto">${paras[1]}</p>
+
+      <div class="my-6 pt-6 border-t border-ink-100">
+        <div id="modalPlate" class="inline-flex items-center justify-center rounded-2xl px-6 py-5"></div>
+        <p id="modalSize" class="mt-3 text-[13px] font-semibold text-ink-500 tabular-nums"></p>
+      </div>
+
+      <textarea id="modalCode" readonly rows="3" class="w-full rounded-2xl bg-ink-50 ring-1 ring-black/5 p-4 text-[12.5px] font-mono text-left text-ink-700 resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"></textarea>
+
+      <button type="button" id="modalCopy" class="btn-press inline-flex items-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 text-white px-5 py-2.5 mt-4 text-[13.5px] font-semibold transition-colors duration-300">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        <span id="modalCopyLabel">Copy code</span>
+      </button>
+
+      <p class="mt-6 pt-5 border-t border-ink-100 text-[13px] text-ink-500">${paras[2]}</p>
+    </div>
+  </div>
 </main>
 
 <footer></footer>
@@ -206,17 +243,83 @@ ${LANGS.map(panel).join('\n')}
   /* The embed code points at the live site, because a badge on someone else's page has
      to: a relative path would resolve against their domain, not ours. */
   const HOST = 'https://plagiarismsearch.com';
-  document.querySelectorAll('.badge-pick').forEach(b => b.addEventListener('click', () => {
-    const d = b.dataset;
+  /* One builder, two destinations: the panel and the popup show the same string, so
+     whichever wins there is nothing to reconcile. */
+  const buildCode = d => {
     const href = d.lang === 'en' ? HOST + '/' : HOST + '/' + d.lang + '/';
-    code.value = '<a href="' + href + '"><img src="' + HOST + '/files/images/originality-badges/'
+    return '<a href="' + href + '"><img src="' + HOST + '/files/images/originality-badges/'
       + d.lang + '/' + d.file.split('/').pop() + '" alt="' + d.alt + '" title="' + d.title
       + '" width="' + d.w + '" height="' + d.h + '"></a>';
-    size.textContent = d.w + ' \\u00d7 ' + d.h + ' pixels';
-    embed.classList.remove('hidden');
-    embed.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    label.textContent = 'Copy code';
+  };
+
+  const modal = document.getElementById('badgeModal');
+  const mPlate = document.getElementById('modalPlate');
+  const mSize = document.getElementById('modalSize');
+  const mCode = document.getElementById('modalCode');
+  const mCopy = document.getElementById('modalCopy');
+  const mLabel = document.getElementById('modalCopyLabel');
+  let mode = 'popup';
+  let opener = null;
+
+  document.querySelectorAll('.mode-tab').forEach(t => t.addEventListener('click', () => {
+    mode = t.dataset.mode;
+    document.querySelectorAll('.mode-tab').forEach(x => {
+      const on = x === t;
+      x.classList.toggle('bg-ink-900', on);
+      x.classList.toggle('text-white', on);
+      x.classList.toggle('bg-ink-100', !on);
+      x.classList.toggle('text-ink-600', !on);
+      x.classList.toggle('hover:bg-ink-200', !on);
+    });
+    embed.classList.add('hidden');
+    closeModal();
   }));
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+    if (opener) { opener.focus(); opener = null; }
+  }
+  modal.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeModal(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+
+  document.querySelectorAll('.badge-pick').forEach(b => b.addEventListener('click', () => {
+    const d = b.dataset;
+    const text = buildCode(d);
+    const px = d.w + ' \\u00d7 ' + d.h + ' pixels';
+
+    if (mode === 'panel') {
+      code.value = text;
+      size.textContent = px;
+      embed.classList.remove('hidden');
+      embed.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      label.textContent = 'Copy code';
+      return;
+    }
+
+    opener = b;
+    /* the badge keeps the plate it was shown on, or a white variant vanishes here too */
+    mPlate.className = 'inline-flex items-center justify-center rounded-2xl px-6 py-5 ' +
+      [...b.classList].filter(c => /^bg-|^ring/.test(c)).join(' ');
+    mPlate.innerHTML = '';
+    mPlate.appendChild(b.querySelector('img').cloneNode(true));
+    mSize.textContent = px;
+    mCode.value = text;
+    mLabel.textContent = 'Copy code';
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    mCopy.focus();
+  }));
+
+  mCopy.addEventListener('click', async () => {
+    mCode.select();
+    try { await navigator.clipboard.writeText(mCode.value); }
+    catch { document.execCommand('copy'); }
+    mLabel.textContent = 'Copied';
+    setTimeout(() => { mLabel.textContent = 'Copy code'; }, 1800);
+  });
 
   copy.addEventListener('click', async () => {
     code.select();

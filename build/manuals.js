@@ -165,25 +165,39 @@ ${bodyTag}
 ${groups.map(card).join('\n')}
       </div>
 
-      <!-- The page's own FAQ, questions and answers unchanged. Same accordion as the
-           homepage: every answer is in the rendered HTML, opened and closed rather than
-           fetched, and the first one starts open so the control explains itself. -->
-      <div class="mt-12 sm:mt-16 lg:mt-20">
-        <div class="max-w-[720px] mb-6 sm:mb-8">
-          <h2 class="text-[clamp(1.5rem,2.6vw,2.1rem)] font-extrabold tracking-tightest leading-[1.15] mb-3">${faqTitle}</h2>
-          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed">${faqLead}</p>
+      <!-- The page's own FAQ, questions and answers unchanged, in the architecture the
+           homepage established: a sticky left column that keeps the section's name in
+           view, the accordion on the right. A long list under a centred heading leaves
+           the last question a screen and a half from its own title.
+
+           No .rv on any of it — that class ships hidden and is revealed by a script this
+           generated page does not carry. It would hide the whole section. -->
+      <div class="mt-12 sm:mt-16 lg:mt-20 grid lg:grid-cols-[380px_1fr] gap-10 sm:gap-12 lg:gap-14 items-start">
+
+        <div class="lg:sticky lg:top-32">
+          <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+          </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">${faqTitle}</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${faqLead}</p>
+          <a href="help-center.html" class="inline-flex items-center gap-2 mt-5 lg:mt-6 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+            More questions? Visit the Help Center.
+          </a>
         </div>
 
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-1.5 sm:p-2" id="faqList">
-          <div class="rounded-[18px] sm:rounded-[20px] bg-white divide-y divide-ink-100 overflow-hidden">
+        <!-- every answer is in the rendered HTML, not fetched on click -->
+        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse" id="faqList">
+          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${faqs.map((f, i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
-                <span class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight">${f.q}</span>
+              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">${f.q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">${f.a}</p></div></div>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${f.a}</p></div></div>
             </div>`).join('\n')}
           </div>
         </div>
