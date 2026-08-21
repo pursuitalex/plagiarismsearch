@@ -284,7 +284,10 @@ tailwind.config = {
         <h1 class="text-[clamp(2.1rem,4vw,3rem)] font-extrabold tracking-tightest leading-[1.06]">User Guide</h1>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 items-start">
+      <!-- No items-start: the cards stretch to the tallest in their row. The lists are
+           six, five, four and five long, so left to themselves the pairs sat at
+           different heights and the row edge stepped. -->
+      <div class="grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
         <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
           <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 mb-4 lg:mb-5 py-5 sm:py-6 flex items-center justify-center">
             <img src="assets/img/ug/cat-check.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">

@@ -174,7 +174,10 @@ ${bodyTag}
         <h1 class="text-[clamp(2.1rem,4vw,3rem)] font-extrabold tracking-tightest leading-[1.06]">${h1}</h1>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 items-start">
+      <!-- No items-start: the cards stretch to the tallest in their row. The lists are
+           six, five, four and five long, so left to themselves the pairs sat at
+           different heights and the row edge stepped. -->
+      <div class="grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
 ${groups.map(card).join('\n')}
       </div>
 
