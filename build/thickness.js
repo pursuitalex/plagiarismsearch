@@ -12,6 +12,10 @@
 
    Both sets are measured with this, so the comparison stands on one scale.
 
+   sharp is not a dependency of this repo — the build is dependency-free on purpose.
+   Run it from a scratch folder that has sharp installed:
+     npm install sharp && node /path/to/build/thickness.js <file> [...]
+
    Usage: node thickness.js <file> [...]
 */
 const sharp = require('sharp');
