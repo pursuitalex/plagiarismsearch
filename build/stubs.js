@@ -37,8 +37,6 @@ const STUBS = [
   { slug: 'originality-badges',                    label: 'Originality Badges',        group: 'Footer · Resources',            note: 'Footer only — the brief keeps it out of the header.' },
   { slug: 'scholarship',                           label: 'Scholarship',               group: 'Footer · Company' },
   { slug: 'affiliate-program-at-plagiarismsearch', label: 'Affiliate Program',         group: 'Footer · Company' },
-  { slug: 'policy',                                label: 'Privacy Policy',            group: 'Footer · Plans & Legal',        note: 'The homepage privacy section links here. The brief forbids inventing a new privacy URL.' },
-  { slug: 'cookie-policy',                         label: 'Cookie Policy',             group: 'Footer · Plans & Legal' },
 
   /* no approved slug yet — the filenames below are provisional and marked as such */
   { slug: 'canvas-integration',                    label: 'Canvas',                    group: 'Products · Integrations',

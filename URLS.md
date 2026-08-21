@@ -17,6 +17,8 @@ driven by this table.
 | `api.html` | `/plagiarism-api` | built |  |
 | `prices.html` | `/prices` | built |  |
 | `terms-of-use.html` | `/terms-of-use` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
+| `policy.html` | `/policy` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
+| `cookie-policy.html` | `/cookie-policy` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
 | `why-us.html` | `/why-us` | built |  |
 | `mission.html` | `/plagiarismsearch-mission-and-core-values` | built |  |
 | `contact-us.html` | `/contact-us` | built |  |
@@ -46,15 +48,13 @@ driven by this table.
 | `originality-badges.html` | `/originality-badges` | stub | Footer only — the brief keeps it out of the header. |
 | `scholarship.html` | `/scholarship` | stub | Approved destination, page not designed yet. |
 | `affiliate-program-at-plagiarismsearch.html` | `/affiliate-program-at-plagiarismsearch` | stub | Approved destination, page not designed yet. |
-| `policy.html` | `/policy` | stub | The homepage privacy section links here. The brief forbids inventing a new privacy URL. |
-| `cookie-policy.html` | `/cookie-policy` | stub | Approved destination, page not designed yet. |
 | `canvas-integration.html` | `/canvas-integration` | stub | Treated as live: Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate. The address closed with it — the point-fix brief of 2026-08-20 approves /canvas-integration as final, so the filename is no longer provisional. |
 | `plagiarism-checker-for-teachers.html` | `/plagiarism-checker-for-teachers` | stub | The Teachers URL audit closed on 2026-08-20: Educators lands here, and no second educator address is created. The page itself will be rewritten separately around real educator use cases. |
 
 ## Counts
 
-- 19 × stub
-- 12 × built
+- 17 × stub
+- 14 × built
 - 4 × no approved path
 - 4 × built · out of global nav
 

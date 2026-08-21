@@ -72,6 +72,8 @@ const PAGES = {
   'plagiarism-check.html':       { active: null },
   /* legal: reachable from the footer, so no header item lights up */
   'terms-of-use.html':           { active: null },
+  'policy.html':                 { active: null },
+  'cookie-policy.html':          { active: null },
   'paper-analysis.html':         { active: null },
   'readability-check.html':      { active: null },
   'spell-check.html':            { active: null },

@@ -20,13 +20,15 @@ const SITE = path.join(ROOT, 'site');
 const SRC  = path.join(__dirname, 'legal');
 
 /* slug        our filename, which is also the approved production path
-   container   the class the live page wraps its document in
+   container   the class the live page wraps its document in. Not guessable: terms-of-use
+               uses its own slug, the other two use static-page-<slug>, and .footer-policy
+               is a block of footer links that matches neither.
    eyebrow     where this sits in the footer's own grouping
    intro       null unless the page needs a line the source does not carry  */
 const PAGES = [
   { slug: 'terms-of-use',  container: 'terms-of-use',  eyebrow: 'Plans &amp; Legal', title: 'Terms of Use' },
-  { slug: 'policy',        container: 'policy',        eyebrow: 'Plans &amp; Legal', title: 'Privacy Policy' },
-  { slug: 'cookie-policy', container: 'cookie-policy', eyebrow: 'Plans &amp; Legal', title: 'Cookie Policy' },
+  { slug: 'policy',        container: 'static-page-policy',        eyebrow: 'Plans &amp; Legal', title: 'Privacy Policy' },
+  { slug: 'cookie-policy', container: 'static-page-cookie-policy', eyebrow: 'Plans &amp; Legal', title: 'Cookie Policy' },
 ];
 
 /* absolute addresses on the live site that we hold a page for */
@@ -65,6 +67,7 @@ const clean = html => html
   .replace(/<a /gi, '<a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" ')
   .replace(/<strong>/gi, '<strong class="font-bold text-ink-900">')
   .replace(/<b>/gi, '<b class="font-bold text-ink-900">')
+  .replace(/<code>/gi, '<code class="rounded-md bg-ink-100 px-1.5 py-0.5 text-[.9em] font-semibold text-ink-800">')
   .replace(/\s+/g, ' ')
   .trim();
 
@@ -75,8 +78,14 @@ function render(page) {
 
   /* the container, by counting div depth: it holds nested divs and the page's footer
      follows it, so neither the next </div> nor the next </main> is the right edge */
-  const open = new RegExp('<div class="' + page.container + '[^"]*"[^>]*>', 'i');
-  const m = src.match(open);
+  /* Match the class as a token in the list, not as the start of the attribute: two of
+     the three pages carry it last, after sc_content main static-page. */
+  let m = null;
+  const opens = /<div\s+class="([^"]*)"[^>]*>/gi;
+  let o;
+  while ((o = opens.exec(src))) {
+    if (o[1].split(/\s+/).includes(page.container)) { m = o; break; }
+  }
   if (!m) throw new Error(page.slug + ': no .' + page.container + ' container');
   const from = m.index + m[0].length;
   let depth = 1, end = -1;
@@ -92,7 +101,7 @@ function render(page) {
 
   /* top-level blocks, in the order the document sets them */
   const blocks = [];
-  const re = /<(h1|h2|h3|h4|p|ul|ol)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+  const re = /<(h1|h2|h3|h4|p|ul|ol|table)\b[^>]*>([\s\S]*?)<\/\1>/gi;
   let b;
   while ((b = re.exec(doc))) {
     const html = b[2].trim();
@@ -120,6 +129,37 @@ function render(page) {
     if (x.tag === 'h3') return `        <h3 class="${T.h3}">${inner}</h3>`;
     if (x.tag === 'h4') return `        <h4 class="${T.h4}">${inner}</h4>`;
     if (x.tag === 'p')  return `        <p class="${T.body} mb-4 sm:mb-5">${inner}</p>`;
+    /* A table — the cookie policy lists its cookies in one. It scrolls inside its own
+       box rather than widening the page, since five columns will not fit a phone. */
+    if (x.tag === 'table') {
+      const row = tr => [...tr.matchAll(/<(th|td)\b[^>]*>([\s\S]*?)<\/\1>/gi)]
+        .map(c => ({ head: c[1].toLowerCase() === 'th', html: clean(c[2]) }));
+      const head = (x.html.match(/<thead\b[^>]*>([\s\S]*?)<\/thead>/i) || [, ''])[1];
+      const bodyRows = [...(x.html.match(/<tbody\b[^>]*>([\s\S]*?)<\/tbody>/i) || [, x.html])[1]
+        .matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(r => row(r[1]));
+      const headCells = head ? row(head) : [];
+      return [
+        '        <div class="my-7 sm:my-9 -mx-4 sm:mx-0 overflow-x-auto">',
+        '          <table class="w-full min-w-[640px] sm:min-w-0 border-collapse text-left">',
+        headCells.length ? [
+          '            <thead>',
+          '              <tr class="border-b border-ink-200">',
+          ...headCells.map(c => `                <th scope="col" class="py-2.5 pr-4 last:pr-0 text-[10.5px] font-bold uppercase tracking-[0.14em] text-ink-400">${c.html}</th>`),
+          '              </tr>',
+          '            </thead>',
+        ].join('\n') : '',
+        '            <tbody class="text-[13.5px] sm:text-[14px] text-ink-700 leading-relaxed">',
+        ...bodyRows.map(cells => [
+          '              <tr class="border-b border-ink-100 last:border-0">',
+          ...cells.map((c, i) => `                <td class="py-3 pr-4 last:pr-0 align-top${i === 0 ? ' font-semibold text-ink-900' : ''}">${c.html}</td>`),
+          '              </tr>',
+        ].join('\n')),
+        '            </tbody>',
+        '          </table>',
+        '        </div>',
+      ].filter(Boolean).join('\n');
+    }
+
     /* lists keep the marker the source chose; only the styling is ours */
     const items = [...x.html.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi)].map(li => clean(li[1]));
     const ordered = x.tag === 'ol';
