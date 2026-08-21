@@ -38,7 +38,6 @@ const STUBS = [
   { slug: 'scholarship',                           label: 'Scholarship',               group: 'Footer · Company' },
   { slug: 'affiliate-program-at-plagiarismsearch', label: 'Affiliate Program',         group: 'Footer · Company' },
   { slug: 'policy',                                label: 'Privacy Policy',            group: 'Footer · Plans & Legal',        note: 'The homepage privacy section links here. The brief forbids inventing a new privacy URL.' },
-  { slug: 'terms-of-use',                          label: 'Terms of Use',              group: 'Footer · Plans & Legal' },
   { slug: 'cookie-policy',                         label: 'Cookie Policy',             group: 'Footer · Plans & Legal' },
 
   /* no approved slug yet — the filenames below are provisional and marked as such */

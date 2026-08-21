@@ -22,6 +22,7 @@ const BUILT = [
   { file: 'ai-detector.html',            path: '/ai-content-detector' },
   { file: 'api.html',                    path: '/plagiarism-api' },
   { file: 'prices.html',                 path: '/prices' },
+  { file: 'terms-of-use.html',            path: '/terms-of-use',                             note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },
   { file: 'why-us.html',                 path: '/why-us' },
   { file: 'mission.html',                path: '/plagiarismsearch-mission-and-core-values' },
   { file: 'contact-us.html',             path: '/contact-us' },

@@ -70,6 +70,8 @@ const PAGES = {
   /* built and kept, but outside the global navigation per DEC-0027 §5 — plus
      plagiarism-check.html, which the homepage supersedes as the checker page */
   'plagiarism-check.html':       { active: null },
+  /* legal: reachable from the footer, so no header item lights up */
+  'terms-of-use.html':           { active: null },
   'paper-analysis.html':         { active: null },
   'readability-check.html':      { active: null },
   'spell-check.html':            { active: null },

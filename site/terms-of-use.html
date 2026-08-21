@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>PlagiarismSearch — Terms of Use</title>
+<title>Terms of Use | PlagiarismSearch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
@@ -141,6 +141,20 @@ tailwind.config = {
   }
 </style>
 </head>
+
+<style>
+  /* numbered list, drawn rather than left to the browser so it carries our own type */
+  .counter { counter-reset: step; }
+  .counter > li { counter-increment: step; }
+  .counter > li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: .15em;
+    width: 1.6em; height: 1.6em;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 999px; background: #E8F8FB; color: #0991A8;
+    font-size: .74em; font-weight: 800; font-variant-numeric: tabular-nums;
+  }
+</style>
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
 
@@ -259,42 +273,401 @@ tailwind.config = {
 </header>
 
 <main>
-  <section class="relative pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 bg-[#F2FCFC] overflow-hidden">
+  <!-- Legal pages are reference, not reading: the text is the site's own, carried over
+       word for word, and only its dress is new. One centred column at the site's reading
+       size, a contents list built from the document's own headings, and no decoration
+       competing with the clauses. -->
+  <section class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-white">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
-      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
+      <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
     </div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="max-w-[620px]">
-        <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700 mb-4 lg:mb-5">Footer · Plans &amp; Legal</div>
-        <h1 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Terms of Use</h1>
-        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed mb-8 sm:mb-10 lg:mb-12">This page is an approved destination in the navigation architecture. It is not designed yet — the link works so the navigation can be walked end to end.</p>
+      <div class="mx-auto max-w-[720px]">
 
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 mb-8 sm:mb-10 lg:mb-12">
-          <dl class="divide-y divide-ink-100">
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Label</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Terms of Use</dd>
-            </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Placed in</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Footer · Plans &amp; Legal</dd>
-            </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Path</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800 nums">/terms-of-use</dd>
-            </div>
-          </dl>
-          
+        <div class="rv mb-8 sm:mb-10 lg:mb-12">
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4 lg:mb-5">Plans &amp; Legal</div>
+          <h1 class="text-[clamp(2.1rem,4vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4 lg:mb-5">Terms of Use</h1>
+          <p class="text-[13px] sm:text-[13.5px] font-semibold text-ink-400"><strong class="font-bold text-ink-900">Last Updated: August 18, 2026</strong></p>
         </div>
 
-        <a href="index.html" class="btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-ink-900 text-white text-[14px] sm:text-[15px] font-semibold hover:bg-ink-800 transition-colors duration-300">
-          Back to the homepage
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a>
+        <nav class="rv rounded-3xl sm:rounded-[28px] bg-ink-50 p-4 sm:p-5 lg:p-6 mb-8 sm:mb-10 lg:mb-12" aria-label="On this page">
+          <div class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] uppercase text-ink-400 mb-4 lg:mb-5">On this page</div>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#1-ownership-and-contracting-entities" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">1. Ownership and Contracting Entities</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#2-eligibility-and-accounts" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">2. Eligibility and Accounts</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#3-the-service" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">3. The Service</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#4-license-to-use-the-service" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">4. License to Use the Service</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#5-customer-content" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">5. Customer Content</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#6-your-responsibilities-for-customer-content" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">6. Your Responsibilities for Customer Content</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#7-private-storage-and-organization-accounts" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">7. Private Storage and Organization Accounts</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#8-api-use" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">8. API Use</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#9-analytical-results-and-appropriate-use" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">9. Analytical Results and Appropriate Use</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#10-fees-plans-and-usage" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">10. Fees, Plans, and Usage</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#11-subscriptions-renewal-and-cancellation" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">11. Subscriptions, Renewal, and Cancellation</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#12-trials-and-evaluation-access" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">12. Trials and Evaluation Access</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#13-refunds-and-consumer-withdrawal-rights" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">13. Refunds and Consumer Withdrawal Rights</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#14-support-and-service-availability" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">14. Support and Service Availability</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#15-third-party-services-and-integrations" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">15. Third-Party Services and Integrations</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#16-privacy-and-data-processing" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">16. Privacy and Data Processing</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#17-confidentiality" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">17. Confidentiality</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#18-intellectual-property" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">18. Intellectual Property</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#19-feedback" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">19. Feedback</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#20-customer-names-logos-and-publicity" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">20. Customer Names, Logos, and Publicity</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#21-suspension-and-termination" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">21. Suspension and Termination</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#22-disclaimer-of-warranties" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">22. Disclaimer of Warranties</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#23-limitation-of-liability" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">23. Limitation of Liability</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#24-indemnification-by-business-and-organizat" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">24. Indemnification by Business and Organizational Users</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#25-force-majeure" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">25. Force Majeure</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#26-changes-to-the-service-and-these-terms" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">26. Changes to the Service and These Terms</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#27-governing-law-and-disputes" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">27. Governing Law and Disputes</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#28-general-provisions" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">28. General Provisions</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#29-contact" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">29. Contact</a>
+            </li>
+          </ul>
+        </nav>
+
+        <article class="rv min-w-0">
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">These Terms of Use (the <strong class="font-bold text-ink-900">"Terms"</strong>) govern your access to and use of PlagiarismSearch.com, including the website, user accounts, plagiarism detection, AI-content detection, document comparison, private Storage, reports, API access, integrations, and other products or services made available by PlagiarismSearch from time to time (collectively, the <strong class="font-bold text-ink-900">"Service"</strong>).</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Please read these Terms carefully. By creating an account, purchasing or subscribing to the Service, submitting an order form, accessing paid features, or otherwise using the Service, you agree to be bound by these Terms and our <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="policy.html">Privacy Policy</a>. If you do not agree to these Terms, you must not use the Service.</p>
+        <h2 id="1-ownership-and-contracting-entities" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">1. Ownership and Contracting Entities</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch.com is operated by <strong class="font-bold text-ink-900">System Technology Online Spain SL.</strong>, registered in Spain, and <strong class="font-bold text-ink-900">System Tech Online USA Inc.</strong>, registered in the United States.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">For standard self-service paid transactions, the applicable contracting entity and merchant of record are determined as follows:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span><strong class="font-bold text-ink-900">System Tech Online USA Inc.</strong>, having its registered office at 5900 Balcones Dr, Ste 100, Austin, TX 78731, USA, acts as the primary contracting party and merchant of record for card payment transactions initiated by users located outside the European Union (EU) and European Economic Area (EEA).</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span><strong class="font-bold text-ink-900">System Technology Online Spain SL.</strong>, having its registered office at Calle Pintor P&eacute;rez Gil 2, b.46, 03540 Alicante, Spain, acts as the primary contracting party and merchant of record for transactions processed through PayPal, regardless of the user's location, and for card payment transactions initiated by users within the EU/EEA.</span></li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">A separate Order Form, enterprise agreement, or other written agreement may identify a different applicable contracting arrangement. Where such an agreement applies, it will control to the extent of any conflict with these Terms regarding its specific subject matter.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">References in these Terms to <strong class="font-bold text-ink-900">"PlagiarismSearch," "we," "us," or "our"</strong> mean the applicable PlagiarismSearch contracting entity.</p>
+        <h2 id="2-eligibility-and-accounts" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">2. Eligibility and Accounts</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You must have the legal capacity to enter into these Terms.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If you are under the age of legal majority in your jurisdiction, you may use the Service only where your use is authorized and supervised as required by applicable law, for example by a parent, guardian, school, university, or other authorized organization.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If you use the Service on behalf of a company, educational institution, government body, or other organization, you represent that you have authority to bind that organization to these Terms.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You are responsible for:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>providing accurate account information;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>keeping your account credentials confidential;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>maintaining the security of your account;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>all activity performed through your account or API credentials; and</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>promptly notifying us if you become aware of unauthorized access or suspected compromise.</span></li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You must not share account credentials in a manner that circumvents the user, account, subscription, or usage limits applicable to your plan.</p>
+        <h2 id="3-the-service" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">3. The Service</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch provides tools designed to analyze submitted content for textual similarity, potential plagiarism, AI-generated content, and other characteristics supported by the applicable Service features.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Depending on the feature used, the Service may compare submitted content against publicly available Internet sources, available reference datasets, licensed or third-party source collections, and private reference documents made available through Storage or an organization account.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Reports may identify matching or potentially matching sources, similarity information, passages, and other analytical results.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch may modify, improve, add, remove, or replace Service features from time to time. We will not intentionally make a material change that removes a core paid feature during an active subscription without providing notice where required by applicable law or the applicable agreement.</p>
+        <h2 id="4-license-to-use-the-service" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">4. License to Use the Service</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Subject to these Terms, payment of any applicable fees, and compliance with applicable usage limits, PlagiarismSearch grants you a limited, non-exclusive, non-transferable, non-sublicensable right to access and use the Service for your personal, educational, internal business, or organizational purposes.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">This license does not transfer ownership of the Service, software, algorithms, interfaces, trademarks, report formats, documentation, or other PlagiarismSearch intellectual property to you.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Except where expressly permitted by law or by us in writing, you may not:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>copy, modify, distribute, sell, lease, sublicense, or create derivative products from the Service;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>reverse engineer, decompile, disassemble, or attempt to discover source code or non-public algorithms used by the Service;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>circumvent technical restrictions, account limits, rate limits, payment requirements, or usage quotas;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>use automated means to access the Service except through an authorized API or other feature expressly provided for that purpose;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>use the Service to develop, train, benchmark, or operate a competing product by systematically extracting non-public Service functionality or data without our written authorization;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>interfere with the security, availability, or operation of the Service; or</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>remove or alter proprietary notices displayed by PlagiarismSearch.</span></li>
+        </ul>
+        <h2 id="5-customer-content" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">5. Customer Content</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5"><strong class="font-bold text-ink-900">"Customer Content"</strong> means documents, text, files, reference materials, URLs, and other content that you or your authorized users submit to the Service.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You or the applicable rights holder retain ownership of Customer Content.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You grant PlagiarismSearch the limited rights necessary to host, retrieve, copy, process, analyze, index where applicable, transmit where technically necessary, and otherwise handle Customer Content solely as reasonably required to:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>provide the Service requested by you;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>generate and maintain reports;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>provide private Storage and document-comparison functionality;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>provide technical and customer support;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>investigate technical or security issues;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>prevent fraud, abuse, or unauthorized use; and</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>comply with applicable legal obligations.</span></li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5"><strong class="font-bold text-ink-900">Customer Content is not automatically made available as a plagiarism source to unrelated PlagiarismSearch customers.</strong></p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch does not use Customer Content submitted to the Service to train PlagiarismSearch AI or machine-learning models.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Additional information about how Customer Content is processed, retained, and deleted is provided in our <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="policy.html">Privacy Policy</a>.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Certain services, including Paper Analysis and other services expressly described as involving human review, may be performed in whole or in part by authorized specialists. By ordering such a service, you authorize the Customer Content submitted for that order to be made available to the personnel reasonably necessary to perform the requested review.</p>
+        <h2 id="6-your-responsibilities-for-customer-content" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">6. Your Responsibilities for Customer Content</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You are responsible for the Customer Content you submit and for your use of the Service.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You represent that you have the rights, permissions, legal basis, or other authority reasonably necessary to submit and process Customer Content through the Service.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">This requirement does not mean that you must own every text that you submit for a legitimate plagiarism or similarity analysis. For example, educational or professional users may need to analyze material submitted to them or material for which they otherwise have lawful authority to perform the requested analysis.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You must not knowingly use the Service to:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>process content in violation of applicable law;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>infringe the rights of others beyond what is reasonably necessary for a lawful plagiarism, academic-integrity, research, compliance, or similar analysis;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>upload malicious code or content designed to compromise the Service;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>gain unauthorized access to another person's account, documents, or information;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>harass, threaten, exploit, or unlawfully monitor another person; or</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>use the Service for fraudulent or unlawful purposes.</span></li>
+        </ul>
+        <h2 id="7-private-storage-and-organization-accounts" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">7. Private Storage and Organization Accounts</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Documents uploaded to private Storage may be indexed so they can be used as reference documents for comparisons within the applicable customer account.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Storage documents are not automatically made searchable by unrelated PlagiarismSearch customers.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">For organization accounts, authorized members may be permitted to share Storage documents for comparison with other authorized members of the same organization where the relevant sharing permission has been enabled.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">The organization is responsible for configuring its users, permissions, and document-sharing settings appropriately.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Where an organization manages your account, the organization may have administrative access to account information, reports, submissions, and Storage content according to its permissions and applicable agreement.</p>
+        <h2 id="8-api-use" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">8. API Use</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If your plan includes API access, you may use the API only in accordance with these Terms, the applicable plan limits, and the technical documentation provided by PlagiarismSearch.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You are responsible for protecting API credentials and for requests made using your credentials.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You must not:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>exceed applicable API rate or usage limits;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>attempt to bypass usage accounting or billing controls;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>use API access to disrupt or place unreasonable load on the Service; or</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>provide unauthorized third parties with access to your API credentials.</span></li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">API processing may be asynchronous. Where supported, customers may use available status requests and callback functionality to receive or retrieve processing results.</p>
+        <h2 id="9-analytical-results-and-appropriate-use" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">9. Analytical Results and Appropriate Use</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch reports are analytical tools intended to assist users in evaluating submitted content.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Similarity results, source matches, AI-detection results, and other automated outputs should be interpreted together with the underlying evidence and appropriate human review.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">A similarity score is not, by itself, a determination that plagiarism has occurred. Likewise, an AI-detection result is not, by itself, a definitive determination regarding the authorship of a document.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Source availability can depend on factors outside PlagiarismSearch's control, including third-party indexing, availability, access restrictions, website configuration, and changes to external sources.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Reports should not be used as the sole basis for disciplinary, employment, legal, academic, or other high-impact decisions without appropriate independent review.</p>
+        <h2 id="10-fees-plans-and-usage" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">10. Fees, Plans, and Usage</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Current pricing, plan limits, subscription periods, and included usage are displayed on the Website or in the applicable Order Form.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You agree to pay all fees associated with the plan or Service you purchase.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Depending on the applicable product, usage may be measured by words, submissions, documents, API requests, or other units specified for the relevant plan.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Where applicable, PlagiarismSearch may use a fair-usage or fair-words mechanism that adjusts word-balance consumption for qualifying duplicated text previously processed through the Service.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Prices and applicable taxes are shown or calculated as required during the purchase process. You are responsible for applicable taxes except to the extent PlagiarismSearch is required to collect or remit them.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Payments may be processed by third-party payment service providers. Available payment methods are displayed at checkout and may change over time.</p>
+        <h2 id="11-subscriptions-renewal-and-cancellation" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">11. Subscriptions, Renewal, and Cancellation</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Where you purchase a recurring subscription, the subscription will renew automatically at the billing interval shown when you subscribe, unless you cancel it before the next renewal date.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You may cancel a recurring subscription through the cancellation functionality available in your account or by contacting PlagiarismSearch through the support channels made available on the Website.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Cancellation stops future renewals. Unless applicable law requires otherwise, cancellation does not retroactively cancel a billing period that has already begun and does not automatically generate a refund for amounts already charged.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You will normally retain access to the paid features included in your subscription until the end of the billing period for which payment has already been made, unless access is suspended or terminated under these Terms.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Non-recurring products or usage packages do not automatically renew unless expressly stated at the time of purchase.</p>
+        <h2 id="12-trials-and-evaluation-access" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">12. Trials and Evaluation Access</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch may provide free trials, promotional balances, evaluation limits, or other no-charge access at its discretion.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Trial duration, usage limits, eligibility, and available features may be different from paid plans and may be changed or withdrawn where permitted by law.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Unless we expressly agree otherwise, a customer or organization may be limited to one trial or evaluation allocation.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Additional evaluation capacity may be provided to business or institutional customers as part of a technical evaluation or controlled pilot.</p>
+        <h2 id="13-refunds-and-consumer-withdrawal-rights" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">13. Refunds and Consumer Withdrawal Rights</h2>
+        <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight leading-snug mt-7 sm:mt-8 mb-2.5 lg:mb-3">Voluntary Refund Policy</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Except where applicable law requires otherwise, fees paid for the Service are non-refundable after paid usage has occurred.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch may consider a refund request for the most recent billing period under its voluntary refund policy where:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>the request is submitted within <strong class="font-bold text-ink-900">5 calendar days</strong> of the applicable charge; and</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>no paid Service usage has occurred during that billing period.</span></li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">For purposes of the voluntary refund policy, paid usage may include a paid document submission, paid API request, or other use of a paid feature or balance.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Refund eligibility under this voluntary policy does not apply to previous billing periods.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Refund requests may be submitted to <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="mailto:support@plagiarismsearch.com">support@plagiarismsearch.com</a>.</p>
+        <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight leading-snug mt-7 sm:mt-8 mb-2.5 lg:mb-3">Failed Processing</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If a plagiarism-checking job reaches an Error/Failed state without producing the applicable report, the usage balance charged for that failed check is returned in accordance with the Service's billing logic. A return of usage balance is different from a monetary refund of a subscription or purchase.</p>
+        <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight leading-snug mt-7 sm:mt-8 mb-2.5 lg:mb-3">Mandatory Consumer Rights</h3>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5"><strong class="font-bold text-ink-900">Nothing in these Terms limits any mandatory refund, cancellation, withdrawal, conformity, or other consumer rights that cannot lawfully be excluded.</strong></p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Consumers in the EU/EEA may have a statutory right to withdraw from an eligible distance service contract within <strong class="font-bold text-ink-900">14 days</strong> from conclusion of the contract, subject to the conditions and exceptions established by applicable law.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Any charge for Service supplied during an applicable withdrawal period, reduction of a refund, or loss of a statutory right of withdrawal will apply only where the conditions required by applicable law have been satisfied.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You may exercise any applicable statutory withdrawal right through the withdrawal functionality made available by PlagiarismSearch where required by law, or by sending us a clear statement of your decision to withdraw at <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="mailto:support@plagiarismsearch.com">support@plagiarismsearch.com</a>.</p>
+        <h2 id="14-support-and-service-availability" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">14. Support and Service Availability</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch provides customer and technical support through the support channels made available on the Website.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">The time required to investigate or resolve an issue depends on its nature and complexity.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Unless a separate Order Form, enterprise agreement, or Service Level Agreement expressly provides otherwise, the standard Service does not include guaranteed:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>support response or resolution times;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>Service uptime percentages;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>report-completion times; or</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>source-coverage levels.</span></li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Processing times may vary depending on document size, the number and availability of candidate sources, external source retrieval, system load, and other technical factors.</p>
+        <h2 id="15-third-party-services-and-integrations" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">15. Third-Party Services and Integrations</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">The Service may interact with or depend on third-party websites, payment providers, cloud services, APIs, data sources, or integrations.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Examples may include payment-processing services, cloud-storage integrations, analytics providers, infrastructure providers, and external sources used in connection with document analysis.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Your use of a third-party service may also be subject to that third party's own terms and privacy policies.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch is not responsible for the independent operation, content, availability, or practices of third-party services that are outside our reasonable control.</p>
+        <h2 id="16-privacy-and-data-processing" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">16. Privacy and Data Processing</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Our handling of personal data and Customer Content is described in our <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="policy.html">Privacy Policy</a> and <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="https://plagiarismsearch.com/privacy-and-data-security-guarantees" rel="noopener">Privacy and Data Security</a> information.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Our use of cookies and similar technologies is described in our <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="cookie-policy.html">Cookie Policy</a>.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Where PlagiarismSearch processes personal data on behalf of a business, educational institution, or other organization and applicable law requires a controller-processor agreement, that processing will be governed by appropriate binding data-processing terms, including a Data Processing Addendum (DPA) where applicable. Such terms may be incorporated into an Order Form or another written agreement.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If a DPA, Order Form, or other separate written agreement has been entered into, its provisions will control over these Terms to the extent of any conflict relating specifically to the subject matter governed by that agreement.</p>
+        <h2 id="17-confidentiality" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">17. Confidentiality</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">For business and institutional customers, each party may receive non-public information that is identified as confidential or that reasonably should be understood to be confidential given its nature and the circumstances of disclosure.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Each party will use reasonable measures to protect such confidential information and will use it only for the purposes of the parties' relationship, except where disclosure is authorized by the other party or required by law.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Confidential information does not include information that:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>is or becomes publicly available without breach of an obligation;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>was lawfully known to the receiving party without confidentiality restrictions;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>is lawfully received from a third party without a confidentiality obligation; or</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>is independently developed without use of the other party's confidential information.</span></li>
+        </ul>
+        <h2 id="18-intellectual-property" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">18. Intellectual Property</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch and its licensors retain all rights, title, and interest in the Service and its underlying technology, software, algorithms, interfaces, designs, trademarks, logos, documentation, report formats, and other intellectual property.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Your ownership of Customer Content is not transferred to PlagiarismSearch.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Subject to these Terms, you may use and download reports generated for your account for your legitimate personal, educational, internal business, institutional, or professional purposes.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">No rights are granted except those expressly stated in these Terms.</p>
+        <h2 id="19-feedback" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">19. Feedback</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If you voluntarily provide suggestions, ideas, feature requests, or other feedback about the Service, you grant PlagiarismSearch a worldwide, perpetual, irrevocable, royalty-free right to use that feedback to develop, improve, and operate its products and services, provided that doing so does not grant PlagiarismSearch ownership of your Customer Content.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch will not publicly identify you or your organization as the source of feedback without permission where identification would disclose a non-public customer relationship.</p>
+        <h2 id="20-customer-names-logos-and-publicity" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">20. Customer Names, Logos, and Publicity</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5"><strong class="font-bold text-ink-900">PlagiarismSearch will not use an organization's name, logo, trademarks, or the fact that the organization is a PlagiarismSearch customer in public marketing or promotional materials without the organization's prior written consent.</strong></p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">This restriction does not prevent PlagiarismSearch from identifying a customer where disclosure is required by law or expressly authorized in a separate agreement.</p>
+        <h2 id="21-suspension-and-termination" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">21. Suspension and Termination</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">We may suspend or terminate access to all or part of the Service where reasonably necessary to:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>address a material breach of these Terms or an applicable agreement;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>protect the security, integrity, or availability of the Service;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>prevent fraud, abuse, unauthorized access, or unlawful activity;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>respond to non-payment;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>comply with applicable law, a court order, or a lawful governmental request; or</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>prevent material harm to PlagiarismSearch, our users, or third parties.</span></li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Where reasonably practicable and legally permitted, we will provide notice before a material suspension or termination and an opportunity to address the relevant issue.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You may stop using the Service at any time. Cancellation of a recurring subscription is governed by Section 11.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Following termination, Customer Content and account data will be retained or deleted in accordance with our <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="policy.html">Privacy Policy</a>, applicable law, and any separate agreement that applies to your account.</p>
+        <h2 id="22-disclaimer-of-warranties" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">22. Disclaimer of Warranties</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Nothing in this section excludes warranties or rights that cannot lawfully be excluded.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">To the maximum extent permitted by applicable law, the Service and reports are provided on an <strong class="font-bold text-ink-900">"as is"</strong> and <strong class="font-bold text-ink-900">"as available"</strong> basis.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch does not warrant that:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>the Service will always be uninterrupted or error-free;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>every publicly available or private source will be discoverable or accessible;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>every similarity, plagiarism, or AI-related instance will be detected;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>every report or automated result will be complete or error-free; or</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>the Service will meet every specific purpose or requirement that has not been expressly agreed in writing.</span></li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">PlagiarismSearch will nevertheless provide the Service with the level of care required by applicable law and any separate contractual commitments expressly agreed with the customer.</p>
+        <h2 id="23-limitation-of-liability" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">23. Limitation of Liability</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Nothing in these Terms excludes or limits liability where such exclusion or limitation is prohibited by applicable law, including any mandatory consumer rights.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">To the maximum extent permitted by law, PlagiarismSearch and its affiliates, officers, employees, licensors, and suppliers will not be liable for indirect, incidental, special, punitive, exemplary, or consequential damages, or for loss of profits, revenue, business opportunities, goodwill, or data, arising out of or relating to the Service, where such damages may lawfully be excluded.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">To the maximum extent permitted by law, the aggregate liability of PlagiarismSearch arising out of or relating to the standard Service and these Terms will not exceed the fees paid by you to PlagiarismSearch for the Service during the <strong class="font-bold text-ink-900">30-day period immediately preceding the event that first gave rise to the claim</strong>.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">This limitation does not apply where a separate Order Form or enterprise agreement expressly provides a different liability arrangement.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You remain responsible for interpreting reports and deciding how to use their results, including whether additional human, academic, professional, or legal review is appropriate.</p>
+        <h2 id="24-indemnification-by-business-and-organizat" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">24. Indemnification by Business and Organizational Users</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If you use the Service on behalf of a business, educational institution, government body, or other organization, then, to the extent permitted by applicable law, that organization agrees to indemnify and hold harmless PlagiarismSearch and its affiliates, officers, employees, and licensors from third-party claims, damages, liabilities, and reasonable costs arising from:</p>
+        <ul class="space-y-2.5 mb-5 sm:mb-6">
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>the organization's unlawful use of the Service;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>Customer Content submitted without the rights or authority required for the relevant use;</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>the organization's material breach of these Terms; or</span></li>
+          <li class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] flex gap-3"><span class="shrink-0 w-1.5 h-1.5 mt-[.7em] rounded-full bg-teal-500" aria-hidden="true"></span><span>the organization's violation of applicable law or third-party rights.</span></li>
+        </ul>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">This section does not require indemnification to the extent a claim results from PlagiarismSearch's own breach, unlawful conduct, or other responsibility that cannot lawfully be transferred to the customer.</p>
+        <h2 id="25-force-majeure" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">25. Force Majeure</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Neither party will be liable for delay or failure to perform an obligation, other than payment obligations, to the extent caused by circumstances beyond its reasonable control.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Such circumstances may include natural disasters, war, terrorism, civil unrest, labor disputes, widespread telecommunications or infrastructure failures, governmental actions, significant third-party network outages, or similar events outside the affected party's reasonable control.</p>
+        <h2 id="26-changes-to-the-service-and-these-terms" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">26. Changes to the Service and These Terms</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">We may update these Terms from time to time to reflect changes in the Service, applicable law, security requirements, or our business practices.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">When we make material changes, we will update the "Last Updated" date and provide additional notice where required by applicable law.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Changes will apply prospectively from their effective date. Where applicable law requires affirmative acceptance of a material change, we will request it before the change becomes binding.</p>
+        <h2 id="27-governing-law-and-disputes" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">27. Governing Law and Disputes</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Unless a separate written agreement states otherwise, these Terms and any dispute arising out of or relating to them are governed by the laws of <strong class="font-bold text-ink-900">Spain</strong>, without regard to conflict-of-law principles.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5"><strong class="font-bold text-ink-900">Nothing in this choice of law deprives a consumer of mandatory protections available under the laws that apply to the consumer and that cannot lawfully be waived by contract.</strong></p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Nothing in these Terms restricts a consumer's right to bring a claim before a court or other competent body where applicable consumer law provides such a right.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Before commencing formal proceedings, we encourage users to contact us so that we can attempt to resolve the issue directly.</p>
+        <h2 id="28-general-provisions" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">28. General Provisions</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If any provision of these Terms is found to be invalid or unenforceable, that provision will be enforced to the maximum extent permitted by law, and the remaining provisions will remain in effect.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">A failure by either party to enforce a provision of these Terms does not waive the right to enforce it later.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">You may not assign your rights or obligations under these Terms without our prior written consent, except where applicable law provides otherwise. PlagiarismSearch may assign these Terms in connection with a merger, acquisition, corporate reorganization, or transfer of substantially all relevant business assets, subject to applicable law.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">Unless expressly stated otherwise, these Terms do not create rights for third-party beneficiaries.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">These Terms, together with the documents and agreements expressly incorporated into them, constitute the agreement governing your use of the Service. A separate Order Form, DPA, enterprise agreement, or other written agreement may supplement or modify these Terms for the customer to whom it applies.</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If these Terms are translated into another language and there is a conflict between versions, the English version will control to the extent permitted by applicable law.</p>
+        <h2 id="29-contact" class="text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4">29. Contact</h2>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">If you have questions about these Terms, billing, cancellation, refunds, or your account, please contact:</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5"><strong class="font-bold text-ink-900">Email:</strong> <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="mailto:support@plagiarismsearch.com">support@plagiarismsearch.com</a></p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5"><strong class="font-bold text-ink-900">System Technology Online Spain SL.</strong><br /> Calle Pintor P&eacute;rez Gil 2, b.46<br /> 03540 Alicante<br /> Spain</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5"><strong class="font-bold text-ink-900">System Tech Online USA Inc.</strong><br /> 5900 Balcones Dr, Ste 100<br /> Austin, TX 78731<br /> United States</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5">For information about personal data, please see our <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="policy.html">Privacy Policy</a>. For information about cookies and similar technologies, please see our <a class="text-teal-700 underline decoration-teal-600/30 underline-offset-2 hover:text-teal-800 hover:decoration-teal-600 transition-colors duration-300" href="cookie-policy.html">Cookie Policy</a>.</p>
+        </article>
+
+        <div class="rv mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-100">
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4">Also in legal</div>
+          <div class="flex flex-wrap gap-3">
+            <a href="policy.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
+              Privacy Policy
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="cookie-policy.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
+              Cookie Policy
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
