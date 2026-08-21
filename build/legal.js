@@ -47,7 +47,10 @@ const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.ind
 
 /* ── type, in one place so the three pages cannot drift ───────────────────── */
 const T = {
-  body: 'text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75]',
+  /* One body ramp for the reference pages and the blog alike, ending at 17: Olex's
+     call of 2026-08-21, taken knowing the measure runs wide at these column widths.
+     These are not pages anyone reads end to end. */
+  body: 'text-[15.5px] sm:text-[16px] lg:text-[17px] text-ink-700 leading-[1.75]',
   h2:   'text-[19px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest leading-[1.25] scroll-mt-28 mt-10 sm:mt-12 lg:mt-14 mb-3 lg:mb-4',
   h3:   'text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight leading-snug mt-7 sm:mt-8 mb-2.5 lg:mb-3',
   h4:   'text-[15px] sm:text-[15.5px] font-bold tracking-tight mt-6 mb-2',
