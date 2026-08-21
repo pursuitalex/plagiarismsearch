@@ -60,8 +60,12 @@ for (const s of STUBS) {
   });
 }
 
+/* pages.html is the prototype index — a review tool over this map, not an address in
+   it. Like shell.js, this generator leaves it alone. */
+const NOT_A_PAGE = new Set(['pages.html']);
+
 /* a page on disk but missing from this table would quietly have no mapping */
-const onDisk = fs.readdirSync(SITE).filter(f => f.endsWith('.html'));
+const onDisk = fs.readdirSync(SITE).filter(f => f.endsWith('.html') && !NOT_A_PAGE.has(f));
 const untabled = onDisk.filter(f => !rows.some(r => r.file === f));
 if (untabled.length) throw new Error('not in the URL map: ' + untabled.join(', '));
 const ghosts = rows.filter(r => !onDisk.includes(r.file));

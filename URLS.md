@@ -48,16 +48,15 @@ driven by this table.
 | `policy.html` | `/policy` | stub | The homepage privacy section links here. The brief forbids inventing a new privacy URL. |
 | `terms-of-use.html` | `/terms-of-use` | stub | Approved destination, page not designed yet. |
 | `cookie-policy.html` | `/cookie-policy` | stub | Approved destination, page not designed yet. |
-| `canvas-integration.html` | — | stub · path NOT approved | Provisional filename. Treated as live. Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate — which is what DEC-0030 expected all along. Only the address is still open: the final verified URL is supplied at implementation, so this filename stays provisional. |
+| `canvas-integration.html` | `/canvas-integration` | stub | Treated as live: Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate. The address closed with it — the point-fix brief of 2026-08-20 approves /canvas-integration as final, so the filename is no longer provisional. |
 | `plagiarism-checker-for-teachers.html` | `/plagiarism-checker-for-teachers` | stub | The Teachers URL audit closed on 2026-08-20: Educators lands here, and no second educator address is created. The page itself will be rewritten separately around real educator use cases. |
 
 ## Counts
 
-- 19 × stub
+- 20 × stub
 - 11 × built
 - 4 × no approved path
 - 4 × built · out of global nav
-- 1 × stub · path NOT approved
 
 ## Open
 

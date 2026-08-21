@@ -42,8 +42,8 @@ const STUBS = [
   { slug: 'cookie-policy',                         label: 'Cookie Policy',             group: 'Footer · Plans & Legal' },
 
   /* no approved slug yet — the filenames below are provisional and marked as such */
-  { slug: 'canvas-integration',                    label: 'Canvas',                    group: 'Products · Integrations', provisional: true,
-    note: 'Treated as live. Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate — which is what DEC-0030 expected all along. Only the address is still open: the final verified URL is supplied at implementation, so this filename stays provisional.' },
+  { slug: 'canvas-integration',                    label: 'Canvas',                    group: 'Products · Integrations',
+    note: 'Treated as live: Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate. The address closed with it — the point-fix brief of 2026-08-20 approves /canvas-integration as final, so the filename is no longer provisional.' },
   { slug: 'plagiarism-checker-for-teachers',       label: 'Educators',                 group: 'Solutions · For individuals',
     note: 'The Teachers URL audit closed on 2026-08-20: Educators lands here, and no second educator address is created. The page itself will be rewritten separately around real educator use cases.' },
 ];

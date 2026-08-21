@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>Prototype index — every page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+      },
+      colors: {
+        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
+        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
+        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
+        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
+      },
+      letterSpacing: { tightest: '-0.035em' },
+      boxShadow: {
+        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
+        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
+        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
+      },
+      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+    }
+  }
+}
+</script>
+<style>
+  /* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
+     disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
+     grain sheet and the header render 150px wider than the page and open a white gutter that
+     no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
+     creates no scroll container, so position:sticky in the scan scene keeps working. */
+  html { background:#fff; overflow-x: clip; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background:#F36F5A; color:#fff; }
+  .nums { font-variant-numeric: tabular-nums; }
+
+  /* ---------- grain overlay ---------- */
+  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:256px 256px; }
+
+  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
+  .orb { position:absolute; border-radius:9999px; pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+  /* ---------- reveal (transform/opacity only) ---------- */
+  .rv { opacity:0; transform:translateY(40px); }
+  .no-motion .rv { opacity:1 !important; transform:none !important; }
+
+  /* ---------- shared micro-interactions ---------- */
+  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .btn-press:active { transform:scale(.97); }
+  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+  .group:hover .icon-orb svg { transform:rotate(-45deg); }
+
+
+  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
+  .no-motion .pen-word { color:#DC5A45; }
+  .no-motion .pen-underline { opacity:1; }
+
+  /* ---------- AI pricing rows ---------- */
+  .ai-row { transition:background-color .15s ease; }
+  .ai-row:hover { background:#F2FAFB; }
+
+  /* ---------- island nav dropdowns ---------- */
+  .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  .nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
+  .nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
+    transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
+  .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
+  @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
+
+  /* ---------- help-center search (DS input recipe, pill variant) ---------- */
+  .hc-search { width:100%; height:56px; padding:0 116px 0 50px; border-radius:9999px;
+    border:1px solid #E5E7EB; background:#fff; color:#111827; font-size:15px; font-weight:500;
+    transition:border-color .15s ease, box-shadow .15s ease; }
+  .hc-search::placeholder { color:#9CA3AF; font-weight:400; }
+  .hc-search:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+  .hc-search::-webkit-search-cancel-button { -webkit-appearance:none; }
+
+  /* ---------- category cards ---------- */
+  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
+  .hc-go svg { transition:transform .25s cubic-bezier(.32,.72,0,1); }
+  .hc-card:hover .hc-go svg { transform:translateX(3px); }
+  @media (prefers-reduced-motion: reduce) { .hc-card, .hc-go svg { transition:none; } .hc-card:hover { transform:none; } }
+
+  /* ---------- pulse dot (support status) ---------- */
+  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
+  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
+  .no-motion .pulse-dot { animation:none; }
+  /* ---------- header below lg: burger + panel ---------- */
+  .nav-burger-close { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
+  #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
+
+  .nav-panel { position:absolute; left:1rem; right:1rem; top:100%;
+    opacity:0; visibility:hidden; transform:translateY(-8px);
+    transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
+  .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
+
+
+  /* ---------- controls on phones ----------
+     These sizes are declared in CSS rather than as utility classes, so they need
+     their own breakpoint. Field heights come down with the text so the controls
+     keep their proportions instead of turning into tall boxes with small labels. */
+  @media (max-width: 639px) {
+    .qc-area, .rc-area, .sp-area { font-size: 14px; }
+    .fld, .cf-field { height: 44px; font-size: 14px; }
+    textarea.fld { height: auto; }
+    .stepper { height: 44px; }
+    .stepper input { font-size: 14px; }
+    .stepper button { width: 34px; font-size: 16px; }
+    .pa-select { height: 40px; font-size: 13px; }
+    .pa-step { height: 40px; }
+    .pa-step input { font-size: 13px; }
+    .pa-step button { width: 32px; font-size: 15px; }
+    .sp-select { height: 36px; font-size: 12px; }
+    .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
+    .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
+    .rc-stat b { font-size: 17px; }
+    .sp-row { font-size: 12px; }
+    .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
+    .cf-label { font-size: 11.5px; }
+    .ctl { font-size: 13.5px; }
+  }
+</style>
+</head>
+
+<style>
+  .pg-card { display:flex; flex-direction:column; gap:.45rem; height:100%;
+    border-radius:.875rem; background:#fff; padding:.9rem 1rem;
+    box-shadow:0 1px 2px rgba(0,0,0,.04); outline:1px solid rgba(0,0,0,.06);
+    transition:outline-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+  .pg-card:hover { outline-color:#0991A8; box-shadow:0 6px 20px -8px rgba(0,0,0,.18); transform:translateY(-1px); }
+  .pg-row { display:flex; align-items:center; gap:.5rem; }
+  .pg-name { font-size:13.5px; font-weight:700; letter-spacing:-.01em; color:#111827; }
+  .pg-h1 { font-size:12px; color:#6B7280; line-height:1.45; }
+  .pg-foot { display:flex; align-items:center; gap:.5rem; margin-top:auto; padding-top:.45rem;
+    border-top:1px solid #F1F2F6; }
+  .pg-file { font-size:11px; color:#9CA3AF; font-variant-numeric:tabular-nums; }
+  .pg-url { margin-left:auto; font-size:11px; font-weight:600; color:#0991A8; }
+  .pg-none { color:#D1D5DB; font-weight:500; }
+  .pg-tag { font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.12em;
+    padding:.15rem .4rem; border-radius:.35rem; }
+  .pg-tag-stub { background:#FDE5E0; color:#B84431; }
+  .pg-tag-quiet { background:#F1F2F6; color:#6B7280; }
+  @media (min-width:640px) { .pg-card { border-radius:1rem; } }
+</style>
+<body class="font-sans text-ink-900 bg-white">
+
+<main class="min-h-screen bg-[#F7F9FA] py-10 sm:py-14 lg:py-16">
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10">
+
+    <div class="mb-8 sm:mb-10 lg:mb-12">
+      <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Prototype index</div>
+      <h1 class="text-[26px] sm:text-[30px] lg:text-[34px] font-extrabold tracking-tightest leading-[1.1] mb-3">Every page in the prototype</h1>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[70ch]">
+        39 pages on disk, 20 of them placeholders for approved destinations that are not built yet.
+        Generated from the directory, each page&rsquo;s own title and <code class="text-[12.5px]">URLS.md</code> &mdash; run
+        <code class="text-[12.5px]">node build/pages.js</code> after adding a page.
+      </p>
+      <p class="text-[12.5px] text-ink-400 mt-3">This index is a review tool and carries no global header or footer, which is why <code class="text-[12px]">shell.js</code> skips it.</p>
+    </div>
+
+      <section class="mb-10 sm:mb-12 lg:mb-14">
+        <div class="flex items-baseline gap-3 mb-4 sm:mb-5">
+          <h2 class="text-[15px] sm:text-[16px] lg:text-[17px] font-bold tracking-tight">Homepage</h2>
+          <span class="text-[11.5px] font-semibold text-ink-400 nums">2</span>
+          <span class="h-px flex-1 bg-ink-100"></span>
+        </div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <li>
+          <a href="index-v2.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Plagiarism Checker – Check Text Online</span>
+              
+            </span>
+            <span class="pg-h1">Plagiarism Checker</span>
+            <span class="pg-foot">
+              <code class="pg-file">index-v2.html</code>
+              <span class="pg-url"><span class="pg-none">no approved path</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Plagiarism + AI detection in one</span>
+              
+            </span>
+            <span class="pg-h1">Plagiarism + AI detection in one.</span>
+            <span class="pg-foot">
+              <code class="pg-file">index.html</code>
+              <span class="pg-url">/</span>
+            </span>
+          </a>
+        </li>
+        </ul>
+      </section>
+
+      <section class="mb-10 sm:mb-12 lg:mb-14">
+        <div class="flex items-baseline gap-3 mb-4 sm:mb-5">
+          <h2 class="text-[15px] sm:text-[16px] lg:text-[17px] font-bold tracking-tight">Product</h2>
+          <span class="text-[11.5px] font-semibold text-ink-400 nums">7</span>
+          <span class="h-px flex-1 bg-ink-100"></span>
+        </div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <li>
+          <a href="ai-detector.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">AI Text Detector</span>
+              
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">ai-detector.html</code>
+              <span class="pg-url">/ai-content-detector</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="api.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Plagiarism API</span>
+              
+            </span>
+            <span class="pg-h1">Integrated API-based plagiarism checking system</span>
+            <span class="pg-foot">
+              <code class="pg-file">api.html</code>
+              <span class="pg-url">/plagiarism-api</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="chat-bot.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Chat Bot</span>
+              <span class="pg-tag pg-tag-quiet">off nav</span>
+            </span>
+            <span class="pg-h1">Telegram &amp; Viber Chatbot user manual</span>
+            <span class="pg-foot">
+              <code class="pg-file">chat-bot.html</code>
+              <span class="pg-url">/plagiarism-checker-app</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="paper-analysis.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Paper Analysis</span>
+              <span class="pg-tag pg-tag-quiet">off nav</span>
+            </span>
+            <span class="pg-h1">Rate my paper</span>
+            <span class="pg-foot">
+              <code class="pg-file">paper-analysis.html</code>
+              <span class="pg-url">/rate-my-paper</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="plagiarism-check.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Plagiarism Check</span>
+              
+            </span>
+            <span class="pg-h1">Online plagiarism check for papers and essays</span>
+            <span class="pg-foot">
+              <code class="pg-file">plagiarism-check.html</code>
+              <span class="pg-url"><span class="pg-none">no approved path</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="readability-check.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Readability Checker</span>
+              <span class="pg-tag pg-tag-quiet">off nav</span>
+            </span>
+            <span class="pg-h1">Readability score checker</span>
+            <span class="pg-foot">
+              <code class="pg-file">readability-check.html</code>
+              <span class="pg-url">/readability-checker</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="spell-check.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Spell Checker</span>
+              <span class="pg-tag pg-tag-quiet">off nav</span>
+            </span>
+            <span class="pg-h1">Grammar, Style, and Spell Checker</span>
+            <span class="pg-foot">
+              <code class="pg-file">spell-check.html</code>
+              <span class="pg-url">/spell-checker</span>
+            </span>
+          </a>
+        </li>
+        </ul>
+      </section>
+
+      <section class="mb-10 sm:mb-12 lg:mb-14">
+        <div class="flex items-baseline gap-3 mb-4 sm:mb-5">
+          <h2 class="text-[15px] sm:text-[16px] lg:text-[17px] font-bold tracking-tight">Integrations</h2>
+          <span class="text-[11.5px] font-semibold text-ink-400 nums">3</span>
+          <span class="h-px flex-1 bg-ink-100"></span>
+        </div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <li>
+          <a href="canvas-integration.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Canvas</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">canvas-integration.html</code>
+              <span class="pg-url">/canvas-integration</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="how-to-use-plagiarismsearch-google-add-on.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Google Docs Add-on</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">how-to-use-plagiarismsearch-google-add-on.html</code>
+              <span class="pg-url">/how-to-use-plagiarismsearch-google-add-on</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="integration-guide.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Moodle Integration</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">integration-guide.html</code>
+              <span class="pg-url">/integration-guide</span>
+            </span>
+          </a>
+        </li>
+        </ul>
+      </section>
+
+      <section class="mb-10 sm:mb-12 lg:mb-14">
+        <div class="flex items-baseline gap-3 mb-4 sm:mb-5">
+          <h2 class="text-[15px] sm:text-[16px] lg:text-[17px] font-bold tracking-tight">Audience</h2>
+          <span class="text-[11.5px] font-semibold text-ink-400 nums">4</span>
+          <span class="h-px flex-1 bg-ink-100"></span>
+        </div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <li>
+          <a href="plagiarism-checker-for-organization.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Business &amp; Teams</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">plagiarism-checker-for-organization.html</code>
+              <span class="pg-url">/plagiarism-checker-for-organization</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="plagiarism-checker-for-students.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Students</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">plagiarism-checker-for-students.html</code>
+              <span class="pg-url">/plagiarism-checker-for-students</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="plagiarism-checker-for-teachers.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Educators</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">plagiarism-checker-for-teachers.html</code>
+              <span class="pg-url">/plagiarism-checker-for-teachers</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="university-plagiarism-checker.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Education &amp; Institutions</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">university-plagiarism-checker.html</code>
+              <span class="pg-url">/university-plagiarism-checker</span>
+            </span>
+          </a>
+        </li>
+        </ul>
+      </section>
+
+      <section class="mb-10 sm:mb-12 lg:mb-14">
+        <div class="flex items-baseline gap-3 mb-4 sm:mb-5">
+          <h2 class="text-[15px] sm:text-[16px] lg:text-[17px] font-bold tracking-tight">Plans, company and content</h2>
+          <span class="text-[11.5px] font-semibold text-ink-400 nums">9</span>
+          <span class="h-px flex-1 bg-ink-100"></span>
+        </div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <li>
+          <a href="blog-best-checker-2026.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Best Plagiarism Checker in 2026</span>
+              
+            </span>
+            <span class="pg-h1">Best Plagiarism Checker in 2026: How to Choose a Safe and Accurate Tool</span>
+            <span class="pg-foot">
+              <code class="pg-file">blog-best-checker-2026.html</code>
+              <span class="pg-url">/blog/best-plagiarism-checker-in-2026</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="blog.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Blog</span>
+              
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">blog.html</code>
+              <span class="pg-url">/blog</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="contact-us.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Contact Us</span>
+              
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">contact-us.html</code>
+              <span class="pg-url">/contact-us</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="help-center.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Help Center</span>
+              
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">help-center.html</code>
+              <span class="pg-url">/help-center</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="mission.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Mission &amp; Core Values</span>
+              
+            </span>
+            <span class="pg-h1">Our mission and core values</span>
+            <span class="pg-foot">
+              <code class="pg-file">mission.html</code>
+              <span class="pg-url">/plagiarismsearch-mission-and-core-values</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="prices.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Pricing</span>
+              
+            </span>
+            <span class="pg-h1">3 simple plans. No hidden tiers.</span>
+            <span class="pg-foot">
+              <code class="pg-file">prices.html</code>
+              <span class="pg-url">/prices</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="testimonials.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Reviews</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">testimonials.html</code>
+              <span class="pg-url">/testimonials</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="vip.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">VIP Package</span>
+              
+            </span>
+            <span class="pg-h1">Built for serious checking volume.</span>
+            <span class="pg-foot">
+              <code class="pg-file">vip.html</code>
+              <span class="pg-url">/vip-plagiarism-checker</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="why-us.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Why Us</span>
+              
+            </span>
+            <span class="pg-h1">Half a million writers. One honest checker .</span>
+            <span class="pg-foot">
+              <code class="pg-file">why-us.html</code>
+              <span class="pg-url">/why-us</span>
+            </span>
+          </a>
+        </li>
+        </ul>
+      </section>
+
+      <section class="mb-10 sm:mb-12 lg:mb-14">
+        <div class="flex items-baseline gap-3 mb-4 sm:mb-5">
+          <h2 class="text-[15px] sm:text-[16px] lg:text-[17px] font-bold tracking-tight">Account and legal</h2>
+          <span class="text-[11.5px] font-semibold text-ink-400 nums">4</span>
+          <span class="h-px flex-1 bg-ink-100"></span>
+        </div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <li>
+          <a href="account.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Log in or create an account</span>
+              
+            </span>
+            <span class="pg-h1">Your account</span>
+            <span class="pg-foot">
+              <code class="pg-file">account.html</code>
+              <span class="pg-url"><span class="pg-none">no approved path</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="cookie-policy.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Cookie Policy</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">cookie-policy.html</code>
+              <span class="pg-url">/cookie-policy</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="policy.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Privacy Policy</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">policy.html</code>
+              <span class="pg-url">/policy</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="terms-of-use.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Terms of Use</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">terms-of-use.html</code>
+              <span class="pg-url">/terms-of-use</span>
+            </span>
+          </a>
+        </li>
+        </ul>
+      </section>
+
+      <section class="mb-10 sm:mb-12 lg:mb-14">
+        <div class="flex items-baseline gap-3 mb-4 sm:mb-5">
+          <h2 class="text-[15px] sm:text-[16px] lg:text-[17px] font-bold tracking-tight">By file type and use case</h2>
+          <span class="text-[11.5px] font-semibold text-ink-400 nums">5</span>
+          <span class="h-px flex-1 bg-ink-100"></span>
+        </div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <li>
+          <a href="originality-badges.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Originality Badges</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">originality-badges.html</code>
+              <span class="pg-url">/originality-badges</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="pdf-plagiarism-checker.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">PDF Plagiarism Checker</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">pdf-plagiarism-checker.html</code>
+              <span class="pg-url">/pdf-plagiarism-checker</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="powerpoint-plagiarism-checker.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">PowerPoint Plagiarism Checker</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">powerpoint-plagiarism-checker.html</code>
+              <span class="pg-url">/powerpoint-plagiarism-checker</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="quote-checker-at-plagiarismsearch.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Quote Checker</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">quote-checker-at-plagiarismsearch.html</code>
+              <span class="pg-url">/quote-checker-at-plagiarismsearch</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="turnitin-checker-alternative.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Turnitin Alternative</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">turnitin-checker-alternative.html</code>
+              <span class="pg-url">/turnitin-checker-alternative</span>
+            </span>
+          </a>
+        </li>
+        </ul>
+      </section>
+
+      <section class="mb-10 sm:mb-12 lg:mb-14">
+        <div class="flex items-baseline gap-3 mb-4 sm:mb-5">
+          <h2 class="text-[15px] sm:text-[16px] lg:text-[17px] font-bold tracking-tight">Company and programmes</h2>
+          <span class="text-[11.5px] font-semibold text-ink-400 nums">4</span>
+          <span class="h-px flex-1 bg-ink-100"></span>
+        </div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <li>
+          <a href="affiliate-program-at-plagiarismsearch.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Affiliate Program</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">affiliate-program-at-plagiarismsearch.html</code>
+              <span class="pg-url">/affiliate-program-at-plagiarismsearch</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="newsroom.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">News</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">newsroom.html</code>
+              <span class="pg-url">/newsroom</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="scholarship.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Scholarship</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">scholarship.html</code>
+              <span class="pg-url">/scholarship</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="user-manuals.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">User Guide</span>
+              <span class="pg-tag pg-tag-stub">stub</span>
+            </span>
+            
+            <span class="pg-foot">
+              <code class="pg-file">user-manuals.html</code>
+              <span class="pg-url">/user-manuals</span>
+            </span>
+          </a>
+        </li>
+        </ul>
+      </section>
+
+      <section class="mb-10 sm:mb-12 lg:mb-14">
+        <div class="flex items-baseline gap-3 mb-4 sm:mb-5">
+          <h2 class="text-[15px] sm:text-[16px] lg:text-[17px] font-bold tracking-tight">Design reference</h2>
+          <span class="text-[11.5px] font-semibold text-ink-400 nums">1</span>
+          <span class="h-px flex-1 bg-ink-100"></span>
+        </div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <li>
+          <a href="design-system.html" class="pg-card">
+            <span class="pg-row">
+              <span class="pg-name">Design System</span>
+              
+            </span>
+            <span class="pg-h1">The design system</span>
+            <span class="pg-foot">
+              <code class="pg-file">design-system.html</code>
+              <span class="pg-url"><span class="pg-none">no approved path</span></span>
+            </span>
+          </a>
+        </li>
+        </ul>
+      </section>
+
+  </div>
+</main>
+
+</body>
+</html>
