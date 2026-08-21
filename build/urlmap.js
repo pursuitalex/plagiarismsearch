@@ -28,6 +28,7 @@ const BUILT = [
   { file: 'help-center.html',            path: '/help-center' },
   { file: 'blog.html',                   path: '/blog' },
   { file: 'blog-best-checker-2026.html', path: '/blog/best-plagiarism-checker-in-2026' },
+  { file: 'blog-best-checker-2026-b.html', path: null,                                     note: 'Layout variant B of the article above, for choosing between a contents rail and a plain long-read. Whichever loses is deleted; the winner keeps the approved path.' },
   { file: 'vip.html',                    path: '/vip-plagiarism-checker',                   note: 'Footer only, under Plans & Legal. Not a core product; stays out of the header.' },
 
   /* built, kept, but outside the global navigation per DEC-0027 §5 */

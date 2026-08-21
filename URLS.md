@@ -22,6 +22,7 @@ driven by this table.
 | `help-center.html` | `/help-center` | built |  |
 | `blog.html` | `/blog` | built |  |
 | `blog-best-checker-2026.html` | `/blog/best-plagiarism-checker-in-2026` | built |  |
+| `blog-best-checker-2026-b.html` | — | no approved path | Layout variant B of the article above, for choosing between a contents rail and a plain long-read. Whichever loses is deleted; the winner keeps the approved path. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
 | `paper-analysis.html` | `/rate-my-paper` | built · out of global nav |  |
 | `spell-check.html` | `/spell-checker` | built · out of global nav |  |
@@ -55,7 +56,7 @@ driven by this table.
 
 - 20 × stub
 - 11 × built
-- 4 × no approved path
+- 5 × no approved path
 - 4 × built · out of global nav
 
 ## Open

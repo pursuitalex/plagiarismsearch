@@ -63,6 +63,7 @@ const PAGES = {
   'help-center.html':            { active: 'resources' },
   'blog.html':                   { active: 'resources' },
   'blog-best-checker-2026.html': { active: 'resources' },
+  'blog-best-checker-2026-b.html': { active: 'resources' },   /* layout variant, deleted with the losing one */
   'why-us.html':                 { active: 'company' },
   'mission.html':                { active: 'company' },
   'contact-us.html':             { active: 'company' },

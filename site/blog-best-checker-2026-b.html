@@ -270,16 +270,23 @@ tailwind.config = {
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 
       <!-- REVIEW CONTROL — delete with the losing layout. -->
-      <div class="mx-auto max-w-[600px] lg:max-w-[860px] mb-5 sm:mb-6 flex items-center gap-2 text-[11.5px] font-semibold">
+      <div class="mx-auto max-w-[620px] mb-5 sm:mb-6 flex items-center gap-2 text-[11.5px] font-semibold">
         <span class="text-ink-400 uppercase tracking-[0.18em] text-[10px]">Layout</span>
-        <a href="blog-best-checker-2026.html" class="rounded-full px-3 py-1.5 bg-ink-900 text-white transition-colors duration-300">A &middot; contents rail</a>
-        <a href="blog-best-checker-2026-b.html" class="rounded-full px-3 py-1.5 bg-ink-100 text-ink-600 hover:bg-ink-200 transition-colors duration-300">B &middot; long-read</a>
+        <a href="blog-best-checker-2026.html" class="rounded-full px-3 py-1.5 bg-ink-100 text-ink-600 hover:bg-ink-200 transition-colors duration-300">A &middot; contents rail</a>
+        <a href="blog-best-checker-2026-b.html" class="rounded-full px-3 py-1.5 bg-ink-900 text-white transition-colors duration-300">B &middot; long-read</a>
       </div>
-      <!-- An article is not a landing page: it gets its own measure and sits in the
-           middle of the container rather than hugging its left edge. 600px is the text
-           column at every width — about 72 characters at 16.5px, inside the comfortable
-           range; 860 at lg is that column plus the contents rail beside it. -->
-      <div class="mx-auto max-w-[600px] lg:max-w-[860px]">
+      <!-- LAYOUT B — the long-read.
+
+           One column, dead centre, and nothing placed in the margins: 620px of text at
+           every width, about 75 characters. The margins stay empty on purpose — this is
+           the calmer of the two layouts, and it asks the reader to do one thing.
+
+           The cover breaks out past the measure so the page still opens with something
+           wide, which is the only job the extra width does here.
+
+           Layout A is the same article with a contents rail in that margin instead.
+           One of the two files is deleted once the layout is chosen. -->
+      <div class="mx-auto max-w-[620px]">
 
       <!-- masthead -->
       <div class="rv mb-6 sm:mb-8 lg:mb-10">
@@ -301,22 +308,19 @@ tailwind.config = {
 
       <div>
 
-        <div class="rv overflow-hidden rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse mb-8 sm:mb-10 lg:mb-12">
+        <div class="rv overflow-hidden rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse mb-8 sm:mb-10 lg:mb-12 lg:-mx-[130px]">
           <img src="assets/img/blog/post-02.webp" alt="" width="740" height="550" fetchpriority="high" decoding="async" class="w-full aspect-[740/550] object-cover">
         </div>
 
-        <!-- Text and contents share a grid at lg so the rail fills the space the measure
-             leaves rather than stranding it. One nav, not two: it is written above the
-             text — the only sensible place on a phone — and placed into the second column
-             at lg, where it sticks. A duplicate would be two of every link in the DOM. -->
-        <div class="lg:grid lg:grid-cols-[minmax(0,1fr)_216px] lg:gap-10 xl:gap-11 lg:items-start">
-
-        <nav class="rv rounded-3xl sm:rounded-[28px] bg-ink-50 p-4 sm:p-5 mb-8 sm:mb-10 lg:col-start-2 lg:row-start-1 lg:sticky lg:top-28 lg:mb-0 lg:rounded-none lg:bg-transparent lg:p-0 lg:pl-5 lg:border-l lg:border-ink-100" aria-label="On this page">
-          <div class="flex items-center gap-3 mb-4">
+        <!-- The contents stays a card above the text at every width. In this layout there
+             is no rail to put it in, and a card the reader passes once suits a piece meant
+             to be read straight through. -->
+        <nav class="rv rounded-3xl sm:rounded-[28px] bg-ink-50 p-4 sm:p-5 lg:p-6 mb-8 sm:mb-10 lg:mb-12" aria-label="On this page">
+          <div class="flex items-center gap-3 mb-4 lg:mb-5">
             <span class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] uppercase text-ink-400">On this page</span>
-            <span class="ml-auto lg:hidden text-[11.5px] font-medium text-ink-400"><span class="nums">3,527</span> words</span>
+            <span class="ml-auto text-[11.5px] font-medium text-ink-400"><span class="nums">3,527</span> words</span>
           </div>
-          <ol class="grid sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 lg:gap-y-3">
+          <ol class="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
             <li class="flex gap-2.5">
               <span class="shrink-0 text-[11.5px] font-bold nums text-ink-300 pt-0.5">01</span>
               <a href="#why-best-plagiarism-checker-looks-differ" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Why &ldquo;Best Plagiarism Checker&rdquo; Looks Different in 2026</a>
@@ -356,7 +360,7 @@ tailwind.config = {
           </ol>
         </nav>
 
-        <article class="rv min-w-0 lg:col-start-1 lg:row-start-1">
+        <article class="rv min-w-0">
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Between 2023 and 2025, the way we write and submit text changed dramatically. Generative AI tools can draft essays, blog posts and research summaries in seconds, while universities and companies are rewriting their policies on academic integrity and acceptable use of AI. In this new landscape, choosing the best plagiarism checker is no longer just about catching obvious copy-paste from the web. In 2026, the tool you use also has to deal with paraphrased content, translated passages, AI-assisted writing and strict data-protection rules.</p>
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">The problem is that there are now dozens of online plagiarism checkers, all promising high accuracy and &ldquo;advanced AI&rdquo; with very little transparency. Some focus only on student papers, others on SEO content, and some quietly store every document you upload. This guide is designed to cut through the noise. Instead of giving you a random top-10 list, it explains what &ldquo;best plagiarism checker&rdquo; really means in 2026, which criteria actually matter, and how you can test any tool yourself before you trust it with your work.</p>
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">By the end of this article, you will have a practical checklist, a simple DIY comparison test and clear recommendations for students, teachers and content teams who want a safe and accurate solution.</p>
@@ -472,10 +476,8 @@ tailwind.config = {
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">The phrase &ldquo;best plagiarism checker&rdquo; makes it sound as if one perfect tool is hiding at the top of a ranking list. In reality, 2026 is a world of mixed workflows, AI-assisted writing and strict privacy expectations. The best option for a first-year student is not necessarily the best one for a journal editor, a high-school teacher or a global content team. What they all share, however, is the need for accuracy across different plagiarism patterns, honest handling of AI-generated text, robust database coverage and transparent data-protection practices.</p>
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-700 leading-[1.75] mb-4 sm:mb-5 lg:mb-6">Use the criteria and DIY test from this guide to evaluate any checker you are considering. Read the privacy policy, try sample documents and assess not only the similarity percentage but also the clarity of the report and the quality of support. If you want a concrete starting point, you can look at services like PlagiarismSearch, which combine plagiarism detection with AI-aware analysis and transparent, GDPR-focused data handling, and then compare them with other tools using the same checklist. When you find a solution that fits your context and respects your data, stick with it and build it into your regular writing routine. In the long run, a thoughtful choice of plagiarism checker is less about chasing a trendy brand name and more about protecting your integrity, your reputation and the people who rely on your work.</p>
         </article>
-
-        </div><!-- /text + contents grid -->
       </div>
-      </div><!-- /centred composition -->
+      </div><!-- /centred column -->
     </div>
   </section>
 
