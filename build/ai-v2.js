@@ -216,6 +216,21 @@ const lede = t => `<p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leadi
 
 const arrow = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
 
+/* Pen mark — DESIGN.md § Web build → Motion. The word colours in, then a hand-drawn
+   underline draws beneath it. One per heading: it is emphasis, not decoration.
+
+   Applied at render, not stored in COPY, so the approved H1 stays one plain diffable
+   string. check-ai.js compares the H1 with tags stripped, so the wrap is invisible to it.
+
+   The viewBox has to match the phrase: the existing marks run 120 units for an
+   eight-character word and 180 for a ten, so the control points are proportions of the
+   width rather than fixed numbers — "AI Detector" is eleven characters and gets 200. */
+const penMark = (text, phrase) => {
+  const w = Math.round(phrase.length * 18);
+  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg>`;
+  return text.replace(phrase, `<span class="pen-word relative inline-block">${phrase}${svg}</span>`);
+};
+
 /* dark pill on light ground */
 const btnDark = (label, href) => `<a href="${href}" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
             ${label}
@@ -253,7 +268,7 @@ const section1 = () => `  <!-- ================= 01 · HERO + REAL AI CHECKER ==
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv text-center max-w-[760px] mx-auto mb-8 sm:mb-10 lg:mb-12">
 ${eyebrow('teal-400', 'AI Detector')}
-        <h1 class="text-[clamp(2.1rem,4.4vw,3.5rem)] font-extrabold tracking-tightest leading-[1.05] mb-4 lg:mb-5">${COPY.s1.h1}</h1>
+        <h1 class="text-[clamp(2.1rem,4.4vw,3.5rem)] font-extrabold tracking-tightest leading-[1.05] mb-4 lg:mb-5">${penMark(COPY.s1.h1, 'AI Detector')}</h1>
         <p class="text-[14.5px] sm:text-[15.5px] lg:text-[16px] leading-relaxed text-ink-600">${COPY.s1.support}</p>
       </div>
 
@@ -683,6 +698,11 @@ const STYLE = `
   /* placeholder chrome — anything wearing this waits on the approved report asset */
   .ph { border:1px dashed rgba(16,24,40,.22); border-radius:.5rem; }
   .ph-dark { border:1px dashed rgba(255,255,255,.24); border-radius:.5rem; }
+
+  /* pen mark — the reduced-motion fallback is mandatory, not optional: without it the
+     emphasis simply vanishes for anyone who asked the site to stop moving */
+  .no-motion .pen-word { color:#DC5A45; }
+  .no-motion .pen-underline { opacity:1; }
 </style>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -714,6 +734,22 @@ const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.
   gsap.utils.toArray('.rv-kids').forEach(group => {
     gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
       scrollTrigger: { trigger: group, start: 'top 80%' } });
+  });
+
+  /* pen marks — the word colours in, then its underline draws. Marks in the first
+     viewport wait out the reveal cascade; lower ones fire when scrolled to. */
+  gsap.utils.toArray('.pen-word').forEach(word => {
+    const line = word.querySelector('.pen-underline');
+    if (!line) return;
+    const len = line.getTotalLength();
+    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
+    const tl = gsap.timeline(inFirstView
+      ? { delay: 1 }
+      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
+    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+      .set(line, { opacity: 1 }, .35)
+      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
   });
 })();
 </script>

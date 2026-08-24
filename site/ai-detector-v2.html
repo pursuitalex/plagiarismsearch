@@ -282,6 +282,11 @@ tailwind.config = {
   /* placeholder chrome — anything wearing this waits on the approved report asset */
   .ph { border:1px dashed rgba(16,24,40,.22); border-radius:.5rem; }
   .ph-dark { border:1px dashed rgba(255,255,255,.24); border-radius:.5rem; }
+
+  /* pen mark — the reduced-motion fallback is mandatory, not optional: without it the
+     emphasis simply vanishes for anyone who asked the site to stop moving */
+  .no-motion .pen-word { color:#DC5A45; }
+  .no-motion .pen-underline { opacity:1; }
 </style>
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
@@ -421,7 +426,7 @@ tailwind.config = {
           <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">AI Detector</span>
         </div>
-        <h1 class="text-[clamp(2.1rem,4.4vw,3.5rem)] font-extrabold tracking-tightest leading-[1.05] mb-4 lg:mb-5">AI Detector for Text and Documents</h1>
+        <h1 class="text-[clamp(2.1rem,4.4vw,3.5rem)] font-extrabold tracking-tightest leading-[1.05] mb-4 lg:mb-5"><span class="pen-word relative inline-block">AI Detector<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 198 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c50-7 133-7 192-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span> for Text and Documents</h1>
         <p class="text-[14.5px] sm:text-[15.5px] lg:text-[16px] leading-relaxed text-ink-600">Paste text or upload a document to review AI-writing signals in a report that separates overall AI likelihood from the share and location of flagged passages.</p>
       </div>
 
@@ -1206,6 +1211,22 @@ tailwind.config = {
   gsap.utils.toArray('.rv-kids').forEach(group => {
     gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
       scrollTrigger: { trigger: group, start: 'top 80%' } });
+  });
+
+  /* pen marks — the word colours in, then its underline draws. Marks in the first
+     viewport wait out the reveal cascade; lower ones fire when scrolled to. */
+  gsap.utils.toArray('.pen-word').forEach(word => {
+    const line = word.querySelector('.pen-underline');
+    if (!line) return;
+    const len = line.getTotalLength();
+    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
+    const tl = gsap.timeline(inFirstView
+      ? { delay: 1 }
+      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
+    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+      .set(line, { opacity: 1 }, .35)
+      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
   });
 })();
 </script>
