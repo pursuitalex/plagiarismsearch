@@ -28,6 +28,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'ai-detector-v2.html';
+const cta = require('./cta');   /* the closing band — recipe and reasoning live there */
 
 /* ─────────────────────────────────────────────────────────────────────────────
    APPROVED COPY — DEC-0038, 2026-08-22. Verbatim.
@@ -643,19 +644,30 @@ ${COPY.s9.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? 
 /* ═══════════════ 10 · FINAL CTA ═══════════════ */
 const section10 = () => `  <!-- ================= 10 · FINAL CTA =================
        "Do not render a second checker form. The CTA returns the user to the real tool."
-       So both actions are anchors back up the page, not a new input. -->
-  <section id="ai-final-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden bg-[#F2FCFC]">
-    <div class="orb absolute" style="width:1000px;height:940px;left:-20%;top:-460px;background:rgba(243,111,90,.22)"></div>
-    <div class="orb absolute" style="width:880px;height:860px;right:-16%;bottom:-420px;background:rgba(13,168,194,.16)"></div>
+       So both actions are anchors back up the page, not a new input.
 
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <div class="rv max-w-[720px] mx-auto">
-        ${h2(COPY.s10.h2)}
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[16px] leading-relaxed text-ink-600">${COPY.s10.support}</p>
-        <div class="mt-7 lg:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          ${btnDark(COPY.s10.cta, '#ai-checker')}
-          <a href="#ai-pricing" class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s10.secondary}</a>
-        </div>
+       The band is the shared closing CTA — dot field, two masked glows, hero-scale
+       heading, one ring mark. Recipe and reasoning in build/cta.js.
+
+       The ring goes round "AI-writing" because that is what this page is for, and it is
+       ten characters — the length the loop was drawn for. No eyebrow chip: the homepage
+       band has one ("Free check") but that is approved copy there, and inventing a label
+       here would be new visible text the baseline does not carry. -->
+  <section id="ai-final-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+${cta.background('ai-final-cta')}
+
+    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
+      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s10.h2, 'AI-writing')}</h2>
+      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[56ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.s10.support}</p>
+      <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+        <a href="#ai-checker" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          ${COPY.s10.cta}
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+        <a href="#ai-pricing" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s10.secondary}</a>
       </div>
     </div>
   </section>`;
@@ -699,6 +711,7 @@ const STYLE = `
   .ph { border:1px dashed rgba(16,24,40,.22); border-radius:.5rem; }
   .ph-dark { border:1px dashed rgba(255,255,255,.24); border-radius:.5rem; }
 
+${cta.style('ai-final-cta')}
   /* pen mark — the reduced-motion fallback is mandatory, not optional: without it the
      emphasis simply vanishes for anyone who asked the site to stop moving */
   .no-motion .pen-word { color:#DC5A45; }
@@ -735,6 +748,8 @@ const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.
     gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
       scrollTrigger: { trigger: group, start: 'top 80%' } });
   });
+
+${cta.script}
 
   /* pen marks — the word colours in, then its underline draws. Marks in the first
      viewport wait out the reveal cascade; lower ones fire when scrolled to. */

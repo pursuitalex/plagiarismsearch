@@ -287,6 +287,56 @@ tailwind.config = {
   .cf-field:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
   textarea.cf-field { height:auto; padding:12px 14px; line-height:1.6; resize:none; }
 
+
+  /* ===== closing CTA · one place for every knob — see build/cta.js ===== */
+  #api-final-cta {
+    --cta-bg: #F2FCFC;
+    /* warm, upper left */
+    --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
+    --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
+    --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
+    --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
+    /* cool, lower right */
+    --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
+    --cta-o2-w: 954px;          --cta-o2-h: 950px;
+    --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
+    --cta-o2-mid: 65%;          --cta-o2-end: 100%;
+    background-color: var(--cta-bg);
+  }
+  #api-final-ctaGlowWarm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+  #api-final-ctaGlowCool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+  /* tablet — about three quarters of the desktop figure */
+  @media (max-width:1023px) {
+    #api-final-cta {
+      --cta-o1-w: 840px;  --cta-o1-h: 770px;
+      --cta-o1-x: -28%;   --cta-o1-y: -400px;
+      --cta-o2-w: 700px;  --cta-o2-h: 700px;
+      --cta-o2-x: 64%;    --cta-o2-y: 300px;
+    }
+  }
+  /* phone — half the size, softer, hard against the edges so the middle stays readable */
+  @media (max-width:639px) {
+    #api-final-cta {
+      --cta-o1-alpha: .20;
+      --cta-o1-w: 560px;  --cta-o1-h: 520px;
+      --cta-o1-x: -38%;   --cta-o1-y: -250px;
+      --cta-o2-alpha: .12;
+      --cta-o2-w: 470px;  --cta-o2-h: 470px;
+      --cta-o2-x: 52%;    --cta-o2-y: 210px;
+    }
+  }
+
+  /* the ring's reduced-motion fallback is mandatory: colour and path are both scripted */
+  .no-motion .ring-word { color:#DC5A45; }
+  .no-motion .ring-path { opacity:1; }
+
   /* pen mark — the reduced-motion fallback is mandatory */
   .no-motion .pen-word { color:#DC5A45; }
   .no-motion .pen-underline { opacity:1; }
@@ -982,21 +1032,32 @@ tailwind.config = {
   <!-- ================= 11 · FINAL CTA =================
        Dual next steps, in the approved hierarchy: the technical evaluator returns to the
        docs, the buyer goes to the form. No third action, no free-trial button. -->
-  <section id="api-final-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden bg-[#F2FCFC]">
-    <div class="orb absolute" style="width:1000px;height:940px;left:-20%;top:-460px;background:rgba(243,111,90,.22)"></div>
-    <div class="orb absolute" style="width:880px;height:860px;right:-16%;bottom:-420px;background:rgba(13,168,194,.16)"></div>
+  <section id="api-final-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
+          <defs>
+            <pattern id="api-final-ctaDots" width="22" height="22" patternUnits="userSpaceOnUse">
+              <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#api-final-ctaDots)"></rect>
+        </svg>
+        <div id="api-final-ctaGlowWarm" class="orb"></div>
+        <div id="api-final-ctaGlowCool" class="orb"></div>
+      </div>
 
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <div class="rv max-w-[740px] mx-auto">
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Ready to evaluate the PlagiarismSearch API?</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[16px] leading-relaxed text-ink-600">Review the API documentation to inspect the current technical contract, or send us your requirements if you need API access, trial options, or custom pricing.</p>
-        <div class="mt-7 lg:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <a href="https://plagiarismsearch.com/docs/" rel="noopener" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
-            View API documentation
-            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-          </a>
-          <a href="#api-quote" class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">Request API access</a>
-        </div>
+    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
+      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Ready to <span class="ring-word relative inline-block">evaluate<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span> the PlagiarismSearch API?</h2>
+      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Review the API documentation to inspect the current technical contract, or send us your requirements if you need API access, trial options, or custom pricing.</p>
+      <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+        <a href="https://plagiarismsearch.com/docs/" rel="noopener" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+          View API documentation
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+        <a href="#api-quote" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">Request API access</a>
       </div>
     </div>
   </section>
@@ -1177,6 +1238,20 @@ tailwind.config = {
   gsap.utils.toArray('.rv-kids').forEach(group => {
     gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
       scrollTrigger: { trigger: group, start: 'top 80%' } });
+  });
+
+
+  /* ring mark — the closing act loops a word instead of underlining it. Same trick as
+     the pen mark, longer path, and it waits until the word is well inside the viewport. */
+  gsap.utils.toArray('.ring-word').forEach(word => {
+    const path = word.querySelector('.ring-path');
+    if (!path) return;
+    const len = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.timeline({ scrollTrigger: { trigger: word, start: 'top 75%', once: true } })
+      .to(word, { color: '#DC5A45', duration: .4, ease: 'power2.out' })
+      .set(path, { opacity: 1 }, .15)
+      .to(path, { strokeDashoffset: 0, duration: .9, ease: 'power2.inOut' }, .15);
   });
 
   gsap.utils.toArray('.pen-word').forEach(word => {

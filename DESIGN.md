@@ -470,6 +470,35 @@ a phone — a set that looks uniform on the machine you designed it on and ragge
   Use **one** pen mark per heading — it is emphasis, not decoration.
   *(index.html's hero `one.` and CTA `free` predate the class and use IDs with bespoke timing tied
   to the hero cascade; the class pattern above is the standard for all new work.)*
+- **Ring mark** (the closing CTA only): the band loops a word instead of underlining it.
+  `<span class="ring-word relative inline-block">word<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" style="left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);"><path class="ring-path" d="…" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" opacity="0"/></svg></span>`.
+  Same mechanism as the pen mark, longer path, slower draw (.9s), and it fires later —
+  `top 75%`, `once: true` — because it is the last thing the page says. One per heading.
+  The loop is drawn for a fragment of **about ten characters**; the SVG is sized in
+  percentages of the span, so a much shorter or longer phrase stretches the loop into an
+  egg. Pick the fragment by length as well as by meaning. Reduced-motion fallback is
+  mandatory: `.no-motion .ring-word { color:#DC5A45 } .no-motion .ring-path { opacity:1 }`.
+  *(The loop reads as a loose scribble across the word, not a tight enclosure — measured,
+  the path is ~0.6–0.75 of the span width. That is the intended look, not a defect.)*
+
+#### The closing CTA band — `build/cta.js`
+
+The section before the footer is a shared component. Its recipe has four parts and all
+four carry weight:
+
+1. **Dot field.** An SVG `<pattern>`, 22px cell, a 2×2 rounded square (`rx=.65`) in
+   `#DAE7ED`. It is what stops the band reading as an empty coloured rectangle — the
+   section is mostly air, and the dots give that air a texture. A `<pattern>` rather than
+   a repeating background-image, so it stays crisp at any zoom for one rasterisation.
+   **It must sit under the glows** — dots over glow reads as dirt on glass.
+2. **Two glows**, warm upper-left and cool lower-right, as masked gradients on a solid
+   fill — never `blur()`. Every knob is a custom property on the section id, and the two
+   media queries are not optional: the warm glow is 1138px wide, which on a 390px phone
+   is three viewports of coral washing the screen.
+3. **One ring mark** in the heading, per the entry above.
+4. **Hero-scale heading**, `clamp(2.4rem,5.5vw,4.35rem)` — the one place a non-hero
+   heading takes the hero size, because a closing CTA is deliberately roomier.
+
 - Counters: tween object + `onUpdate` with cached writes, `.nums` on the element
 - **`prefers-reduced-motion`**: add `.no-motion` to `<html>`, all `.rv` forced visible, final states set statically — every scripted animation needs its static fallback
 - Perf floor: animate only `transform`/`opacity`; no `backdrop-blur` on elements that repaint per frame; `will-change` only on continuously-moving nodes

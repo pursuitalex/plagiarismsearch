@@ -25,6 +25,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'api-v2.html';
+const cta = require('./cta');   /* the closing band — recipe and reasoning live there */
 
 const DOCS = 'https://plagiarismsearch.com/docs/';   /* live production, no page here */
 
@@ -587,18 +588,21 @@ ${COPY.s10.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ?
 const section11 = () => `  <!-- ================= 11 · FINAL CTA =================
        Dual next steps, in the approved hierarchy: the technical evaluator returns to the
        docs, the buyer goes to the form. No third action, no free-trial button. -->
-  <section id="api-final-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden bg-[#F2FCFC]">
-    <div class="orb absolute" style="width:1000px;height:940px;left:-20%;top:-460px;background:rgba(243,111,90,.22)"></div>
-    <div class="orb absolute" style="width:880px;height:860px;right:-16%;bottom:-420px;background:rgba(13,168,194,.16)"></div>
+  <section id="api-final-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+${cta.background('api-final-cta')}
 
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <div class="rv max-w-[740px] mx-auto">
-        ${h2(COPY.s11.h2)}
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[16px] leading-relaxed text-ink-600">${COPY.s11.support}</p>
-        <div class="mt-7 lg:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          ${btnDark(COPY.s11.primary, DOCS)}
-          <a href="#api-quote" class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s11.secondary}</a>
-        </div>
+    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
+      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s11.h2, 'evaluate')}</h2>
+      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.s11.support}</p>
+      <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+        <a href="${DOCS}" rel="noopener" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+          ${COPY.s11.primary}
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+        <a href="#api-quote" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s11.secondary}</a>
       </div>
     </div>
   </section>`;
@@ -644,6 +648,8 @@ const STYLE = `
   .cf-field:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
   textarea.cf-field { height:auto; padding:12px 14px; line-height:1.6; resize:none; }
 
+${cta.style('api-final-cta')}
+
   /* pen mark — the reduced-motion fallback is mandatory */
   .no-motion .pen-word { color:#DC5A45; }
   .no-motion .pen-underline { opacity:1; }
@@ -677,6 +683,8 @@ const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.
     gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
       scrollTrigger: { trigger: group, start: 'top 80%' } });
   });
+
+${cta.script}
 
   gsap.utils.toArray('.pen-word').forEach(word => {
     const line = word.querySelector('.pen-underline');
