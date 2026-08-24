@@ -133,7 +133,14 @@ const COPY = {
       ['Process', 'The API creates the report and returns a 202 response with the report ID while plagiarism checking continues asynchronously.'],
       ['Receive', 'When processing is complete, PlagiarismSearch sends a report.checked webhook to your callback URL. Use the report ID and returned report link to continue the workflow inside your own system.'],
     ],
-    callout: 'Your integration does not need to wait for the plagiarism check to finish before continuing other work. The initial response identifies the report, and the completion webhook tells your system when the check is ready.',
+    /* The approved SUPPORTING CALLOUT, split at its own full stop. The lead carries
+       the point of the section; the support explains the mechanism. Splitting a
+       paragraph is layout, not rewriting — no word changes. */
+    calloutLead: 'Your integration does not need to wait for the plagiarism check to finish before continuing other work.',
+    calloutSupport: 'The initial response identifies the report, and the completion webhook tells your system when the check is ready.',
+    /* the accented fragment, lifted out of the lead so the emphasis is a span rather
+       than a second copy of the words */
+    calloutAccent: 'does not need to wait',
   },
 
   s5: {
@@ -406,36 +413,54 @@ ${COPY.s4.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rou
         </div>`).join('\n')}
       </div>
 
-      <div class="rv mt-6 lg:mt-8 rounded-3xl bg-ink-950 p-6 sm:p-7 lg:p-8 grid lg:grid-cols-[1fr_auto] gap-7 lg:gap-10 items-center">
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/80 max-w-[68ch]">${COPY.s4.callout}</p>
+      <div class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
 
-        <!-- your app on top, the API below, and the gap between the two arrows is the
-             asynchrony itself — drawn, because a row of equal cards cannot show it -->
-        <div class="shrink-0 w-full lg:w-[340px]" aria-hidden="true">
-          <div class="flex items-center justify-between text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">
-            <span>Your app</span><span>PlagiarismSearch</span>
+        <div class="max-w-[54ch]">
+          <p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] text-white mb-3 lg:mb-4">${
+            COPY.s4.calloutLead.replace(COPY.s4.calloutAccent,
+              '<span class="text-orange-300">' + COPY.s4.calloutAccent + '</span>')}</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/65">${COPY.s4.calloutSupport}</p>
+        </div>
+
+        <!-- The sequence, read top to bottom as time. Two hosts, three messages, and a
+             gap in the middle that is the whole point: the app is free between the 202
+             and the webhook.
+
+             Every label is a literal from the hero code samples — your.app and
+             plagiarismsearch.com are the two hosts in the curl commands, and the rest are
+             the endpoint, the status code, the processing label and the event name. A
+             diagram that quotes the contract needs no invented copy. -->
+        <div class="w-full lg:w-[400px] rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6">
+          <div class="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-white/10">
+            <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">your.app</code>
+            <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">plagiarismsearch.com</code>
           </div>
-          <div class="rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-4 space-y-3">
-            <div class="flex items-center gap-2.5">
-              <span class="w-2 h-2 rounded-full bg-teal-400 shrink-0"></span>
-              <span class="flex-1 h-px bg-gradient-to-r from-teal-400/70 to-teal-400/20"></span>
-              <span class="text-[11px] font-medium text-white/55 shrink-0">create</span>
-            </div>
-            <div class="flex items-center gap-2.5">
-              <span class="text-[11px] font-medium text-white/55 shrink-0">202</span>
-              <span class="flex-1 h-px bg-gradient-to-l from-teal-400/70 to-teal-400/20"></span>
-              <span class="w-2 h-2 rounded-full bg-teal-400 shrink-0"></span>
-            </div>
-            <div class="flex items-center gap-2 py-1">
+
+          <div class="space-y-4">
+${[
+  { dir: 'out',  label: 'POST /api/v3/reports/create', tone: 'teal' },
+  { dir: 'in',   label: '202', tone: 'teal' },
+  { dir: 'wait', label: 'status_label: \"processing\"', tone: 'muted' },
+  { dir: 'in',   label: 'report.checked', tone: 'orange' },
+].map(step => {
+  const C = { teal: ['#2CC3DB', 'text-teal-300'], orange: ['#F58971', 'text-orange-300'], muted: ['', 'text-white/40'] }[step.tone];
+  if (step.dir === 'wait') {
+    return `            <div class="flex items-center gap-3 py-1">
               <span class="flex-1 border-t border-dashed border-white/15"></span>
-              <span class="text-[10.5px] text-white/35 shrink-0">processing</span>
+              <code class="shrink-0 text-[11.5px] sm:text-[12px] ${C[1]}">${step.label}</code>
               <span class="flex-1 border-t border-dashed border-white/15"></span>
-            </div>
-            <div class="flex items-center gap-2.5">
-              <span class="text-[11px] font-medium text-orange-300 shrink-0">report.checked</span>
-              <span class="flex-1 h-px bg-gradient-to-l from-orange-400/70 to-orange-400/20"></span>
-              <span class="w-2 h-2 rounded-full bg-orange-400 shrink-0"></span>
-            </div>
+            </div>`;
+  }
+  const out = step.dir === 'out';
+  return `            <div>
+              <code class="block text-[12px] sm:text-[13px] font-semibold ${C[1]} mb-1.5 ${out ? '' : 'text-right'}">${step.label}</code>
+              <div class="flex items-center gap-2" aria-hidden="true">
+                ${out ? '' : `<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="${C[0]}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
+                <span class="flex-1 h-px" style="background:${C[0]}66"></span>
+                ${out ? `<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1 4.5h7M5 1.5l3 3-3 3" stroke="${C[0]}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ''}
+              </div>
+            </div>`;
+}).join('\n')}
           </div>
         </div>
       </div>
