@@ -22,6 +22,7 @@ const BUILT = [
   { file: 'ai-detector.html',            path: '/ai-content-detector' },
   { file: 'ai-detector-v2.html',         path: null, note: 'The DEC-0038 rebuild of the AI Detector, alongside the current one. Takes over `/ai-content-detector` once approved; the old page is retired then, not before. Built by build/ai-v2.js, checked by build/check-ai.js.' },
   { file: 'api.html',                    path: '/plagiarism-api' },
+  { file: 'api-v2.html',                 path: null, note: 'The DEC-0041 rebuild of the API page, alongside the current one. Takes over `/plagiarism-api` once approved; the old page is retired then, not before. Built by build/api-v2.js, checked by build/check-api.js.' },
   { file: 'prices.html',                 path: '/prices' },
   { file: 'terms-of-use.html',            path: '/terms-of-use',                             note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },
   { file: 'policy.html',                 path: '/policy',                                   note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },

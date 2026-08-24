@@ -62,6 +62,8 @@ const PAGES = {
      index-v2 is: nothing is retired until the replacement is accepted */
   'ai-detector-v2.html':         { active: 'products' },
   'api.html':                    { active: 'products' },
+  /* the DEC-0041 rebuild, alongside the current one */
+  'api-v2.html':                 { active: 'products' },
   'prices.html':                 { active: 'pricing' },
   'help-center.html':            { active: 'resources' },
   'blog.html':                   { active: 'resources' },

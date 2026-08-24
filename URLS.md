@@ -16,6 +16,7 @@ driven by this table.
 | `ai-detector.html` | `/ai-content-detector` | built |  |
 | `ai-detector-v2.html` | — | no approved path | The DEC-0038 rebuild of the AI Detector, alongside the current one. Takes over `/ai-content-detector` once approved; the old page is retired then, not before. Built by build/ai-v2.js, checked by build/check-ai.js. |
 | `api.html` | `/plagiarism-api` | built |  |
+| `api-v2.html` | — | no approved path | The DEC-0041 rebuild of the API page, alongside the current one. Takes over `/plagiarism-api` once approved; the old page is retired then, not before. Built by build/api-v2.js, checked by build/check-api.js. |
 | `prices.html` | `/prices` | built |  |
 | `terms-of-use.html` | `/terms-of-use` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
 | `policy.html` | `/policy` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
@@ -56,7 +57,7 @@ driven by this table.
 
 - 16 × built
 - 15 × stub
-- 5 × no approved path
+- 6 × no approved path
 - 4 × built · out of global nav
 
 ## Open
