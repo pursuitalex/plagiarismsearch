@@ -20,6 +20,7 @@ const BUILT = [
   { file: 'index.html',                  path: '/',                                         note: 'The Plagiarism Checker page. DEC-0030 governs its content.' },
   { file: 'index-v2.html',               path: null, note: 'The DEC-0030 rebuild of the homepage, alongside the current one. Takes over `/` once approved; the old index is retired then, not before.' },
   { file: 'ai-detector.html',            path: '/ai-content-detector' },
+  { file: 'ai-detector-v2.html',         path: null, note: 'The DEC-0038 rebuild of the AI Detector, alongside the current one. Takes over `/ai-content-detector` once approved; the old page is retired then, not before. Built by build/ai-v2.js, checked by build/check-ai.js.' },
   { file: 'api.html',                    path: '/plagiarism-api' },
   { file: 'prices.html',                 path: '/prices' },
   { file: 'terms-of-use.html',            path: '/terms-of-use',                             note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },

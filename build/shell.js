@@ -58,6 +58,9 @@ const PAGES = {
      before either is retired. It is the checker page, so it anchors its own CTAs. */
   'index-v2.html':               { active: null, home: true },
   'ai-detector.html':            { active: 'products' },
+  /* the DEC-0038 AI Detector, built alongside the current one for the same reason
+     index-v2 is: nothing is retired until the replacement is accepted */
+  'ai-detector-v2.html':         { active: 'products' },
   'api.html':                    { active: 'products' },
   'prices.html':                 { active: 'pricing' },
   'help-center.html':            { active: 'resources' },
