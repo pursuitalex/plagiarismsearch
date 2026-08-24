@@ -116,12 +116,12 @@ const COPY = {
     h2: 'Configure each plagiarism check around your workflow',
     intro: 'Choose where the API searches and adjust the options that matter for each check instead of using the same scan configuration for every document.',
     items: [
-      ['Search the web', 'Enable web plagiarism search when the submitted content should be compared with sources available on the web.', null, 'lg:col-span-2', '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>'],
-      ['Include the academic database', 'Add PlagiarismSearch’s academic database to the scan when academic source coverage matters.', '500M+ indexed academic texts', '', '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/>'],
-      ['Search your storage', 'Search personal or organization storage when those repositories and permissions are available to the API account. Submitted content can also be added to storage when that workflow is enabled.', null, '', '<path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>'],
-      ['Exclude references and quoted content', 'Configure the check to exclude references and quoted or cited text when those parts should not affect the result.', null, 'lg:col-span-2', '<path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M21 3 3 21"/><path d="M16 21h5v-5"/>'],
-      ['Control web and storage scope', 'Exclude specific URLs from web search and narrow storage searches with the filters available in the API request.', null, '', '<path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/>'],
-      ['Add AI analysis when needed', 'AI checking is available through the same PlagiarismSearch API infrastructure. AI analysis uses the AI word balance available to the account.', null, '', '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>'],
+      ['Search the web', 'Enable web plagiarism search when the submitted content should be compared with sources available on the web.', null, 'lg:col-span-3', '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>', 'teal'],
+      ['Include the academic database', 'Add PlagiarismSearch’s academic database to the scan when academic source coverage matters.', '500M+ indexed academic texts', 'lg:col-span-2', '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/>', 'teal'],
+      ['Search your storage', 'Search personal or organization storage when those repositories and permissions are available to the API account. Submitted content can also be added to storage when that workflow is enabled.', null, 'lg:col-span-2', '<path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>', 'teal'],
+      ['Exclude references and quoted content', 'Configure the check to exclude references and quoted or cited text when those parts should not affect the result.', null, 'lg:col-span-3', '<path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M21 3 3 21"/><path d="M16 21h5v-5"/>', 'ink'],
+      ['Control web and storage scope', 'Exclude specific URLs from web search and narrow storage searches with the filters available in the API request.', null, 'lg:col-span-3', '<path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/>', 'ink'],
+      ['Add AI analysis when needed', 'AI checking is available through the same PlagiarismSearch API infrastructure. AI analysis uses the AI word balance available to the account.', null, 'lg:col-span-2', '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>', 'orange'],
     ],
   },
 
@@ -362,15 +362,25 @@ ${eyebrow('teal-400', 'Configuration')}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s3.intro}</p>
       </div>
 
-      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-${COPY.s3.items.map(([head, body, proof, span, icon]) => `        <div class="${span ? span + ' ' : ''}rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="w-11 h-11 rounded-xl bg-teal-50 flex items-center justify-center mb-4">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
-          </span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">${head}</h3>
-          <p class="flex-1 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${body}</p>
-${proof ? `          <p class="mt-4 pt-3 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">${proof}</p>` : ''}
-        </div>`).join('\n')}
+      <!-- The homepage capabilities grid is lg:grid-cols-5 with no tablet step, but it
+           carries four blocks and this carries six: one column from 640 to 1024 is a long
+           scroll. A plain two-up fills that band; the bento itself is unchanged, because
+           the spans are lg-only and do not apply until the five columns exist. -->
+      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
+${COPY.s3.items.map(([head, body, proof, span, icon, tint]) => {
+  const wide = span === 'lg:col-span-3';
+  const CHIP = { teal: ['bg-teal-100', '#06748A'], ink: ['bg-ink-100', '#374151'], orange: ['bg-orange-100', '#B84431'] }[tint];
+  return `        <div class="min-w-0 ${span} rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex ${wide ? 'w-12 h-12' : 'w-11 h-11'} rounded-xl sm:rounded-[14px] lg:rounded-2xl ${CHIP[0]} items-center justify-center mb-4 sm:mb-5">
+              <svg width="${wide ? 22 : 20}" height="${wide ? 22 : 20}" viewBox="0 0 24 24" fill="none" stroke="${CHIP[1]}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+            </span>
+            <h3 class="${wide ? 'text-[19px] sm:text-[21px] lg:text-[22px]' : 'text-[17px] sm:text-[18px] lg:text-[19px]'} font-bold tracking-tight mb-2.5">${head}</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">${body}</p>
+${proof ? `            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">${proof}</p>` : ''}
+          </div>
+        </div>`;
+}).join('\n')}
       </div>
     </div>
   </section>`;
@@ -710,6 +720,11 @@ const STYLE = `
   textarea.cf-field { height:auto; padding:12px 14px; line-height:1.6; resize:none; }
 
 ${cta.style('api-final-cta')}
+
+  /* the bento hover from the homepage capabilities grid */
+  .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
+  .spotlight:hover { transform:translateY(-4px); }
+  @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
 
   /* pen mark — the reduced-motion fallback is mandatory */
   .no-motion .pen-word { color:#DC5A45; }
