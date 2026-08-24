@@ -107,13 +107,13 @@ const COPY = {
        the two things to know about the sample are the narrow pair. */
     blocks: [
       ['Paste text', 'Use the editor when the text is already available to copy and paste. Pasted text must contain at least 100 characters.',
-       '<path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/>', 'lg:col-span-2'],
+       '<path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/>', 'lg:col-span-3', 'teal'],
       ['Upload a document', 'Upload a supported document and let PlagiarismSearch extract the readable text for AI analysis.',
-       '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>', ''],
+       '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>', 'lg:col-span-2', 'teal'],
       ['Give the detector enough context', 'For a more reliable result, we recommend checking at least 150–200 words whenever possible. Longer samples give the detector more context than very short excerpts.',
-       '<line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/>', ''],
+       '<line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/>', 'lg:col-span-2', 'ink'],
       ['Check text in different languages', 'PlagiarismSearch can process text in any language. Detection accuracy is highest in English, so results in other languages should be interpreted with that limitation in mind.',
-       '<path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/>', 'lg:col-span-2'],
+       '<path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/>', 'lg:col-span-3', 'ink'],
     ],
   },
 
@@ -445,45 +445,55 @@ const section3 = () => `  <!-- ================= 03 · DOCUMENT / FILE CHECKING 
        No extension list either — the authoritative allow-list is not available. -->
   <section id="document-ai-checker" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-10 sm:mb-12">
+      <div class="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center mb-10 sm:mb-12 lg:mb-16">
+
+        <div class="rv lg:order-2">
 ${eyebrow('orange-500', 'Documents')}
-        ${h2(COPY.s3.h2)}
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s3.intro}</p>
-      </div>
-
-      <!-- The page's one photograph. Track 2 in IMAGES.md, and built to the LAW OF THE
-           COMPOSED COLLAGE: the image is a plain full-bleed photo and the panels over it
-           are real HTML, never baked into the raster. Panels carry a shadow or they
-           dissolve into a light section, and they go at lg only — on a phone they cover
-           the face. The bars are placeholder chrome, not fake report values. -->
-      <div class="rv relative mb-6 sm:mb-8 lg:mb-10">
-        <img src="assets/img/ai/hero.webp" alt="" width="1100" height="821" loading="lazy" decoding="async"
-             class="w-full h-[240px] sm:h-[320px] lg:h-[400px] object-cover rounded-3xl sm:rounded-[28px] lg:rounded-4xl">
-
-        <div class="hidden lg:block absolute -left-6 top-12 w-[30%] rounded-2xl bg-white shadow-diffuse-lg p-5 space-y-2.5">
-          <div class="h-2.5 w-2/3 rounded-full bg-ink-200"></div>
-          <div class="h-2.5 w-full rounded-full bg-ink-200"></div>
-          <div class="h-6 rounded-lg" style="background:rgba(154,106,222,.35)"></div>
-          <div class="h-2.5 w-1/2 rounded-full bg-ink-200"></div>
+          ${h2(COPY.s3.h2)}
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s3.intro}</p>
         </div>
 
-        <div class="hidden lg:block absolute -right-5 bottom-10 w-[26%] rounded-2xl bg-white shadow-diffuse-lg p-5 space-y-2.5">
-          <div class="h-2.5 w-1/2 rounded-full bg-ink-200"></div>
-          <div class="h-6 rounded-lg" style="background:rgba(154,106,222,.35)"></div>
-          <div class="h-2.5 w-3/4 rounded-full bg-ink-200"></div>
+        <!-- collage = photo element + HTML panels on top (IMAGES.md, LAW OF THE COMPOSED
+             COLLAGE). The panels carry their own shadow or white-on-white loses its edge,
+             they overhang the frame, and they go below lg where they would cover the face.
+
+             They sit over the quiet halves of the frame — the desk on the left, the
+             blurred office on the right — never over the subject. The violet bar is the
+             page's own flagged-passage colour, so the panels echo the report rather than
+             inventing a second visual language. -->
+        <div class="rv lg:order-1 relative">
+          <img src="assets/img/ai/hero.webp" alt="" width="1100" height="821" loading="lazy" decoding="async"
+               class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl">
+
+          <div class="hidden lg:block absolute -left-7 bottom-8 w-[54%] rounded-2xl bg-white shadow-diffuse-lg p-4 lg:p-5 space-y-2.5">
+            <div class="h-2.5 w-2/3 rounded-full bg-ink-200"></div>
+            <div class="h-2.5 w-full rounded-full bg-ink-200"></div>
+            <div class="h-6 rounded-lg" style="background:rgba(154,106,222,.35)"></div>
+            <div class="h-2.5 w-1/2 rounded-full bg-ink-200"></div>
+          </div>
+
+          <div class="hidden lg:block absolute -right-6 top-7 w-[44%] rounded-2xl bg-white shadow-diffuse-lg p-4 lg:p-5 space-y-2.5">
+            <div class="h-2.5 w-1/2 rounded-full bg-ink-200"></div>
+            <div class="h-6 rounded-lg" style="background:rgba(154,106,222,.35)"></div>
+            <div class="h-2.5 w-3/4 rounded-full bg-ink-200"></div>
+          </div>
         </div>
       </div>
 
-      <!-- bento, not four identical tiles: the two ways into the checker are wide, the
-           two things to know about the sample are narrow -->
-      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-${COPY.s3.blocks.map(([head, body, icon, span]) => `        <div class="${span ? span + ' ' : ''}rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
-          <span class="w-11 h-11 rounded-xl bg-white flex items-center justify-center mb-4 ring-1 ring-black/5">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
-          </span>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2">${head}</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 max-w-[54ch]">${body}</p>
-        </div>`).join('\n')}
+      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
+${COPY.s3.blocks.map(([head, body, icon, span, tint]) => {
+  const wide = span === 'lg:col-span-3';
+  const CHIP = { teal: ['bg-teal-100', '#06748A'], ink: ['bg-ink-100', '#374151'], orange: ['bg-orange-100', '#B84431'] }[tint];
+  return `        <div class="min-w-0 ${span} rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex ${wide ? 'w-12 h-12' : 'w-11 h-11'} rounded-xl sm:rounded-[14px] lg:rounded-2xl ${CHIP[0]} items-center justify-center mb-4 sm:mb-5">
+              <svg width="${wide ? 22 : 20}" height="${wide ? 22 : 20}" viewBox="0 0 24 24" fill="none" stroke="${CHIP[1]}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+            </span>
+            <h3 class="${wide ? 'text-[19px] sm:text-[21px] lg:text-[22px]' : 'text-[17px] sm:text-[18px] lg:text-[19px]'} font-bold tracking-tight mb-2.5">${head}</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">${body}</p>
+          </div>
+        </div>`;
+}).join('\n')}
       </div>
     </div>
   </section>`;
@@ -749,6 +759,11 @@ const STYLE = `
   .ph-dark { border:1px dashed rgba(255,255,255,.24); border-radius:.5rem; }
 
 ${cta.style('ai-final-cta')}
+  /* the bento hover from the homepage capabilities grid */
+  .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
+  .spotlight:hover { transform:translateY(-4px); }
+  @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
+
   /* pen mark — the reduced-motion fallback is mandatory, not optional: without it the
      emphasis simply vanishes for anyone who asked the site to stop moving */
   .no-motion .pen-word { color:#DC5A45; }
