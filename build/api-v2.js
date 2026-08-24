@@ -103,9 +103,12 @@ const COPY = {
     h2: 'Send text, documents, or public URLs',
     intro: 'Use the input method that fits the content already available in your system. Standard text and URL requests can use JSON, while document uploads use multipart form data.',
     items: [
-      ['Text', 'Send text directly in a JSON request when the content already exists inside your product or workflow.', 'JSON'],
-      ['Documents', 'Upload a supported document with multipart form data when the content you need to check is stored as a file.', 'Multipart upload'],
-      ['Public URLs', 'Submit a public URL when the content you want to analyze is already available online.', 'URL input'],
+      ['Text', 'Send text directly in a JSON request when the content already exists inside your product or workflow.', 'JSON',
+       '<path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/>'],
+      ['Documents', 'Upload a supported document with multipart form data when the content you need to check is stored as a file.', 'Multipart upload',
+       '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/>'],
+      ['Public URLs', 'Submit a public URL when the content you want to analyze is already available online.', 'URL input',
+       '<path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/>'],
     ],
   },
 
@@ -113,12 +116,12 @@ const COPY = {
     h2: 'Configure each plagiarism check around your workflow',
     intro: 'Choose where the API searches and adjust the options that matter for each check instead of using the same scan configuration for every document.',
     items: [
-      ['Search the web', 'Enable web plagiarism search when the submitted content should be compared with sources available on the web.', null],
-      ['Include the academic database', 'Add PlagiarismSearch’s academic database to the scan when academic source coverage matters.', '500M+ indexed academic texts'],
-      ['Search your storage', 'Search personal or organization storage when those repositories and permissions are available to the API account. Submitted content can also be added to storage when that workflow is enabled.', null],
-      ['Exclude references and quoted content', 'Configure the check to exclude references and quoted or cited text when those parts should not affect the result.', null],
-      ['Control web and storage scope', 'Exclude specific URLs from web search and narrow storage searches with the filters available in the API request.', null],
-      ['Add AI analysis when needed', 'AI checking is available through the same PlagiarismSearch API infrastructure. AI analysis uses the AI word balance available to the account.', null],
+      ['Search the web', 'Enable web plagiarism search when the submitted content should be compared with sources available on the web.', null, 'lg:col-span-2', '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>'],
+      ['Include the academic database', 'Add PlagiarismSearch’s academic database to the scan when academic source coverage matters.', '500M+ indexed academic texts', '', '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/>'],
+      ['Search your storage', 'Search personal or organization storage when those repositories and permissions are available to the API account. Submitted content can also be added to storage when that workflow is enabled.', null, '', '<path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>'],
+      ['Exclude references and quoted content', 'Configure the check to exclude references and quoted or cited text when those parts should not affect the result.', null, 'lg:col-span-2', '<path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M21 3 3 21"/><path d="M16 21h5v-5"/>'],
+      ['Control web and storage scope', 'Exclude specific URLs from web search and narrow storage searches with the filters available in the API request.', null, '', '<path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/>'],
+      ['Add AI analysis when needed', 'AI checking is available through the same PlagiarismSearch API infrastructure. AI analysis uses the AI word balance available to the account.', null, '', '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>'],
     ],
   },
 
@@ -148,9 +151,9 @@ const COPY = {
     h2: 'Build plagiarism checking into the workflow you already use',
     intro: 'The API is designed for systems that need plagiarism checking inside an existing product or document process rather than as a separate manual step.',
     items: [
-      ['Education and LMS platforms', 'Add plagiarism checks to workflows that process academic documents or student submissions. Configure web, academic, and permitted storage sources according to the needs of the integration.'],
-      ['Publishing and content operations', 'Run plagiarism checks as part of an editorial or pre-publication workflow without requiring every user to move into a separate checking interface.'],
-      ['Products that process submitted documents', 'Trigger plagiarism checks when users submit text, files, or URLs to your product, then use the webhook and report data to continue the process inside your own application.'],
+      ['Education and LMS platforms', 'Add plagiarism checks to workflows that process academic documents or student submissions. Configure web, academic, and permitted storage sources according to the needs of the integration.', '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>'],
+      ['Publishing and content operations', 'Run plagiarism checks as part of an editorial or pre-publication workflow without requiring every user to move into a separate checking interface.', '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/>'],
+      ['Products that process submitted documents', 'Trigger plagiarism checks when users submit text, files, or URLs to your product, then use the webhook and report data to continue the process inside your own application.', '<path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>'],
     ],
   },
 
@@ -332,8 +335,13 @@ ${eyebrow('orange-500', 'Inputs')}
       </div>
 
       <div class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-${COPY.s2.items.map(([head, body, tag]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="inline-flex self-start items-center rounded-full bg-white ring-1 ring-black/5 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-ink-600 mb-4">${tag}</span>
+${COPY.s2.items.map(([head, body, tag, icon]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7 flex flex-col">
+          <div class="flex items-center justify-between gap-3 mb-4">
+            <span class="w-11 h-11 rounded-xl bg-white flex items-center justify-center ring-1 ring-black/5">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+            </span>
+            <span class="inline-flex items-center rounded-full bg-white ring-1 ring-black/5 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-ink-600">${tag}</span>
+          </div>
           <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2">${head}</h3>
           <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${body}</p>
         </div>`).join('\n')}
@@ -346,7 +354,7 @@ const section3 = () => `  <!-- ================= 03 · SEARCH SCOPE & SCAN CONFI
        The bento the brief encourages, carrying actual capabilities rather than generic
        advantage cards. The 500M+ academic figure is approved; no web-corpus number is,
        so none appears. AI is one card among six, not a product. -->
-  <section id="api-configuration" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <section id="api-configuration" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
 ${eyebrow('teal-400', 'Configuration')}
@@ -355,7 +363,10 @@ ${eyebrow('teal-400', 'Configuration')}
       </div>
 
       <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-${COPY.s3.items.map(([head, body, proof]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+${COPY.s3.items.map(([head, body, proof, span, icon]) => `        <div class="${span ? span + ' ' : ''}rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <span class="w-11 h-11 rounded-xl bg-teal-50 flex items-center justify-center mb-4">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+          </span>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">${head}</h3>
           <p class="flex-1 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${body}</p>
 ${proof ? `          <p class="mt-4 pt-3 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">${proof}</p>` : ''}
@@ -385,8 +396,38 @@ ${COPY.s4.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rou
         </div>`).join('\n')}
       </div>
 
-      <div class="rv mt-6 lg:mt-8 rounded-3xl bg-ink-950 p-6 sm:p-7 lg:p-8">
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/80 max-w-[86ch]">${COPY.s4.callout}</p>
+      <div class="rv mt-6 lg:mt-8 rounded-3xl bg-ink-950 p-6 sm:p-7 lg:p-8 grid lg:grid-cols-[1fr_auto] gap-7 lg:gap-10 items-center">
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/80 max-w-[68ch]">${COPY.s4.callout}</p>
+
+        <!-- your app on top, the API below, and the gap between the two arrows is the
+             asynchrony itself — drawn, because a row of equal cards cannot show it -->
+        <div class="shrink-0 w-full lg:w-[340px]" aria-hidden="true">
+          <div class="flex items-center justify-between text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-2">
+            <span>Your app</span><span>PlagiarismSearch</span>
+          </div>
+          <div class="rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-4 space-y-3">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-teal-400 shrink-0"></span>
+              <span class="flex-1 h-px bg-gradient-to-r from-teal-400/70 to-teal-400/20"></span>
+              <span class="text-[11px] font-medium text-white/55 shrink-0">create</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <span class="text-[11px] font-medium text-white/55 shrink-0">202</span>
+              <span class="flex-1 h-px bg-gradient-to-l from-teal-400/70 to-teal-400/20"></span>
+              <span class="w-2 h-2 rounded-full bg-teal-400 shrink-0"></span>
+            </div>
+            <div class="flex items-center gap-2 py-1">
+              <span class="flex-1 border-t border-dashed border-white/15"></span>
+              <span class="text-[10.5px] text-white/35 shrink-0">processing</span>
+              <span class="flex-1 border-t border-dashed border-white/15"></span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <span class="text-[11px] font-medium text-orange-300 shrink-0">report.checked</span>
+              <span class="flex-1 h-px bg-gradient-to-l from-orange-400/70 to-orange-400/20"></span>
+              <span class="w-2 h-2 rounded-full bg-orange-400 shrink-0"></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>`;
@@ -399,21 +440,35 @@ const section5 = () => `  <!-- ================= 05 · RESULT LIFECYCLE ========
 
        The field chips are the real names from the Response and Webhook tabs above, which
        is the "actual product evidence" the brief asks for in place of stock imagery. -->
-  <section id="api-results" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <section id="api-results" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute" style="width:880px;height:820px;left:-14%;top:-360px;background:rgba(44,195,219,.20)"></div>
+    <div class="orb absolute" style="width:700px;height:680px;right:-12%;bottom:-320px;background:rgba(243,111,90,.12)"></div>
+
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1fr_1.05fr] gap-8 lg:gap-12 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('teal-400', 'Results')}
+        <div class="rv lg:sticky lg:top-28 text-white">
+${eyebrowDark('teal-400', 'Results')}
           ${h2(COPY.s5.h2)}
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-ink-600 max-w-[56ch]">${COPY.s5.intro}</p>
-          <div class="mt-6 lg:mt-7">${linkQuiet(COPY.s5.cta, DOCS)}</div>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-white/70 max-w-[56ch]">${COPY.s5.intro}</p>
+          <div class="mt-6 lg:mt-7">${linkQuiet(COPY.s5.cta, DOCS, true)}</div>
+
+          <!-- Field treatment, not a picture of a developer. Every name here appears in
+               the Response or Webhook sample in the hero, so it is the same contract the
+               reader just saw, named rather than re-quoted. -->
+          <div class="hidden lg:block mt-8 rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-5">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/40 mb-3">Returned by the API</span>
+            <div class="flex flex-wrap gap-2">
+${['id', 'progress', 'status', 'status_label', 'event', 'checked_words', 'words', 'links.self']
+  .map(f => `              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">${f}</code>`).join('\n')}
+            </div>
+          </div>
         </div>
 
         <div class="rv-kids space-y-4 sm:space-y-5">
-${COPY.s5.items.map(([head, body], i) => `          <div class="rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Step 0${i + 1}</span>
-            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">${head}</h3>
-            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 max-w-[60ch]">${body}</p>
+${COPY.s5.items.map(([head, body], i) => `          <div class="rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-2">Step 0${i + 1}</span>
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-white mb-2">${head}</h3>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[60ch]">${body}</p>
           </div>`).join('\n')}
         </div>
       </div>
@@ -425,7 +480,7 @@ const section6 = () => `  <!-- ================= 06 · WORKFLOW USE CASES ======
        Three genuinely distinct integration shapes. Not Schools / Universities / Colleges,
        which the brief rejects as near-duplicate persona cards, and no Moodle card — that
        cross-link is a separate later decision, not an API mechanic. -->
-  <section id="api-use-cases" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="api-use-cases" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', 'Use cases')}
@@ -434,7 +489,10 @@ ${eyebrow('orange-500', 'Use cases')}
       </div>
 
       <div class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-${COPY.s6.items.map(([head, body]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+${COPY.s6.items.map(([head, body, icon]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+          </span>
           <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2.5">${head}</h3>
           <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${body}</p>
         </div>`).join('\n')}
@@ -447,7 +505,7 @@ const section7 = () => `  <!-- ================= 07 · DEVELOPER RESOURCES =====
        One card, deliberately. The API Q&amp;A page is gated until it is synchronized with
        3.1.0, and the brief is explicit: "Do not reserve an empty second-card slot." So
        the layout is built for one rather than showing a hole where the second will go. -->
-  <section id="api-resources" class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
+  <section id="api-resources" class="relative py-16 sm:py-24 lg:py-28 bg-white overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-8 sm:mb-10">
 ${eyebrow('teal-400', 'Resources')}
@@ -473,22 +531,25 @@ const section8 = () => `  <!-- ================= 08 · ACCESS, TRIAL &amp; PRICI
        Two paths and no price cards. The legacy Monthly / 3-Month / Yearly module is
        rejected outright: pricing and entitlements come from the commercial source of
        truth. No universal free trial, and no claim that every account gets API access. -->
-  <section id="api-access" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <!-- The dark commercial callout DEC-0041 lists under encouraged reuse, and the page's
+       second dark act. Two paths, no price cards: pricing and entitlements come from the
+       commercial source of truth, not from here. -->
+  <section id="api-access" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute" style="width:820px;height:780px;right:-14%;top:-340px;background:rgba(243,111,90,.18)"></div>
+    <div class="orb absolute" style="width:660px;height:640px;left:-10%;bottom:-300px;background:rgba(44,195,219,.16)"></div>
+
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv text-center max-w-[760px] mx-auto mb-10 sm:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Access</span>
-        </div>
+      <div class="rv text-center max-w-[760px] mx-auto mb-10 sm:mb-12 text-white">
+${eyebrowDark('orange-500', 'Access')}
         ${h2(COPY.s8.h2)}
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s8.intro}</p>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70">${COPY.s8.intro}</p>
       </div>
 
       <div class="rv-kids grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 max-w-[1000px] mx-auto">
-${COPY.s8.paths.map(([head, body, cta, href]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-6 sm:p-7 lg:p-8 flex flex-col">
-          <h3 class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-2.5">${head}</h3>
-          <p class="flex-1 text-[13.5px] sm:text-[14px] leading-relaxed text-ink-600 max-w-[52ch] mb-6">${body}</p>
-          <div>${btnDark(cta, href)}</div>
+${COPY.s8.paths.map(([head, body, cta, href]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7 lg:p-8 flex flex-col">
+          <h3 class="text-[17px] sm:text-[18px] font-bold tracking-tight text-white mb-2.5">${head}</h3>
+          <p class="flex-1 text-[13.5px] sm:text-[14px] leading-relaxed text-white/70 max-w-[52ch] mb-6">${body}</p>
+          <div>${btnLight(cta, href)}</div>
         </div>`).join('\n')}
       </div>
     </div>
@@ -506,7 +567,7 @@ const section9 = () => `  <!-- ================= 09 · API ACCESS / CUSTOM QUOTE
        inventing a consent claim, which the same clause forbids.
 
        No response-time promise anywhere, including the success state. -->
-  <section id="api-quote" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
+  <section id="api-quote" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
