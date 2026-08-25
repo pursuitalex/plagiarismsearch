@@ -708,6 +708,13 @@ ${cta.background('api-final-cta')}
    ───────────────────────────────────────────────────────────────────────────── */
 const STYLE = `
 <style>
+  /* [hidden] must actually hide. Tailwind's display utilities share specificity with
+     the attribute selector and come later in the sheet, so .flex on a hidden element
+     wins and the element renders. The success block here survives only because its
+     happens not to be one — index-v2 and the detector page both carry this guard, and
+     leaving it off would make the next class added to that div a silent bug. */
+  [hidden] { display: none !important; }
+
   .rv-kids > * { opacity:0; transform:translateY(40px); }
   .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
 

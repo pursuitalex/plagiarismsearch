@@ -61,9 +61,11 @@ const COPY = {
     ],
     cta: 'Check for AI',
     secondary: 'View AI pricing',
-    /* All five required states ship in the HTML. They are the product's real
-       vocabulary, and the brief forbids plagiarism status strings anywhere in the
-       AI flow — keeping them here, visible to the checker, is how that stays true. */
+    /* All five required states ship in the HTML, hidden until their event fires.
+       They are the product's real vocabulary and the brief forbids plagiarism status
+       strings anywhere in the AI flow, so keeping them in the markup is how that stays
+       checkable — but the 2026-08-25 batch is explicit that they are implementation
+       states, not page content, and must never be listed for a reader. */
     states: [
       ['too-short',    'Please enter at least 100 characters or upload a document.'],
       ['unreadable',   'We couldn’t identify readable text in this file. Try another document or paste the text directly.'],
@@ -327,6 +329,13 @@ ${eyebrow('teal-400', 'AI Detector')}
           </div>
           <p class="text-[12px] sm:text-[12.5px] text-ink-500 mb-4">${COPY.s1.guidance}</p>
 
+          <!-- Inline validation, tied to the field it is about. role="alert" so a screen
+               reader hears it when it appears rather than only on the next focus move. -->
+          <p id="stTooShort" role="alert" hidden class="flex items-start gap-2 -mt-2 mb-4 text-[12.5px] font-medium text-orange-700">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            ${COPY.s1.states[0][1]}
+          </p>
+
           <!-- Upload is a peer of the editor, not a footnote to it: "File/document upload
                is visually prominent and not relegated to a minor icon." Below md there is
                no pointer to drag with, so the panel becomes a plain upload button. -->
@@ -341,6 +350,12 @@ ${eyebrow('teal-400', 'AI Detector')}
             <button type="button" class="qc-chip shrink-0">${COPY.s1.uploadBtn}</button>
           </div>
 
+          <!-- file error, tied to the upload area rather than the page -->
+          <p id="stUnreadable" role="alert" hidden class="flex items-start gap-2 -mt-1 mb-3 text-[12.5px] font-medium text-orange-700">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            ${COPY.s1.states[1][1]}
+          </p>
+
           <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
 ${COPY.s1.inputs.map(i => `            <button type="button" class="qc-chip">${
   i.icon === 'brand'
@@ -351,36 +366,45 @@ ${COPY.s1.inputs.map(i => `            <button type="button" class="qc-chip">${
 
           <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 border-t border-ink-100">
             <a href="#ai-pricing" class="text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s1.secondary}</a>
-            <a href="#ai-report" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            <button type="submit" id="runCheck" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
               ${COPY.s1.cta}
               <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">${arrow}</span>
-            </a>
+            </button>
+          </div>
+
+          <!-- Run states. The checker itself changes; there is no separate page block,
+               which is what the batch rules out. -->
+          <p id="stProcessing" role="status" hidden class="flex items-center gap-2.5 mt-4 pt-4 border-t border-ink-100 text-[13px] font-semibold text-ink-700">
+            <span class="w-3.5 h-3.5 rounded-full border-2 border-teal-500 border-t-transparent animate-spin" aria-hidden="true"></span>
+            ${COPY.s1.states[2][1]}
+          </p>
+          <p id="stCompleted" role="status" hidden class="flex items-center gap-2.5 mt-4 pt-4 border-t border-ink-100 text-[13px] font-semibold text-mint-700">
+            <svg class="shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            ${COPY.s1.states[3][1]}
+          </p>
+          <div id="stBalance" role="alert" hidden class="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-4 pt-4 border-t border-ink-100 text-[13px] font-semibold text-orange-700">
+            ${COPY.s1.states[4][1]}
+            <a href="#ai-pricing" class="underline decoration-orange-300 underline-offset-4 hover:text-orange-800 transition-colors duration-300">${COPY.s1.insufficientCta}</a>
+          </div>
+
+          <!-- THE AUTH GATE. Not a second form and not a persistent card: it is a state of
+               this card, revealed only when an unauthenticated visitor presses Check for AI.
+               The copy is the approved copy, unchanged; only its display condition moved.
+               Both actions go to the shared account route, the same one every other page
+               in this prototype uses for the auth flow. -->
+          <div id="authGate" hidden class="mt-4 pt-5 border-t border-ink-100">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+              <div class="min-w-0 flex-1">
+                <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-1.5">${COPY.s1.reg.heading}</p>
+                <p class="text-[13px] leading-relaxed text-ink-600">${COPY.s1.reg.copy}</p>
+              </div>
+              <div class="shrink-0 flex flex-col items-start sm:items-end gap-2">
+                ${btnDark(COPY.s1.reg.cta, 'account.html')}
+                <a href="account.html" class="text-[12.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s1.reg.secondary}</a>
+              </div>
+            </div>
           </div>
         </form>
-      </div>
-
-      <!-- the states the real flow uses, rendered so they cannot silently drift -->
-      <div class="rv max-w-[860px] mx-auto mt-4 sm:mt-5">
-        <details class="rounded-2xl bg-white/70 ring-1 ring-black/5 px-4 py-3">
-          <summary class="text-[12.5px] font-semibold text-ink-600 cursor-pointer">Checker states</summary>
-          <ul class="mt-3 space-y-2">
-${COPY.s1.states.map(([k, v]) => `            <li class="flex gap-3 text-[12.5px] leading-relaxed"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-400"></span><span class="text-ink-600"><span class="font-semibold text-ink-900">${k}</span> — ${v}${k === 'insufficient' ? ` <a href="#ai-pricing" class="underline decoration-ink-300 underline-offset-2 font-semibold text-ink-700">${COPY.s1.insufficientCta}</a>` : ''}</span></li>`).join('\n')}
-          </ul>
-        </details>
-      </div>
-
-      <!-- Registration is where the free AI allowance begins. "Do not promise an
-           anonymous free AI scan" — so this sits under the tool as the next step,
-           not as a badge on it. -->
-      <div class="rv max-w-[860px] mx-auto mt-4 sm:mt-5 rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-        <div class="min-w-0 flex-1">
-          <h2 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-1.5">${COPY.s1.reg.heading}</h2>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${COPY.s1.reg.copy}</p>
-        </div>
-        <div class="shrink-0 flex flex-col items-start sm:items-end gap-2">
-          ${btnDark(COPY.s1.reg.cta, 'account.html')}
-          <a href="account.html" class="text-[12.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s1.reg.secondary}</a>
-        </div>
       </div>
 
       <!-- Compact product proof rail. Each item is one element in reading order so the
@@ -776,6 +800,13 @@ ${cta.background('ai-final-cta')}
    ───────────────────────────────────────────────────────────────────────────── */
 const STYLE = `
 <style>
+  /* [hidden] must actually hide. Tailwind's display utilities — .flex, .grid, .block —
+     have the same specificity as the [hidden] attribute selector and come later in the
+     sheet, so they win: a hidden paragraph carrying .flex still renders. Every
+     visible on the default screen because of this, which is the exact defect the
+     2026-08-25 batch exists to remove, reintroduced by the fix for it. */
+  [hidden] { display: none !important; }
+
   .rv-kids > * { opacity:0; transform:translateY(40px); }
   .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
 
@@ -873,6 +904,40 @@ ${cta.script}
 <script>
 (() => {
   'use strict';
+
+  /* The corrected checker flow, as far as a prototype can honestly show it.
+
+     Under 100 characters the field objects, inline, where the text is. At or above it
+     the auth gate opens — because this prototype has no session, and the approved
+     behaviour for a visitor without one is exactly that. Nothing is submitted, so
+     check.js's inert-form rule still holds.
+
+     What is entered is preserved: the gate opens beneath the text, it does not replace
+     the card. The batch asks for that explicitly. */
+  const form = document.querySelector('#ai-checker form');
+  const field = document.getElementById('aiText');
+  const tooShort = document.getElementById('stTooShort');
+  const gate = document.getElementById('authGate');
+
+  if (form && field && tooShort && gate) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const short = field.value.trim().length < 100;
+      tooShort.hidden = !short;
+      gate.hidden = short;
+      field.setAttribute('aria-invalid', String(short));
+      (short ? field : gate.querySelector('a')).focus();
+    });
+
+    /* clear the objection as soon as the reason for it is gone */
+    field.addEventListener('input', () => {
+      if (!tooShort.hidden && field.value.trim().length >= 100) {
+        tooShort.hidden = true;
+        field.setAttribute('aria-invalid', 'false');
+      }
+    });
+  }
+
   /* FAQ: answers are already in the DOM; this only opens and closes them */
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => {
