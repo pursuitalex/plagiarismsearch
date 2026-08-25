@@ -477,8 +477,8 @@ ${eyebrowDark('teal-400', 'The report')}
               <!-- document -->
               <div class="min-w-0 p-4 sm:p-5 lg:p-6 border-b sm:border-b-0 sm:border-r border-ink-100">
                 <div class="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-ink-100">
-                  <span class="text-[11.5px] font-semibold text-ink-400 tabular-nums">${COPY.s2.report.id}</span>
-                  <span class="text-[11px] text-ink-400 tabular-nums">Words: ${COPY.s2.report.words}</span>
+                  <span class="text-[11.5px] font-semibold text-ink-500 tabular-nums">${COPY.s2.report.id}</span>
+                  <span class="text-[11px] text-ink-500 tabular-nums">Words: ${COPY.s2.report.words}</span>
                 </div>
 ${COPY.s2.report.doc.map(para => `                <p class="text-[12.5px] sm:text-[13px] leading-[1.85] text-ink-700 mb-3.5">` +
   para.map(run => run.hl ? `<span class="hl-ai on-ai">${run.t}</span>` : run.t).join('') + `</p>`).join('\n')}
@@ -501,7 +501,7 @@ ${[[COPY.s2.report.totalLabel, COPY.s2.report.totalValue, 13.44],
                 </div>`).join('\n')}
 
                 <div class="flex items-center gap-4 pt-3 mt-4 border-t border-ink-200">
-${COPY.s2.report.tabs.map((t, i) => `                  <span class="text-[12.5px] font-semibold pb-1.5 ${i === 1 ? 'text-teal-600 border-b-2 border-teal-500' : 'text-ink-400'}">${t}</span>`).join('\n')}
+${COPY.s2.report.tabs.map((t, i) => `                  <span class="text-[12.5px] font-semibold pb-1.5 ${i === 1 ? 'text-teal-700 border-b-2 border-teal-500' : 'text-ink-500'}">${t}</span>`).join('\n')}
                 </div>
 
                 <!-- the flagged passages, the same runs the document highlights -->
@@ -516,7 +516,7 @@ ${COPY.s2.report.doc.flat().filter(r => r.hl).map(r => `                  <p cla
         <!-- the three layers, compact: they explain the report, they do not compete with it -->
         <div class="rv-kids space-y-3 sm:space-y-4">
 ${COPY.s2.metrics.map(([label, def, sup], i) => `          <div class="rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
-            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1.5">0${i + 1} · ${sup}</span>
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-1.5">0${i + 1} · ${sup}</span>
             <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight text-white mb-1.5">${label}</h3>
             <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-white/65">${def}</p>
           </div>`).join('\n')}
@@ -578,7 +578,7 @@ ${COPY.s1.inputs.map(i => `                <span class="qc-chip">${
               </div>
 
               <div class="flex items-center justify-between gap-4 pt-4 border-t border-ink-100">
-                <span class="text-[13px] font-semibold text-ink-400">${COPY.s1.secondary}</span>
+                <span class="text-[13px] font-semibold text-ink-500">${COPY.s1.secondary}</span>
                 <span class="flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[13.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
                   ${COPY.s1.cta}
                   <span class="hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">${arrow}</span>
@@ -774,7 +774,7 @@ ${COPY.s8.groups.map(([billing, rows], g) => `        <fieldset class="rounded-3
           <legend class="sr-only">${billing} AI word packages</legend>
           <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
             <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">${billing}</h3>
-            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400">AI words</span>
+            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500">AI words</span>
           </div>
           <div class="flex-1 space-y-2">
 ${rows.map(([words, price], i) => `            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
@@ -808,7 +808,7 @@ ${eyebrow('orange-500', 'Questions')}
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
           <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${COPY.s9.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -867,6 +867,21 @@ const STYLE = `
      2026-08-25 batch exists to remove, reintroduced by the fix for it. */
   [hidden] { display: none !important; }
 
+  /* Anchor landings clear the sticky header. Measured, not guessed: the header is
+     fixed at top:20 and its bar ends at 76px, so a section arriving at offset 0 puts
+     its own label underneath it. 100px leaves the H2 fully visible with air above.
+     The batch is explicit that this is fixed at the anchor, never by changing section
+     spacing globally. */
+  section[id] { scroll-margin-top: 100px; }
+
+  /* A visible focus ring on everything reachable by keyboard. :focus-visible rather
+     than :focus, so a mouse press does not leave a ring behind. */
+  a:focus-visible, button:focus-visible, summary:focus-visible,
+  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
+  /* on ink, the teal ring is too close to the ground to read */
+  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible {
+    outline-color: #6ED7E8; }
   .rv-kids > * { opacity:0; transform:translateY(40px); }
   .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
 
@@ -1028,8 +1043,13 @@ ${cta.script}
     q.addEventListener('click', () => {
       const item = q.closest('.faq-item');
       const wasOpen = item.classList.contains('open');
-      item.parentElement.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
+      const list = item.parentElement;
+      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
       if (!wasOpen) item.classList.add('open');
+      /* aria-expanded has to follow the visual state or a screen-reader user is told
+         every answer is collapsed while looking at an open one */
+      list.querySelectorAll('.faq-q').forEach(b =>
+        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
     });
   });
 })();

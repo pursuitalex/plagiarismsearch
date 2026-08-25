@@ -258,6 +258,21 @@ tailwind.config = {
      2026-08-25 batch exists to remove, reintroduced by the fix for it. */
   [hidden] { display: none !important; }
 
+  /* Anchor landings clear the sticky header. Measured, not guessed: the header is
+     fixed at top:20 and its bar ends at 76px, so a section arriving at offset 0 puts
+     its own label underneath it. 100px leaves the H2 fully visible with air above.
+     The batch is explicit that this is fixed at the anchor, never by changing section
+     spacing globally. */
+  section[id] { scroll-margin-top: 100px; }
+
+  /* A visible focus ring on everything reachable by keyboard. :focus-visible rather
+     than :focus, so a mouse press does not leave a ring behind. */
+  a:focus-visible, button:focus-visible, summary:focus-visible,
+  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
+  /* on ink, the teal ring is too close to the ground to read */
+  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible {
+    outline-color: #6ED7E8; }
   .rv-kids > * { opacity:0; transform:translateY(40px); }
   .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
 
@@ -652,8 +667,8 @@ tailwind.config = {
               <!-- document -->
               <div class="min-w-0 p-4 sm:p-5 lg:p-6 border-b sm:border-b-0 sm:border-r border-ink-100">
                 <div class="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-ink-100">
-                  <span class="text-[11.5px] font-semibold text-ink-400 tabular-nums">#11549335</span>
-                  <span class="text-[11px] text-ink-400 tabular-nums">Words: 1443</span>
+                  <span class="text-[11.5px] font-semibold text-ink-500 tabular-nums">#11549335</span>
+                  <span class="text-[11px] text-ink-500 tabular-nums">Words: 1443</span>
                 </div>
                 <p class="text-[12.5px] sm:text-[13px] leading-[1.85] text-ink-700 mb-3.5">Urban transport planning has changed considerably over the past two decades. Cities that once measured success by road capacity now look at how many journeys can be completed without a car at all.</p>
                 <p class="text-[12.5px] sm:text-[13px] leading-[1.85] text-ink-700 mb-3.5">Several factors contribute to this shift. <span class="hl-ai on-ai">The widespread adoption of integrated ticketing has made multi-modal journeys significantly more convenient for daily commuters, while real-time arrival data has reduced the perceived cost of waiting.</span> Local authorities have also revised how street space is allocated.</p>
@@ -684,8 +699,8 @@ tailwind.config = {
                 </div>
 
                 <div class="flex items-center gap-4 pt-3 mt-4 border-t border-ink-200">
-                  <span class="text-[12.5px] font-semibold pb-1.5 text-ink-400">Plagiarism</span>
-                  <span class="text-[12.5px] font-semibold pb-1.5 text-teal-600 border-b-2 border-teal-500">AI</span>
+                  <span class="text-[12.5px] font-semibold pb-1.5 text-ink-500">Plagiarism</span>
+                  <span class="text-[12.5px] font-semibold pb-1.5 text-teal-700 border-b-2 border-teal-500">AI</span>
                 </div>
 
                 <!-- the flagged passages, the same runs the document highlights -->
@@ -701,17 +716,17 @@ tailwind.config = {
         <!-- the three layers, compact: they explain the report, they do not compete with it -->
         <div class="rv-kids space-y-3 sm:space-y-4">
           <div class="rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
-            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1.5">01 · Document-level likelihood</span>
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-1.5">01 · Document-level likelihood</span>
             <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight text-white mb-1.5">AI Probability</h3>
             <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-white/65">The percentage likelihood that the analyzed text, considered as a whole, was AI-generated.</p>
           </div>
           <div class="rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
-            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1.5">02 · Share of flagged text</span>
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-1.5">02 · Share of flagged text</span>
             <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight text-white mb-1.5">Total AI Rate</h3>
             <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-white/65">The share of the document made up of passages flagged as AI-generated.</p>
           </div>
           <div class="rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
-            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1.5">03 · Location and passage-level signal</span>
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-1.5">03 · Location and passage-level signal</span>
             <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight text-white mb-1.5">Highlighted passages</h3>
             <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-white/65">See where AI-writing signals appear in the document. Individual highlighted sentences or passages can show their own AI probability.</p>
           </div>
@@ -775,7 +790,7 @@ tailwind.config = {
               </div>
 
               <div class="flex items-center justify-between gap-4 pt-4 border-t border-ink-100">
-                <span class="text-[13px] font-semibold text-ink-400">View AI pricing</span>
+                <span class="text-[13px] font-semibold text-ink-500">View AI pricing</span>
                 <span class="flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[13.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
                   Check for AI
                   <span class="hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
@@ -1029,7 +1044,7 @@ tailwind.config = {
           <legend class="sr-only">One-time AI word packages</legend>
           <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
             <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">One-time</h3>
-            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400">AI words</span>
+            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500">AI words</span>
           </div>
           <div class="flex-1 space-y-2">
             <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
@@ -1051,7 +1066,7 @@ tailwind.config = {
           <legend class="sr-only">Monthly AI word packages</legend>
           <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
             <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Monthly</h3>
-            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400">AI words</span>
+            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500">AI words</span>
           </div>
           <div class="flex-1 space-y-2">
             <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
@@ -1079,7 +1094,7 @@ tailwind.config = {
           <legend class="sr-only">Yearly AI word packages</legend>
           <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
             <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Yearly</h3>
-            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400">AI words</span>
+            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500">AI words</span>
           </div>
           <div class="flex-1 space-y-2">
             <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
@@ -1127,7 +1142,7 @@ tailwind.config = {
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
           <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
             <div class="faq-item open">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">What does AI Probability mean?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1136,7 +1151,7 @@ tailwind.config = {
               <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">AI Probability is the percentage likelihood that the analyzed text, considered as a whole, was AI-generated. It is a document-level detection indicator. It does not represent the percentage of the document that was generated by AI, and it is not proof of authorship.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">What does Total AI Rate mean?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1145,7 +1160,7 @@ tailwind.config = {
               <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Total AI Rate is the share of the document made up of passages flagged as AI-generated. It complements AI Probability by showing how much of the text is contained in flagged passages rather than the overall likelihood for the document.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Why can AI Probability and Total AI Rate be different?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1154,7 +1169,7 @@ tailwind.config = {
               <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">They measure different things. AI Probability describes the likelihood that the document as a whole was AI-generated. Total AI Rate describes the amount of text contained in passages flagged as AI-generated. The two percentages therefore should not be expected to match.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Does a high AI Probability prove that a text was written by AI?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1163,7 +1178,7 @@ tailwind.config = {
               <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. AI detection is probabilistic. A high AI Probability means the detector found stronger AI-writing signals in the document, but it does not prove who wrote the text or establish by itself that AI was used. Review Total AI Rate, the highlighted passages, and the context of the document before drawing a conclusion.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Can I upload a document instead of pasting text?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1172,7 +1187,7 @@ tailwind.config = {
               <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. You can paste text directly into the AI checker or upload a supported document. PlagiarismSearch uses broad document-format support for uploaded files. If readable text cannot be extracted from a file, paste the text directly into the checker instead.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">How much text should I check?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1181,7 +1196,7 @@ tailwind.config = {
               <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Pasted text must contain at least 100 characters. For a more reliable AI detection result, we recommend checking at least 150–200 words whenever possible because a longer sample gives the detector more context.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">What languages can the AI detector check?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1190,7 +1205,7 @@ tailwind.config = {
               <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">PlagiarismSearch can process text in any language. Detection accuracy is highest in English, so results for other languages should be interpreted with that limitation in mind.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Is AI-generated text the same as plagiarism?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1199,7 +1214,7 @@ tailwind.config = {
               <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. AI generation and plagiarism are different issues. AI detection looks for patterns associated with AI-generated writing. Plagiarism checking compares text with available sources to identify matching or similar passages. AI-generated text is not automatically plagiarism, and a source match does not prove that AI was used.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">What happens to my text and report after an AI check?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1208,7 +1223,7 @@ tailwind.config = {
               <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">AI checks are processed on PlagiarismSearch infrastructure, and checked content is not sent to an external AI detector provider. Generated reports may remain available in your account for convenience, and you can permanently delete them. For broader information about account data and privacy practices, see the Privacy Policy.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Is AI checking free?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1531,8 +1546,13 @@ tailwind.config = {
     q.addEventListener('click', () => {
       const item = q.closest('.faq-item');
       const wasOpen = item.classList.contains('open');
-      item.parentElement.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
+      const list = item.parentElement;
+      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
       if (!wasOpen) item.classList.add('open');
+      /* aria-expanded has to follow the visual state or a screen-reader user is told
+         every answer is collapsed while looking at an open one */
+      list.querySelectorAll('.faq-q').forEach(b =>
+        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
     });
   });
 })();

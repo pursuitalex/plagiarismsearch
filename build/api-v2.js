@@ -312,10 +312,10 @@ ${COPY.s1.rail.map(([head, sup]) => `            <div>
         <div class="rv min-w-0">
           <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 shadow-diffuse-lg overflow-hidden">
             <div class="flex items-center gap-1 px-3 sm:px-4 pt-3 sm:pt-4 pb-0">
-${COPY.s1.tabs.map((t, i) => `              <button type="button" class="code-tab${i === 0 ? ' on' : ''}" data-tab="${t.name}">${t.name}</button>`).join('\n')}
-              <button type="button" class="code-copy ml-auto" data-copy>Copy</button>
+${COPY.s1.tabs.map((t, i) => `              <button type="button" class="code-tab${i === 0 ? ' on' : ''}" data-tab="${t.name}" aria-current="${i === 0 ? 'true' : 'false'}" aria-controls="panel-${t.name}">${t.name}</button>`).join('\n')}
+              <button type="button" class="code-copy ml-auto" data-copy aria-label="Copy the code sample">Copy</button>
             </div>
-${COPY.s1.tabs.map((t, i) => `            <div class="code-panel${i === 0 ? ' on' : ''}" data-panel="${t.name}">
+${COPY.s1.tabs.map((t, i) => `            <div class="code-panel${i === 0 ? ' on' : ''}" data-panel="${t.name}" id="panel-${t.name}">
               <pre class="code-pre"><code>${t.lines.map(esc).join('\n')}</code></pre>
 ${t.caption ? `              <p class="px-4 sm:px-5 lg:px-6 pb-4 text-[12px] leading-relaxed text-white/50">${t.caption}</p>` : ''}
             </div>`).join('\n')}
@@ -443,7 +443,7 @@ ${[
   { dir: 'wait', label: 'status_label: \"processing\"', tone: 'muted' },
   { dir: 'in',   label: 'report.checked', tone: 'orange' },
 ].map(step => {
-  const C = { teal: ['#2CC3DB', 'text-teal-300'], orange: ['#F58971', 'text-orange-300'], muted: ['', 'text-white/40'] }[step.tone];
+  const C = { teal: ['#2CC3DB', 'text-teal-300'], orange: ['#F58971', 'text-orange-300'], muted: ['', 'text-white/60'] }[step.tone];
   if (step.dir === 'wait') {
     return `            <div class="flex items-center gap-3 py-1">
               <span class="flex-1 border-t border-dashed border-white/15"></span>
@@ -491,7 +491,7 @@ ${eyebrowDark('teal-400', 'Results')}
                the Response or Webhook sample in the hero, so it is the same contract the
                reader just saw, named rather than re-quoted. -->
           <div class="hidden lg:block mt-8 rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-5">
-            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/40 mb-3">Returned by the API</span>
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-3">Returned by the API</span>
             <div class="flex flex-wrap gap-2">
 ${['id', 'progress', 'status', 'status_label', 'event', 'checked_words', 'words', 'links.self']
   .map(f => `              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">${f}</code>`).join('\n')}
@@ -501,7 +501,7 @@ ${['id', 'progress', 'status', 'status_label', 'event', 'checked_words', 'words'
 
         <div class="rv-kids space-y-4 sm:space-y-5">
 ${COPY.s5.items.map(([head, body], i) => `          <div class="rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7">
-            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-2">Step 0${i + 1}</span>
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-2">Step 0${i + 1}</span>
             <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-white mb-2">${head}</h3>
             <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[60ch]">${body}</p>
           </div>`).join('\n')}
@@ -537,26 +537,45 @@ ${COPY.s6.items.map(([head, body, icon]) => `        <div class="rounded-3xl sm:
 
 /* ═══════════════ 07 · DEVELOPER RESOURCES ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · DEVELOPER RESOURCES =================
-       One card, deliberately. The API Q&amp;A page is gated until it is synchronized with
-       3.1.0, and the brief is explicit: "Do not reserve an empty second-card slot." So
-       the layout is built for one rather than showing a hole where the second will go. -->
-  <section id="api-resources" class="relative py-16 sm:py-24 lg:py-28 bg-white overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-8 sm:mb-10">
-${eyebrow('teal-400', 'Resources')}
-        ${h2(COPY.s7.h2)}
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s7.intro}</p>
-      </div>
+       One card, and it is meant to look that way. The API Q&amp;A page is gated until it is
+       synchronized with 3.1.0 and the brief forbids reserving an empty second slot — so
+       rather than leaving a hole, the single resource fills the width it has.
 
-      <div class="rv max-w-[820px] rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
-        <span class="shrink-0 w-12 h-12 rounded-2xl bg-teal-50 flex items-center justify-center">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        </span>
-        <div class="min-w-0 flex-1">
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">${COPY.s7.card[0]}</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 max-w-[62ch]">${COPY.s7.card[1]}</p>
+       Reshaped 2026-08-25: the card was 820px inside a 1,200px column under act-sized
+       padding, and the surrounding air read as a missing sibling. Heading beside the
+       card instead of above it, card full width, padding cut to what one row needs. -->
+  <section id="api-resources" class="relative py-12 sm:py-14 lg:py-16 bg-white overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv grid lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-12 items-center">
+
+        <div>
+${eyebrow('teal-400', 'Resources')}
+          ${h2(COPY.s7.h2)}
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s7.intro}</p>
         </div>
-        <div class="shrink-0">${btnDark(COPY.s7.cta, DOCS)}</div>
+
+        <div class="rounded-3xl sm:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="rounded-[18px] sm:rounded-3xl bg-white shadow-inner-hl p-6 sm:p-7 lg:p-8">
+            <div class="flex items-start gap-4 sm:gap-5 mb-5 lg:mb-6">
+              <span class="shrink-0 w-12 h-12 rounded-2xl bg-teal-100 flex items-center justify-center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </span>
+              <div class="min-w-0">
+                <h3 class="text-[18px] sm:text-[20px] font-bold tracking-tight mb-1.5">${COPY.s7.card[0]}</h3>
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[58ch]">${COPY.s7.card[1]}</p>
+              </div>
+            </div>
+
+            <!-- what the documentation actually contains, named from the contract the
+                 hero already showed. Not a second card: the same resource, described. -->
+            <div class="flex flex-wrap gap-2 pb-5 mb-5 border-b border-ink-100">
+${['Endpoints', 'Request parameters', 'Response schemas', 'API 3.1.0']
+  .map(t => `              <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1.5 text-[12px] font-semibold text-ink-600">${t}</span>`).join('\n')}
+            </div>
+
+            ${btnDark(COPY.s7.cta, DOCS)}
+          </div>
+        </div>
       </div>
     </div>
   </section>`;
@@ -621,7 +640,7 @@ ${COPY.s9.fields.map(([label, placeholder, required, note, isArea], i) => {
   const id = 'aq-' + i;
   const wide = isArea || i === 4 ? ' sm:col-span-2' : '';
   return `              <div class="${wide.trim() || 'min-w-0'}${wide}">
-                <label class="cf-label" for="${id}">${label}${required ? ' <i>*</i>' : ''}${note && note === 'Optional' ? ' <span class="font-medium text-ink-400">Optional</span>' : ''}</label>
+                <label class="cf-label" for="${id}">${label}${required ? ' <i>*</i>' : ''}${note && note === 'Optional' ? ' <span class="font-medium text-ink-500">Optional</span>' : ''}</label>
                 ${isArea
                   ? `<textarea class="cf-field" id="${id}" rows="4" placeholder="${placeholder}"></textarea>`
                   : `<input class="cf-field" id="${id}" type="${label === 'Work email' ? 'email' : label === 'Phone' ? 'tel' : 'text'}" placeholder="${placeholder}">`}
@@ -666,7 +685,7 @@ ${eyebrow('orange-500', 'Questions')}
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
           <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${COPY.s10.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -715,6 +734,21 @@ const STYLE = `
      leaving it off would make the next class added to that div a silent bug. */
   [hidden] { display: none !important; }
 
+  /* Anchor landings clear the sticky header. Measured, not guessed: the header is
+     fixed at top:20 and its bar ends at 76px, so a section arriving at offset 0 puts
+     its own label underneath it. 100px leaves the H2 fully visible with air above.
+     The batch is explicit that this is fixed at the anchor, never by changing section
+     spacing globally. */
+  section[id] { scroll-margin-top: 100px; }
+
+  /* A visible focus ring on everything reachable by keyboard. :focus-visible rather
+     than :focus, so a mouse press does not leave a ring behind. */
+  a:focus-visible, button:focus-visible, summary:focus-visible,
+  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
+  /* on ink, the teal ring is too close to the ground to read */
+  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible {
+    outline-color: #6ED7E8; }
   .rv-kids > * { opacity:0; transform:translateY(40px); }
   .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
 
@@ -743,7 +777,9 @@ const STYLE = `
      The shared head carries only the small-breakpoint height override, so the base
      rules have to live here or the fields collapse to browser defaults. */
   .cf-label { display:block; font-size:12px; font-weight:700; letter-spacing:.01em; color:#4B5563; margin-bottom:7px; }
-  .cf-label i { font-style:normal; color:#F36F5A; }
+  /* orange-500 measured 2.90 on white; orange-600 clears AA. Local correction to a
+     measured failure, not a palette change — the shared form keeps its own value. */
+  .cf-label i { font-style:normal; color:#B84431; }
   .cf-field { width:100%; height:48px; padding:0 14px; border-radius:10px; border:1px solid #E5E7EB;
     background:#fff; color:#111827; font-size:14.5px; font-weight:500; font-family:inherit;
     transition:border-color .15s ease, box-shadow .15s ease; }
@@ -818,7 +854,10 @@ ${cta.script}
   const panels = [...document.querySelectorAll('.code-panel')];
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.toggle('on', t === tab));
+      tabs.forEach(t => {
+        t.classList.toggle('on', t === tab);
+        t.setAttribute('aria-current', String(t === tab));
+      });
       panels.forEach(p => p.classList.toggle('on', p.dataset.panel === tab.dataset.tab));
     });
   });
@@ -840,8 +879,13 @@ ${cta.script}
     q.addEventListener('click', () => {
       const item = q.closest('.faq-item');
       const wasOpen = item.classList.contains('open');
-      item.parentElement.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
+      const list = item.parentElement;
+      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
       if (!wasOpen) item.classList.add('open');
+      /* aria-expanded has to follow the visual state or a screen-reader user is told
+         every answer is collapsed while looking at an open one */
+      list.querySelectorAll('.faq-q').forEach(b =>
+        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
     });
   });
 })();
