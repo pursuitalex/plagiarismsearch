@@ -10,6 +10,15 @@
    new claim but carrying an old one across, and a person rereading a 74KB page will not
    catch that reliably.
 
+   AMENDED 2026-08-25 by the Visual & Interaction Correction Batch, which supersedes
+   DEC-0038 on four points. Each amendment is marked below with the clause it follows,
+   because the two documents now disagree and the newer one wins only where it speaks:
+
+     · bracket placeholders go from REQUIRED-until-asset to BANNED outright
+     · the report must carry real numeric values
+     · 'Choose plan' is forbidden where a card holds more than one package
+     · the checker states must not be listed anywhere as page content
+
    Run: node build/check-ai.js
 */
 const fs = require('fs');
@@ -132,9 +141,11 @@ console.log('\nfixed copy');
   ok(FIXED.length + ' approved strings present', !missing.length,
      missing.map(s => '"' + s.slice(0, 45) + '…"').join(' · '));
 
+  /* AMENDED: 'Choose plan' was approved by DEC-0038 and is now forbidden — the batch
+     calls a generic CTA over several packages a conversion defect, not a preference. */
   const CTAS = ['Check for AI', 'View AI pricing', 'Create free account', 'Check for plagiarism',
                 'Read the Privacy Policy', 'Explore the PlagiarismSearch API', 'Visit the Help Center',
-                'Choose plan', 'Start AI check'];
+                'Start AI check'];
   const missingCta = CTAS.filter(s => !has(s));
   ok(CTAS.length + ' approved CTA labels present', !missingCta.length, missingCta.join(' · '));
 
@@ -244,22 +255,53 @@ console.log('\nstructure');
   const missingRow = rows.filter(r => !pricing.includes(r));
   ok('eight approved AI word packages', !missingRow.length, missingRow.join(', '));
 
-  /* "Until a real asset is supplied, use [REAL AI PROBABILITY] placeholders." The page
-     is not done while these stand, so they are reported every run rather than passing
-     silently -- that is the whole point of the brief's asset gate. */
-  const ph = (body.match(/\[REAL [A-Z\- ]+\]/g) || []);
-  console.log('  note  ' + (ph.length
-    ? ph.length + ' report placeholder(s) awaiting the approved asset: ' + [...new Set(ph)].join(' ')
-    : 'no report placeholders — real asset in use'));
+  /* AMENDED — the rule reversed. DEC-0038 required bracket placeholders while the real
+     asset was missing; the asset arrived with the 2026-08-25 batch, which bans them:
+     "No bracket placeholder may appear in a user-facing mock or production build." */
+  const ph = [...new Set(body.match(/\[REAL [A-Z\- ]+\]/g) || [])];
+  ok('no bracket placeholders anywhere', !ph.length, ph.join(' '));
+
+  /* AMENDED — and the other half of the same reversal: real values are now required.
+     These are the product's own, from the report state supplied with the batch. */
+  const report = section('ai-report');
+  ok('report carries the real metric values',
+     report.includes('13.44%') && report.includes('12.5%'),
+     'Total AI rate 13.44% / AI probability 12.5%');
+
+  /* AMENDED — "In the normal/default state there is no Checker states control,
+     accordion, disclosure, debug list, or documentation block anywhere on the page."
+     The five messages must still EXIST (asserted above); they must not be listed. */
+  const hero = section('ai-checker');
+  ok('no states listed as page content',
+     !/Checker states/i.test(body) && !/<details/.test(hero), '');
+
+  /* Each state ships hidden, and [hidden] has to actually win against Tailwind's
+     display utilities — it did not, and five of them rendered. */
+  ok('[hidden] is guarded against the display utilities',
+     /\[hidden\]\s*\{\s*display:\s*none\s*!important/.test(html), '');
+
+  /* AMENDED — the account block is a state of the checker, not a second standalone
+     card below it. It must sit inside the one form. */
+  ok('auth gate lives inside the checker card',
+     /id="authGate"[^>]*hidden/.test(hero) &&
+     hero.indexOf('id="authGate"') < hero.indexOf('</form>'), '');
+
+  /* AMENDED — every package row is individually selectable and the CTA names it. */
+  const pricing2 = section('ai-pricing');
+  const radios = (pricing2.match(/type="radio"/g) || []).length;
+  ok('all eight packages are selectable', radios === 8, radios + ' radio(s)');
+  ok('no generic Choose plan CTA', !/Choose plan/.test(pricing2), '');
+  ok('each group CTA names its package',
+     (pricing2.match(/data-prefix="Continue with"/g) || []).length === 3,
+     (pricing2.match(/data-prefix=/g) || []).length + ' of 3');
 }
 
 /* -- what DEC-0038 asks for that this repo cannot supply ------------------
    Printed every run rather than filed somewhere and forgotten. Neither is a defect
    in the page; both need someone outside this prototype. */
 console.log('\noutstanding — not blockers for the page, but the brief is not closed');
-console.log('  1  The approved real AI-only report screenshot/state. DEC-0038 makes it');
-console.log('     mandatory for final report-demo approval. Until it lands the demo shows');
-console.log('     structure only, with the [REAL …] tokens listed above.');
+console.log('  1  CLOSED 2026-08-25 — the approved real AI-only report state arrived with');
+console.log('     the correction batch. The demo now carries its values.');
 console.log('  2  The P0 Help Center AI FAQ hotfix (three replaced answers) has no target');
 console.log('     here: site/help-center.html is a four-door landing page, not the FAQ list.');
 console.log('     Those three answers live on production /faq-and-support, so the fix is');

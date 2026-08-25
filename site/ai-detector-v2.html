@@ -344,6 +344,15 @@ tailwind.config = {
   .spotlight:hover { transform:translateY(-4px); }
   @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
 
+  /* pricing package rows — a real selection, not decoration */
+  .pkg { transition:background-color .2s ease, box-shadow .2s ease; }
+  .pkg:hover { background:#F8F9FB; }
+  .pkg:has(input:checked) { background:#E8F8FB; box-shadow:inset 0 0 0 1.5px #0CA9C3; }
+  .pkg:has(input:checked) .pkg-dot { border-color:#0CA9C3; }
+  .pkg:has(input:checked) .pkg-dot::after { content:''; width:8px; height:8px; border-radius:9999px; background:#0CA9C3; }
+  /* the focus ring has to be on the label, since the input itself is visually hidden */
+  .pkg:has(input:focus-visible) { box-shadow:inset 0 0 0 2px #0CA9C3, 0 0 0 3px rgba(12,169,195,.25); }
+
   /* pen mark — the reduced-motion fallback is mandatory, not optional: without it the
      emphasis simply vanishes for anyone who asked the site to stop moving */
   .no-motion .pen-word { color:#DC5A45; }
@@ -735,29 +744,44 @@ tailwind.config = {
           <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Paste text directly into the AI checker for a quick analysis, or upload a document when you want to review the text from a complete file. Document upload makes it easier to check longer essays, reports, articles, and other written work without copying the entire text into the editor.</p>
         </div>
 
-        <!-- collage = photo element + HTML panels on top (IMAGES.md, LAW OF THE COMPOSED
-             COLLAGE). The panels carry their own shadow or white-on-white loses its edge,
-             they overhang the frame, and they go below lg where they would cover the face.
+        <!-- Real product evidence, not a photograph. See the note in build/ai-v2.js.
+             The filename and word count match the report demo below, so the two sections
+             describe one document rather than two unrelated mocks. -->
+        <div class="rv lg:order-1">
+          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+            <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
 
-             They sit over the quiet halves of the frame — the desk on the left, the
-             blurred office on the right — never over the subject. The violet bar is the
-             page's own flagged-passage colour, so the panels echo the report rather than
-             inventing a second visual language. -->
-        <div class="rv lg:order-1 relative">
-          <img src="assets/img/ai/hero.webp" alt="" width="1100" height="821" loading="lazy" decoding="async"
-               class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl">
+              <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-4">Paste text or upload a document</p>
 
-          <div class="hidden lg:block absolute -left-7 bottom-8 w-[54%] rounded-2xl bg-white shadow-diffuse-lg p-4 lg:p-5 space-y-2.5">
-            <div class="h-2.5 w-2/3 rounded-full bg-ink-200"></div>
-            <div class="h-2.5 w-full rounded-full bg-ink-200"></div>
-            <div class="h-6 rounded-lg" style="background:rgba(154,106,222,.35)"></div>
-            <div class="h-2.5 w-1/2 rounded-full bg-ink-200"></div>
-          </div>
+              <!-- the drop zone in its attached state -->
+              <div class="qc-drop flex items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+                <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="block text-[13px] font-bold tracking-tight truncate">urban-transport-review.docx</span>
+                  <span class="block text-[11.5px] text-ink-500 tabular-nums">1,443 words</span>
+                </span>
+                <span class="shrink-0 w-7 h-7 rounded-full bg-ink-100 flex items-center justify-center" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </span>
+              </div>
 
-          <div class="hidden lg:block absolute -right-6 top-7 w-[44%] rounded-2xl bg-white shadow-diffuse-lg p-4 lg:p-5 space-y-2.5">
-            <div class="h-2.5 w-1/2 rounded-full bg-ink-200"></div>
-            <div class="h-6 rounded-lg" style="background:rgba(154,106,222,.35)"></div>
-            <div class="h-2.5 w-3/4 rounded-full bg-ink-200"></div>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="qc-chip"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</span>
+                <span class="qc-chip"><img src="assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">Dropbox</span>
+                <span class="qc-chip"><img src="assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">OneDrive</span>
+                <span class="qc-chip"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</span>
+              </div>
+
+              <div class="flex items-center justify-between gap-4 pt-4 border-t border-ink-100">
+                <span class="text-[13px] font-semibold text-ink-400">View AI pricing</span>
+                <span class="flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[13.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                  Check for AI
+                  <span class="hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -804,36 +828,65 @@ tailwind.config = {
   </section>
 
   <!-- ================= 04 · RESPONSIBLE INTERPRETATION =================
-       The 70% callout is the sharpest sentence on the page and the one most likely to
-       be softened by a layout, so it gets its own plate rather than a line of body. -->
+       Recomposed 2026-08-25. It was a 50/50 split with a lone H2 on the left and three
+       stacked paragraphs on the right — the batch called it sparse and disconnected, and
+       it was: the most important sentence on the page sat as one card among equals.
+
+       The section now has a job distinct from the report above it. The report answers
+       'what are the three signals?'; this answers 'how do I use them?' — so it reads as
+       a sequence: intro, three numbered steps, then the clarification as the thing the
+       whole section builds to.
+
+       The 70% sentence is the signature callout now, not a note beside paragraphs. The
+       consequential-use note sits under it at lower priority, which is where the batch
+       puts it. -->
   <section id="interpret-ai-results" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-12 items-start">
-        <div class="rv">
+
+      <div class="rv max-w-[760px] mb-10 sm:mb-12">
         <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
           <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Interpretation</span>
         </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Use AI detection as a signal, not a verdict</h2>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Use AI detection as a signal, not a verdict</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">AI detection estimates patterns associated with AI-generated writing. It cannot prove who wrote a text or, by itself, establish that a person used AI.</p>
+      </div>
+
+      <!-- the reading order -->
+      <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 lg:mb-8">
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">1</span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-1.5">Document-level likelihood</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Start with AI Probability.</p>
         </div>
-
-        <div class="rv space-y-4 lg:space-y-5">
-          <p class="text-[14px] sm:text-[15px] leading-relaxed text-ink-600 max-w-[68ch]">AI detection estimates patterns associated with AI-generated writing. It cannot prove who wrote a text or, by itself, establish that a person used AI.</p>
-          <p class="text-[14px] sm:text-[15px] leading-relaxed text-ink-600 max-w-[68ch]">Review the document-level AI Probability together with Total AI Rate and the highlighted passages. Looking at these signals together provides more context than relying on a single percentage.</p>
-          <p class="text-[14px] sm:text-[15px] leading-relaxed text-ink-600 max-w-[68ch]">Short samples give the detector less context, which is why we recommend 150–200 words or more whenever possible.</p>
-
-          <div class="rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-            <div class="flex items-start gap-4">
-              <span class="shrink-0 w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
-              </span>
-              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-semibold max-w-[60ch]">A 70% AI Probability does not mean that 70% of the text was written by AI. AI Probability describes the likelihood for the document as a whole. Use Total AI Rate to understand the share of text contained in passages flagged as AI-generated.</p>
-            </div>
-          </div>
-
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500 max-w-[68ch]">If an AI result is being considered in an academic or other consequential review, use the report as one source of evidence and consider the surrounding context before making a decision.</p>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">2</span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-1.5">Share of flagged text</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Compare Total AI Rate.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">3</span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-1.5">Highlighted passages</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Inspect the exact passages and context.</p>
         </div>
       </div>
+
+      <!-- the sentence the section exists for -->
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 mb-5 lg:mb-6">
+        <div class="flex flex-col sm:flex-row items-start gap-5 sm:gap-7">
+          <span class="shrink-0 w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          </span>
+          <p class="text-[16px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight leading-[1.4] text-white max-w-[62ch]"><span class="text-orange-300">A 70% AI Probability does not mean that 70% of the text was written by AI.</span> AI Probability describes the likelihood for the document as a whole. Use Total AI Rate to understand the share of text contained in passages flagged as AI-generated.</p>
+        </div>
+      </div>
+
+      <!-- the remaining approved body, and the consequential-use note beneath it -->
+      <div class="rv grid lg:grid-cols-2 gap-5 lg:gap-8">
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Review the document-level AI Probability together with Total AI Rate and the highlighted passages. Looking at these signals together provides more context than relying on a single percentage.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Short samples give the detector less context, which is why we recommend 150–200 words or more whenever possible.</p>
+      </div>
+      <p class="rv mt-5 lg:mt-6 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500 max-w-[80ch]">If an AI result is being considered in an academic or other consequential review, use the report as one source of evidence and consider the surrounding context before making a decision.</p>
     </div>
   </section>
 
@@ -926,31 +979,27 @@ tailwind.config = {
   </section>
 
   <!-- ================= 07 · AI DETECTION THROUGH THE API =================
-       The dark callout composition the brief encourages, rewritten to the approved
-       semantics: the main API, not a separate AI API product, and no promise that
-       every account has access. -->
-  <!-- The page's second dark act. It was a dark card floating on white, which reads as a
-       banner dropped into a light page; as a full-bleed act it becomes a beat in the
-       rhythm — dark at 2 and 7, light either side. -->
-  <section id="ai-api" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
-    <div class="orb absolute" style="width:820px;height:780px;right:-12%;top:-340px;background:rgba(44,195,219,.20)"></div>
-    <div class="orb absolute" style="width:640px;height:620px;left:-10%;bottom:-300px;background:rgba(243,111,90,.12)"></div>
+       A compact banner, not an act. See the note in build/ai-v2.js: this was a full dark
+       section and the 2026-08-25 batch cut it back, because API is secondary here and it
+       was interrupting checker → report → understanding → pricing.
 
+       The copy is untouched: same H2, same two approved paragraphs, same single CTA to
+       the main API page. Only the footprint changed. -->
+  <section id="ai-api" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv grid lg:grid-cols-[1.15fr_auto] gap-8 lg:gap-12 items-center">
-        <div class="text-white max-w-[62ch]">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">API</span>
-        </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Add AI detection to your own workflow</h2>
-          <p class="mt-4 lg:mt-5 text-[14px] sm:text-[15px] leading-relaxed text-white/70">AI checking is available through the same PlagiarismSearch API infrastructure used for the main service. It is not a separate AI API product.</p>
-          <p class="mt-3 text-[14px] sm:text-[15px] leading-relaxed text-white/70">AI checks use AI-specific checking limits or credits within the API workflow. Use the main PlagiarismSearch API page to review current access options and implementation details.</p>
-        </div>
-        <div class="shrink-0"><a href="api.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-7 sm:px-8 sm:py-8 lg:px-10 lg:py-9">
+        <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(44,195,219,.18)"></div>
+        <div class="relative flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-10">
+          <div class="min-w-0 flex-1 text-white">
+            <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-bold tracking-tight mb-2">Add AI detection to your own workflow</h2>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[74ch]">AI checking is available through the same PlagiarismSearch API infrastructure used for the main service. It is not a separate AI API product.</p>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[74ch] mt-1.5">AI checks use AI-specific checking limits or credits within the API workflow. Use the main PlagiarismSearch API page to review current access options and implementation details.</p>
+          </div>
+          <div class="shrink-0"><a href="api.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
             Explore the PlagiarismSearch API
             <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a></div>
+        </div>
       </div>
     </div>
   </section>
@@ -972,68 +1021,88 @@ tailwind.config = {
         <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Choose an AI word package for your checking volume</h2>
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">AI checking is priced by word allowance. Choose a one-time package or a recurring plan based on how much text you expect to analyze.</p>
         <p class="mt-3 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">New accounts receive a one-time 1,000-word credit that can be used for AI checking.</p>
+        <p class="mt-4 text-[13px] sm:text-[13.5px] font-semibold text-ink-700">Select an AI word allowance, then continue with the chosen package.</p>
       </div>
 
       <div class="rv-kids grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 max-w-[1100px] mx-auto">
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+        <fieldset class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col" data-group="0">
+          <legend class="sr-only">One-time AI word packages</legend>
           <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
             <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">One-time</h3>
             <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400">AI words</span>
           </div>
-          <ul class="flex-1 divide-y divide-ink-100">
-            <li class="flex items-baseline justify-between gap-4 py-3">
+          <div class="flex-1 space-y-2">
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-0" value="10,000" class="sr-only" checked data-words="10,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">10,000</span>
-              <span class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$4.95</span>
-            </li>
-            <li class="flex items-baseline justify-between gap-4 py-3">
+              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$4.95</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-0" value="50,000" class="sr-only"  data-words="50,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">50,000</span>
-              <span class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$9.95</span>
-            </li>
-          </ul>
-          <a href="account.html" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Choose plan</a>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$9.95</span>
+            </label>
+          </div>
+          <a href="account.html" data-cta="0" data-prefix="Continue with" data-suffix="words" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Continue with 10,000 words</a>
+        </fieldset>
+        <fieldset class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col" data-group="1">
+          <legend class="sr-only">Monthly AI word packages</legend>
           <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
             <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Monthly</h3>
             <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400">AI words</span>
           </div>
-          <ul class="flex-1 divide-y divide-ink-100">
-            <li class="flex items-baseline justify-between gap-4 py-3">
+          <div class="flex-1 space-y-2">
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-1" value="100,000" class="sr-only" checked data-words="100,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">100,000</span>
-              <span class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$12.95/month</span>
-            </li>
-            <li class="flex items-baseline justify-between gap-4 py-3">
+              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$12.95/month</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-1" value="300,000" class="sr-only"  data-words="300,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">300,000</span>
-              <span class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$25.95/month</span>
-            </li>
-            <li class="flex items-baseline justify-between gap-4 py-3">
+              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$25.95/month</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-1" value="500,000" class="sr-only"  data-words="500,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">500,000</span>
-              <span class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$35.95/month</span>
-            </li>
-          </ul>
-          <a href="account.html" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Choose plan</a>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$35.95/month</span>
+            </label>
+          </div>
+          <a href="account.html" data-cta="1" data-prefix="Continue with" data-suffix="words" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Continue with 100,000 words</a>
+        </fieldset>
+        <fieldset class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col" data-group="2">
+          <legend class="sr-only">Yearly AI word packages</legend>
           <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
             <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Yearly</h3>
             <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400">AI words</span>
           </div>
-          <ul class="flex-1 divide-y divide-ink-100">
-            <li class="flex items-baseline justify-between gap-4 py-3">
+          <div class="flex-1 space-y-2">
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-2" value="1,000,000" class="sr-only" checked data-words="1,000,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">1,000,000</span>
-              <span class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$55.95/year</span>
-            </li>
-            <li class="flex items-baseline justify-between gap-4 py-3">
+              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$55.95/year</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-2" value="3,000,000" class="sr-only"  data-words="3,000,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">3,000,000</span>
-              <span class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$125.95/year</span>
-            </li>
-            <li class="flex items-baseline justify-between gap-4 py-3">
+              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$125.95/year</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-2" value="5,000,000" class="sr-only"  data-words="5,000,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">5,000,000</span>
-              <span class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$215.95/year</span>
-            </li>
-          </ul>
-          <a href="account.html" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Choose plan</a>
-        </div>
+              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">$215.95/year</span>
+            </label>
+          </div>
+          <a href="account.html" data-cta="2" data-prefix="Continue with" data-suffix="words" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Continue with 1,000,000 words</a>
+        </fieldset>
       </div>
     </div>
   </section>
@@ -1440,6 +1509,22 @@ tailwind.config = {
       }
     });
   }
+
+  /* Pricing: the CTA must always name the package it buys. Radio semantics come from
+     the markup — a keyboard user changes the selection with arrow keys and nothing here
+     interferes; this only keeps the button label in step.
+
+     The two words around the number are read off the button's own data attributes
+     rather than baked into this script, so the approved copy stays in one place. */
+  document.querySelectorAll('[data-group]').forEach(group => {
+    const cta = group.querySelector('[data-cta]');
+    if (!cta) return;
+    group.addEventListener('change', () => {
+      const on = group.querySelector('input:checked');
+      if (!on) return;
+      cta.textContent = [cta.dataset.prefix, on.dataset.words, cta.dataset.suffix].join(' ');
+    });
+  });
 
   /* FAQ: answers are already in the DOM; this only opens and closes them */
   document.querySelectorAll('.faq-q').forEach(q => {

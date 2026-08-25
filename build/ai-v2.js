@@ -139,6 +139,11 @@ const COPY = {
 
   s3: {
     h2: 'Check AI-written text in complete documents',
+    /* The document shown attached in the section's visual. Deliberately the same one
+       the report demo reports on — 1,443 words is the figure in its Report information
+       panel — so the page shows one document through two stages rather than two
+       unrelated mocks. Mock UI content, not product copy. */
+    file: { name: 'urban-transport-review.docx', words: '1,443 words' },
     intro: 'Paste text directly into the AI checker for a quick analysis, or upload a document when you want to review the text from a complete file. Document upload makes it easier to check longer essays, reports, articles, and other written work without copying the entire text into the editor.',
     /* head, body, Lucide path, bento span. The spans make this a bento rather than a
        grid of four identical tiles: the two ways INTO the checker are the wide pair,
@@ -157,6 +162,14 @@ const COPY = {
 
   s4: {
     h2: 'Use AI detection as a signal, not a verdict',
+    /* The reading order, from the 2026-08-25 batch § 6. Each label pairs a metric
+       with the approved supporting label DEC-0038 already gives it, so the section
+       teaches a sequence without introducing new terminology. */
+    steps: [
+      ['Document-level likelihood', 'Start with AI Probability.'],
+      ['Share of flagged text', 'Compare Total AI Rate.'],
+      ['Highlighted passages', 'Inspect the exact passages and context.'],
+    ],
     body: [
       'AI detection estimates patterns associated with AI-generated writing. It cannot prove who wrote a text or, by itself, establish that a person used AI.',
       'Review the document-level AI Probability together with Total AI Rate and the highlighted passages. Looking at these signals together provides more context than relying on a single percentage.',
@@ -214,7 +227,13 @@ const COPY = {
       ['Monthly',  [['100,000', '$12.95/month'], ['300,000', '$25.95/month'], ['500,000', '$35.95/month']]],
       ['Yearly',   [['1,000,000', '$55.95/year'], ['3,000,000', '$125.95/year'], ['5,000,000', '$215.95/year']]],
     ],
-    planCta: 'Choose plan',
+    /* One short interface instruction, added by the 2026-08-25 batch § 10. */
+    helper: 'Select an AI word allowance, then continue with the chosen package.',
+    /* The CTA is built from the selection, so it always names what it buys. The batch
+       gives the pattern: "Continue with 300,000 words". A generic label is only
+       acceptable where a card holds exactly one package, and none here does. */
+    planCtaPrefix: 'Continue with',
+    planCtaSuffix: 'words',
   },
 
   s9: {
@@ -527,29 +546,45 @@ ${eyebrow('orange-500', 'Documents')}
           <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s3.intro}</p>
         </div>
 
-        <!-- collage = photo element + HTML panels on top (IMAGES.md, LAW OF THE COMPOSED
-             COLLAGE). The panels carry their own shadow or white-on-white loses its edge,
-             they overhang the frame, and they go below lg where they would cover the face.
+        <!-- Real product evidence, not a photograph. See the note in build/ai-v2.js.
+             The filename and word count match the report demo below, so the two sections
+             describe one document rather than two unrelated mocks. -->
+        <div class="rv lg:order-1">
+          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+            <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
 
-             They sit over the quiet halves of the frame — the desk on the left, the
-             blurred office on the right — never over the subject. The violet bar is the
-             page's own flagged-passage colour, so the panels echo the report rather than
-             inventing a second visual language. -->
-        <div class="rv lg:order-1 relative">
-          <img src="assets/img/ai/hero.webp" alt="" width="1100" height="821" loading="lazy" decoding="async"
-               class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl">
+              <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-4">${COPY.s1.toolHeading}</p>
 
-          <div class="hidden lg:block absolute -left-7 bottom-8 w-[54%] rounded-2xl bg-white shadow-diffuse-lg p-4 lg:p-5 space-y-2.5">
-            <div class="h-2.5 w-2/3 rounded-full bg-ink-200"></div>
-            <div class="h-2.5 w-full rounded-full bg-ink-200"></div>
-            <div class="h-6 rounded-lg" style="background:rgba(154,106,222,.35)"></div>
-            <div class="h-2.5 w-1/2 rounded-full bg-ink-200"></div>
-          </div>
+              <!-- the drop zone in its attached state -->
+              <div class="qc-drop flex items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+                <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="block text-[13px] font-bold tracking-tight truncate">${COPY.s3.file.name}</span>
+                  <span class="block text-[11.5px] text-ink-500 tabular-nums">${COPY.s3.file.words}</span>
+                </span>
+                <span class="shrink-0 w-7 h-7 rounded-full bg-ink-100 flex items-center justify-center" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </span>
+              </div>
 
-          <div class="hidden lg:block absolute -right-6 top-7 w-[44%] rounded-2xl bg-white shadow-diffuse-lg p-4 lg:p-5 space-y-2.5">
-            <div class="h-2.5 w-1/2 rounded-full bg-ink-200"></div>
-            <div class="h-6 rounded-lg" style="background:rgba(154,106,222,.35)"></div>
-            <div class="h-2.5 w-3/4 rounded-full bg-ink-200"></div>
+              <div class="flex flex-wrap gap-2 mb-4">
+${COPY.s1.inputs.map(i => `                <span class="qc-chip">${
+  i.icon === 'brand'
+    ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">`
+    : `<svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`
+}${i.label}</span>`).join('\n')}
+              </div>
+
+              <div class="flex items-center justify-between gap-4 pt-4 border-t border-ink-100">
+                <span class="text-[13px] font-semibold text-ink-400">${COPY.s1.secondary}</span>
+                <span class="flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[13.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                  ${COPY.s1.cta}
+                  <span class="hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">${arrow}</span>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -574,31 +609,53 @@ ${COPY.s3.blocks.map(([head, body, icon, span, tint]) => {
 
 /* ═══════════════ 04 · RESPONSIBLE INTERPRETATION ═══════════════ */
 const section4 = () => `  <!-- ================= 04 · RESPONSIBLE INTERPRETATION =================
-       The 70% callout is the sharpest sentence on the page and the one most likely to
-       be softened by a layout, so it gets its own plate rather than a line of body. -->
+       Recomposed 2026-08-25. It was a 50/50 split with a lone H2 on the left and three
+       stacked paragraphs on the right — the batch called it sparse and disconnected, and
+       it was: the most important sentence on the page sat as one card among equals.
+
+       The section now has a job distinct from the report above it. The report answers
+       'what are the three signals?'; this answers 'how do I use them?' — so it reads as
+       a sequence: intro, three numbered steps, then the clarification as the thing the
+       whole section builds to.
+
+       The 70% sentence is the signature callout now, not a note beside paragraphs. The
+       consequential-use note sits under it at lower priority, which is where the batch
+       puts it. -->
   <section id="interpret-ai-results" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-12 items-start">
-        <div class="rv">
+
+      <div class="rv max-w-[760px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', 'Interpretation')}
-          ${h2(COPY.s4.h2)}
-        </div>
+        ${h2(COPY.s4.h2)}
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s4.body[0]}</p>
+      </div>
 
-        <div class="rv space-y-4 lg:space-y-5">
-${COPY.s4.body.map(p => `          <p class="text-[14px] sm:text-[15px] leading-relaxed text-ink-600 max-w-[68ch]">${p}</p>`).join('\n')}
+      <!-- the reading order -->
+      <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 lg:mb-8">
+${COPY.s4.steps.map(([label, action], i) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">${i + 1}</span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-1.5">${label}</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${action}</p>
+        </div>`).join('\n')}
+      </div>
 
-          <div class="rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-            <div class="flex items-start gap-4">
-              <span class="shrink-0 w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
-              </span>
-              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-semibold max-w-[60ch]">${COPY.s4.callout}</p>
-            </div>
-          </div>
-
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500 max-w-[68ch]">${COPY.s4.consequential}</p>
+      <!-- the sentence the section exists for -->
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 mb-5 lg:mb-6">
+        <div class="flex flex-col sm:flex-row items-start gap-5 sm:gap-7">
+          <span class="shrink-0 w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          </span>
+          <p class="text-[16px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight leading-[1.4] text-white max-w-[62ch]">${
+            COPY.s4.callout.replace('A 70% AI Probability does not mean that 70% of the text was written by AI.',
+              '<span class="text-orange-300">A 70% AI Probability does not mean that 70% of the text was written by AI.</span>')}</p>
         </div>
       </div>
+
+      <!-- the remaining approved body, and the consequential-use note beneath it -->
+      <div class="rv grid lg:grid-cols-2 gap-5 lg:gap-8">
+${COPY.s4.body.slice(1).map(p => `        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">${p}</p>`).join('\n')}
+      </div>
+      <p class="rv mt-5 lg:mt-6 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500 max-w-[80ch]">${COPY.s4.consequential}</p>
     </div>
   </section>`;
 
@@ -673,24 +730,23 @@ ${COPY.s6.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rou
 
 /* ═══════════════ 07 · AI THROUGH THE API ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · AI DETECTION THROUGH THE API =================
-       The dark callout composition the brief encourages, rewritten to the approved
-       semantics: the main API, not a separate AI API product, and no promise that
-       every account has access. -->
-  <!-- The page's second dark act. It was a dark card floating on white, which reads as a
-       banner dropped into a light page; as a full-bleed act it becomes a beat in the
-       rhythm — dark at 2 and 7, light either side. -->
-  <section id="ai-api" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
-    <div class="orb absolute" style="width:820px;height:780px;right:-12%;top:-340px;background:rgba(44,195,219,.20)"></div>
-    <div class="orb absolute" style="width:640px;height:620px;left:-10%;bottom:-300px;background:rgba(243,111,90,.12)"></div>
+       A compact banner, not an act. See the note in build/ai-v2.js: this was a full dark
+       section and the 2026-08-25 batch cut it back, because API is secondary here and it
+       was interrupting checker → report → understanding → pricing.
 
+       The copy is untouched: same H2, same two approved paragraphs, same single CTA to
+       the main API page. Only the footprint changed. -->
+  <section id="ai-api" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv grid lg:grid-cols-[1.15fr_auto] gap-8 lg:gap-12 items-center">
-        <div class="text-white max-w-[62ch]">
-${eyebrowDark('teal-400', 'API')}
-          ${h2(COPY.s7.h2)}
-${COPY.s7.body.map((p, i) => `          <p class="mt-${i === 0 ? '4 lg:mt-5' : '3'} text-[14px] sm:text-[15px] leading-relaxed text-white/70">${p}</p>`).join('\n')}
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-7 sm:px-8 sm:py-8 lg:px-10 lg:py-9">
+        <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(44,195,219,.18)"></div>
+        <div class="relative flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-10">
+          <div class="min-w-0 flex-1 text-white">
+            <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-bold tracking-tight mb-2">${COPY.s7.h2}</h2>
+${COPY.s7.body.map((t, i) => `            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[74ch]${i ? ' mt-1.5' : ''}">${t}</p>`).join('\n')}
+          </div>
+          <div class="shrink-0">${btnLight(COPY.s7.cta, COPY.s7.ctaHref)}</div>
         </div>
-        <div class="shrink-0">${btnLight(COPY.s7.cta, COPY.s7.ctaHref)}</div>
       </div>
     </div>
   </section>`;
@@ -710,22 +766,26 @@ ${eyebrow('orange-500', 'AI pricing')}
         ${h2(COPY.s8.h2)}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s8.intro}</p>
         <p class="mt-3 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">${COPY.s8.free}</p>
+        <p class="mt-4 text-[13px] sm:text-[13.5px] font-semibold text-ink-700">${COPY.s8.helper}</p>
       </div>
 
       <div class="rv-kids grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 max-w-[1100px] mx-auto">
-${COPY.s8.groups.map(([billing, rows]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+${COPY.s8.groups.map(([billing, rows], g) => `        <fieldset class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col" data-group="${g}">
+          <legend class="sr-only">${billing} AI word packages</legend>
           <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
             <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">${billing}</h3>
             <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400">AI words</span>
           </div>
-          <ul class="flex-1 divide-y divide-ink-100">
-${rows.map(([words, price]) => `            <li class="flex items-baseline justify-between gap-4 py-3">
+          <div class="flex-1 space-y-2">
+${rows.map(([words, price], i) => `            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-${g}" value="${words}" class="sr-only" ${i === 0 ? 'checked' : ''} data-words="${words}">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">${words}</span>
-              <span class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">${price}</span>
-            </li>`).join('\n')}
-          </ul>
-          <a href="account.html" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">${COPY.s8.planCta}</a>
-        </div>`).join('\n')}
+              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">${price}</span>
+            </label>`).join('\n')}
+          </div>
+          <a href="account.html" data-cta="${g}" data-prefix="${COPY.s8.planCtaPrefix}" data-suffix="${COPY.s8.planCtaSuffix}" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">${COPY.s8.planCtaPrefix} ${rows[0][0]} ${COPY.s8.planCtaSuffix}</a>
+        </fieldset>`).join('\n')}
       </div>
     </div>
   </section>`;
@@ -845,6 +905,15 @@ ${cta.style('ai-final-cta')}
   .spotlight:hover { transform:translateY(-4px); }
   @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
 
+  /* pricing package rows — a real selection, not decoration */
+  .pkg { transition:background-color .2s ease, box-shadow .2s ease; }
+  .pkg:hover { background:#F8F9FB; }
+  .pkg:has(input:checked) { background:#E8F8FB; box-shadow:inset 0 0 0 1.5px #0CA9C3; }
+  .pkg:has(input:checked) .pkg-dot { border-color:#0CA9C3; }
+  .pkg:has(input:checked) .pkg-dot::after { content:''; width:8px; height:8px; border-radius:9999px; background:#0CA9C3; }
+  /* the focus ring has to be on the label, since the input itself is visually hidden */
+  .pkg:has(input:focus-visible) { box-shadow:inset 0 0 0 2px #0CA9C3, 0 0 0 3px rgba(12,169,195,.25); }
+
   /* pen mark — the reduced-motion fallback is mandatory, not optional: without it the
      emphasis simply vanishes for anyone who asked the site to stop moving */
   .no-motion .pen-word { color:#DC5A45; }
@@ -937,6 +1006,22 @@ ${cta.script}
       }
     });
   }
+
+  /* Pricing: the CTA must always name the package it buys. Radio semantics come from
+     the markup — a keyboard user changes the selection with arrow keys and nothing here
+     interferes; this only keeps the button label in step.
+
+     The two words around the number are read off the button's own data attributes
+     rather than baked into this script, so the approved copy stays in one place. */
+  document.querySelectorAll('[data-group]').forEach(group => {
+    const cta = group.querySelector('[data-cta]');
+    if (!cta) return;
+    group.addEventListener('change', () => {
+      const on = group.querySelector('input:checked');
+      if (!on) return;
+      cta.textContent = [cta.dataset.prefix, on.dataset.words, cta.dataset.suffix].join(' ');
+    });
+  });
 
   /* FAQ: answers are already in the DOM; this only opens and closes them */
   document.querySelectorAll('.faq-q').forEach(q => {
