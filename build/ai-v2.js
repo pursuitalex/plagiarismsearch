@@ -89,10 +89,46 @@ const COPY = {
     h2: 'Understand your AI detection report',
     intro: 'A single percentage can be easy to misread. PlagiarismSearch separates the result into three levels so you can see what the detector says about the document as a whole, how much of the text is flagged, and where those signals appear.',
     metrics: [
-      ['AI Probability', 'The percentage likelihood that the analyzed text, considered as a whole, was AI-generated.', 'Document-level likelihood', '[REAL AI PROBABILITY]'],
-      ['Total AI Rate', 'The share of the document made up of passages flagged as AI-generated.', 'Share of flagged text', '[REAL TOTAL AI RATE]'],
-      ['Highlighted passages', 'See where AI-writing signals appear in the document. Individual highlighted sentences or passages can show their own AI probability.', 'Location and passage-level signal', '[REAL PASSAGE-LEVEL AI PROBABILITY]'],
+      ['AI Probability', 'The percentage likelihood that the analyzed text, considered as a whole, was AI-generated.', 'Document-level likelihood'],
+      ['Total AI Rate', 'The share of the document made up of passages flagged as AI-generated.', 'Share of flagged text'],
+      ['Highlighted passages', 'See where AI-writing signals appear in the document. Individual highlighted sentences or passages can show their own AI probability.', 'Location and passage-level signal'],
     ],
+
+    /* ── the report demo ──────────────────────────────────────────────────────
+       Values are REAL, from the product state supplied with the 2026-08-25
+       correction batch. The 2026-08-22 rule that forbade numbers was reversed by
+       that batch: visible numeric report values are now required and bracket
+       placeholders are banned from any user-facing build.
+
+       These are sample OUTPUT values from one report. They are not an accuracy
+       claim, and nothing on the page presents them as one.
+
+       Label case follows the PRODUCT, not the brief — 'Total AI rate', not 'Total
+       AI Rate' (DEC-U02). Inside the report the page is quoting an interface; in
+       the explanations beside it, the approved title case is untouched. */
+    report: {
+      id: '#11549335',
+      words: '1443',
+      uploaded: 'Jul 21, 2026',
+      totalLabel: 'Total AI rate',
+      totalValue: '13.44%',
+      probLabel: 'AI probability',
+      probValue: '12.5%',
+      tabs: ['Plagiarism', 'AI'],
+      panelHeading: 'Report information',
+      /* Demo document body, English (DEC-U01). Written for this mock, deliberately
+         neutral: it is sample content, the way a screenshot's document would be, and
+         it makes no claim about anything. `hl: true` marks a flagged passage. */
+      doc: [
+        [{ t: 'Urban transport planning has changed considerably over the past two decades. Cities that once measured success by road capacity now look at how many journeys can be completed without a car at all.' }],
+        [{ t: 'Several factors contribute to this shift. ' },
+         { t: 'The widespread adoption of integrated ticketing has made multi-modal journeys significantly more convenient for daily commuters, while real-time arrival data has reduced the perceived cost of waiting.', hl: true },
+         { t: ' Local authorities have also revised how street space is allocated.' }],
+        [{ t: 'Evidence from comparable programmes suggests the effects are cumulative rather than immediate. ' },
+         { t: 'Sustained investment across a decade tends to produce more durable changes in travel behaviour than short-term interventions concentrated in a single corridor.', hl: true },
+         { t: ' Measurement remains difficult, and results vary between districts.' }],
+      ],
+    },
     callout: [
       'AI Probability and Total AI Rate are not the same metric. AI Probability describes the document-level likelihood. Total AI Rate describes how much of the document is contained in passages flagged as AI-generated.',
       'These values are detection indicators, not proof of authorship.',
@@ -363,15 +399,19 @@ const section2 = () => `  <!-- ================= 02 · SIGNATURE: AI-ONLY REPORT
        The page's whole argument: "do not win by claiming more certainty than
        competitors; win by showing the result more clearly."
 
-       Every value is a placeholder. DEC-0038 requires a real approved AI-only report
-       state as the visual source of truth and forbids inventing values, colours,
-       thresholds or interactions — and that asset has not been supplied. So the demo
-       shows the three-layer structure and the highlight mechanic, and nothing that
-       could be mistaken for a result: the metric slots wear .ph-dark chrome around
-       [REAL …] tokens, and the document body is set in Flow Circular, which renders
-       text as redacted bars rather than sentences.
+       Rebuilt 2026-08-25. The previous version was a schematic — grey bars and bracket tokens
+       tokens — which the correction batch called out as looking like a Figma placeholder
+       rather than a product. It now reproduces the real report's own layout: readable
+       document text with violet flagged passages on the left, the Report information
+       panel with its two metrics and the Plagiarism / AI tab pair on the right.
 
-       No plagiarism metric appears anywhere in this section. check-ai.js asserts it. -->
+       The split follows the batch: the report takes ~65% of the content width and the
+       three metric explanations ~35%, so the evidence outweighs the commentary. It used
+       to be the other way round.
+
+       The Plagiarism tab label is present and that is a recorded deviation — see
+       DECISIONS.md § DEC-U03. No plagiarism PERCENTAGE appears: the real panel carries
+       only the two AI metrics, and the tabs switch the passage list, not the figures. -->
   <section id="ai-report" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
     <div class="orb absolute" style="width:900px;height:820px;left:-16%;top:-300px;background:rgba(44,195,219,.20)"></div>
     <div class="orb absolute" style="width:720px;height:700px;right:-14%;bottom:-320px;background:rgba(154,106,222,.18)"></div>
@@ -383,55 +423,65 @@ ${eyebrowDark('teal-400', 'The report')}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[70ch]">${COPY.s2.intro}</p>
       </div>
 
-      <div class="grid lg:grid-cols-[1fr_1.05fr] gap-6 lg:gap-8 items-start">
+      <div class="grid lg:grid-cols-[1.85fr_1fr] gap-6 lg:gap-8 items-start">
 
-        <!-- the three layers, in the approved order: document → amount → location -->
-        <div class="rv-kids space-y-4 sm:space-y-5">
-${COPY.s2.metrics.map(([label, def, sup, token], i) => `          <div class="rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <div class="min-w-0">
-                <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1.5">0${i + 1} · ${sup}</span>
-                <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight text-white">${label}</h3>
+        <!-- the report itself — the dominant object in this section -->
+        <div class="rv min-w-0 rounded-3xl sm:rounded-4xl bg-white/[.06] ring-1 ring-white/10 p-1.5 sm:p-2">
+          <div class="min-w-0 rounded-[18px] sm:rounded-3xl bg-white overflow-hidden">
+
+            <div class="grid sm:grid-cols-[1.5fr_1fr]">
+
+              <!-- document -->
+              <div class="min-w-0 p-4 sm:p-5 lg:p-6 border-b sm:border-b-0 sm:border-r border-ink-100">
+                <div class="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-ink-100">
+                  <span class="text-[11.5px] font-semibold text-ink-400 tabular-nums">${COPY.s2.report.id}</span>
+                  <span class="text-[11px] text-ink-400 tabular-nums">Words: ${COPY.s2.report.words}</span>
+                </div>
+${COPY.s2.report.doc.map(para => `                <p class="text-[12.5px] sm:text-[13px] leading-[1.85] text-ink-700 mb-3.5">` +
+  para.map(run => run.hl ? `<span class="hl-ai on-ai">${run.t}</span>` : run.t).join('') + `</p>`).join('\n')}
               </div>
-              <span class="shrink-0">${phDark(token)}</span>
-            </div>
-            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[52ch]">${def}</p>
-          </div>`).join('\n')}
-        </div>
 
-        <!-- the document panel: real mechanic, no invented content -->
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-1.5 sm:p-2">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white p-5 sm:p-6 lg:p-7">
-            <div class="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-ink-100">
-              <span class="text-[12px] font-semibold uppercase tracking-[0.18em] text-ink-400">AI report</span>
-              <span class="text-[12px] font-semibold text-ink-500">Highlighted passages</span>
-            </div>
+              <!-- Report information -->
+              <div class="min-w-0 p-4 sm:p-5 lg:p-6 bg-ink-50/60">
+                <h3 class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-4">${COPY.s2.report.panelHeading}</h3>
 
-            <!-- Flow Circular renders these as redacted bars. The two marked spans carry
-                 the real highlight treatment, so the mechanic reads at a glance while
-                 the text itself stays unmistakably placeholder. -->
-            <p class="font-flow text-[15px] leading-[2] text-ink-300 select-none" aria-hidden="true">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-              <span class="hl-ai on-ai">do eiusmod tempor incididunt ut labore et dolore magna</span>
-              aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut
-              <span class="hl-ai on-ai">aliquip ex ea commodo consequat duis aute irure</span>
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            </p>
-            <p class="sr-only">Placeholder document body. The approved AI-only report state has not yet been supplied.</p>
+${[[COPY.s2.report.totalLabel, COPY.s2.report.totalValue, 13.44],
+   [COPY.s2.report.probLabel, COPY.s2.report.probValue, 12.5]]
+  .map(([label, value, pct]) => `                <div class="mb-4">
+                  <div class="text-[12px] font-medium text-ink-600 mb-1.5">${label}</div>
+                  <div class="flex items-center gap-3">
+                    <div class="flex-1 h-1.5 rounded-full bg-ink-200 overflow-hidden">
+                      <div class="h-full rounded-full" style="width:${pct}%;background:#9A6ADE"></div>
+                    </div>
+                    <span class="shrink-0 text-[12.5px] font-semibold tabular-nums text-ink-900">${value}</span>
+                  </div>
+                </div>`).join('\n')}
 
-            <div class="mt-5 pt-4 border-t border-ink-100 flex flex-wrap items-center gap-x-5 gap-y-2">
-              <span class="inline-flex items-center gap-2 text-[12px] font-semibold text-ink-600">
-                <span class="w-3 h-3 rounded-[4px]" style="background:rgba(154,106,222,.35)"></span>
-                Passage flagged as AI-generated
-              </span>
-              <span class="text-[12px] text-ink-400">Passage-level signal ${ph('[REAL PASSAGE-LEVEL AI PROBABILITY]')}</span>
+                <div class="flex items-center gap-4 pt-3 mt-4 border-t border-ink-200">
+${COPY.s2.report.tabs.map((t, i) => `                  <span class="text-[12.5px] font-semibold pb-1.5 ${i === 1 ? 'text-teal-600 border-b-2 border-teal-500' : 'text-ink-400'}">${t}</span>`).join('\n')}
+                </div>
+
+                <!-- the flagged passages, the same runs the document highlights -->
+                <div class="mt-3 space-y-2.5">
+${COPY.s2.report.doc.flat().filter(r => r.hl).map(r => `                  <p class="text-[11.5px] leading-relaxed text-ink-500 pb-2.5 border-b border-ink-100 last:border-0">${r.t}</p>`).join('\n')}
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+
+        <!-- the three layers, compact: they explain the report, they do not compete with it -->
+        <div class="rv-kids space-y-3 sm:space-y-4">
+${COPY.s2.metrics.map(([label, def, sup], i) => `          <div class="rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1.5">0${i + 1} · ${sup}</span>
+            <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight text-white mb-1.5">${label}</h3>
+            <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-white/65">${def}</p>
+          </div>`).join('\n')}
         </div>
       </div>
 
       <!-- the critical interpretation callout -->
-      <div class="rv mt-8 sm:mt-10 lg:mt-12 rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 max-w-[92ch]">
+      <div class="rv mt-6 sm:mt-8 rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 max-w-[92ch]">
 ${COPY.s2.callout.map((p, i) => `        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed ${i === 0 ? 'text-white/80 mb-3' : 'text-white font-semibold'}">${p}</p>`).join('\n')}
       </div>
     </div>
