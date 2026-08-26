@@ -207,10 +207,18 @@ const COPY = {
 
   s7: {
     h2: 'Add AI detection to your own workflow',
-    body: [
-      'AI checking is available through the same PlagiarismSearch API infrastructure used for the main service. It is not a separate AI API product.',
-      'AI checks use AI-specific checking limits or credits within the API workflow. Use the main PlagiarismSearch API page to review current access options and implementation details.',
-    ],
+    /* The two approved paragraphs, split at their own full stops so the layout can give
+       each sentence the weight its job deserves. Nothing added, cut or reordered — and
+       lead + note still read as one sentence pair in the rendered text, which is what
+       check-ai.js asserts. */
+    lead: 'AI checking is available through the same PlagiarismSearch API infrastructure used for the main service.',
+    note: 'It is not a separate AI API product.',
+    support: 'AI checks use AI-specific checking limits or credits within the API workflow. Use the main PlagiarismSearch API page to review current access options and implementation details.',
+    /* one API, two analyses — and the two labels are the tabs the real report carries */
+    branch: ['PlagiarismSearch API', [
+      ['Plagiarism', "<path d=\"m8 11 2 2 4-4\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/>"],
+      ['AI', "<path d=\"M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z\"/>"],
+    ]],
     cta: 'Explore the PlagiarismSearch API',
     ctaHref: 'api.html',
   },
@@ -744,22 +752,51 @@ ${COPY.s6.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rou
 
 /* ═══════════════ 07 · AI THROUGH THE API ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · AI DETECTION THROUGH THE API =================
-       A compact banner, not an act. See the note in build/ai-v2.js: this was a full dark
-       section and the 2026-08-25 batch cut it back, because API is secondary here and it
-       was interrupting checker → report → understanding → pricing.
+       A compact banner, not an act. This was a full dark section until the 2026-08-25
+       batch cut it back: API is secondary here, and it was interrupting
+       checker -> report -> understanding -> pricing.
 
-       The copy is untouched: same H2, same two approved paragraphs, same single CTA to
-       the main API page. Only the footprint changed. -->
+       Reworked 2026-08-26: it was a heading and two paragraphs set at one size, one
+       colour and one weight, which is why it read as a block of undifferentiated text.
+       Now: eyebrow, a heading with room to breathe, a lead, the point of the section
+       raised into a pill, the detail set quieter beneath it, then the CTA — and a small
+       schematic that draws the sentence rather than repeating it.
+
+       Not one word is rewritten. The approved sentences are split at their own full
+       stops and given the weight each one's job deserves. -->
   <section id="ai-api" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-7 sm:px-8 sm:py-8 lg:px-10 lg:py-9">
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
         <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(44,195,219,.18)"></div>
-        <div class="relative flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-10">
-          <div class="min-w-0 flex-1 text-white">
-            <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-bold tracking-tight mb-2">${COPY.s7.h2}</h2>
-${COPY.s7.body.map((t, i) => `            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[74ch]${i ? ' mt-1.5' : ''}">${t}</p>`).join('\n')}
+        <div class="relative grid lg:grid-cols-[1.4fr_1fr] gap-7 lg:gap-12 items-center">
+
+          <div class="min-w-0 text-white">
+        ${eyebrowDark('teal-400', 'API').replace('mb-4 sm:mb-5 lg:mb-6', 'mb-3.5')}
+            <h2 class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] mb-3">${COPY.s7.h2}</h2>
+            <p class="text-[14px] sm:text-[15px] leading-relaxed text-white/80 max-w-[54ch]">${COPY.s7.lead}</p>
+            <p class="inline-flex items-center gap-2 rounded-full bg-teal-400/10 ring-1 ring-teal-400/30 px-3.5 py-1.5 mt-3 text-[12.5px] sm:text-[13px] font-semibold text-teal-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>${COPY.s7.note}
+            </p>
+            <p class="mt-3.5 text-[13px] sm:text-[13.5px] leading-relaxed text-white/55 max-w-[58ch]">${COPY.s7.support}</p>
+            <div class="mt-6">${btnLight(COPY.s7.cta, COPY.s7.ctaHref)}</div>
           </div>
-          <div class="shrink-0">${btnLight(COPY.s7.cta, COPY.s7.ctaHref)}</div>
+
+          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
+            <p class="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">${COPY.s7.branch[0]}</p>
+            <div class="relative space-y-3 pl-6">
+              <span class="absolute left-0 top-7 bottom-7 w-px bg-white/15"></span>
+${COPY.s7.branch[1].map(([label, icon]) => {
+  const ai = /^AI/.test(label);
+  return `              <div class="relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3">
+                <span class="absolute -left-6 top-1/2 w-5 h-px bg-white/15"></span>
+                <span class="shrink-0 w-10 h-10 rounded-xl bg-white/[.07] ring-1 ring-white/10 flex items-center justify-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${ai ? '#F58971' : '#5AD3E4'}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
+                </span>
+                <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/85 leading-snug">${label}</span>
+              </div>`;
+}).join('\n')}
+            </div>
+          </div>
         </div>
       </div>
     </div>

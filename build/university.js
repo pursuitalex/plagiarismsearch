@@ -175,7 +175,14 @@ const COPY = {
 
   s9: {
     h2: 'Need AI checking as part of the same institutional setup?',
-    body: 'AI detection is available as a separate analysis within the PlagiarismSearch product ecosystem. When an organization uses AI checking, administrators can allocate AI word balance to members separately from plagiarism-checking balance.',
+    /* The approved paragraph, split at its own full stop. Nothing added or reordered. */
+    lead: 'AI detection is available as a separate analysis within the PlagiarismSearch product ecosystem.',
+    support: 'When an organization uses AI checking, administrators can allocate AI word balance to members separately from plagiarism-checking balance.',
+    /* two balances from one organization — section 3's own wording, drawn */
+    branch: ['Organization balance', [
+      ['Plagiarism-checking words', "<path d=\"m8 11 2 2 4-4\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/>"],
+      ['AI words', "<path d=\"M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z\"/>"],
+    ]],
     clarification: 'AI-generated text is not automatically plagiarism, so plagiarism checking and AI detection should be interpreted as separate results.',
     cta: 'Learn about AI detection',
     ctaHref: 'ai-detector.html',
@@ -594,19 +601,51 @@ ${COPY.s8.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rou
 /* ═══════════════ 09 · SECONDARY AI CAPABILITY ═══════════════ */
 const section9 = () => `  <!-- ================= 09 · SECONDARY AI CAPABILITY =================
        "Keep this visually secondary. Do not turn it into a second AI Detector landing
-       inside the University page." A compact banner, the same weight the AI Detector page
-       gives its own API block. -->
+       inside the University page." A compact banner, the same weight — and now the same
+       shape — the AI Detector page gives its own API block.
+
+       Reworked 2026-08-26: it was a heading and two paragraphs set at one size, one
+       colour and one weight, which is why it read as a block of undifferentiated text.
+       Now: eyebrow, a heading with room to breathe, a lead, the point of the section
+       raised into a pill, the detail set quieter beneath it, then the CTA — and a small
+       schematic that draws the sentence rather than repeating it.
+
+       Not one word is rewritten. The approved sentences are split at their own full
+       stops and given the weight each one's job deserves. -->
   <section id="institutional-ai" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-7 sm:px-8 sm:py-8 lg:px-10 lg:py-9">
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
         <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(154,106,222,.18)"></div>
-        <div class="relative flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-10">
-          <div class="min-w-0 flex-1 text-white">
-            <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-bold tracking-tight mb-2">${COPY.s9.h2}</h2>
-            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[76ch]">${COPY.s9.body}</p>
-            <p class="mt-1.5 text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[76ch]">${COPY.s9.clarification}</p>
+        <div class="relative grid lg:grid-cols-[1.4fr_1fr] gap-7 lg:gap-12 items-center">
+
+          <div class="min-w-0 text-white">
+        ${eyebrowDark('teal-400', 'AI checking').replace('mb-4 sm:mb-5 lg:mb-6', 'mb-3.5')}
+            <h2 class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] mb-3">${COPY.s9.h2}</h2>
+            <p class="text-[14px] sm:text-[15px] leading-relaxed text-white/80 max-w-[56ch]">${COPY.s9.lead}</p>
+            <p class="mt-3 text-[13px] sm:text-[13.5px] leading-relaxed text-white/55 max-w-[60ch]">${COPY.s9.support}</p>
+            <p class="inline-flex items-start gap-2.5 rounded-2xl bg-orange-400/10 ring-1 ring-orange-400/30 px-4 py-3 mt-4 text-[12.5px] sm:text-[13px] leading-relaxed text-orange-100 max-w-[58ch]">
+              <svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              ${COPY.s9.clarification}
+            </p>
+            <div class="mt-6">${btnLight(COPY.s9.cta, COPY.s9.ctaHref)}</div>
           </div>
-          <div class="shrink-0">${btnLight(COPY.s9.cta, COPY.s9.ctaHref)}</div>
+
+          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
+            <p class="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">${COPY.s9.branch[0]}</p>
+            <div class="relative space-y-3 pl-6">
+              <span class="absolute left-0 top-7 bottom-7 w-px bg-white/15"></span>
+${COPY.s9.branch[1].map(([label, icon]) => {
+  const ai = /^AI/.test(label);
+  return `              <div class="relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3">
+                <span class="absolute -left-6 top-1/2 w-5 h-px bg-white/15"></span>
+                <span class="shrink-0 w-10 h-10 rounded-xl bg-white/[.07] ring-1 ring-white/10 flex items-center justify-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${ai ? '#F58971' : '#5AD3E4'}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
+                </span>
+                <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/85 leading-snug">${label}</span>
+              </div>`;
+}).join('\n')}
+            </div>
+          </div>
         </div>
       </div>
     </div>
