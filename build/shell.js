@@ -21,6 +21,8 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const TPL = path.join(__dirname, 'shell');
+/* the temporary v1/v2 review switcher — see build/version-switch.js */
+const vswitch = require('./version-switch');
 
 /* ── which navigation ────────────────────────────────────────────────────────
    'v2' is the approved DEC-0027 architecture. 'v1' is the navigation the site had
@@ -165,6 +167,11 @@ for (const file of found) {
 
   if (page.header !== false) after = swap(after, 'header', render(headerTpl, page), file);
   after = swap(after, 'footer', render(footerTpl, page), file);
+
+  /* Idempotent: writes the switcher onto the paired pages and strips it from every
+     other, so removing a pair from version-switch.js cleans the widget out on the
+     next build rather than leaving it stranded on a retired page. */
+  after = vswitch.apply(after, file);
 
   if (after !== before) {
     changed++;

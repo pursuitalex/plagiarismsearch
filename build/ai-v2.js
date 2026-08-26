@@ -523,9 +523,17 @@ ${COPY.s2.metrics.map(([label, def, sup], i) => `          <div class="rounded-2
         </div>
       </div>
 
-      <!-- the critical interpretation callout -->
-      <div class="rv mt-6 sm:mt-8 rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 max-w-[92ch]">
-${COPY.s2.callout.map((p, i) => `        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed ${i === 0 ? 'text-white/80 mb-3' : 'text-white font-semibold'}">${p}</p>`).join('\n')}
+      <!-- The critical interpretation callout, as an informer rather than another card:
+           icon chip, tinted ring, content offset beside it. Teal and an info mark —
+           the coral warning triangle belongs to the interpretation section, which
+           cautions rather than explains. -->
+      <div class="rv mt-6 sm:mt-8 rounded-3xl bg-teal-400/[.07] ring-1 ring-teal-400/25 p-5 sm:p-6 lg:p-7 max-w-[92ch] flex items-start gap-4 sm:gap-5">
+        <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-400/15 ring-1 ring-teal-400/30 flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </span>
+        <div class="min-w-0">
+${COPY.s2.callout.map((t, i) => `          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed ${i === 0 ? 'text-white/80 mb-3' : 'text-white font-semibold'}">${t}</p>`).join('\n')}
+        </div>
       </div>
     </div>
   </section>`;
