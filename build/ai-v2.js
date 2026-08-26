@@ -702,7 +702,7 @@ const section5 = () => `  <!-- ================= 05 · AI DETECTION VS PLAGIARIS
       <!-- Lead and support, split at the copy's own sentence boundary — see the note in
            build/ai-v2.js. The CTA needs something to sit under; two equal paragraphs
            gave it nothing. -->
-      <div class="rv max-w-[860px] mx-auto mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-50 p-7 sm:p-9 lg:p-11 text-center">
+      <div class="rv max-w-[1000px] mx-auto mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-50 p-7 sm:p-9 lg:p-11 text-center">
         <p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.3] text-ink-900 mb-3 lg:mb-4">${
           COPY.s5.core[0].replace('not automatically plagiarism',
             '<span class="text-orange-600">not automatically plagiarism</span>')}</p>
