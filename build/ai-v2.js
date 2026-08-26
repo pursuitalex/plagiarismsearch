@@ -466,7 +466,7 @@ ${eyebrowDark('teal-400', 'The report')}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[70ch]">${COPY.s2.intro}</p>
       </div>
 
-      <div class="grid lg:grid-cols-[1.85fr_1fr] gap-6 lg:gap-8 items-start">
+      <div class="grid lg:grid-cols-[1.85fr_1fr] gap-6 lg:gap-8">
 
         <!-- the report itself — the dominant object in this section -->
         <div class="rv min-w-0 rounded-3xl sm:rounded-4xl bg-white/[.06] ring-1 ring-white/10 p-1.5 sm:p-2">
@@ -514,8 +514,8 @@ ${COPY.s2.report.doc.flat().filter(r => r.hl).map(r => `                  <p cla
         </div>
 
         <!-- the three layers, compact: they explain the report, they do not compete with it -->
-        <div class="rv-kids space-y-3 sm:space-y-4">
-${COPY.s2.metrics.map(([label, def, sup], i) => `          <div class="rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
+        <div class="rv-kids flex flex-col gap-3 sm:gap-4">
+${COPY.s2.metrics.map(([label, def, sup], i) => `          <div class="flex-1 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
             <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-1.5">0${i + 1} · ${sup}</span>
             <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight text-white mb-1.5">${label}</h3>
             <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-white/65">${def}</p>
@@ -527,7 +527,7 @@ ${COPY.s2.metrics.map(([label, def, sup], i) => `          <div class="rounded-2
            icon chip, tinted ring, content offset beside it. Teal and an info mark —
            the coral warning triangle belongs to the interpretation section, which
            cautions rather than explains. -->
-      <div class="rv mt-6 sm:mt-8 rounded-3xl bg-teal-400/[.07] ring-1 ring-teal-400/25 p-5 sm:p-6 lg:p-7 max-w-[92ch] flex items-start gap-4 sm:gap-5">
+      <div class="rv mt-6 sm:mt-8 rounded-3xl bg-teal-400/[.07] ring-1 ring-teal-400/25 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5">
         <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-400/15 ring-1 ring-teal-400/30 flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         </span>
