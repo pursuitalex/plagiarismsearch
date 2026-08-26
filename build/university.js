@@ -54,6 +54,15 @@ const COPY = {
     secondary: 'See how it works',
     secondaryHref: '#institutional-report',
     line: 'For universities, colleges, academic departments, and other educational institutions.',
+    /* The three workflows the supporting sentence names, quoted from it. The asset gate
+       rules out a real screenshot in this hero and names the substitute in the same
+       breath — "neutral diagrams, structured copy, icons or abstract workflow visuals"
+       — so the hero draws the choice rather than showing a product that is not there. */
+    paths: [
+      ['Organization workspace', '<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/>'],
+      ['Moodle', '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>'],
+      ['API', '<path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/>'],
+    ],
   },
 
   s2: {
@@ -299,7 +308,9 @@ const section1 = () => `  <!-- ================= 01 · INSTITUTIONAL HERO ======
     <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px]">
+      <div class="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-center">
+
+      <div class="rv min-w-0">
 ${eyebrow('teal-400', COPY.s1.eyebrow)}
         <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">${penMark(COPY.s1.h1, 'University')}</h1>
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[70ch] mb-7 lg:mb-8">${COPY.s1.support}</p>
@@ -310,6 +321,28 @@ ${eyebrow('teal-400', COPY.s1.eyebrow)}
         </div>
 
         <p class="text-[13px] sm:text-[13.5px] text-ink-500">${COPY.s1.line}</p>
+      </div>
+
+      <!-- The workflow choice, drawn. Every word in it is lifted from the supporting
+           sentence above, so the panel adds structure without adding copy — and it is a
+           diagram rather than a product screen, which is what the asset gate requires
+           where no real capture exists. The three sit on one spine because they are one
+           decision, not three features. -->
+      <div class="rv min-w-0">
+        <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-white/60 ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-8">
+            <div class="relative space-y-3 sm:space-y-4">
+              <span class="absolute left-[23px] sm:left-[25px] top-9 bottom-9 w-px bg-ink-200" aria-hidden="true"></span>
+${COPY.s1.paths.map(([name, icon]) => `              <div class="relative flex items-center gap-4 rounded-2xl bg-ink-50 px-4 py-4 sm:px-5">
+                <span class="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white ring-1 ring-black/5 flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+                </span>
+                <span class="text-[15px] sm:text-[16px] font-bold tracking-tight">${name}</span>
+              </div>`).join('\n')}
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   </section>`;
