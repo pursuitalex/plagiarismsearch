@@ -18,6 +18,7 @@ driven by this table.
 | `api.html` | `/plagiarism-api` | built |  |
 | `api-v2.html` | — | no approved path | The DEC-0041 rebuild of the API page, alongside the current one. Takes over `/plagiarism-api` once approved; the old page is retired then, not before. Built by build/api-v2.js, checked by build/check-api.js. |
 | `prices.html` | `/prices` | built |  |
+| `prices-v2.html` | — | no approved path | The DEC-0042 rebuild of the Pricing page, alongside the current one. Takes over `/prices` once approved. Built by build/prices-v2.js, checked by build/check-prices.js. Its plan cards are a shell for the backend pricing widget; figures come from build/pricing-data.js, shared with the homepage. |
 | `terms-of-use.html` | `/terms-of-use` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
 | `policy.html` | `/policy` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
 | `cookie-policy.html` | `/cookie-policy` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
@@ -57,7 +58,7 @@ driven by this table.
 
 - 16 × built
 - 15 × stub
-- 6 × no approved path
+- 7 × no approved path
 - 4 × built · out of global nav
 
 ## Open

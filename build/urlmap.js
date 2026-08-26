@@ -24,6 +24,7 @@ const BUILT = [
   { file: 'api.html',                    path: '/plagiarism-api' },
   { file: 'api-v2.html',                 path: null, note: 'The DEC-0041 rebuild of the API page, alongside the current one. Takes over `/plagiarism-api` once approved; the old page is retired then, not before. Built by build/api-v2.js, checked by build/check-api.js.' },
   { file: 'prices.html',                 path: '/prices' },
+  { file: 'prices-v2.html',              path: null, note: 'The DEC-0042 rebuild of the Pricing page, alongside the current one. Takes over `/prices` once approved. Built by build/prices-v2.js, checked by build/check-prices.js. Its plan cards are a shell for the backend pricing widget; figures come from build/pricing-data.js, shared with the homepage.' },
   { file: 'terms-of-use.html',            path: '/terms-of-use',                             note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },
   { file: 'policy.html',                 path: '/policy',                                   note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },
   { file: 'cookie-policy.html',          path: '/cookie-policy',                            note: 'Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/.' },

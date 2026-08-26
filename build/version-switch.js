@@ -24,6 +24,8 @@ const PAIRS = {
   'ai-detector-v2.html':   { other: 'ai-detector.html',     self: 2 },
   'api.html':              { other: 'api-v2.html',          self: 1 },
   'api-v2.html':           { other: 'api.html',             self: 2 },
+  'prices.html':           { other: 'prices-v2.html',       self: 1 },
+  'prices-v2.html':        { other: 'prices.html',          self: 2 },
 };
 
 const OPEN = '<!-- VSWITCH · temporary review tool, remove with the retired version -->';

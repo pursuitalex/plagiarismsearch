@@ -67,6 +67,8 @@ const PAGES = {
   /* the DEC-0041 rebuild, alongside the current one */
   'api-v2.html':                 { active: 'products' },
   'prices.html':                 { active: 'pricing' },
+  /* the DEC-0042 rebuild, alongside the current one */
+  'prices-v2.html':              { active: 'pricing' },
   'help-center.html':            { active: 'resources' },
   'blog.html':                   { active: 'resources' },
   'blog-best-checker-2026.html': { active: 'resources' },
