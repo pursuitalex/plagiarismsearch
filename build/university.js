@@ -264,6 +264,18 @@ const penMark = (text, phrase) => {
 };
 
 /* the double-bezel card, the vocabulary the capabilities grids established */
+const assetSlot = (token, what) => `      <!-- ASSET SLOT — waiting on a real capture. Replace this whole block with the
+           screenshot; nothing else in the section has to change. Do not draw a mock in
+           its place: DEC-0043 forbids inventing product UI where a real one is missing. -->
+      <div class="rv ph flex flex-col items-center justify-center text-center gap-3 px-6 py-12 sm:py-16 lg:py-20 aspect-[16/10] sm:aspect-[16/9] max-h-[520px]">
+        <span class="w-12 h-12 rounded-2xl bg-ink-100 flex items-center justify-center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        </span>
+        <p class="text-[12.5px] sm:text-[13px] font-bold tracking-[0.14em] uppercase text-ink-600">${token}</p>
+        <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 max-w-[46ch]">${what}</p>
+        <p class="text-[12px] leading-relaxed text-ink-600 max-w-[52ch]">Crop and frame it, but keep the real labels and states — do not add controls the product does not have.</p>
+      </div>`;
+
 const bezel = (span, inner) => `        <div class="min-w-0 ${span} rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
           <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
 ${inner}
@@ -399,7 +411,10 @@ ${COPY.s3.items.map(([head, body, icon, span]) => {
 }).join('\n')}
       </div>
 
-      <div class="rv">${linkQuiet(COPY.s3.cta, COPY.s3.ctaHref)}</div>
+${assetSlot('[ORGANIZATION MANAGEMENT SCREENSHOT]',
+  'The real members and permissions screen: the member list, the permission controls, and the plagiarism and AI balance allocation.')}
+
+      <div class="rv mt-7 lg:mt-8">${linkQuiet(COPY.s3.cta, COPY.s3.ctaHref)}</div>
     </div>
   </section>`;
 
@@ -485,7 +500,10 @@ ${COPY.s6.controls.map(([head, body], i) => `        <div class="rounded-3xl sm:
         </div>`).join('\n')}
       </div>
 
-      <div class="rv">${linkQuiet(COPY.s6.cta, COPY.s6.ctaHref)}</div>
+${assetSlot('[MOODLE SETTINGS SCREENSHOT]',
+  'The real plugin settings inside Moodle: automatic or manual checking, the source options, Add to Storage, and student report visibility.')}
+
+      <div class="rv mt-7 lg:mt-8">${linkQuiet(COPY.s6.cta, COPY.s6.ctaHref)}</div>
     </div>
   </section>`;
 
@@ -702,6 +720,9 @@ const STYLE = `
 
   .rv-kids > * { opacity:0; transform:translateY(40px); }
   .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
+
+  /* placeholder chrome — anything wearing this waits on a real asset */
+  .ph { border:1.5px dashed rgba(16,24,40,.22); border-radius:1.5rem; background:rgba(16,24,40,.015); }
 
   .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
   .spotlight:hover { transform:translateY(-4px); }
