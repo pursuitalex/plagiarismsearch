@@ -179,10 +179,18 @@ const COPY = {
     lead: 'AI detection is available as a separate analysis within the PlagiarismSearch product ecosystem.',
     support: 'When an organization uses AI checking, administrators can allocate AI word balance to members separately from plagiarism-checking balance.',
     /* two balances from one organization — section 3's own wording, drawn */
-    branch: ['Organization balance', [
-      ['Plagiarism-checking words', "<path d=\"m8 11 2 2 4-4\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/>"],
-      ['AI words', "<path d=\"M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z\"/>"],
-    ]],
+    /* One pool of words split into two allocations. "Plagiarism balance" and "AI
+       balance" are the brief's own subsection headings, allocated from what it calls
+       "the organization balance" — so all three labels are its words, not mine.
+       Both children share the coins glyph because they are the same kind of object;
+       the wallet on the parent is what makes the split legible. */
+    branch: {
+      parent: ['Organization balance', "<path d=\"M17 14h.01\"/><path d=\"M7 7h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10\"/>"],
+      children: [
+        ['Plagiarism balance', "<circle cx=\"8\" cy=\"8\" r=\"6\"/><path d=\"M18.09 10.37A6 6 0 1 1 10.34 18\"/><path d=\"M7 6h1v4\"/><path d=\"m16.71 13.88.7.71-2.82 2.82\"/>"],
+        ['AI balance', "<circle cx=\"8\" cy=\"8\" r=\"6\"/><path d=\"M18.09 10.37A6 6 0 1 1 10.34 18\"/><path d=\"M7 6h1v4\"/><path d=\"m16.71 13.88.7.71-2.82 2.82\"/>"],
+      ],
+    },
     clarification: 'AI-generated text is not automatically plagiarism, so plagiarism checking and AI detection should be interpreted as separate results.',
     cta: 'Learn about AI detection',
     ctaHref: 'ai-detector.html',
@@ -631,10 +639,13 @@ const section9 = () => `  <!-- ================= 09 · SECONDARY AI CAPABILITY =
           </div>
 
           <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
-            <p class="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">${COPY.s9.branch[0]}</p>
+            <p class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
+              <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COPY.s9.branch.parent[1]}</svg>
+              ${COPY.s9.branch.parent[0]}
+            </p>
             <div class="relative space-y-3 pl-6">
               <span class="absolute left-0 top-7 bottom-7 w-px bg-white/15"></span>
-${COPY.s9.branch[1].map(([label, icon]) => {
+${COPY.s9.branch.children.map(([label, icon]) => {
   const ai = /^AI/.test(label);
   return `              <div class="relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3">
                 <span class="absolute -left-6 top-1/2 w-5 h-px bg-white/15"></span>

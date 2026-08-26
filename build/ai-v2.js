@@ -215,10 +215,15 @@ const COPY = {
     note: 'It is not a separate AI API product.',
     support: 'AI checks use AI-specific checking limits or credits within the API workflow. Use the main PlagiarismSearch API page to review current access options and implementation details.',
     /* one API, two analyses — and the two labels are the tabs the real report carries */
-    branch: ['PlagiarismSearch API', [
-      ['Plagiarism', "<path d=\"m8 11 2 2 4-4\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/>"],
-      ['AI', "<path d=\"M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z\"/>"],
-    ]],
+    /* one API, two kinds of analysis — the two labels are the tabs the real report
+       carries, and the glyphs say "analysis" because that is what branches here */
+    branch: {
+      parent: ['PlagiarismSearch API', "<path d=\"m16 18 6-6-6-6\"/><path d=\"m8 6-6 6 6 6\"/>"],
+      children: [
+        ['Plagiarism', "<path d=\"m8 11 2 2 4-4\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/>"],
+        ['AI', "<path d=\"M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z\"/>"],
+      ],
+    },
     cta: 'Explore the PlagiarismSearch API',
     ctaHref: 'api.html',
   },
@@ -782,10 +787,13 @@ const section7 = () => `  <!-- ================= 07 · AI DETECTION THROUGH THE 
           </div>
 
           <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
-            <p class="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">${COPY.s7.branch[0]}</p>
+            <p class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
+              <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COPY.s7.branch.parent[1]}</svg>
+              ${COPY.s7.branch.parent[0]}
+            </p>
             <div class="relative space-y-3 pl-6">
               <span class="absolute left-0 top-7 bottom-7 w-px bg-white/15"></span>
-${COPY.s7.branch[1].map(([label, icon]) => {
+${COPY.s7.branch.children.map(([label, icon]) => {
   const ai = /^AI/.test(label);
   return `              <div class="relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3">
                 <span class="absolute -left-6 top-1/2 w-5 h-px bg-white/15"></span>
