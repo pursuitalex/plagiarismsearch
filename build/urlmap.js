@@ -36,6 +36,7 @@ const BUILT = [
   { file: 'help-center.html',            path: '/help-center' },
   { file: 'blog.html',                   path: '/blog' },
   { file: 'blog-best-checker-2026.html', path: '/blog/best-plagiarism-checker-in-2026' },
+  { file: 'university-plagiarism-checker.html', path: '/university-plagiarism-checker', note: 'The DEC-0043 institutional solution page. It replaced a stub rather than a previous version, so there is no v2 and no version switcher. Built by build/university.js, checked by build/check-university.js.' },
   { file: 'vip.html',                    path: '/vip-plagiarism-checker',                   note: 'Footer only, under Plans & Legal. Not a core product; stays out of the header.' },
 
   /* built, kept, but outside the global navigation per DEC-0027 §5 */

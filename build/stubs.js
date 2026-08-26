@@ -24,7 +24,6 @@ const SITE = path.join(ROOT, 'site');
 const STUBS = [
   { slug: 'integration-guide',                     label: 'Moodle Integration',        group: 'Products · Integrations' },
   { slug: 'how-to-use-plagiarismsearch-google-add-on', label: 'Google Docs Add-on',    group: 'Products · Integrations' },
-  { slug: 'university-plagiarism-checker',         label: 'Education & Institutions',  group: 'Solutions · For organizations', note: 'Existing URL; the brief says the page content will be completely rebuilt.' },
   { slug: 'plagiarism-checker-for-organization',   label: 'Business & Teams',          group: 'Solutions · For organizations', note: 'Existing URL; the brief says the page content will be completely rebuilt.' },
   { slug: 'plagiarism-checker-for-students',       label: 'Students',                  group: 'Solutions · For individuals',   note: 'Existing URL; a substantial rewrite is planned.' },
   { slug: 'testimonials',                          label: 'Reviews',                   group: 'Company' },

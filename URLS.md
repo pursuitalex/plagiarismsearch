@@ -30,6 +30,7 @@ driven by this table.
 | `help-center.html` | `/help-center` | built |  |
 | `blog.html` | `/blog` | built |  |
 | `blog-best-checker-2026.html` | `/blog/best-plagiarism-checker-in-2026` | built |  |
+| `university-plagiarism-checker.html` | `/university-plagiarism-checker` | built | The DEC-0043 institutional solution page. It replaced a stub rather than a previous version, so there is no v2 and no version switcher. Built by build/university.js, checked by build/check-university.js. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
 | `paper-analysis.html` | `/rate-my-paper` | built · out of global nav |  |
 | `spell-check.html` | `/spell-checker` | built · out of global nav |  |
@@ -40,7 +41,6 @@ driven by this table.
 | `design-system.html` | — | no approved path | Internal reference sheet. Never part of the public site. |
 | `integration-guide.html` | `/integration-guide` | stub | Approved destination, page not designed yet. |
 | `how-to-use-plagiarismsearch-google-add-on.html` | `/how-to-use-plagiarismsearch-google-add-on` | stub | Approved destination, page not designed yet. |
-| `university-plagiarism-checker.html` | `/university-plagiarism-checker` | stub | Existing URL; the brief says the page content will be completely rebuilt. |
 | `plagiarism-checker-for-organization.html` | `/plagiarism-checker-for-organization` | stub | Existing URL; the brief says the page content will be completely rebuilt. |
 | `plagiarism-checker-for-students.html` | `/plagiarism-checker-for-students` | stub | Existing URL; a substantial rewrite is planned. |
 | `testimonials.html` | `/testimonials` | stub | Approved destination, page not designed yet. |
@@ -56,8 +56,8 @@ driven by this table.
 
 ## Counts
 
-- 16 × built
-- 15 × stub
+- 17 × built
+- 14 × stub
 - 7 × no approved path
 - 4 × built · out of global nav
 

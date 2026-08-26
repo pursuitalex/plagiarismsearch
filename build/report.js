@@ -103,9 +103,9 @@ const cabMetric = ([label, figure, pct, colour]) => `<div class="cab-in mb-4 las
 const cabSource = ([title, url, pct], i) => `<li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="${i}">
                 <span class="min-w-0">
                   <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">${title}</span>
-                  <span class="block text-[12px] text-ink-400 truncate">${url}</span>
+                  <span class="block text-[12px] text-ink-500 truncate">${url}</span>
                 </span>
-                <span class="shrink-0 rounded-full bg-orange-100 text-orange-700 px-2.5 py-1 text-[11.5px] font-bold nums">${pct}</span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">${pct}</span>
               </li>`;
 
 module.exports = { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 };

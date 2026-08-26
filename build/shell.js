@@ -85,6 +85,8 @@ const PAGES = {
   'cookie-policy.html':          { active: null },
   'originality-badges.html':     { active: 'resources' },
   'user-manuals.html':           { active: 'resources' },
+  /* the DEC-0043 institutional page — a real page now, not a stub */
+  'university-plagiarism-checker.html': { active: 'solutions' },
   'paper-analysis.html':         { active: null },
   'readability-check.html':      { active: null },
   'spell-check.html':            { active: null },
