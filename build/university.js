@@ -419,8 +419,8 @@ ${eyebrow('teal-400', 'Sources')}
       </div>
 
       <div class="rv-kids grid sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 mb-6 lg:mb-8">
-${COPY.s4.items.map(([head, body, proof], i) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-2.5">${i < 2 ? 'External source' : i === 2 ? 'Institution-controlled' : 'Scan control'}</span>
+${COPY.s4.items.map(([head, body, proof], i) => `        <div class="rounded-3xl sm:rounded-[28px] ${i === 2 ? 'bg-teal-50 ring-1 ring-teal-200' : 'bg-white ring-1 ring-black/5'} shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] ${i === 2 ? 'text-teal-700' : 'text-ink-500'} mb-2.5">${i < 2 ? 'External source' : i === 2 ? 'Institution-controlled' : 'Scan control'}</span>
           <h3 class="text-[16px] sm:text-[17.5px] font-bold tracking-tight mb-2">${head}</h3>
           <p class="flex-1 text-[13.5px] sm:text-[14px] leading-relaxed text-ink-600 max-w-[56ch]">${body}</p>
 ${proof ? `          <p class="mt-4 pt-3 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">${proof}</p>` : ''}

@@ -25,7 +25,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'prices-v2.html';
 const cta = require('./cta');
-const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
+const { PLANS, LABEL } = require('./pricing-data');   /* TAGLINE is the homepage's; DEC-0042 grants no plan subtitle */
 
 const HELP = 'https://plagiarismsearch.com/faq-and-support';   /* live production, no page here */
 
@@ -240,7 +240,6 @@ ${dark ? '          <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-
               <span class="text-[11px] font-bold tracking-[0.16em] uppercase ${dark ? 'text-teal-300' : 'text-orange-700'}">${LABEL[tier]}</span>
 ${dark ? `              <span class="text-[9.5px] font-bold tracking-widest bg-orange-700 text-white rounded-full px-2.5 py-1 uppercase">${COPY.s1.recommended}</span>` : ''}
             </div>
-            <div class="text-[13.5px] ${dark ? 'text-white/50' : 'text-ink-500'} mb-4 sm:mb-5 lg:mb-6">${TAGLINE[tier]}</div>
             <div class="flex items-end gap-1.5 mb-3">
               <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price"></span>
               <span class="text-[12.5px] font-medium ${dark ? 'text-white/50' : 'text-ink-500'} pb-1.5 js-term"></span>
