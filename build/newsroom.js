@@ -423,13 +423,14 @@ ${byYear(y).map(it => {
                 </div>
               </div>
               <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 mb-2">
-                  <h4 class="text-[16px] sm:text-[17px] lg:text-[17.5px] font-bold tracking-tight leading-[1.32]">${it.h}</h4>
-                  <span class="inline-flex items-center gap-1.5 shrink-0 rounded-full bg-ink-50 ring-1 ring-black/5 px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-ink-500">
-                    <svg class="shrink-0" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
-                    ${label}
-                  </span>
-                </div>
+                <!-- The topic sat on the heading's line, sharing it with the title as if
+                     the two were the same kind of thing. It is a label, so it goes where
+                     every other label on this site goes: above the heading it labels. -->
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-ink-50 ring-1 ring-black/5 px-2.5 py-1 mb-2.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-ink-500">
+                  <svg class="shrink-0" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+                  ${label}
+                </span>
+                <h4 class="text-[16px] sm:text-[17px] lg:text-[17.5px] font-bold tracking-tight leading-[1.32] mb-2">${it.h}</h4>
 ${body(it, false)}
               </div>
             </div>
