@@ -80,10 +80,21 @@ const COPY = {
       cta: 'Create free account',
       secondary: 'Already have an account? Log in',
     },
+    /* The proof rail under the checker. Three items, and only the first is a
+       statistic — so only the first gets the homepage's statistic treatment, a display
+       figure over a caption. The other two get a lead line. All three share one card
+       and one icon chip, so the row still reads as a set.
+
+       "Processed on PlagiarismSearch infrastructure" is shortened to "Processed on our
+       infrastructure" for the lead: the sentence under it names PlagiarismSearch, so
+       the meaning is intact and the card no longer runs to two lines of bold. */
     rail: [
-      ['500,000+ users', 'Across PlagiarismSearch'],
-      ['Processed on PlagiarismSearch infrastructure', 'Checked content is not sent to an external AI detector provider.'],
-      ['Text or document', 'Paste text or upload a file for analysis.'],
+      { tint: 'teal', icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+        value: '500,000+', label: 'users', sup: 'Across PlagiarismSearch' },
+      { tint: 'ink', icon: '<rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01"/><path d="M6 18h.01"/>',
+        head: 'Processed on our infrastructure', sup: 'Checked content is not sent to an external AI detector provider.' },
+      { tint: 'orange', icon: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+        head: 'Text or document', sup: 'Paste text or upload a file for analysis.' },
     ],
   },
 
@@ -437,10 +448,22 @@ ${COPY.s1.inputs.map(i => `            <button type="button" class="qc-chip">${
       <!-- Compact product proof rail. Each item is one element in reading order so the
            approved sentence survives whole for a crawler and a screen reader. -->
       <div class="rv-kids max-w-[1000px] mx-auto mt-10 sm:mt-12 lg:mt-14 grid sm:grid-cols-3 gap-4 sm:gap-5">
-${COPY.s1.rail.map(([head, sup]) => `        <div class="rounded-2xl bg-white/60 ring-1 ring-black/5 px-5 py-4">
-          <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight mb-1">${head}</p>
-          <p class="text-[12.5px] leading-relaxed text-ink-500">${sup}</p>
-        </div>`).join('\n')}
+${COPY.s1.rail.map(item => {
+  const CHIP = { teal: ['bg-teal-100', '#06748A'], ink: ['bg-ink-100', '#374151'], orange: ['bg-orange-100', '#B84431'] }[item.tint];
+  /* a figure gets the statistic treatment the homepage gives its numbers — the value
+     large, the unit as a caption under it. A lead line gets the lead line. */
+  const body = item.value
+    ? `          <p class="text-[26px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tightest nums leading-none">${item.value}</p>
+          <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-1.5 mb-1.5">${item.label}</p>`
+    : `          <p class="text-[15px] sm:text-[16px] font-bold tracking-tight leading-snug mb-1.5">${item.head}</p>`;
+  return `        <div class="rounded-2xl sm:rounded-[20px] bg-white ring-1 ring-black/5 shadow-diffuse px-5 py-5 sm:px-6 sm:py-6 flex flex-col">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] ${CHIP[0]} items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${CHIP[1]}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${item.icon}</svg>
+          </span>
+${body}
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${item.sup}</p>
+        </div>`;
+}).join('\n')}
       </div>
     </div>
   </section>`;
