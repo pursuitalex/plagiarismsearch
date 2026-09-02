@@ -602,13 +602,28 @@ const section4 = () => `  <!-- ================= 04 · RESPONSIBLE INTERPRETATIO
   <section id="interpret-ai-results" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 
-      <div class="rv max-w-[760px] mb-10 sm:mb-12">
+      <div class="rv max-w-[760px] mb-7 sm:mb-8">
 ${eyebrow('orange-500', 'Interpretation')}
         ${h2(COPY.s4.h2)}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s4.body[0]}</p>
       </div>
 
-      <!-- the reading order -->
+      <!-- Reorganised 2026-08-26. Olex flagged the tail of this section: two bare
+           paragraphs in a two-column grid with a third loose under them, sitting after
+           the callout with no container and nothing holding them together.
+
+           The cause was ordering, not styling. body[1] — "Review the document-level AI
+           Probability together with Total AI Rate and the highlighted passages" — is the
+           prose form of the three numbered cards, and it was stranded BELOW them, after
+           the callout. It now introduces the steps it describes, which is the one place
+           on the page it does any work.
+
+           That leaves two genuine caveats, and they are caveats rather than paragraphs,
+           so they take the icon-chip card from section 3's bento: same shell, same 44px
+           tinted chip, same 3+2 bento spans. No new component. The labels are eyebrow
+           register, lifted from each sentence's own words. -->
+      <p class="rv text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mb-5 lg:mb-6">${COPY.s4.body[1]}</p>
+
       <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 lg:mb-8">
 ${COPY.s4.steps.map(([label, action], i) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
           <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">${i + 1}</span>
@@ -618,7 +633,7 @@ ${COPY.s4.steps.map(([label, action], i) => `        <div class="rounded-3xl sm:
       </div>
 
       <!-- the sentence the section exists for -->
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 mb-5 lg:mb-6">
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 mb-4 lg:mb-5">
         <div class="flex flex-col sm:flex-row items-start gap-5 sm:gap-7">
           <span class="shrink-0 w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
@@ -629,11 +644,23 @@ ${COPY.s4.steps.map(([label, action], i) => `        <div class="rounded-3xl sm:
         </div>
       </div>
 
-      <!-- the remaining approved body, and the consequential-use note beneath it -->
-      <div class="rv grid lg:grid-cols-2 gap-5 lg:gap-8">
-${COPY.s4.body.slice(1).map(p => `        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">${p}</p>`).join('\n')}
+      <!-- the two caveats, at the weight the batch gives them -->
+      <div class="rv-kids grid lg:grid-cols-5 gap-4 lg:gap-5">
+        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-ink-100 items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
+          </span>
+          <p class="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-ink-500 mb-2">Sample length</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">${COPY.s4.body[2]}</p>
+        </div>
+        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-orange-100 items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+          </span>
+          <p class="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-ink-500 mb-2">Consequential review</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">${COPY.s4.consequential}</p>
+        </div>
       </div>
-      <p class="rv mt-5 lg:mt-6 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500 max-w-[80ch]">${COPY.s4.consequential}</p>
     </div>
   </section>`;
 
