@@ -131,13 +131,33 @@ const eyebrowDark = (dot, label) => `        <div class="inline-flex items-cente
 
 const h2 = t => `<h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">${t}</h2>`;
 
-/* Body measure. Olex on the newsroom: pages this wide are uncomfortable to read. A line
-   of prose stops at 68 characters here whatever the viewport does. */
+/* ── The article scheme ──────────────────────────────────────────────────────
+   Olex: the empty areas read as accidental and the widths do not agree — text pages
+   are hard to read like this. Both complaints have one cause: blocks were left-aligned
+   in a 1280px container at four different max-widths, so the right edge was ragged and
+   nothing lined up.
+
+   Two widths from here on, and both are centred:
+
+     COL   the reading column. Every heading, paragraph, callout and list sits on these
+           edges, so the left and right edges never move as you scroll.
+     WIDE  the deliberate breakouts — the card grids and the colour legend. Centred on
+           the same axis, so the column reads as a narrowing of the page rather than as
+           a different page.
+
+   The width is measured, not chosen. The blog post is the site's only other long-form
+   page and it sets the type ramp — 15.5 / 16 / 17 with leading-[1.72] — but its 700px
+   column runs 87 to 97 characters a line, median 91, which is half again the
+   comfortable band and is why that page reads as hard work too. Same ramp, 560px: 73
+   characters, inside 45–75. */
+const COL = 'max-w-[560px] mx-auto';
+const WIDE = 'max-w-[1080px] mx-auto';
+const BODY = 'text-[15.5px] sm:text-[16px] lg:text-[17px] leading-[1.72]';
 /* Measured, not guessed: Manrope's ch is ~0.6em while its average character is ~0.44em,
    so max-w-[68ch] rendered a 94-character line. 52ch measures 72, which is inside the
    comfortable band. The unit stays font-relative, so it holds at every breakpoint. */
-const PROSE = 'text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[52ch]';
-const PROSE_DARK = 'text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[52ch]';
+const PROSE = BODY + ' text-ink-700';
+const PROSE_DARK = BODY + ' text-white/75';
 
 /* ═══════════════ 01 · HERO ═══════════════ */
 const section1 = () => `  <!-- ================= 01 · HERO =================
@@ -150,14 +170,14 @@ const section1 = () => `  <!-- ================= 01 · HERO =================
     </div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[860px]">
-        <a href="user-manuals.html" class="inline-flex items-center gap-2 mb-5 text-[12.5px] sm:text-[13px] font-semibold text-ink-500 hover:text-ink-900 transition-colors">
+      <div class="rv ${COL}">
+        <div class="mb-5"><a href="user-manuals.html" class="inline-flex items-center gap-2 text-[12.5px] sm:text-[13px] font-semibold text-ink-500 hover:text-ink-900 transition-colors">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
           ${WRITTEN.backLabel}
-        </a>
+        </a></div>
 ${eyebrow('orange-500', WRITTEN.eyebrow1)}
         <h1 class="text-[clamp(2.4rem,5.5vw,3.6rem)] font-extrabold tracking-tightest leading-[1.04] mb-4 lg:mb-5">${src.h1}</h1>
-        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[48ch]">${src.meta.description}</p>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600">${src.meta.description}</p>
       </div>
     </div>
   </section>`;
@@ -169,17 +189,17 @@ const section2 = () => `  <!-- ================= 02 · WHY IT MATTERS · blocks 
        onto its own ground instead of being the last of three identical columns. -->
   <section id="why-check" class="relative py-14 sm:py-18 lg:py-24 bg-[#F7F9FA]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-7 sm:mb-8">
+      <div class="rv ${COL} mb-7 sm:mb-8">
 ${eyebrow('teal-400', WRITTEN.eyebrow2)}
         ${h2(WRITTEN.h2why)}
       </div>
 
-      <div class="rv max-w-[760px] space-y-4 mb-7 lg:mb-8">
+      <div class="rv ${COL} space-y-4 mb-7 lg:mb-8">
         <p class="${PROSE}">${rich(0)}</p>
         <p class="${PROSE}">${rich(1)}</p>
       </div>
 
-      <div class="rv max-w-[900px] rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8">
+      <div class="rv ${COL} rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8">
         <div class="flex flex-col sm:flex-row items-start gap-5 sm:gap-6">
           <span class="shrink-0 w-11 h-11 rounded-2xl bg-orange-100 flex items-center justify-center">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
@@ -206,16 +226,16 @@ const section3 = () => `  <!-- ================= 03 · BEFORE YOU SUBMIT · bloc
     <div class="orb absolute" style="width:720px;height:680px;right:-12%;top:-260px;background:rgba(44,195,219,.18)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-7 sm:mb-9">
+      <div class="rv ${COL} mb-7 sm:mb-9">
 ${eyebrowDark('teal-400', WRITTEN.eyebrow3)}
         <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] text-white">${WRITTEN.h2before}</h2>
       </div>
 
-      <div class="rv max-w-[760px] mb-7 lg:mb-9">
+      <div class="rv ${COL} mb-7 lg:mb-9">
         <p class="${PROSE_DARK}">${rich(3)}</p>
       </div>
 
-      <div class="rv-kids grid lg:grid-cols-2 gap-4 sm:gap-5 max-w-[1080px]">
+      <div class="rv-kids grid lg:grid-cols-2 gap-4 sm:gap-5 ${WIDE}">
 ${[[4, 5, '#5AD3E4'], [6, 7, '#F58971']].map(([lead, list, tint]) => `        <div class="min-w-0 rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7">
           <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70 mb-5">${rich(lead)}</p>
 ${optionChips(list, tint)}
@@ -230,13 +250,13 @@ const section4 = () => `  <!-- ================= 04 · WHAT THE REPORT SHOWS · 
        page. The example timestamp in the first row is the live page's own. -->
   <section id="report-shows" class="relative py-14 sm:py-18 lg:py-24 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-7 sm:mb-9">
+      <div class="rv ${COL} mb-7 sm:mb-9">
 ${eyebrow('orange-500', WRITTEN.eyebrow4)}
         ${h2(WRITTEN.h2shows)}
         <p class="mt-4 lg:mt-5 ${PROSE}">${rich(8)}</p>
       </div>
 
-      <div class="rv-kids grid sm:grid-cols-2 gap-3 sm:gap-4 max-w-[1080px]">
+      <div class="rv-kids grid sm:grid-cols-2 gap-3 sm:gap-4 ${WIDE}">
 ${listAt(9).itemsHtml.map((row, n) => `        <div class="min-w-0 flex items-start gap-3.5 rounded-2xl sm:rounded-[20px] bg-[#F7F9FA] ring-1 ring-black/5 px-4 py-4 sm:px-5">
           <span class="shrink-0 inline-flex w-7 h-7 rounded-full bg-white ring-1 ring-black/5 items-center justify-center text-[11.5px] font-bold tabular-nums text-ink-500">${n + 1}</span>
           <span class="min-w-0 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">${row}</span>
@@ -251,19 +271,19 @@ const section5 = () => `  <!-- ================= 05 · THE CATEGORIES · blocks 
        name and its sentence exactly; only the dash becomes a card. -->
   <section id="report-categories" class="relative py-14 sm:py-18 lg:py-24 bg-[#F7F9FA]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-7 sm:mb-9">
+      <div class="rv ${COL} mb-7 sm:mb-9">
 ${eyebrow('teal-400', WRITTEN.eyebrow5)}
         ${h2(WRITTEN.h2rates)}
         <p class="mt-4 lg:mt-5 ${PROSE}">${rich(10)}</p>
       </div>
 
-      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-[1120px]">
+      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 ${WIDE}">
 ${CATEGORIES.map((c, n) => `        <div class="min-w-0 ${n === 3 ? 'sm:col-span-2 lg:col-span-1' : ''} rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
           <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-ink-100 items-center justify-center mb-4">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CAT_ICON[n]}</svg>
           </span>
           <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2">${c.name}</h3>
-          <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[46ch]">${c.body}</p>
+          <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">${c.body}</p>
         </div>`).join('\n')}
       </div>
     </div>
@@ -277,13 +297,13 @@ const section6 = () => `  <!-- ================= 06 · THE COLOURS · blocks 18-
        Red and Purple are that page's own plagiarism and AI marks. -->
   <section id="report-colours" class="relative py-14 sm:py-18 lg:py-24 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-7 sm:mb-9">
+      <div class="rv ${COL} mb-7 sm:mb-9">
 ${eyebrow('orange-500', WRITTEN.eyebrow6)}
         ${h2(WRITTEN.h2colours)}
         <p class="mt-4 lg:mt-5 ${PROSE}">${rich(18)}</p>
       </div>
 
-      <div class="rv max-w-[900px] rounded-3xl sm:rounded-4xl bg-[#F7F9FA] ring-1 ring-black/5 p-2 sm:p-2.5">
+      <div class="rv ${WIDE} rounded-3xl sm:rounded-4xl bg-[#F7F9FA] ring-1 ring-black/5 p-2 sm:p-2.5">
         <div class="rounded-[18px] sm:rounded-3xl bg-white divide-y divide-ink-100">
 ${COLOURS.map(c => `          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-5 px-5 py-4 sm:px-6 sm:py-4.5">
             <span class="shrink-0 sm:w-[152px] inline-flex items-center gap-3">
@@ -305,8 +325,8 @@ const section7 = () => `  <!-- ================= 07 · CLOSING · block 25 =====
     <div class="orb absolute" style="width:700px;height:660px;left:-10%;bottom:-300px;background:rgba(154,106,222,.18)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px]">
-        <p class="text-[15.5px] sm:text-[16.5px] lg:text-[17.5px] font-semibold tracking-tight leading-[1.5] text-white max-w-[44ch]">${rich(25)}</p>
+      <div class="rv ${COL}">
+        <p class="text-[15.5px] sm:text-[16.5px] lg:text-[17.5px] font-semibold tracking-tight leading-[1.5] text-white">${rich(25)}</p>
         <a href="user-manuals.html" class="btn-press group inline-flex items-center gap-2.5 mt-7 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
           ${WRITTEN.backLabel}
           <span class="hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center">

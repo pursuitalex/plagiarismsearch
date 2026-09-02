@@ -406,6 +406,36 @@ enough to read as a mistake rather than a distinction. If a body line looks wron
 weight or colour; there is no size between 13.5 and 14.5.
 
 
+### Text pages — one reading column, one breakout
+
+A page that is mostly prose gets exactly **two content widths**, and both are centred:
+
+| | width | what sits on it |
+|---|---|---|
+| **column** | `max-w-[560px] mx-auto` | every heading, paragraph, callout, standalone list |
+| **breakout** | `max-w-[1080px] mx-auto` | card grids, legends, tables — used deliberately, for rhythm |
+
+Body copy on these pages is `text-[15.5px] sm:text-[16px] lg:text-[17px]` with `leading-[1.72]`,
+the ramp the blog post established. Nothing carries its own `max-w-[…ch]`: the column is the
+measure, so the left and right edges never move as the reader scrolls.
+
+**Why 560 and not 700.** Measured, by walking each text node and counting characters per line
+box. The blog post's 700px column at 17px runs **87–97 characters a line, median 91** — half
+again the comfortable 45–75 band, and the reason that page reads as hard work. The same ramp at
+560px measures **65–76, median 69** on desktop and 42–53 on a phone.
+
+**`ch` is not a character.** `max-w-[68ch]` rendered a 94-character line: Manrope's `ch` is about
+0.6em while its average character is about 0.44em, so the unit reads roughly 1.4× wider than its
+name suggests. Use it only with that factor in mind, or use px and measure.
+
+**Left-aligned columns in a wide shell look broken.** A 560px block aligned left inside a 1280px
+container leaves 640px of void on one side, and a reader reads that as a layout fault rather than
+as a margin. Centre it. The same block centred reads as a deliberate narrowing.
+
+> Pages still on the old habit: `blog-best-checker-2026.html` (700px, 91 characters) and
+> `newsroom.html`. Both predate this rule.
+
+
 ### Standalone button — one shape
 
 A standalone button is a section-level call to action: not a control inside a form, a pricing card,

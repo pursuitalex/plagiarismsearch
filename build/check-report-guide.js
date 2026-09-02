@@ -140,8 +140,21 @@ for (const b of B) {
 {
   ok('no invented sub-heading carries product claims',
      !/<h2[^>]*>[^<]*(best|leading|guarantee|100%|most accurate)/i.test(body));
-  ok('body copy is held to a readable measure',
-     (body.match(/max-w-\[6[0-9]ch\]|max-w-\[4[0-9]ch\]|max-w-\[7[0-9]ch\]/g) || []).length >= 8);
+  /* The article scheme: two content widths and no third. A page that drifts back to
+     four different max-widths is the page Olex called hard to read — the edges have to
+     line up, and they only line up if there is nothing else to line up with. */
+  const widths = [...new Set([...body.matchAll(/max-w-\[(\d+)px\]/g)].map(m => +m[1]))].sort((a, b) => a - b);
+  ok('exactly two content widths inside the page shell',
+     widths.length === 3 && widths[0] === 560 && widths[1] === 1080 && widths[2] === 1280,
+     widths.join(' · ') + ' (1280 is the shell)');
+
+  const col = (body.match(/max-w-\[560px\] mx-auto/g) || []).length;
+  const wide = (body.match(/max-w-\[1080px\] mx-auto/g) || []).length;
+  ok('every block is centred on the same axis', col >= 8 && wide >= 3,
+     col + ' on the column, ' + wide + ' breakouts');
+
+  ok('no per-element measure fighting the column',
+     !/max-w-\[\d+ch\]/.test(body), (body.match(/max-w-\[\d+ch\]/g) || []).join(' · '));
 }
 
 console.log('\n' + (failed
