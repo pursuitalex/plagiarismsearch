@@ -145,6 +145,17 @@ console.log('\n' + FILE + ' — the live archive, carried over\n');
 {
   ok('no photograph stands in for a news item', !/<img[^>]+src="assets\/img\/(news|hero)/i.test(body));
   ok('no "read more" that goes nowhere', !/href="#"[^>]*>\s*Read more/i.test(body));
+
+  /* The text-page scheme in DESIGN.md. This page was the worst offender on the site
+     before it: item bodies 1027px wide, carrying 153 to 160 characters a line. 880
+     puts the prose inside a card at ~720px, which is the measure the blog post and
+     the report guide read at. */
+  const widths = [...new Set([...body.matchAll(/max-w-\[(\d+)px\]/g)].map(m => +m[1]))].sort((a, b) => a - b);
+  ok('one content width inside the page shell',
+     widths.length === 2 && widths[0] === 880 && widths[1] === 1280,
+     widths.join(' · ') + ' (1280 is the shell)');
+  const col = (body.match(/max-w-\[880px\] mx-auto/g) || []).length;
+  ok('every block centred on that width', col >= 6, col + ' blocks');
 }
 
 console.log('\n' + (failed

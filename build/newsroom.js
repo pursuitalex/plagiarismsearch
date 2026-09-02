@@ -228,6 +228,19 @@ const iso = it => {
 /* ─────────────────────────────────────────────────────────────────────────────
    Shared bits, in the idioms the v2 pages already use
    ───────────────────────────────────────────────────────────────────────────── */
+/* ── The article scheme, per DESIGN.md "Text pages" ──────────────────────────
+   Olex: the news pages are too wide as well. Measured, they were the worst on the
+   site — item bodies 1027px carrying 153 to 160 characters a line, twice the band
+   and well past even the 88 the blog post trades for.
+
+   COL is the established 880 rather than the article's 700, because a news item is
+   a card with a date column beside it: at 880 the prose inside lands at ~720px,
+   which is the same measure the blog and the report guide read at. The body takes
+   the blog's ramp for the same reason the report guide does — a news item is short
+   prose, and the site should not carry a second set of sizes for it. */
+const COL = 'max-w-[880px] mx-auto';
+const BODY = 'text-[15.5px] sm:text-[16px] lg:text-[17px] leading-[1.72]';
+
 const eyebrow = (dot, label) => `        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
           <span class="w-1.5 h-1.5 rounded-full bg-${dot}"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">${label}</span>
@@ -242,9 +255,7 @@ const h2 = t => `<h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tra
 
 /* one item's body — the stored paragraphs, their lists, and the read-more link */
 const body = (it, dark) => {
-  const p = dark
-    ? 'text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70'
-    : 'text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600';
+  const p = dark ? BODY + ' text-white/75' : BODY + ' text-ink-700';
   const out = [];
   for (const para of it.paras) {
     if (para.itemsHtml && para.itemsHtml.length) {
@@ -283,7 +294,7 @@ const section1 = () => {
     </div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
+      <div class="${COL} grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
 
         <div class="rv min-w-0">
 ${eyebrow('orange-500', 'Newsroom')}
@@ -331,11 +342,11 @@ const section2 = () => `  <!-- ================= 02 · LATEST =================
     <div class="orb absolute" style="width:760px;height:700px;right:-12%;top:-280px;background:rgba(154,106,222,.18)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv">
+      <div class="rv ${COL}">
 ${eyebrowDark('teal-400', 'Latest')}
       </div>
 
-      <div class="rv-kids grid ${latest.length > 1 ? 'lg:grid-cols-2' : ''} gap-4 sm:gap-5 lg:gap-6">
+      <div class="rv-kids ${COL} grid ${latest.length > 1 ? 'lg:grid-cols-2' : ''} gap-4 sm:gap-5 lg:gap-6">
 ${latest.map(it => `        <article class="on-dark min-w-0 rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7 lg:p-8">
           <div class="flex items-center gap-2.5 mb-4">
             <span class="w-1.5 h-1.5 rounded-full bg-teal-400" aria-hidden="true"></span>
@@ -370,13 +381,15 @@ const section3 = () => `  <!-- ================= 03 · ARCHIVE =================
   <section id="news-archive" class="relative py-16 sm:py-20 lg:py-24 bg-[#F7F9FA]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 
-      <div class="rv mb-6 sm:mb-7">
+      <div class="rv ${COL} mb-6 sm:mb-7">
 ${eyebrow('teal-400', 'Archive')}
         ${h2('Earlier updates')}
       </div>
 
       <div class="rv sticky top-[74px] z-20 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10 py-3 mb-7 lg:mb-9 bg-[#F7F9FA]/92 backdrop-blur">
-        <div class="-mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10 overflow-x-auto tp-scroll">
+        <!-- the sticky band above is full-bleed on purpose, so the blur reaches the
+             page edges; the chips inside it sit on the column like everything else -->
+        <div class="${COL} overflow-x-auto tp-scroll">
           <div id="topicTabs" class="flex flex-nowrap lg:flex-wrap gap-1.5 w-max lg:w-auto" role="group" aria-label="Filter updates by topic">
           <button type="button" data-topic="all" aria-pressed="true" class="tp-btn active inline-flex items-center gap-2 whitespace-nowrap rounded-full ring-1 ring-black/5 px-3.5 py-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">All <span class="tp-n tabular-nums text-ink-500">${archive.length}</span></button>
 ${TOPICS.map(([key, label, icon]) => {
@@ -391,7 +404,7 @@ ${TOPICS.map(([key, label, icon]) => {
         </div>
       </div>
 
-${archiveYears.map(y => `      <div class="yr-group" data-year="${y}">
+${archiveYears.map(y => `      <div class="yr-group ${COL}" data-year="${y}">
         <div class="flex items-baseline gap-4 mb-4 lg:mb-5" id="y${y}">
           <h3 class="text-[22px] sm:text-[26px] font-extrabold tracking-tightest tabular-nums">${y}</h3>
           <span class="yr-count text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-500 tabular-nums" data-total="${byYear(y).length}">${byYear(y).length} updates</span>
@@ -425,7 +438,7 @@ ${body(it, false)}
         </div>
       </div>`).join('\n\n')}
 
-      <p id="topicEmpty" hidden class="rv text-[13.5px] sm:text-[14.5px] text-ink-500"></p>
+      <p id="topicEmpty" hidden class="rv ${COL} text-[13.5px] sm:text-[14.5px] text-ink-500"></p>
     </div>
   </section>`;
 

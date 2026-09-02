@@ -413,6 +413,7 @@ A page that is mostly prose gets exactly **two content widths**, and both are ce
 | | width | what sits on it |
 |---|---|---|
 | **column** | `max-w-[700px] mx-auto` | every heading, paragraph, callout, standalone list |
+| **card list** | `max-w-[880px] mx-auto` | a column of cards that carry a rail beside the prose — a date, a number, an icon |
 | **breakout** | `max-w-[1080px] mx-auto` | card grids, legends, tables, images — wider than the column on purpose |
 
 Body copy is `text-[15.5px] sm:text-[16px] lg:text-[17px]` with `leading-[1.72]`. Both numbers
@@ -423,6 +424,10 @@ the measure, so the left and right edges never move as the reader scrolls.
 **700 is settled.** It was agreed as the readable compromise for blocks like these. For the
 record, since it was measured: 700px at 17px runs about 87–91 characters a line, above the 45–75
 typography usually quotes. That is a known trade, decided deliberately — do not narrow it.
+
+**Pick the width from what is inside it.** 700 where the prose starts at the left edge; 880
+where a card puts a date or a rail before it, since the prose then begins about 180px in and
+lands at the same measure. `newsroom.html` is the second: 880 outside, ~720 of prose inside.
 
 **A breakout may be wider than the text.** Images at the head of an article, card grids, a
 legend: these are meant to exceed the column. Only prose is held to it.
