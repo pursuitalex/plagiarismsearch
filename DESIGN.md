@@ -406,40 +406,39 @@ enough to read as a mistake rather than a distinction. If a body line looks wron
 weight or colour; there is no size between 13.5 and 14.5.
 
 
-### Text pages — one reading column, one breakout
+### Text pages — cap the long runs, not the page
 
-A page that is mostly prose gets exactly **two content widths**, and both are centred:
+A page carrying a lot of prose keeps the site's ordinary layout. Blocks share **one left
+edge** and take their width from what they are; only prose that runs to several lines gets a
+cap.
 
-| | width | what sits on it |
+| role | width | what it is |
 |---|---|---|
-| **column** | `max-w-[700px] mx-auto` | every heading, paragraph, callout, standalone list |
-| **card list** | `max-w-[880px] mx-auto` | a column of cards that carry a rail beside the prose — a date, a number, an icon |
-| **breakout** | `max-w-[1080px] mx-auto` | card grids, legends, tables, images — wider than the column on purpose |
+| hero | `max-w-[820px]` | the `h1` block |
+| heading block | `max-w-[760px]` | eyebrow + `h2` + the line or two under it |
+| **long prose** | `max-w-[700px]` | a paragraph run of roughly four lines or more |
+| breakout | `max-w-[1080px]` | card grids, legends, tables, images — wider than the text on purpose |
 
-Body copy is `text-[15.5px] sm:text-[16px] lg:text-[17px]` with `leading-[1.72]`. Both numbers
-come from `blog-best-checker-2026.html`, which set them first; a new text page reuses them rather
-than starting its own size architecture. Nothing carries its own `max-w-[…ch]` — the column is
-the measure, so the left and right edges never move as the reader scrolls.
+Body copy is `text-[15.5px] sm:text-[16px] lg:text-[17px]` with `leading-[1.72]`, and a column
+of cards with a date or icon rail beside the prose sits at `max-w-[880px]`, which puts the text
+inside it at about 720. Both come from `blog-best-checker-2026.html` and `newsroom.html`; a new
+text page reuses them rather than starting its own size architecture.
 
-**700 is settled.** It was agreed as the readable compromise for blocks like these. For the
-record, since it was measured: 700px at 17px runs about 87–91 characters a line, above the 45–75
-typography usually quotes. That is a known trade, decided deliberately — do not narrow it.
+**700 is settled, and it is not for everything.** It was agreed as the readable compromise for a
+long block. Putting it on every heading and every one-line lead was a mistake — it shrank the
+page for no reason and made it look unlike every other page on the site. A two-line section
+intro belongs at 760 like everywhere else.
 
-**Pick the width from what is inside it.** 700 where the prose starts at the left edge; 880
-where a card puts a date or a rail before it, since the prose then begins about 180px in and
-lands at the same measure. `newsroom.html` is the second: 880 outside, ~720 of prose inside.
+**One left edge, several right edges.** That is the fix for a layout that looks ragged, not a
+single width. Blocks that all start at the same x and end where their content needs read as
+deliberate; four blocks each centred at a different width do not.
 
 **A breakout may be wider than the text.** Images at the head of an article, card grids, a
-legend: these are meant to exceed the column. Only prose is held to it.
+legend: these are meant to exceed the prose.
 
-**What was actually broken.** Not the width — the alignment. A 700px block aligned *left* inside
-a 1280px shell leaves a void down one side, and a page carrying four different max-widths has a
-right edge that never settles. Readers see that as a fault. Centre everything on one axis and
-keep the number of widths to two.
-
-**`ch` is not a character.** `max-w-[68ch]` renders a 94-character line: Manrope's `ch` is about
-0.6em while its average character is about 0.44em, so the unit reads roughly 1.4× wider than its
-name suggests. Use px, and measure by counting characters per line box.
+**`ch` is not a character.** `max-w-[68ch]` renders a 94-character line — Manrope's `ch` is about
+0.6em while its average character is about 0.44em. Use px, and measure by counting characters
+per line box rather than trusting the unit.
 
 ### Standalone button — one shape
 

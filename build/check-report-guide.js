@@ -140,20 +140,26 @@ for (const b of B) {
 {
   ok('no invented sub-heading carries product claims',
      !/<h2[^>]*>[^<]*(best|leading|guarantee|100%|most accurate)/i.test(body));
-  /* The article scheme: two content widths and no third. A page that drifts back to
-     four different max-widths is the page Olex called hard to read — the edges have to
-     line up, and they only line up if there is nothing else to line up with. */
+  /* Widths by role, on one left edge — the site's own set, not a scheme of this page's
+     own. 700 is the long-prose cap and belongs to the one long run there is; putting it
+     on everything was the mistake this replaces. */
   const widths = [...new Set([...body.matchAll(/max-w-\[(\d+)px\]/g)].map(m => +m[1]))].sort((a, b) => a - b);
-  ok('exactly two content widths inside the page shell',
-     widths.length === 3 && widths[0] === 700 && widths[1] === 1080 && widths[2] === 1280,
-     widths.join(' · ') + ' (1280 is the shell)');
+  ok('the widths this page is allowed',
+     JSON.stringify(widths) === JSON.stringify([700, 760, 820, 1080, 1280]),
+     widths.join(' · ') + ' — 700 read, 760 head, 820 hero, 1080 wide, 1280 shell');
 
-  const col = (body.match(/max-w-\[700px\] mx-auto/g) || []).length;
-  const wide = (body.match(/max-w-\[1080px\] mx-auto/g) || []).length;
-  ok('every block is centred on the same axis', col >= 8 && wide >= 3,
-     col + ' on the column, ' + wide + ' breakouts');
+  /* The cap belongs to prose that runs to several lines — §2's pair and the closing
+     statement — and to nothing else. Heading blocks take the site's 760. */
+  const capped = (body.match(/max-w-\[700px\]/g) || []).length;
+  ok('the long-prose cap is only on the long runs', capped >= 1 && capped <= 2, capped + ' blocks');
+  ok('heading blocks on the site-standard 760',
+     (body.match(/max-w-\[760px\]/g) || []).length >= 6);
 
-  ok('no per-element measure fighting the column',
+  /* one left edge: nothing inside the shell re-centres itself */
+  const recentred = (body.match(/max-w-\[(700|760|820|1080)px\][^"]*mx-auto/g) || []);
+  ok('one left edge — no content block re-centres', !recentred.length, recentred.join(' · '));
+
+  ok('no per-element measure fighting its container',
      !/max-w-\[\d+ch\]/.test(body), (body.match(/max-w-\[\d+ch\]/g) || []).join(' · '));
 }
 

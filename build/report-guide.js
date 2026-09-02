@@ -131,36 +131,30 @@ const eyebrowDark = (dot, label) => `        <div class="inline-flex items-cente
 
 const h2 = t => `<h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">${t}</h2>`;
 
-/* ── The article scheme ──────────────────────────────────────────────────────
-   Olex: the empty areas read as accidental and the widths do not agree — text pages
-   are hard to read like this. Both complaints have one cause: blocks were left-aligned
-   in a 1280px container at four different max-widths, so the right edge was ragged and
-   nothing lined up.
+/* ── Widths ──────────────────────────────────────────────────────────────────
+   Olex: the 700 cap belongs to a long text block, if the page has one — everything
+   else lays out like every other page. It does not, so it should not be on
+   everything, and it no longer is.
 
-   Two widths from here on, and both are centred:
+   One LEFT EDGE for the whole page; only the right edge moves, and it moves by what
+   the block is. That is what the other pages do, and it is what stops the layout
+   looking ragged without pretending a section heading is a paragraph.
 
-     COL   the reading column. Every heading, paragraph, callout and list sits on these
-           edges, so the left and right edges never move as you scroll.
-     WIDE  the deliberate breakouts — the card grids and the colour legend. Centred on
-           the same axis, so the column reads as a narrowing of the page rather than as
-           a different page.
+     HERO   820   the h1 block; 820 is a width this site already uses for one
+     HEAD   760   eyebrow + h2 + the single line under it. Nine blocks across the v2
+                  pages already use 760 for exactly that
+     READ   700   the one long run of prose here — §2's two paragraphs, 646 and 671
+                  characters. Nothing else on the page is long enough to need it: the
+                  other leads run 113 to 441 characters, one paragraph each
+     WIDE  1080   card grids and the colour legend
 
-   Both numbers come from the blog post, which is the site's other long-form page: the
-   700px column and the 15.5 / 16 / 17 ramp with leading-[1.72]. Olex settled 700 earlier
-   as the readable compromise for blocks like these, so it is the agreed width and this
-   page does not get its own.
-
-   For the record, since it was measured on the way here: 700px at 17px runs about 87 to
-   91 characters a line, above the 45–75 that typography usually quotes. That is a known
-   trade, not an oversight — narrowing it was tried and rejected. What was actually
-   broken was never the width; it was that the blocks were left-aligned at four
-   different max-widths, so the right edge was ragged and nothing lined up. */
-const COL = 'max-w-[700px] mx-auto';
-const WIDE = 'max-w-[1080px] mx-auto';
+   Body copy keeps the blog post's ramp, so this page adds no size architecture. */
+const HERO = 'max-w-[820px]';
+const HEAD = 'max-w-[760px]';
+const READ = 'max-w-[700px]';
+const WIDE = 'max-w-[1080px]';
 const BODY = 'text-[15.5px] sm:text-[16px] lg:text-[17px] leading-[1.72]';
-/* Measured, not guessed: Manrope's ch is ~0.6em while its average character is ~0.44em,
-   so max-w-[68ch] rendered a 94-character line. 52ch measures 72, which is inside the
-   comfortable band. The unit stays font-relative, so it holds at every breakpoint. */
+
 const PROSE = BODY + ' text-ink-700';
 const PROSE_DARK = BODY + ' text-white/75';
 
@@ -175,7 +169,7 @@ const section1 = () => `  <!-- ================= 01 · HERO =================
     </div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv ${COL}">
+      <div class="rv ${HERO}">
         <div class="mb-5"><a href="user-manuals.html" class="inline-flex items-center gap-2 text-[12.5px] sm:text-[13px] font-semibold text-ink-500 hover:text-ink-900 transition-colors">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
           ${WRITTEN.backLabel}
@@ -194,17 +188,17 @@ const section2 = () => `  <!-- ================= 02 · WHY IT MATTERS · blocks 
        onto its own ground instead of being the last of three identical columns. -->
   <section id="why-check" class="relative py-14 sm:py-18 lg:py-24 bg-[#F7F9FA]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv ${COL} mb-7 sm:mb-8">
+      <div class="rv ${HEAD} mb-7 sm:mb-8">
 ${eyebrow('teal-400', WRITTEN.eyebrow2)}
         ${h2(WRITTEN.h2why)}
       </div>
 
-      <div class="rv ${COL} space-y-4 mb-7 lg:mb-8">
+      <div class="rv ${READ} space-y-4 mb-7 lg:mb-8">
         <p class="${PROSE}">${rich(0)}</p>
         <p class="${PROSE}">${rich(1)}</p>
       </div>
 
-      <div class="rv ${COL} rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8">
+      <div class="rv ${HEAD} rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8">
         <div class="flex flex-col sm:flex-row items-start gap-5 sm:gap-6">
           <span class="shrink-0 w-11 h-11 rounded-2xl bg-orange-100 flex items-center justify-center">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
@@ -231,12 +225,12 @@ const section3 = () => `  <!-- ================= 03 · BEFORE YOU SUBMIT · bloc
     <div class="orb absolute" style="width:720px;height:680px;right:-12%;top:-260px;background:rgba(44,195,219,.18)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv ${COL} mb-7 sm:mb-9">
+      <div class="rv ${HEAD} mb-7 sm:mb-9">
 ${eyebrowDark('teal-400', WRITTEN.eyebrow3)}
         <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] text-white">${WRITTEN.h2before}</h2>
       </div>
 
-      <div class="rv ${COL} mb-7 lg:mb-9">
+      <div class="rv ${HEAD} mb-7 lg:mb-9">
         <p class="${PROSE_DARK}">${rich(3)}</p>
       </div>
 
@@ -255,7 +249,7 @@ const section4 = () => `  <!-- ================= 04 · WHAT THE REPORT SHOWS · 
        page. The example timestamp in the first row is the live page's own. -->
   <section id="report-shows" class="relative py-14 sm:py-18 lg:py-24 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv ${COL} mb-7 sm:mb-9">
+      <div class="rv ${HEAD} mb-7 sm:mb-9">
 ${eyebrow('orange-500', WRITTEN.eyebrow4)}
         ${h2(WRITTEN.h2shows)}
         <p class="mt-4 lg:mt-5 ${PROSE}">${rich(8)}</p>
@@ -276,7 +270,7 @@ const section5 = () => `  <!-- ================= 05 · THE CATEGORIES · blocks 
        name and its sentence exactly; only the dash becomes a card. -->
   <section id="report-categories" class="relative py-14 sm:py-18 lg:py-24 bg-[#F7F9FA]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv ${COL} mb-7 sm:mb-9">
+      <div class="rv ${HEAD} mb-7 sm:mb-9">
 ${eyebrow('teal-400', WRITTEN.eyebrow5)}
         ${h2(WRITTEN.h2rates)}
         <p class="mt-4 lg:mt-5 ${PROSE}">${rich(10)}</p>
@@ -302,7 +296,7 @@ const section6 = () => `  <!-- ================= 06 · THE COLOURS · blocks 18-
        Red and Purple are that page's own plagiarism and AI marks. -->
   <section id="report-colours" class="relative py-14 sm:py-18 lg:py-24 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv ${COL} mb-7 sm:mb-9">
+      <div class="rv ${HEAD} mb-7 sm:mb-9">
 ${eyebrow('orange-500', WRITTEN.eyebrow6)}
         ${h2(WRITTEN.h2colours)}
         <p class="mt-4 lg:mt-5 ${PROSE}">${rich(18)}</p>
@@ -330,7 +324,7 @@ const section7 = () => `  <!-- ================= 07 · CLOSING · block 25 =====
     <div class="orb absolute" style="width:700px;height:660px;left:-10%;bottom:-300px;background:rgba(154,106,222,.18)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv ${COL}">
+      <div class="rv ${READ}">
         <p class="text-[15.5px] sm:text-[16.5px] lg:text-[17.5px] font-semibold tracking-tight leading-[1.5] text-white">${rich(25)}</p>
         <a href="user-manuals.html" class="btn-press group inline-flex items-center gap-2.5 mt-7 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
           ${WRITTEN.backLabel}
