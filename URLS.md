@@ -24,6 +24,7 @@ driven by this table.
 | `cookie-policy.html` | `/cookie-policy` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
 | `originality-badges.html` | `/originality-badges` | built | Copy and artwork carried over from the live page unchanged; the 129 badge images live in site/assets/img/badges/. Built by build/badges.js. |
 | `user-manuals.html` | `/user-manuals` | built | Category names and all twenty guide titles carried over unchanged; the arrangement is new. Built by build/manuals.js. Most guides still live on the production site and keep absolute addresses. |
+| `newsroom.html` | `/newsroom` | built | The news archive. All 68 items carried over from the seven live pages with their dates, wording and destinations intact; the arrangement is new. Built by build/newsroom.js from build/newsroom-data.json, which build/newsroom-fetch.js refreshes. |
 | `why-us.html` | `/why-us` | built |  |
 | `mission.html` | `/plagiarismsearch-mission-and-core-values` | built |  |
 | `contact-us.html` | `/contact-us` | built |  |
@@ -48,7 +49,6 @@ driven by this table.
 | `pdf-plagiarism-checker.html` | `/pdf-plagiarism-checker` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
 | `quote-checker-at-plagiarismsearch.html` | `/quote-checker-at-plagiarismsearch` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
 | `turnitin-checker-alternative.html` | `/turnitin-checker-alternative` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
-| `newsroom.html` | `/newsroom` | stub | Approved destination, page not designed yet. |
 | `scholarship.html` | `/scholarship` | stub | Approved destination, page not designed yet. |
 | `affiliate-program-at-plagiarismsearch.html` | `/affiliate-program-at-plagiarismsearch` | stub | Approved destination, page not designed yet. |
 | `canvas-integration.html` | `/canvas-integration` | stub | Treated as live: Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate. The address closed with it — the point-fix brief of 2026-08-20 approves /canvas-integration as final, so the filename is no longer provisional. |
@@ -56,8 +56,8 @@ driven by this table.
 
 ## Counts
 
-- 17 × built
-- 14 × stub
+- 18 × built
+- 13 × stub
 - 7 × no approved path
 - 4 × built · out of global nav
 
