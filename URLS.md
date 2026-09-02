@@ -26,6 +26,7 @@ driven by this table.
 | `user-manuals.html` | `/user-manuals` | built | Category names and all twenty guide titles carried over unchanged; the arrangement is new. Built by build/manuals.js. Most guides still live on the production site and keep absolute addresses. |
 | `newsroom.html` | `/newsroom` | built | The news archive. All 68 items carried over from the seven live pages with their dates, wording and destinations intact; the arrangement is new. Built by build/newsroom.js from build/newsroom-data.json, which build/newsroom-fetch.js refreshes. |
 | `plagiarism-and-ai-check-report.html` | `/plagiarism-and-ai-check-report` | built | A User Guide article. All 26 blocks of the live page carried over in their original order and wording; the sections are cuts along seams the text itself makes. Built by build/report-guide.js from build/report-guide-data.json, which build/report-guide-fetch.js refreshes. |
+| `plagiarism-and-ai-check-report-v2.html` | `/plagiarism-and-ai-check-report` | built | The same guide rendered through build/article.js — the template lifted from the blog post: one centred 700px column, a contents box, and semantic blocks styled once. Built alongside v1 so the two approaches can be compared. |
 | `why-us.html` | `/why-us` | built |  |
 | `mission.html` | `/plagiarismsearch-mission-and-core-values` | built |  |
 | `contact-us.html` | `/contact-us` | built |  |
@@ -57,7 +58,7 @@ driven by this table.
 
 ## Counts
 
-- 19 × built
+- 20 × built
 - 13 × stub
 - 7 × no approved path
 - 4 × built · out of global nav

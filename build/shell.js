@@ -90,6 +90,9 @@ const PAGES = {
   'newsroom.html':               { active: null },
   /* a User Guide article, reached from user-manuals.html and from the newsroom */
   'plagiarism-and-ai-check-report.html': { active: null },
+  /* the same guide through build/article.js, the blog post's template, built
+     alongside so the two approaches can be compared before either is retired */
+  'plagiarism-and-ai-check-report-v2.html': { active: null },
   /* the DEC-0043 institutional page — a real page now, not a stub */
   'university-plagiarism-checker.html': { active: 'solutions' },
   'paper-analysis.html':         { active: null },
