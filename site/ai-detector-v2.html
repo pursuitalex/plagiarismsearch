@@ -292,6 +292,7 @@ tailwind.config = {
 
   /* AI highlight — violet, the product report's own colour coding, kept distinct from
      the orange used for plagiarism matches elsewhere on the site */
+  .bg-ai-mark { background:rgba(154,106,222,.85); }
   .hl-ai { background:rgba(154,106,222,.22); border-radius:.35rem; padding:.05em .18em;
     margin:-.05em -.18em; box-shadow:inset 0 -2px 0 rgba(154,106,222,.5);
     box-decoration-break:clone; -webkit-box-decoration-break:clone; }
@@ -854,33 +855,86 @@ tailwind.config = {
            register, lifted from each sentence's own words. -->
       <p class="rv text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mb-5 lg:mb-6">Review the document-level AI Probability together with Total AI Rate and the highlighted passages. Looking at these signals together provides more context than relying on a single percentage.</p>
 
-      <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 lg:mb-8">
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">1</span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-1.5">Document-level likelihood</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Start with AI Probability.</p>
+      <!-- Recomposed 2026-08-26 at Olex's request: the three steps run down the left and
+           the correction stands beside them at full height.
+
+           It reads better this way than as a 3-across row above a full-width band. The
+           steps are a sequence, and a vertical list is what a sequence looks like; each
+           card is now a wide short row, so the number sits beside the text rather than
+           stacked on top of it, which is what that shape wants.
+
+           The right panel had room to spare once it was half-width and full-height, so
+           it carries the diagram the sentence asks for: the same document twice, once
+           with a single figure over the whole of it (AI Probability) and once with the
+           flagged runs marked and no figure at all (Total AI Rate). That IS the
+           correction — one is a number about everything, the other is which parts.
+           70% is the sentence's own number; no second number is invented, and the marks
+           are partial-width for the same reason. -->
+      <div class="grid lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 mb-4 lg:mb-5">
+
+        <div class="rv-kids min-w-0 flex flex-col gap-4 sm:gap-5">
+          <div class="flex-1 flex items-center gap-4 sm:gap-5 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+            <span class="shrink-0 inline-flex w-10 h-10 rounded-full bg-ink-900 text-white text-[13px] font-bold items-center justify-center tabular-nums">1</span>
+            <div class="min-w-0">
+              <h3 class="text-[15px] sm:text-[16px] lg:text-[16.5px] font-bold tracking-tight">Document-level likelihood</h3>
+              <p class="mt-1 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Start with AI Probability.</p>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center gap-4 sm:gap-5 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+            <span class="shrink-0 inline-flex w-10 h-10 rounded-full bg-ink-900 text-white text-[13px] font-bold items-center justify-center tabular-nums">2</span>
+            <div class="min-w-0">
+              <h3 class="text-[15px] sm:text-[16px] lg:text-[16.5px] font-bold tracking-tight">Share of flagged text</h3>
+              <p class="mt-1 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Compare Total AI Rate.</p>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center gap-4 sm:gap-5 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+            <span class="shrink-0 inline-flex w-10 h-10 rounded-full bg-ink-900 text-white text-[13px] font-bold items-center justify-center tabular-nums">3</span>
+            <div class="min-w-0">
+              <h3 class="text-[15px] sm:text-[16px] lg:text-[16.5px] font-bold tracking-tight">Highlighted passages</h3>
+              <p class="mt-1 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Inspect the exact passages and context.</p>
+            </div>
+          </div>
         </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">2</span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-1.5">Share of flagged text</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Compare Total AI Rate.</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">3</span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-1.5">Highlighted passages</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Inspect the exact passages and context.</p>
+
+        <!-- the sentence the section exists for -->
+        <div class="rv min-w-0 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-7 lg:p-8 flex flex-col">
+          <span class="shrink-0 w-11 h-11 rounded-2xl bg-white/10 flex items-center justify-center mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          </span>
+          <p class="text-[15.5px] sm:text-[16.5px] lg:text-[17.5px] font-bold tracking-tight leading-[1.42] text-white"><span class="text-orange-300">A 70% AI Probability does not mean that 70% of the text was written by AI.</span> AI Probability describes the likelihood for the document as a whole. Use Total AI Rate to understand the share of text contained in passages flagged as AI-generated.</p>
+
+          <div class="mt-auto pt-6 lg:pt-7">
+            <div class="grid grid-cols-2 gap-3 sm:gap-3.5" aria-hidden="true">
+
+              <!-- one figure, and it is about the whole thing -->
+              <div class="min-w-0 rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-3.5 sm:p-4">
+                <p class="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/60 mb-3 truncate">AI Probability</p>
+                <div class="relative rounded-xl ring-1 ring-white/15 px-3 py-3 space-y-1.5">
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:62%"></span><span class="block h-1.5 rounded-full bg-white/20" style="width:38%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:100%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:34%"></span><span class="block h-1.5 rounded-full bg-white/20" style="width:66%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:100%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:48%"></span><span class="block h-1.5 rounded-full bg-white/20" style="width:52%"></span></span>
+                  <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-ink-950 ring-1 ring-orange-400/45 px-2.5 py-0.5 text-[10.5px] font-bold tabular-nums text-orange-200">70%</span>
+                </div>
+              </div>
+
+              <!-- which parts, and no figure at all -->
+              <div class="min-w-0 rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-3.5 sm:p-4">
+                <p class="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/60 mb-3 truncate">Total AI Rate</p>
+                <div class="rounded-xl ring-1 ring-white/15 px-3 py-3 space-y-1.5">
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:62%"></span><span class="block h-1.5 rounded-full bg-ai-mark" style="width:38%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:100%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-ai-mark" style="width:34%"></span><span class="block h-1.5 rounded-full bg-white/20" style="width:66%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:100%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:48%"></span><span class="block h-1.5 rounded-full bg-ai-mark" style="width:52%"></span></span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- the sentence the section exists for -->
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 mb-4 lg:mb-5">
-        <div class="flex flex-col sm:flex-row items-start gap-5 sm:gap-7">
-          <span class="shrink-0 w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
-          </span>
-          <p class="text-[16px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight leading-[1.4] text-white max-w-[62ch]"><span class="text-orange-300">A 70% AI Probability does not mean that 70% of the text was written by AI.</span> AI Probability describes the likelihood for the document as a whole. Use Total AI Rate to understand the share of text contained in passages flagged as AI-generated.</p>
-        </div>
-      </div>
 
       <!-- the two caveats, at the weight the batch gives them -->
       <div class="rv-kids grid lg:grid-cols-5 gap-4 lg:gap-5">
