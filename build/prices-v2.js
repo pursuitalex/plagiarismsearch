@@ -224,7 +224,7 @@ ${eyebrow('teal-400', COPY.s1.eyebrow)}
 
       <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
         <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
-${COPY.s1.tabs.map(([k, label]) => `          <button type="button" data-period="${k}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-600">${label}</button>`).join('\n')}
+${COPY.s1.tabs.map(([k, label]) => `          <button type="button" data-period="${k}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">${label}</button>`).join('\n')}
         </div>
       </div>
 
@@ -340,7 +340,7 @@ ${COPY.s3.tableHeads.map((h, i) => `                      <th scope="col" class=
 ${COPY.s3.packages.map(([words, billing, price]) => `                    <tr class="ai-row">
                       <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">${words}</td>
                       <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">${billing}</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14px] font-semibold text-ink-900 tabular-nums text-right">${price}</td>
+                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">${price}</td>
                     </tr>`).join('\n')}
                   </tbody>
                 </table>
@@ -370,7 +370,7 @@ const section4 = () => `  <!-- ================= 04 · OTHER WRITING SERVICES ==
       <div class="rv max-w-[720px] mb-7 sm:mb-8">
 ${eyebrow('orange-500', COPY.s4.eyebrow)}
         <h2 class="text-[22px] sm:text-[25px] lg:text-[28px] font-extrabold tracking-tightest leading-[1.1] mb-3">${COPY.s4.h2}</h2>
-        <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-ink-600">${COPY.s4.intro}</p>
+        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s4.intro}</p>
       </div>
 
       <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5">

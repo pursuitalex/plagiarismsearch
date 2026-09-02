@@ -151,7 +151,7 @@ function render(page) {
           '              </tr>',
           '            </thead>',
         ].join('\n') : '',
-        '            <tbody class="text-[13.5px] sm:text-[14px] text-ink-700 leading-relaxed">',
+        '            <tbody class="text-[13.5px] sm:text-[14.5px] text-ink-700 leading-relaxed">',
         ...bodyRows.map(cells => [
           '              <tr class="border-b border-ink-100 last:border-0">',
           ...cells.map((c, i) => `                <td class="py-3 pr-4 last:pr-0 align-top${i === 0 ? ' font-semibold text-ink-900' : ''}">${c.html}</td>`),
@@ -225,7 +225,7 @@ ${bodyTag}
           <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
 ${sections.map(s => `            <li class="flex gap-2.5">
               <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
-              <a href="#${s.id}" class="min-w-0 text-[13.5px] sm:text-[14px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">${s.text}</a>
+              <a href="#${s.id}" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">${s.text}</a>
             </li>`).join('\n')}
           </ul>
         </nav>
@@ -237,7 +237,7 @@ ${markup}
         <div class="mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-100">
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4">Also in legal</div>
           <div class="flex flex-wrap gap-3">
-${others.map(o => `            <a href="${o.slug}.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
+${others.map(o => `            <a href="${o.slug}.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-900 transition-colors duration-300">
               ${o.title}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>`).join('\n')}

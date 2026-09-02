@@ -1172,7 +1172,7 @@ const section11 = () => `
       <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
         <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
           ${[['onetime','One-time'],['monthly','Monthly'],['quarterly','3-Months'],['yearly','Yearly']]
-            .map(([k, label]) => `<button type="button" data-period="${k}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[14px] font-semibold text-ink-500">${label}</button>`)
+            .map(([k, label]) => `<button type="button" data-period="${k}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">${label}</button>`)
             .join('\n          ')}
         </div>
       </div>

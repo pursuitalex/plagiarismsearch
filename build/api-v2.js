@@ -291,7 +291,7 @@ ${eyebrow('teal-400', COPY.s1.eyebrow)}
 
           <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-9 lg:mb-11">
             ${btnDark(COPY.s1.primary, DOCS)}
-            <a href="#api-access" class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s1.secondary}</a>
+            <a href="#api-access" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s1.secondary}</a>
           </div>
 
           <!-- technical proof rail: each item one element, in reading order -->
@@ -602,7 +602,7 @@ ${eyebrowDark('orange-500', 'Access')}
       <div class="rv-kids grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 max-w-[1000px] mx-auto">
 ${COPY.s8.paths.map(([head, body, cta, href]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7 lg:p-8 flex flex-col">
           <h3 class="text-[17px] sm:text-[18px] font-bold tracking-tight text-white mb-2.5">${head}</h3>
-          <p class="flex-1 text-[13.5px] sm:text-[14px] leading-relaxed text-white/70 max-w-[52ch] mb-6">${body}</p>
+          <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70 max-w-[52ch] mb-6">${body}</p>
           <div>${btnLight(cta, href)}</div>
         </div>`).join('\n')}
       </div>

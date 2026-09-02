@@ -91,7 +91,7 @@ const cabLegend = ([label, colour]) => `<span class="flex items-center gap-2 tex
 /* a metric row: label, bar, figure. The bar carries its width inline so a fill
    animation later has only to change one number. */
 const cabMetric = ([label, figure, pct, colour]) => `<div class="cab-in mb-4 last:mb-0">
-                <p class="text-[13.5px] sm:text-[14px] lg:text-[14.5px] font-semibold text-ink-700">${label}</p>
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">${label}</p>
                 <div class="flex items-center gap-3">
                   <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
                     <span class="cab-bar block h-full rounded-full" style="width:${pct}%; background:${colour}"></span>

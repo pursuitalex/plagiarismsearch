@@ -332,7 +332,7 @@ ${eyebrow('teal-400', COPY.s1.eyebrow)}
 
         <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 lg:mb-7">
           ${btnDark(COPY.s1.primary, COPY.s1.primaryHref)}
-          <a href="${COPY.s1.secondaryHref}" class="text-[13.5px] sm:text-[14px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s1.secondary}</a>
+          <a href="${COPY.s1.secondaryHref}" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s1.secondary}</a>
         </div>
 
         <p class="text-[13px] sm:text-[13.5px] text-ink-500">${COPY.s1.line}</p>
@@ -377,7 +377,7 @@ const section2 = () => `  <!-- ================= 02 · REAL REPORT / FACULTY EVI
 ${eyebrowDark('teal-400', 'Report evidence')}
         ${h2(COPY.s2.h2)}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[72ch]">${COPY.s2.intro}</p>
-        <p class="mt-3 text-[14px] sm:text-[14.5px] leading-relaxed text-white/60 max-w-[72ch]">${COPY.s2.supporting}</p>
+        <p class="mt-3 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60 max-w-[72ch]">${COPY.s2.supporting}</p>
       </div>
 
       <div class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
@@ -431,7 +431,7 @@ ${COPY.s2.items.map(([head, body]) => `        <div class="rounded-2xl sm:rounde
         <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-400/15 ring-1 ring-teal-400/30 flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         </span>
-        <p class="text-[14px] sm:text-[15px] leading-relaxed text-white font-semibold max-w-[76ch]">${COPY.s2.callout}</p>
+        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white font-semibold max-w-[76ch]">${COPY.s2.callout}</p>
       </div>
     </div>
   </section>`;
@@ -485,7 +485,7 @@ ${eyebrow('teal-400', 'Sources')}
 ${COPY.s4.items.map(([head, body, proof], i) => `        <div class="rounded-3xl sm:rounded-[28px] ${i === 2 ? 'bg-teal-50 ring-1 ring-teal-200' : 'bg-white ring-1 ring-black/5'} shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
           <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] ${i === 2 ? 'text-teal-700' : 'text-ink-500'} mb-2.5">${i < 2 ? 'External source' : i === 2 ? 'Institution-controlled' : 'Scan control'}</span>
           <h3 class="text-[16px] sm:text-[17.5px] font-bold tracking-tight mb-2">${head}</h3>
-          <p class="flex-1 text-[13.5px] sm:text-[14px] leading-relaxed text-ink-600 max-w-[56ch]">${body}</p>
+          <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[56ch]">${body}</p>
 ${proof ? `          <p class="mt-4 pt-3 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">${proof}</p>` : ''}
         </div>`).join('\n')}
       </div>
@@ -494,7 +494,7 @@ ${proof ? `          <p class="mt-4 pt-3 border-t border-ink-100 text-[12.5px] f
         <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-100 flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
         </span>
-        <p class="text-[14px] sm:text-[15px] leading-relaxed text-ink-900 font-semibold max-w-[80ch]">${COPY.s4.clarification}</p>
+        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-900 font-semibold max-w-[80ch]">${COPY.s4.clarification}</p>
       </div>
     </div>
   </section>`;
@@ -516,7 +516,7 @@ ${eyebrow('orange-500', 'Deployment', 'ink')}
 ${COPY.s5.paths.map(([head, body, label, ctaLabel, href], i) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8 flex flex-col">
           <span class="inline-flex self-start items-center rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1.5 text-[11.5px] font-semibold text-ink-600 mb-4 lg:mb-5">${label}</span>
           <h3 class="text-[17px] sm:text-[18.5px] font-bold tracking-tight mb-2.5">${head}</h3>
-          <p class="flex-1 text-[13.5px] sm:text-[14px] leading-relaxed text-ink-600 mb-5">${body}</p>
+          <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-5">${body}</p>
 ${ctaLabel ? `          <div>${linkQuiet(ctaLabel, href)}</div>` : ''}
         </div>`).join('\n')}
       </div>
@@ -572,7 +572,7 @@ ${eyebrow('orange-500', 'Roles', 'ink')}
 ${COPY.s7.roles.map(([head, body, icon], i) => `        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-6 sm:p-7 lg:p-8">
 ${chip(['teal', 'orange', 'ink'][i], icon, false).replace('bg-teal-100', 'bg-white').replace('bg-orange-100', 'bg-white').replace('bg-ink-100', 'bg-white')}
           <h3 class="text-[17px] sm:text-[18.5px] font-bold tracking-tight mb-2.5">${head}</h3>
-          <p class="text-[13.5px] sm:text-[14px] leading-relaxed text-ink-600">${body}</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">${body}</p>
         </div>`).join('\n')}
       </div>
     </div>
@@ -600,7 +600,7 @@ ${COPY.s8.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rou
       </div>
 
       <div class="rv flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-        <p class="min-w-0 flex-1 text-[14px] sm:text-[15px] leading-relaxed text-ink-900 font-semibold">${COPY.s8.clarification}</p>
+        <p class="min-w-0 flex-1 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-900 font-semibold">${COPY.s8.clarification}</p>
         <span class="shrink-0">${linkQuiet(COPY.s8.cta, COPY.s8.ctaHref)}</span>
       </div>
     </div>
@@ -629,7 +629,7 @@ const section9 = () => `  <!-- ================= 09 · SECONDARY AI CAPABILITY =
           <div class="min-w-0 text-white">
         ${eyebrowDark('teal-400', 'AI checking').replace('mb-4 sm:mb-5 lg:mb-6', 'mb-3.5')}
             <h2 class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] mb-3">${COPY.s9.h2}</h2>
-            <p class="text-[14px] sm:text-[15px] leading-relaxed text-white/80 max-w-[56ch]">${COPY.s9.lead}</p>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/80 max-w-[56ch]">${COPY.s9.lead}</p>
             <p class="mt-3 text-[13px] sm:text-[13.5px] leading-relaxed text-white/55 max-w-[60ch]">${COPY.s9.support}</p>
             <p class="inline-flex items-start gap-2.5 rounded-2xl bg-orange-400/10 ring-1 ring-orange-400/30 px-4 py-3 mt-4 text-[12.5px] sm:text-[13px] leading-relaxed text-orange-100 max-w-[58ch]">
               <svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>

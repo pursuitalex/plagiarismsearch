@@ -438,7 +438,7 @@ ${COPY.s1.inputs.map(i => `            <button type="button" class="qc-chip">${
            approved sentence survives whole for a crawler and a screen reader. -->
       <div class="rv-kids max-w-[1000px] mx-auto mt-10 sm:mt-12 lg:mt-14 grid sm:grid-cols-3 gap-4 sm:gap-5">
 ${COPY.s1.rail.map(([head, sup]) => `        <div class="rounded-2xl bg-white/60 ring-1 ring-black/5 px-5 py-4">
-          <p class="text-[13.5px] sm:text-[14px] font-bold tracking-tight mb-1">${head}</p>
+          <p class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight mb-1">${head}</p>
           <p class="text-[12.5px] leading-relaxed text-ink-500">${sup}</p>
         </div>`).join('\n')}
       </div>
@@ -734,14 +734,14 @@ const section5 = () => `  <!-- ================= 05 · AI DETECTION VS PLAGIARIS
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6a6 6 0 1 0 6 6"/><circle cx="12" cy="12" r="1.5" fill="#0991A8"/></svg>
           </span>
           <h3 class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-2.5">${COPY.s5.ai[0]}</h3>
-          <p class="text-[13.5px] sm:text-[14px] leading-relaxed text-ink-600 max-w-[52ch]">${COPY.s5.ai[1]}</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">${COPY.s5.ai[1]}</p>
         </div>
         <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8">
           <span class="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           </span>
           <h3 class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-2.5">${COPY.s5.plag[0]}</h3>
-          <p class="text-[13.5px] sm:text-[14px] leading-relaxed text-ink-600 max-w-[52ch]">${COPY.s5.plag[1]}</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">${COPY.s5.plag[1]}</p>
         </div>
       </div>
 
@@ -782,7 +782,7 @@ ${COPY.s6.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rou
       </div>
 
       <div class="rv mt-6 lg:mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
-        <p class="text-[13.5px] sm:text-[14px] leading-relaxed text-ink-600 max-w-[62ch]">${COPY.s6.support}</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">${COPY.s6.support}</p>
         <span class="shrink-0">${linkQuiet(COPY.s6.cta, COPY.s6.ctaHref)}</span>
       </div>
     </div>
@@ -811,7 +811,7 @@ const section7 = () => `  <!-- ================= 07 · AI DETECTION THROUGH THE 
           <div class="min-w-0 text-white">
         ${eyebrowDark('teal-400', 'API').replace('mb-4 sm:mb-5 lg:mb-6', 'mb-3.5')}
             <h2 class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] mb-3">${COPY.s7.h2}</h2>
-            <p class="text-[14px] sm:text-[15px] leading-relaxed text-white/80 max-w-[54ch]">${COPY.s7.lead}</p>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/80 max-w-[54ch]">${COPY.s7.lead}</p>
             <p class="inline-flex items-center gap-2 rounded-full bg-teal-400/10 ring-1 ring-teal-400/30 px-3.5 py-1.5 mt-3 text-[12.5px] sm:text-[13px] font-semibold text-teal-200">
               <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>${COPY.s7.note}
             </p>
@@ -881,7 +881,7 @@ ${rows.map(([words, price], i) => `            <label class="pkg flex items-cent
               <input type="radio" name="pkg-${g}" value="${words}" class="sr-only" ${i === 0 ? 'checked' : ''} data-words="${words}">
               <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
               <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">${words}</span>
-              <span class="ml-auto text-[13.5px] sm:text-[14px] font-semibold text-ink-600 tabular-nums">${price}</span>
+              <span class="ml-auto text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 tabular-nums">${price}</span>
             </label>`).join('\n')}
           </div>
           <a href="account.html" data-cta="${g}" data-prefix="${COPY.s8.planCtaPrefix}" data-suffix="${COPY.s8.planCtaSuffix}" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">${COPY.s8.planCtaPrefix} ${rows[0][0]} ${COPY.s8.planCtaSuffix}</a>

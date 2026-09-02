@@ -390,6 +390,22 @@ form hint, not a support line — promoting it to 15.5px would be wrong.
 unrelated paragraphs, because the Google Docs bento card and the pricing cards carry teal eyebrows
 too. Walk out to the block that holds the heading and take its direct `<p>` children.
 
+### Body and small text — 14px is not a size
+
+Below the support lines there is one body ramp and one small-UI ramp, and nothing between them:
+
+| role | phone | tablet+ | class |
+|---|---|---|---|
+| **body** — card and tile copy, table cells, secondary links, list items, data values | 13.5 | 14.5 | `text-[13.5px] sm:text-[14.5px]` |
+| **small UI** — segmented switchers, captions, meta | 13 | 13.5 | `text-[13px] sm:text-[13.5px]` |
+
+**14px is reserved for the standalone button label** (`text-[14px] sm:text-[15px]`, above) and appears
+nowhere else. It had leaked into 31 other places as a half-pixel-short body ramp — `13.5 → 14` in 17
+of them against `13.5 → 14.5` in 49 — which rendered a flat 14 beside a flat 14.5 on desktop, close
+enough to read as a mistake rather than a distinction. If a body line looks wrong at 14.5, change its
+weight or colour; there is no size between 13.5 and 14.5.
+
+
 ### Standalone button — one shape
 
 A standalone button is a section-level call to action: not a control inside a form, a pricing card,

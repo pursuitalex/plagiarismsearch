@@ -121,7 +121,7 @@ const link = l => {
   const external = /^https?:/.test(href);
   return `            <li>
               <a href="${href}"${external ? ' rel="noopener"' : ''} class="group flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-ink-50 transition-colors duration-300">
-                <span class="min-w-0 flex-1 text-[14px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">${l.text}</span>
+                <span class="min-w-0 flex-1 text-[13.5px] sm:text-[14.5px] font-medium text-ink-700 group-hover:text-ink-900 leading-snug transition-colors duration-300">${l.text}</span>
                 ${external ? OUT : ARROW}
               </a>
             </li>`;
@@ -220,12 +220,12 @@ ${faqs.map((f, i) => `            <div class="faq-item${i === 0 ? ' open' : ''}"
       </div>
 
       <div class="mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-200/60 flex flex-wrap items-center gap-x-6 gap-y-3">
-        <p class="text-[13.5px] sm:text-[14px] text-ink-500">Looking for something else?</p>
-        <a href="help-center.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
+        <p class="text-[13.5px] sm:text-[14.5px] text-ink-500">Looking for something else?</p>
+        <a href="help-center.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-900 transition-colors duration-300">
           Help Center
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
-        <a href="contact-us.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900 transition-colors duration-300">
+        <a href="contact-us.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-900 transition-colors duration-300">
           Contact us
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>

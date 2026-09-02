@@ -109,7 +109,7 @@ const group = (g, lang) => {
   if (!mine.length) return '';
   return `          <div class="mb-8 sm:mb-10">
             <div class="flex items-baseline gap-3 mb-3 sm:mb-4">
-              <h3 class="text-[14px] sm:text-[15px] font-bold tracking-tight">${g.name}</h3>
+              <h3 class="text-[14.5px] sm:text-[15px] font-bold tracking-tight">${g.name}</h3>
               <span class="text-[11.5px] font-medium text-ink-400 tabular-nums">${g.size} px</span>
               <span class="h-px flex-1 bg-ink-100"></span>
             </div>
@@ -172,7 +172,7 @@ ${LANGS.map(panel).join('\n')}
       </button>
 
       <h2 id="badgeModalTitle" class="text-[19px] sm:text-[22px] font-extrabold tracking-tightest leading-tight mb-3">Embed this badge on your website</h2>
-      <p class="text-[14px] sm:text-[14.5px] text-ink-600 leading-relaxed max-w-[46ch] mx-auto">${paras[1]}</p>
+      <p class="text-[13.5px] sm:text-[14.5px] text-ink-600 leading-relaxed max-w-[46ch] mx-auto">${paras[1]}</p>
 
       <div class="my-6 pt-6 border-t border-ink-100">
         <div id="modalPlate" class="inline-flex items-center justify-center rounded-2xl px-6 py-5"></div>
