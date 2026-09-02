@@ -853,13 +853,21 @@ const section8 = () => `  <!-- ================= 08 · AI PRICING ==============
        the legacy "checker → pricing → advantages" order. -->
   <section id="ai-pricing" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv text-center max-w-[720px] mx-auto mb-10 sm:mb-12">
+      <div class="rv text-center max-w-[720px] mx-auto mb-7 sm:mb-9">
 ${eyebrow('orange-500', 'AI pricing')}
         ${h2(COPY.s8.h2)}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s8.intro}</p>
-        <p class="mt-3 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">${COPY.s8.free}</p>
-        <p class="mt-4 text-[13px] sm:text-[13.5px] font-semibold text-ink-700">${COPY.s8.helper}</p>
+
+        <!-- the free credit is a perk, not a third paragraph. rounded-2xl rather than
+             rounded-full because the sentence wraps to two lines under 420px. -->
+        <p class="inline-flex items-start gap-2.5 mt-5 rounded-2xl bg-teal-50 ring-1 ring-black/5 px-4 py-2.5 text-[12.5px] sm:text-[13px] font-semibold leading-relaxed text-ink-700 text-left">
+          <svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>
+          ${COPY.s8.free}
+        </p>
       </div>
+
+      <!-- the interface instruction, where it instructs -->
+      <p class="rv max-w-[1100px] mx-auto mb-4 lg:mb-5 text-center text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">${COPY.s8.helper}</p>
 
       <div class="rv-kids grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 max-w-[1100px] mx-auto">
 ${COPY.s8.groups.map(([billing, rows], g) => `        <fieldset class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col" data-group="${g}">
