@@ -25,6 +25,7 @@ driven by this table.
 | `originality-badges.html` | `/originality-badges` | built | Copy and artwork carried over from the live page unchanged; the 129 badge images live in site/assets/img/badges/. Built by build/badges.js. |
 | `user-manuals.html` | `/user-manuals` | built | Category names and all twenty guide titles carried over unchanged; the arrangement is new. Built by build/manuals.js. Most guides still live on the production site and keep absolute addresses. |
 | `newsroom.html` | `/newsroom` | built | The news archive. All 68 items carried over from the seven live pages with their dates, wording and destinations intact; the arrangement is new. Built by build/newsroom.js from build/newsroom-data.json, which build/newsroom-fetch.js refreshes. |
+| `plagiarism-and-ai-check-report.html` | `/plagiarism-and-ai-check-report` | built | A User Guide article. All 26 blocks of the live page carried over in their original order and wording; the sections are cuts along seams the text itself makes. Built by build/report-guide.js from build/report-guide-data.json, which build/report-guide-fetch.js refreshes. |
 | `why-us.html` | `/why-us` | built |  |
 | `mission.html` | `/plagiarismsearch-mission-and-core-values` | built |  |
 | `contact-us.html` | `/contact-us` | built |  |
@@ -56,7 +57,7 @@ driven by this table.
 
 ## Counts
 
-- 18 × built
+- 19 × built
 - 13 × stub
 - 7 × no approved path
 - 4 × built · out of global nav

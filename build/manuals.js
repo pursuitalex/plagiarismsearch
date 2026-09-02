@@ -24,6 +24,7 @@ const SRC  = path.join(__dirname, 'legal', 'user-manuals.html');
 const LOCAL = {
   'https://plagiarismsearch.com/integration-guide': 'integration-guide.html',
   'https://plagiarismsearch.com/how-to-use-plagiarismsearch-google-add-on': 'how-to-use-plagiarismsearch-google-add-on.html',
+  'https://plagiarismsearch.com/plagiarism-and-ai-check-report': 'plagiarism-and-ai-check-report.html',
   'plagiarism-checker-app': 'chat-bot.html',
   'how-plagiarism-checker-work': 'https://plagiarismsearch.com/how-plagiarism-checker-work',
 };

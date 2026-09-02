@@ -88,6 +88,8 @@ const PAGES = {
   /* the news archive — a real page now, not a stub. Reached from the footer and
      from the Help Center, so no header item lights up. */
   'newsroom.html':               { active: null },
+  /* a User Guide article, reached from user-manuals.html and from the newsroom */
+  'plagiarism-and-ai-check-report.html': { active: null },
   /* the DEC-0043 institutional page — a real page now, not a stub */
   'university-plagiarism-checker.html': { active: 'solutions' },
   'paper-analysis.html':         { active: null },

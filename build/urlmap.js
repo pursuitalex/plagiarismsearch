@@ -31,6 +31,7 @@ const BUILT = [
   { file: 'originality-badges.html',      path: '/originality-badges',                       note: 'Copy and artwork carried over from the live page unchanged; the 129 badge images live in site/assets/img/badges/. Built by build/badges.js.' },
   { file: 'user-manuals.html',            path: '/user-manuals',                             note: 'Category names and all twenty guide titles carried over unchanged; the arrangement is new. Built by build/manuals.js. Most guides still live on the production site and keep absolute addresses.' },
   { file: 'newsroom.html',                path: '/newsroom',                                 note: 'The news archive. All 68 items carried over from the seven live pages with their dates, wording and destinations intact; the arrangement is new. Built by build/newsroom.js from build/newsroom-data.json, which build/newsroom-fetch.js refreshes.' },
+  { file: 'plagiarism-and-ai-check-report.html', path: '/plagiarism-and-ai-check-report', note: 'A User Guide article. All 26 blocks of the live page carried over in their original order and wording; the sections are cuts along seams the text itself makes. Built by build/report-guide.js from build/report-guide-data.json, which build/report-guide-fetch.js refreshes.' },
   { file: 'why-us.html',                 path: '/why-us' },
   { file: 'mission.html',                path: '/plagiarismsearch-mission-and-core-values' },
   { file: 'contact-us.html',             path: '/contact-us' },

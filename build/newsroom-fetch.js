@@ -16,57 +16,8 @@ const fs = require('fs');
 const path = require('path');
 
 const PAGES = 7;
-const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
 
-const decode = s => s
-  .replace(/<br\s*\/?>/gi, ' ')
-  .replace(/<[^>]+>/g, '')
-  .replace(/&nbsp;| /g, ' ')
-  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-  .replace(/&quot;/g, '"').replace(/&#0?39;|&apos;|&rsquo;/g, '’')
-  .replace(/&lsquo;/g, '‘').replace(/&ldquo;/g, '“').replace(/&rdquo;/g, '”')
-  .replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').replace(/&hellip;/g, '…')
-  .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(+d))
-  .replace(/\s+/g, ' ')
-  .trim();
-
-/* links are read off the raw block before the tags are stripped */
-const linksIn = html => [...html.matchAll(/<a\b[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi)]
-  .map(m => [decode(m[2]), m[1]])
-  .filter(([t, h]) => t && h && !/^javascript:/i.test(h));
-
-/* The paragraph again, this time keeping its anchors — 45 of the 68 items carry at least
-   one, and a newsroom that drops its links is a newsroom that stops working. Everything
-   else goes: the source is full of inline colour styles, gmail classes and empty spans.
-   Anchors are rebuilt from scratch rather than passed through, so no attribute from the
-   live page survives into ours. */
-const esc = s => s.replace(/&(?!(amp|lt|gt|quot|#\d+|nbsp);)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const richText = html => {
-  const parts = [];
-  let last = 0;
-  for (const m of html.matchAll(/<a\b[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi)) {
-    parts.push(esc(decode(html.slice(last, m.index))));
-    const label = decode(m[2]);
-    /* One href on the live site holds two URLs separated by a space —
-       "https://moodle.org/… https://github.com/…" on the Moodle editable-report item —
-       which is broken there too, since a browser resolves the whole string as one
-       relative path. Take the first URL; it is the one the link text promises. */
-    const href = m[1].trim().split(/\s+/)[0];
-    parts.push(label && href && !/^javascript:/i.test(href)
-      ? '<a href="' + esc(href) + '">' + esc(label) + '</a>'
-      : esc(label));
-    last = m.index + m[0].length;
-  }
-  parts.push(esc(decode(html.slice(last))));
-  /* decode() trimmed each fragment, so put back the single space between them — then
-     close the gap this leaves in front of a full stop that followed a link.
-     Only when the mark actually ends a word: without the lookahead this ate the space
-     in "speed in .docx format", which is a file extension, not a sentence ending. */
-  return parts.filter(Boolean).join(' ')
-    .replace(/\s+([,.;:!?])(?=\s|$)/g, '$1')
-    .replace(/\s+/g, ' ')
-    .trim();
-};
+const { decode, blocks, driftCheck, get } = require('./scrape');
 
 function parse(html) {
   const out = [];
@@ -87,32 +38,7 @@ function parse(html) {
     if (!day || !month || !title) continue;
 
     const body = box.slice(box.indexOf('</h3>') + 5);
-    const blocks = [...body.matchAll(/<(p|div|ul|ol)\b([^>]*)>([\s\S]*?)<\/\1>/gi)];
-
-    const take = tags => {
-      const got = [];
-      for (const [, tag, attrs, inner] of blocks) {
-        if (!tags.test(tag)) continue;
-        if (/news-date-mobile/.test(attrs)) continue;
-        const t = decode(inner);
-        if (!t) continue;
-        if (got.some(p => p.t === t || p.t.includes(t))) continue;
-        const li = /^(ul|ol)$/i.test(tag)
-          ? [...inner.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)]
-              .map(m => ({ t: decode(m[1]), html: richText(m[1]) }))
-              .filter(x => x.t)
-          : null;
-        got.push({
-          tag: tag.toUpperCase(),
-          t,                               /* plain text, for the checkers to match on */
-          html: richText(inner),           /* the same words, with their links intact */
-          items: li ? li.map(x => x.t) : null,
-          itemsHtml: li ? li.map(x => x.html) : null,
-          links: linksIn(inner),
-        });
-      }
-      return got;
-    };
+    const take = tags => blocks(body, tags);
 
     /* Two authoring styles in their CMS, and a few items carry BOTH: the body in
        <p>/<ol>, and the same text again flattened into bare <div>s. Nothing is
@@ -138,9 +64,7 @@ function parse(html) {
   const all = [];
   for (let p = 1; p <= PAGES; p++) {
     const url = 'https://plagiarismsearch.com/newsroom' + (p > 1 ? '/page/' + p : '');
-    const res = await fetch(url, { headers: { 'User-Agent': UA, 'Accept': 'text/html' } });
-    if (!res.ok) throw new Error(url + ' -> HTTP ' + res.status);
-    const items = parse(await res.text());
+    const items = parse(await get(url));
     console.log('  page ' + p + '  ' + String(items.length).padStart(2) + ' items');
     if (!items.length) throw new Error('page ' + p + ' parsed to nothing — markup changed?');
     all.push(...items);
@@ -160,20 +84,11 @@ function parse(html) {
 
   /* the linked version must read exactly like the plain one. This caught a real bug:
      the punctuation cleanup above closed the space in "speed in .docx format". */
-  const drift = all.flatMap(x => x.paras.map(p => ({ h: x.h, p })))
-    .filter(({ p }) => !(p.items && p.items.length))
-    .filter(({ p }) => p.html.replace(/<[^>]+>/g, '')
-      .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
-      .replace(/\s+/g, ' ').trim() !== p.t.replace(/\s+/g, ' ').trim());
-  if (drift.length) throw new Error('html and text disagree in ' + drift.length + ' paragraph(s), first in "' +
-    drift[0].h + '":\n    text: ' + drift[0].p.t.slice(-90) + '\n    html: ' + drift[0].p.html.replace(/<[^>]+>/g, '').slice(-90));
-
-  /* every destination the live page offers is still here, body links and read-more alike.
-     Both numbers were established by diffing against the live markup, item by item. */
-  const withMore = all.filter(x => x.more);
-  if (withMore.length !== 5) throw new Error('expected 5 read-more links, found ' + withMore.length);
-  const withDest = all.filter(x => x.more || x.paras.some(p => p.links.length));
-  if (withDest.length !== 46) throw new Error('expected 46 items with a destination, found ' + withDest.length);
+  const drift = all.flatMap(x => driftCheck(x.paras).map(p => ({ h: x.h, p })));
+  if (drift.length) throw new Error('html and text disagree in ' + drift.length +
+    ' paragraph(s), first in "' + drift[0].h + '"\n' +
+    '    text: ' + drift[0].p.t.slice(-90) + '\n' +
+    '    html: ' + drift[0].p.html.replace(/<[^>]+>/g, '').slice(-90));
 
   const perYear = {};
   all.forEach(x => { const y = x.m.split(' ')[1]; perYear[y] = (perYear[y] || 0) + 1; });
