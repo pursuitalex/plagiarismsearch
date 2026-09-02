@@ -406,35 +406,41 @@ enough to read as a mistake rather than a distinction. If a body line looks wron
 weight or colour; there is no size between 13.5 and 14.5.
 
 
-### Text pages — cap the long runs, not the page
+### A section must not leave a gap down one side
 
-A page carrying a lot of prose keeps the site's ordinary layout. Blocks share **one left
-edge** and take their width from what they are; only prose that runs to several lines gets a
-cap.
+This is the layout rule, and it holds on every page including the homepage. A section is one
+of two things:
+
+**Something in it fills the shell.** A heading block sits left at `max-w-[760px]` above a grid,
+a table or a card row that runs the full `max-w-[1280px]` content width. Nothing is short of
+the right edge, so nothing reads as a gap. This is what the homepage does throughout, and what
+every v2 page does.
+
+**Or the whole section is text, and then it is centred.** No capped block is ever left-aligned
+on its own — a 760px block hard left in a 1200px shell puts 440px of nothing down the right,
+and that reads as a fault, not as a margin. Centre it and the space becomes a margin.
+
+> Never cap a grid at some width narrower than the shell and leave it left-aligned. That was the
+> mistake on `plagiarism-and-ai-check-report`: grids capped at 1080 inside a 1200 shell left a
+> 105px strip down the right of four sections in a row.
+
+### Text width — cap the long runs, not the page
 
 | role | width | what it is |
 |---|---|---|
 | hero | `max-w-[820px]` | the `h1` block |
 | heading block | `max-w-[760px]` | eyebrow + `h2` + the line or two under it |
 | **long prose** | `max-w-[700px]` | a paragraph run of roughly four lines or more |
-| breakout | `max-w-[1080px]` | card grids, legends, tables, images — wider than the text on purpose |
+| card list | `max-w-[880px]` | a column of cards with a date or icon rail beside the prose |
 
-Body copy is `text-[15.5px] sm:text-[16px] lg:text-[17px]` with `leading-[1.72]`, and a column
-of cards with a date or icon rail beside the prose sits at `max-w-[880px]`, which puts the text
-inside it at about 720. Both come from `blog-best-checker-2026.html` and `newsroom.html`; a new
-text page reuses them rather than starting its own size architecture.
+Body copy on a text page is `text-[15.5px] sm:text-[16px] lg:text-[17px]` with `leading-[1.72]`.
+Both the ramp and the 700 come from `blog-best-checker-2026.html`; a new text page reuses them
+rather than starting its own size architecture.
 
-**700 is settled, and it is not for everything.** It was agreed as the readable compromise for a
-long block. Putting it on every heading and every one-line lead was a mistake — it shrank the
-page for no reason and made it look unlike every other page on the site. A two-line section
-intro belongs at 760 like everywhere else.
-
-**One left edge, several right edges.** That is the fix for a layout that looks ragged, not a
-single width. Blocks that all start at the same x and end where their content needs read as
-deliberate; four blocks each centred at a different width do not.
-
-**A breakout may be wider than the text.** Images at the head of an article, card grids, a
-legend: these are meant to exceed the prose.
+**700 is settled, and it is only for a long run.** It was agreed as the readable compromise for
+a long block — a blog paragraph, an article's opening. Putting it on every heading and every
+one-line lead shrinks the page for nothing and makes it look unlike the rest of the site. A
+two-line section intro belongs at 760, and a grid belongs at full width.
 
 **`ch` is not a character.** `max-w-[68ch]` renders a 94-character line — Manrope's `ch` is about
 0.6em while its average character is about 0.44em. Use px, and measure by counting characters

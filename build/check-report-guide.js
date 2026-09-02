@@ -145,8 +145,8 @@ for (const b of B) {
      on everything was the mistake this replaces. */
   const widths = [...new Set([...body.matchAll(/max-w-\[(\d+)px\]/g)].map(m => +m[1]))].sort((a, b) => a - b);
   ok('the widths this page is allowed',
-     JSON.stringify(widths) === JSON.stringify([700, 760, 820, 1080, 1280]),
-     widths.join(' · ') + ' — 700 read, 760 head, 820 hero, 1080 wide, 1280 shell');
+     JSON.stringify(widths) === JSON.stringify([700, 760, 820, 1280]),
+     widths.join(' · ') + ' — 700 read, 760 head, 820 hero, 1280 shell');
 
   /* The cap belongs to prose that runs to several lines — §2's pair and the closing
      statement — and to nothing else. Heading blocks take the site's 760. */
@@ -155,9 +155,26 @@ for (const b of B) {
   ok('heading blocks on the site-standard 760',
      (body.match(/max-w-\[760px\]/g) || []).length >= 6);
 
-  /* one left edge: nothing inside the shell re-centres itself */
-  const recentred = (body.match(/max-w-\[(700|760|820|1080)px\][^"]*mx-auto/g) || []);
-  ok('one left edge — no content block re-centres', !recentred.length, recentred.join(' · '));
+  /* THE ONE OLEX REPORTED. A section must not leave free space down its right side.
+     So each section either carries something that fills the shell — the homepage's
+     arrangement, a heading left above a full-width grid — or, if it is nothing but
+     text, its blocks are centred. A capped block sitting alone and left-aligned is
+     the fault, and it is what the 1080 grids used to be. */
+  const shells = [...body.matchAll(/<section[^>]*id="([^"]+)"[\s\S]*?(?=<section|$)/g)];
+  const bad = [];
+  for (const [chunk, id] of shells) {
+    const inner = chunk.slice(chunk.indexOf('max-w-[1280px]'));
+    const blocks = [...inner.matchAll(/class="(rv|rv-kids)(?: [^"]*)?"/g)].map(m => m[0]);
+    if (!blocks.length) continue;
+    /* something in the section runs the whole shell — that is the homepage's
+       arrangement, a heading left above full-width content, and it leaves no gap */
+    if (blocks.some(b => !/max-w-\[\d+px\]/.test(b))) continue;
+    /* otherwise every capped block has to be centred */
+    const offAxis = blocks.filter(b => !/mx-auto/.test(b));
+    if (offAxis.length) bad.push(id);
+  }
+  ok('no section leaves a gap down its right side', !bad.length,
+     bad.length ? bad.join(' · ') + ' — capped and left-aligned with nothing filling the shell' : '');
 
   ok('no per-element measure fighting its container',
      !/max-w-\[\d+ch\]/.test(body), (body.match(/max-w-\[\d+ch\]/g) || []).join(' · '));
