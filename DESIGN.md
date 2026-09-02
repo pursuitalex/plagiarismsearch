@@ -412,29 +412,29 @@ A page that is mostly prose gets exactly **two content widths**, and both are ce
 
 | | width | what sits on it |
 |---|---|---|
-| **column** | `max-w-[560px] mx-auto` | every heading, paragraph, callout, standalone list |
-| **breakout** | `max-w-[1080px] mx-auto` | card grids, legends, tables — used deliberately, for rhythm |
+| **column** | `max-w-[700px] mx-auto` | every heading, paragraph, callout, standalone list |
+| **breakout** | `max-w-[1080px] mx-auto` | card grids, legends, tables, images — wider than the column on purpose |
 
-Body copy on these pages is `text-[15.5px] sm:text-[16px] lg:text-[17px]` with `leading-[1.72]`,
-the ramp the blog post established. Nothing carries its own `max-w-[…ch]`: the column is the
-measure, so the left and right edges never move as the reader scrolls.
+Body copy is `text-[15.5px] sm:text-[16px] lg:text-[17px]` with `leading-[1.72]`. Both numbers
+come from `blog-best-checker-2026.html`, which set them first; a new text page reuses them rather
+than starting its own size architecture. Nothing carries its own `max-w-[…ch]` — the column is
+the measure, so the left and right edges never move as the reader scrolls.
 
-**Why 560 and not 700.** Measured, by walking each text node and counting characters per line
-box. The blog post's 700px column at 17px runs **87–97 characters a line, median 91** — half
-again the comfortable 45–75 band, and the reason that page reads as hard work. The same ramp at
-560px measures **65–76, median 69** on desktop and 42–53 on a phone.
+**700 is settled.** It was agreed as the readable compromise for blocks like these. For the
+record, since it was measured: 700px at 17px runs about 87–91 characters a line, above the 45–75
+typography usually quotes. That is a known trade, decided deliberately — do not narrow it.
 
-**`ch` is not a character.** `max-w-[68ch]` rendered a 94-character line: Manrope's `ch` is about
+**A breakout may be wider than the text.** Images at the head of an article, card grids, a
+legend: these are meant to exceed the column. Only prose is held to it.
+
+**What was actually broken.** Not the width — the alignment. A 700px block aligned *left* inside
+a 1280px shell leaves a void down one side, and a page carrying four different max-widths has a
+right edge that never settles. Readers see that as a fault. Centre everything on one axis and
+keep the number of widths to two.
+
+**`ch` is not a character.** `max-w-[68ch]` renders a 94-character line: Manrope's `ch` is about
 0.6em while its average character is about 0.44em, so the unit reads roughly 1.4× wider than its
-name suggests. Use it only with that factor in mind, or use px and measure.
-
-**Left-aligned columns in a wide shell look broken.** A 560px block aligned left inside a 1280px
-container leaves 640px of void on one side, and a reader reads that as a layout fault rather than
-as a margin. Centre it. The same block centred reads as a deliberate narrowing.
-
-> Pages still on the old habit: `blog-best-checker-2026.html` (700px, 91 characters) and
-> `newsroom.html`. Both predate this rule.
-
+name suggests. Use px, and measure by counting characters per line box.
 
 ### Standalone button — one shape
 

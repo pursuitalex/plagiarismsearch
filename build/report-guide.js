@@ -145,12 +145,17 @@ const h2 = t => `<h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tra
            the same axis, so the column reads as a narrowing of the page rather than as
            a different page.
 
-   The width is measured, not chosen. The blog post is the site's only other long-form
-   page and it sets the type ramp — 15.5 / 16 / 17 with leading-[1.72] — but its 700px
-   column runs 87 to 97 characters a line, median 91, which is half again the
-   comfortable band and is why that page reads as hard work too. Same ramp, 560px: 73
-   characters, inside 45–75. */
-const COL = 'max-w-[560px] mx-auto';
+   Both numbers come from the blog post, which is the site's other long-form page: the
+   700px column and the 15.5 / 16 / 17 ramp with leading-[1.72]. Olex settled 700 earlier
+   as the readable compromise for blocks like these, so it is the agreed width and this
+   page does not get its own.
+
+   For the record, since it was measured on the way here: 700px at 17px runs about 87 to
+   91 characters a line, above the 45–75 that typography usually quotes. That is a known
+   trade, not an oversight — narrowing it was tried and rejected. What was actually
+   broken was never the width; it was that the blocks were left-aligned at four
+   different max-widths, so the right edge was ragged and nothing lined up. */
+const COL = 'max-w-[700px] mx-auto';
 const WIDE = 'max-w-[1080px] mx-auto';
 const BODY = 'text-[15.5px] sm:text-[16px] lg:text-[17px] leading-[1.72]';
 /* Measured, not guessed: Manrope's ch is ~0.6em while its average character is ~0.44em,
