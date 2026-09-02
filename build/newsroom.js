@@ -3,9 +3,12 @@
    The live page is 7 paginated pages of 68 updates: a narrow date column, a blue
    heading and a paragraph, repeated. Every word of every item is carried over
    unchanged, and so is every destination it links to. What is new is the
-   arrangement — a hero with the archive at a glance, the newest year raised into
-   a dark block, and the rest grouped by year behind a filter instead of seven
-   pages of Next.
+   arrangement — the site's standard centred top, the newest year raised into a
+   dark block, then the rest in the order the archive runs, twenty to a page
+   behind a topic filter.
+
+   The whole archive is in the delivered HTML; the pager only hides. A reader
+   without JavaScript, and a crawler, still get all 68.
 
    No photographs: the live items have none, and inventing them would be
    inventing evidence.
@@ -17,8 +20,8 @@
    ── What is written here, and nothing else is ─────────────────────────────
    The live page gives one heading ("Our News"), one meta description and the 68
    items. Everything below that needs a label had to be written, so here they all
-   are, in one place: the eyebrows "Newsroom", "Latest" and "Archive", the panel
-   label "Updates by year", the H2 "Earlier updates", and the filter's "All".
+   are, in one place: the eyebrows "Newsroom", "Latest" and "Archive", the H2
+   "Earlier updates", the filter's "All", and the pager's "Previous" and "Next".
    They are structural labels in eyebrow and section-heading register. No
    marketing sentence was added — which is also why the page has no closing CTA
    band: that band's heading is a sentence, and there is no approved one for this
@@ -278,54 +281,36 @@ ${para.itemsHtml.map(li => `              <li class="pl-1">${rich(li)}</li>`).jo
 
 /* ═══════════════ 01 · HERO ═══════════════ */
 const section1 = () => {
-  const max = Math.max(...YEARS.map(y => byYear(y).length));
   const oldest = items[items.length - 1];
   const newest = items[0];
   return `  <!-- ================= 01 · HERO =================
-       The heading and the line under it are the live page's own — its top-level
-       heading and its meta description, neither reworded.
+       The blog's hero, because the top of a page is the same everywhere on this site and
+       a news index has no reason to be the exception: two orbs, a centred 620px block,
+       eyebrow over an H1 over one line, then the archive's own counts.
 
-       The panel beside them is the archive counted, nothing more: one row per year,
-       the bar in proportion to how many updates that year holds. It earns the right
-       half without a photograph, and every number in it comes from the data file. -->
-  <section id="newsroom" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-white overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb absolute" style="width:620px;height:600px;left:-14%;top:-240px;background:rgba(44,195,219,.16)"></div>
-    </div>
+       The year panel that used to sit on the right is gone with it. It was a second
+       navigation for a page that now has pagination, and it made the hero the only
+       asymmetric top on the site. -->
+  <section id="newsroom" class="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC]">
+    <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
+    <div class="orb w-[560px] h-[560px] bg-orange-500/10 right-[-150px] top-52"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="${COL} grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
-
-        <div class="rv min-w-0">
-${eyebrow('orange-500', 'Newsroom')}
-          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 lg:mb-5">${COPY.h1}</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[56ch]">${COPY.support}</p>
+      <div class="rv text-center max-w-[620px] mx-auto">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Newsroom</span>
         </div>
+        <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 lg:mb-5">${COPY.h1}</h1>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">${COPY.support}</p>
 
-        <div class="rv min-w-0">
-          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-            <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-7">
-              <p class="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-ink-500 mb-4">Updates by year</p>
-              <div class="space-y-2.5">
-${YEARS.map(y => {
-  const n = byYear(y).length;
-  /* the newest year is section 02, not a group inside the archive, so it points there */
-  const to = y === LATEST_YEAR ? '#latest' : '#y' + y;
-  return `                <a href="${to}" class="group flex items-center gap-3.5">
-                  <span class="shrink-0 w-[38px] text-[12.5px] font-bold tabular-nums text-ink-700">${y}</span>
-                  <span class="flex-1 h-2.5 rounded-full bg-ink-100 overflow-hidden">
-                    <span class="block h-full rounded-full bg-teal-400 group-hover:bg-teal-500 transition-colors" style="width:${Math.round(n / max * 100)}%"></span>
-                  </span>
-                  <span class="shrink-0 w-6 text-right text-[12.5px] font-semibold tabular-nums text-ink-500">${n}</span>
-                </a>`;
-}).join('\n')}
-              </div>
-              <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] text-ink-500">
-                <span class="font-bold text-ink-900 tabular-nums">${items.length}</span> updates ·
-                ${longDate(oldest)} – ${longDate(newest)}
-              </p>
-            </div>
-          </div>
+        <!-- the counts are the archive's own, not decoration -->
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 mt-5 sm:mt-6 lg:mt-7 text-[12.5px] font-medium text-ink-500">
+          <span><span class="font-bold text-ink-900 tabular-nums">${items.length}</span> updates</span>
+          <span class="w-1 h-1 rounded-full bg-ink-300" aria-hidden="true"></span>
+          <span><span class="font-bold text-ink-900 tabular-nums">${YEARS.length}</span> years</span>
+          <span class="w-1 h-1 rounded-full bg-ink-300" aria-hidden="true"></span>
+          <span>${longDate(oldest)} – ${longDate(newest)}</span>
         </div>
       </div>
     </div>
@@ -342,11 +327,11 @@ const section2 = () => `  <!-- ================= 02 · LATEST =================
     <div class="orb absolute" style="width:760px;height:700px;right:-12%;top:-280px;background:rgba(154,106,222,.18)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv ${COL}">
+      <div class="rv">
 ${eyebrowDark('teal-400', 'Latest')}
       </div>
 
-      <div class="rv-kids ${COL} grid ${latest.length > 1 ? 'lg:grid-cols-2' : ''} gap-4 sm:gap-5 lg:gap-6">
+      <div class="rv-kids grid ${latest.length > 1 ? 'lg:grid-cols-2' : ''} gap-4 sm:gap-5 lg:gap-6">
 ${latest.map(it => `        <article class="on-dark min-w-0 rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7 lg:p-8">
           <div class="flex items-center gap-2.5 mb-4">
             <span class="w-1.5 h-1.5 rounded-full bg-teal-400" aria-hidden="true"></span>
@@ -439,6 +424,25 @@ ${body(it, false)}
         </div>
       </div>`).join('\n\n')}
 
+      <!-- The pager. Twenty to a page, and it pages the FILTERED set — pick a topic
+           and you page through that topic, not through the whole archive with gaps in
+           it. Rendered by the script, because how many pages there are depends on
+           which topic is on. -->
+      <nav id="pager" class="rv ${COL} flex flex-wrap items-center justify-between gap-4 pt-2" aria-label="Archive pages">
+        <p id="pagerCount" class="text-[13px] sm:text-[13.5px] text-ink-500"></p>
+        <div class="flex items-center gap-1.5">
+          <button type="button" id="pagePrev" class="pg-step inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-2 text-[13px] font-semibold text-ink-600">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            Previous
+          </button>
+          <div id="pageNums" class="flex items-center gap-1.5"></div>
+          <button type="button" id="pageNext" class="pg-step inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-2 text-[13px] font-semibold text-ink-600">
+            Next
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+      </nav>
+
       <p id="topicEmpty" hidden class="rv ${COL} text-[13.5px] sm:text-[14.5px] text-ink-500"></p>
     </div>
   </section>`;
@@ -464,6 +468,15 @@ const STYLE = `
   .tp-scroll { scrollbar-width:none; -ms-overflow-style:none; }
   .tp-scroll::-webkit-scrollbar { display:none; }
 
+  .pg-step, .pg-num { transition:background-color .25s ease, color .25s ease, box-shadow .25s ease; }
+  .pg-step:hover:not(:disabled), .pg-num:hover:not(.on) { background:#F1F2F6; color:#111827; }
+  .pg-step:disabled { opacity:.4; cursor:default; }
+  .pg-num { min-width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center;
+    border-radius:9999px; background:#fff; box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
+    font-size:13px; font-weight:600; color:#4B5563; font-variant-numeric:tabular-nums; }
+  .pg-num.on { background:#111827; color:#fff; box-shadow:none; }
+  .pg-gap { min-width:20px; text-align:center; color:#9CA3AF; font-size:13px; }
+
   .tp-btn { background:#fff; transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
   .tp-btn:hover { background:#F1F2F6; }
   .tp-btn.active { background:#111827; color:#fff; box-shadow:0 1px 2px rgba(0,0,0,.08); }
@@ -485,44 +498,102 @@ const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.
 (() => {
   'use strict';
 
-  /* ---- the topic filter. It hides items; it never moves one. The years stay in the
-          order the archive runs, and a year with nothing left to show steps aside
-          rather than standing empty. ---- */
+  /* ---- filter, then page. The filter hides; the pager hides further. Neither ever
+          moves an item, so what you read is always the archive in its own order. ---- */
+  const PER_PAGE = 20;
   const tabs = [...document.querySelectorAll('#topicTabs .tp-btn')];
   const groups = [...document.querySelectorAll('.yr-group')];
-  const empty = document.getElementById('topicEmpty');
+  const all = [...document.querySelectorAll('.news-item')];
+  const empty = document.getElementById('yearEmpty') || document.getElementById('topicEmpty');
+  const pager = document.getElementById('pager');
+  const pagerCount = document.getElementById('pagerCount');
+  const pageNums = document.getElementById('pageNums');
+  const prev = document.getElementById('pagePrev');
+  const next = document.getElementById('pageNext');
 
-  const apply = topic => {
-    let shown = 0;
-    groups.forEach(g => {
-      let n = 0;
-      g.querySelectorAll('.news-item').forEach(item => {
-        const on = topic === 'all' || item.dataset.topic === topic;
-        item.hidden = !on;
-        if (on) n++;
-      });
-      g.hidden = n === 0;
-      shown += n;
-      const count = g.querySelector('.yr-count');
-      const total = count.dataset.total;
-      count.textContent = (topic === 'all' ? total : n + ' of ' + total) + ' updates';
+  let topic = 'all';
+  let page = 1;
+
+  const numbers = (current, total) => {
+    /* 1 … c-1 c c+1 … n, without ever printing a gap that hides a single page */
+    const want = new Set([1, total, current, current - 1, current + 1]);
+    if (current <= 3) [2, 3, 4].forEach(n => want.add(n));
+    if (current >= total - 2) [total - 1, total - 2, total - 3].forEach(n => want.add(n));
+    const list = [...want].filter(n => n >= 1 && n <= total).sort((x, y) => x - y);
+    const out = [];
+    list.forEach((n, i) => {
+      if (i && n - list[i - 1] > 1) out.push(n - list[i - 1] === 2 ? list[i - 1] + 1 : null);
+      out.push(n);
     });
-    tabs.forEach(t => {
-      const on = t.dataset.topic === topic;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-    empty.hidden = shown > 0;
-    if (!shown) empty.textContent = 'Nothing filed under that topic yet.';
+    return out;
   };
 
-  tabs.forEach(t => t.addEventListener('click', () => {
-    apply(t.dataset.topic);
-    if (window.ScrollTrigger) ScrollTrigger.refresh();
-  }));
+  const render = (scroll) => {
+    const set = all.filter(el => topic === 'all' || el.dataset.topic === topic);
+    const total = Math.max(1, Math.ceil(set.length / PER_PAGE));
+    if (page > total) page = total;
+    const from = (page - 1) * PER_PAGE;
+    const shown = set.slice(from, from + PER_PAGE);
+    const on = new Set(shown);
 
-  /* a year link in the hero clears the filter first, so the year it jumps to is there */
-  document.querySelectorAll('a[href^="#y20"]').forEach(a => a.addEventListener('click', () => apply('all')));
+    all.forEach(el => { el.hidden = !on.has(el); });
+
+    groups.forEach(g => {
+      const n = [...g.querySelectorAll('.news-item')].filter(el => !el.hidden).length;
+      g.hidden = n === 0;
+      const c = g.querySelector('.yr-count');
+      if (c) {
+        const all_ = c.dataset.total;
+        c.textContent = (n === +all_ ? all_ : n + ' of ' + all_) + ' updates';
+      }
+    });
+
+    tabs.forEach(t => {
+      const active = t.dataset.topic === topic;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+
+    empty.hidden = set.length > 0;
+    if (!set.length) empty.textContent = 'Nothing filed under that topic yet.';
+
+    pager.hidden = set.length <= PER_PAGE;
+    pagerCount.textContent = set.length
+      ? (from + 1) + '–' + (from + shown.length) + ' of ' + set.length + ' updates'
+      : '';
+    prev.disabled = page === 1;
+    next.disabled = page === total;
+
+    pageNums.innerHTML = '';
+    numbers(page, total).forEach(n => {
+      if (n === null) {
+        const s = document.createElement('span');
+        s.className = 'pg-gap'; s.textContent = '…'; s.setAttribute('aria-hidden', 'true');
+        pageNums.appendChild(s);
+        return;
+      }
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pg-num' + (n === page ? ' on' : '');
+      b.textContent = n;
+      b.setAttribute('aria-label', 'Page ' + n);
+      if (n === page) b.setAttribute('aria-current', 'page');
+      b.addEventListener('click', () => { page = n; render(true); });
+      pageNums.appendChild(b);
+    });
+
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+    if (scroll) {
+      const top = document.getElementById('news-archive');
+      if (top) top.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+  };
+
+  tabs.forEach(t => t.addEventListener('click', () => { topic = t.dataset.topic; page = 1; render(false); }));
+  prev.addEventListener('click', () => { if (page > 1) { page--; render(true); } });
+  next.addEventListener('click', () => { page++; render(true); });
+  render(false);
+
 
   /* ---- reveals ---- */
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;

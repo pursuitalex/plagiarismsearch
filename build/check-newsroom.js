@@ -63,8 +63,11 @@ console.log('\n' + FILE + ' — the live archive, carried over\n');
   ok(data.length + ' machine-readable dates', !missing.length,
      missing.map(x => x.d + ' ' + x.m).join(' · '));
 
+  /* Read from the text, not from a bare element: the hero's year panel used to print
+     each year on its own and no longer does, but every year is still on the page
+     because every item still carries its date. */
   const years = [...new Set(data.map(it => it.m.split(' ')[1]))];
-  const shown = years.filter(y => new RegExp('>' + y + '<').test(body));
+  const shown = years.filter(y => text.includes(y));
   ok(years.length + ' years all on the page', shown.length === years.length,
      years.filter(y => !shown.includes(y)).join(' · '));
 }
@@ -151,11 +154,22 @@ console.log('\n' + FILE + ' — the live archive, carried over\n');
      puts the prose inside a card at ~720px, which is the measure the blog post and
      the report guide read at. */
   const widths = [...new Set([...body.matchAll(/max-w-\[(\d+)px\]/g)].map(m => +m[1]))].sort((a, b) => a - b);
-  ok('one content width inside the page shell',
-     widths.length === 2 && widths[0] === 880 && widths[1] === 1280,
-     widths.join(' · ') + ' (1280 is the shell)');
+  ok('the widths this page is allowed',
+     widths.length === 3 && widths[0] === 620 && widths[1] === 880 && widths[2] === 1280,
+     widths.join(' · ') + ' — 620 hero, 880 card list, 1280 shell');
   const col = (body.match(/max-w-\[880px\] mx-auto/g) || []).length;
-  ok('every block centred on that width', col >= 6, col + ' blocks');
+  ok('the card list is centred on 880', col >= 5, col + ' blocks');
+  ok('the hero is the site-standard centred top, not the card width',
+     /class="rv text-center max-w-\[620px\] mx-auto"/.test(body));
+  ok('Latest is not held to the card width',
+     !/id="latest"[\s\S]*?max-w-\[880px\][\s\S]*?id="news-archive"/.test(body));
+
+  /* pagination — twenty to a page, and every item still in the document so a reader
+     without JavaScript, and a crawler, still get the whole archive */
+  ok('the pager is on the page', /id="pager"/.test(body) && /id="pageNums"/.test(body));
+  ok('20 to a page', /const PER_PAGE = 20;/.test(html));
+  const hiddenItems = (body.match(/<article[^>]+class="news-item[^"]*"[^>]*hidden/g) || []).length;
+  ok('nothing is hidden in the delivered HTML', hiddenItems === 0, hiddenItems + ' pre-hidden');
 }
 
 console.log('\n' + (failed
