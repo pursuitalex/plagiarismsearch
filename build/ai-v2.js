@@ -139,11 +139,6 @@ const COPY = {
 
   s3: {
     h2: 'Check AI-written text in complete documents',
-    /* The document shown attached in the section's visual. Deliberately the same one
-       the report demo reports on — 1,443 words is the figure in its Report information
-       panel — so the page shows one document through two stages rather than two
-       unrelated mocks. Mock UI content, not product copy. */
-    file: { name: 'urban-transport-review.docx', words: '1,443 words' },
     intro: 'Paste text directly into the AI checker for a quick analysis, or upload a document when you want to review the text from a complete file. Document upload makes it easier to check longer essays, reports, articles, and other written work without copying the entire text into the editor.',
     /* head, body, Lucide path, bento span. The spans make this a bento rather than a
        grid of four identical tiles: the two ways INTO the checker are the wide pair,
@@ -513,8 +508,8 @@ ${[[COPY.s2.report.totalLabel, COPY.s2.report.totalValue, 13.44],
                   </div>
                 </div>`).join('\n')}
 
-                <div class="flex items-center gap-4 pt-3 mt-4 border-t border-ink-200">
-${COPY.s2.report.tabs.map((t, i) => `                  <span class="text-[12.5px] font-semibold pb-1.5 ${i === 1 ? 'text-teal-700 border-b-2 border-teal-500' : 'text-ink-500'}">${t}</span>`).join('\n')}
+                <div class="flex items-center gap-4 -mx-4 sm:-mx-5 lg:-mx-6 px-4 sm:px-5 lg:px-6 pt-3 mt-4 bg-ink-100 border-y border-ink-200">
+${COPY.s2.report.tabs.map((t, i) => `                  <span class="text-[12.5px] font-semibold pb-2.5 ${i === 1 ? 'text-teal-700 border-b-2 border-teal-500' : 'text-ink-600'}">${t}</span>`).join('\n')}
                 </div>
 
                 <!-- the flagged passages, the same runs the document highlights -->
@@ -559,55 +554,17 @@ const section3 = () => `  <!-- ================= 03 · DOCUMENT / FILE CHECKING 
        No extension list either — the authoritative allow-list is not available. -->
   <section id="document-ai-checker" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center mb-10 sm:mb-12 lg:mb-16">
+      <!-- Recomposed 2026-08-26 at Olex's request: the drop-zone widget that stood
+           beside this text is gone and the text is centred.
 
-        <div class="rv lg:order-2">
+           It was a second piece of product chrome directly above the bento below,
+           competing with the bento instead of setting it up — and the hero already
+           shows the same checker forty lines earlier. Centred header over a bento is
+           the idiom sections 01, 08 and 09 use, so this now matches them. -->
+      <div class="rv text-center max-w-[760px] mx-auto mb-10 sm:mb-12 lg:mb-16">
 ${eyebrow('orange-500', 'Documents')}
-          ${h2(COPY.s3.h2)}
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s3.intro}</p>
-        </div>
-
-        <!-- Real product evidence, not a photograph. See the note in build/ai-v2.js.
-             The filename and word count match the report demo below, so the two sections
-             describe one document rather than two unrelated mocks. -->
-        <div class="rv lg:order-1">
-          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-            <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
-
-              <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-4">${COPY.s1.toolHeading}</p>
-
-              <!-- the drop zone in its attached state -->
-              <div class="qc-drop flex items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
-                <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
-                </span>
-                <span class="min-w-0 flex-1">
-                  <span class="block text-[13px] font-bold tracking-tight truncate">${COPY.s3.file.name}</span>
-                  <span class="block text-[11.5px] text-ink-500 tabular-nums">${COPY.s3.file.words}</span>
-                </span>
-                <span class="shrink-0 w-7 h-7 rounded-full bg-ink-100 flex items-center justify-center" aria-hidden="true">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-                </span>
-              </div>
-
-              <div class="flex flex-wrap gap-2 mb-4">
-${COPY.s1.inputs.map(i => `                <span class="qc-chip">${
-  i.icon === 'brand'
-    ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="w-4 h-4 shrink-0">`
-    : `<svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`
-}${i.label}</span>`).join('\n')}
-              </div>
-
-              <div class="flex items-center justify-between gap-4 pt-4 border-t border-ink-100">
-                <span class="text-[13px] font-semibold text-ink-500">${COPY.s1.secondary}</span>
-                <span class="flex items-center gap-2.5 rounded-full bg-ink-900 text-white text-[13.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
-                  ${COPY.s1.cta}
-                  <span class="hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">${arrow}</span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        ${h2(COPY.s3.h2)}
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s3.intro}</p>
       </div>
 
       <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
