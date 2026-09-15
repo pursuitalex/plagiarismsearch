@@ -1,6 +1,9 @@
-/* Check site/prices-v2.html against DEC-0042.
+/* Check site/prices-v2.html against DEC-0042 and the Targeted Corrections v2 batch
+   of 2026-09-04.
 
    Same discipline as the other page checkers: the brief is testable, so it is tested.
+   The corrections batch is tested the same way, and one thing more: it is a "preserve
+   first" document, so every DEC-0042 assertion it does not explicitly change stays.
 
    This one has a boundary the others do not. The plan cards are a visual shell for a
    backend-driven widget, and DEC-0042 forbids freezing plan names, prices, quotas,
@@ -61,12 +64,13 @@ console.log('page-level');
 /* -- the seven approved sections, in order -------------------------------- */
 console.log('\nsection order');
 {
+  /* Corrections v2 §7: Custom & High Volume ahead of Optional Services */
   const ORDER = [
     ['plans',        null],
     ['core-value',   'A plagiarism check you can inspect, not just a score'],
     ['ai-pricing',   'Add AI checking when you need it'],
-    ['services',     'Other writing services'],
     ['high-volume',  'Need a custom or high-volume option?'],
+    ['services',     'Other writing services'],
     ['pricing-faq',  'Pricing FAQ'],
     ['free-check',   'Try plagiarism checking before you choose a plan'],
   ];
@@ -89,30 +93,50 @@ console.log('\nfixed copy');
   const FIXED = [
     'Compare one-time, monthly, 3-month, and yearly options and choose the plan that fits how much content you expect to check.',
     'Pay once. Your purchased quota does not expire.',
-    'PlagiarismSearch helps you review where matches appear, which sources they come from, and which settings shaped the result.',
+    /* Corrections v2 §6 — the new Core Value intro, whole */
+    'PlagiarismSearch shows where matches appear and which sources they come from, so you can review the result instead of relying on a single percentage. Core checking supports web and academic source comparison, text or document input, scan controls, and downloadable PDF reports. The pricing widget above shows which plans add plan-specific features such as API access, report storage, or an AI allowance.',
     'AI detection uses a separate AI word balance.',
     'AI detection and plagiarism checking are separate analyses.',
     'These optional services are available separately when you need help beyond plagiarism or AI checking.',
-    'If the standard pricing options do not fit your checking volume or requirements, explore the available VIP options.',
+    /* Corrections v2 §8 */
+    'If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.',
     'Check up to 150 words without creating an account.',
     'Need an AI word allowance beyond the standard packages?',
+    /* Corrections v2 §4 — the helper before the selector */
+    'Select an AI word package, then continue with the option you want to purchase.',
   ];
   const missing = FIXED.filter(s => !has(s));
   ok(FIXED.length + ' approved strings present', !missing.length,
      missing.map(s => '"' + s.slice(0, 42) + '…"').join(' · '));
 
-  /* the brief's own fixed-string checklist */
-  const CTAS = ['Try a free plagiarism check', 'Explore VIP options', 'Learn about AI detection',
+  /* the brief's own fixed-string checklist, with §8's relabel */
+  const CTAS = ['Try a free plagiarism check', 'Explore high-volume options', 'Learn about AI detection',
                 'View Paper Analysis', 'Use Spell Check', 'Check Readability',
                 'Visit the Help Center', 'Contact us'];
   const missingCta = CTAS.filter(s => !has(s));
   ok(CTAS.length + ' approved CTA labels present', !missingCta.length, missingCta.join(' · '));
 
-  /* the six supporting labels of the core-value grid */
-  const LABELS = ['500M+ academic texts', 'Web search', 'Evidence you can inspect',
-                  'Paste or upload', 'Adjust the check', 'Keep a copy of the report'];
-  const missingLabel = LABELS.filter(s => !has(s));
-  ok('six core-value supporting labels', !missingLabel.length, missingLabel.join(' · '));
+  /* Corrections v2 §6 — the three groups, h3 + body verbatim, and the one proof */
+  const GROUPS = [
+    ['Compare with web and academic sources', 'Compare submitted content with sources available on the web and more than 500 million indexed academic texts.'],
+    ['Inspect matches source by source', 'Review where matching or similar text appears and open the corresponding source to understand the result in context.'],
+    ['Check text or documents your way', 'Paste text or upload a supported document, exclude references and in-text citations when appropriate, and download or print a PDF report when you need an offline copy.'],
+  ];
+  const missingGroup = GROUPS.flat().filter(s => !has(s));
+  ok('three core-value groups, h3 and body verbatim', !missingGroup.length,
+     missingGroup.map(s => '"' + s.slice(0, 36) + '…"').join(' · '));
+  ok('the 500M+ proof is on the page', has('500M+ indexed academic texts'));
+
+  /* §5 — bare Storage is gone from plan-entitlement copy; the widget's own label is
+     used. "report storage" is looked for in lower case because that is how the brief
+     writes it in running text. */
+  const bare = [...text.matchAll(/\bStorage\b/g)].length;
+  ok('no bare "Storage" as a plan feature', bare === 0, bare + ' found');
+  ok('"report storage" is the entitlement label', (text.match(/report storage/g) || []).length >= 3,
+     (text.match(/report storage/g) || []).length + ' found');
+
+  /* §8 — the reader is not asked to know what VIP means */
+  ok('no visible VIP jargon in the high-volume block', !/VIP/.test(section('high-volume').replace(/<[^>]*>/g, ' ')));
 }
 
 /* -- the widget shell ----------------------------------------------------- */
@@ -178,10 +202,12 @@ console.log('\nforbidden');
 /* -- structural rules ------------------------------------------------------ */
 console.log('\nstructure');
 {
-  /* "exactly these six semantic capabilities" */
+  /* Corrections v2 §6: three content groups, not six equal cards; no second report
+     demo on this page */
   const core = section('core-value');
-  ok('exactly six core-value cards', (core.match(/<h3\b/g) || []).length === 6,
+  ok('exactly three core-value groups', (core.match(/<h3\b/g) || []).length === 3,
      (core.match(/<h3\b/g) || []).length + ' found');
+  ok('no report demo inside core-value', !/cab-|data-report|class="report/.test(core));
 
   /* eight AI packages in the approved snapshot */
   const ai = section('ai-pricing');
@@ -189,6 +215,28 @@ console.log('\nstructure');
                 '1,000,000', '3,000,000', '5,000,000'];
   ok('eight AI packages', rows.every(r => ai.includes(r)),
      rows.filter(r => !ai.includes(r)).join(' '));
+
+  /* Corrections v2 §4 — the selector and its one continuation action */
+  const radios = (ai.match(/<input type="radio" name="aiPackage"/g) || []).length;
+  ok('the eight packages are one radio group', radios === 8, radios + ' radios');
+  const checked = (ai.match(/name="aiPackage"[^>]*\bchecked\b/g) || []).length;
+  ok('exactly one package selected by default', checked === 1, checked + ' checked');
+  ok('the default is 10,000 AI words', /value="10000"[^>]*\bchecked\b/.test(ai));
+  const btn = (ai.match(/<button[^>]*id="aiContinue"[^>]*>[\s\S]*?<\/button>/) || [''])[0];
+  const btnText = btn.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  ok('the CTA reads "Continue with 10,000 AI words"', btnText === 'Continue with 10,000 AI words', btnText || '(no button)');
+  ok('the CTA carries the developer hook, not an invented route',
+     /data-purchase-hook="ai-package"/.test(btn) && !/href=/.test(btn));
+  ok('the package CTA does not go to the AI Detector page',
+     !/<a[^>]*href="ai-detector\.html"[^>]*>[^<]*Continue/.test(ai));
+  ok('Learn about AI detection stays a secondary link',
+     /<a[^>]*href="ai-detector\.html"[^>]*>Learn about AI detection<\/a>/.test(ai));
+  ok('the AI prices are the approved snapshot',
+     ['$4.95', '$9.95', '$12.95', '$25.95', '$35.95', '$55.95', '$125.95', '$215.95'].every(p => ai.includes(p)));
+
+  /* §10 — the period tabs carry a selected state a screen reader can hear */
+  const plans = section('plans');
+  ok('period tabs carry aria-pressed', (plans.match(/aria-pressed=/g) || []).length === 4);
 
   /* "one compact row/grid only" — three services, no sub-sections */
   const svc = section('services');
@@ -209,7 +257,7 @@ console.log('\nstructure');
     'How do I choose the right PlagiarismSearch plan?',
     'Do one-time packages expire?',
     'Is AI checking included with every plagiarism plan?',
-    'Do all plans include API access and Storage?',
+    'Do all plans include API access and report storage?',
     'Can I buy AI checking separately?',
     'Can I try PlagiarismSearch before I buy a plan?',
     'What if the standard plans do not fit my volume?',
@@ -217,7 +265,8 @@ console.log('\nstructure');
   ok('seven approved FAQ questions', QS.every(q => faq.includes(q)),
      QS.filter(q => !faq.includes(q)).join(' · '));
 
-  /* "Do not render a second checker inside this section" */
+  /* "Do not render a second checker inside this section" — the AI selector is a
+     fieldset, not a form, so this stays as strict as DEC-0042 wrote it */
   ok('no checker form on the page', !/<form\b/.test(body));
 
   /* the approved link policy, and nothing else */
@@ -237,7 +286,13 @@ console.log('      authoritative production pricing widget before launch; build/
 console.log('      is placeholder data shared with the homepage and goes when the widget lands.');
 console.log('  G2  AI package prices are the approved 2026-08-24 snapshot; production values');
 console.log('      must come from authoritative billing data.');
+console.log('  G3  The AI package CTA is a button with data-purchase-hook="ai-package" and');
+console.log('      data-ai-words / -billing / -price; a developer binds it to the real purchase');
+console.log('      flow. No route was invented (Corrections v2 §4).');
 console.log('  G5  Footer ratings refresh from production before launch.');
+console.log('  N1  FAQ answer 7 still says "Explore the VIP options" with a "View VIP options"');
+console.log('      link: Corrections v2 §9 preserves every FAQ answer except the Storage one,');
+console.log('      while §8 removes VIP from the high-volume block only. Left as written; flag.');
 
-console.log('\n' + (failed ? failed + ' check(s) FAILED' : FILE + ' matches DEC-0042'));
+console.log('\n' + (failed ? failed + ' check(s) FAILED' : FILE + ' matches DEC-0042 + Corrections v2'));
 process.exit(failed ? 1 : 0);

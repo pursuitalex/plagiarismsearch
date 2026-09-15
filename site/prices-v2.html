@@ -272,9 +272,17 @@ tailwind.config = {
   .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
   .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
 
-  /* the AI table */
-  .ai-row { transition:background-color .15s ease; }
-  .ai-row:hover { background:#F2FAFB; }
+  /* the AI package selector. The selected row is tinted AND carries the filled dot with
+     a check mark, so the state survives without colour. Keyboard focus lands on the
+     hidden radio, so the ring is drawn on the row that contains it. */
+  .ai-opt { transition:background-color .15s ease; }
+  .ai-opt:hover { background:#F2FAFB; }
+  .ai-opt.on { background:#E6F4F7; }
+  .ai-opt .ai-dot { background:#fff; transition:background-color .15s ease, box-shadow .15s ease; }
+  .ai-opt .ai-dot svg { opacity:0; }
+  .ai-opt.on .ai-dot { background:#0991A8; box-shadow:inset 0 0 0 1px #0991A8; }
+  .ai-opt.on .ai-dot svg { opacity:1; }
+  .ai-opt:has(input:focus-visible) { outline:2px solid #6ED7E8; outline-offset:-2px; }
 
   /* the bento hover from the homepage capabilities grid */
   .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
@@ -477,10 +485,10 @@ tailwind.config = {
 
       <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
         <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
-          <button type="button" data-period="onetime" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">One-time</button>
-          <button type="button" data-period="monthly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">Monthly</button>
-          <button type="button" data-period="quarterly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">3-Months</button>
-          <button type="button" data-period="yearly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">Yearly</button>
+          <button type="button" data-period="onetime" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">One-time</button>
+          <button type="button" data-period="monthly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">Monthly</button>
+          <button type="button" data-period="quarterly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">3-Months</button>
+          <button type="button" data-period="yearly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">Yearly</button>
         </div>
       </div>
 
@@ -544,11 +552,10 @@ tailwind.config = {
   </section>
 
   <!-- ================= 02 · CORE PRODUCT VALUE =================
-       Exactly six factual capabilities. The mock carries twelve cards and the brief is
-       explicit that the count is not required — "do not add placeholder cards merely to
-       preserve the mock's 12-card count" — so the grid is a bento built for six.
-
-       Double-bezel cards, the vocabulary the homepage capabilities grid established. -->
+       Three content groups (Corrections v2 §6), not six equal cards. The first group is
+       the one with a proof figure, so it gets the lead: a tall double-bezel card with the
+       figure in the homepage's statistic treatment. The other two stack beside it in the
+       same vocabulary at the smaller size. Same words, three weights. -->
   <section id="core-value" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
@@ -557,68 +564,42 @@ tailwind.config = {
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">PLAGIARISM CHECKING</span>
         </div>
         <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">A plagiarism check you can inspect, not just a score</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">PlagiarismSearch helps you review where matches appear, which sources they come from, and which settings shaped the result. The pricing cards above show which plans include additional features such as API access, Storage, or AI allowance.</p>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">PlagiarismSearch shows where matches appear and which sources they come from, so you can review the result instead of relying on a single percentage. Core checking supports web and academic source comparison, text or document input, scan controls, and downloadable PDF reports. The pricing widget above shows which plans add plan-specific features such as API access, report storage, or an AI allowance.</p>
       </div>
 
-      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
-        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+      <div class="rv-kids grid lg:grid-cols-[1.15fr_1fr] gap-4 lg:gap-5">
+        <div class="min-w-0 lg:row-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
           <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
             <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 sm:mb-5">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
             </span>
-            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Academic source coverage</h3>
-            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Check submitted content against a database of more than 500 million indexed academic texts.</p>
-            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">500M+ academic texts</p>
+            <h3 class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight mb-2.5">Compare with web and academic sources</h3>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Compare submitted content with sources available on the web and more than 500 million indexed academic texts.</p>
+            <!-- the proof, in the statistic treatment the homepage gives its figures -->
+            <div class="mt-auto pt-8 sm:pt-10 lg:pt-12">
+              <div class="rounded-2xl sm:rounded-3xl bg-teal-50 ring-1 ring-teal-600/10 px-5 py-5 sm:px-6 sm:py-6">
+                <p class="text-[34px] sm:text-[40px] lg:text-[48px] font-extrabold tracking-tightest nums leading-none text-teal-800">500M+</p>
+                <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mt-2">indexed academic texts</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
-          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 sm:mb-5">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-            </span>
-            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Web source checking</h3>
-            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Compare submitted content with sources available on the web to identify matching and similar passages for review.</p>
-            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">Web search</p>
-          </div>
-        </div>
-        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+        <div class="min-w-0  rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
           <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
             <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center mb-4 sm:mb-5">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/><path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.944.033z"/></svg>
             </span>
-            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Interactive match report</h3>
-            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Review matches source by source. Select a match in the report to highlight the corresponding passage and its source.</p>
-            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">Evidence you can inspect</p>
+            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Inspect matches source by source</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Review where matching or similar text appears and open the corresponding source to understand the result in context.</p>
           </div>
         </div>
-        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
-          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
-            <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 sm:mb-5">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-            </span>
-            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Text and document uploads</h3>
-            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Paste text directly or upload a supported document. Drag and drop makes it easy to start with a file from your device.</p>
-            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">Paste or upload</p>
-          </div>
-        </div>
-        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
-          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
-            <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-4 sm:mb-5">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
-            </span>
-            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Scan controls</h3>
-            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Exclude references and in-text citations when those parts should not affect the result of the plagiarism check.</p>
-            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">Adjust the check</p>
-          </div>
-        </div>
-        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+        <div class="min-w-0  rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
           <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
             <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-4 sm:mb-5">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
             </span>
-            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">PDF reports</h3>
-            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Download or print a PDF version of the plagiarism report when you need an offline copy.</p>
-            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">Keep a copy of the report</p>
+            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Check text or documents your way</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Paste text or upload a supported document, exclude references and in-text citations when appropriate, and download or print a PDF report when you need an offline copy.</p>
           </div>
         </div>
       </div>
@@ -658,126 +639,112 @@ tailwind.config = {
         </div>
 
         <div class="rv min-w-0">
-          <!-- the table scrolls inside its own box rather than shrinking to microscopic
-               text, which is what the responsive rules ask for -->
-          <div class="rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-1.5 sm:p-2">
-            <div class="rounded-[18px] sm:rounded-3xl bg-white overflow-hidden">
-              <div class="overflow-x-auto">
-                <table class="w-full min-w-[420px] text-left">
-                  <thead>
-                    <tr class="border-b border-ink-100">
-                      <th scope="col" class="px-5 sm:px-6 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500">AI words</th>
-                      <th scope="col" class="px-5 sm:px-6 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500 ">Billing</th>
-                      <th scope="col" class="px-5 sm:px-6 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500 text-right">Current price</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-ink-100">
-                    <tr class="ai-row">
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">10,000</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">One-time</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$4.95</td>
-                    </tr>
-                    <tr class="ai-row">
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">50,000</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">One-time</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$9.95</td>
-                    </tr>
-                    <tr class="ai-row">
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">100,000</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">Monthly</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$12.95</td>
-                    </tr>
-                    <tr class="ai-row">
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">300,000</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">Monthly</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$25.95</td>
-                    </tr>
-                    <tr class="ai-row">
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">500,000</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">Monthly</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$35.95</td>
-                    </tr>
-                    <tr class="ai-row">
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">1,000,000</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">Yearly</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$55.95</td>
-                    </tr>
-                    <tr class="ai-row">
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">3,000,000</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">Yearly</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$125.95</td>
-                    </tr>
-                    <tr class="ai-row">
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">5,000,000</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">Yearly</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$215.95</td>
-                    </tr>
-                  </tbody>
-                </table>
+          <!-- Corrections v2 §4: a selector, not a table. Native radios carry the
+               keyboard model and the one-at-a-time rule; the drawn dot and the check mark
+               carry the selected state without leaning on colour alone. -->
+          <p id="aiHelp" class="mb-4 text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/80">Select an AI word package, then continue with the option you want to purchase.</p>
+          <fieldset class="m-0 p-0 border-0 min-w-0">
+            <legend class="sr-only">AI word package</legend>
+            <div class="rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-1.5 sm:p-2">
+              <div class="rounded-[18px] sm:rounded-3xl bg-white overflow-hidden">
+                <div class="grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3.5 border-b border-ink-100" aria-hidden="true">
+                  <span></span>
+                  <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500">AI words</span>
+                  <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500">Billing</span>
+                  <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500 text-right">Current price</span>
+                </div>
+                <div class="divide-y divide-ink-100">
+                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                    <input type="radio" name="aiPackage" value="10000" data-billing="One-time" data-price="$4.95" class="sr-only" checked>
+                    <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <span class="text-[14.5px] font-bold tracking-tight tabular-nums text-ink-900">10,000</span>
+                    <span class="text-[13px] text-ink-600">One-time</span>
+                    <span class="text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$4.95</span>
+                  </label>
+                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                    <input type="radio" name="aiPackage" value="50000" data-billing="One-time" data-price="$9.95" class="sr-only">
+                    <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <span class="text-[14.5px] font-bold tracking-tight tabular-nums text-ink-900">50,000</span>
+                    <span class="text-[13px] text-ink-600">One-time</span>
+                    <span class="text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$9.95</span>
+                  </label>
+                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                    <input type="radio" name="aiPackage" value="100000" data-billing="Monthly" data-price="$12.95" class="sr-only">
+                    <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <span class="text-[14.5px] font-bold tracking-tight tabular-nums text-ink-900">100,000</span>
+                    <span class="text-[13px] text-ink-600">Monthly</span>
+                    <span class="text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$12.95</span>
+                  </label>
+                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                    <input type="radio" name="aiPackage" value="300000" data-billing="Monthly" data-price="$25.95" class="sr-only">
+                    <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <span class="text-[14.5px] font-bold tracking-tight tabular-nums text-ink-900">300,000</span>
+                    <span class="text-[13px] text-ink-600">Monthly</span>
+                    <span class="text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$25.95</span>
+                  </label>
+                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                    <input type="radio" name="aiPackage" value="500000" data-billing="Monthly" data-price="$35.95" class="sr-only">
+                    <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <span class="text-[14.5px] font-bold tracking-tight tabular-nums text-ink-900">500,000</span>
+                    <span class="text-[13px] text-ink-600">Monthly</span>
+                    <span class="text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$35.95</span>
+                  </label>
+                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                    <input type="radio" name="aiPackage" value="1000000" data-billing="Yearly" data-price="$55.95" class="sr-only">
+                    <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <span class="text-[14.5px] font-bold tracking-tight tabular-nums text-ink-900">1,000,000</span>
+                    <span class="text-[13px] text-ink-600">Yearly</span>
+                    <span class="text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$55.95</span>
+                  </label>
+                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                    <input type="radio" name="aiPackage" value="3000000" data-billing="Yearly" data-price="$125.95" class="sr-only">
+                    <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <span class="text-[14.5px] font-bold tracking-tight tabular-nums text-ink-900">3,000,000</span>
+                    <span class="text-[13px] text-ink-600">Yearly</span>
+                    <span class="text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$125.95</span>
+                  </label>
+                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                    <input type="radio" name="aiPackage" value="5000000" data-billing="Yearly" data-price="$215.95" class="sr-only">
+                    <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <span class="text-[14.5px] font-bold tracking-tight tabular-nums text-ink-900">5,000,000</span>
+                    <span class="text-[13px] text-ink-600">Yearly</span>
+                    <span class="text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">$215.95</span>
+                  </label>
+                </div>
               </div>
             </div>
+          </fieldset>
+
+          <!-- the one continuation action. No href: the checkout route is not known to
+               the prototype and the brief says not to invent one. data-purchase-hook and
+               the data-ai-* attributes are the developer's binding point. -->
+          <div class="mt-5 sm:mt-6">
+            <button type="button" id="aiContinue" data-purchase-hook="ai-package" data-ai-words="10000" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+              <span>Continue with <span class="js-ai-words tabular-nums">10,000</span> AI words</span>
+              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </button>
           </div>
 
           <div class="mt-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
             <p class="text-[13.5px] leading-relaxed text-white/70">Need an AI word allowance beyond the standard packages?</p>
             <span class="shrink-0"><a href="contact-us.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-white/70 hover:text-white decoration-white/30 underline underline-offset-4 transition-colors duration-300">Contact us</a></span>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 04 · OTHER WRITING SERVICES =================
-       "Intentionally compact and secondary because these services receive little actual
-       usage. It must take materially less space and visual weight than the main pricing
-       widget or AI pricing section."
-
-       So: one row, flat cards rather than the double-bezel used for the capabilities,
-       a short section rather than a full act, and no illustration. -->
-  <section id="services" class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-7 sm:mb-8">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">OPTIONAL SERVICES</span>
-        </div>
-        <h2 class="text-[22px] sm:text-[25px] lg:text-[28px] font-extrabold tracking-tightest leading-[1.1] mb-3">Other writing services</h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">These optional services are available separately when you need help beyond plagiarism or AI checking.</p>
-      </div>
-
-      <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5">
-        <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 flex flex-col">
-          <div class="flex items-baseline justify-between gap-3 mb-2">
-            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Paper Analysis</h3>
-            <span class="shrink-0 text-[12.5px] font-bold tabular-nums text-teal-700">From $3.50</span>
-          </div>
-          <p class="flex-1 text-[13px] leading-relaxed text-ink-600 mb-4">Human editor review of grammar, style, and punctuation.</p>
-          <a href="paper-analysis.html" class="inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink-700 hover:text-ink-900 transition-colors duration-300">
-            View Paper Analysis
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
-        </div>
-        <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 flex flex-col">
-          <div class="flex items-baseline justify-between gap-3 mb-2">
-            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Spell Check</h3>
-            <span class="shrink-0 text-[12.5px] font-bold tabular-nums text-teal-700">Free</span>
-          </div>
-          <p class="flex-1 text-[13px] leading-relaxed text-ink-600 mb-4">Check spelling, grammar, and punctuation online.</p>
-          <a href="spell-check.html" class="inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink-700 hover:text-ink-900 transition-colors duration-300">
-            Use Spell Check
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
-        </div>
-        <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 flex flex-col">
-          <div class="flex items-baseline justify-between gap-3 mb-2">
-            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Readability Check</h3>
-            <span class="shrink-0 text-[12.5px] font-bold tabular-nums text-teal-700">From $0.99</span>
-          </div>
-          <p class="flex-1 text-[13px] leading-relaxed text-ink-600 mb-4">Get a readability score and recommendations for making your text easier to read.</p>
-          <a href="readability-check.html" class="inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink-700 hover:text-ink-900 transition-colors duration-300">
-            Check Readability
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
         </div>
       </div>
     </div>
@@ -798,12 +765,81 @@ tailwind.config = {
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">CUSTOM &amp; HIGH VOLUME</span>
         </div>
             <h2 class="text-[20px] sm:text-[23px] lg:text-[26px] font-bold tracking-tight leading-[1.2] mb-3">Need a custom or high-volume option?</h2>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70 max-w-[62ch]">If the standard pricing options do not fit your checking volume or requirements, explore the available VIP options.</p>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70 max-w-[62ch]">If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.</p>
           </div>
           <div class="shrink-0"><a href="vip.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
-            Explore VIP options
+            Explore high-volume options
             <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 · OTHER WRITING SERVICES =================
+       "Intentionally compact and secondary because these services receive little actual
+       usage. It must take materially less space and visual weight than the main pricing
+       widget or AI pricing section."
+
+       The cards are the first version's (site/prices.html, "Additional services"):
+       a tinted icon chip, the name, a quiet description, and a footer that sets the
+       price as a figure — or a mint pill where the service is free — beside the link.
+       What keeps it secondary is the section, not the card: a short band rather than a
+       full act. The heading is the page's h2, set left like every other section heading;
+       the row runs to 1200. Words are DEC-0042's. -->
+  <section id="services" class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[720px] mb-7 sm:mb-8 lg:mb-10">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">OPTIONAL SERVICES</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Other writing services</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">These optional services are available separately when you need help beyond plagiarism or AI checking.</p>
+      </div>
+
+      <div class="rv-kids grid md:grid-cols-3 gap-4 lg:gap-5 max-w-[1200px]">
+        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8 flex flex-col">
+          <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 flex items-center justify-center mb-4 lg:mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          </span>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">Paper Analysis</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-500 mb-4 sm:mb-5 lg:mb-6">Human editor review of grammar, style, and punctuation.</p>
+          <div class="mt-auto flex items-end justify-between gap-3">
+            <div class="flex items-baseline"><span class="text-[12px] font-medium text-ink-500 mr-1">From</span><span class="text-[20px] sm:text-[22px] lg:text-[24px] font-extrabold tracking-tightest nums">$3.50</span></div>
+            <a href="paper-analysis.html" class="shrink-0 inline-flex items-center gap-1.5 text-[13px] font-semibold text-teal-700 hover:text-teal-800 transition-colors duration-300">
+              View Paper Analysis
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8 flex flex-col">
+          <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-100 flex items-center justify-center mb-4 lg:mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 16 6-12 6 12"/><path d="M8 12h8"/><path d="m16 20 2 2 4-4"/></svg>
+          </span>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">Spell Check</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-500 mb-4 sm:mb-5 lg:mb-6">Check spelling, grammar, and punctuation online.</p>
+          <div class="mt-auto flex items-end justify-between gap-3">
+            <div class="flex items-baseline"><span class="text-[12px] font-bold tracking-[0.12em] uppercase text-mint-700 bg-mint-100 rounded-full px-3 py-1.5">Free</span></div>
+            <a href="spell-check.html" class="shrink-0 inline-flex items-center gap-1.5 text-[13px] font-semibold text-teal-700 hover:text-teal-800 transition-colors duration-300">
+              Use Spell Check
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8 flex flex-col">
+          <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 flex items-center justify-center mb-4 lg:mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">Readability Check</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-500 mb-4 sm:mb-5 lg:mb-6">Get a readability score and recommendations for making your text easier to read.</p>
+          <div class="mt-auto flex items-end justify-between gap-3">
+            <div class="flex items-baseline"><span class="text-[12px] font-medium text-ink-500 mr-1">From</span><span class="text-[20px] sm:text-[22px] lg:text-[24px] font-extrabold tracking-tightest nums">$0.99</span></div>
+            <a href="readability-check.html" class="shrink-0 inline-flex items-center gap-1.5 text-[13px] font-semibold text-teal-700 hover:text-teal-800 transition-colors duration-300">
+              Check Readability
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -821,7 +857,7 @@ tailwind.config = {
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
         </div>
           <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Pricing FAQ</h2>
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-ink-600">Need help with an existing plan or account?</p>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Need help with an existing plan or account?</p>
           <div class="mt-5 lg:mt-6"><a href="https://plagiarismsearch.com/faq-and-support" rel="noopener" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Visit the Help Center</a></div>
         </div>
 
@@ -856,12 +892,12 @@ tailwind.config = {
             </div>
             <div class="faq-item">
               <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Do all plans include API access and Storage?</span>
+                <span class="text-[15.5px] font-bold tracking-tight">Do all plans include API access and report storage?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. API access and Storage are plan-specific features. Check the current pricing widget to see which options are included with the plan you are considering.</p></div></div>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. API access and report storage are plan-specific features. Check the current pricing widget to see which options are included with the plan you are considering.</p></div></div>
             </div>
             <div class="faq-item">
               <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
@@ -1290,7 +1326,11 @@ tailwind.config = {
   const render = key => {
     const period = PLANS[key];
     if (!period) return;
-    tabs.forEach(t => t.classList.toggle('active', t.dataset.period === key));
+    tabs.forEach(t => {
+      const on = t.dataset.period === key;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-pressed', String(on));
+    });
     helper.hidden = key !== 'onetime';
     cards.forEach(card => {
       const tier = period[card.dataset.tier];
@@ -1305,6 +1345,25 @@ tailwind.config = {
 
   tabs.forEach(t => t.addEventListener('click', () => render(t.dataset.period)));
   render('onetime');
+
+  /* ── the AI package selector ──────────────────────────────────────────────
+     One radio group; the checked one names the allowance on the button and stamps it
+     on the data hook a developer binds the real purchase flow to. */
+  const radios = [...document.querySelectorAll('input[name="aiPackage"]')];
+  const go = document.getElementById('aiContinue');
+  if (radios.length && go) {
+    const fmt = n => Number(n).toLocaleString('en-US');
+    const syncAi = () => {
+      const r = radios.find(x => x.checked) || radios[0];
+      radios.forEach(x => x.closest('.ai-opt').classList.toggle('on', x === r));
+      go.querySelector('.js-ai-words').textContent = fmt(r.value);
+      go.dataset.aiWords = r.value;
+      go.dataset.aiBilling = r.dataset.billing;
+      go.dataset.aiPrice = r.dataset.price;
+    };
+    radios.forEach(x => x.addEventListener('change', syncAi));
+    syncAi();
+  }
 
   /* FAQ: answers are already in the DOM; this only opens and closes them */
   document.querySelectorAll('.faq-q').forEach(q => {

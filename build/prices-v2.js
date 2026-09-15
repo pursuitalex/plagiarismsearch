@@ -16,6 +16,13 @@
    brief's reject list by name, so this is a new file beside it: the index-v2 precedent,
    and the same reason — nothing is retired until Olex accepts the replacement.
 
+   TARGETED CORRECTIONS v2, 2026-09-04. A surgical batch on top of DEC-0042, applied
+   here and nowhere else: the AI packages became selectable with one continuation
+   action; bare "Storage" became "report storage" in plan-entitlement copy (the widget's
+   own label, see pricing-data.js); the six capability cards became three content
+   groups; Custom & High Volume moved ahead of Optional Services and lost the word VIP.
+   Everything the batch does not name is preserved as DEC-0042 built it.
+
    Run:  node build/prices-v2.js  →  node build/shell.js  →  node build/check-prices.js
 */
 const fs = require('fs');
@@ -61,35 +68,24 @@ const COPY = {
   s2: {
     eyebrow: 'PLAGIARISM CHECKING',
     h2: 'A plagiarism check you can inspect, not just a score',
-    intro: 'PlagiarismSearch helps you review where matches appear, which sources they come from, and which settings shaped the result. The pricing cards above show which plans include additional features such as API access, Storage, or AI allowance.',
-    /* head, body, supporting label, Lucide path, bento span, tint.
-       Exactly six — "do not add placeholder cards merely to preserve the mock's
-       12-card count". */
-    cards: [
-      ['Academic source coverage',
-       'Check submitted content against a database of more than 500 million indexed academic texts.',
-       '500M+ academic texts',
-       '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>', 'lg:col-span-3', 'teal'],
-      ['Web source checking',
-       'Compare submitted content with sources available on the web to identify matching and similar passages for review.',
-       'Web search',
-       '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>', 'lg:col-span-2', 'teal'],
-      ['Interactive match report',
-       'Review matches source by source. Select a match in the report to highlight the corresponding passage and its source.',
-       'Evidence you can inspect',
-       '<path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/><path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.944.033z"/>', 'lg:col-span-2', 'orange'],
-      ['Text and document uploads',
-       'Paste text directly or upload a supported document. Drag and drop makes it easy to start with a file from your device.',
-       'Paste or upload',
-       '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>', 'lg:col-span-3', 'teal'],
-      ['Scan controls',
-       'Exclude references and in-text citations when those parts should not affect the result of the plagiarism check.',
-       'Adjust the check',
-       '<line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/>', 'lg:col-span-3', 'ink'],
-      ['PDF reports',
-       'Download or print a PDF version of the plagiarism report when you need an offline copy.',
-       'Keep a copy of the report',
-       '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/>', 'lg:col-span-2', 'ink'],
+    /* Corrections v2 §6 — verbatim. "report storage" is the widget's own entitlement
+       label; bare Storage collides with Organization Storage elsewhere on the site. */
+    intro: 'PlagiarismSearch shows where matches appear and which sources they come from, so you can review the result instead of relying on a single percentage. Core checking supports web and academic source comparison, text or document input, scan controls, and downloadable PDF reports. The pricing widget above shows which plans add plan-specific features such as API access, report storage, or an AI allowance.',
+    /* Three content groups, not six equal cards — §6. h3, body, proof (only the first
+       has one), Lucide path, tint. The layout is the section's, not the brief's. */
+    groups: [
+      ['Compare with web and academic sources',
+       'Compare submitted content with sources available on the web and more than 500 million indexed academic texts.',
+       ['500M+', 'indexed academic texts'],
+       '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>', 'teal'],
+      ['Inspect matches source by source',
+       'Review where matching or similar text appears and open the corresponding source to understand the result in context.',
+       null,
+       '<path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/><path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.944.033z"/>', 'orange'],
+      ['Check text or documents your way',
+       'Paste text or upload a supported document, exclude references and in-text citations when appropriate, and download or print a PDF report when you need an offline copy.',
+       null,
+       '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>', 'ink'],
     ],
   },
 
@@ -111,6 +107,13 @@ const COPY = {
       ['5,000,000', 'Yearly', '$215.95'],
     ],
     tableHeads: ['AI words', 'Billing', 'Current price'],
+    /* Corrections v2 §4 — the read-only table was a conversion dead end. Exactly one
+       package is selected at a time, 10,000 by default, and the one continuation
+       action names the selected allowance. Where the checkout route lands is not
+       known here, so the button carries a data hook for the developer and no href. */
+    selectHelper: 'Select an AI word package, then continue with the option you want to purchase.',
+    continueLabel: ['Continue with ', ' AI words'],
+    defaultPackage: '10,000',
     cta: 'Learn about AI detection',
     ctaHref: 'ai-detector.html',
     customNote: 'Need an AI word allowance beyond the standard packages?',
@@ -122,18 +125,25 @@ const COPY = {
     eyebrow: 'OPTIONAL SERVICES',
     h2: 'Other writing services',
     intro: 'These optional services are available separately when you need help beyond plagiarism or AI checking.',
+    /* head, body, price, CTA, href — DEC-0042 verbatim — then the icon and tint the
+       first version (site/prices.html, "Additional services") gave each service. */
     items: [
-      ['Paper Analysis', 'Human editor review of grammar, style, and punctuation.', 'From $3.50', 'View Paper Analysis', 'paper-analysis.html'],
-      ['Spell Check', 'Check spelling, grammar, and punctuation online.', 'Free', 'Use Spell Check', 'spell-check.html'],
-      ['Readability Check', 'Get a readability score and recommendations for making your text easier to read.', 'From $0.99', 'Check Readability', 'readability-check.html'],
+      ['Paper Analysis', 'Human editor review of grammar, style, and punctuation.', 'From $3.50', 'View Paper Analysis', 'paper-analysis.html',
+       '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>', 'orange'],
+      ['Spell Check', 'Check spelling, grammar, and punctuation online.', 'Free', 'Use Spell Check', 'spell-check.html',
+       '<path d="m6 16 6-12 6 12"/><path d="M8 12h8"/><path d="m16 20 2 2 4-4"/>', 'mint'],
+      ['Readability Check', 'Get a readability score and recommendations for making your text easier to read.', 'From $0.99', 'Check Readability', 'readability-check.html',
+       '<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>', 'teal'],
     ],
   },
 
   s5: {
     eyebrow: 'CUSTOM &amp; HIGH VOLUME',
     h2: 'Need a custom or high-volume option?',
-    body: 'If the standard pricing options do not fit your checking volume or requirements, explore the available VIP options.',
-    cta: 'Explore VIP options',
+    /* Corrections v2 §8 — the destination stays /vip; the words stop asking the
+       reader to know what VIP means. No benefits invented. */
+    body: 'If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.',
+    cta: 'Explore high-volume options',
     ctaHref: 'vip.html',
   },
 
@@ -143,7 +153,7 @@ const COPY = {
       ['How do I choose the right PlagiarismSearch plan?', 'Start with how much content you expect to check and which additional features you need. Use the One-time, Monthly, 3-Months, and Yearly tabs to compare the current price, checking allowance, billing period, and included features for each plan.'],
       ['Do one-time packages expire?', 'No. A purchased one-time quota does not expire, so you can use it when you need it rather than within a fixed billing period.'],
       ['Is AI checking included with every plagiarism plan?', 'Not necessarily. AI allowance is plan-specific. If AI checking is included with a plan, the current pricing widget shows the available AI allowance in that plan’s features. Separate AI word packages are also available on this page.'],
-      ['Do all plans include API access and Storage?', 'No. API access and Storage are plan-specific features. Check the current pricing widget to see which options are included with the plan you are considering.'],
+      ['Do all plans include API access and report storage?', 'No. API access and report storage are plan-specific features. Check the current pricing widget to see which options are included with the plan you are considering.'],
       ['Can I buy AI checking separately?', 'Yes. Separate AI word packages are available for users who need additional AI checking volume. AI checks use an AI word balance that is separate from plagiarism checking.'],
       ['Can I try PlagiarismSearch before I buy a plan?', 'Yes. You can run a plagiarism check of up to 150 words without creating an account. New accounts also receive a one-time 1,000-word credit that can be used for plagiarism or AI checking.'],
       ['What if the standard plans do not fit my volume?', 'Explore the VIP options if you need a higher-volume or custom arrangement beyond the standard pricing choices.'],
@@ -224,7 +234,7 @@ ${eyebrow('teal-400', COPY.s1.eyebrow)}
 
       <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
         <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
-${COPY.s1.tabs.map(([k, label]) => `          <button type="button" data-period="${k}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">${label}</button>`).join('\n')}
+${COPY.s1.tabs.map(([k, label]) => `          <button type="button" data-period="${k}" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">${label}</button>`).join('\n')}
         </div>
       </div>
 
@@ -262,11 +272,10 @@ ${dark ? `              <span class="text-[9.5px] font-bold tracking-widest bg-o
 
 /* ═══════════════ 02 · CORE PRODUCT VALUE ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · CORE PRODUCT VALUE =================
-       Exactly six factual capabilities. The mock carries twelve cards and the brief is
-       explicit that the count is not required — "do not add placeholder cards merely to
-       preserve the mock's 12-card count" — so the grid is a bento built for six.
-
-       Double-bezel cards, the vocabulary the homepage capabilities grid established. -->
+       Three content groups (Corrections v2 §6), not six equal cards. The first group is
+       the one with a proof figure, so it gets the lead: a tall double-bezel card with the
+       figure in the homepage's statistic treatment. The other two stack beside it in the
+       same vocabulary at the smaller size. Same words, three weights. -->
   <section id="core-value" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
@@ -275,20 +284,27 @@ ${eyebrow('orange-500', COPY.s2.eyebrow, 'ink')}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s2.intro}</p>
       </div>
 
-      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
-${COPY.s2.cards.map(([head, body, label, icon, span, tint]) => {
-  const wide = span === 'lg:col-span-3';
+      <div class="rv-kids grid lg:grid-cols-[1.15fr_1fr] gap-4 lg:gap-5">
+${COPY.s2.groups.map(([head, body, proof, icon, tint], i) => {
+  const lead = i === 0;
   const CHIP = { teal: ['bg-teal-100', '#06748A'], ink: ['bg-ink-100', '#374151'], orange: ['bg-orange-100', '#B84431'] }[tint];
-  return `        <div class="min-w-0 ${span} rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+  const card = `        <div class="min-w-0 ${lead ? 'lg:row-span-2' : ''} rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
           <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
-            <span class="inline-flex ${wide ? 'w-12 h-12' : 'w-11 h-11'} rounded-xl sm:rounded-[14px] lg:rounded-2xl ${CHIP[0]} items-center justify-center mb-4 sm:mb-5">
-              <svg width="${wide ? 22 : 20}" height="${wide ? 22 : 20}" viewBox="0 0 24 24" fill="none" stroke="${CHIP[1]}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+            <span class="inline-flex ${lead ? 'w-12 h-12' : 'w-11 h-11'} rounded-xl sm:rounded-[14px] lg:rounded-2xl ${CHIP[0]} items-center justify-center mb-4 sm:mb-5">
+              <svg width="${lead ? 22 : 20}" height="${lead ? 22 : 20}" viewBox="0 0 24 24" fill="none" stroke="${CHIP[1]}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
             </span>
-            <h3 class="${wide ? 'text-[19px] sm:text-[21px] lg:text-[22px]' : 'text-[17px] sm:text-[18px] lg:text-[19px]'} font-bold tracking-tight mb-2.5">${head}</h3>
-            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">${body}</p>
-            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">${label}</p>
+            <h3 class="${lead ? 'text-[19px] sm:text-[21px] lg:text-[23px]' : 'text-[17px] sm:text-[18px] lg:text-[19px]'} font-bold tracking-tight mb-2.5">${head}</h3>
+            <p class="${lead ? '' : 'flex-1 '}text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">${body}</p>${proof ? `
+            <!-- the proof, in the statistic treatment the homepage gives its figures -->
+            <div class="mt-auto pt-8 sm:pt-10 lg:pt-12">
+              <div class="rounded-2xl sm:rounded-3xl bg-teal-50 ring-1 ring-teal-600/10 px-5 py-5 sm:px-6 sm:py-6">
+                <p class="text-[34px] sm:text-[40px] lg:text-[48px] font-extrabold tracking-tightest nums leading-none text-teal-800">${proof[0]}</p>
+                <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mt-2">${proof[1]}</p>
+              </div>
+            </div>` : ''}
           </div>
         </div>`;
+  return card;
 }).join('\n')}
       </div>
     </div>
@@ -325,27 +341,41 @@ ${eyebrowDark('teal-400', COPY.s3.eyebrow)}
         </div>
 
         <div class="rv min-w-0">
-          <!-- the table scrolls inside its own box rather than shrinking to microscopic
-               text, which is what the responsive rules ask for -->
-          <div class="rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-1.5 sm:p-2">
-            <div class="rounded-[18px] sm:rounded-3xl bg-white overflow-hidden">
-              <div class="overflow-x-auto">
-                <table class="w-full min-w-[420px] text-left">
-                  <thead>
-                    <tr class="border-b border-ink-100">
-${COPY.s3.tableHeads.map((h, i) => `                      <th scope="col" class="px-5 sm:px-6 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500${i ? ' ' : ''}${i === 2 ? 'text-right' : ''}">${h}</th>`).join('\n')}
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-ink-100">
-${COPY.s3.packages.map(([words, billing, price]) => `                    <tr class="ai-row">
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-bold tracking-tight tabular-nums">${words}</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[13px] text-ink-600">${billing}</td>
-                      <td class="px-5 sm:px-6 py-3.5 text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">${price}</td>
-                    </tr>`).join('\n')}
-                  </tbody>
-                </table>
+          <!-- Corrections v2 §4: a selector, not a table. Native radios carry the
+               keyboard model and the one-at-a-time rule; the drawn dot and the check mark
+               carry the selected state without leaning on colour alone. -->
+          <p id="aiHelp" class="mb-4 text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/80">${COPY.s3.selectHelper}</p>
+          <fieldset class="m-0 p-0 border-0 min-w-0">
+            <legend class="sr-only">AI word package</legend>
+            <div class="rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-1.5 sm:p-2">
+              <div class="rounded-[18px] sm:rounded-3xl bg-white overflow-hidden">
+                <div class="grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3.5 border-b border-ink-100" aria-hidden="true">
+                  <span></span>
+${COPY.s3.tableHeads.map((h, i) => `                  <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500${i === 2 ? ' text-right' : ''}">${h}</span>`).join('\n')}
+                </div>
+                <div class="divide-y divide-ink-100">
+${COPY.s3.packages.map(([words, billing, price]) => `                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                    <input type="radio" name="aiPackage" value="${words.replace(/,/g, '')}" data-billing="${billing}" data-price="${price}" class="sr-only"${words === COPY.s3.defaultPackage ? ' checked' : ''}>
+                    <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <span class="text-[14.5px] font-bold tracking-tight tabular-nums text-ink-900">${words}</span>
+                    <span class="text-[13px] text-ink-600">${billing}</span>
+                    <span class="text-[14.5px] font-semibold text-ink-900 tabular-nums text-right">${price}</span>
+                  </label>`).join('\n')}
+                </div>
               </div>
             </div>
+          </fieldset>
+
+          <!-- the one continuation action. No href: the checkout route is not known to
+               the prototype and the brief says not to invent one. data-purchase-hook and
+               the data-ai-* attributes are the developer's binding point. -->
+          <div class="mt-5 sm:mt-6">
+            <button type="button" id="aiContinue" data-purchase-hook="ai-package" data-ai-words="${COPY.s3.defaultPackage.replace(/,/g, '')}" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+              <span>${COPY.s3.continueLabel[0]}<span class="js-ai-words tabular-nums">${COPY.s3.defaultPackage}</span>${COPY.s3.continueLabel[1]}</span>
+              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center">${arrow}</span>
+            </button>
           </div>
 
           <div class="mt-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
@@ -363,28 +393,43 @@ const section4 = () => `  <!-- ================= 04 · OTHER WRITING SERVICES ==
        usage. It must take materially less space and visual weight than the main pricing
        widget or AI pricing section."
 
-       So: one row, flat cards rather than the double-bezel used for the capabilities,
-       a short section rather than a full act, and no illustration. -->
+       The cards are the first version's (site/prices.html, "Additional services"):
+       a tinted icon chip, the name, a quiet description, and a footer that sets the
+       price as a figure — or a mint pill where the service is free — beside the link.
+       What keeps it secondary is the section, not the card: a short band rather than a
+       full act. The heading is the page's h2, set left like every other section heading;
+       the row runs to 1200. Words are DEC-0042's. -->
   <section id="services" class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-7 sm:mb-8">
+      <div class="rv max-w-[720px] mb-7 sm:mb-8 lg:mb-10">
 ${eyebrow('orange-500', COPY.s4.eyebrow)}
-        <h2 class="text-[22px] sm:text-[25px] lg:text-[28px] font-extrabold tracking-tightest leading-[1.1] mb-3">${COPY.s4.h2}</h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s4.intro}</p>
+        ${h2(COPY.s4.h2)}
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s4.intro}</p>
       </div>
 
-      <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5">
-${COPY.s4.items.map(([head, body, price, label, href]) => `        <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 flex flex-col">
-          <div class="flex items-baseline justify-between gap-3 mb-2">
-            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">${head}</h3>
-            <span class="shrink-0 text-[12.5px] font-bold tabular-nums text-teal-700">${price}</span>
+      <div class="rv-kids grid md:grid-cols-3 gap-4 lg:gap-5 max-w-[1200px]">
+${COPY.s4.items.map(([head, body, price, label, href, icon, tint]) => {
+  const CHIP = { orange: ['bg-orange-100', '#B84431'], mint: ['bg-mint-100', '#1B7A50'], teal: ['bg-teal-100', '#06748A'] }[tint];
+  /* "From $3.50" stays one phrase: the word small, the figure as a figure */
+  const m = price.match(/^(From)\s+(\S+)$/);
+  const priceHtml = m
+    ? `<span class="text-[12px] font-medium text-ink-500 mr-1">${m[1]}</span><span class="text-[20px] sm:text-[22px] lg:text-[24px] font-extrabold tracking-tightest nums">${m[2]}</span>`
+    : `<span class="text-[12px] font-bold tracking-[0.12em] uppercase text-mint-700 bg-mint-100 rounded-full px-3 py-1.5">${price}</span>`;
+  return `        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8 flex flex-col">
+          <span class="w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl ${CHIP[0]} flex items-center justify-center mb-4 lg:mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${CHIP[1]}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+          </span>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">${head}</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-500 mb-4 sm:mb-5 lg:mb-6">${body}</p>
+          <div class="mt-auto flex items-end justify-between gap-3">
+            <div class="flex items-baseline">${priceHtml}</div>
+            <a href="${href}" class="shrink-0 inline-flex items-center gap-1.5 text-[13px] font-semibold text-teal-700 hover:text-teal-800 transition-colors duration-300">
+              ${label}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
           </div>
-          <p class="flex-1 text-[13px] leading-relaxed text-ink-600 mb-4">${body}</p>
-          <a href="${href}" class="inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink-700 hover:text-ink-900 transition-colors duration-300">
-            ${label}
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
-        </div>`).join('\n')}
+        </div>`;
+}).join('\n')}
       </div>
     </div>
   </section>`;
@@ -420,7 +465,7 @@ const section6 = () => `  <!-- ================= 06 · PRICING FAQ =============
         <div class="rv lg:sticky lg:top-28">
 ${eyebrow('orange-500', 'Questions')}
           ${h2(COPY.s6.h2)}
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-ink-600">${COPY.s6.footer}</p>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s6.footer}</p>
           <div class="mt-5 lg:mt-6">${linkQuiet(COPY.s6.cta, COPY.s6.ctaHref)}</div>
         </div>
 
@@ -489,9 +534,17 @@ const STYLE = `
   .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
   .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
 
-  /* the AI table */
-  .ai-row { transition:background-color .15s ease; }
-  .ai-row:hover { background:#F2FAFB; }
+  /* the AI package selector. The selected row is tinted AND carries the filled dot with
+     a check mark, so the state survives without colour. Keyboard focus lands on the
+     hidden radio, so the ring is drawn on the row that contains it. */
+  .ai-opt { transition:background-color .15s ease; }
+  .ai-opt:hover { background:#F2FAFB; }
+  .ai-opt.on { background:#E6F4F7; }
+  .ai-opt .ai-dot { background:#fff; transition:background-color .15s ease, box-shadow .15s ease; }
+  .ai-opt .ai-dot svg { opacity:0; }
+  .ai-opt.on .ai-dot { background:#0991A8; box-shadow:inset 0 0 0 1px #0991A8; }
+  .ai-opt.on .ai-dot svg { opacity:1; }
+  .ai-opt:has(input:focus-visible) { outline:2px solid #6ED7E8; outline-offset:-2px; }
 
   /* the bento hover from the homepage capabilities grid */
   .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
@@ -572,7 +625,11 @@ ${cta.script}
   const render = key => {
     const period = PLANS[key];
     if (!period) return;
-    tabs.forEach(t => t.classList.toggle('active', t.dataset.period === key));
+    tabs.forEach(t => {
+      const on = t.dataset.period === key;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-pressed', String(on));
+    });
     helper.hidden = key !== 'onetime';
     cards.forEach(card => {
       const tier = period[card.dataset.tier];
@@ -587,6 +644,25 @@ ${cta.script}
 
   tabs.forEach(t => t.addEventListener('click', () => render(t.dataset.period)));
   render('onetime');
+
+  /* ── the AI package selector ──────────────────────────────────────────────
+     One radio group; the checked one names the allowance on the button and stamps it
+     on the data hook a developer binds the real purchase flow to. */
+  const radios = [...document.querySelectorAll('input[name="aiPackage"]')];
+  const go = document.getElementById('aiContinue');
+  if (radios.length && go) {
+    const fmt = n => Number(n).toLocaleString('en-US');
+    const syncAi = () => {
+      const r = radios.find(x => x.checked) || radios[0];
+      radios.forEach(x => x.closest('.ai-opt').classList.toggle('on', x === r));
+      go.querySelector('.js-ai-words').textContent = fmt(r.value);
+      go.dataset.aiWords = r.value;
+      go.dataset.aiBilling = r.dataset.billing;
+      go.dataset.aiPrice = r.dataset.price;
+    };
+    radios.forEach(x => x.addEventListener('change', syncAi));
+    syncAi();
+  }
 
   /* FAQ: answers are already in the DOM; this only opens and closes them */
   document.querySelectorAll('.faq-q').forEach(q => {
@@ -640,7 +716,10 @@ head = head.replace('<title>', '<link rel="canonical" href="' + COPY.canonical +
 
 const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
 
-const sections = [section1, section2, section3, section4, section5, section6, section7];
+/* Corrections v2 §7: high-volume/custom access continues the pricing intent; the
+   writing services are peripheral and stay behind it. The section numbers in the
+   builders keep their DEC-0042 names; only the page order changes. */
+const sections = [section1, section2, section3, section5, section4, section6, section7];
 
 const html = head + STYLE + '\n' + bodyTag + `
 <div class="grain"></div>
