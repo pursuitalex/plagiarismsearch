@@ -25,7 +25,6 @@ const STUBS = [
   { slug: 'integration-guide',                     label: 'Moodle Integration',        group: 'Products · Integrations' },
   { slug: 'how-to-use-plagiarismsearch-google-add-on', label: 'Google Docs Add-on',    group: 'Products · Integrations' },
   { slug: 'plagiarism-checker-for-organization',   label: 'Business & Teams',          group: 'Solutions · For organizations', note: 'Existing URL; the brief says the page content will be completely rebuilt.' },
-  { slug: 'plagiarism-checker-for-students',       label: 'Students',                  group: 'Solutions · For individuals',   note: 'Existing URL; a substantial rewrite is planned.' },
   { slug: 'testimonials',                          label: 'Reviews',                   group: 'Company' },
   { slug: 'powerpoint-plagiarism-checker',         label: 'PowerPoint Plagiarism Checker', group: 'Footer · Popular Checks',   note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
   { slug: 'pdf-plagiarism-checker',                label: 'PDF Plagiarism Checker',    group: 'Footer · Popular Checks',       note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },

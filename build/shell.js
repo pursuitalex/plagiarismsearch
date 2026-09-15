@@ -96,6 +96,8 @@ const PAGES = {
   /* the DEC-0043 institutional page — a real page now, not a stub */
   'university-plagiarism-checker.html': { active: 'solutions' },
   'university-plagiarism-checker-v2.html': { active: 'solutions' },
+  /* the Students page to the 2026-09-15 brief — the stub graduated */
+  'plagiarism-checker-for-students.html': { active: 'solutions' },
   'paper-analysis.html':         { active: null },
   'readability-check.html':      { active: null },
   'spell-check.html':            { active: null },

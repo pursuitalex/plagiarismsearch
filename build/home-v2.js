@@ -685,6 +685,9 @@ const S = COPY;
    neither section depends on the other still being on the page. */
 /* the dot field is shared now — build/dots.js — so every hero on the tint has it */
 const { dots } = require('./dots');
+/* the quick-check form is shared too — build/checker.js — so Students and PDF render
+   the same component; the homepage's markup is unchanged */
+const checker = require('./checker');
 
 const section1 = () => `
   <!-- ================= 01 · HERO / REAL CHECKER =================
@@ -706,67 +709,9 @@ const section1 = () => `
         <p id="heroSupport" class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">${S.s1.support}</p>
       </div>
 
-      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-        <form class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+${checker.form(S.s1, '#checker')}
 
-          <label for="checkText" class="sr-only">${S.s1.placeholder}</label>
-          <!-- the count belongs to the text, so it sits in the corner of the field
-               rather than in a footer two rows away from what it counts -->
-          <div class="relative mb-4">
-            <textarea id="checkText" rows="4" class="qc-area block pr-24" placeholder="${S.s1.placeholder}"></textarea>
-            <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span id="wordCount">0</span> / 150 words</span>
-          </div>
-
-          <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
-               formats line it carried reappears under the input chips instead. The two
-               are exclusive — one display query, never both on screen — so the approved
-               sentence still appears exactly once at any width. -->
-          <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
-            <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.upload}</svg>
-            </span>
-            <span class="min-w-0 flex-1">
-              <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
-              <span class="block text-[12px] text-ink-500">${S.s1.formats}</span>
-            </span>
-          </div>
-
-          <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
-            ${S.s1.inputs.map(chipGlyph).join(NL12)}
-          </div>
-          <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">${S.s1.formats}</p>
-
-          <!-- The two checks sit beside the button they modify, not in a row of their own.
-               The row itself never wraps: the button keeps the right edge at every width,
-               and it is the checks that give — side by side where they fit, stacked below
-               640 where the pair needs about 300px and the form only has 295. -->
-          <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
-            <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
-              <label class="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" id="optPlag" checked class="sr-only peer">
-                <span class="sw on" data-for="optPlag"></span>
-                <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">${S.s1.checkPlagiarism}</span>
-              </label>
-              <label class="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" id="optAI" class="sr-only peer">
-                <span class="sw" data-for="optAI"></span>
-                <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">${S.s1.checkAI}</span>
-              </label>
-            </div>
-            <a href="#checker" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
-              ${S.s1.cta}
-              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </span>
-            </a>
-          </div>
-        </form>
-      </div>
-
-      <p class="mt-5 sm:mt-6 flex items-center justify-center gap-2 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">
-        <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.sparkles}</svg>
-        ${S.s1.free}
-      </p>
+${checker.free(S.s1)}
     </div>
   </section>`;
 

@@ -35,6 +35,7 @@ driven by this table.
 | `blog-best-checker-2026.html` | `/blog/best-plagiarism-checker-in-2026` | built |  |
 | `university-plagiarism-checker.html` | `/university-plagiarism-checker` | built | The DEC-0043 institutional solution page, v1. Built by build/university.js, checked by build/check-university.js. Version switcher to v2. |
 | `university-plagiarism-checker-v2.html` | `/university-plagiarism-checker` | built | The University page to the v2 brief of 2026-09-04: nine sections, a proof type per act (hub, report, relationship map, source map, decision tree). Built by build/university-v2.js, checked by build/check-university-v2.js. |
+| `plagiarism-checker-for-students.html` | `/plagiarism-checker-for-students` | built | The Students page to the 2026-09-15 brief: the real checker in a two-column hero, the shared report with the student principle, a decision-shaped review workflow. Replaced the stub. Built by build/students.js, checked by build/check-students.js. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
 | `paper-analysis.html` | `/rate-my-paper` | built · out of global nav |  |
 | `spell-check.html` | `/spell-checker` | built · out of global nav |  |
@@ -46,7 +47,6 @@ driven by this table.
 | `integration-guide.html` | `/integration-guide` | stub | Approved destination, page not designed yet. |
 | `how-to-use-plagiarismsearch-google-add-on.html` | `/how-to-use-plagiarismsearch-google-add-on` | stub | Approved destination, page not designed yet. |
 | `plagiarism-checker-for-organization.html` | `/plagiarism-checker-for-organization` | stub | Existing URL; the brief says the page content will be completely rebuilt. |
-| `plagiarism-checker-for-students.html` | `/plagiarism-checker-for-students` | stub | Existing URL; a substantial rewrite is planned. |
 | `testimonials.html` | `/testimonials` | stub | Approved destination, page not designed yet. |
 | `powerpoint-plagiarism-checker.html` | `/powerpoint-plagiarism-checker` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
 | `pdf-plagiarism-checker.html` | `/pdf-plagiarism-checker` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
@@ -59,8 +59,8 @@ driven by this table.
 
 ## Counts
 
-- 21 × built
-- 13 × stub
+- 22 × built
+- 12 × stub
 - 7 × no approved path
 - 4 × built · out of global nav
 
