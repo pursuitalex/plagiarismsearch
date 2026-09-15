@@ -113,6 +113,26 @@ console.log('\ndesign system');
 }
 
 /* ── 5. the responsive ramp ─────────────────────────────────────────────── */
+/* DESIGN.md § The compact dark banner: every rounded bg-ink-950 box with the banner's
+   padding carries the banner's h2. The closing CTA band has no such padding and is not
+   swept in; a dark act (a whole section) is not a rounded box and is not either. */
+{
+  const BOX = /class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10"/g;
+  const H2 = 'text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]';
+  const off = [];
+  let boxes = 0;
+  for (const f of pages) {
+    const html = fs.readFileSync(path.join(SITE, f), 'utf8');
+    for (const m of html.matchAll(BOX)) {
+      boxes++;
+      const box = html.slice(m.index, html.indexOf('</section>', m.index));
+      const h2 = (box.match(/<h2 class="([^"]*)"/) || [, ''])[1];
+      if (!h2.startsWith(H2)) off.push(f + ' (' + (h2.split(' ').slice(0, 3).join(' ') || 'no h2') + ')');
+    }
+  }
+  ok(boxes + ' compact dark banners carry the one banner h2', boxes > 0 && !off.length, off.join(', '));
+}
+
 console.log('\nresponsive ramp');
 {
   /* Large values must not be flat: a 40px radius or a 30px type size with no breakpoint

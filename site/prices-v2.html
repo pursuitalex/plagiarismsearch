@@ -731,13 +731,15 @@ tailwind.config = {
             </div>
           </fieldset>
 
-          <!-- the one continuation action. No href: the checkout route is not known to
-               the prototype and the brief says not to invent one. data-purchase-hook and
-               the data-ai-* attributes are the developer's binding point. -->
+          <!-- the one continuation action, in the site's accent (the header's Check free
+               button): white would vanish against the white selector above it. No href:
+               the checkout route is not known to the prototype and the brief says not to
+               invent one. data-purchase-hook and the data-ai-* attributes are the
+               developer's binding point. -->
           <div class="mt-5 sm:mt-6">
-            <button type="button" id="aiContinue" data-purchase-hook="ai-package" data-ai-words="10000" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            <button type="button" id="aiContinue" data-purchase-hook="ai-package" data-ai-words="10000" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
               <span>Continue with <span class="js-ai-words tabular-nums">10,000</span> AI words</span>
-              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/15 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
             </button>
           </div>
 
@@ -753,19 +755,23 @@ tailwind.config = {
   <!-- ================= 05 · CUSTOM & HIGH VOLUME =================
        The dark banner the brief calls for, and the page's second dark beat. Neutral by
        instruction: no VIP benefits, pricing, discounts, submission quantities, dedicated
-       manager, invoicing or Storage promises — only the approved sentence and the link. -->
-  <section id="high-volume" class="relative py-12 sm:py-16 lg:py-20 bg-white overflow-hidden">
+       manager, invoicing or Storage promises — only the approved sentence and the link.
+
+       The shell is build/banner.js — the same block the AI Detector page gives its API
+       and the University page gives AI checking. It used to carry its own heading size
+       and padding here; that was drift, not a decision. -->
+  <section id="high-volume" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-9 sm:py-10 lg:px-12 lg:py-11">
-        <div class="orb absolute" style="width:560px;height:540px;right:-6%;top:-240px;background:rgba(243,111,90,.18)"></div>
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
+        <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(243,111,90,.18)"></div>
         <div class="relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
           <div class="min-w-0 flex-1 text-white">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-3.5">
           <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">CUSTOM &amp; HIGH VOLUME</span>
         </div>
-            <h2 class="text-[20px] sm:text-[23px] lg:text-[26px] font-bold tracking-tight leading-[1.2] mb-3">Need a custom or high-volume option?</h2>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70 max-w-[62ch]">If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.</p>
+            <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-3">Need a custom or high-volume option?</h2>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60 max-w-[62ch]">If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.</p>
           </div>
           <div class="shrink-0"><a href="vip.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
             Explore high-volume options

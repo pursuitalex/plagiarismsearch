@@ -32,6 +32,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'prices-v2.html';
 const cta = require('./cta');
+const banner = require('./banner');
 const { PLANS, LABEL } = require('./pricing-data');   /* TAGLINE is the homepage's; DEC-0042 grants no plan subtitle */
 
 const HELP = 'https://plagiarismsearch.com/faq-and-support';   /* live production, no page here */
@@ -368,13 +369,15 @@ ${COPY.s3.packages.map(([words, billing, price]) => `                  <label cl
             </div>
           </fieldset>
 
-          <!-- the one continuation action. No href: the checkout route is not known to
-               the prototype and the brief says not to invent one. data-purchase-hook and
-               the data-ai-* attributes are the developer's binding point. -->
+          <!-- the one continuation action, in the site's accent (the header's Check free
+               button): white would vanish against the white selector above it. No href:
+               the checkout route is not known to the prototype and the brief says not to
+               invent one. data-purchase-hook and the data-ai-* attributes are the
+               developer's binding point. -->
           <div class="mt-5 sm:mt-6">
-            <button type="button" id="aiContinue" data-purchase-hook="ai-package" data-ai-words="${COPY.s3.defaultPackage.replace(/,/g, '')}" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            <button type="button" id="aiContinue" data-purchase-hook="ai-package" data-ai-words="${COPY.s3.defaultPackage.replace(/,/g, '')}" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
               <span>${COPY.s3.continueLabel[0]}<span class="js-ai-words tabular-nums">${COPY.s3.defaultPackage}</span>${COPY.s3.continueLabel[1]}</span>
-              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center">${arrow}</span>
+              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/15 items-center justify-center">${arrow}</span>
             </button>
           </div>
 
@@ -438,22 +441,19 @@ ${COPY.s4.items.map(([head, body, price, label, href, icon, tint]) => {
 const section5 = () => `  <!-- ================= 05 · CUSTOM & HIGH VOLUME =================
        The dark banner the brief calls for, and the page's second dark beat. Neutral by
        instruction: no VIP benefits, pricing, discounts, submission quantities, dedicated
-       manager, invoicing or Storage promises — only the approved sentence and the link. -->
-  <section id="high-volume" class="relative py-12 sm:py-16 lg:py-20 bg-white overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-9 sm:py-10 lg:px-12 lg:py-11">
-        <div class="orb absolute" style="width:560px;height:540px;right:-6%;top:-240px;background:rgba(243,111,90,.18)"></div>
-        <div class="relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
-          <div class="min-w-0 flex-1 text-white">
-${eyebrowDark('orange-500', COPY.s5.eyebrow)}
-            <h2 class="text-[20px] sm:text-[23px] lg:text-[26px] font-bold tracking-tight leading-[1.2] mb-3">${COPY.s5.h2}</h2>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70 max-w-[62ch]">${COPY.s5.body}</p>
-          </div>
-          <div class="shrink-0">${btnLight(COPY.s5.cta, COPY.s5.ctaHref)}</div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+       manager, invoicing or Storage promises — only the approved sentence and the link.
+
+       The shell is build/banner.js — the same block the AI Detector page gives its API
+       and the University page gives AI checking. It used to carry its own heading size
+       and padding here; that was drift, not a decision. -->
+${banner({
+    id: 'high-volume',
+    orb: 'rgba(243,111,90,.18)',
+    eyebrow: ['orange-500', COPY.s5.eyebrow],
+    h2: COPY.s5.h2,
+    lead: COPY.s5.body, leadMax: '62ch',
+    action: banner.btn(COPY.s5.cta, COPY.s5.ctaHref),
+  })}`;
 
 /* ═══════════════ 06 · PRICING FAQ ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · PRICING FAQ =================

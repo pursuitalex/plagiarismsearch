@@ -28,7 +28,8 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'ai-detector-v2.html';
-const cta = require('./cta');   /* the closing band — recipe and reasoning live there */
+const cta = require('./cta');
+const banner = require('./banner');   /* the closing band — recipe and reasoning live there */
 
 /* ─────────────────────────────────────────────────────────────────────────────
    APPROVED COPY — DEC-0038, 2026-08-22. Verbatim.
@@ -825,24 +826,18 @@ const section7 = () => `  <!-- ================= 07 · AI DETECTION THROUGH THE 
 
        Not one word is rewritten. The approved sentences are split at their own full
        stops and given the weight each one's job deserves. -->
-  <section id="ai-api" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
-        <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(44,195,219,.18)"></div>
-        <div class="relative grid lg:grid-cols-[1.4fr_1fr] gap-7 lg:gap-12 items-center">
-
-          <div class="min-w-0 text-white">
-        ${eyebrowDark('teal-400', 'API').replace('mb-4 sm:mb-5 lg:mb-6', 'mb-3.5')}
-            <h2 class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] mb-3">${COPY.s7.h2}</h2>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/80 max-w-[54ch]">${COPY.s7.lead}</p>
-            <p class="inline-flex items-center gap-2 rounded-full bg-teal-400/10 ring-1 ring-teal-400/30 px-3.5 py-1.5 mt-3 text-[12.5px] sm:text-[13px] font-semibold text-teal-200">
+${banner({
+    id: 'ai-api',
+    orb: 'rgba(44,195,219,.18)',
+    eyebrow: ['teal-400', 'API'],
+    h2: COPY.s7.h2,
+    lead: COPY.s7.lead, leadMax: '54ch',
+    after: `            <p class="inline-flex items-center gap-2 rounded-full bg-teal-400/10 ring-1 ring-teal-400/30 px-3.5 py-1.5 mt-3 text-[12.5px] sm:text-[13px] font-semibold text-teal-200">
               <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>${COPY.s7.note}
             </p>
-            <p class="mt-3.5 text-[13px] sm:text-[13.5px] leading-relaxed text-white/55 max-w-[58ch]">${COPY.s7.support}</p>
-            <div class="mt-6">${btnLight(COPY.s7.cta, COPY.s7.ctaHref)}</div>
-          </div>
-
-          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
+            <p class="mt-3.5 ${banner.SUPPORT} max-w-[58ch]">${COPY.s7.support}</p>`,
+    action: banner.btn(COPY.s7.cta, COPY.s7.ctaHref),
+    aside: `          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
             <p class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
               <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COPY.s7.branch.parent[1]}</svg>
               ${COPY.s7.branch.parent[0]}
@@ -860,11 +855,8 @@ ${COPY.s7.branch.children.map(([label, icon]) => {
               </div>`;
 }).join('\n')}
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+          </div>`,
+  })}`;
 
 /* ═══════════════ 08 · AI PRICING ═══════════════ */
 const section8 = () => `  <!-- ================= 08 · AI PRICING =================

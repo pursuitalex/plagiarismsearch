@@ -555,6 +555,35 @@ four carry weight:
 4. **Hero-scale heading**, `clamp(2.4rem,5.5vw,4.35rem)` — the one place a non-hero
    heading takes the hero size, because a closing CTA is deliberately roomier.
 
+#### The compact dark banner — `build/banner.js`
+
+The other dark block, and the one that is **not** a CTA band: a rounded `bg-ink-950` box
+that sits between sections, says one thing about a capability that lives on another page,
+and links there (API on the AI Detector page, AI checking on University, high volume on
+Pricing). It is a heading block, not a smaller act, so it takes heading-block sizes:
+
+| part | value |
+|---|---|
+| section | `py-10 sm:py-12 lg:py-14`, white ground |
+| box | `rounded-3xl sm:rounded-4xl` · `px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10` · one orb top-right |
+| eyebrow | the one eyebrow scale, `bg-white/10 ring-white/15`, `mb-3.5` |
+| h2 | `text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]` — the dark accent card's heading, shared |
+| lead | the heading-block ramp `14.5 / 15 / 15.5`, `text-white/60` — the dark accent card's support colour, so every dark block's support line is one colour |
+| detail | `13 / 13.5`, `text-white/50` (5.0:1 on ink-950) |
+| action | the white button; under the text when there is an aside panel, in the right slot when there is not |
+
+**Which dark block is it?** Between sections with a link onward → this banner. A tall card
+inside a section with the 48/56px buttons and a second cell of its own → the dark accent
+card (§ Card recipes). Last thing before the footer → the closing CTA band above. The
+banner and the accent card share one heading scale and one support colour on purpose:
+what separates them is composition — a short band with the action beside the text
+against a tall double-bezel card — never the type size.
+
+> Measured 2026-09-15: three pages, three versions. Pricing had grown a 20/23/26 heading
+> over a 13.5/14.5 line — a bigger title on a smaller support line, the exact inversion
+> § Support lines forbids — because each builder carried its own copy of the shell.
+> `build/check.js` now holds every `bg-ink-950` box of this shape to the h2 above.
+
 - Counters: tween object + `onUpdate` with cached writes, `.nums` on the element
 - **`prefers-reduced-motion`**: add `.no-motion` to `<html>`, all `.rv` forced visible, final states set statically — every scripted animation needs its static fallback
 - Perf floor: animate only `transform`/`opacity`; no `backdrop-blur` on elements that repaint per frame; `will-change` only on continuously-moving nodes

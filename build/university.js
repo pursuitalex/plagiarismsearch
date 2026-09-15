@@ -27,6 +27,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'university-plagiarism-checker.html';
 const cta = require('./cta');
+const banner = require('./banner');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* /organization-management has no page in this prototype and is a live production URL,
@@ -603,25 +604,19 @@ const section9 = () => `  <!-- ================= 09 · SECONDARY AI CAPABILITY =
 
        Not one word is rewritten. The approved sentences are split at their own full
        stops and given the weight each one's job deserves. -->
-  <section id="institutional-ai" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
-        <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(154,106,222,.18)"></div>
-        <div class="relative grid lg:grid-cols-[1.4fr_1fr] gap-7 lg:gap-12 items-center">
-
-          <div class="min-w-0 text-white">
-        ${eyebrowDark('teal-400', 'AI checking').replace('mb-4 sm:mb-5 lg:mb-6', 'mb-3.5')}
-            <h2 class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] mb-3">${COPY.s9.h2}</h2>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/80 max-w-[56ch]">${COPY.s9.lead}</p>
-            <p class="mt-3 text-[13px] sm:text-[13.5px] leading-relaxed text-white/55 max-w-[60ch]">${COPY.s9.support}</p>
+${banner({
+    id: 'institutional-ai',
+    orb: 'rgba(154,106,222,.18)',
+    eyebrow: ['teal-400', 'AI checking'],
+    h2: COPY.s9.h2,
+    lead: COPY.s9.lead, leadMax: '56ch',
+    after: `            <p class="mt-3 ${banner.SUPPORT} max-w-[60ch]">${COPY.s9.support}</p>
             <p class="inline-flex items-start gap-2.5 rounded-2xl bg-orange-400/10 ring-1 ring-orange-400/30 px-4 py-3 mt-4 text-[12.5px] sm:text-[13px] leading-relaxed text-orange-100 max-w-[58ch]">
               <svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
               ${COPY.s9.clarification}
-            </p>
-            <div class="mt-6">${btnLight(COPY.s9.cta, COPY.s9.ctaHref)}</div>
-          </div>
-
-          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
+            </p>`,
+    action: banner.btn(COPY.s9.cta, COPY.s9.ctaHref),
+    aside: `          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
             <p class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
               <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COPY.s9.branch.parent[1]}</svg>
               ${COPY.s9.branch.parent[0]}
@@ -639,11 +634,8 @@ ${COPY.s9.branch.children.map(([label, icon]) => {
               </div>`;
 }).join('\n')}
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+          </div>`,
+  })}`;
 
 /* ═══════════════ 10 · INSTITUTIONAL INQUIRY ═══════════════ */
 const section10 = () => `  <!-- ================= 10 · INSTITUTIONAL PROCUREMENT / INQUIRY =================
