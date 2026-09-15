@@ -243,6 +243,7 @@ Brand marks live in `site/assets/svg/partners/`, named after the service in lowe
 ### Section rhythm
 - Vertical padding: `py-28 lg:py-36` every section; hero-type sections may go `min-h-[100dvh] flex items-center`
 - Background alternation: white → `bg-ink-50` → white…; **max one dark band** (`bg-ink-950`) per view as accent; hero tint `#F2FCFC`
+- **The hero tint carries the dot field** (`build/dots.js`, the same 22px / 2px pattern the closing band uses), as the first child of the section, under the orbs. A tinted hero without it is the same block minus its texture — the homepage had it and six other heroes did not, until 2026-09-15.
 - **Two sections on the same background = one padding, not two.** Where the alternation
   breaks and two neighbours share a background, their facing paddings stack and the gap
   doubles. Collapse it: **keep the larger padding, strip the smaller one** — `py-24 lg:py-32`

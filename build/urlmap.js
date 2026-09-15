@@ -39,7 +39,8 @@ const BUILT = [
   { file: 'help-center.html',            path: '/help-center' },
   { file: 'blog.html',                   path: '/blog' },
   { file: 'blog-best-checker-2026.html', path: '/blog/best-plagiarism-checker-in-2026' },
-  { file: 'university-plagiarism-checker.html', path: '/university-plagiarism-checker', note: 'The DEC-0043 institutional solution page. It replaced a stub rather than a previous version, so there is no v2 and no version switcher. Built by build/university.js, checked by build/check-university.js.' },
+  { file: 'university-plagiarism-checker.html', path: '/university-plagiarism-checker', note: 'The DEC-0043 institutional solution page, v1. Built by build/university.js, checked by build/check-university.js. Version switcher to v2.' },
+  { file: 'university-plagiarism-checker-v2.html', path: '/university-plagiarism-checker', note: 'The University page to the v2 brief of 2026-09-04: nine sections, a proof type per act (hub, report, relationship map, source map, decision tree). Built by build/university-v2.js, checked by build/check-university-v2.js.' },
   { file: 'vip.html',                    path: '/vip-plagiarism-checker',                   note: 'Footer only, under Plans & Legal. Not a core product; stays out of the header.' },
 
   /* built, kept, but outside the global navigation per DEC-0027 §5 */

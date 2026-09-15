@@ -33,7 +33,8 @@ driven by this table.
 | `help-center.html` | `/help-center` | built |  |
 | `blog.html` | `/blog` | built |  |
 | `blog-best-checker-2026.html` | `/blog/best-plagiarism-checker-in-2026` | built |  |
-| `university-plagiarism-checker.html` | `/university-plagiarism-checker` | built | The DEC-0043 institutional solution page. It replaced a stub rather than a previous version, so there is no v2 and no version switcher. Built by build/university.js, checked by build/check-university.js. |
+| `university-plagiarism-checker.html` | `/university-plagiarism-checker` | built | The DEC-0043 institutional solution page, v1. Built by build/university.js, checked by build/check-university.js. Version switcher to v2. |
+| `university-plagiarism-checker-v2.html` | `/university-plagiarism-checker` | built | The University page to the v2 brief of 2026-09-04: nine sections, a proof type per act (hub, report, relationship map, source map, decision tree). Built by build/university-v2.js, checked by build/check-university-v2.js. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
 | `paper-analysis.html` | `/rate-my-paper` | built · out of global nav |  |
 | `spell-check.html` | `/spell-checker` | built · out of global nav |  |
@@ -58,7 +59,7 @@ driven by this table.
 
 ## Counts
 
-- 20 × built
+- 21 × built
 - 13 × stub
 - 7 × no approved path
 - 4 × built · out of global nav

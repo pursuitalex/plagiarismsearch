@@ -133,6 +133,22 @@ console.log('\ndesign system');
   ok(boxes + ' compact dark banners carry the one banner h2', boxes > 0 && !off.length, off.join(', '));
 }
 
+/* DESIGN.md § Section rhythm: every generated hero on the #F2FCFC tint carries the dot
+   field, and it comes before the orbs. Hand-written and stub pages are not swept. */
+{
+  const HERO_PAGES = ['index-v2.html', 'ai-detector-v2.html', 'api-v2.html', 'prices-v2.html',
+                      'university-plagiarism-checker.html', 'university-plagiarism-checker-v2.html', 'newsroom.html'];
+  const bad = [];
+  for (const f of HERO_PAGES) {
+    const html = fs.readFileSync(path.join(SITE, f), 'utf8');
+    const open = html.indexOf('<section');
+    const first = html.slice(open, html.indexOf('</section>', open));
+    const d = first.indexOf('Dots" width="22"'), o = first.indexOf('class="orb');
+    if (d < 0 || (o >= 0 && d > o)) bad.push(f + (d < 0 ? ' (no field)' : ' (field over the orbs)'));
+  }
+  ok(HERO_PAGES.length + ' tinted heroes carry the dot field under the orbs', !bad.length, bad.join(', '));
+}
+
 console.log('\nresponsive ramp');
 {
   /* Large values must not be flat: a 40px radius or a 30px type size with no breakpoint

@@ -30,6 +30,10 @@ const PAIRS = {
      through build/article.js — the template lifted from the blog post */
   'plagiarism-and-ai-check-report.html':    { other: 'plagiarism-and-ai-check-report-v2.html', self: 1 },
   'plagiarism-and-ai-check-report-v2.html': { other: 'plagiarism-and-ai-check-report.html',    self: 2 },
+  /* the University page to the v2 brief of 2026-09-04: nine sections and a proof type
+     per act, beside the twelve-section v1 */
+  'university-plagiarism-checker.html':    { other: 'university-plagiarism-checker-v2.html', self: 1 },
+  'university-plagiarism-checker-v2.html': { other: 'university-plagiarism-checker.html',    self: 2 },
 };
 
 const OPEN = '<!-- VSWITCH · temporary review tool, remove with the retired version -->';

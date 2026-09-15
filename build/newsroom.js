@@ -29,6 +29,7 @@
 */
 const fs = require('fs');
 const path = require('path');
+const { dots } = require('./dots');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
@@ -292,6 +293,7 @@ const section1 = () => {
        navigation for a page that now has pagination, and it made the hero the only
        asymmetric top on the site. -->
   <section id="newsroom" class="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC]">
+    ${dots('heroDots')}
     <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
     <div class="orb w-[560px] h-[560px] bg-orange-500/10 right-[-150px] top-52"></div>
 

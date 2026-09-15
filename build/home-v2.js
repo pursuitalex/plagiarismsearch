@@ -683,15 +683,8 @@ const S = COPY;
    of baked pixels. The hero and the closing act share the same wash, so they share the
    same ground — one definition, one place to change it, a separate pattern id each so
    neither section depends on the other still being on the page. */
-const DOT = { size: 2, radius: .65, grid: 22, colour: '#DAE7ED' };
-const dots = id => `<svg class="absolute inset-0 w-full h-full" aria-hidden="true">
-        <defs>
-          <pattern id="${id}" width="${DOT.grid}" height="${DOT.grid}" patternUnits="userSpaceOnUse">
-            <rect width="${DOT.size}" height="${DOT.size}" rx="${DOT.radius}" fill="${DOT.colour}"></rect>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#${id})"></rect>
-      </svg>`;
+/* the dot field is shared now — build/dots.js — so every hero on the tint has it */
+const { dots } = require('./dots');
 
 const section1 = () => `
   <!-- ================= 01 · HERO / REAL CHECKER =================

@@ -470,6 +470,14 @@ tailwind.config = {
        per-period notes are deliberately not rendered: the brief forbids inventing
        billing or cancellation wording in the design layer. -->
   <section id="plans" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
+        <defs>
+          <pattern id="heroDots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#heroDots)"></rect>
+      </svg>
     <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
     <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 

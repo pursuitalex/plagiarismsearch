@@ -25,7 +25,8 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'api-v2.html';
-const cta = require('./cta');   /* the closing band — recipe and reasoning live there */
+const cta = require('./cta');
+const { dots } = require('./dots');   /* the closing band — recipe and reasoning live there */
 
 const DOCS = 'https://plagiarismsearch.com/docs/';   /* live production, no page here */
 
@@ -278,6 +279,7 @@ const section1 = () => `  <!-- ================= 01 · PRODUCT HERO / REAL API E
        Every character in the tabs is the brief's. The Authorization line is the
        developer-supplied example and stays until the preferred literal is given. -->
   <section id="plagiarism-api" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    ${dots('heroDots')}
     <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
     <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 

@@ -27,6 +27,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'university-plagiarism-checker.html';
 const cta = require('./cta');
+const { dots } = require('./dots');
 const banner = require('./banner');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
@@ -309,6 +310,7 @@ const section1 = () => `  <!-- ================= 01 · INSTITUTIONAL HERO ======
        institutional procurement/solution page." So the primary object is the decision,
        not a tool: category, outcome, and the two approved actions. -->
   <section id="university-plagiarism-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    ${dots('heroDots')}
     <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
     <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 

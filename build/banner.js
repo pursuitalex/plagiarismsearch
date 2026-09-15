@@ -24,7 +24,8 @@
        after: '…',                             // html under the lead: pill, note, callout
        action: banner.btn('Label', 'x.html'),  // the one action
        aside: '…',                             // optional right-hand panel; without it the
-     });                                       // action sits on the right instead
+       actionUnder: 'text',                    // action sits on the right instead. With an
+     });                                       // aside, 'aside' puts the action under it
 
    Two layouts, chosen by whether there is an aside: with one, text left and the panel
    right (1.4fr / 1fr) and the action stays under the text; without one, the action
@@ -55,16 +56,23 @@ const eyebrow = (dot, label) => `        <div class="inline-flex items-center ga
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">${label}</span>
         </div>`;
 
-const banner = ({ id, orb = 'rgba(44,195,219,.18)', eyebrow: eb, h2, lead, leadMax = '54ch', after = '', action = '', aside = '' }) => {
+const banner = ({ id, orb = 'rgba(44,195,219,.18)', eyebrow: eb, h2, lead, leadMax = '54ch', after = '', action = '', aside = '', actionUnder = 'text' }) => {
   if (!id || !h2 || !lead) throw new Error('banner: id, h2 and lead are required');
   const text = `          <div class="min-w-0${aside ? '' : ' flex-1'} text-white">
 ${eb ? eyebrow(eb[0], eb[1]) : ''}
             <h2 class="${H2}">${h2}</h2>
-            <p class="${LEAD} max-w-[${leadMax}]">${lead}</p>${after ? '\n' + after : ''}${aside && action ? `
+            <p class="${LEAD} max-w-[${leadMax}]">${lead}</p>${after ? '\n' + after : ''}${aside && action && actionUnder === 'text' ? `
             <div class="mt-6">${action}</div>` : ''}
           </div>`;
-  /* the aside IS the right-hand cell — the caller hands over the whole panel */
-  const right = aside ? aside
+  /* the aside IS the right-hand cell — the caller hands over the whole panel. With
+     actionUnder: 'aside' the action sits under that panel instead of under the text. */
+  const right = aside
+    ? (action && actionUnder === 'aside'
+        ? `          <div class="min-w-0">
+${aside}
+            <div class="mt-5">${action}</div>
+          </div>`
+        : aside)
     : action ? `          <div class="shrink-0">${action}</div>` : '';
   const grid = aside
     ? 'relative grid lg:grid-cols-[1.4fr_1fr] gap-7 lg:gap-12 items-center'

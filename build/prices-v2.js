@@ -32,6 +32,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'prices-v2.html';
 const cta = require('./cta');
+const { dots } = require('./dots');
 const banner = require('./banner');
 const { PLANS, LABEL } = require('./pricing-data');   /* TAGLINE is the homepage's; DEC-0042 grants no plan subtitle */
 
@@ -223,6 +224,7 @@ const section1 = () => `  <!-- ================= 01 · PRICING HERO + MAIN WIDGE
        per-period notes are deliberately not rendered: the brief forbids inventing
        billing or cancellation wording in the design layer. -->
   <section id="plans" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
+    ${dots('heroDots')}
     <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
     <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 

@@ -29,6 +29,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'ai-detector-v2.html';
 const cta = require('./cta');
+const { dots } = require('./dots');
 const banner = require('./banner');   /* the closing band — recipe and reasoning live there */
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -347,6 +348,7 @@ const section1 = () => `  <!-- ================= 01 · HERO + REAL AI CHECKER ==
        leaving them in the markup is what keeps a plagiarism status string from
        drifting back into the AI flow unnoticed. -->
   <section id="ai-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
+    ${dots('heroDots')}
     <div class="orb absolute" style="width:820px;height:760px;left:-14%;top:-380px;background:rgba(44,195,219,.22)"></div>
     <div class="orb absolute" style="width:680px;height:660px;right:-12%;top:-180px;background:rgba(243,111,90,.14)"></div>
 
@@ -837,17 +839,19 @@ ${banner({
             </p>
             <p class="mt-3.5 ${banner.SUPPORT} max-w-[58ch]">${COPY.s7.support}</p>`,
     action: banner.btn(COPY.s7.cta, COPY.s7.ctaHref),
+    actionUnder: 'aside',
     aside: `          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
             <p class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
               <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COPY.s7.branch.parent[1]}</svg>
               ${COPY.s7.branch.parent[0]}
             </p>
-            <div class="relative space-y-3 pl-6">
-              <span class="absolute left-0 top-7 bottom-7 w-px bg-white/15"></span>
-${COPY.s7.branch.children.map(([label, icon]) => {
+            <div class="space-y-3 pl-6">
+${COPY.s7.branch.children.map(([label, icon], i) => {
   const ai = /^AI/.test(label);
   return `              <div class="relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3">
-                <span class="absolute -left-6 top-1/2 w-5 h-px bg-white/15"></span>
+                ${i === 0
+                  ? '<span class="absolute right-full top-1/2 -bottom-3 w-6 border-t border-l border-white/15 rounded-tl-2xl" aria-hidden="true"></span>'
+                  : '<span class="absolute right-full -top-3 bottom-1/2 w-6 border-b border-l border-white/15 rounded-bl-2xl" aria-hidden="true"></span>'}
                 <span class="shrink-0 w-10 h-10 rounded-xl bg-white/[.07] ring-1 ring-white/10 flex items-center justify-center">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${ai ? '#F58971' : '#5AD3E4'}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
                 </span>

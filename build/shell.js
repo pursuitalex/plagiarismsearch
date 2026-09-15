@@ -95,6 +95,7 @@ const PAGES = {
   'plagiarism-and-ai-check-report-v2.html': { active: null },
   /* the DEC-0043 institutional page — a real page now, not a stub */
   'university-plagiarism-checker.html': { active: 'solutions' },
+  'university-plagiarism-checker-v2.html': { active: 'solutions' },
   'paper-analysis.html':         { active: null },
   'readability-check.html':      { active: null },
   'spell-check.html':            { active: null },
