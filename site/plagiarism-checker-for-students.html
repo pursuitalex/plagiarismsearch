@@ -365,11 +365,29 @@ tailwind.config = {
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
 
-<header class="fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
+<header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
+  <!-- On phones the bar starts as the floating pill every other width has, and DOCKS once
+       the page scrolls: flush to the top edge, no side gutters, square corners. One
+       class, toggled by the script at the foot of this element; nothing changes from sm
+       up. The transition is on the three properties that move and respects reduced
+       motion. -->
+  <style>
+    .site-header { transition: top .28s cubic-bezier(.32,.72,0,1), padding .28s cubic-bezier(.32,.72,0,1); }
+    .site-header .site-nav { transition: border-radius .28s cubic-bezier(.32,.72,0,1), box-shadow .28s ease, background-color .28s ease; }
+    @media (max-width: 639px) {
+      .site-header.is-docked { top: 0; padding-left: 0; padding-right: 0; }
+      .site-header.is-docked .site-nav { border-radius: 0; background-color: rgba(255,255,255,.94);
+        box-shadow: 0 1px 0 rgba(17,24,39,.07), 0 8px 24px -16px rgba(17,24,39,.18); }
+      .site-header.is-docked #navPanel { margin-left: .75rem; margin-right: .75rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .site-header, .site-header .site-nav { transition: none; } }
+  </style>
   <div class="flex justify-center">
-  <nav class="pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+  <nav class="site-nav pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
     <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-5 xl:pr-6">
-      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-6 w-auto max-w-none">
+      <!-- the mark alone on phones, so Sign in and Check free fit beside it -->
+      <img src="assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
+      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
     </a>
     <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
       <div class="nav-item relative">
@@ -429,8 +447,8 @@ tailwind.config = {
           EN<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </button>
       </div>
-      <a href="account.html" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
-      <a href="index.html#top" class="btn-press hidden sm:inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-4 sm:px-5 py-2 sm:py-2.5">Check free</a>
+      <a href="account.html" class="btn-press inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5">Check free</a>
       <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
         <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
         <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
@@ -470,13 +488,18 @@ tailwind.config = {
           English
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </button>
-        <div class="sm:hidden space-y-2">
-          <a href="account.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-ink-900 ring-1 ring-black/10 text-center hover:bg-ink-50 transition-colors duration-200">Sign in</a>
-          <a href="index.html#top" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14.5px] font-bold tracking-tight text-white bg-teal-600 hover:bg-teal-700 text-center transition-colors duration-300">Check free</a>
-        </div>
       </div>
     </div>
   </div>
+  <script>
+    (() => {
+      const h = document.currentScript.closest('.site-header');
+      if (!h) return;
+      const dock = () => h.classList.toggle('is-docked', scrollY > 8);
+      addEventListener('scroll', dock, { passive: true });
+      dock();
+    })();
+  </script>
 </header>
 
 <main>
@@ -498,37 +521,16 @@ tailwind.config = {
     <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-10 lg:gap-14 items-start">
+      <!-- three blocks: DOM order H1 → form → path, so a phone has the checker on its first
+           screen; at lg the form takes the right column across both rows -->
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
 
-        <div class="rv min-w-0 lg:pt-4">
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-1 lg:pt-4">
           <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">Plagiarism Checker for <span class="pen-word relative inline-block">Students<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 144 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c36-7 96-7 138-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span></h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch] mb-7 lg:mb-8">Check your essay, paper, assignment, thesis, or other coursework for matching text and sources before you submit. Review each match in context and decide what needs attention before you turn in your work.</p>
-
-          <!-- the pre-submission path: the brief's student story, as a strip -->
-          <ol class="flex flex-wrap items-center gap-y-2" aria-label="Before you submit">
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Draft</span>
-              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </li>
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-ink-900 text-white px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>Check</span>
-              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </li>
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Inspect the match and its source</span>
-              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </li>
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Revise deliberately</span>
-              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </li>
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Submit</span>
-            </li>
-          </ol>
+          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch]">Check your essay, paper, assignment, thesis, or other coursework for matching text and sources before you submit. Review each match in context and decide what needs attention before you turn in your work.</p>
         </div>
 
-        <div class="min-w-0">
+        <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
       <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
         <form class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
@@ -592,6 +594,31 @@ tailwind.config = {
         <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
         150 words free — no registration required.
       </p>
+        </div>
+
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
+          <!-- the pre-submission path: the brief's student story, as a strip -->
+          <ol class="flex flex-wrap items-center gap-y-2" aria-label="Before you submit">
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Draft</span>
+              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </li>
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-ink-900 text-white px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>Check</span>
+              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </li>
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Inspect the match and its source</span>
+              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </li>
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Revise deliberately</span>
+              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </li>
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Submit</span>
+            </li>
+          </ol>
         </div>
       </div>
     </div>

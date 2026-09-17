@@ -230,12 +230,21 @@ const section1 = () => `  <!-- ================= 01 · HERO / REAL STUDENT CHECK
     <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-10 lg:gap-14 items-start">
+      <!-- three blocks: DOM order H1 → form → path, so a phone has the checker on its first
+           screen; at lg the form takes the right column across both rows -->
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
 
-        <div class="rv min-w-0 lg:pt-4">
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-1 lg:pt-4">
           <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">${penMark(COPY.hero.h1, 'Students')}</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch] mb-7 lg:mb-8">${COPY.hero.support}</p>
+          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch]">${COPY.hero.support}</p>
+        </div>
 
+        <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
+${checker.form(COPY.hero, ANCHOR)}
+${checker.free(COPY.hero)}
+        </div>
+
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
           <!-- the pre-submission path: the brief's student story, as a strip -->
           <ol class="flex flex-wrap items-center gap-y-2" aria-label="Before you submit">
 ${COPY.hero.path.map((step, i) => `            <li class="flex items-center">
@@ -243,11 +252,6 @@ ${COPY.hero.path.map((step, i) => `            <li class="flex items-center">
               <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>` : ''}
             </li>`).join('\n')}
           </ol>
-        </div>
-
-        <div class="min-w-0">
-${checker.form(COPY.hero, ANCHOR)}
-${checker.free(COPY.hero)}
         </div>
       </div>
     </div>

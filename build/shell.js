@@ -98,6 +98,8 @@ const PAGES = {
   'university-plagiarism-checker-v2.html': { active: 'solutions' },
   /* the Students page to the 2026-09-15 brief — the stub graduated */
   'plagiarism-checker-for-students.html': { active: 'solutions' },
+  /* the PDF Plagiarism Checker to the 2026-09-15 brief — footer-led, no nav item */
+  'pdf-plagiarism-checker.html': { active: null },
   'paper-analysis.html':         { active: null },
   'readability-check.html':      { active: null },
   'spell-check.html':            { active: null },
