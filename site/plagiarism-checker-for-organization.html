@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>PlagiarismSearch — Business &amp; Teams</title>
+<meta name="description" content="Manage plagiarism checking across your team with member permissions, organization balances, Organization Storage, interactive reports, and optional API access." />
+<link rel="canonical" href="https://plagiarismsearch.com/plagiarism-checker-for-organization" />
+<title>Plagiarism Checker for Business &amp; Teams | PlagiarismSearch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
 tailwind.config = {
   theme: {
     extend: {
@@ -45,7 +46,6 @@ tailwind.config = {
   html { background:#fff; overflow-x: clip; }
   body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   ::selection { background:#F36F5A; color:#fff; }
-  .nums { font-variant-numeric: tabular-nums; }
 
   /* ---------- grain overlay ---------- */
   .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
@@ -57,24 +57,149 @@ tailwind.config = {
     -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
     mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
 
-  /* ---------- reveal (transform/opacity only) ---------- */
+  /* ---------- reveal (transform/opacity only — compositor-friendly) ---------- */
   .rv { opacity:0; transform:translateY(40px); }
   .no-motion .rv { opacity:1 !important; transform:none !important; }
+  .hero-float, #scanLine, #probBar { will-change: transform; }
 
-  /* ---------- shared micro-interactions ---------- */
-  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  /* ---------- scan highlights ---------- */
+  .hl { background-repeat:no-repeat; background-size:0% 100%; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
+        transition:color .3s ease; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .hl-orange { background-image:linear-gradient(to right, rgba(243,111,90,.16), rgba(243,111,90,.16)); }
+  .hl-teal   { background-image:linear-gradient(to right, rgba(12,169,195,.14), rgba(12,169,195,.14)); }
+  /* AI highlight — violet, matching the product report's colour coding */
+  .hl-ai     { background-image:linear-gradient(to right, rgba(154,106,222,.18), rgba(154,106,222,.18)); }
+  .hl.on-orange { color:#B84431; font-weight:600; }
+  .hl.on-teal { color:#06748A; font-weight:600; }
+  .hl.on-ai { color:#6D3FB0; font-weight:600; }
+
+  /* scan legend — dots light up as each category is found */
+  .lg-item { opacity:.35; transition:opacity .45s cubic-bezier(.32,.72,0,1); }
+  .lg-item.found { opacity:1; }
+  .lg-dot { box-shadow:0 0 0 0 currentColor; transition:box-shadow .45s cubic-bezier(.32,.72,0,1); }
+  .lg-item.found .lg-dot { box-shadow:0 0 0 3px color-mix(in srgb, currentColor 22%, transparent); }
+  .no-motion .lg-item { opacity:1; }
+
+  /* ================= CTA SECTION · single source of truth =================
+     Every visual knob of the closing CTA lives here as a custom property.
+     Edit these numbers (or drive them live with ?tune=cta) — nothing else needs touching.
+     Breakpoint overrides go in the two media queries at the bottom of this block. */
+  #cta {
+    /* base plate */
+    --cta-bg:          #F2FCFC;
+    /* wash: a soft directional gradient laid over the plate */
+    --cta-wash-angle:  180deg;
+    --cta-wash-from:   rgba(255,255,255,0);
+    --cta-wash-mid:    rgba(255,255,255,0);
+    --cta-wash-midpos: 50%;
+    --cta-wash-to:     rgba(255,255,255,0);
+    /* glow 1 — warm, upper left */
+    --cta-o1-rgb:   243,111,90;
+    --cta-o1-alpha: .25;
+    --cta-o1-w:     1138px;
+    --cta-o1-h:     1040px;
+    --cta-o1-x:     -22.2%;
+    --cta-o1-y:     -546px;
+    --cta-o1-mid:   54.1%;   /* where the mask drops to 50% */
+    --cta-o1-end:   83.2%;   /* where it reaches full transparency */
+    /* glow 2 — cool, lower right */
+    --cta-o2-rgb:   13,168,194;
+    --cta-o2-alpha: .15;
+    --cta-o2-w:     954px;
+    --cta-o2-h:     950px;
+    --cta-o2-x:     74.2%;
+    --cta-o2-y:     374px;
+    --cta-o2-mid:   65%;
+    --cta-o2-end:   100%;
+
+    background-color: var(--cta-bg);
+    background-image: linear-gradient(var(--cta-wash-angle),
+      var(--cta-wash-from) 0%, var(--cta-wash-mid) var(--cta-wash-midpos), var(--cta-wash-to) 100%);
+  }
+  #ctaOrb1 { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+  #ctaOrb2 { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+  /* ---- CTA · tablet (max 1023px) ---- */
+  @media (max-width:1023px) { #cta { } }
+  /* ---- CTA · mobile (max 639px) ---- */
+  @media (max-width:639px)  { #cta { } }
+
+  /* ---------- Trustpilot review rail ---------- */
+  .tp-scroll { scrollbar-width:none; -ms-overflow-style:none; }
+  .tp-scroll::-webkit-scrollbar { display:none; }
+  .tp-star { width:16px; height:16px; background:#00B67A; display:flex; align-items:center; justify-content:center; }
+  .tp-nav { transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1), box-shadow .3s ease; }
+  .tp-nav:hover { transform:translateY(-50%) scale(1.06); }
+  .tp-nav:active { transform:translateY(-50%) scale(.96); }
+  .tp-nav[disabled] { opacity:0 !important; pointer-events:none; }
+  .tp-dot { transition:width .35s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
+
+  /* ---------- language live-scan block ---------- */
+  .pill-lang { transition: background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+  .pill-lang.active { background:#111827; color:#fff; }
+
+  /* ---------- pen annotations (reduced-motion: static final state) ---------- */
+  .no-motion #freeWord, .no-motion #oneWord { color:#DC5A45; }
+  .no-motion #oneUnderline, .no-motion #freeCirclePath { opacity:1; }
+
+  /* ---------- hero paper document (Flow font renders text as redacted bars) ---------- */
+  .font-flow { font-family:'Flow Circular', cursive; }
+  /* drop-shadow on the parent: clip-path on the sheet would eat its own box-shadow,
+     while a parent filter wraps the already-clipped silhouette (incl. the dog-ear) */
+  .paper-doc { filter: drop-shadow(0 1px 2px rgba(17,24,39,.05)) drop-shadow(0 18px 36px rgba(17,24,39,.13)); }
+  .paper-doc .paper-sheet {
+    clip-path: polygon(0 0, calc(100% - 52px) 0, 100% 52px, 100% 100%, 0 100%);
+    border: 1px solid rgba(17,24,39,.07);
+    border-radius: 16px; /* rounds 3 corners + curves the border; the 4th is cut by the clip */
+  }
+  .paper-doc .paper-fold {
+    position:absolute; top:0; right:0; width:52px; height:52px;
+    background: linear-gradient(225deg, rgba(0,0,0,0) 50%, #E9EBF0 50%, #F8F9FB 98%);
+    border-bottom-left-radius: 12px;
+    filter: drop-shadow(-5px 5px 6px rgba(17,24,39,.10));
+  }
+
+  /* ---------- hero avatar stack (Figma 5379:2064 — 32px circles on a 22px step) ---------- */
+  .avatar-stack img { filter: drop-shadow(-1px 0 2px rgba(17,24,39,.07)); }
+  .avatar-stack img + img { margin-left: -10px; }
+
+  /* ---------- breathing bar ---------- */
+  @keyframes breathe { 0%,100% { width:26%; } 50% { width:38%; } }
+  .breathe { animation:breathe 4.5s cubic-bezier(.45,0,.25,1) infinite; }
+  .no-motion .breathe { animation:none; width:32%; }
+
+  @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1);} 50% { opacity:.45; transform:scale(.8);} }
+  .pulse-dot { animation:pulse-dot 2.2s ease-in-out infinite; }
+
+  /* ---------- FAQ accordion ---------- */
+  .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1); }
+  .faq-item.open .faq-a { grid-template-rows:1fr; }
+  .faq-a > div { overflow:hidden; }
+  .faq-chev { transition:transform .45s cubic-bezier(.32,.72,0,1); }
+  .faq-item.open .faq-chev { transform:rotate(180deg); }
+
+  /* ---------- persona fade ---------- */
+  /* All three panels share one grid cell, so the holder is exactly as tall as the tallest
+     of them at any width. It used to be min-h-[380px] with the inactive panels absolutely
+     positioned: a number picked for the desktop panel, which left 69px of dead space under
+     the active one on a phone and read as a broken gap above the reviews rail. */
+  .persona-panel { grid-area:1/1; transition:opacity .45s cubic-bezier(.32,.72,0,1), transform .45s cubic-bezier(.32,.72,0,1); }
+  .persona-panel.hidden-panel { opacity:0; transform:translateY(14px); pointer-events:none; }
+
+  /* ---------- buttons ---------- */
+  .btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
   .btn-press:active { transform:scale(.97); }
+  /* circle stays put; only the arrow inside rotates 45° counter-clockwise */
   .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
   .group:hover .icon-orb svg { transform:rotate(-45deg); }
 
-
-  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-
-  /* ---------- AI pricing rows ---------- */
-  .ai-row { transition:background-color .15s ease; }
-  .ai-row:hover { background:#F2FAFB; }
+  .nums { font-variant-numeric: tabular-nums; }
 
   /* ---------- island nav dropdowns ---------- */
   .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
@@ -83,26 +208,6 @@ tailwind.config = {
     transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
   .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
   @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
-
-  /* ---------- help-center search (DS input recipe, pill variant) ---------- */
-  .hc-search { width:100%; height:56px; padding:0 116px 0 50px; border-radius:9999px;
-    border:1px solid #E5E7EB; background:#fff; color:#111827; font-size:15px; font-weight:500;
-    transition:border-color .15s ease, box-shadow .15s ease; }
-  .hc-search::placeholder { color:#9CA3AF; font-weight:400; }
-  .hc-search:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
-  .hc-search::-webkit-search-cancel-button { -webkit-appearance:none; }
-
-  /* ---------- category cards ---------- */
-  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
-  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
-  .hc-go svg { transition:transform .25s cubic-bezier(.32,.72,0,1); }
-  .hc-card:hover .hc-go svg { transform:translateX(3px); }
-  @media (prefers-reduced-motion: reduce) { .hc-card, .hc-go svg { transition:none; } .hc-card:hover { transform:none; } }
-
-  /* ---------- pulse dot (support status) ---------- */
-  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
-  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
-  .no-motion .pulse-dot { animation:none; }
   /* ---------- header below lg: burger + panel ---------- */
   .nav-burger-close { display:none; }
   #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
@@ -139,8 +244,126 @@ tailwind.config = {
     .cf-label { font-size: 11.5px; }
     .ctl { font-size: 13.5px; }
   }
+  /* the scan scene pins and scrubs only from lg up; below that it is a normal section */
+  @media (min-width: 1024px) { #scanWrap { height: 285vh; } }
+
 </style>
 </head>
+
+<style>
+  [hidden] { display: none !important; }
+  section[id] { scroll-margin-top: 100px; }
+
+  a:focus-visible, button:focus-visible, select:focus-visible,
+  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
+  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible { outline-color: #6ED7E8; }
+
+  .rv-kids > * { opacity:0; transform:translateY(40px); }
+  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
+
+  /* dashed rings: Tailwind's ring is a shadow and cannot dash, so these are borders */
+  .ring-dashed { box-shadow:none !important; border:1px dashed currentColor; }
+  .ring-dashed.ring-teal-300 { border-color:#6ED7E8; }
+
+  /* the multi-select: a chip that fills when its checkbox is checked, and says so with a
+     tick, not only with colour; focus lands on the hidden input, so the ring is drawn on
+     the chip */
+  .need-chip { transition:background-color .15s ease, color .15s ease, box-shadow .15s ease; }
+  .need-chip .need-tick { display:none; }
+  .need-opt input:checked + .need-chip { background:#111827; color:#fff; box-shadow:inset 0 0 0 1px #111827; }
+  .need-opt input:checked + .need-chip .need-tick { display:block; }
+  .need-opt input:focus-visible + .need-chip { outline:2px solid #0CA9C3; outline-offset:3px; }
+  .need-opt:hover .need-chip { background:#F3F4F6; }
+  .need-opt:hover input:checked + .need-chip { background:#1F2937; }
+
+  /* ---------- the shared report component ---------- */
+  .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease;
+    border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
+    box-shadow:inset 0 -2px 0 currentColor;
+    background-image:linear-gradient(var(--wash), var(--wash));
+    background-repeat:no-repeat; background-position:left center; background-size:100% 100%; }
+  .cab-plag { --wash:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
+  .cab-ai   { --wash:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
+  .cab-plag.on { --wash:rgba(243,111,90,.4); }
+  .cab-ai.on   { --wash:rgba(168,85,247,.34); }
+  .cab-mark > span { color:#111827; }
+  .cab-src.on { background:#F8F9FB; }
+  .cab-tab { padding-bottom:10px; border-bottom:2px solid transparent; color:#4B5563; }
+  .cab-tab.on { color:#06748A; border-bottom-color:#0991A8; }
+  .cab-sources, .cab-foot { border-bottom-left-radius:1rem; border-bottom-right-radius:1rem; }
+  @media (min-width:640px) {
+    .cab-sources, .cab-foot { border-bottom-left-radius:20px; border-bottom-right-radius:20px; }
+  }
+  @media (min-width:1024px) {
+    .cab-sources, .cab-foot { border-bottom-left-radius:1.5rem; border-bottom-right-radius:1.5rem; }
+  }
+  .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
+    pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
+  @media (prefers-reduced-motion: reduce) { .cab-mark { transition:none; } }
+
+  /* ---------- the shared inquiry-form fields ---------- */
+  .cf-label { display:block; font-size:12px; font-weight:700; letter-spacing:.01em; color:#4B5563; margin-bottom:7px; padding:0; }
+  .cf-label i { font-style:normal; color:#B84431; }
+  .cf-field { width:100%; height:48px; padding:0 14px; border-radius:10px; border:1px solid #E5E7EB;
+    background:#fff; color:#111827; font-size:14.5px; font-weight:500; font-family:inherit;
+    transition:border-color .15s ease, box-shadow .15s ease; }
+  .cf-field::placeholder { color:#9CA3AF; font-weight:400; }
+  .cf-field:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+  textarea.cf-field { height:auto; padding:12px 14px; line-height:1.6; resize:none; }
+
+  .no-motion .pen-word { color:#DC5A45; }
+  .no-motion .pen-underline { opacity:1; }
+
+  /* ===== closing CTA · one place for every knob — see build/cta.js ===== */
+  #business-cta {
+    --cta-bg: #F2FCFC;
+    /* warm, upper left */
+    --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
+    --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
+    --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
+    --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
+    /* cool, lower right */
+    --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
+    --cta-o2-w: 954px;          --cta-o2-h: 950px;
+    --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
+    --cta-o2-mid: 65%;          --cta-o2-end: 100%;
+    background-color: var(--cta-bg);
+  }
+  #business-ctaGlowWarm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+  #business-ctaGlowCool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+  /* tablet — about three quarters of the desktop figure */
+  @media (max-width:1023px) {
+    #business-cta {
+      --cta-o1-w: 840px;  --cta-o1-h: 770px;
+      --cta-o1-x: -28%;   --cta-o1-y: -400px;
+      --cta-o2-w: 700px;  --cta-o2-h: 700px;
+      --cta-o2-x: 64%;    --cta-o2-y: 300px;
+    }
+  }
+  /* phone — half the size, softer, hard against the edges so the middle stays readable */
+  @media (max-width:639px) {
+    #business-cta {
+      --cta-o1-alpha: .20;
+      --cta-o1-w: 560px;  --cta-o1-h: 520px;
+      --cta-o1-x: -38%;   --cta-o1-y: -250px;
+      --cta-o2-alpha: .12;
+      --cta-o2-w: 470px;  --cta-o2-h: 470px;
+      --cta-o2-x: 52%;    --cta-o2-y: 210px;
+    }
+  }
+
+  /* the ring's reduced-motion fallback is mandatory: colour and path are both scripted */
+  .no-motion .ring-word { color:#DC5A45; }
+  .no-motion .ring-path { opacity:1; }
+</style>
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
 
@@ -282,42 +505,903 @@ tailwind.config = {
 </header>
 
 <main>
-  <section class="relative pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 bg-[#F2FCFC] overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
-      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
-    </div>
+  <!-- ================= 01 · HERO / BUSINESS & TEAMS =================
+       No checker, no free-check line: the homepage owns that. The first product idea on
+       this page is the managed organization, so the visual is that and nothing else —
+       an administrator, the organization's resources, and members who each carry TWO
+       balances. A diagram, not a dashboard: every label is the supporting copy's. -->
+  <section id="business-and-teams" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
+        <defs>
+          <pattern id="heroDots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#heroDots)"></rect>
+      </svg>
+    <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
+    <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="max-w-[620px]">
-        <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700 mb-4 lg:mb-5">Solutions · For organizations</div>
-        <h1 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Business &amp; Teams</h1>
-        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed mb-8 sm:mb-10 lg:mb-12">This page is an approved destination in the navigation architecture. It is not designed yet — the link works so the navigation can be walked end to end.</p>
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
 
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 mb-8 sm:mb-10 lg:mb-12">
-          <dl class="divide-y divide-ink-100">
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Label</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Business &amp; Teams</dd>
-            </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Placed in</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Solutions · For organizations</dd>
-            </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Path</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800 nums">/plagiarism-checker-for-organization</dd>
-            </div>
-          </dl>
-          <p class="mt-4 pt-4 border-t border-ink-100 text-[13.5px] sm:text-[14.5px] text-ink-600 leading-relaxed">Existing URL; the brief says the page content will be completely rebuilt.</p>
+        <div class="rv min-w-0">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Business &amp; Teams</span>
+        </div>
+          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">Plagiarism Checking for <span class="pen-word relative inline-block">Business &amp; Teams<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 288 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c72-7 193-7 282-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span></h1>
+          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[60ch]">Bring recurring plagiarism checks into a managed team workflow. Administrators can manage members, permissions, and organization resources, while team members can keep their personal balances separate.</p>
+          <p class="mt-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[60ch] mb-7 lg:mb-8">Use Organization Storage when your own content should be part of comparison, or connect the PlagiarismSearch API when checks need to run inside another workflow.</p>
+
+          <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 lg:mb-7">
+            <a href="#business-inquiry" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Request a business quote
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+            <a href="#organization-management" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">See how team access works</a>
+          </div>
+          <p class="text-[13px] sm:text-[13.5px] text-ink-500 max-w-[58ch]">For agencies, content teams, companies, publishers, and other organizations with recurring content-review needs.</p>
         </div>
 
-        <a href="index.html" class="btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-ink-900 text-white text-[14px] sm:text-[15px] font-semibold hover:bg-ink-800 transition-colors duration-300">
-          Back to the homepage
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <!-- the managed organization, drawn -->
+        <div class="rv min-w-0">
+          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+            <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-7">
+
+              <div class="flex items-center gap-3.5 rounded-2xl bg-ink-950 text-white px-4 py-3.5">
+                <span class="shrink-0 w-10 h-10 rounded-xl bg-white/10 ring-1 ring-white/15 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                <div class="min-w-0">
+                  <p class="text-[14.5px] sm:text-[15px] font-bold tracking-tight">Administrator</p>
+                  <p class="text-[12px] sm:text-[12.5px] text-white/60">Members, permissions, organization resources</p>
+                </div>
+              </div>
+
+              <span class="block mx-auto w-px h-4 bg-ink-200" aria-hidden="true"></span>
+
+              <div class="rounded-2xl bg-teal-50 ring-1 ring-teal-200 px-4 py-3.5">
+                <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mb-2.5">Organization resources</p>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="rounded-full bg-white ring-1 ring-teal-200 px-3 py-1 text-[12px] font-semibold text-ink-800">Plagiarism words</span>
+                  <span class="rounded-full bg-white ring-1 ring-teal-200 px-3 py-1 text-[12px] font-semibold text-ink-800">AI words</span>
+                  <span class="rounded-full bg-white ring-1 ring-teal-200 px-3 py-1 text-[12px] font-semibold text-ink-800">Organization Storage</span>
+                </div>
+              </div>
+
+              <!-- one stem, a bar, two rounded drops: the allocation reaches each member -->
+              <div class="relative h-8" aria-hidden="true">
+                <span class="absolute left-1/2 top-0 h-4 w-px bg-ink-200"></span>
+                <span class="absolute left-1/4 right-1/2 top-4 h-4 border-t border-l border-ink-200 rounded-tl-2xl"></span>
+                <span class="absolute left-1/2 right-1/4 top-4 h-4 border-t border-r border-ink-200 rounded-tr-2xl"></span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-3.5 py-3.5">
+                  <div class="flex items-center gap-2.5 mb-3">
+                    <span class="w-8 h-8 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                    <p class="text-[13.5px] font-bold tracking-tight">Team member</p>
+                  </div>
+                  <span class="flex flex-col gap-1.5">
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-teal-50 ring-1 ring-teal-600/15 px-2.5 py-1 text-[10.5px] font-semibold text-teal-800"><span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>Organization resources</span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-ink-100 px-2.5 py-1 text-[10.5px] font-semibold text-ink-700"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Personal balance</span>
+                  </span>
+                </div>
+                <div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-3.5 py-3.5">
+                  <div class="flex items-center gap-2.5 mb-3">
+                    <span class="w-8 h-8 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                    <p class="text-[13.5px] font-bold tracking-tight">Team member</p>
+                  </div>
+                  <span class="flex flex-col gap-1.5">
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-teal-50 ring-1 ring-teal-600/15 px-2.5 py-1 text-[10.5px] font-semibold text-teal-800"><span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>Organization resources</span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-ink-100 px-2.5 py-1 text-[10.5px] font-semibold text-ink-700"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Personal balance</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 · ORGANIZATION MANAGEMENT =================
+       A bento with one lead: the separation of personal and organization balances is
+       the card that carries the section, drawn as two ledgers with a wall between them;
+       the four set-up facts sit beside it at card-title weight. No SSO, departments,
+       role tiers, seats, audit logs — nothing the brief does not confirm. -->
+  <section id="organization-management" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Organization Management</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Manage members, permissions, and shared resources in one organization</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Organization Management gives administrators a practical way to coordinate team access while keeping organization resources separate from each member’s personal balance.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-[1.05fr_1fr] gap-4 sm:gap-5 lg:gap-6 items-stretch">
+
+        <!-- the lead: two ledgers, one wall -->
+        <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <div class="grid grid-cols-[1fr_auto_1fr] gap-3 sm:gap-4 items-stretch mb-6 lg:mb-7">
+              <div class="rounded-2xl bg-teal-50 ring-1 ring-teal-200 p-4 sm:p-5">
+                <div class="flex items-center gap-2.5 mb-3.5">
+                  <span class="w-9 h-9 rounded-xl bg-white ring-1 ring-teal-200 flex items-center justify-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 14h.01"/><path d="M7 7h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10"/></svg></span>
+                  <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700">Organization</p>
+                </div>
+                <p class="text-[14.5px] sm:text-[15px] font-bold tracking-tight mb-2.5">Organization balances</p>
+                <ul class="space-y-1.5 text-[12.5px] sm:text-[13px] font-semibold text-ink-800">
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>Plagiarism words</li>
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>AI words</li>
+                </ul>
+                <p class="text-[12px] sm:text-[12.5px] text-ink-600 mt-3">Allocated by the administrator</p>
+              </div>
+
+              <div class="flex flex-col items-center justify-center gap-2" aria-hidden="true">
+                <span class="flex-1 w-px border-l border-dashed border-ink-300"></span>
+                <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 [writing-mode:vertical-rl] rotate-180">separate</span>
+                <span class="flex-1 w-px border-l border-dashed border-ink-300"></span>
+              </div>
+
+              <div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.05] p-4 sm:p-5">
+                <div class="flex items-center gap-2.5 mb-3.5">
+                  <span class="w-9 h-9 rounded-xl bg-white ring-1 ring-black/5 flex items-center justify-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                  <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Member</p>
+                </div>
+                <p class="text-[14.5px] sm:text-[15px] font-bold tracking-tight mb-2.5">Personal balance</p>
+                <p class="text-[12.5px] sm:text-[13px] font-semibold text-ink-800">Private</p>
+                <p class="text-[12px] sm:text-[12.5px] text-ink-600 mt-3">The administrator and other members do not access it</p>
+              </div>
+            </div>
+
+            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Personal and organization balances stay separate</h3>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[60ch]">A member can keep a private personal balance that the administrator and other organization members do not access, while also using organization resources allocated by the administrator.</p>
+            <div class="mt-auto pt-6"><a href="https://plagiarismsearch.com/organization-management" rel="noopener" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Learn more about Organization Management</a></div>
+          </div>
+        </div>
+
+        <!-- the four set-up facts -->
+        <div class="rv-kids grid sm:grid-cols-2 gap-4 sm:gap-5">
+          <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 flex flex-col">
+            <div class="flex items-center justify-between gap-3 mb-4">
+              <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/></svg></span>
+              <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">01</span>
+            </div>
+            <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Create your organization</h3>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">An administrator creates the organization and manages its members from one organization workspace.</p>
+          </div>
+          <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 flex flex-col">
+            <div class="flex items-center justify-between gap-3 mb-4">
+              <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg></span>
+              <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">02</span>
+            </div>
+            <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Invite and manage members</h3>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Invite members by email and manage their organization access as your team changes. Members can be blocked or unblocked when needed.</p>
+          </div>
+          <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 flex flex-col">
+            <div class="flex items-center justify-between gap-3 mb-4">
+              <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+              <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">03</span>
+            </div>
+            <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Set organization permissions</h3>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Control how members can use Organization Storage, search the organization’s storage during plagiarism checks, and view documents stored there.</p>
+          </div>
+          <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 flex flex-col">
+            <div class="flex items-center justify-between gap-3 mb-4">
+              <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+              <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">04</span>
+            </div>
+            <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Allocate checking resources</h3>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Administrators can allocate organization plagiarism and AI word balances to members according to the team’s needs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 · REPORT EVIDENCE =================
+       Supporting evidence, kept proportionate: the approved report, the three points as
+       one strip, the closing line. No fields, thresholds or verdicts invented. -->
+  <section id="report-evidence" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+    <div class="orb absolute" style="width:620px;height:620px;left:-13%;top:40px;background:rgba(13,168,194,.12)"></div>
+    <div class="orb absolute" style="width:520px;height:520px;right:-10%;bottom:-120px;background:rgba(243,111,90,.10)"></div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">Report Evidence</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Review the source evidence behind each check</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[72ch]">PlagiarismSearch does not decide whether a passage is plagiarism. The report shows matched or similar text and the sources found for it, so your team can review the context before deciding what needs attention.</p>
+      </div>
+
+      <div class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
+        <div id="cabDoc" class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+          <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
+            <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">#10248837</span>
+            <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
+              <span>Words: <b class="font-bold text-ink-800 tabular-nums">214</b></span>
+              <span>Uploaded at: <b class="font-bold text-ink-800">May 12, 2026</b></span>
+            </span>
+          </div>
+          <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
+            <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="0" aria-label="Matched passage — open its source"><span>Climate change and the economics of food</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="0" aria-label="Matched passage — open its source"><span>The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="1" aria-label="Matched passage — open its source"><span>Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions, and that the effect compounds where irrigation is unavailable.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800">However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.</p>
+              <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-800">What the models leave out</p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai" role="button" tabindex="0" data-match="2" aria-label="Matched passage — open its source"><span>Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai" role="button" tabindex="0" data-match="2" aria-label="Matched passage — open its source"><span>Field data from recent seasons supports this reading across tropical zones, though the sample remains too small to generalise from with confidence.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800">Further work should separate the price effect from the yield effect before either is used to guide policy.</p>
+          </div>
+          <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50">
+            <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#F36F5A; background:#F36F5A80"></span>Plagiarism
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#EAB308; background:#EAB30880"></span>Similarities
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#A855F7; background:#A855F780"></span>AI probability
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#22C55E; background:#22C55E80"></span>Citations
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#3B82F6; background:#3B82F680"></span>References
+              </span>
+          </div>
+        </div>
+
+        <div id="cabSide" class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+          <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
+            <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
+            <div class="cab-in mb-4 last:mb-0">
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">Plagiarism</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:38.2%; background:#F36F5A"></span>
+                  </span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="38.2">38.2%</span>
+                </div>
+              </div>
+              <div class="cab-in mb-4 last:mb-0">
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">Total AI rate</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:12.4%; background:#A855F7"></span>
+                  </span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="12.4">12.4%</span>
+                </div>
+              </div>
+              <div class="cab-in mb-4 last:mb-0">
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">AI probability</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:0%; background:#A855F7"></span>
+                  </span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="0">0%</span>
+                </div>
+              </div>
+          </div>
+          <div class="shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
+            <span class="cab-tab on pt-3">Plagiarism</span>
+            <span class="cab-tab pt-3">AI</span>
+          </div>
+          <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
+            <ul class="absolute inset-0 divide-y divide-ink-100">
+              <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="0">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Climate volatility and agriculture vulnerability</span>
+                  <span class="block text-[12px] text-ink-500 truncate">nature.com/nclimate/vol-13</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">31.6%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="1">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Adaptation strategies in West African smallholding</span>
+                  <span class="block text-[12px] text-ink-500 truncate">cambridge.org/agricultural-economics</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">6.6%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="2">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Rain-fed yield variance under warming scenarios</span>
+                  <span class="block text-[12px] text-ink-500 truncate">sciencedirect.com/agsy/2024</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">4.1%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="3">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Millet cultivars and drought tolerance trials</span>
+                  <span class="block text-[12px] text-ink-500 truncate">fao.org/publications/cb9241</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">2.8%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="4">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Smallholder decision-making under uncertainty</span>
+                  <span class="block text-[12px] text-ink-500 truncate">jstor.org/stable/48729103</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">1.9%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="5">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Price transmission in West African grain markets</span>
+                  <span class="block text-[12px] text-ink-500 truncate">ifpri.org/publication/gm-2023</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">1.2%</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <ol class="rv mt-6 sm:mt-8 grid sm:grid-cols-3 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+        <li class="flex items-start gap-3.5 px-5 py-4 sm:px-6 sm:py-5">
+          <span class="shrink-0 inline-flex w-7 h-7 rounded-full bg-white text-ink-900 text-[12px] font-bold items-center justify-center tabular-nums">1</span>
+          <span class="min-w-0">
+            <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-white">Matched text</span>
+            <span class="block text-[12.5px] sm:text-[13px] leading-relaxed text-white/60 mt-0.5">See the passages where matching or similar text was found.</span>
+          </span>
+        </li>
+        <li class="flex items-start gap-3.5 px-5 py-4 sm:px-6 sm:py-5">
+          <span class="shrink-0 inline-flex w-7 h-7 rounded-full bg-white text-ink-900 text-[12px] font-bold items-center justify-center tabular-nums">2</span>
+          <span class="min-w-0">
+            <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-white">Source evidence</span>
+            <span class="block text-[12.5px] sm:text-[13px] leading-relaxed text-white/60 mt-0.5">Review the corresponding sources and compare them with the checked text.</span>
+          </span>
+        </li>
+        <li class="flex items-start gap-3.5 px-5 py-4 sm:px-6 sm:py-5">
+          <span class="shrink-0 inline-flex w-7 h-7 rounded-full bg-white text-ink-900 text-[12px] font-bold items-center justify-center tabular-nums">3</span>
+          <span class="min-w-0">
+            <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-white">Interactive review</span>
+            <span class="block text-[12.5px] sm:text-[13px] leading-relaxed text-white/60 mt-0.5">Select a match in the report to focus on the relevant source and inspect the result in context.</span>
+          </span>
+        </li>
+      </ol>
+
+      <div class="rv mt-5 sm:mt-6 rounded-3xl bg-teal-400/[.07] ring-1 ring-teal-400/25 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5">
+        <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-400/15 ring-1 ring-teal-400/30 flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white font-semibold max-w-[76ch]">The report supports review and decision-making; it is not an automatic plagiarism verdict.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 · SOURCES & ORGANIZATION STORAGE =================
+       Two things the section has to say, two halves: on the left, the four source
+       options as the list the intro names, the organization one marked as the
+       conditional it is; on the right, the claim that matters — a normal check and
+       adding content to Storage are TWO TRACKS that never join. Solid for the check,
+       dashed for the separate action, and nothing drawn between them. -->
+  <section id="organization-storage" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Sources &amp; Organization Storage</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Use Organization Storage as a controlled comparison source</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">PlagiarismSearch supports multiple source options in its scan settings, including web search, academic database search, personal storage search, and organization storage search.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-[.85fr_1.15fr] gap-4 sm:gap-5 lg:gap-6 items-stretch">
+        <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Source options in scan settings</span>
+          </div>
+          <ul class="divide-y divide-ink-100">
+            <li class="flex items-center gap-3 py-3">
+              <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight">Web search</span>
+            </li>
+            <li class="flex items-center gap-3 py-3">
+              <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight">Academic database search</span>
+            </li>
+            <li class="flex items-center gap-3 py-3">
+              <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight">Personal storage search</span>
+            </li>
+            <li class="flex items-center gap-3 py-3">
+              <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight">Organization storage search</span>
+              <span class="ml-auto text-[10px] font-semibold uppercase tracking-[0.18em] text-teal-700 bg-teal-50 ring-1 ring-teal-600/15 rounded-full px-2.5 py-1">when enabled</span>
+            </li>
+          </ul>
+          <p class="mt-auto pt-4 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">For a team, Organization Storage can become an additional comparison source when the relevant organization permissions and search option are enabled.</p>
+        </div>
+
+        <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-8 flex flex-col gap-5">
+
+            <div>
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-3">A normal check</p>
+              <ol class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-0">
+                <li class="flex items-center sm:flex-1">
+                  <span class="flex-1 rounded-xl bg-ink-50 ring-1 ring-black/[.04] text-ink-900 px-3.5 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-center">Checked document</span>
+                  <span class="hidden sm:flex items-center w-8 shrink-0" aria-hidden="true"><span class="flex-1 h-px bg-ink-300"></span><svg class="-ml-1 shrink-0" width="8" height="10" viewBox="0 0 10 12" fill="#9CA3AF"><path d="M0 0 10 6 0 12z"/></svg></span>
+                </li>
+                <li class="flex items-center sm:flex-1">
+                  <span class="flex-1 rounded-xl bg-ink-950 text-white px-3.5 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-center">Plagiarism check</span>
+                  <span class="hidden sm:flex items-center w-8 shrink-0" aria-hidden="true"><span class="flex-1 h-px bg-ink-300"></span><svg class="-ml-1 shrink-0" width="8" height="10" viewBox="0 0 10 12" fill="#9CA3AF"><path d="M0 0 10 6 0 12z"/></svg></span>
+                </li>
+                <li class="flex items-center sm:flex-1">
+                  <span class="flex-1 rounded-xl bg-ink-50 ring-1 ring-black/[.04] text-ink-900 px-3.5 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-center">Report</span>
+                </li>
+              </ol>
+            </div>
+
+            <div class="flex items-center gap-3" aria-hidden="true">
+              <span class="flex-1 border-t border-dashed border-ink-300"></span>
+              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-orange-700 bg-orange-50 ring-1 ring-orange-200 rounded-full px-3 py-1">not automatic</span>
+              <span class="flex-1 border-t border-dashed border-ink-300"></span>
+            </div>
+
+            <div>
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mb-3">A separate action</p>
+              <ol class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-0 rounded-2xl ring-dashed ring-teal-300 p-2.5 sm:p-3 bg-teal-50/50">
+                <li class="flex items-center sm:flex-1">
+                  <span class="flex-1 rounded-xl bg-white ring-1 ring-black/5 text-ink-900 px-3 py-2.5 text-[12.5px] sm:text-[13px] font-semibold text-center leading-snug">Content you choose</span>
+                  <span class="hidden sm:flex items-center w-6 shrink-0" aria-hidden="true"><span class="flex-1 border-t border-dashed border-teal-400"></span><svg class="-ml-1 shrink-0" width="8" height="10" viewBox="0 0 10 12" fill="#2CC3DB"><path d="M0 0 10 6 0 12z"/></svg></span>
+                </li>
+                <li class="flex items-center sm:flex-1">
+                  <span class="flex-1 rounded-xl bg-white ring-1 ring-black/5 text-ink-900 px-3 py-2.5 text-[12.5px] sm:text-[13px] font-semibold text-center leading-snug">Add to Storage</span>
+                  <span class="hidden sm:flex items-center w-6 shrink-0" aria-hidden="true"><span class="flex-1 border-t border-dashed border-teal-400"></span><svg class="-ml-1 shrink-0" width="8" height="10" viewBox="0 0 10 12" fill="#2CC3DB"><path d="M0 0 10 6 0 12z"/></svg></span>
+                </li>
+                <li class="flex items-center sm:flex-1">
+                  <span class="flex-1 rounded-xl bg-teal-600 text-white px-3 py-2.5 text-[12.5px] sm:text-[13px] font-semibold text-center leading-snug">Organization Storage</span>
+                  <span class="hidden sm:flex items-center w-6 shrink-0" aria-hidden="true"><span class="flex-1 border-t border-dashed border-teal-400"></span><svg class="-ml-1 shrink-0" width="8" height="10" viewBox="0 0 10 12" fill="#2CC3DB"><path d="M0 0 10 6 0 12z"/></svg></span>
+                </li>
+                <li class="flex items-center sm:flex-1">
+                  <span class="flex-1 rounded-xl bg-white ring-1 ring-black/5 text-ink-900 px-3 py-2.5 text-[12.5px] sm:text-[13px] font-semibold text-center leading-snug">Future comparisons</span>
+                </li>
+              </ol>
+            </div>
+
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-auto">This lets an organization decide when its own stored content should become part of future comparisons instead of treating every checked document as repository content.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rv mt-5 sm:mt-6 rounded-3xl bg-orange-50 ring-1 ring-orange-200 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5">
+        <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-100 flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg></span>
+        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-900 font-semibold max-w-[84ch]">Running a plagiarism check does not automatically add the checked document to Organization Storage. Adding content to Storage is a separate action and remains distinct from the normal checking and report workflow.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 · REAL BUSINESS WORKFLOWS =================
+       Three operational scenarios as an editorial list on one surface — number, name,
+       what it uses, how it runs — not three persona cards. The "uses" chips are phrases
+       lifted from each scenario's own sentence. No verticals added, no audience links. -->
+  <section id="business-workflows" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Business Workflows</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Fit plagiarism checking into the way your team already reviews content</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">The same organization controls can support different recurring review workflows without requiring a separate plagiarism product for each type of business.</p>
+      </div>
+
+      <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100">
+          <div class="grid lg:grid-cols-[5rem_1fr_1.35fr] gap-3 lg:gap-8 items-start px-5 py-6 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
+            <span class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-none text-ink-200 nums">01</span>
+            <div class="min-w-0">
+              <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-3">Agencies and content teams</h3>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Organization resources</span>
+                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Permissions and balances</span>
+                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Source matches</span>
+              </div>
+            </div>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Give writers, editors, and reviewers access to organization resources while the administrator manages permissions and balances. Review source matches before work is delivered or published.</p>
+          </div>
+          <div class="grid lg:grid-cols-[5rem_1fr_1.35fr] gap-3 lg:gap-8 items-start px-5 py-6 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
+            <span class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-none text-ink-200 nums">02</span>
+            <div class="min-w-0">
+              <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-3">In-house teams</h3>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Recurring checks</span>
+                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Personal resources separate</span>
+                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Organization balances</span>
+              </div>
+            </div>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Coordinate recurring plagiarism checks across a team while each member can keep personal resources separate from the organization balances assigned to them.</p>
+          </div>
+          <div class="grid lg:grid-cols-[5rem_1fr_1.35fr] gap-3 lg:gap-8 items-start px-5 py-6 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
+            <span class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-none text-ink-200 nums">03</span>
+            <div class="min-w-0">
+              <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-3">Publishers and recurring document review</h3>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Organization Storage</span>
+                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">API</span>
+              </div>
+            </div>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Use Organization Storage when your own repository should be part of comparison, and use the API for workflows that need plagiarism checks to run from another system.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 06 · ORGANIZATION WORKSPACE VS API =================
+       One card, split in two: the two real ways to deploy, with an "or" on the seam. The
+       lighter pattern, as the brief asks — no tree, no developer hero, no code. The AI
+       note sits under it as the compact secondary treatment the brief allows. -->
+  <section id="choose-your-workflow" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Choose Your Workflow</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Work in PlagiarismSearch or connect checking to your own system</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Teams can work directly in PlagiarismSearch or use the API when plagiarism checking needs to become part of another application or automated workflow.</p>
+      </div>
+
+      <div class="rv relative rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+        <div class="relative grid md:grid-cols-2 rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] overflow-hidden">
+          <div class="bg-white p-6 sm:p-8 lg:p-10 flex flex-col">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/></svg></span>
+              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Path A</span>
+            </div>
+            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Organization workspace</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-6">Choose the organization workspace when team members should run checks and review reports directly in PlagiarismSearch. The administrator manages members, permissions, and organization resources while each member works through their own account access.</p>
+            <div><a href="https://plagiarismsearch.com/organization-management" rel="noopener" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Learn about Organization Management</a></div>
+          </div>
+          <div class="bg-ink-950 text-white p-6 sm:p-8 lg:p-10 flex flex-col">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+              <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/50">Path B</span>
+            </div>
+            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">API integration</h3>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70 mb-3">Use the PlagiarismSearch API when checks need to be triggered from another application or workflow. API access may be included in some packages or purchased separately.</p>
+            <p class="flex-1 text-[13px] sm:text-[13.5px] leading-relaxed text-white/50 mb-6">AI checking can also be used through the PlagiarismSearch API when the account has available AI-word balance.</p>
+            <div><a href="api.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-white/70 hover:text-white decoration-white/30 underline underline-offset-4 transition-colors duration-300">Explore the Plagiarism API</a></div>
+          </div>
+          <span class="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white ring-1 ring-black/10 shadow-diffuse items-center justify-center text-[12px] font-bold uppercase tracking-[0.12em] text-ink-700" aria-hidden="true">or</span>
+        </div>
+      </div>
+
+      <!-- AI: secondary, compact, separate -->
+      <div id="plagiarism-and-ai" class="rv mt-5 sm:mt-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg></span>
+        <div class="min-w-0 flex-1">
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1">Plagiarism and AI checks remain separate</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[86ch]">Administrators can allocate both plagiarism and AI word balances through the organization. AI detection remains a separate analysis from plagiarism checking and uses its own AI-word balance.</p>
+        </div>
+        <span class="shrink-0"><a href="ai-detector.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Explore AI Content Detector</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 07 · DATA HANDLING =================
+       Three different things, so three columns of one card with rules between them —
+       distinct, side by side, not blended. The closing line and the privacy link are the
+       card's foot. No absolutes, no timings. -->
+  <section id="data-handling" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Data Handling</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Keep checked documents, reports, and Organization Storage distinct</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">A checked document, a generated report, and content intentionally added to Organization Storage are different parts of the workflow.</p>
+      </div>
+
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 overflow-hidden">
+        <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-200/70">
+          <div class="p-6 sm:p-7 lg:p-8">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Checked document</h3>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Uploaded source documents are not retained as stored documents after the check.</p>
+          </div>
+          <div class="p-6 sm:p-7 lg:p-8">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Generated report</h3>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Generated reports can remain available in the account for convenience. Users can permanently delete their reports.</p>
+          </div>
+          <div class="p-6 sm:p-7 lg:p-8">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></span>
+            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Organization Storage</h3>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Organization Storage is a separate repository workflow. Content is added to it separately and access is governed by organization permissions.</p>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 border-t border-ink-200/70 bg-white/60 px-6 py-5 sm:px-7 lg:px-8">
+          <p class="min-w-0 flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-semibold">A normal plagiarism check should not be confused with intentionally adding content to Organization Storage.</p>
+          <span class="shrink-0"><a href="policy.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Read the Privacy Policy
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 08 · PLANS & CUSTOM REQUIREMENTS =================
+       The shared compact banner (build/banner.js): between sections, two ways on. No
+       pricing widget, no discounts, seats, managers or SLAs. -->
+  <section id="plans-and-custom" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
+        <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(243,111,90,.18)"></div>
+        <div class="relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
+          <div class="min-w-0 flex-1 text-white">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-3.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">Plans &amp; Custom Requirements</span>
+        </div>
+            <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-3">Choose a standard plan or discuss a custom setup</h2>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60 max-w-[66ch]">Standard PlagiarismSearch plans are available on the Pricing page. If your organization needs larger volumes, API access, or a custom commercial arrangement, tell us what your workflow requires.</p>
+            <p class="mt-3 text-[13px] sm:text-[13.5px] leading-relaxed text-white/50 max-w-[60ch]">Custom contracts and pricing are available for larger customers.</p>
+          </div>
+          <div class="shrink-0"><div class="flex flex-col items-start lg:items-end gap-3.5"><a href="#business-inquiry" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Request a business quote
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a><a href="prices.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-white/70 hover:text-white decoration-white/30 underline underline-offset-4 transition-colors duration-300">View standard pricing</a></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 09 · BUSINESS INQUIRY =================
+       The approved field variant: no Facebook, no LinkedIn, no callback promise, phone
+       optional, "What do you need?" as a clear multi-select. Inert — validation, routing
+       and consent handling are the backend's. -->
+  <section id="business-inquiry" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
+        <div class="rv lg:sticky lg:top-28">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Business Inquiry</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Tell us how your team plans to use PlagiarismSearch</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[56ch]">Share your team size, expected usage, and the workflow you want to support. These details help us understand whether you need an organization workspace, Organization Storage, API access, AI checking, standard pricing, or a custom commercial setup.</p>
+        </div>
+
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8">
+          <form onsubmit="return false" novalidate>
+            <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
+              <div class="min-w-0">
+                <label class="cf-label" for="bq-0">Name <i>*</i></label>
+                <input class="cf-field" id="bq-0" type="text" required>
+              </div>
+              <div class="min-w-0">
+                <label class="cf-label" for="bq-1">Work email <i>*</i></label>
+                <input class="cf-field" id="bq-1" type="email" required>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="cf-label" for="bq-2">Organization or company <i>*</i></label>
+                <input class="cf-field" id="bq-2" type="text" required>
+              </div>
+              <div class="min-w-0">
+                <label class="cf-label" for="bq-3">Role or job title</label>
+                <input class="cf-field" id="bq-3" type="text">
+              </div>
+              <div class="min-w-0">
+                <label class="cf-label" for="bq-4">Approximate team size</label>
+                <input class="cf-field" id="bq-4" type="text">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="cf-label" for="bq-5">Approximate monthly checking volume</label>
+                <input class="cf-field" id="bq-5" type="text">
+                <p class="mt-2 text-[12px] text-ink-500">Words, documents, or another estimate is fine.</p>
+              </div>
+
+              <fieldset class="sm:col-span-2 m-0 p-0 border-0 min-w-0">
+                <legend class="cf-label">What do you need?</legend>
+                <div class="flex flex-wrap gap-2">
+                  <label class="need-opt cursor-pointer">
+                    <input type="checkbox" name="needs" value="Organization workspace" class="sr-only">
+                    <span class="need-chip inline-flex items-center gap-2 rounded-full ring-1 ring-ink-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-ink-700">
+                      <svg class="need-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Organization workspace
+                    </span>
+                  </label>
+                  <label class="need-opt cursor-pointer">
+                    <input type="checkbox" name="needs" value="Organization Storage" class="sr-only">
+                    <span class="need-chip inline-flex items-center gap-2 rounded-full ring-1 ring-ink-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-ink-700">
+                      <svg class="need-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Organization Storage
+                    </span>
+                  </label>
+                  <label class="need-opt cursor-pointer">
+                    <input type="checkbox" name="needs" value="API access" class="sr-only">
+                    <span class="need-chip inline-flex items-center gap-2 rounded-full ring-1 ring-ink-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-ink-700">
+                      <svg class="need-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>API access
+                    </span>
+                  </label>
+                  <label class="need-opt cursor-pointer">
+                    <input type="checkbox" name="needs" value="AI checking" class="sr-only">
+                    <span class="need-chip inline-flex items-center gap-2 rounded-full ring-1 ring-ink-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-ink-700">
+                      <svg class="need-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>AI checking
+                    </span>
+                  </label>
+                  <label class="need-opt cursor-pointer">
+                    <input type="checkbox" name="needs" value="Custom volume or pricing" class="sr-only">
+                    <span class="need-chip inline-flex items-center gap-2 rounded-full ring-1 ring-ink-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-ink-700">
+                      <svg class="need-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Custom volume or pricing
+                    </span>
+                  </label>
+                  <label class="need-opt cursor-pointer">
+                    <input type="checkbox" name="needs" value="Not sure yet" class="sr-only">
+                    <span class="need-chip inline-flex items-center gap-2 rounded-full ring-1 ring-ink-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-ink-700">
+                      <svg class="need-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Not sure yet
+                    </span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <div class="min-w-0">
+                <label class="cf-label" for="bq-phone">Phone number</label>
+                <input class="cf-field" id="bq-phone" type="tel">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="cf-label" for="bq-message">Tell us about your workflow or requirements <i>*</i></label>
+                <textarea class="cf-field" id="bq-message" rows="4" required></textarea>
+              </div>
+            </div>
+
+            <label class="flex items-start gap-3 mt-6 lg:mt-7 cursor-pointer">
+              <input type="checkbox" id="bq-consent" class="mt-0.5 w-4 h-4 shrink-0 accent-teal-600">
+              <span class="text-[13px] leading-relaxed text-ink-600">I agree to the <a href="terms-of-use.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Terms of Use</a> and <a href="policy.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Privacy Policy</a>. <i class="not-italic text-orange-700">*</i></span>
+            </label>
+
+            <div class="mt-6 lg:mt-7">
+              <button type="submit" class="btn-press group flex items-center justify-center sm:justify-start gap-2.5 w-full sm:w-auto rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
+                Request a business quote
+                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-6 pt-6 border-t border-ink-100" hidden id="bq-success" role="status">
+            <p class="text-[15.5px] font-bold tracking-tight">Thanks — your business inquiry has been submitted.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 10 · BUSINESS FAQ =================
+       Nine questions, full answers in the HTML, the two crawlable links the brief asks
+       for set on the phrases that reference them. -->
+  <section id="business-faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
+        <div class="rv lg:sticky lg:top-28">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Business &amp; Teams FAQ</h2>
+        </div>
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+            <div class="faq-item open">
+              <button type="button" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can multiple people use PlagiarismSearch through one organization?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. An administrator can create an organization, invite members, and manage their access to organization resources. Members can also be blocked or unblocked when needed.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can an administrator control what organization members can access?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Organization Management includes permissions related to Organization Storage and its use, including searching organization storage during plagiarism checks and viewing documents stored there.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">How do organization and personal balances work together?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Organization plagiarism and AI balances are managed separately from each member’s personal balance. A member can keep a private personal balance that the administrator and other members do not access, while also receiving organization resources allocated by the administrator.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Are checked documents automatically added to Organization Storage?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. Running a plagiarism check does not automatically add the checked document to Organization Storage. Storage is a separate action and depends on the organization workflow and the member’s permissions.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can Organization Storage be used as a plagiarism-checking source?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Organization Storage can be used as an additional comparison source when organization storage search is enabled and the member has the relevant permission.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can we integrate plagiarism checking into our own platform?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. PlagiarismSearch provides an API for programmatic plagiarism-checking workflows. API access may be included in some packages or purchased separately. See the <a href="api.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Plagiarism API page</a> for the current integration workflow and developer documentation.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can an organization use AI detection too?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Administrators can allocate organization AI-word balance to members. AI detection is a separate analysis from plagiarism checking and requires available AI-word balance.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">What happens to uploaded documents and reports?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Uploaded source documents are not retained as stored documents after the check. Generated reports can remain available in the account for convenience and can be permanently deleted by the user. Organization Storage is a separate repository workflow.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Do you offer custom pricing for larger organizations?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Standard plans are available on the <a href="prices.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Pricing page</a>, while larger customers can use custom contracts and pricing. Send a business inquiry if your organization has larger-volume, API, or other custom commercial requirements.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 11 · FINAL CTA =================
+       The closing band (build/cta.js). A business action and the standard-pricing
+       alternative — never a checker. -->
+  <section id="business-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
+          <defs>
+            <pattern id="business-ctaDots" width="22" height="22" patternUnits="userSpaceOnUse">
+              <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#business-ctaDots)"></rect>
+        </svg>
+        <div id="business-ctaGlowWarm" class="orb"></div>
+        <div id="business-ctaGlowCool" class="orb"></div>
+      </div>
+
+    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
+      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Set up plagiarism checking for <span class="ring-word relative inline-block">your team<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span></h2>
+      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[62ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Tell us how your organization works today and whether you need a managed team workspace, Organization Storage, API access, or higher-volume usage.</p>
+      <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+        <a href="#business-inquiry" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+          Request a business quote
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </span>
         </a>
+        <a href="prices.html" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">View standard pricing</a>
       </div>
     </div>
   </section>
@@ -473,5 +1557,121 @@ tailwind.config = {
   })();
   </script>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const rvs = gsap.utils.toArray('.rv');
+  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
+  inView.forEach(el => {
+    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+  });
+  rvs.filter(el => !inView.includes(el)).forEach(el => {
+    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 70%' } });
+  });
+
+  gsap.utils.toArray('.rv-kids').forEach(group => {
+    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
+      scrollTrigger: { trigger: group, start: 'top 80%' } });
+  });
+
+  gsap.utils.toArray('.pen-word').forEach(word => {
+    const line = word.querySelector('.pen-underline');
+    if (!line) return;
+    const len = line.getTotalLength();
+    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
+    const tl = gsap.timeline(inFirstView
+      ? { delay: 1 }
+      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
+    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+      .set(line, { opacity: 1 }, .35)
+      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
+  });
+
+  /* ring mark — the closing act loops a word instead of underlining it. Same trick as
+     the pen mark, longer path, and it waits until the word is well inside the viewport. */
+  gsap.utils.toArray('.ring-word').forEach(word => {
+    const path = word.querySelector('.ring-path');
+    if (!path) return;
+    const len = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.timeline({ scrollTrigger: { trigger: word, start: 'top 75%', once: true } })
+      .to(word, { color: '#DC5A45', duration: .4, ease: 'power2.out' })
+      .set(path, { opacity: 1 }, .15)
+      .to(path, { strokeDashoffset: 0, duration: .9, ease: 'power2.inOut' }, .15);
+  });
+})();
+</script>
+<script>
+(() => {
+  'use strict';
+
+  /* the report: selecting a passage highlights it and its source */
+  const marks = [...document.querySelectorAll('.cab-mark')];
+  const sources = [...document.querySelectorAll('.cab-src')];
+  const pick = i => {
+    marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
+    sources.forEach(s => s.classList.toggle('on', s.dataset.src === String(i)));
+  };
+  marks.forEach(m => {
+    m.addEventListener('click', () => pick(m.dataset.match));
+    m.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(m.dataset.match); }
+    });
+  });
+  if (marks.length) pick(marks[0].dataset.match);
+
+  /* every quote CTA lands on the form and puts the caret in its first field */
+  document.querySelectorAll('a[href="#business-inquiry"]').forEach(a => {
+    a.addEventListener('click', () => {
+      const first = document.getElementById('bq-0');
+      if (first) setTimeout(() => first.focus({ preventScroll: true }), 500);
+    });
+  });
+
+  /* FAQ: answers are already in the DOM; this only opens and closes them */
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      const list = item.parentElement;
+      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+      list.querySelectorAll('.faq-q').forEach(b =>
+        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
+    });
+  });
+})();
+</script>
+<script>
+(() => {
+  'use strict';
+  const btn = document.getElementById('navBurger');
+  const panel = document.getElementById('navPanel');
+  if (!btn || !panel) return;
+  const setOpen = on => {
+    btn.setAttribute('aria-expanded', String(on));
+    panel.classList.toggle('open', on);
+    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
+  };
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => {
+    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
+})();
+</script>
 </body>
 </html>

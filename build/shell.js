@@ -100,6 +100,8 @@ const PAGES = {
   'plagiarism-checker-for-students.html': { active: 'solutions' },
   /* the PDF Plagiarism Checker to the 2026-09-15 brief — footer-led, no nav item */
   'pdf-plagiarism-checker.html': { active: null },
+  /* Business & Teams to the 2026-09-15 brief — the stub graduated */
+  'plagiarism-checker-for-organization.html': { active: 'solutions' },
   'paper-analysis.html':         { active: null },
   'readability-check.html':      { active: null },
   'spell-check.html':            { active: null },
