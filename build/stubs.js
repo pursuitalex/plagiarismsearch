@@ -27,7 +27,6 @@ const STUBS = [
   { slug: 'testimonials',                          label: 'Reviews',                   group: 'Company' },
   { slug: 'powerpoint-plagiarism-checker',         label: 'PowerPoint Plagiarism Checker', group: 'Footer · Popular Checks',   note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
   { slug: 'quote-checker-at-plagiarismsearch',     label: 'Quote Checker',             group: 'Footer · Popular Checks',       note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
-  { slug: 'turnitin-checker-alternative',          label: 'Turnitin Alternative',      group: 'Footer · Popular Checks',       note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
   { slug: 'scholarship',                           label: 'Scholarship',               group: 'Footer · Company' },
   { slug: 'affiliate-program-at-plagiarismsearch', label: 'Affiliate Program',         group: 'Footer · Company' },
 

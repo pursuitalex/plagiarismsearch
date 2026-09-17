@@ -231,11 +231,11 @@ const sheet = (inner, extra = '') => `<span class="block rounded-lg bg-white rin
 
 /* ═══════════════ 01 · HERO — THE REAL PDF CHECKER ═══════════════ */
 const section1 = () => `  <!-- ================= 01 · HERO / REAL PDF CHECKER =================
-       The same form the homepage and Students render (build/checker.js) — but here it
-       sits FIRST, on the left, because upload is the page's job: the H1 and its support
-       take the right column, with the three production limits as figures under the
-       approved helper sentence and the scanned-PDF link straight to the extraction act.
-       DOM order keeps the H1 first; the columns swap visually at lg. -->
+       The same form the homepage and Students render (build/checker.js), on the right.
+       The H1 and its support take the left column, with the three production limits as
+       figures under the approved helper sentence and the scanned-PDF link straight to
+       the extraction act. (The form sat on the left at first; Olex swapped the columns
+       on 2026-09-17 so the page opens on its name, like the other checker heroes.) -->
   <section id="pdf-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
     ${dots('heroDots')}
     <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
@@ -244,20 +244,20 @@ const section1 = () => `  <!-- ================= 01 · HERO / REAL PDF CHECKER =
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <!-- three blocks, not two columns: DOM order is H1 → form → limits, which is what a
            phone shows, so the checker is on the first screen there too; at lg the form
-           takes the left column across both rows and the other two stack on the right -->
-      <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
+           takes the right column across both rows and the other two stack on the left -->
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
 
-        <div class="rv min-w-0 lg:col-start-2 lg:row-start-1 lg:pt-4">
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-1 lg:pt-4">
           <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">${penMark(COPY.hero.h1, 'PDF')}</h1>
           <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch]">${COPY.hero.support}</p>
         </div>
 
-        <div class="min-w-0 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+        <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
 ${checker.form(COPY.hero, ANCHOR)}
 ${checker.free(COPY.hero)}
         </div>
 
-        <div class="rv min-w-0 lg:col-start-2 lg:row-start-2">
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
           <!-- the upload limits: the approved sentence, and its three figures -->
           <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-4 sm:p-5">
             <div class="grid grid-cols-3 gap-3 sm:gap-4 mb-3.5">

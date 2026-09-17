@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>PlagiarismSearch — Turnitin Alternative</title>
+<meta name="description" content="Compare PlagiarismSearch with Turnitin® using verified facts about access, reports, sources and pricing. Run an independent self-service plagiarism check." />
+<link rel="canonical" href="https://plagiarismsearch.com/turnitin-checker-alternative" />
+<title>Turnitin Checker Alternative | PlagiarismSearch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
 tailwind.config = {
   theme: {
     extend: {
@@ -45,7 +46,6 @@ tailwind.config = {
   html { background:#fff; overflow-x: clip; }
   body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   ::selection { background:#F36F5A; color:#fff; }
-  .nums { font-variant-numeric: tabular-nums; }
 
   /* ---------- grain overlay ---------- */
   .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
@@ -57,24 +57,149 @@ tailwind.config = {
     -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
     mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
 
-  /* ---------- reveal (transform/opacity only) ---------- */
+  /* ---------- reveal (transform/opacity only — compositor-friendly) ---------- */
   .rv { opacity:0; transform:translateY(40px); }
   .no-motion .rv { opacity:1 !important; transform:none !important; }
+  .hero-float, #scanLine, #probBar { will-change: transform; }
 
-  /* ---------- shared micro-interactions ---------- */
-  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  /* ---------- scan highlights ---------- */
+  .hl { background-repeat:no-repeat; background-size:0% 100%; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
+        transition:color .3s ease; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .hl-orange { background-image:linear-gradient(to right, rgba(243,111,90,.16), rgba(243,111,90,.16)); }
+  .hl-teal   { background-image:linear-gradient(to right, rgba(12,169,195,.14), rgba(12,169,195,.14)); }
+  /* AI highlight — violet, matching the product report's colour coding */
+  .hl-ai     { background-image:linear-gradient(to right, rgba(154,106,222,.18), rgba(154,106,222,.18)); }
+  .hl.on-orange { color:#B84431; font-weight:600; }
+  .hl.on-teal { color:#06748A; font-weight:600; }
+  .hl.on-ai { color:#6D3FB0; font-weight:600; }
+
+  /* scan legend — dots light up as each category is found */
+  .lg-item { opacity:.35; transition:opacity .45s cubic-bezier(.32,.72,0,1); }
+  .lg-item.found { opacity:1; }
+  .lg-dot { box-shadow:0 0 0 0 currentColor; transition:box-shadow .45s cubic-bezier(.32,.72,0,1); }
+  .lg-item.found .lg-dot { box-shadow:0 0 0 3px color-mix(in srgb, currentColor 22%, transparent); }
+  .no-motion .lg-item { opacity:1; }
+
+  /* ================= CTA SECTION · single source of truth =================
+     Every visual knob of the closing CTA lives here as a custom property.
+     Edit these numbers (or drive them live with ?tune=cta) — nothing else needs touching.
+     Breakpoint overrides go in the two media queries at the bottom of this block. */
+  #cta {
+    /* base plate */
+    --cta-bg:          #F2FCFC;
+    /* wash: a soft directional gradient laid over the plate */
+    --cta-wash-angle:  180deg;
+    --cta-wash-from:   rgba(255,255,255,0);
+    --cta-wash-mid:    rgba(255,255,255,0);
+    --cta-wash-midpos: 50%;
+    --cta-wash-to:     rgba(255,255,255,0);
+    /* glow 1 — warm, upper left */
+    --cta-o1-rgb:   243,111,90;
+    --cta-o1-alpha: .25;
+    --cta-o1-w:     1138px;
+    --cta-o1-h:     1040px;
+    --cta-o1-x:     -22.2%;
+    --cta-o1-y:     -546px;
+    --cta-o1-mid:   54.1%;   /* where the mask drops to 50% */
+    --cta-o1-end:   83.2%;   /* where it reaches full transparency */
+    /* glow 2 — cool, lower right */
+    --cta-o2-rgb:   13,168,194;
+    --cta-o2-alpha: .15;
+    --cta-o2-w:     954px;
+    --cta-o2-h:     950px;
+    --cta-o2-x:     74.2%;
+    --cta-o2-y:     374px;
+    --cta-o2-mid:   65%;
+    --cta-o2-end:   100%;
+
+    background-color: var(--cta-bg);
+    background-image: linear-gradient(var(--cta-wash-angle),
+      var(--cta-wash-from) 0%, var(--cta-wash-mid) var(--cta-wash-midpos), var(--cta-wash-to) 100%);
+  }
+  #ctaOrb1 { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+  #ctaOrb2 { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+  /* ---- CTA · tablet (max 1023px) ---- */
+  @media (max-width:1023px) { #cta { } }
+  /* ---- CTA · mobile (max 639px) ---- */
+  @media (max-width:639px)  { #cta { } }
+
+  /* ---------- Trustpilot review rail ---------- */
+  .tp-scroll { scrollbar-width:none; -ms-overflow-style:none; }
+  .tp-scroll::-webkit-scrollbar { display:none; }
+  .tp-star { width:16px; height:16px; background:#00B67A; display:flex; align-items:center; justify-content:center; }
+  .tp-nav { transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1), box-shadow .3s ease; }
+  .tp-nav:hover { transform:translateY(-50%) scale(1.06); }
+  .tp-nav:active { transform:translateY(-50%) scale(.96); }
+  .tp-nav[disabled] { opacity:0 !important; pointer-events:none; }
+  .tp-dot { transition:width .35s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
+
+  /* ---------- language live-scan block ---------- */
+  .pill-lang { transition: background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+  .pill-lang.active { background:#111827; color:#fff; }
+
+  /* ---------- pen annotations (reduced-motion: static final state) ---------- */
+  .no-motion #freeWord, .no-motion #oneWord { color:#DC5A45; }
+  .no-motion #oneUnderline, .no-motion #freeCirclePath { opacity:1; }
+
+  /* ---------- hero paper document (Flow font renders text as redacted bars) ---------- */
+  .font-flow { font-family:'Flow Circular', cursive; }
+  /* drop-shadow on the parent: clip-path on the sheet would eat its own box-shadow,
+     while a parent filter wraps the already-clipped silhouette (incl. the dog-ear) */
+  .paper-doc { filter: drop-shadow(0 1px 2px rgba(17,24,39,.05)) drop-shadow(0 18px 36px rgba(17,24,39,.13)); }
+  .paper-doc .paper-sheet {
+    clip-path: polygon(0 0, calc(100% - 52px) 0, 100% 52px, 100% 100%, 0 100%);
+    border: 1px solid rgba(17,24,39,.07);
+    border-radius: 16px; /* rounds 3 corners + curves the border; the 4th is cut by the clip */
+  }
+  .paper-doc .paper-fold {
+    position:absolute; top:0; right:0; width:52px; height:52px;
+    background: linear-gradient(225deg, rgba(0,0,0,0) 50%, #E9EBF0 50%, #F8F9FB 98%);
+    border-bottom-left-radius: 12px;
+    filter: drop-shadow(-5px 5px 6px rgba(17,24,39,.10));
+  }
+
+  /* ---------- hero avatar stack (Figma 5379:2064 — 32px circles on a 22px step) ---------- */
+  .avatar-stack img { filter: drop-shadow(-1px 0 2px rgba(17,24,39,.07)); }
+  .avatar-stack img + img { margin-left: -10px; }
+
+  /* ---------- breathing bar ---------- */
+  @keyframes breathe { 0%,100% { width:26%; } 50% { width:38%; } }
+  .breathe { animation:breathe 4.5s cubic-bezier(.45,0,.25,1) infinite; }
+  .no-motion .breathe { animation:none; width:32%; }
+
+  @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1);} 50% { opacity:.45; transform:scale(.8);} }
+  .pulse-dot { animation:pulse-dot 2.2s ease-in-out infinite; }
+
+  /* ---------- FAQ accordion ---------- */
+  .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1); }
+  .faq-item.open .faq-a { grid-template-rows:1fr; }
+  .faq-a > div { overflow:hidden; }
+  .faq-chev { transition:transform .45s cubic-bezier(.32,.72,0,1); }
+  .faq-item.open .faq-chev { transform:rotate(180deg); }
+
+  /* ---------- persona fade ---------- */
+  /* All three panels share one grid cell, so the holder is exactly as tall as the tallest
+     of them at any width. It used to be min-h-[380px] with the inactive panels absolutely
+     positioned: a number picked for the desktop panel, which left 69px of dead space under
+     the active one on a phone and read as a broken gap above the reviews rail. */
+  .persona-panel { grid-area:1/1; transition:opacity .45s cubic-bezier(.32,.72,0,1), transform .45s cubic-bezier(.32,.72,0,1); }
+  .persona-panel.hidden-panel { opacity:0; transform:translateY(14px); pointer-events:none; }
+
+  /* ---------- buttons ---------- */
+  .btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
   .btn-press:active { transform:scale(.97); }
+  /* circle stays put; only the arrow inside rotates 45° counter-clockwise */
   .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
   .group:hover .icon-orb svg { transform:rotate(-45deg); }
 
-
-  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-
-  /* ---------- AI pricing rows ---------- */
-  .ai-row { transition:background-color .15s ease; }
-  .ai-row:hover { background:#F2FAFB; }
+  .nums { font-variant-numeric: tabular-nums; }
 
   /* ---------- island nav dropdowns ---------- */
   .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
@@ -83,26 +208,6 @@ tailwind.config = {
     transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
   .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
   @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
-
-  /* ---------- help-center search (DS input recipe, pill variant) ---------- */
-  .hc-search { width:100%; height:56px; padding:0 116px 0 50px; border-radius:9999px;
-    border:1px solid #E5E7EB; background:#fff; color:#111827; font-size:15px; font-weight:500;
-    transition:border-color .15s ease, box-shadow .15s ease; }
-  .hc-search::placeholder { color:#9CA3AF; font-weight:400; }
-  .hc-search:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
-  .hc-search::-webkit-search-cancel-button { -webkit-appearance:none; }
-
-  /* ---------- category cards ---------- */
-  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
-  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
-  .hc-go svg { transition:transform .25s cubic-bezier(.32,.72,0,1); }
-  .hc-card:hover .hc-go svg { transform:translateX(3px); }
-  @media (prefers-reduced-motion: reduce) { .hc-card, .hc-go svg { transition:none; } .hc-card:hover { transform:none; } }
-
-  /* ---------- pulse dot (support status) ---------- */
-  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
-  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
-  .no-motion .pulse-dot { animation:none; }
   /* ---------- header below lg: burger + panel ---------- */
   .nav-burger-close { display:none; }
   #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
@@ -139,8 +244,157 @@ tailwind.config = {
     .cf-label { font-size: 11.5px; }
     .ctl { font-size: 13.5px; }
   }
+  /* the scan scene pins and scrubs only from lg up; below that it is a normal section */
+  @media (min-width: 1024px) { #scanWrap { height: 285vh; } }
+
 </style>
 </head>
+
+<style>
+  [hidden] { display: none !important; }
+  section[id], [id^="source-"], #sources { scroll-margin-top: 100px; }
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+  a:focus-visible, button:focus-visible, select:focus-visible,
+  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
+  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible { outline-color: #6ED7E8; }
+
+  .rv-kids > * { opacity:0; transform:translateY(40px); }
+  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
+
+  /* ---------- the quick-check form (build/checker.js) ---------- */
+  .qc-area { width:100%; border:0; outline:none; background:transparent; resize:none;
+    font-size:15px; line-height:1.6; font-weight:500; color:#111827; }
+  .qc-area::placeholder { color:#9CA3AF; font-weight:400; }
+
+  .qc-chip { display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 14px;
+    border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12.5px; font-weight:600;
+    transition:background-color .2s ease, color .2s ease; }
+  .qc-chip:hover { background:#E5E7EB; color:#111827; }
+  .qc-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
+    transition:border-color .2s ease, background-color .2s ease; }
+  .qc-drop:hover { border-color:#2CC3DB; background:#F0FAFC; }
+
+  /* the two checks */
+  .sw { width:38px; height:22px; border-radius:999px; background:rgba(16,24,40,.14);
+        position:relative; transition:background .25s cubic-bezier(.32,.72,0,1); flex:none; }
+  .sw::after { content:''; position:absolute; top:3px; left:3px; width:16px; height:16px;
+        border-radius:999px; background:#fff; box-shadow:0 1px 3px rgba(16,24,40,.3);
+        transition:transform .25s cubic-bezier(.32,.72,0,1); }
+  .sw.on { background:#0D9488; }
+  .sw.on::after { transform:translateX(16px); }
+  @media (prefers-reduced-motion: reduce) { .sw, .sw::after { transition:none; } }
+
+  /* ---------- the comparison table ----------
+     One white sheet inside the bezel; the two product columns are the same width and the
+     same ground. Under 768px every row becomes a card and each cell names its product. */
+  .cmp { border-collapse:separate; border-spacing:0; background:#fff; border-radius:18px; overflow:hidden; table-layout:fixed; }
+  .cmp th, .cmp td { vertical-align:top; padding:20px 24px; border-bottom:1px solid #EEF0F3; }
+  .cmp thead th { background:#F8F9FB; padding-top:16px; padding-bottom:16px; vertical-align:middle; }
+  .cmp tbody tr:last-child th, .cmp tbody tr:last-child td { border-bottom:0; }
+  .cmp .cmp-topic { width:22%; }
+  .cmp td + td, .cmp thead th + th + th { border-left:1px solid #EEF0F3; }
+  .cmp td, .cmp thead th + th { border-left:1px solid #EEF0F3; }
+  @media (min-width:1024px) { .cmp { border-radius:24px; } .cmp th, .cmp td { padding:24px 28px; } }
+  @media (max-width:767px) {
+    .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display:block; width:auto; }
+    .cmp { background:transparent; border-radius:0; overflow:visible; }
+    .cmp thead { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+    .cmp tbody tr { background:#fff; border-radius:16px; overflow:hidden; }
+    .cmp tbody tr + tr { margin-top:8px; }
+    .cmp .cmp-topic { width:auto; background:#F8F9FB; padding:14px 18px; border-bottom:1px solid #EEF0F3; }
+    .cmp td { padding:16px 18px; border-left:0 !important; }
+    .cmp tbody tr td:last-child { border-bottom:0; }
+    .cmp tbody tr:last-child td { border-bottom:1px solid #EEF0F3; }
+    .cmp tbody tr:last-child td:last-child { border-bottom:0; }
+    .cmp td::before { content:attr(data-label); display:block; margin-bottom:6px;
+      font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
+  }
+  /* the source a reference jumped to answers for a moment */
+  .src-item:target { background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,.06); }
+
+  .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+  .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+
+  /* ---------- the shared report component ---------- */
+  .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease;
+    border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
+    box-shadow:inset 0 -2px 0 currentColor;
+    background-image:linear-gradient(var(--wash), var(--wash));
+    background-repeat:no-repeat; background-position:left center; background-size:100% 100%; }
+  .cab-plag { --wash:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
+  .cab-ai   { --wash:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
+  .cab-plag.on { --wash:rgba(243,111,90,.4); }
+  .cab-ai.on   { --wash:rgba(168,85,247,.34); }
+  .cab-mark > span { color:#111827; }
+  .cab-src.on { background:#F8F9FB; }
+  .cab-tab { padding-bottom:10px; border-bottom:2px solid transparent; color:#4B5563; }
+  .cab-tab.on { color:#06748A; border-bottom-color:#0991A8; }
+  .cab-sources, .cab-foot { border-bottom-left-radius:1rem; border-bottom-right-radius:1rem; }
+  @media (min-width:640px) {
+    .cab-sources, .cab-foot { border-bottom-left-radius:20px; border-bottom-right-radius:20px; }
+  }
+  @media (min-width:1024px) {
+    .cab-sources, .cab-foot { border-bottom-left-radius:1.5rem; border-bottom-right-radius:1.5rem; }
+  }
+  .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
+    pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
+  @media (prefers-reduced-motion: reduce) { .cab-mark { transition:none; } }
+
+  .no-motion .pen-word { color:#DC5A45; }
+  .no-motion .pen-underline { opacity:1; }
+
+  /* ===== closing CTA · one place for every knob — see build/cta.js ===== */
+  #independent-cta {
+    --cta-bg: #F2FCFC;
+    /* warm, upper left */
+    --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
+    --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
+    --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
+    --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
+    /* cool, lower right */
+    --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
+    --cta-o2-w: 954px;          --cta-o2-h: 950px;
+    --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
+    --cta-o2-mid: 65%;          --cta-o2-end: 100%;
+    background-color: var(--cta-bg);
+  }
+  #independent-ctaGlowWarm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+  #independent-ctaGlowCool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+  /* tablet — about three quarters of the desktop figure */
+  @media (max-width:1023px) {
+    #independent-cta {
+      --cta-o1-w: 840px;  --cta-o1-h: 770px;
+      --cta-o1-x: -28%;   --cta-o1-y: -400px;
+      --cta-o2-w: 700px;  --cta-o2-h: 700px;
+      --cta-o2-x: 64%;    --cta-o2-y: 300px;
+    }
+  }
+  /* phone — half the size, softer, hard against the edges so the middle stays readable */
+  @media (max-width:639px) {
+    #independent-cta {
+      --cta-o1-alpha: .20;
+      --cta-o1-w: 560px;  --cta-o1-h: 520px;
+      --cta-o1-x: -38%;   --cta-o1-y: -250px;
+      --cta-o2-alpha: .12;
+      --cta-o2-w: 470px;  --cta-o2-h: 470px;
+      --cta-o2-x: 52%;    --cta-o2-y: 210px;
+    }
+  }
+
+  /* the ring's reduced-motion fallback is mandatory: colour and path are both scripted */
+  .no-motion .ring-word { color:#DC5A45; }
+  .no-motion .ring-path { opacity:1; }
+</style>
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
 
@@ -282,42 +536,905 @@ tailwind.config = {
 </header>
 
 <main>
-  <section class="relative pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 bg-[#F2FCFC] overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
-      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
-    </div>
+  <!-- ================= 01 · HERO / INDEPENDENT ALTERNATIVE + REAL CHECKER =================
+       The shared form (build/checker.js) on the right, and on the left the two things a
+       visitor from a "Turnitin alternative" query has to learn before they type: what
+       this is, and what it is not. The independence sentence is a card of its own, not
+       fine print, and the short disclosure sits under the form where the action is.
+       Three blocks, DOM order H1 → form → independence, so a phone opens on the checker. -->
+  <section id="independent-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
+        <defs>
+          <pattern id="heroDots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#heroDots)"></rect>
+      </svg>
+    <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
+    <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="max-w-[620px]">
-        <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700 mb-4 lg:mb-5">Footer · Popular Checks</div>
-        <h1 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Turnitin Alternative</h1>
-        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed mb-8 sm:mb-10 lg:mb-12">This page is an approved destination in the navigation architecture. It is not designed yet — the link works so the navigation can be walked end to end.</p>
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
 
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 mb-8 sm:mb-10 lg:mb-12">
-          <dl class="divide-y divide-ink-100">
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Label</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Turnitin Alternative</dd>
-            </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Placed in</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Footer · Popular Checks</dd>
-            </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Path</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800 nums">/turnitin-checker-alternative</dd>
-            </div>
-          </dl>
-          <p class="mt-4 pt-4 border-t border-ink-100 text-[13.5px] sm:text-[14.5px] text-ink-600 leading-relaxed">Footer only. The brief keeps it out of the header and out of the homepage body.</p>
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-1 lg:pt-2">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Independent plagiarism checking</span>
+        </div>
+          <h1 class="text-[clamp(2.1rem,4.2vw,3rem)] font-extrabold tracking-tightest leading-[1.05] mb-4 sm:mb-5 lg:mb-6">An <span class="pen-word relative inline-block">Independent<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 198 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c50-7 133-7 192-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span> Alternative to Turnitin® for Plagiarism Checking</h1>
+          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch]">Looking for a plagiarism check you can run directly? PlagiarismSearch lets individuals upload or paste their own content, review matching passages and sources, and use self-service plagiarism checking without an institutional PlagiarismSearch setup.</p>
         </div>
 
-        <a href="index.html" class="btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-ink-900 text-white text-[14px] sm:text-[15px] font-semibold hover:bg-ink-800 transition-colors duration-300">
-          Back to the homepage
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
+      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+        <form class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+
+          <label for="checkText" class="sr-only">Paste or type your text here</label>
+          <!-- the count belongs to the text, so it sits in the corner of the field
+               rather than in a footer two rows away from what it counts -->
+          <div class="relative mb-4">
+            <textarea id="checkText" rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
+            <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span id="wordCount">0</span> / 150 words</span>
+          </div>
+
+          <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+               formats line it carried reappears under the input chips instead. The two
+               are exclusive — one display query, never both on screen — so the approved
+               sentence still appears exactly once at any width. -->
+          <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+            <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+              <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
+            </span>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+            <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+            <button type="button" class="qc-chip"><img src="assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+            <button type="button" class="qc-chip"><img src="assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+            <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+          </div>
+          <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
+
+          <!-- The two checks sit beside the button they modify, not in a row of their own.
+               The row itself never wraps: the button keeps the right edge at every width,
+               and it is the checks that give — side by side where they fit, stacked below
+               640 where the pair needs about 300px and the form only has 295. -->
+          <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+            <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="optPlag" checked class="sr-only peer">
+                <span class="sw on" data-for="optPlag"></span>
+                <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
+              </label>
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="optAI" class="sr-only peer">
+                <span class="sw" data-for="optAI"></span>
+                <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
+              </label>
+            </div>
+            <a href="#independent-checker" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+              Check for plagiarism
+              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </a>
+          </div>
+        </form>
+      </div>
+      <p class="mt-5 sm:mt-6 flex items-center justify-center gap-2 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">
+        <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+        150 words free — no registration required.
+      </p>
+          <p class="rv mt-3 flex items-center justify-center gap-2 text-[12.5px] sm:text-[13px] font-medium text-ink-500 text-center">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            <span>Independent service — not affiliated with Turnitin, LLC.</span>
+          </p>
+        </div>
+
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
+          <div class="flex items-start gap-4 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse px-5 py-4 sm:px-6 sm:py-5 max-w-[560px]">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800 font-semibold">PlagiarismSearch is an independent service. It is not affiliated with or endorsed by Turnitin, LLC and does not generate Turnitin Similarity Reports.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 · OBJECTIVE COMPARISON + ITS SOURCES =================
+       A real table: <th scope="col"> for the two products, <th scope="row"> for the
+       topic, every cell text. Both product columns are set identically — same ground,
+       same weight, no winner. Each Turnitin cell ends on the number of the official guide
+       that supports it, and the guides are listed directly under the table with the
+       date they were checked. Under 768px the table reflows into one card per topic; the
+       explicit roles keep it a table for assistive tech once display:block has been
+       applied, and each cell repeats its product name as a label. -->
+  <section id="comparison" class="relative py-16 sm:py-24 lg:py-28 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[860px] mb-8 sm:mb-10 lg:mb-12">
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">PlagiarismSearch vs Turnitin®: what is actually different?</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[76ch]">Turnitin offers several products and institution-specific configurations. This comparison focuses on PlagiarismSearch self-service plagiarism checking and documented aspects of Turnitin Similarity / Feedback Studio that can be compared using current official information.</p>
+        <p class="mt-5 inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 text-[12px] sm:text-[12.5px] font-semibold text-ink-700">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          Last verified: September 15, 2026
+        </p>
+      </div>
+
+      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+        <table class="cmp w-full text-left" role="table">
+          <caption class="sr-only">PlagiarismSearch self-service plagiarism checking compared with documented aspects of Turnitin Similarity / Feedback Studio</caption>
+          <thead role="rowgroup">
+            <tr role="row">
+              <th scope="col" role="columnheader" class="cmp-topic text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Topic</th>
+              <th scope="col" role="columnheader" class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Turnitin® Similarity / Feedback Studio</th>
+              <th scope="col" role="columnheader" class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">PlagiarismSearch</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row">
+              <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Direct individual purchase</th>
+              <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Turnitin states that subscriptions to these products are designed for educational institutions and are not sold directly to individuals.</p>
+                <p class="mt-2.5"><a href="#source-1" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 1: How to purchase a Turnitin subscription">Source 1</a></p>
+              </td>
+              <td role="cell" data-label="PlagiarismSearch">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Individuals can use PlagiarismSearch directly through its self-service checker and public plan options.</p>
+              </td>
+            </tr>
+            <tr role="row">
+              <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">How access works</th>
+              <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Access commonly depends on an institution's Turnitin product, license and workflow. Student access to a Similarity Report can also depend on instructor or institutional settings.</p>
+                <p class="mt-2.5"><a href="#source-3" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 3: Accessing the Similarity Report and similarity score via Turnitin Website">Source 3</a></p>
+              </td>
+              <td role="cell" data-label="PlagiarismSearch">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">A user can start their own check directly in PlagiarismSearch and review the generated report through their account workflow.</p>
+              </td>
+            </tr>
+            <tr role="row">
+              <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">What the report means</th>
+              <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Turnitin's Similarity Report highlights text that matches selected search sources. Turnitin states that a similarity score is not itself a determination of plagiarism.</p>
+                <p class="mt-2.5"><a href="#source-2" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 2: Turnitin and plagiarism">Source 2</a></p>
+              </td>
+              <td role="cell" data-label="PlagiarismSearch">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">PlagiarismSearch highlights matching or similar passages and their sources. The result is evidence for the user to review, not an automatic plagiarism determination.</p>
+              </td>
+            </tr>
+            <tr role="row">
+              <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Source collections</th>
+              <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Depending on the product and settings, Turnitin documents source collections including internet content, publications and repositories of submitted works.</p>
+                <p class="mt-2.5"><a href="#source-4" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 4: Customizing account settings for Similarity and SimCheck">Source 4</a></p>
+              </td>
+              <td role="cell" data-label="PlagiarismSearch">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">PlagiarismSearch can search web sources, an academic database with 500M+ indexed academic texts when enabled, and available personal or organization storage sources.</p>
+              </td>
+            </tr>
+            <tr role="row">
+              <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Pricing path</th>
+              <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Institutional customers request pricing based on their organization's requirements; these subscriptions are not sold directly to individuals.</p>
+                <p class="mt-2.5"><a href="#source-1" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 1: How to purchase a Turnitin subscription">Source 1</a></p>
+              </td>
+              <td role="cell" data-label="PlagiarismSearch">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Public self-service plan options are available directly from PlagiarismSearch.</p>
+              </td>
+            </tr>
+            <tr role="row">
+              <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Official Turnitin report</th>
+              <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Turnitin generates its own Similarity Reports using its products, databases and configured search targets.</p>
+                <p class="mt-2.5"><a href="#source-3" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 3: Accessing the Similarity Report and similarity score via Turnitin Website">Source 3</a></p>
+              </td>
+              <td role="cell" data-label="PlagiarismSearch">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">PlagiarismSearch generates a PlagiarismSearch report. It does not connect to Turnitin software or generate an official Turnitin Similarity Report.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- the evidence, directly under the claims it supports -->
+      <div id="sources" class="rv mt-6 sm:mt-8 grid lg:grid-cols-[.9fr_1.1fr] gap-6 lg:gap-12 rounded-2xl sm:rounded-3xl bg-ink-50 p-5 sm:p-7 lg:p-8">
+        <div class="min-w-0">
+          <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-3">Last verified: September 15, 2026</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700 max-w-[62ch]">Turnitin information on this page was last reviewed on September 15, 2026 against current official Turnitin documentation covering subscription access, Similarity Reports, source repositories and AI Writing Reports. Turnitin product availability and settings can vary by license, institution and configuration.</p>
+        </div>
+        <div class="min-w-0">
+          <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-3">Official Turnitin sources</p>
+          <ol class="grid gap-2">
+            <li id="source-1" class="src-item flex items-start gap-3 rounded-xl px-2 py-1.5 -mx-2">
+              <span class="shrink-0 w-6 h-6 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center text-[11.5px] font-bold text-ink-700 tabular-nums">1</span>
+              <a href="https://guides.turnitin.com/hc/en-us/articles/37985974637453-How-to-purchase-a-Turnitin-subscription" rel="noopener" class="min-w-0 inline-flex items-start gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>How to purchase a Turnitin subscription</span><span class="mt-1 text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a>
+            </li>
+            <li id="source-2" class="src-item flex items-start gap-3 rounded-xl px-2 py-1.5 -mx-2">
+              <span class="shrink-0 w-6 h-6 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center text-[11.5px] font-bold text-ink-700 tabular-nums">2</span>
+              <a href="https://guides.turnitin.com/hc/en-us/articles/34400565079053-Turnitin-and-plagiarism" rel="noopener" class="min-w-0 inline-flex items-start gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>Turnitin and plagiarism</span><span class="mt-1 text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a>
+            </li>
+            <li id="source-3" class="src-item flex items-start gap-3 rounded-xl px-2 py-1.5 -mx-2">
+              <span class="shrink-0 w-6 h-6 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center text-[11.5px] font-bold text-ink-700 tabular-nums">3</span>
+              <a href="https://guides.turnitin.com/hc/en-us/articles/28310712438029-Accessing-the-Similarity-Report-and-similarity-score-via-Turnitin-Website" rel="noopener" class="min-w-0 inline-flex items-start gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>Accessing the Similarity Report and similarity score via Turnitin Website</span><span class="mt-1 text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a>
+            </li>
+            <li id="source-4" class="src-item flex items-start gap-3 rounded-xl px-2 py-1.5 -mx-2">
+              <span class="shrink-0 w-6 h-6 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center text-[11.5px] font-bold text-ink-700 tabular-nums">4</span>
+              <a href="https://guides.turnitin.com/hc/en-us/articles/21745851240589-Customizing-account-settings-for-Similarity-and-SimCheck" rel="noopener" class="min-w-0 inline-flex items-start gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>Customizing account settings for Similarity and SimCheck</span><span class="mt-1 text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a>
+            </li>
+            <li id="source-5" class="src-item flex items-start gap-3 rounded-xl px-2 py-1.5 -mx-2">
+              <span class="shrink-0 w-6 h-6 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center text-[11.5px] font-bold text-ink-700 tabular-nums">5</span>
+              <a href="https://guides.turnitin.com/hc/en-us/articles/22774058814093-Using-the-AI-Writing-Report" rel="noopener" class="min-w-0 inline-flex items-start gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>Using the AI Writing Report</span><span class="mt-1 text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a>
+            </li>
+          </ol>
+          <p class="mt-3 text-[12.5px] sm:text-[13px] text-ink-500">guides.turnitin.com — official Turnitin documentation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 · SIGNATURE · NOT THE SAME SCORE =================
+       The page's one dark act, and the thing a competitor page will not say. The diagram
+       is the first paragraph, drawn: two systems, the same four ingredients named in
+       each, two different reports, and a ≠ between the results. Both lanes are set
+       alike — neither is the "good" one — and nothing in the right lane imitates
+       Turnitin's product. Every label is a noun from the approved paragraph. -->
+  <section id="not-the-same-score" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+    <div class="orb absolute" style="width:620px;height:620px;left:-13%;top:40px;background:rgba(13,168,194,.12)"></div>
+    <div class="orb absolute" style="width:520px;height:520px;right:-10%;bottom:-120px;background:rgba(243,111,90,.10)"></div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-16 items-center">
+        <div class="rv min-w-0">
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Your PlagiarismSearch result will <span class="pen-word relative inline-block">not<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 54 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c14-7 36-7 48-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span> be the same as a Turnitin® score</h2>
+          <p class="mt-5 lg:mt-6 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[60ch]">Different plagiarism-checking systems use different source collections, repositories, matching methods and settings. Because of those differences, a similarity percentage from PlagiarismSearch should not be treated as a prediction of the score that Turnitin may return.</p>
+          <p class="mt-4 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[60ch]">PlagiarismSearch does not access Turnitin proprietary databases or its repository of submitted papers. Use the PlagiarismSearch report to review the matches and sources it finds — not to predict an official institutional result.</p>
+        </div>
+
+        <div class="rv grid sm:grid-cols-[1fr_auto_1fr] gap-3 sm:gap-4 items-end" role="img" aria-label="Two separate systems: PlagiarismSearch and Turnitin each use their own source collections, repositories, matching methods and settings, and each produces its own report. The two results are not equal.">
+          <div class="rounded-2xl sm:rounded-3xl bg-white/[.04] ring-1 ring-white/10 p-4 sm:p-5">
+            <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight text-white mb-3.5">PlagiarismSearch</p>
+            <ul class="grid gap-2">
+              <li class="flex items-center gap-2.5 rounded-xl bg-white/[.05] px-3.5 py-2 text-[12.5px] sm:text-[13px] font-medium text-white/75"><span class="w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0"></span>Source collections</li>
+              <li class="flex items-center gap-2.5 rounded-xl bg-white/[.05] px-3.5 py-2 text-[12.5px] sm:text-[13px] font-medium text-white/75"><span class="w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0"></span>Repositories</li>
+              <li class="flex items-center gap-2.5 rounded-xl bg-white/[.05] px-3.5 py-2 text-[12.5px] sm:text-[13px] font-medium text-white/75"><span class="w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0"></span>Matching methods</li>
+              <li class="flex items-center gap-2.5 rounded-xl bg-white/[.05] px-3.5 py-2 text-[12.5px] sm:text-[13px] font-medium text-white/75"><span class="w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0"></span>Settings</li>
+            </ul>
+            <div class="flex justify-center py-2.5 text-white/30" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></div>
+            <p class="rounded-xl bg-white text-ink-900 px-3.5 py-2.5 text-center text-[13px] sm:text-[13.5px] font-bold tracking-tight">PlagiarismSearch report</p>
+          </div>
+          <div class="flex justify-center sm:pb-[18px]" aria-hidden="true">
+            <span class="w-11 h-11 rounded-full bg-orange-500 text-white flex items-center justify-center text-[19px] font-extrabold leading-none shadow-diffuse-lg">≠</span>
+          </div>
+          <div class="rounded-2xl sm:rounded-3xl bg-white/[.04] ring-1 ring-white/10 p-4 sm:p-5">
+            <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight text-white mb-3.5">Turnitin®</p>
+            <ul class="grid gap-2">
+              <li class="flex items-center gap-2.5 rounded-xl bg-white/[.05] px-3.5 py-2 text-[12.5px] sm:text-[13px] font-medium text-white/75"><span class="w-1.5 h-1.5 rounded-full bg-white/50 shrink-0"></span>Source collections</li>
+              <li class="flex items-center gap-2.5 rounded-xl bg-white/[.05] px-3.5 py-2 text-[12.5px] sm:text-[13px] font-medium text-white/75"><span class="w-1.5 h-1.5 rounded-full bg-white/50 shrink-0"></span>Repositories</li>
+              <li class="flex items-center gap-2.5 rounded-xl bg-white/[.05] px-3.5 py-2 text-[12.5px] sm:text-[13px] font-medium text-white/75"><span class="w-1.5 h-1.5 rounded-full bg-white/50 shrink-0"></span>Matching methods</li>
+              <li class="flex items-center gap-2.5 rounded-xl bg-white/[.05] px-3.5 py-2 text-[12.5px] sm:text-[13px] font-medium text-white/75"><span class="w-1.5 h-1.5 rounded-full bg-white/50 shrink-0"></span>Settings</li>
+            </ul>
+            <div class="flex justify-center py-2.5 text-white/30" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></div>
+            <p class="rounded-xl bg-white text-ink-900 px-3.5 py-2.5 text-center text-[13px] sm:text-[13.5px] font-bold tracking-tight">Turnitin Similarity Report</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 · WHICH OPTION FITS YOUR WORKFLOW =================
+       Balanced on purpose. Two cards with the same shell, the same type and the same
+       bullet — Turnitin's column is not dimmed, crossed out or shorter by design; it has
+       three reasons because the brief gives it three. The closing line sits under both
+       as the sentence that joins them. -->
+  <section id="which-option-fits" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-8 sm:mb-10 lg:mb-12">
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Which option fits your workflow?</h2>
+      </div>
+      <div class="rv-kids grid lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 items-start">
+        <div class="rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8">
+          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight pb-4 mb-1 border-b border-ink-100">PlagiarismSearch may fit when</h3>
+          <ul class="divide-y divide-ink-100">
+            <li class="flex items-start gap-3.5 py-4">
+              <span class="mt-[9px] w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></span>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Direct self-service access</span>
+                <span class="block text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1">You need to run your own plagiarism checks without relying on an institution to provide your PlagiarismSearch account.</span>
+              </span>
+            </li>
+            <li class="flex items-start gap-3.5 py-4">
+              <span class="mt-[9px] w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></span>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Independent pre-submission review</span>
+                <span class="block text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1">You want to review the matches and sources found by PlagiarismSearch before you submit your final version.</span>
+              </span>
+            </li>
+            <li class="flex items-start gap-3.5 py-4">
+              <span class="mt-[9px] w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></span>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Public self-service pricing</span>
+                <span class="block text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1">You want to choose from current PlagiarismSearch plan options directly.</span>
+              </span>
+            </li>
+            <li class="flex items-start gap-3.5 py-4">
+              <span class="mt-[9px] w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></span>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Scan control</span>
+                <span class="block text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1">You want to configure the source collections and exclusions available for your PlagiarismSearch check.</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="rounded-3xl sm:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8">
+          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight pb-4 mb-1 border-b border-ink-100">Turnitin® may fit when</h3>
+          <ul class="divide-y divide-ink-100">
+            <li class="flex items-start gap-3.5 py-4">
+              <span class="mt-[9px] w-1.5 h-1.5 rounded-full bg-ink-400 shrink-0"></span>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Official institutional workflow</span>
+                <span class="block text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1">Your school or organization already uses Turnitin® as part of its official workflow.</span>
+              </span>
+            </li>
+            <li class="flex items-start gap-3.5 py-4">
+              <span class="mt-[9px] w-1.5 h-1.5 rounded-full bg-ink-400 shrink-0"></span>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Official Turnitin report</span>
+                <span class="block text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1">You need the official Turnitin Similarity Report required by your institution.</span>
+              </span>
+            </li>
+            <li class="flex items-start gap-3.5 py-4">
+              <span class="mt-[9px] w-1.5 h-1.5 rounded-full bg-ink-400 shrink-0"></span>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Institution-managed features</span>
+                <span class="block text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1">Your workflow depends on Turnitin® institutional repositories, assignment settings or integrations.</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="rv mt-6 sm:mt-8 max-w-[860px] text-[15.5px] sm:text-[17px] lg:text-[18px] font-semibold tracking-tight leading-snug text-ink-900">The two products should not be treated as interchangeable. The better fit depends on whether you need an independent self-service check or an institution-managed Turnitin® workflow.</p>
+    </div>
+  </section>
+
+  <!-- ================= 05 · WHAT YOU GET — THE PLAGIARISMSEARCH REPORT =================
+       The approved report (build/report.js), semantics untouched, on a light ground so
+       the page keeps one dark act. Under it, the three things the report lets you do and
+       the one sentence it must not be mistaken for. -->
+  <section id="report" class="relative py-16 sm:py-24 lg:py-28 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">What You Get with PlagiarismSearch</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Review the evidence behind each match</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[72ch]">The PlagiarismSearch report highlights matching or similar passages and connects them with the sources found during the check. Select a match to review the relevant source and inspect the result in context.</p>
+      </div>
+
+      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 ring-1 ring-black/5 p-3 sm:p-4 lg:p-5">
+        <div class="grid lg:grid-cols-[1fr_360px] gap-3 sm:gap-4 lg:gap-5 items-stretch">
+          <div id="cabDoc" class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden ring-1 ring-black/5 shadow-diffuse">
+            <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
+              <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">#10248837</span>
+              <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
+                <span>Words: <b class="font-bold text-ink-800 tabular-nums">214</b></span>
+                <span>Uploaded at: <b class="font-bold text-ink-800">May 12, 2026</b></span>
+              </span>
+            </div>
+            <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
+            <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="0" aria-label="Matched passage — open its source"><span>Climate change and the economics of food</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="0" aria-label="Matched passage — open its source"><span>The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="1" aria-label="Matched passage — open its source"><span>Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions, and that the effect compounds where irrigation is unavailable.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800">However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.</p>
+              <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-800">What the models leave out</p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai" role="button" tabindex="0" data-match="2" aria-label="Matched passage — open its source"><span>Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai" role="button" tabindex="0" data-match="2" aria-label="Matched passage — open its source"><span>Field data from recent seasons supports this reading across tropical zones, though the sample remains too small to generalise from with confidence.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800">Further work should separate the price effect from the yield effect before either is used to guide policy.</p>
+            </div>
+            <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50">
+            <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#F36F5A; background:#F36F5A80"></span>Plagiarism
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#EAB308; background:#EAB30880"></span>Similarities
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#A855F7; background:#A855F780"></span>AI probability
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#22C55E; background:#22C55E80"></span>Citations
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#3B82F6; background:#3B82F680"></span>References
+              </span>
+            </div>
+          </div>
+
+          <div id="cabSide" class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden ring-1 ring-black/5 shadow-diffuse">
+            <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
+              <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
+            <div class="cab-in mb-4 last:mb-0">
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">Plagiarism</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:38.2%; background:#F36F5A"></span>
+                  </span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="38.2">38.2%</span>
+                </div>
+              </div>
+              <div class="cab-in mb-4 last:mb-0">
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">Total AI rate</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:12.4%; background:#A855F7"></span>
+                  </span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="12.4">12.4%</span>
+                </div>
+              </div>
+              <div class="cab-in mb-4 last:mb-0">
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">AI probability</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:0%; background:#A855F7"></span>
+                  </span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="0">0%</span>
+                </div>
+              </div>
+            </div>
+            <div class="shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
+              <span class="cab-tab on pt-3">Plagiarism</span>
+              <span class="cab-tab pt-3">AI</span>
+            </div>
+            <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
+              <ul class="absolute inset-0 divide-y divide-ink-100">
+              <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="0">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Climate volatility and agriculture vulnerability</span>
+                  <span class="block text-[12px] text-ink-500 truncate">nature.com/nclimate/vol-13</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">31.6%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="1">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Adaptation strategies in West African smallholding</span>
+                  <span class="block text-[12px] text-ink-500 truncate">cambridge.org/agricultural-economics</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">6.6%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="2">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Rain-fed yield variance under warming scenarios</span>
+                  <span class="block text-[12px] text-ink-500 truncate">sciencedirect.com/agsy/2024</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">4.1%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="3">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Millet cultivars and drought tolerance trials</span>
+                  <span class="block text-[12px] text-ink-500 truncate">fao.org/publications/cb9241</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">2.8%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="4">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Smallholder decision-making under uncertainty</span>
+                  <span class="block text-[12px] text-ink-500 truncate">jstor.org/stable/48729103</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">1.9%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="5">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Price transmission in West African grain markets</span>
+                  <span class="block text-[12px] text-ink-500 truncate">ifpri.org/publication/gm-2023</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">1.2%</span>
+              </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 sm:mt-10 grid lg:grid-cols-[1.5fr_1fr] gap-6 lg:gap-10 items-stretch">
+        <ul class="rv-kids grid sm:grid-cols-3 gap-5 sm:gap-6">
+          <li>
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/></svg></span>
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mt-4 mb-1.5">Matched passages</h3>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">See the text where a match or similarity was found.</p>
+          </li>
+          <li>
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mt-4 mb-1.5">Source evidence</h3>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Review the sources associated with reported matches.</p>
+          </li>
+          <li>
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/><path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.944.033z"/></svg></span>
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mt-4 mb-1.5">Interactive review</h3>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Select a match to focus on the corresponding source and examine its context.</p>
+          </li>
+        </ul>
+        <div class="rv rounded-3xl sm:rounded-4xl bg-orange-50 ring-1 ring-orange-200 p-6 sm:p-7 flex items-center gap-4">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <p class="text-[16px] sm:text-[17.5px] lg:text-[19px] font-bold tracking-tight leading-snug text-ink-900">A similarity percentage is not a plagiarism verdict.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 06 · WHAT PLAGIARISMSEARCH CHECKS AGAINST =================
+       Heading left, the four collections as one list on the right — a definition list in
+       a double-bezel card, not four cards — and the boundary line as the card's footer:
+       these are ours, they are not Turnitin's. -->
+  <section id="sources-and-settings" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[.85fr_1.15fr] gap-8 lg:gap-14 items-start">
+        <div class="rv lg:sticky lg:top-28">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Scan Sources &amp; Settings</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Know what PlagiarismSearch checks against</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">The results you see depend on the source collections and exclusions used for your PlagiarismSearch check.</p>
+        </div>
+
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden">
+            <dl class="divide-y divide-ink-100">
+              <div class="flex items-start gap-4 sm:gap-5 px-5 py-5 sm:px-6 sm:py-6 lg:px-7">
+                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
+                <div class="min-w-0">
+                  <dt class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-900">Web</dt>
+                  <dd class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1 max-w-[62ch]">Search available web sources for matching or similar text.</dd>
+                </div>
+              </div>
+              <div class="flex items-start gap-4 sm:gap-5 px-5 py-5 sm:px-6 sm:py-6 lg:px-7">
+                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></span>
+                <div class="min-w-0">
+                  <dt class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-900">Academic database</dt>
+                  <dd class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1 max-w-[62ch]">Include academic database search when you want to compare text with indexed academic material. PlagiarismSearch provides access to over 500 million indexed academic texts when this search source is enabled.</dd>
+                </div>
+              </div>
+              <div class="flex items-start gap-4 sm:gap-5 px-5 py-5 sm:px-6 sm:py-6 lg:px-7">
+                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
+                <div class="min-w-0">
+                  <dt class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-900">Storage</dt>
+                  <dd class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1 max-w-[62ch]">Personal or organization storage can also be used as comparison sources where available for the account.</dd>
+                </div>
+              </div>
+              <div class="flex items-start gap-4 sm:gap-5 px-5 py-5 sm:px-6 sm:py-6 lg:px-7">
+                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+                <div class="min-w-0">
+                  <dt class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-900">Exclusions</dt>
+                  <dd class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1 max-w-[62ch]">References and in-text citations can be excluded when appropriate for the purpose of the check.</dd>
+                </div>
+              </div>
+            </dl>
+            <p class="flex items-start gap-3 px-5 py-4 sm:px-6 sm:py-5 lg:px-7 bg-ink-900 text-white text-[14px] sm:text-[15px] font-semibold leading-relaxed">
+              <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+              <span>These are PlagiarismSearch source collections. They are not Turnitin® databases.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 07 · AI WRITING IS A SEPARATE CHECK =================
+       Compact: one card, two halves of equal weight — what PlagiarismSearch does, what
+       Turnitin documents — with the official guide cited on Turnitin's half and one quiet
+       link to the AI owner on ours. -->
+  <section id="ai-writing" class="relative py-12 sm:py-14 lg:py-16 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-7 sm:mb-8 lg:mb-10">
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">AI writing analysis is separate from plagiarism checking</h2>
+      </div>
+      <div class="rv rounded-3xl sm:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+        <div class="rounded-[18px] sm:rounded-3xl bg-white shadow-inner-hl overflow-hidden grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ink-100">
+          <div class="p-5 sm:p-6 lg:p-7 flex flex-col">
+            <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-3">PlagiarismSearch</p>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 mb-5">PlagiarismSearch can run AI writing analysis as a separate check when that capability and AI-word balance are available. An AI-writing result does not mean that plagiarism occurred and does not prove authorship.</p>
+            <div class="mt-auto"><a href="ai-detector.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Explore AI Content Detector</a></div>
+          </div>
+          <div class="p-5 sm:p-6 lg:p-7 flex flex-col">
+            <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-3">Turnitin®</p>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 mb-5">Turnitin® also presents AI writing detection separately from its similarity result. Turnitin states that its AI model may misidentify text and should not be used as the sole basis for adverse action against a student.</p>
+            <div class="mt-auto"><a href="#source-5" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 5: Using the AI Writing Report">Source 5</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 08 · WHAT HAPPENS TO YOUR DOCUMENT =================
+       Three stations on one rail — the document, the report, Storage — each carrying its
+       approved sentences whole. About PlagiarismSearch only: the page says nothing about
+       how anyone else handles a paper. -->
+  <section id="your-document" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-10 sm:mb-12">
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Know what happens to your document in PlagiarismSearch</h2>
+      </div>
+
+      <ol class="rv-kids relative grid md:grid-cols-3 gap-7 lg:gap-10">
+        <span class="hidden md:block absolute left-[8%] right-[8%] top-[22px] h-px bg-ink-200" aria-hidden="true"></span>
+        <li class="relative">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="relative z-[1] inline-flex ring-4 ring-[#F7FAFC] w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+            <span class="relative z-[1] bg-[#F7FAFC] pr-3 text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">01</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Your document</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[44ch]">Your uploaded document is processed to perform the checks you select. The uploaded source document is not retained as a stored source document.</p>
+        </li>
+        <li class="relative">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="relative z-[1] inline-flex ring-4 ring-[#F7FAFC] w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+            <span class="relative z-[1] bg-[#F7FAFC] pr-3 text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">02</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Your report</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[44ch]">A generated report may remain available in your account for convenience, and you can permanently delete reports.</p>
+        </li>
+        <li class="relative">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="relative z-[1] inline-flex ring-4 ring-[#F7FAFC] w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
+            <span class="relative z-[1] bg-[#F7FAFC] pr-3 text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">03</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Storage</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[44ch]">Adding content to Storage is a separate action you control. Running a plagiarism check does not automatically add the document to Storage.</p>
+        </li>
+      </ol>
+
+      <div class="rv mt-8 sm:mt-10"><a href="policy.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Read the Privacy Policy
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+    </div>
+  </section>
+
+  <!-- ================= 09 · SELF-SERVICE PRICING =================
+       A real preview, because buying directly is part of the comparison and this URL
+       already converts: the homepage's widget shell and its period switcher, reading
+       build/pricing-data.js. PLACEHOLDER figures — production values are backend-driven —
+       and only PlagiarismSearch prices: no Turnitin number, no "cheaper". -->
+  <section id="pricing" class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[1fr_.8fr] gap-6 lg:gap-14 items-end mb-8 sm:mb-10 lg:mb-12">
+        <div class="rv min-w-0">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Self-Service Pricing</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Choose a PlagiarismSearch plan directly</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[64ch]">PlagiarismSearch offers public self-service plan options for users who need more than the free check. Current prices, quotas, billing periods and plan entitlements should always come from the live pricing system.</p>
+        </div>
+        <p class="rv flex items-start gap-3 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 px-5 py-4 sm:px-6 sm:py-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800 font-semibold">
+          <span class="mt-0.5 shrink-0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg></span>
+          <span>150 plagiarism words can be checked without registration. Registered users receive 300 plagiarism words per day.</span>
+        </p>
+      </div>
+
+      <div class="rv flex mb-7 sm:mb-8 lg:mb-10">
+        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs" role="group" aria-label="Billing period">
+          <button type="button" data-period="onetime" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">One-time</button>
+          <button type="button" data-period="monthly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">Monthly</button>
+          <button type="button" data-period="quarterly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">3-Months</button>
+          <button type="button" data-period="yearly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">Yearly</button>
+        </div>
+      </div>
+
+      <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-stretch mb-8 sm:mb-10">
+        <div data-tier="light" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">light</span>
+          <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5">For occasional checks</div>
+          <div class="flex items-end gap-1.5 mb-3">
+            <span class="text-[29px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-none nums js-price"></span>
+            <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term"></span>
+          </div>
+          <div class="self-start inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+          <div class="h-px bg-ink-100 mb-5 sm:mb-6"></div>
+          <ul class="space-y-3 text-[13.5px] font-medium text-ink-700 mb-6 sm:mb-7 js-feats"></ul>
+          <a href="prices.html" class="btn-press mt-auto block text-center rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[13.5px] sm:text-[14.5px] font-semibold py-3 transition-colors duration-300">Start Light</a>
+        </div>
+        <div data-tier="standard" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">standard</span>
+          <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5">For regular work</div>
+          <div class="flex items-end gap-1.5 mb-3">
+            <span class="text-[29px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-none nums js-price"></span>
+            <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term"></span>
+          </div>
+          <div class="self-start inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+          <div class="h-px bg-ink-100 mb-5 sm:mb-6"></div>
+          <ul class="space-y-3 text-[13.5px] font-medium text-ink-700 mb-6 sm:mb-7 js-feats"></ul>
+          <a href="prices.html" class="btn-press mt-auto block text-center rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[13.5px] sm:text-[14.5px] font-semibold py-3 transition-colors duration-300">Start Standard</a>
+        </div>
+        <div data-tier="premium" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
+          <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">premium</span>
+          <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5">For higher-volume checks</div>
+          <div class="flex items-end gap-1.5 mb-3">
+            <span class="text-[29px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-none nums js-price"></span>
+            <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term"></span>
+          </div>
+          <div class="self-start inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+          <div class="h-px bg-ink-100 mb-5 sm:mb-6"></div>
+          <ul class="space-y-3 text-[13.5px] font-medium text-ink-700 mb-6 sm:mb-7 js-feats"></ul>
+          <a href="prices.html" class="btn-press mt-auto block text-center rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[13.5px] sm:text-[14.5px] font-semibold py-3 transition-colors duration-300">Start Premium</a>
+        </div>
+      </div>
+
+      <div class="rv"><a href="prices.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            View all pricing
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+    </div>
+  </section>
+
+  <!-- ================= 10 · FAQ =================
+       Nine questions, the confusion ones first, every answer in the HTML. The answer about
+       buying Turnitin directly is followed by the official purchase guide. -->
+  <section id="turnitin-alternative-faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
+        <div class="rv lg:sticky lg:top-28">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Turnitin Alternative FAQ</h2>
+        </div>
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+            <div class="faq-item open">
+              <button type="button" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Is PlagiarismSearch affiliated with Turnitin®?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">No. PlagiarismSearch is an independent plagiarism-checking service. It is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC.</p>
+              </div></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Is PlagiarismSearch a third-party Turnitin® checker?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">No. PlagiarismSearch does not connect to Turnitin software, access Turnitin proprietary databases, or generate Turnitin Similarity Reports. It is a separate plagiarism-checking service that can be used as an independent alternative.</p>
+              </div></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Will PlagiarismSearch give me the same similarity score as Turnitin®?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Not necessarily. Different services can use different source collections, repositories, matching methods and settings, so similarity results may differ. A PlagiarismSearch result should not be treated as a prediction of an official Turnitin score.</p>
+              </div></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can individuals buy Turnitin® Similarity directly?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Turnitin currently states that Turnitin Feedback Studio and Similarity subscriptions are not sold directly to individuals. Access may be provided through an institution; Turnitin points individuals with personal similarity-checking needs toward iThenticate.</p>
+                <p class="mt-3"><a href="https://guides.turnitin.com/hc/en-us/articles/37985974637453-How-to-purchase-a-Turnitin-subscription" rel="noopener" class="inline-flex items-start gap-1.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-950 underline decoration-ink-300 underline-offset-4 transition-colors duration-300"><span>Official Turnitin guide: How to purchase a Turnitin subscription</span><span class="mt-1 text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
+              </div></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Do I need an institutional account to use PlagiarismSearch?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">No. PlagiarismSearch is available through its own self-service workflow and does not require your school or university to provide access.</p>
+              </div></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Is a similarity percentage proof of plagiarism?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">No. A similarity percentage shows matched or similar text found against the sources used for a check. The context of each match still needs to be reviewed before deciding what it means.</p>
+              </div></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can I use PlagiarismSearch before submitting through my institution?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">You can use PlagiarismSearch to review your own draft before submission, subject to your institution's rules. Because PlagiarismSearch and Turnitin® use different systems and source collections, do not assume that the two services will return the same result.</p>
+              </div></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Does PlagiarismSearch check AI writing too?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">AI writing analysis is available as a separate check when the capability and AI-word balance are available. AI detection and plagiarism checking answer different questions; an AI result does not itself mean plagiarism.</p>
+              </div></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">How much can I check for free?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">You can check up to 150 plagiarism words without registering. Registered users receive 300 plagiarism words per day.</p>
+              </div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 11 · FINAL CTA =================
+       The closing band (build/cta.js). One action, back to the one real checker — and the
+       support line says once more what the result is and is not. -->
+  <section id="independent-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
+          <defs>
+            <pattern id="independent-ctaDots" width="22" height="22" patternUnits="userSpaceOnUse">
+              <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#independent-ctaDots)"></rect>
+        </svg>
+        <div id="independent-ctaGlowWarm" class="orb"></div>
+        <div id="independent-ctaGlowCool" class="orb"></div>
+      </div>
+
+    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
+      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Run an <span class="ring-word relative inline-block">independent<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span> plagiarism check</h2>
+      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[62ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Review the matches and sources PlagiarismSearch finds before you submit your work. Your result is a PlagiarismSearch report — not a Turnitin Similarity Report or a prediction of an official Turnitin score.</p>
+      <div class="rv flex flex-col items-center gap-4">
+        <a href="#independent-checker" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+          Check for plagiarism
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </span>
         </a>
+        <p class="flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700">
+          <svg class="shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          150 words free — no registration required.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 12 · TRADEMARK NOTICE =================
+       In the page body, above the footer, at a size a person can read. It is the last
+       word, not the only one: the hero and the comparison have already said it. -->
+  <section id="trademark-notice" class="relative py-8 sm:py-10 bg-white border-t border-ink-100" aria-label="Trademark notice">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid md:grid-cols-[200px_1fr] gap-3 md:gap-10">
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 md:pt-0.5">Trademark notice</p>
+        <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 max-w-[96ch]">Turnitin® is a registered trademark of Turnitin, LLC. PlagiarismSearch is an independent service and is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC. References to Turnitin® on this page are used for comparative and consumer-information purposes. PlagiarismSearch does not provide access to Turnitin software or proprietary databases and does not generate Turnitin Similarity Reports.</p>
       </div>
     </div>
   </section>
@@ -473,5 +1590,166 @@ tailwind.config = {
   })();
   </script>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const rvs = gsap.utils.toArray('.rv');
+  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
+  inView.forEach(el => {
+    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+  });
+  rvs.filter(el => !inView.includes(el)).forEach(el => {
+    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 70%' } });
+  });
+
+  gsap.utils.toArray('.rv-kids').forEach(group => {
+    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
+      scrollTrigger: { trigger: group, start: 'top 80%' } });
+  });
+
+  gsap.utils.toArray('.pen-word').forEach(word => {
+    const line = word.querySelector('.pen-underline');
+    if (!line) return;
+    const len = line.getTotalLength();
+    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
+    const tl = gsap.timeline(inFirstView
+      ? { delay: 1 }
+      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
+    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
+      .set(line, { opacity: 1 }, .35)
+      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
+  });
+
+  /* ring mark — the closing act loops a word instead of underlining it. Same trick as
+     the pen mark, longer path, and it waits until the word is well inside the viewport. */
+  gsap.utils.toArray('.ring-word').forEach(word => {
+    const path = word.querySelector('.ring-path');
+    if (!path) return;
+    const len = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.timeline({ scrollTrigger: { trigger: word, start: 'top 75%', once: true } })
+      .to(word, { color: '#DC5A45', duration: .4, ease: 'power2.out' })
+      .set(path, { opacity: 1 }, .15)
+      .to(path, { strokeDashoffset: 0, duration: .9, ease: 'power2.inOut' }, .15);
+  });
+})();
+</script>
+<script>
+(() => {
+  'use strict';
+
+  /* the quick-check form (build/checker.js) */
+  [['checkText', 'wordCount']].forEach(pair => {
+    const ta = document.getElementById(pair[0]), wc = document.getElementById(pair[1]);
+    if (!ta || !wc) return;
+    ta.addEventListener('input', () => {
+      const w = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
+      wc.textContent = w;
+      wc.style.color = w > 150 ? '#B84431' : '';
+    });
+  });
+  document.querySelectorAll('.sw[data-for]').forEach(sw => {
+    const input = document.getElementById(sw.dataset.for);
+    if (!input) return;
+    input.addEventListener('change', () => sw.classList.toggle('on', input.checked));
+  });
+  document.querySelectorAll('a[href="#independent-checker"]').forEach(a => {
+    a.addEventListener('click', () => {
+      const ta = document.getElementById('checkText');
+      if (ta) setTimeout(() => ta.focus({ preventScroll: true }), 400);
+    });
+  });
+
+  /* the report: selecting a passage highlights it and its source */
+  const marks = [...document.querySelectorAll('.cab-mark')];
+  const sources = [...document.querySelectorAll('.cab-src')];
+  const pick = i => {
+    marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
+    sources.forEach(s => s.classList.toggle('on', s.dataset.src === String(i)));
+  };
+  marks.forEach(m => {
+    m.addEventListener('click', () => pick(m.dataset.match));
+    m.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(m.dataset.match); }
+    });
+  });
+  if (marks.length) pick(marks[0].dataset.match);
+
+  /* the pricing preview. PLACEHOLDER figures from build/pricing-data.js; the production
+     widget is backend-driven and replaces this object and the markup that reads it. */
+  const PLANS = {"onetime":{"note":"One payment · packages never expire","term":"/ one-time","light":{"price":"$9.95","rate":"$1.00","feats":["1 plagiarism check","1 AI check","No expiry"]},"standard":{"price":"$17.95","rate":"$0.90","feats":["10 plagiarism checks","10 AI checks","No expiry"]},"premium":{"price":"$41.95","rate":"$0.42","feats":["50 plagiarism checks","50 AI checks","No expiry"]}},"monthly":{"note":"Recurring billing · cancel anytime","term":"/ month","light":{"price":"$22.95","rate":"$0.23","feats":["100 plagiarism checks","30-day validity"]},"standard":{"price":"$34.95","rate":"$0.12","feats":["300 plagiarism checks","API access","Report storage","30-day validity"]},"premium":{"price":"$54.95","rate":"$0.09","feats":["300 plagiarism checks","300 AI checks","API access","Report storage","30-day validity"]}},"quarterly":{"note":"Recurring billing every 3 months · cancel anytime","term":"/ 3 months","light":{"price":"$34.95","rate":"$0.17","feats":["100 plagiarism checks","100 AI checks","90-day validity"]},"standard":{"price":"$64.95","rate":"$0.10","feats":["300 plagiarism checks","300 AI checks","API access","Report storage","90-day validity"]},"premium":{"price":"$89.95","rate":"$0.07","feats":["500 plagiarism checks","500 AI checks","API access","Report storage","90-day validity"]}},"yearly":{"note":"Recurring billing yearly · best per-word rate","term":"/ year","light":{"price":"$114.95","rate":"$0.11","feats":["1,000 plagiarism checks","365-day validity"]},"standard":{"price":"$174.95","rate":"$0.06","feats":["3,000 plagiarism checks","API access","Report storage","365-day validity"]},"premium":{"price":"$259.95","rate":"$0.04","feats":["3,000 plagiarism checks","3,000 AI checks","API access","Report storage","365-day validity"]}}};
+  const tabs = [...document.querySelectorAll('#periodTabs .period-btn')];
+  const cards = [...document.querySelectorAll('[data-tier]')];
+  const tick = '<svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+  if (tabs.length && cards.length) {
+    const render = (key, animate) => {
+      const period = PLANS[key];
+      cards.forEach(card => {
+        const tier = period[card.dataset.tier];
+        const feats = card.querySelector('.js-feats');
+        /* values first, motion second — a price must never wait on an animation frame */
+        card.querySelector('.js-price').textContent = tier.price;
+        card.querySelector('.js-term').textContent = period.term;
+        card.querySelector('.js-rate').textContent = tier.rate;
+        feats.innerHTML = tier.feats.map(f => '<li class="flex gap-3">' + tick + f + '</li>').join('');
+        if (animate && window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          gsap.fromTo([card.querySelector('.js-price'), card.querySelector('.js-rate'), feats],
+            { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .28, ease: 'power2.out', overwrite: 'auto' });
+        }
+      });
+      tabs.forEach(b => {
+        b.classList.toggle('active', b.dataset.period === key);
+        b.setAttribute('aria-pressed', String(b.dataset.period === key));
+      });
+    };
+    tabs.forEach(b => b.addEventListener('click', () => render(b.dataset.period, true)));
+    render('onetime', false);
+  }
+
+  /* FAQ: answers are already in the DOM; this only opens and closes them */
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      const list = item.parentElement;
+      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+      list.querySelectorAll('.faq-q').forEach(b =>
+        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
+    });
+  });
+})();
+</script>
+<script>
+(() => {
+  'use strict';
+  const btn = document.getElementById('navBurger');
+  const panel = document.getElementById('navPanel');
+  if (!btn || !panel) return;
+  const setOpen = on => {
+    btn.setAttribute('aria-expanded', String(on));
+    panel.classList.toggle('open', on);
+    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
+  };
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => {
+    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
+})();
+</script>
 </body>
 </html>

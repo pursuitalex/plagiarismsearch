@@ -122,7 +122,7 @@ console.log('\nthe checker');
   ok('the hero carries the shared form (build/checker.js)', /<textarea id="checkText"/.test(hero) && /class="qc-drop/.test(hero) && /id="optPlag" checked/.test(hero));
   ok('plagiarism is the checked control; AI is optional and not the story', /id="optAI" class/.test(hero) && !/id="optAI" checked/.test(hero) && !/AI (detector|detection)/i.test(flat(hero)));
   ok('exactly one form on the page', (body.match(/<form\b/g) || []).length === 1);
-  ok('the form sits first at lg (upload is the job)', /lg:col-start-1 lg:row-start-1 lg:row-span-2">[\s\S]*<textarea/.test(hero));
+  ok('the form takes the right column at lg (Olex swapped the columns, 2026-09-17)', /lg:col-start-2 lg:row-start-1 lg:row-span-2">[\s\S]*<textarea/.test(hero));
   ok('on a phone the order is H1 → form → limits', hero.indexOf('<h1') < hero.indexOf('<textarea') && hero.indexOf('<textarea') < hero.indexOf('File size limit'));
   ok('the three limits are the production ones', /2 MB/.test(flat(hero)) && /24 MB/.test(flat(hero)) && /10 files/.test(flat(hero)));
   ok('"Using a scanned PDF?" lands on the extraction act', /href="#pdf-text-extraction"[^>]*>[^<]*Using a scanned PDF\?/.test(hero.replace(/<svg[\s\S]*?<\/svg>/g, '')));
@@ -223,7 +223,9 @@ console.log('\nstructure');
   ok('every in-page anchor resolves', !dead.length, dead.join(', '));
   /* the only <img> allowed are the service marks inside the form's input chips */
   ok('no stock imagery', !/<img\b(?![^>]*partners\/)/.test(body));
-  ok('the page is not the Students composition', !/grid lg:grid-cols-\[\.95fr_1\.05fr\]/.test(body) && !/Similarity is not a plagiarism grade/.test(text));
+  /* the hero grid is the Students one since Olex swapped the columns (2026-09-17); what
+     still separates the pages is the story, so that is what is held */
+  ok('the page does not borrow the Students principle', !/Similarity is not a plagiarism grade/.test(text));
 }
 
 console.log('\ngates — open items, not defects');
