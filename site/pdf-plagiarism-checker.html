@@ -627,7 +627,9 @@ tailwind.config = {
 
   <!-- ================= 02 · HOW TO CHECK A PDF FOR PLAGIARISM =================
        The natural how-to heading the brief asks for, as three real product steps on one
-       line with the connectors drawn, each with the object it is about. -->
+       line, each with the object it is about. A connector starts at a card's right edge
+       and is exactly as long as the grid gap (gap-5 / lg:gap-6), so it sits between
+       the cards and never runs into one. -->
   <section id="how-to-check-a-pdf" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
@@ -641,7 +643,7 @@ tailwind.config = {
 
       <ol class="rv-kids relative grid md:grid-cols-3 gap-5 lg:gap-6">
         <li class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="hidden md:block absolute top-1/2 -right-3 lg:-right-3.5 w-6 lg:w-7 h-px bg-ink-200 z-[1]" aria-hidden="true"></span>
+          <span class="hidden md:block absolute top-1/2 left-full w-5 lg:w-6 h-px bg-ink-200" aria-hidden="true"></span>
           <div class="flex items-center justify-between gap-3 mb-5">
             <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
             <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">01</span>
@@ -650,7 +652,7 @@ tailwind.config = {
           <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Drag and drop the PDF or select it from your device. You can upload up to 10 files at once. The upload size limit is 2 MB for guests and 24 MB when signed in.</p>
         </li>
         <li class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="hidden md:block absolute top-1/2 -right-3 lg:-right-3.5 w-6 lg:w-7 h-px bg-ink-200 z-[1]" aria-hidden="true"></span>
+          <span class="hidden md:block absolute top-1/2 left-full w-5 lg:w-6 h-px bg-ink-200" aria-hidden="true"></span>
           <div class="flex items-center justify-between gap-3 mb-5">
             <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
             <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">02</span>
