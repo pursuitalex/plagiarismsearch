@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>PlagiarismSearch — Moodle Integration</title>
+<meta name="description" content="Install and configure the PlagiarismSearch Moodle plugin for Assignments. Set up API access, checking modes, reports, student permissions, and optional AI detection." />
+<link rel="canonical" href="https://plagiarismsearch.com/integration-guide" />
+<title>Moodle Plagiarism Checker Plugin: Setup Guide | PlagiarismSearch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
 tailwind.config = {
   theme: {
     extend: {
@@ -45,7 +46,6 @@ tailwind.config = {
   html { background:#fff; overflow-x: clip; }
   body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   ::selection { background:#F36F5A; color:#fff; }
-  .nums { font-variant-numeric: tabular-nums; }
 
   /* ---------- grain overlay ---------- */
   .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
@@ -57,24 +57,149 @@ tailwind.config = {
     -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
     mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
 
-  /* ---------- reveal (transform/opacity only) ---------- */
+  /* ---------- reveal (transform/opacity only — compositor-friendly) ---------- */
   .rv { opacity:0; transform:translateY(40px); }
   .no-motion .rv { opacity:1 !important; transform:none !important; }
+  .hero-float, #scanLine, #probBar { will-change: transform; }
 
-  /* ---------- shared micro-interactions ---------- */
-  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
+  /* ---------- scan highlights ---------- */
+  .hl { background-repeat:no-repeat; background-size:0% 100%; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
+        transition:color .3s ease; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .hl-orange { background-image:linear-gradient(to right, rgba(243,111,90,.16), rgba(243,111,90,.16)); }
+  .hl-teal   { background-image:linear-gradient(to right, rgba(12,169,195,.14), rgba(12,169,195,.14)); }
+  /* AI highlight — violet, matching the product report's colour coding */
+  .hl-ai     { background-image:linear-gradient(to right, rgba(154,106,222,.18), rgba(154,106,222,.18)); }
+  .hl.on-orange { color:#B84431; font-weight:600; }
+  .hl.on-teal { color:#06748A; font-weight:600; }
+  .hl.on-ai { color:#6D3FB0; font-weight:600; }
+
+  /* scan legend — dots light up as each category is found */
+  .lg-item { opacity:.35; transition:opacity .45s cubic-bezier(.32,.72,0,1); }
+  .lg-item.found { opacity:1; }
+  .lg-dot { box-shadow:0 0 0 0 currentColor; transition:box-shadow .45s cubic-bezier(.32,.72,0,1); }
+  .lg-item.found .lg-dot { box-shadow:0 0 0 3px color-mix(in srgb, currentColor 22%, transparent); }
+  .no-motion .lg-item { opacity:1; }
+
+  /* ================= CTA SECTION · single source of truth =================
+     Every visual knob of the closing CTA lives here as a custom property.
+     Edit these numbers (or drive them live with ?tune=cta) — nothing else needs touching.
+     Breakpoint overrides go in the two media queries at the bottom of this block. */
+  #cta {
+    /* base plate */
+    --cta-bg:          #F2FCFC;
+    /* wash: a soft directional gradient laid over the plate */
+    --cta-wash-angle:  180deg;
+    --cta-wash-from:   rgba(255,255,255,0);
+    --cta-wash-mid:    rgba(255,255,255,0);
+    --cta-wash-midpos: 50%;
+    --cta-wash-to:     rgba(255,255,255,0);
+    /* glow 1 — warm, upper left */
+    --cta-o1-rgb:   243,111,90;
+    --cta-o1-alpha: .25;
+    --cta-o1-w:     1138px;
+    --cta-o1-h:     1040px;
+    --cta-o1-x:     -22.2%;
+    --cta-o1-y:     -546px;
+    --cta-o1-mid:   54.1%;   /* where the mask drops to 50% */
+    --cta-o1-end:   83.2%;   /* where it reaches full transparency */
+    /* glow 2 — cool, lower right */
+    --cta-o2-rgb:   13,168,194;
+    --cta-o2-alpha: .15;
+    --cta-o2-w:     954px;
+    --cta-o2-h:     950px;
+    --cta-o2-x:     74.2%;
+    --cta-o2-y:     374px;
+    --cta-o2-mid:   65%;
+    --cta-o2-end:   100%;
+
+    background-color: var(--cta-bg);
+    background-image: linear-gradient(var(--cta-wash-angle),
+      var(--cta-wash-from) 0%, var(--cta-wash-mid) var(--cta-wash-midpos), var(--cta-wash-to) 100%);
+  }
+  #ctaOrb1 { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+  #ctaOrb2 { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+  /* ---- CTA · tablet (max 1023px) ---- */
+  @media (max-width:1023px) { #cta { } }
+  /* ---- CTA · mobile (max 639px) ---- */
+  @media (max-width:639px)  { #cta { } }
+
+  /* ---------- Trustpilot review rail ---------- */
+  .tp-scroll { scrollbar-width:none; -ms-overflow-style:none; }
+  .tp-scroll::-webkit-scrollbar { display:none; }
+  .tp-star { width:16px; height:16px; background:#00B67A; display:flex; align-items:center; justify-content:center; }
+  .tp-nav { transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1), box-shadow .3s ease; }
+  .tp-nav:hover { transform:translateY(-50%) scale(1.06); }
+  .tp-nav:active { transform:translateY(-50%) scale(.96); }
+  .tp-nav[disabled] { opacity:0 !important; pointer-events:none; }
+  .tp-dot { transition:width .35s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
+
+  /* ---------- language live-scan block ---------- */
+  .pill-lang { transition: background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+  .pill-lang.active { background:#111827; color:#fff; }
+
+  /* ---------- pen annotations (reduced-motion: static final state) ---------- */
+  .no-motion #freeWord, .no-motion #oneWord { color:#DC5A45; }
+  .no-motion #oneUnderline, .no-motion #freeCirclePath { opacity:1; }
+
+  /* ---------- hero paper document (Flow font renders text as redacted bars) ---------- */
+  .font-flow { font-family:'Flow Circular', cursive; }
+  /* drop-shadow on the parent: clip-path on the sheet would eat its own box-shadow,
+     while a parent filter wraps the already-clipped silhouette (incl. the dog-ear) */
+  .paper-doc { filter: drop-shadow(0 1px 2px rgba(17,24,39,.05)) drop-shadow(0 18px 36px rgba(17,24,39,.13)); }
+  .paper-doc .paper-sheet {
+    clip-path: polygon(0 0, calc(100% - 52px) 0, 100% 52px, 100% 100%, 0 100%);
+    border: 1px solid rgba(17,24,39,.07);
+    border-radius: 16px; /* rounds 3 corners + curves the border; the 4th is cut by the clip */
+  }
+  .paper-doc .paper-fold {
+    position:absolute; top:0; right:0; width:52px; height:52px;
+    background: linear-gradient(225deg, rgba(0,0,0,0) 50%, #E9EBF0 50%, #F8F9FB 98%);
+    border-bottom-left-radius: 12px;
+    filter: drop-shadow(-5px 5px 6px rgba(17,24,39,.10));
+  }
+
+  /* ---------- hero avatar stack (Figma 5379:2064 — 32px circles on a 22px step) ---------- */
+  .avatar-stack img { filter: drop-shadow(-1px 0 2px rgba(17,24,39,.07)); }
+  .avatar-stack img + img { margin-left: -10px; }
+
+  /* ---------- breathing bar ---------- */
+  @keyframes breathe { 0%,100% { width:26%; } 50% { width:38%; } }
+  .breathe { animation:breathe 4.5s cubic-bezier(.45,0,.25,1) infinite; }
+  .no-motion .breathe { animation:none; width:32%; }
+
+  @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1);} 50% { opacity:.45; transform:scale(.8);} }
+  .pulse-dot { animation:pulse-dot 2.2s ease-in-out infinite; }
+
+  /* ---------- FAQ accordion ---------- */
+  .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1); }
+  .faq-item.open .faq-a { grid-template-rows:1fr; }
+  .faq-a > div { overflow:hidden; }
+  .faq-chev { transition:transform .45s cubic-bezier(.32,.72,0,1); }
+  .faq-item.open .faq-chev { transform:rotate(180deg); }
+
+  /* ---------- persona fade ---------- */
+  /* All three panels share one grid cell, so the holder is exactly as tall as the tallest
+     of them at any width. It used to be min-h-[380px] with the inactive panels absolutely
+     positioned: a number picked for the desktop panel, which left 69px of dead space under
+     the active one on a phone and read as a broken gap above the reviews rail. */
+  .persona-panel { grid-area:1/1; transition:opacity .45s cubic-bezier(.32,.72,0,1), transform .45s cubic-bezier(.32,.72,0,1); }
+  .persona-panel.hidden-panel { opacity:0; transform:translateY(14px); pointer-events:none; }
+
+  /* ---------- buttons ---------- */
+  .btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
   .btn-press:active { transform:scale(.97); }
+  /* circle stays put; only the arrow inside rotates 45° counter-clockwise */
   .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
   .group:hover .icon-orb svg { transform:rotate(-45deg); }
 
-
-  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-
-  /* ---------- AI pricing rows ---------- */
-  .ai-row { transition:background-color .15s ease; }
-  .ai-row:hover { background:#F2FAFB; }
+  .nums { font-variant-numeric: tabular-nums; }
 
   /* ---------- island nav dropdowns ---------- */
   .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
@@ -83,26 +208,6 @@ tailwind.config = {
     transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
   .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
   @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
-
-  /* ---------- help-center search (DS input recipe, pill variant) ---------- */
-  .hc-search { width:100%; height:56px; padding:0 116px 0 50px; border-radius:9999px;
-    border:1px solid #E5E7EB; background:#fff; color:#111827; font-size:15px; font-weight:500;
-    transition:border-color .15s ease, box-shadow .15s ease; }
-  .hc-search::placeholder { color:#9CA3AF; font-weight:400; }
-  .hc-search:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
-  .hc-search::-webkit-search-cancel-button { -webkit-appearance:none; }
-
-  /* ---------- category cards ---------- */
-  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
-  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
-  .hc-go svg { transition:transform .25s cubic-bezier(.32,.72,0,1); }
-  .hc-card:hover .hc-go svg { transform:translateX(3px); }
-  @media (prefers-reduced-motion: reduce) { .hc-card, .hc-go svg { transition:none; } .hc-card:hover { transform:none; } }
-
-  /* ---------- pulse dot (support status) ---------- */
-  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
-  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
-  .no-motion .pulse-dot { animation:none; }
   /* ---------- header below lg: burger + panel ---------- */
   .nav-burger-close { display:none; }
   #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
@@ -139,8 +244,148 @@ tailwind.config = {
     .cf-label { font-size: 11.5px; }
     .ctl { font-size: 13.5px; }
   }
+  /* the scan scene pins and scrubs only from lg up; below that it is a normal section */
+  @media (min-width: 1024px) { #scanWrap { height: 285vh; } }
+
 </style>
 </head>
+
+<style>
+  [hidden] { display: none !important; }
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  /* anchors clear the site header, and under lg the jump menu beneath it */
+  section[id], .doc-sub[id] { scroll-margin-top: 104px; }
+  @media (max-width:1023px) { .doc-section, .doc-sub[id] { scroll-margin-top: 132px; } }
+
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
+  .bg-ink-950 a:focus-visible { outline-color: #6ED7E8; }
+
+  .rv-kids > * { opacity:0; transform:translateY(40px); }
+  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
+
+  /* Moodle's own words */
+  .ui { font-weight:600; color:#111827; background:#F3F4F6; border-radius:6px; padding:.08em .4em;
+    box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .bg-orange-50 .ui { background:rgba(184,68,49,.10); }
+  .bg-teal-50 .ui, .bg-ink-50 .ui, .deftable dt .ui { background:#E9EBEF; }
+
+  /* ---------- the reading column ---------- */
+  .doc-section { display:grid; gap:20px; padding-bottom:56px; margin-bottom:56px; border-bottom:1px solid #EEF0F3; }
+  .doc-section:last-child { border-bottom:0; margin-bottom:0; padding-bottom:0; }
+  .doc-section > h2 { margin-bottom:4px; }
+  .doc-sub { display:grid; gap:16px; padding-top:28px; margin-top:8px; border-top:1px dashed #E1E4E9; }
+  .group-label { margin-top:8px; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#B84431; }
+  @media (min-width:1024px) { .doc-section { gap:22px; padding-bottom:72px; margin-bottom:72px; } }
+
+  /* ---------- the definition table ---------- */
+  .deftable { border-radius:16px; box-shadow:0 0 0 1px rgba(0,0,0,.06); overflow:hidden; background:#fff; }
+  .deftable-head { display:none; }
+  .deftable-row { padding:14px 16px; border-top:1px solid #EEF0F3; }
+  .deftable-row:first-child { border-top:0; }
+  .deftable dt { font-size:14px; font-weight:700; color:#111827; letter-spacing:-.01em; margin-bottom:6px; }
+  .deftable dd { font-size:13.5px; line-height:1.6; color:#374151; }
+  @media (min-width:640px) {
+    .deftable-head, .deftable-row { display:grid; grid-template-columns:minmax(0,.38fr) minmax(0,.62fr); gap:24px; }
+    .deftable-head { padding:11px 20px; background:#F8F9FB; border-bottom:1px solid #EEF0F3;
+      font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
+    .deftable-row { padding:16px 20px; }
+    .deftable dt { margin-bottom:0; font-size:14.5px; }
+    .deftable dd { font-size:14.5px; }
+  }
+
+  /* ---------- at a glance ---------- */
+  .glance-row { display:grid; gap:2px; padding:13px 18px; border-top:1px solid #EEF0F3; }
+  .glance-row:first-child { border-top:0; }
+  .glance dt { font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
+  .glance dd { font-size:15px; font-weight:700; letter-spacing:-.01em; color:#111827; }
+  @media (min-width:640px) {
+    .glance-row { grid-template-columns:200px minmax(0,1fr); gap:20px; align-items:baseline; padding:14px 24px; }
+    .glance dd { font-size:15.5px; }
+  }
+
+  /* ---------- numbered steps on one spine ---------- */
+  .steps { position:relative; display:grid; gap:16px; counter-reset:none; }
+  .steps::before { content:""; position:absolute; left:15px; top:16px; bottom:16px; width:1px; background:#E1E4E9; }
+  .steps > li { position:relative; display:flex; align-items:flex-start; gap:16px; }
+  .steps-n { position:relative; z-index:1; flex:none; width:31px; height:31px; border-radius:999px; background:#D4F3F8; color:#06748A;
+    display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums;
+    box-shadow:0 0 0 4px #fff; }
+  .steps-tight { gap:12px; }
+
+  /* ---------- the schematic ---------- */
+  .flow { margin:4px 0 0; }
+  .flow ol { display:grid; gap:22px; }
+  .flow li { position:relative; }
+  .flow li span { display:flex; align-items:center; justify-content:center; text-align:center; min-height:56px; padding:10px 12px;
+    border-radius:14px; background:#F8F9FB; box-shadow:0 0 0 1px rgba(0,0,0,.06);
+    font-size:12.5px; font-weight:600; line-height:1.35; color:#1F2937; }
+  .flow li.is-ps span { background:#111827; color:#fff; box-shadow:none; }
+  .flow li + li::before { content:""; position:absolute; left:50%; top:-16px; width:1px; height:10px; background:#9CA3AF; }
+  .flow li + li::after { content:""; position:absolute; left:50%; top:-9px; width:6px; height:6px; margin-left:-3px;
+    border-right:1px solid #9CA3AF; border-bottom:1px solid #9CA3AF; transform:rotate(45deg); }
+  .flow figcaption, .shot figcaption { margin-top:10px; font-size:12.5px; line-height:1.5; color:#6B7280; }
+  @media (min-width:768px) {
+    .flow ol { grid-template-columns:repeat(5, minmax(0,1fr)); gap:22px; }
+    .flow li span { height:100%; min-height:76px; }
+    .flow li + li::before { left:-17px; top:50%; width:11px; height:1px; }
+    .flow li + li::after { left:-11px; top:50%; margin-left:0; margin-top:-3px; transform:rotate(-45deg); }
+  }
+
+  /* ---------- the evidence figure ---------- */
+  .shot { margin:4px 0 0; width:100%; }
+  .shot-frame { border-radius:16px; background:#F3F4F6; box-shadow:0 0 0 1px rgba(0,0,0,.06); padding:0 8px 8px; }
+  .shot-tag { display:flex; align-items:center; gap:5px; height:30px; padding:0 6px; }
+  .shot-tag span { width:7px; height:7px; border-radius:999px; background:#D1D5DB; }
+  .shot-tag b { margin-left:8px; font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#6B7280; }
+  .shot img { display:block; width:100%; height:auto; border-radius:10px; background:#fff; padding:8px 9px; box-shadow:0 0 0 1px rgba(0,0,0,.05); }
+
+  /* ---------- file vs online text ---------- */
+  .matrix { border-top:1px solid #EEF0F3; border-collapse:collapse; font-size:13.5px; }
+  .matrix th, .matrix td { padding:12px 16px; border-top:1px solid #EEF0F3; vertical-align:top; line-height:1.5; }
+  .matrix thead th { border-top:0; background:#F8F9FB; font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#6B7280; }
+  .matrix tbody th { font-weight:700; color:#111827; width:32%; }
+  .matrix td { color:#1B7A50; font-weight:600; }
+  .matrix td.is-no { color:#B84431; }
+  @media (min-width:640px) { .matrix { font-size:14.5px; } .matrix th, .matrix td { padding:14px 24px; } }
+
+  /* ---------- troubleshooting ---------- */
+  .trouble { display:grid; gap:12px; }
+  .trouble > div { border-radius:16px; box-shadow:0 0 0 1px rgba(0,0,0,.06); background:#fff; padding:16px 18px; }
+  .trouble dt { display:flex; align-items:flex-start; gap:12px; font-size:15px; font-weight:700; letter-spacing:-.01em; color:#111827; }
+  .trouble-q { flex:none; width:22px; height:22px; border-radius:999px; background:#FDE6E1; color:#B84431; font-size:12.5px; font-weight:800;
+    display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .trouble dd { margin:10px 0 0 34px; font-size:14px; line-height:1.6; color:#374151; }
+  @media (min-width:768px) {
+    .trouble > div { display:grid; grid-template-columns:minmax(0,.42fr) minmax(0,.58fr); gap:28px; padding:18px 22px; }
+    .trouble dd { margin:0; font-size:14.5px; }
+  }
+
+  /* ---------- the rail and the jump menu ---------- */
+  .rail { position:sticky; top:112px; }
+  .rail ul { display:grid; border-left:1px solid #E1E4E9; }
+  .rail-link { display:block; margin-left:-1px; padding:7px 0 7px 16px; border-left:2px solid transparent;
+    font-size:13.5px; font-weight:500; color:#6B7280; transition:color .2s ease, border-color .2s ease; }
+  .rail-link:hover { color:#111827; }
+  .rail-link.on { color:#111827; font-weight:700; border-left-color:#0991A8; }
+
+  .jump { position:sticky; top:68px; z-index:30; margin:0 -16px; background:rgba(255,255,255,.94);
+    -webkit-backdrop-filter:saturate(1.4) blur(10px); backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid #EEF0F3; }
+  @media (min-width:640px) { .jump { margin:0 -24px; top:84px; } }
+  .jump summary { list-style:none; display:flex; align-items:center; gap:12px; min-height:48px; padding:0 16px; cursor:pointer;
+    font-size:13.5px; font-weight:700; color:#111827; }
+  @media (min-width:640px) { .jump summary { padding:0 24px; } }
+  .jump summary::-webkit-details-marker { display:none; }
+  .jump-now { margin-left:auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; color:#6B7280; }
+  .jump-chev { flex:none; transition:transform .25s ease; }
+  .jump[open] .jump-chev { transform:rotate(180deg); }
+  .jump nav { padding:4px 8px 12px; }
+  @media (min-width:640px) { .jump nav { padding:4px 16px 12px; } }
+  .jump-link { display:flex; align-items:center; min-height:44px; padding:0 8px; border-radius:10px; font-size:14.5px; font-weight:500; color:#374151; }
+  .jump-link.on { background:#F3F4F6; color:#111827; font-weight:700; }
+  @media (prefers-reduced-motion: reduce) { .jump-chev, .rail-link { transition:none; } }
+</style>
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
 
@@ -282,42 +527,796 @@ tailwind.config = {
 </header>
 
 <main>
-  <section class="relative pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 bg-[#F2FCFC] overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
-      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
-    </div>
+  <!-- ================= 01 · DOCUMENTATION / PRODUCT HEADER =================
+       Compact. What this is, what it supports — the compatibility line is set as a fact,
+       not as small print — and the three ways on: get the plugin (leaves the site, and the
+       button says so), start the setup, open the credentials. No checker, no illustration. -->
+  <section id="moodle-integration" class="relative pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-14 lg:pb-16 bg-[#F2FCFC] overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
+        <defs>
+          <pattern id="heroDots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#heroDots)"></rect>
+      </svg>
+    <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
+    <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="max-w-[620px]">
-        <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700 mb-4 lg:mb-5">Products · Integrations</div>
-        <h1 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Moodle Integration</h1>
-        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed mb-8 sm:mb-10 lg:mb-12">This page is an approved destination in the navigation architecture. It is not designed yet — the link works so the navigation can be walked end to end.</p>
+      <div class="rv max-w-[900px]">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Moodle Integration · Setup Guide</span>
+        </div>
+        <h1 class="text-[clamp(2.1rem,4.4vw,3.25rem)] font-extrabold tracking-tightest leading-[1.05] mb-5 lg:mb-6">PlagiarismSearch Moodle Integration: Installation &amp; Setup</h1>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[70ch]">Connect PlagiarismSearch to Moodle Assignments so file and online-text submissions can be sent for plagiarism checking directly from the Moodle workflow.</p>
+        <p class="mt-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[70ch]">Administrators can configure automatic checking, Web and Storage comparison sources, report access, student permissions, and optional AI detection from the PlagiarismSearch plugin settings.</p>
 
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 mb-8 sm:mb-10 lg:mb-12">
-          <dl class="divide-y divide-ink-100">
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Label</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Moodle Integration</dd>
+        <p class="mt-6 inline-flex items-start sm:items-center gap-2.5 rounded-2xl sm:rounded-full bg-white ring-1 ring-black/5 shadow-diffuse px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900">
+          <svg class="shrink-0 mt-0.5 sm:mt-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>Current compatibility: Moodle 2.7–5.2 · Moodle Assignment (mod_assign) only</span>
+        </p>
+
+        <div class="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3">
+          <a href="https://marketplace.moodle.com/plugins/plagiarism_plagiarismsearch" rel="noopener" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Download Moodle Plugin
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span>
+          </a>
+          <a href="#installation" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Start Setup
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+          <a href="account.html" class="text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300">Open API Credentials</a>
+        </div>
+        <p class="mt-5 text-[13px] sm:text-[13.5px] text-ink-500">Need help with an institutional Moodle deployment? <a href="contact-us.html" class="font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300">Contact our team.</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 · QUICK FACTS =================
+       The evaluator's ten seconds. Nine label/value pairs as one sheet — a definition
+       list, every value text — not nine cards. -->
+  <section id="at-a-glance" class="relative py-12 sm:py-16 lg:py-20 bg-white border-b border-ink-100">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[.8fr_1.2fr] gap-8 lg:gap-14 items-start">
+        <div class="rv">
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Moodle Integration at a Glance</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 text-ink-600">The PlagiarismSearch plugin works inside the Moodle Assignment workflow and lets administrators control when submissions are checked, which comparison sources are used, what report access is available, and which options students can use.</p>
+        </div>
+        <div class="rv rounded-3xl sm:rounded-[28px] bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <dl class="glance rounded-[18px] sm:rounded-[20px] bg-white shadow-inner-hl overflow-hidden">
+            <div class="glance-row">
+              <dt>Moodle versions</dt>
+              <dd>2.7–5.2</dd>
             </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Placed in</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800">Products · Integrations</dd>
+            <div class="glance-row">
+              <dt>Supported activity</dt>
+              <dd>Moodle Assignment (mod_assign)</dd>
             </div>
-            <div class="flex flex-wrap gap-x-6 gap-y-1 py-3 first:pt-0 last:pb-0">
-              <dt class="w-28 shrink-0 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-400">Path</dt>
-              <dd class="min-w-0 text-[13.5px] sm:text-[14.5px] text-ink-800 nums">/integration-guide</dd>
+            <div class="glance-row">
+              <dt>Submission types</dt>
+              <dd>File submissions and online text</dd>
+            </div>
+            <div class="glance-row">
+              <dt>Automatic checking</dt>
+              <dd>Available for file and online-text submissions</dd>
+            </div>
+            <div class="glance-row">
+              <dt>Manual checking</dt>
+              <dd>Available for file submissions, subject to permissions and settings</dd>
+            </div>
+            <div class="glance-row">
+              <dt>Comparison sources</dt>
+              <dd>Web, Storage, or Web + Storage</dd>
+            </div>
+            <div class="glance-row">
+              <dt>AI detection</dt>
+              <dd>Optional separate setting</dd>
+            </div>
+            <div class="glance-row">
+              <dt>Reports</dt>
+              <dd>PDF, HTML, or both</dd>
+            </div>
+            <div class="glance-row">
+              <dt>API credentials</dt>
+              <dd>API User + API Key from your PlagiarismSearch account</dd>
             </div>
           </dl>
-          
         </div>
+      </div>
+    </div>
+  </section>
 
-        <a href="index.html" class="btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-ink-900 text-white text-[14px] sm:text-[15px] font-semibold hover:bg-ink-800 transition-colors duration-300">
-          Back to the homepage
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
+  <!-- ================= 03 · THE GUIDE =================
+       One reading column and its rail. The rail is sticky from lg and marks the section
+       being read; under lg it is a jump menu that sticks below the site header and closes
+       when a link is chosen. Every section is anchorable; the offset clears both bars. -->
+  <div id="guide" class="relative bg-white">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+
+      <details class="jump lg:hidden" id="jumpMenu">
+        <summary><span class="flex items-center gap-2.5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg><span>On this page</span></span><span class="jump-now" id="jumpNow"></span><svg class="jump-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <nav aria-label="On this page">
+          <ul>
+            <li><a href="#requirements" class="jump-link" data-spy="requirements">Requirements</a></li>
+            <li><a href="#installation" class="jump-link" data-spy="installation">Installation</a></li>
+            <li><a href="#connect-your-account" class="jump-link" data-spy="connect-your-account">Connect your account</a></li>
+            <li><a href="#plugin-settings" class="jump-link" data-spy="plugin-settings">Plugin settings</a></li>
+            <li><a href="#assignment-setup" class="jump-link" data-spy="assignment-setup">Assignment setup</a></li>
+            <li><a href="#reports-and-student-access" class="jump-link" data-spy="reports-and-student-access">Reports &amp; student access</a></li>
+            <li><a href="#troubleshooting" class="jump-link" data-spy="troubleshooting">Troubleshooting</a></li>
+            <li><a href="#faq" class="jump-link" data-spy="faq">FAQ</a></li>
+          </ul>
+        </nav>
+      </details>
+
+      <div class="grid lg:grid-cols-[232px_minmax(0,1fr)] gap-x-14 xl:gap-x-20 py-10 sm:py-14 lg:py-20">
+        <aside class="hidden lg:block">
+          <nav class="rail" aria-label="On this page">
+            <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-4">On this page</p>
+            <ul>
+            <li><a href="#requirements" class="rail-link" data-spy="requirements">Requirements</a></li>
+            <li><a href="#installation" class="rail-link" data-spy="installation">Installation</a></li>
+            <li><a href="#connect-your-account" class="rail-link" data-spy="connect-your-account">Connect your account</a></li>
+            <li><a href="#plugin-settings" class="rail-link" data-spy="plugin-settings">Plugin settings</a></li>
+            <li><a href="#assignment-setup" class="rail-link" data-spy="assignment-setup">Assignment setup</a></li>
+            <li><a href="#reports-and-student-access" class="rail-link" data-spy="reports-and-student-access">Reports &amp; student access</a></li>
+            <li><a href="#troubleshooting" class="rail-link" data-spy="troubleshooting">Troubleshooting</a></li>
+            <li><a href="#faq" class="rail-link" data-spy="faq">FAQ</a></li>
+            </ul>
+            <div class="mt-7 pt-6 border-t border-ink-100 grid gap-2.5">
+              <a href="https://marketplace.moodle.com/plugins/plagiarism_plagiarismsearch" rel="noopener" class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>Moodle Marketplace</span><span class="text-ink-400"><svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a>
+              <a href="https://github.com/plagiarismsearch/moodle-plagiarism_plagiarismsearch/releases" rel="noopener" class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>GitHub Releases</span><span class="text-ink-400"><svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a>
+            </div>
+          </nav>
+        </aside>
+
+        <div class="doc min-w-0 max-w-[860px]">
+        <section id="requirements" class="doc-section" aria-labelledby="requirements-h">
+          <h2 id="requirements-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Before You Install the Moodle Plugin</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Before starting the setup, make sure you have administrator access to the Moodle site and access to the API credentials in your PlagiarismSearch account.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Moodle also requires plagiarism prevention to be enabled at the site level before plagiarism plugins can be used. In current Moodle documentation, this setting is available under <span class="ui">Site administration → Advanced features → Enable plagiarism plugins</span>.</p>
+          <div class="deftable">
+            <div class="deftable-head" aria-hidden="true"><span>Requirement</span><span>Explanation</span></div>
+            <dl>
+              <div class="deftable-row">
+                <dt>Moodle administrator access</dt>
+                <dd>Required to enable plagiarism prevention, install the plugin, and configure site-wide settings.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt>Supported Moodle version</dt>
+                <dd>Your installation should be within the currently supported Moodle 2.7–5.2 range.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt>PlagiarismSearch account</dt>
+                <dd>Required to obtain the API User and API Key used by the plugin.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt>Moodle Assignment workflow</dt>
+                <dd>The current confirmed integration supports Moodle Assignments only.</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        <section id="how-it-works" class="doc-section" aria-labelledby="how-it-works-h">
+          <h2 id="how-it-works-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">How the Moodle Integration Works</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">PlagiarismSearch uses Moodle’s plagiarism-plugin workflow. Once the plugin is installed and connected, site-wide settings can provide the default checking behavior, while supported settings can also be configured for individual Moodle Assignments.</p>
+          <ol class="steps">
+            <li>
+              <span class="steps-n">1</span>
+              <div class="min-w-0">
+                <p class="text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Enable plagiarism prevention</p>
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-0.5">Turn on Moodle’s plagiarism-plugin feature at the site level.</p>
+              </div>
+            </li>
+            <li>
+              <span class="steps-n">2</span>
+              <div class="min-w-0">
+                <p class="text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Install PlagiarismSearch</p>
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-0.5">Download the current plugin and install it through Moodle administration.</p>
+              </div>
+            </li>
+            <li>
+              <span class="steps-n">3</span>
+              <div class="min-w-0">
+                <p class="text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Connect your account</p>
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-0.5">Enter the API credentials available in your PlagiarismSearch account.</p>
+              </div>
+            </li>
+            <li>
+              <span class="steps-n">4</span>
+              <div class="min-w-0">
+                <p class="text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Set your defaults</p>
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-0.5">Choose checking mode, comparison sources, report options, AI detection, and student permissions.</p>
+              </div>
+            </li>
+            <li>
+              <span class="steps-n">5</span>
+              <div class="min-w-0">
+                <p class="text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Enable it for an Assignment</p>
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-0.5">Configure PlagiarismSearch in the Moodle Assignment where submissions should be checked.</p>
+              </div>
+            </li>
+          </ol>
+          <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-ink-50 ring-black/5 px-4 py-4 sm:px-5 sm:py-[18px]">
+            <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+            <div class="min-w-0">
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">When Assignment-level settings are not stored, the plugin falls back to the corresponding site-wide settings. This lets administrators define defaults while still allowing Assignment-specific configuration where permitted.</p>
+            </div>
+          </div>
+          <!-- the schematic the brief allows: five nodes, a line, no Moodle UI -->
+          <figure class="flow" aria-label="How a submission moves: Moodle Assignment → File / online-text submission → PlagiarismSearch check → Similarity / optional AI result → Report links and permitted student/teacher actions">
+            <ol>
+              <li><span>Moodle Assignment</span></li>
+              <li><span>File / online-text submission</span></li>
+              <li class="is-ps"><span>PlagiarismSearch check</span></li>
+              <li><span>Similarity / optional AI result</span></li>
+              <li><span>Report links and permitted student/teacher actions</span></li>
+            </ol>
+            <figcaption>Schematic of the workflow — not a Moodle screen.</figcaption>
+          </figure>
+        </section>
+
+        <section id="installation" class="doc-section" aria-labelledby="installation-h">
+          <h2 id="installation-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Install the PlagiarismSearch Plugin in Moodle</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Use the current plugin package from Moodle Marketplace or the official PlagiarismSearch GitHub repository. Moodle menu wording can vary slightly between versions, but the installation flow remains the same.</p>
+          <ol class="steps steps-tight">
+            <li>
+              <span class="steps-n">1</span>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 min-w-0 pt-[3px]">In Moodle, go to <span class="ui">Site administration → Advanced features</span> and enable plagiarism plugins.</p>
+            </li>
+            <li>
+              <span class="steps-n">2</span>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 min-w-0 pt-[3px]">Download the current PlagiarismSearch plugin ZIP from Moodle Marketplace or the official GitHub releases page.</p>
+            </li>
+            <li>
+              <span class="steps-n">3</span>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 min-w-0 pt-[3px]">In Moodle, open <span class="ui">Site administration → Plugins → Install plugins</span>.</p>
+            </li>
+            <li>
+              <span class="steps-n">4</span>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 min-w-0 pt-[3px]">Upload the PlagiarismSearch ZIP package and follow Moodle’s installation prompts.</p>
+            </li>
+            <li>
+              <span class="steps-n">5</span>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 min-w-0 pt-[3px]">After installation, open the PlagiarismSearch plugin settings under Moodle site administration.</p>
+            </li>
+            <li>
+              <span class="steps-n">6</span>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 min-w-0 pt-[3px]">Enable PlagiarismSearch and enter the connection details described in the next section.</p>
+            </li>
+            <li>
+              <span class="steps-n">7</span>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 min-w-0 pt-[3px]">Save the settings and confirm that Moodle can connect to the PlagiarismSearch API.</p>
+            </li>
+          </ol>
+          <p class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <a href="https://marketplace.moodle.com/plugins/plagiarism_plagiarismsearch" rel="noopener" class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>Download from Moodle Marketplace</span><span class="text-ink-400"><svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a>
+            <a href="https://github.com/plagiarismsearch/moodle-plagiarism_plagiarismsearch/releases" rel="noopener" class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>View GitHub Releases</span><span class="text-ink-400"><svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a>
+          </p>
+        </section>
+
+        <section id="connect-your-account" class="doc-section" aria-labelledby="connect-your-account-h">
+          <h2 id="connect-your-account-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Connect Moodle to Your PlagiarismSearch Account</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Sign in to PlagiarismSearch and open the API section of your account. Your API User and API Key are available there.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">In the Moodle PlagiarismSearch settings, enter those values in the corresponding API user and API key fields. The current plugin also contains an API URL field for the service endpoint.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Save the settings after entering your credentials.</p>
+          <p><a href="account.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Open My API Credentials
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></p>
+          <figure class="shot" style="max-width:594px">
+            <div class="shot-frame">
+              <p class="shot-tag"><span></span><span></span><span></span><b>Moodle · plugin settings</b></p>
+              <img src="assets/img/moodle/settings-connection.png" width="560" height="262" alt="PlagiarismSearch settings in Moodle: the Enable PlagiarismSearch checkbox, then the API url, API user and API key fields and the API debug option. The API user and API key values are masked." loading="lazy" decoding="async">
+            </div>
+            <figcaption>Example PlagiarismSearch settings in Moodle — the connection fields. Credential values are masked.</figcaption>
+          </figure>
+          <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-teal-50 ring-teal-600/15 px-4 py-4 sm:px-5 sm:py-[18px]">
+            <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+            <div class="min-w-0">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1.5">Security note</p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">Keep your API Key private. Do not place it in screenshots, public documentation, support tickets visible to third parties, or other publicly accessible content.</p>
+            </div>
+          </div>
+          <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-ink-50 ring-black/5 px-4 py-4 sm:px-5 sm:py-[18px]">
+            <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+            <div class="min-w-0">
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">If PlagiarismSearch cannot validate the connection while the plugin is being enabled, check the API connection values and save the settings again.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="plugin-settings" class="doc-section" aria-labelledby="plugin-settings-h">
+          <h2 id="plugin-settings-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Configure PlagiarismSearch Settings</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">PlagiarismSearch separates connection settings from checking, comparison, reporting, and student-access controls. Site-wide values act as defaults for Moodle Assignments unless an Assignment-specific value has been saved.</p>
+          <p class="group-label">Group 1 — Connection</p>
+          <div class="deftable">
+            <div class="deftable-head" aria-hidden="true"><span>Setting</span><span>Explanation</span></div>
+            <dl>
+              <div class="deftable-row">
+                <dt><span class="ui">Enable PlagiarismSearch</span></dt>
+                <dd>Turns the PlagiarismSearch plugin on at the site level. The integration must also be enabled for the Assignment where you want to use it.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">API url</span></dt>
+                <dd>Defines the PlagiarismSearch API endpoint used by the plugin.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">API user</span></dt>
+                <dd>Your PlagiarismSearch API user value.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">API key</span></dt>
+                <dd>Your PlagiarismSearch API key.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">API debug</span></dt>
+                <dd>Advanced connection/debugging setting. Leave this at the standard configuration unless PlagiarismSearch support instructs you to change it.</dd>
+              </div>
+            </dl>
+          </div>
+          <p class="group-label">Group 2 — Checking behavior</p>
+          <div class="deftable">
+            <div class="deftable-head" aria-hidden="true"><span>Setting</span><span>Explanation</span></div>
+            <dl>
+              <div class="deftable-row">
+                <dt><span class="ui">Auto check</span></dt>
+                <dd>Automatically sends supported Moodle Assignment submissions for checking after the relevant submission event. This applies to Assignment file submissions and online text.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Manual check</span></dt>
+                <dd>Enables manual submission and resubmission controls for supported file submissions when the user has the required permission. Student access also depends on the student settings below.</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        <section id="sources-and-storage" class="doc-section" aria-labelledby="sources-and-storage-h">
+          <h2 id="sources-and-storage-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Choose What to Compare — and What to Store</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]"><span class="ui">Sources</span> and <span class="ui">Add to Storage</span> are separate controls. One decides where a submission is compared; the other decides whether the new submission is added to PlagiarismSearch Storage.</p>
+          <!-- the two controls, side by side, so nobody reads them as one -->
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="rounded-2xl ring-1 ring-black/5 bg-white shadow-diffuse p-5 sm:p-6">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1.5">Control 1 · where it is compared</p>
+              <p class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-3"><span class="ui">Sources</span></p>
+              <ul class="grid gap-1.5">
+                <li class="flex items-center gap-2.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700"><span class="w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></span><span class="ui">Doc vs Web + Storage</span></li>
+                <li class="flex items-center gap-2.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700"><span class="w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></span><span class="ui">Doc vs Web</span></li>
+                <li class="flex items-center gap-2.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700"><span class="w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></span><span class="ui">Doc vs Storage</span></li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-dashed border-ink-300 bg-ink-50 p-5 sm:p-6">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1.5">Control 2 · whether it is kept</p>
+              <p class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-3"><span class="ui">Add to Storage</span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes / No — set separately from <span class="ui">Sources</span>.</p>
+            </div>
+          </div>
+          <div class="deftable">
+            <div class="deftable-head" aria-hidden="true"><span>Source option</span><span>Meaning</span></div>
+            <dl>
+              <div class="deftable-row">
+                <dt><span class="ui">Doc vs Web + Storage</span></dt>
+                <dd>Compare the submitted content against both Web sources and the configured PlagiarismSearch Storage.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Doc vs Web</span></dt>
+                <dd>Compare the submitted content against Web sources without using Storage as a comparison source.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Doc vs Storage</span></dt>
+                <dd>Compare the submitted content against Storage without using Web sources for that check.</dd>
+              </div>
+            </dl>
+          </div>
+          <div>
+            <p class="group-label !mt-0">Add to Storage</p>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]"><span class="ui">Add to Storage</span> controls whether the submitted content is added to Storage for future comparisons. Searching Storage does not by itself mean that the current submission will be added to Storage. Likewise, adding a submission to Storage is separate from deciding whether Storage will be searched during the current check.</p>
+          </div>
+          <figure class="shot" style="max-width:594px">
+            <div class="shot-frame">
+              <p class="shot-tag"><span></span><span></span><span></span><b>Moodle · plugin settings</b></p>
+              <img src="assets/img/moodle/settings-checking-sources.png" width="560" height="458" alt="PlagiarismSearch settings in Moodle: Auto check, Manual check, Add to Storage and Sources shown as separate controls, followed by the Only Latin characters, Exclude references, Exclude in-text citations and Exclude self-plagiarism filters." loading="lazy" decoding="async">
+            </div>
+            <figcaption>Example PlagiarismSearch settings in Moodle — Sources and Add to Storage are separate controls, followed by the comparison filters. The values shown are one example configuration.</figcaption>
+          </figure>
+          <div id="refine-the-comparison" class="doc-sub">
+            <h3 class="text-[clamp(1.2rem,1.6vw,1.375rem)] font-bold tracking-tight leading-snug">Refine the Comparison</h3>
+          <div class="deftable">
+            <div class="deftable-head" aria-hidden="true"><span>Setting</span><span>Explanation</span></div>
+            <dl>
+              <div class="deftable-row">
+                <dt><span class="ui">Only Latin characters</span></dt>
+                <dd>Applies the plugin’s character-substitution filter during the search. It is intended to help identify character replacements that can affect text matching.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Exclude references</span></dt>
+                <dd>Excludes detected reference-list content from the similarity calculation when the filter is enabled.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Exclude in-text citations</span></dt>
+                <dd>Excludes qualifying in-text citation content from the similarity calculation when the filter is enabled.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Exclude self-plagiarism</span></dt>
+                <dd>Changes how Storage comparisons involving the same user and/or course are filtered. This setting is relevant when Storage is used as a comparison source.</dd>
+              </div>
+            </dl>
+          </div>
+            <p class="group-label">Self-comparison options</p>
+            <ul class="grid gap-2">
+              <li class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700"><span class="ui">No</span> — do not apply a same-user/course exclusion.</li>
+              <li class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700"><span class="ui">Exclude user plagiarism within the same course</span> — filter matching Storage content associated with the same user in the same course.</li>
+              <li class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700"><span class="ui">Exclude user plagiarism</span> — filter matching Storage content associated with the same user.</li>
+              <li class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700"><span class="ui">Exclude course plagiarism</span> — filter matching Storage content associated with the same course.</li>
+            </ul>
+          </div>
+          <div id="optional-ai-detection" class="doc-sub">
+            <h3 class="text-[clamp(1.2rem,1.6vw,1.375rem)] font-bold tracking-tight leading-snug">Optional AI Detection</h3>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]"><span class="ui">Detect AI</span> is a separate setting from plagiarism detection. Enable it when you also want the PlagiarismSearch check to request an AI-related result.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">When an AI result is available, Moodle can display it separately from the plagiarism/similarity result.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">AI-generated text is not automatically plagiarism, and the two signals should be interpreted separately.</p>
+          </div>
+          <div id="report-access" class="doc-sub">
+            <h3 class="text-[clamp(1.2rem,1.6vw,1.375rem)] font-bold tracking-tight leading-snug">Configure Report Access</h3>
+          <div class="deftable">
+            <div class="deftable-head" aria-hidden="true"><span>Setting</span><span>Explanation</span></div>
+            <dl>
+              <div class="deftable-row">
+                <dt><span class="ui">Report language</span></dt>
+                <dd>Selects the language used when a supported report language is requested.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Report file type</span></dt>
+                <dd>Controls whether Moodle provides no report link, a PDF report, an HTML report, or both.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Allow teachers review reports</span></dt>
+                <dd>Enables the additional teacher review-report link when the user has the required permission.</dd>
+              </div>
+            </dl>
+          </div>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700"><b class="font-semibold text-ink-900">Current report-language options:</b> Default (English), English, Spanish, Ukrainian, Polish, and Russian.</p>
+          </div>
+        </section>
+
+        <section id="assignment-setup" class="doc-section" aria-labelledby="assignment-setup-h">
+          <h2 id="assignment-setup-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Configure PlagiarismSearch for a Moodle Assignment</h2>
+          <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-orange-50 ring-orange-200 px-4 py-4 sm:px-5 sm:py-[18px]">
+            <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+            <div class="min-w-0">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1.5">Supported activity</p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">The current PlagiarismSearch Moodle integration supports the Assignment (mod_assign) activity only. It does not currently provide the confirmed PlagiarismSearch workflow for Moodle Workshop, Forum, or Quiz activities.</p>
+            </div>
+          </div>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Create a new Moodle Assignment or edit an existing one. In the Assignment settings, find the PlagiarismSearch section and enable the integration.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Supported checking and report settings can then use the site-wide defaults or be saved specifically for that Assignment. This allows administrators to establish a standard configuration while still supporting Assignment-level requirements where course configuration is permitted.</p>
+          <figure class="shot" style="max-width:554px">
+            <div class="shot-frame">
+              <p class="shot-tag"><span></span><span></span><span></span><b>Moodle · Assignment settings</b></p>
+              <img src="assets/img/moodle/assignment-locator.png" width="520" height="140" alt="The Moodle Assignment settings form (Updating: Assignment) with a PlagiarismSearch section expanded and Enable PlagiarismSearch set to Yes." loading="lazy" decoding="async">
+            </div>
+            <figcaption>Where to look: the PlagiarismSearch section inside the Moodle Assignment settings. Shown as a locator only — it is not the full list of current settings.</figcaption>
+          </figure>
+          <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-ink-50 ring-black/5 px-4 py-4 sm:px-5 sm:py-[18px]">
+            <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+            <div class="min-w-0">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1.5">Admin governance note</p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">If <span class="ui">Only administrators can configure course settings</span> is enabled at the site level, Assignment-level PlagiarismSearch configuration is restricted accordingly.</p>
+            </div>
+          </div>
+          <!-- file vs online text: the one distinction the page must never blur -->
+          <div class="rounded-2xl ring-1 ring-black/5 bg-white shadow-diffuse overflow-hidden">
+            <p class="px-5 sm:px-6 pt-5 text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">File and online-text submissions are not identical workflows</p>
+            <p class="px-5 sm:px-6 pt-2 pb-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700 max-w-[72ch]">Automatic checking supports both Assignment file submissions and online text. The current manual <span class="ui">Submit to PlagiarismSearch</span> / <span class="ui">Resubmit to PlagiarismSearch</span> workflow is file-based.</p>
+            <table class="matrix w-full text-left">
+              <thead><tr><th scope="col"><span class="sr-only">Checking mode</span></th><th scope="col">File submission</th><th scope="col">Online text</th></tr></thead>
+              <tbody>
+                <tr><th scope="row"><span class="ui">Auto check</span></th><td>Supported</td><td>Supported</td></tr>
+                <tr><th scope="row">Manual Submit / Resubmit</th><td>Supported, subject to permissions and settings</td><td class="is-no">Not part of the current workflow — file-based</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="url-parsing" class="doc-sub">
+            <h3 class="text-[clamp(1.2rem,1.6vw,1.375rem)] font-bold tracking-tight leading-snug">URL Parsing for Online Text</h3>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">The plugin also includes an <span class="ui">Allow URL parsing in text</span> option.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">When URL parsing is enabled, the plugin can use the configured <span class="ui">Valid URLs list for parsing</span> to define which URLs are allowed for that workflow.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Keep the allowed URL list limited to services and domains your institution intentionally supports.</p>
+            <ul class="grid sm:grid-cols-2 gap-3">
+              <li class="rounded-xl bg-ink-50 ring-1 ring-black/5 px-4 py-3"><span class="ui">Allow URL parsing in text</span><span class="block mt-1.5 text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Assignment level, where available</span></li>
+              <li class="rounded-xl bg-ink-50 ring-1 ring-black/5 px-4 py-3"><span class="ui">Valid URLs list for parsing</span><span class="block mt-1.5 text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Site level, administrator-maintained</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="reports-and-student-access" class="doc-section" aria-labelledby="reports-and-student-access-h">
+          <h2 id="reports-and-student-access-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">What Happens After a Student Submits Work</h2>
+          <div class="grid md:grid-cols-[1fr_auto] gap-6 md:gap-8 items-start">
+            <div class="grid gap-4 min-w-0">
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">If <span class="ui">Auto check</span> is enabled, PlagiarismSearch listens for supported Moodle Assignment submission events and sends the submitted file or online text for checking.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">For file submissions, <span class="ui">Manual check</span> can provide a <span class="ui">Submit to PlagiarismSearch</span> action when the current user has permission to use it. A completed file can also expose <span class="ui">Resubmit to PlagiarismSearch</span> when resubmission is allowed.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">While a report is being processed, Moodle can show an <span class="ui">In progress</span> status and a <span class="ui">Check status</span> link.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">After processing is complete, Moodle can display the returned percentage and the report links enabled by your configuration. If AI detection was enabled and an AI result was returned, the AI value is shown separately.</p>
+            </div>
+          <figure class="shot" style="max-width:284px">
+            <div class="shot-frame">
+              <p class="shot-tag"><span></span><span></span><span></span><b>Moodle · Assignment grading</b></p>
+              <img src="assets/img/moodle/result-teacher-view.png" width="250" height="220" alt="A Moodle Assignment grading row: the submitted file name, the returned percentage, a Download .pdf report link and a Resubmit to PlagiarismSearch link." loading="lazy" decoding="async">
+            </div>
+            <figcaption>Example Moodle Assignment result view — the file, the returned percentage, the PDF report link and the Resubmit action.</figcaption>
+          </figure>
+          </div>
+          <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-orange-50 ring-orange-200 px-4 py-4 sm:px-5 sm:py-[18px]">
+            <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+            <div class="min-w-0">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1.5">Interpretation note</p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">A similarity result identifies matching content that should be reviewed in context. It should not be treated as an automatic determination that plagiarism or academic misconduct occurred.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="student-access" class="doc-section" aria-labelledby="student-access-h">
+          <h2 id="student-access-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Control What Students Can See and Do</h2>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Student access is configurable. Administrators can determine whether students can see report links, view the returned percentage, manually submit eligible files, or resubmit them after revision.</p>
+          <div class="deftable">
+            <div class="deftable-head" aria-hidden="true"><span>Setting</span><span>Explanation</span></div>
+            <dl>
+              <div class="deftable-row">
+                <dt><span class="ui">Allow students view reports</span></dt>
+                <dd>Select whether students receive no report link, PDF, HTML, or both supported report formats.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Allow students view plagiarism percentage</span></dt>
+                <dd>Controls whether students can see the returned percentage in Moodle.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Allow students submit papers</span></dt>
+                <dd>Allows students to manually submit eligible file submissions when <span class="ui">Manual check</span> is enabled.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Allow students re-submit papers</span></dt>
+                <dd>Allows students to manually resubmit eligible files after a previous completed check when <span class="ui">Manual check</span> is enabled.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">The number of re-submits</span></dt>
+                <dd>Limits the number of permitted student resubmissions when a limit is configured.</dd>
+              </div>
+              <div class="deftable-row">
+                <dt><span class="ui">Student disclosure</span></dt>
+                <dd>Defines the disclosure text shown to students when the plugin is enabled.</dd>
+              </div>
+            </dl>
+          </div>
+          <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-orange-50 ring-orange-200 px-4 py-4 sm:px-5 sm:py-[18px]">
+            <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+            <div class="min-w-0">
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">Important: student permissions do not override the overall checking mode. Enabling student submission does not create a manual submission action unless <span class="ui">Manual check</span> is also enabled.</p>
+            </div>
+          </div>
+          <figure class="shot" style="max-width:674px">
+            <div class="shot-frame">
+              <p class="shot-tag"><span></span><span></span><span></span><b>Moodle · plugin settings</b></p>
+              <img src="assets/img/moodle/settings-reports-students.png" width="640" height="490" alt="PlagiarismSearch settings in Moodle: Report language, Report file type, Allow students view reports, Allow students view plagiarism percentage, Allow students submit papers, Allow students re-submit papers and The number of re-submits." loading="lazy" decoding="async">
+            </div>
+            <figcaption>Example PlagiarismSearch settings in Moodle — report and student-access controls. The values shown are one example configuration.</figcaption>
+          </figure>
+        </section>
+
+        <section id="troubleshooting" class="doc-section" aria-labelledby="troubleshooting-h">
+          <h2 id="troubleshooting-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Troubleshooting Moodle Integration</h2>
+          <dl class="trouble">
+            <div>
+              <dt><span class="trouble-q" aria-hidden="true">?</span>PlagiarismSearch does not appear in the Assignment</dt>
+              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>Confirm that Moodle plagiarism plugins are enabled, the PlagiarismSearch plugin is installed and enabled, and you are configuring a Moodle Assignment.</dd>
+            </div>
+            <div>
+              <dt><span class="trouble-q" aria-hidden="true">?</span>The plugin cannot be enabled successfully</dt>
+              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>Recheck the API URL, API User, and API Key. The plugin validates the API connection when it is enabled.</dd>
+            </div>
+            <div>
+              <dt><span class="trouble-q" aria-hidden="true">?</span>An online-text submission has no manual Submit button</dt>
+              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>This is expected in the current implementation. Use <span class="ui">Auto check</span> for the online-text submission workflow.</dd>
+            </div>
+            <div>
+              <dt><span class="trouble-q" aria-hidden="true">?</span>A file has no manual Submit or Resubmit action</dt>
+              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>Check <span class="ui">Manual check</span>, user capability, and the applicable student submit/resubmit settings.</dd>
+            </div>
+            <div>
+              <dt><span class="trouble-q" aria-hidden="true">?</span>A student cannot see the result</dt>
+              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>Check <span class="ui">Allow students view reports</span> and <span class="ui">Allow students view plagiarism percentage</span>.</dd>
+            </div>
+            <div>
+              <dt><span class="trouble-q" aria-hidden="true">?</span>The result is still processing</dt>
+              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>Use <span class="ui">Check status</span> while the report remains <span class="ui">In progress</span>.</dd>
+            </div>
+            <div>
+              <dt><span class="trouble-q" aria-hidden="true">?</span>Storage behavior is not what you expected</dt>
+              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>Check both <span class="ui">Sources</span> and <span class="ui">Add to Storage</span>. They control different behaviors.</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section id="faq" class="doc-section" aria-labelledby="faq-h">
+          <h2 id="faq-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Moodle Integration FAQ</h2>
+          <div class="rounded-3xl sm:rounded-[28px] bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+            <div class="rounded-[18px] sm:rounded-[20px] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+              <div class="faq-item open">
+                <h3 class="m-0"><button type="button" aria-expanded="true" aria-controls="faq-a-0" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Does PlagiarismSearch work with Moodle?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-0"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes. PlagiarismSearch provides a Moodle plagiarism plugin for the Moodle Assignment workflow. The current confirmed compatibility range is Moodle 2.7–5.2.</p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-1" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Which Moodle activities does PlagiarismSearch support?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-1"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">The current confirmed PlagiarismSearch integration supports Moodle Assignment (mod_assign) only. Do not assume support for Workshop, Forum, Quiz, or other Moodle activities unless a later plugin release explicitly adds them.</p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-2" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Can PlagiarismSearch check both files and online text in Moodle?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-2"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes. Automatic checking supports Moodle Assignment file submissions and online-text submissions. The current manual Submit/Resubmit workflow is file-based.</p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-3" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Where do I get the API User and API Key for Moodle?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-3"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Sign in to your PlagiarismSearch account and open the API section. The API User and API Key used by the Moodle plugin are available there.</p>
+                  <p class="mt-3"><a href="account.html" class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300">Open API Credentials</a></p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-4" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Can Moodle submissions be checked automatically?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-4"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes. Enable <span class="ui">Auto check</span> in the PlagiarismSearch settings. For supported Moodle Assignment submissions, the plugin can automatically send new file and online-text submissions for checking.</p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-5" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Can I compare Moodle submissions with our own stored documents?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-5"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes. The <span class="ui">Sources</span> setting can use Web, Storage, or Web + Storage. Searching Storage is separate from <span class="ui">Add to Storage</span>, which controls whether a new submission is added to Storage for future comparisons.</p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-6" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Does the Moodle plugin include AI detection?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-6"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">The plugin has a separate <span class="ui">Detect AI</span> option. When it is enabled, an AI-related result can be requested and displayed separately from the plagiarism/similarity result. AI detection and plagiarism detection are not the same analysis.</p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-7" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Which report formats are available in Moodle?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-7"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">The current plugin can provide PDF reports, HTML reports, both formats, or no report link, depending on the selected settings. A separate teacher review link can also be enabled.</p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-8" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Can students see their plagiarism report?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-8"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes, if the administrator allows it. Student report access and percentage visibility are separate settings, so institutions can control what students can see.</p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-9" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Can students resubmit a paper after checking it?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-9"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes, for eligible file submissions when <span class="ui">Manual check</span> and student resubmission are enabled. Administrators can also configure a resubmission limit.</p>
+                </div></div></div>
+              </div>
+              <div class="faq-item">
+                <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-10" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
+                  <span class="text-[15.5px] font-bold tracking-tight">Are all Moodle submissions automatically stored?</span>
+                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </button></h3>
+                <div class="faq-a" id="faq-a-10"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">No. Storage behavior is configurable. <span class="ui">Add to Storage</span> controls whether a submitted document is added to Storage, while <span class="ui">Sources</span> controls whether Storage is searched during a check.</p>
+                </div></div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="moodle-support" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
+        <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(44,195,219,.18)"></div>
+        <div class="relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
+          <div class="min-w-0 flex-1 text-white">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-3.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">Support</span>
+        </div>
+            <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-3">Need Help with Your Moodle Setup?</h2>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60 max-w-[60ch]">This guide covers the standard PlagiarismSearch Moodle installation and configuration workflow.</p>
+            <p class="mt-3 text-[13px] sm:text-[13.5px] leading-relaxed text-white/50 max-w-[60ch]">If you need help with API access, institutional deployment, account configuration, or a Moodle setup that requires additional technical review, contact the PlagiarismSearch team.</p>
+          </div>
+          <div class="shrink-0"><a href="contact-us.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Contact Support
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 · WHERE TO GO INSTEAD / NEXT =================
+       The resource row: two routes to the pages that own the neighbouring jobs, and the
+       two official places the plugin lives — marked as leaving the site, not dressed as
+       buttons. -->
+  <section id="related" class="relative pb-16 sm:pb-20 lg:pb-24 bg-white">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv-kids grid md:grid-cols-2 lg:grid-cols-[1fr_1fr_.8fr] gap-4 sm:gap-5 lg:gap-6">
+        <a href="university-plagiarism-checker.html" class="group rounded-2xl sm:rounded-3xl bg-ink-50 hover:bg-ink-100 transition-colors duration-300 p-5 sm:p-6 lg:p-7 flex flex-col">
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-3">Planning an institution-wide plagiarism workflow?</p>
+          <p class="mt-auto inline-flex items-center gap-2 text-[15px] sm:text-[16px] font-bold tracking-tight text-ink-900">Explore PlagiarismSearch for Universities<span class="transition-transform duration-300 group-hover:translate-x-1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></p>
         </a>
+        <a href="api.html" class="group rounded-2xl sm:rounded-3xl bg-ink-50 hover:bg-ink-100 transition-colors duration-300 p-5 sm:p-6 lg:p-7 flex flex-col">
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-3">Need a custom integration instead of the Moodle plugin?</p>
+          <p class="mt-auto inline-flex items-center gap-2 text-[15px] sm:text-[16px] font-bold tracking-tight text-ink-900">Explore the Plagiarism API<span class="transition-transform duration-300 group-hover:translate-x-1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></p>
+        </a>
+        <div class="md:col-span-2 lg:col-span-1 rounded-2xl sm:rounded-3xl ring-1 ring-black/5 p-5 sm:p-6 lg:p-7">
+          <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-4">External resources</p>
+          <ul class="grid gap-3">
+            <li><a href="https://marketplace.moodle.com/plugins/plagiarism_plagiarismsearch" rel="noopener" class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>Moodle Marketplace</span><span class="text-ink-400"><svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></li>
+            <li><a href="https://github.com/plagiarismsearch/moodle-plagiarism_plagiarismsearch/releases" rel="noopener" class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>GitHub Releases</span><span class="text-ink-400"><svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -473,5 +1472,96 @@ tailwind.config = {
   })();
   </script>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
+  gsap.registerPlugin(ScrollTrigger);
+  const rvs = gsap.utils.toArray('.rv');
+  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
+  inView.forEach(el => {
+    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+  });
+  rvs.filter(el => !inView.includes(el)).forEach(el => {
+    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 70%' } });
+  });
+  gsap.utils.toArray('.rv-kids').forEach(group => {
+    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
+      scrollTrigger: { trigger: group, start: 'top 80%' } });
+  });
+})();
+</script>
+<script>
+(() => {
+  'use strict';
+  /* the section spy: the last navigated section whose top has passed the reading line */
+  const links = [...document.querySelectorAll('[data-spy]')];
+  const ids = [...new Set(links.map(a => a.dataset.spy))];
+  const targets = ids.map(id => document.getElementById(id)).filter(Boolean);
+  const now = document.getElementById('jumpNow');
+  const jump = document.getElementById('jumpMenu');
+  let current = null, ticking = false;
+  const spy = () => {
+    ticking = false;
+    const line = innerWidth < 1024 ? 150 : 140;
+    let hit = null;
+    targets.forEach(t => { if (t.getBoundingClientRect().top <= line) hit = t.id; });
+    if (hit === current) return;
+    current = hit;
+    links.forEach(a => {
+      const on = a.dataset.spy === hit;
+      a.classList.toggle('on', on);
+      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    if (now) { const a = links.find(x => x.dataset.spy === hit); now.textContent = a ? a.textContent : ''; }
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
+  addEventListener('resize', spy);
+  spy();
+  if (jump) {
+    jump.addEventListener('click', e => { if (e.target.closest('a')) jump.open = false; });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') jump.open = false; });
+  }
+
+  /* FAQ: answers are already in the DOM; this only opens and closes them */
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      const list = item.parentElement;
+      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+      list.querySelectorAll('.faq-q').forEach(b =>
+        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
+    });
+  });
+})();
+</script>
+<script>
+(() => {
+  'use strict';
+  const btn = document.getElementById('navBurger');
+  const panel = document.getElementById('navPanel');
+  if (!btn || !panel) return;
+  const setOpen = on => {
+    btn.setAttribute('aria-expanded', String(on));
+    panel.classList.toggle('open', on);
+    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
+  };
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => {
+    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
+})();
+</script>
 </body>
 </html>

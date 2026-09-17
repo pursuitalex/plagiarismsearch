@@ -100,6 +100,8 @@ const PAGES = {
   'plagiarism-checker-for-students.html': { active: 'solutions' },
   /* the Turnitin Alternative page to the 2026-09-15 brief — footer-only, so no active tab */
   'turnitin-checker-alternative.html': { active: null },
+  /* the Moodle Integration guide to the 2026-09-15 brief — the stub graduated */
+  'integration-guide.html': { active: 'products' },
   /* the PDF Plagiarism Checker to the 2026-09-15 brief — footer-led, no nav item */
   'pdf-plagiarism-checker.html': { active: null },
   /* Business & Teams to the 2026-09-15 brief — the stub graduated */

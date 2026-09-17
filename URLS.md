@@ -37,6 +37,7 @@ driven by this table.
 | `university-plagiarism-checker-v2.html` | `/university-plagiarism-checker` | built | The University page to the v2 brief of 2026-09-04: nine sections, a proof type per act (hub, report, relationship map, source map, decision tree). Built by build/university-v2.js, checked by build/check-university-v2.js. |
 | `plagiarism-checker-for-students.html` | `/plagiarism-checker-for-students` | built | The Students page to the 2026-09-15 brief: the real checker in a two-column hero, the shared report with the student principle, a decision-shaped review workflow. Replaced the stub. Built by build/students.js, checked by build/check-students.js. |
 | `turnitin-checker-alternative.html` | `/turnitin-checker-alternative` | built | The Turnitin Alternative page to the 2026-09-15 brief: the real checker, a semantic comparison table with official Turnitin sources and a last-verified date, the non-equivalence act, a balanced fit section, the shared report, a pricing preview, the trademark notice. Footer only. Replaced the stub. Built by build/turnitin.js, checked by build/check-turnitin.js. |
+| `integration-guide.html` | `/integration-guide` | built | The Moodle Integration guide to the 2026-09-15 brief: a documentation-led page — compact product header, quick facts, a sticky On-this-page rail, definition tables, masked crops of the real plugin screens, troubleshooting, FAQ, support handoff. Replaced the stub. Built by build/moodle.js, checked by build/check-moodle.js. |
 | `pdf-plagiarism-checker.html` | `/pdf-plagiarism-checker` | built | The PDF Plagiarism Checker to the 2026-09-15 brief: protect-first — title and route kept, the real checker first, the text-based / scan-only / mixed extraction act as the signature, no OCR. Replaced the stub. Built by build/pdf.js, checked by build/check-pdf.js. |
 | `plagiarism-checker-for-organization.html` | `/plagiarism-checker-for-organization` | built | Business & Teams to the 2026-09-15 brief: no checker; the managed organization in the hero, Organization Management as a bento led by the personal-vs-organization separation, Storage as two tracks, workspace-vs-API as one split card, the business inquiry as the conversion. Replaced the stub. Built by build/business.js, checked by build/check-business.js. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
@@ -47,7 +48,6 @@ driven by this table.
 | `plagiarism-check.html` | — | no approved path | Confirmed 2026-08-17: the homepage IS the Plagiarism Checker page. So this one has no approved address of its own. It stays on disk and leaves the navigation, the same treatment as the other delisted pages. |
 | `account.html` | — | no approved path | Log in / create account. The brief says only "keep existing authentication behavior" and names no path. |
 | `design-system.html` | — | no approved path | Internal reference sheet. Never part of the public site. |
-| `integration-guide.html` | `/integration-guide` | stub | Approved destination, page not designed yet. |
 | `how-to-use-plagiarismsearch-google-add-on.html` | `/how-to-use-plagiarismsearch-google-add-on` | stub | Approved destination, page not designed yet. |
 | `testimonials.html` | `/testimonials` | stub | Approved destination, page not designed yet. |
 | `powerpoint-plagiarism-checker.html` | `/powerpoint-plagiarism-checker` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
@@ -59,8 +59,8 @@ driven by this table.
 
 ## Counts
 
-- 25 × built
-- 9 × stub
+- 26 × built
+- 8 × stub
 - 7 × no approved path
 - 4 × built · out of global nav
 

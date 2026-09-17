@@ -22,7 +22,6 @@ const SITE = path.join(ROOT, 'site');
    group         where the brief files it
    note          why it is not built, when that is not simply "not built yet"       */
 const STUBS = [
-  { slug: 'integration-guide',                     label: 'Moodle Integration',        group: 'Products · Integrations' },
   { slug: 'how-to-use-plagiarismsearch-google-add-on', label: 'Google Docs Add-on',    group: 'Products · Integrations' },
   { slug: 'testimonials',                          label: 'Reviews',                   group: 'Company' },
   { slug: 'powerpoint-plagiarism-checker',         label: 'PowerPoint Plagiarism Checker', group: 'Footer · Popular Checks',   note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
