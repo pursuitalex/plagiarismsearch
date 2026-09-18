@@ -117,7 +117,7 @@ console.log('\ntechnical facts');
     const cells = [...(body.match(/<table class="matrix[\s\S]*?<\/table>/) || [''])[0].matchAll(/<td[^>]*>([^<]*)<\/td>/g)].map(m => m[1]);
     ok('the matrix: four cells, all supported, the manual row subject to permissions', cells.join('|') === 'Supported|Supported|Supported, subject to permissions and settings|Supported, subject to permissions and settings', cells.join('|'));
   }
-  ok('no online-text button name or screen is invented', !/Submit online text|online-text (button|screen|UI)/i.test(text) && (body.match(/<img\b/g) || []).length === 5);
+  ok('no online-text button name or screen is invented', !/Submit online text|online-text (button|screen|UI)/i.test(text) && (body.match(/<figure class="shot"/g) || []).length === 5);
   ok('credentials are self-service, never "provided by managers"', has('Your API User and API Key are available there.') && !/manager/i.test(text));
   ok('Sources vs Add to Storage stated as separate controls', has('Sources and Add to Storage are separate controls.') && has('Searching Storage does not by itself mean that the current submission will be added to Storage.'));
   ok('AI is optional and separate', has('Detect AI is a separate setting from plagiarism detection.') && has('AI-generated text is not automatically plagiarism, and the two signals should be interpreted separately.'));
@@ -295,8 +295,16 @@ console.log('\nbindings');
 /* ── screenshots ────────────────────────────────────────────────────────────── */
 console.log('\nvisual evidence');
 {
-  const imgs = [...body.matchAll(/<img\b[^>]*>/g)].map(m => m[0]);
-  ok('five images, all from assets/img/moodle/', imgs.length === 5 && imgs.every(i => /src="assets\/img\/moodle\//.test(i)));
+  /* the hero link carries the two marks; every other image is a screenshot crop */
+  const hero = block('moodle-integration');
+  const marks = [...hero.matchAll(/<img\b[^>]*>/g)].map(m => m[0]);
+  ok('the hero link: Moodle\'s official mark and ours, named, with the plugin between them and pulses on the line',
+     marks.length === 2 && /src="assets\/svg\/partners\/moodle\.svg" alt="Moodle"/.test(marks[0]) && /src="assets\/svg\/logo\.svg" alt="PlagiarismSearch"/.test(marks[1]) &&
+     /class="hero-link-plug"/.test(hero) && (hero.match(/<animateMotion/g) || []).length >= 2 && /role="img" aria-label="Moodle and PlagiarismSearch connected/.test(hero));
+  ok('the link draws straight tracks only — no curves', !/ Q\d| C\d/.test((hero.match(/<svg viewBox="0 0 340 330"[\s\S]*?<\/svg>/) || [' Q0'])[0]));
+  ok('the pulses stop under reduced motion, and the hero still has no checker or screenshot', /prefers-reduced-motion: reduce\) \{ \.hero-link-pulse \{ display:none/.test(html) && !/<form|<textarea|class="shot"/.test(hero));
+  const imgs = [...body.replace(hero, '').matchAll(/<img\b[^>]*>/g)].map(m => m[0]);
+  ok('five screenshots, all from assets/img/moodle/', imgs.length === 5 && imgs.every(i => /src="assets\/img\/moodle\//.test(i)));
   ok('every image file exists, has dimensions, alt text and lazy loading', imgs.every(i => {
     const src = (i.match(/src="([^"]+)"/) || [])[1];
     return fs.existsSync(path.join(SITE, src)) && /width="\d+" height="\d+"/.test(i) && /alt="[^"]{40,}"/.test(i) && /loading="lazy"/.test(i);

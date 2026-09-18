@@ -393,10 +393,10 @@ const ui = s => {
   /* longest first, and never inside a term already wrapped */
   let out = s; const held = [];
   UI_TERMS.forEach(t => {
-    out = out.split(t).join(' ' + held.length + ' ');
+    out = out.split(t).join('\u0000' + held.length + '\u0000');
     held.push(`<span class="ui">${t}</span>`);
   });
-  return out.replace(/ (\d+) /g, (_, n) => held[+n]);
+  return out.replace(/\u0000(\d+)\u0000/g, (_, n) => held[+n]);
 };
 
 /* the definition table: a <dl> that is two columns from sm and stacks under it */
@@ -450,15 +450,18 @@ ${inner}
 /* ═══════════════ 01 · HEADER ═══════════════ */
 const section1 = () => `  <!-- ================= 01 · DOCUMENTATION / PRODUCT HEADER =================
        Compact. What this is, what it supports — the compatibility line is set as a fact,
-       not as small print — and the three ways on: get the plugin (leaves the site, and the
-       button says so), start the setup, open the credentials. No checker, no illustration. -->
+       not as small print — and the two ways on: get the plugin (leaves the site, and the
+       button says so) and start the setup. No checker. On the right, the link: Moodle's
+       mark above, ours below, two straight tracks and the plugin between them; on a phone it sits under the
+       actions at a smaller size. -->
   <section id="moodle-integration" class="relative pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-14 lg:pb-16 bg-[#F2FCFC] overflow-hidden">
     ${dots('heroDots')}
     <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
     <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[900px]">
+      <div class="grid lg:grid-cols-[minmax(0,1fr)_400px] xl:grid-cols-[minmax(0,1fr)_420px] gap-x-12 xl:gap-x-16 gap-y-10 items-center">
+      <div class="rv min-w-0 max-w-[900px]">
 ${eyebrow(COPY.hero.eyebrow)}
         <h1 class="text-[clamp(2.1rem,4.4vw,3.25rem)] font-extrabold tracking-tightest leading-[1.05] mb-5 lg:mb-6">${COPY.hero.h1}</h1>
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[70ch]">${COPY.hero.p1}</p>
@@ -475,8 +478,45 @@ ${eyebrow(COPY.hero.eyebrow)}
         </div>
         <p class="mt-5 text-[13px] sm:text-[13.5px] text-ink-500">${COPY.hero.support[0]} <a href="${CONTACT}" class="${LINK}">${COPY.hero.support[1]}</a></p>
       </div>
+${heroLink()}
+      </div>
     </div>
   </section>`;
+
+/* The link — the hero's one drawing: Moodle's mark above, ours below, and two straight
+   vertical tracks between them — submissions run down the left one,
+   results and report links run up the right one — with the plugin as the pill between the
+   tracks. (A first version joined the marks with a curved bracket; Olex chose straight
+   lines on 2026-09-18 — a plain column is easier to seat in a layout.) One 340×330 box:
+   tiles in percentages, tracks in an SVG on the same viewBox, so they meet at every size.
+   Moodle's logo is the official file the homepage uses (assets/svg/partners/moodle.svg). The
+   tracks run a little way under the tiles, so a pulse appears from behind one mark and
+   disappears behind the other. */
+const TRACK_DOWN = 'M110 84 V246';
+const TRACK_UP = 'M230 246 V84';
+const pulses = (path, colour) => [0, -1.4].map(b => `            <circle class="hero-link-pulse" r="4.5" fill="${colour}"><animateMotion dur="2.8s" begin="${b}s" repeatCount="indefinite" path="${path}"/></circle>`).join('\n');
+const heroLink = () => `        <div class="hero-link rv" role="img" aria-label="Moodle and PlagiarismSearch connected through the PlagiarismSearch plagiarism plugin: Assignment submissions go to PlagiarismSearch, results and report links come back to Moodle.">
+          <svg viewBox="0 0 340 330" fill="none" aria-hidden="true">
+            <path d="${TRACK_DOWN}" stroke="#C3CAD5" stroke-width="1.5" stroke-dasharray="4 6" stroke-linecap="round"/>
+            <path d="${TRACK_UP}" stroke="#C3CAD5" stroke-width="1.5" stroke-dasharray="4 6" stroke-linecap="round"/>
+            <path d="m104 222 6 6 6-6" stroke="#0CA9C3" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="m224 108 6-6 6 6" stroke="#F36F5A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+${pulses(TRACK_DOWN, '#0CA9C3')}
+${pulses(TRACK_UP, '#F36F5A')}
+          </svg>
+          <div class="hero-link-tile" style="left:14.7%;top:0;width:70.6%;height:29.1%">
+            <img src="assets/svg/partners/moodle.svg" alt="Moodle" width="600" height="270" decoding="async" style="width:72%">
+          </div>
+          <div class="hero-link-tile" style="left:14.7%;top:70.9%;width:70.6%;height:29.1%">
+            <img src="assets/svg/logo.svg" alt="PlagiarismSearch" width="200" height="28" decoding="async" style="width:72%">
+          </div>
+          <span class="hero-link-plug" style="left:50%;top:50%" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg>
+            Plugin
+          </span>
+          <span class="hero-link-side is-left" style="left:32.35%;top:50%" aria-hidden="true">Submission</span>
+          <span class="hero-link-side" style="left:67.65%;top:50%" aria-hidden="true">Result &amp; report</span>
+        </div>`;
 
 /* ═══════════════ 02 · AT A GLANCE ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · QUICK FACTS =================
@@ -725,6 +765,20 @@ const STYLE = `
 
   .rv-kids > * { opacity:0; transform:translateY(40px); }
   .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
+
+  /* ---------- the hero link: two marks, two straight tracks, the plugin between ---------- */
+  .hero-link { position:relative; width:100%; max-width:340px; aspect-ratio:340/330; margin:0 auto; }
+  .hero-link > svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .hero-link-tile { position:absolute; display:flex; align-items:center; justify-content:center; border-radius:20px;
+    background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,.05), 0 18px 40px -22px rgba(16,24,40,.28); }
+  .hero-link-tile img { display:block; width:82%; height:auto; }
+  .hero-link-plug { position:absolute; transform:translate(-50%,-50%); display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 14px 0 11px;
+    border-radius:999px; background:#111827; color:#fff; font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    box-shadow:0 0 0 5px rgba(242,252,252,.9), 0 10px 24px -10px rgba(16,24,40,.5); }
+  .hero-link-side { position:absolute; transform:translate(12px,-50%); max-width:92px; font-size:12px; font-weight:600; line-height:1.3; color:#374151; }
+  .hero-link-side.is-left { transform:translate(calc(-100% - 12px),-50%); text-align:right; }
+  @media (max-width:1023px) { .hero-link { max-width:300px; margin:0; } .hero-link-tile { border-radius:16px; } }
+  @media (prefers-reduced-motion: reduce) { .hero-link-pulse { display:none; } }
 
   /* Moodle's own words */
   .ui { font-weight:600; color:#111827; background:#F3F4F6; border-radius:6px; padding:.08em .4em;
