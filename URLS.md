@@ -38,6 +38,7 @@ driven by this table.
 | `plagiarism-checker-for-students.html` | `/plagiarism-checker-for-students` | built | The Students page to the 2026-09-15 brief: the real checker in a two-column hero, the shared report with the student principle, a decision-shaped review workflow. Replaced the stub. Built by build/students.js, checked by build/check-students.js. |
 | `turnitin-checker-alternative.html` | `/turnitin-checker-alternative` | built | The Turnitin Alternative page to the 2026-09-15 brief: the real checker, a semantic comparison table with official Turnitin sources and a last-verified date, the non-equivalence act, a balanced fit section, the shared report, a pricing preview, the trademark notice. Footer only. Replaced the stub. Built by build/turnitin.js, checked by build/check-turnitin.js. |
 | `integration-guide.html` | `/integration-guide` | built | The Moodle Integration guide to the 2026-09-15 brief: a documentation-led page — compact product header, quick facts, a sticky On-this-page rail, definition tables, masked crops of the real plugin screens, troubleshooting, FAQ, support handoff. Replaced the stub. Built by build/moodle.js, checked by build/check-moodle.js. |
+| `ua-plagiarism-check.html` | `/ua/plagiarism-check` | built | The Ukrainian dedicated checker to the 2026-09-16 brief — the AR-03 master. Ukrainian content, English shell and product UI by decision. Flat file in the prototype; the production path is /ua/plagiarism-check. Built by build/ua.js, checked by build/check-ua.js. |
 | `pdf-plagiarism-checker.html` | `/pdf-plagiarism-checker` | built | The PDF Plagiarism Checker to the 2026-09-15 brief: protect-first — title and route kept, the real checker first, the text-based / scan-only / mixed extraction act as the signature, no OCR. Replaced the stub. Built by build/pdf.js, checked by build/check-pdf.js. |
 | `plagiarism-checker-for-organization.html` | `/plagiarism-checker-for-organization` | built | Business & Teams to the 2026-09-15 brief: no checker; the managed organization in the hero, Organization Management as a bento led by the personal-vs-organization separation, Storage as two tracks, workspace-vs-API as one split card, the business inquiry as the conversion. Replaced the stub. Built by build/business.js, checked by build/check-business.js. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
@@ -59,7 +60,7 @@ driven by this table.
 
 ## Counts
 
-- 26 × built
+- 27 × built
 - 8 × stub
 - 7 × no approved path
 - 4 × built · out of global nav

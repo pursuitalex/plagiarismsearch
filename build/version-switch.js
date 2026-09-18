@@ -18,8 +18,11 @@
    switcher previously written into it is stripped — so retiring a v1 is one deletion
    here rather than an edit in two files. */
 const PAIRS = {
-  'index.html':            { other: 'index-v2.html',        self: 1 },
-  'index-v2.html':         { other: 'index.html',           self: 2 },
+  /* the homepage pair carries a third tab: the Ukrainian dedicated checker, which has no
+     v1 of its own — it is reached from here and leads back to both (Olex, 2026-09-18) */
+  'index.html':            { other: 'index-v2.html',        self: 1,    more: [['UA', 'ua-plagiarism-check.html']] },
+  'index-v2.html':         { other: 'index.html',           self: 2,    more: [['UA', 'ua-plagiarism-check.html']] },
+  'ua-plagiarism-check.html': { tabs: [[1, 'index.html'], [2, 'index-v2.html'], ['UA', 'ua-plagiarism-check.html']], self: 'UA' },
   'ai-detector.html':      { other: 'ai-detector-v2.html',  self: 1 },
   'ai-detector-v2.html':   { other: 'ai-detector.html',     self: 2 },
   'api.html':              { other: 'api-v2.html',          self: 1 },
@@ -43,6 +46,14 @@ const seg = (n, active, href) => active
   ? `      <span aria-current="page" class="rounded-full bg-ink-900 text-white text-[12px] font-bold px-3.5 py-1.5 tabular-nums">${n}</span>`
   : `      <a href="${href}" class="rounded-full text-[12px] font-bold text-ink-500 hover:text-ink-900 hover:bg-ink-100 px-3.5 py-1.5 tabular-nums transition-colors duration-200">${n}</a>`;
 
+/* the tabs a page shows: its pair as 1 and 2, then any extra named tabs; or an explicit
+   list for a page that joins someone else's group */
+const tabs = (file, pair) => pair.tabs || [
+  [1, pair.self === 1 ? file : pair.other],
+  [2, pair.self === 2 ? file : pair.other],
+  ...(pair.more || []),
+];
+
 /* Bottom centre, above everything, and out of the way of the sticky header. Hidden when
    printing — it is scaffolding, and it should not turn up in a PDF sent to anyone. */
 function markup(file) {
@@ -54,8 +65,7 @@ function markup(file) {
     '  <div class="flex items-center gap-1 rounded-full bg-white/95 backdrop-blur-md ring-1 ring-black/10 shadow-diffuse-lg p-1 pl-3">',
     '    <span class="text-[9px] font-bold uppercase tracking-[0.16em] text-ink-400">Version</span>',
     '    <div class="flex items-center gap-0.5 ml-1.5">',
-    seg(1, pair.self === 1, pair.self === 1 ? '#' : pair.other),
-    seg(2, pair.self === 2, pair.self === 2 ? '#' : pair.other),
+    ...tabs(file, pair).map(([label, href]) => seg(label, label === pair.self, label === pair.self ? '#' : href)),
     '    </div>',
     '  </div>',
     '</div>',
