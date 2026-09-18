@@ -347,7 +347,6 @@ tailwind.config = {
   .matrix thead th { border-top:0; background:#F8F9FB; font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#6B7280; }
   .matrix tbody th { font-weight:700; color:#111827; width:32%; }
   .matrix td { color:#1B7A50; font-weight:600; }
-  .matrix td.is-no { color:#B84431; }
   @media (min-width:640px) { .matrix { font-size:14.5px; } .matrix th, .matrix td { padding:14px 24px; } }
 
   /* ---------- troubleshooting ---------- */
@@ -555,7 +554,7 @@ tailwind.config = {
 
         <p class="mt-6 inline-flex items-start sm:items-center gap-2.5 rounded-2xl sm:rounded-full bg-white ring-1 ring-black/5 shadow-diffuse px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-900">
           <svg class="shrink-0 mt-0.5 sm:mt-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-          <span>Current compatibility: Moodle 2.7–5.2 · Moodle Assignment (mod_assign) only</span>
+          <span>Current compatibility: Moodle 2.7–5.2 · Moodle Assignment (mod_assign)</span>
         </p>
 
         <div class="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3">
@@ -567,7 +566,6 @@ tailwind.config = {
             Start Setup
             <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
-          <a href="account.html" class="text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300">Open API Credentials</a>
         </div>
         <p class="mt-5 text-[13px] sm:text-[13.5px] text-ink-500">Need help with an institutional Moodle deployment? <a href="contact-us.html" class="font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300">Contact our team.</a></p>
       </div>
@@ -604,7 +602,7 @@ tailwind.config = {
             </div>
             <div class="glance-row">
               <dt>Manual checking</dt>
-              <dd>Available for file submissions, subject to permissions and settings</dd>
+              <dd>Available for file and online-text submissions, subject to permissions and settings</dd>
             </div>
             <div class="glance-row">
               <dt>Comparison sources</dt>
@@ -694,7 +692,7 @@ tailwind.config = {
               </div>
               <div class="deftable-row">
                 <dt>Moodle Assignment workflow</dt>
-                <dd>The current confirmed integration supports Moodle Assignments only.</dd>
+                <dd>This guide documents the current PlagiarismSearch workflow for Moodle Assignment (mod_assign).</dd>
               </div>
             </dl>
           </div>
@@ -868,7 +866,7 @@ tailwind.config = {
               </div>
               <div class="deftable-row">
                 <dt><span class="ui">Manual check</span></dt>
-                <dd>Enables manual submission and resubmission controls for supported file submissions when the user has the required permission. Student access also depends on the student settings below.</dd>
+                <dd>Enables manual checking controls for supported Moodle Assignment file and online-text submissions when the user has the required permission. Student access also depends on the student settings below.</dd>
               </div>
             </dl>
           </div>
@@ -984,11 +982,11 @@ tailwind.config = {
 
         <section id="assignment-setup" class="doc-section" aria-labelledby="assignment-setup-h">
           <h2 id="assignment-setup-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Configure PlagiarismSearch for a Moodle Assignment</h2>
-          <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-orange-50 ring-orange-200 px-4 py-4 sm:px-5 sm:py-[18px]">
-            <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+          <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-ink-50 ring-black/5 px-4 py-4 sm:px-5 sm:py-[18px]">
+            <span class="mt-0.5 shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
             <div class="min-w-0">
-              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1.5">Supported activity</p>
-              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">The current PlagiarismSearch Moodle integration supports the Assignment (mod_assign) activity only. It does not currently provide the confirmed PlagiarismSearch workflow for Moodle Workshop, Forum, or Quiz activities.</p>
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1.5">Current documented activity</p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">This guide covers the current PlagiarismSearch workflow for Moodle Assignment (mod_assign).</p>
             </div>
           </div>
           <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Create a new Moodle Assignment or edit an existing one. In the Assignment settings, find the PlagiarismSearch section and enable the integration.</p>
@@ -1007,15 +1005,16 @@ tailwind.config = {
               <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-medium">If <span class="ui">Only administrators can configure course settings</span> is enabled at the site level, Assignment-level PlagiarismSearch configuration is restricted accordingly.</p>
             </div>
           </div>
-          <!-- file vs online text: the one distinction the page must never blur -->
+          <!-- file and online text, side by side: both modes cover both (patch 2026-09-18 — the
+               developer confirmed manual checking for online text; no button name is invented) -->
           <div class="rounded-2xl ring-1 ring-black/5 bg-white shadow-diffuse overflow-hidden">
-            <p class="px-5 sm:px-6 pt-5 text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">File and online-text submissions are not identical workflows</p>
-            <p class="px-5 sm:px-6 pt-2 pb-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700 max-w-[72ch]">Automatic checking supports both Assignment file submissions and online text. The current manual <span class="ui">Submit to PlagiarismSearch</span> / <span class="ui">Resubmit to PlagiarismSearch</span> workflow is file-based.</p>
+            <p class="px-5 sm:px-6 pt-5 text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Checking behavior for file and online-text submissions</p>
+            <p class="px-5 sm:px-6 pt-2 pb-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700 max-w-[72ch]">Automatic and manual checking can be used for both Moodle Assignment file and online-text submissions. Manual actions remain subject to the configured permissions and checking settings.</p>
             <table class="matrix w-full text-left">
               <thead><tr><th scope="col"><span class="sr-only">Checking mode</span></th><th scope="col">File submission</th><th scope="col">Online text</th></tr></thead>
               <tbody>
                 <tr><th scope="row"><span class="ui">Auto check</span></th><td>Supported</td><td>Supported</td></tr>
-                <tr><th scope="row">Manual Submit / Resubmit</th><td>Supported, subject to permissions and settings</td><td class="is-no">Not part of the current workflow — file-based</td></tr>
+                <tr><th scope="row">Manual checking</th><td>Supported, subject to permissions and settings</td><td>Supported, subject to permissions and settings</td></tr>
               </tbody>
             </table>
           </div>
@@ -1036,16 +1035,16 @@ tailwind.config = {
           <div class="grid md:grid-cols-[1fr_auto] gap-6 md:gap-8 items-start">
             <div class="grid gap-4 min-w-0">
           <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">If <span class="ui">Auto check</span> is enabled, PlagiarismSearch listens for supported Moodle Assignment submission events and sends the submitted file or online text for checking.</p>
-          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">For file submissions, <span class="ui">Manual check</span> can provide a <span class="ui">Submit to PlagiarismSearch</span> action when the current user has permission to use it. A completed file can also expose <span class="ui">Resubmit to PlagiarismSearch</span> when resubmission is allowed.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">When <span class="ui">Manual check</span> is enabled, eligible file and online-text submissions can also be checked manually, subject to the configured permissions and student-access settings.</p>
           <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">While a report is being processed, Moodle can show an <span class="ui">In progress</span> status and a <span class="ui">Check status</span> link.</p>
           <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">After processing is complete, Moodle can display the returned percentage and the report links enabled by your configuration. If AI detection was enabled and an AI result was returned, the AI value is shown separately.</p>
             </div>
           <figure class="shot" style="max-width:284px">
             <div class="shot-frame">
               <p class="shot-tag"><span></span><span></span><span></span><b>Moodle · Assignment grading</b></p>
-              <img src="assets/img/moodle/result-teacher-view.png" width="250" height="220" alt="A Moodle Assignment grading row: the submitted file name, the returned percentage, a Download .pdf report link and a Resubmit to PlagiarismSearch link." loading="lazy" decoding="async">
+              <img src="assets/img/moodle/result-teacher-view.png" width="250" height="220" alt="A Moodle Assignment grading row for a file submission: the submitted file name, the returned percentage, a Download .pdf report link and a Resubmit to PlagiarismSearch link." loading="lazy" decoding="async">
             </div>
-            <figcaption>Example Moodle Assignment result view — the file, the returned percentage, the PDF report link and the Resubmit action.</figcaption>
+            <figcaption>Example Moodle Assignment result view for a file submission — the file, the returned percentage, the PDF report link and the Resubmit action. It does not show the online-text workflow.</figcaption>
           </figure>
           </div>
           <div class="callout flex items-start gap-3.5 rounded-2xl ring-1 bg-orange-50 ring-orange-200 px-4 py-4 sm:px-5 sm:py-[18px]">
@@ -1059,7 +1058,7 @@ tailwind.config = {
 
         <section id="student-access" class="doc-section" aria-labelledby="student-access-h">
           <h2 id="student-access-h" class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1]">Control What Students Can See and Do</h2>
-          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Student access is configurable. Administrators can determine whether students can see report links, view the returned percentage, manually submit eligible files, or resubmit them after revision.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-700 max-w-[72ch]">Student access is configurable. Administrators can determine whether students can see report links, view the returned percentage, manually submit eligible Moodle Assignment submissions, or resubmit them after revision.</p>
           <div class="deftable">
             <div class="deftable-head" aria-hidden="true"><span>Setting</span><span>Explanation</span></div>
             <dl>
@@ -1073,11 +1072,11 @@ tailwind.config = {
               </div>
               <div class="deftable-row">
                 <dt><span class="ui">Allow students submit papers</span></dt>
-                <dd>Allows students to manually submit eligible file submissions when <span class="ui">Manual check</span> is enabled.</dd>
+                <dd>Allows students to manually submit eligible Moodle Assignment submissions when <span class="ui">Manual check</span> is enabled.</dd>
               </div>
               <div class="deftable-row">
                 <dt><span class="ui">Allow students re-submit papers</span></dt>
-                <dd>Allows students to manually resubmit eligible files after a previous completed check when <span class="ui">Manual check</span> is enabled.</dd>
+                <dd>Allows students to manually resubmit eligible Moodle Assignment submissions after a previous completed check when <span class="ui">Manual check</span> is enabled.</dd>
               </div>
               <div class="deftable-row">
                 <dt><span class="ui">The number of re-submits</span></dt>
@@ -1116,12 +1115,8 @@ tailwind.config = {
               <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>Recheck the API URL, API User, and API Key. The plugin validates the API connection when it is enabled.</dd>
             </div>
             <div>
-              <dt><span class="trouble-q" aria-hidden="true">?</span>An online-text submission has no manual Submit button</dt>
-              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>This is expected in the current implementation. Use <span class="ui">Auto check</span> for the online-text submission workflow.</dd>
-            </div>
-            <div>
-              <dt><span class="trouble-q" aria-hidden="true">?</span>A file has no manual Submit or Resubmit action</dt>
-              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>Check <span class="ui">Manual check</span>, user capability, and the applicable student submit/resubmit settings.</dd>
+              <dt><span class="trouble-q" aria-hidden="true">?</span>Manual Submit or Resubmit is unavailable</dt>
+              <dd><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 block mb-1">Recommended check</span>Confirm <span class="ui">Manual check</span> is enabled, verify the user’s permissions/capabilities, and review the applicable student submit/resubmit settings for the Assignment.</dd>
             </div>
             <div>
               <dt><span class="trouble-q" aria-hidden="true">?</span>A student cannot see the result</dt>
@@ -1155,13 +1150,13 @@ tailwind.config = {
               </div>
               <div class="faq-item">
                 <h3 class="m-0"><button type="button" aria-expanded="false" aria-controls="faq-a-1" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
-                  <span class="text-[15.5px] font-bold tracking-tight">Which Moodle activities does PlagiarismSearch support?</span>
+                  <span class="text-[15.5px] font-bold tracking-tight">Which Moodle activity does this guide cover?</span>
                   <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   </span>
                 </button></h3>
                 <div class="faq-a" id="faq-a-1"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
-                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">The current confirmed PlagiarismSearch integration supports Moodle Assignment (mod_assign) only. Do not assume support for Workshop, Forum, Quiz, or other Moodle activities unless a later plugin release explicitly adds them.</p>
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">This guide covers the current PlagiarismSearch workflow for Moodle Assignment (mod_assign).</p>
                 </div></div></div>
               </div>
               <div class="faq-item">
@@ -1172,7 +1167,7 @@ tailwind.config = {
                   </span>
                 </button></h3>
                 <div class="faq-a" id="faq-a-2"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
-                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes. Automatic checking supports Moodle Assignment file submissions and online-text submissions. The current manual Submit/Resubmit workflow is file-based.</p>
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes. In Moodle Assignments, both file and online-text submissions can be checked. Automatic checking and manual checking are supported; manual actions depend on the configured permissions and plugin settings.</p>
                 </div></div></div>
               </div>
               <div class="faq-item">
@@ -1250,7 +1245,7 @@ tailwind.config = {
                   </span>
                 </button></h3>
                 <div class="faq-a" id="faq-a-9"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
-                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes, for eligible file submissions when <span class="ui">Manual check</span> and student resubmission are enabled. Administrators can also configure a resubmission limit.</p>
+                  <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Yes, for eligible Moodle Assignment submissions when <span class="ui">Manual check</span> and student resubmission are enabled. Administrators can also configure a resubmission limit.</p>
                 </div></div></div>
               </div>
               <div class="faq-item">

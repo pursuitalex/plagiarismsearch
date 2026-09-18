@@ -8,6 +8,10 @@
    in-page navigation, facts in text rather than in images, and screenshots that carry no
    credentials.
 
+   Developer-feedback patch of 2026-09-18 (new-tasks/new-page-4/updates/): the hero loses
+   its credentials link, the activity wording stops listing what is not supported, and
+   manual checking covers online text as well as files — with no button name invented.
+
    Run: node build/check-moodle.js
 */
 const fs = require('fs');
@@ -100,12 +104,20 @@ console.log('\nin-page navigation');
 /* ── the frozen facts ───────────────────────────────────────────────────────── */
 console.log('\ntechnical facts');
 {
-  ok('compatibility line, verbatim', has('Current compatibility: Moodle 2.7–5.2 · Moodle Assignment (mod_assign) only'));
+  ok('compatibility line, verbatim — without "only"', has('Current compatibility: Moodle 2.7–5.2 · Moodle Assignment (mod_assign)') && !has('(mod_assign) only'));
   const ranges = [...text.matchAll(/Moodle (\d\.\d+\s?[–-]\s?\d\.\d+)/g)].map(m => m[1]);
   ok('every stated Moodle range is 2.7–5.2', ranges.length >= 3 && ranges.every(r => r === '2.7–5.2'), [...new Set(ranges)].join(' '));
   ok('the range is one constant in the generator', (fs.readFileSync(path.join(__dirname, 'moodle.js'), 'utf8').match(/2\.7–5\.2/g) || []).length === 1);
-  ok('Workshop / Forum / Quiz appear only as not-supported', [...text.matchAll(/[^.]*\b(Workshop|Forum|Quiz)\b[^.]*\./g)].every(m => /does not currently|Do not assume|only/i.test(m[0])));
-  ok('auto = files + online text; manual Submit/Resubmit = file-based', has('Automatic checking supports both Assignment file submissions and online text. The current manual Submit to PlagiarismSearch / Resubmit to PlagiarismSearch workflow is file-based.'));
+  ok('no negative activity list: Workshop / Forum / Quiz are not named at all', !/Workshop|Forum|Quiz/.test(text));
+  ok('no sentence says Assignment is the only activity', !/Assignments? only|\(mod_assign\)( activity)? only|only (supports|the Assignment)/i.test(text));
+  ok('the activity is documented, future-proof, in the three places the patch names', (text.match(/This guide (covers|documents) the current PlagiarismSearch workflow for Moodle Assignment \(mod_assign\)\./g) || []).length === 3);
+  ok('auto and manual both cover files and online text', has('Automatic and manual checking can be used for both Moodle Assignment file and online-text submissions. Manual actions remain subject to the configured permissions and checking settings.'));
+  ok('no sentence says manual checking is file-only', !/file-based|file-only|for (eligible |supported )?file submissions|eligible files\b|no manual Submit/i.test(text));
+  {
+    const cells = [...(body.match(/<table class="matrix[\s\S]*?<\/table>/) || [''])[0].matchAll(/<td[^>]*>([^<]*)<\/td>/g)].map(m => m[1]);
+    ok('the matrix: four cells, all supported, the manual row subject to permissions', cells.join('|') === 'Supported|Supported|Supported, subject to permissions and settings|Supported, subject to permissions and settings', cells.join('|'));
+  }
+  ok('no online-text button name or screen is invented', !/Submit online text|online-text (button|screen|UI)/i.test(text) && (body.match(/<img\b/g) || []).length === 5);
   ok('credentials are self-service, never "provided by managers"', has('Your API User and API Key are available there.') && !/manager/i.test(text));
   ok('Sources vs Add to Storage stated as separate controls', has('Sources and Add to Storage are separate controls.') && has('Searching Storage does not by itself mean that the current submission will be added to Storage.'));
   ok('AI is optional and separate', has('Detect AI is a separate setting from plagiarism detection.') && has('AI-generated text is not automatically plagiarism, and the two signals should be interpreted separately.'));
@@ -114,7 +126,7 @@ console.log('\ntechnical facts');
   const glance = block('at-a-glance');
   const facts = [...glance.matchAll(/<dt>([^<]+)<\/dt>\s*<dd>([^<]+)<\/dd>/g)].map(m => m[1] + '=' + m[2]);
   const FACTS = ['Moodle versions=2.7–5.2', 'Supported activity=Moodle Assignment (mod_assign)', 'Submission types=File submissions and online text',
-    'Automatic checking=Available for file and online-text submissions', 'Manual checking=Available for file submissions, subject to permissions and settings',
+    'Automatic checking=Available for file and online-text submissions', 'Manual checking=Available for file and online-text submissions, subject to permissions and settings',
     'Comparison sources=Web, Storage, or Web + Storage', 'AI detection=Optional separate setting', 'Reports=PDF, HTML, or both',
     'API credentials=API User + API Key from your PlagiarismSearch account'];
   ok('nine quick facts, label and value verbatim, as a definition list', facts.join('|') === FACTS.join('|'), facts.filter(f => !FACTS.includes(f)).join(' | '));
@@ -134,7 +146,7 @@ console.log('\napproved copy');
     'Required to enable plagiarism prevention, install the plugin, and configure site-wide settings.',
     'Your installation should be within the currently supported Moodle 2.7–5.2 range.',
     'Required to obtain the API User and API Key used by the plugin.',
-    'The current confirmed integration supports Moodle Assignments only.',
+    'This guide documents the current PlagiarismSearch workflow for Moodle Assignment (mod_assign).',
     'PlagiarismSearch uses Moodle\'s plagiarism-plugin workflow. Once the plugin is installed and connected, site-wide settings can provide the default checking behavior, while supported settings can also be configured for individual Moodle Assignments.',
     'Turn on Moodle\'s plagiarism-plugin feature at the site level.',
     'Download the current plugin and install it through Moodle administration.',
@@ -160,7 +172,7 @@ console.log('\napproved copy');
     'Defines the PlagiarismSearch API endpoint used by the plugin.',
     'Advanced connection/debugging setting. Leave this at the standard configuration unless PlagiarismSearch support instructs you to change it.',
     'Automatically sends supported Moodle Assignment submissions for checking after the relevant submission event. This applies to Assignment file submissions and online text.',
-    'Enables manual submission and resubmission controls for supported file submissions when the user has the required permission. Student access also depends on the student settings below.',
+    'Enables manual checking controls for supported Moodle Assignment file and online-text submissions when the user has the required permission. Student access also depends on the student settings below.',
     'One decides where a submission is compared; the other decides whether the new submission is added to PlagiarismSearch Storage.',
     'Compare the submitted content against both Web sources and the configured PlagiarismSearch Storage.',
     'Compare the submitted content against Web sources without using Storage as a comparison source.',
@@ -180,21 +192,22 @@ console.log('\napproved copy');
     'Controls whether Moodle provides no report link, a PDF report, an HTML report, or both.',
     'Enables the additional teacher review-report link when the user has the required permission.',
     'Default (English), English, Spanish, Ukrainian, Polish, and Russian.',
-    'The current PlagiarismSearch Moodle integration supports the Assignment (mod_assign) activity only. It does not currently provide the confirmed PlagiarismSearch workflow for Moodle Workshop, Forum, or Quiz activities.',
+    'Current documented activity',
+    'This guide covers the current PlagiarismSearch workflow for Moodle Assignment (mod_assign).',
     'Create a new Moodle Assignment or edit an existing one. In the Assignment settings, find the PlagiarismSearch section and enable the integration.',
     'Supported checking and report settings can then use the site-wide defaults or be saved specifically for that Assignment. This allows administrators to establish a standard configuration while still supporting Assignment-level requirements where course configuration is permitted.',
     'If Only administrators can configure course settings is enabled at the site level, Assignment-level PlagiarismSearch configuration is restricted accordingly.',
-    'File and online-text submissions are not identical workflows',
+    'Checking behavior for file and online-text submissions',
     'If Auto check is enabled, PlagiarismSearch listens for supported Moodle Assignment submission events and sends the submitted file or online text for checking.',
-    'For file submissions, Manual check can provide a Submit to PlagiarismSearch action when the current user has permission to use it. A completed file can also expose Resubmit to PlagiarismSearch when resubmission is allowed.',
+    'When Manual check is enabled, eligible file and online-text submissions can also be checked manually, subject to the configured permissions and student-access settings.',
     'While a report is being processed, Moodle can show an In progress status and a Check status link.',
     'After processing is complete, Moodle can display the returned percentage and the report links enabled by your configuration. If AI detection was enabled and an AI result was returned, the AI value is shown separately.',
     'A similarity result identifies matching content that should be reviewed in context.',
-    'Student access is configurable. Administrators can determine whether students can see report links, view the returned percentage, manually submit eligible files, or resubmit them after revision.',
+    'Student access is configurable. Administrators can determine whether students can see report links, view the returned percentage, manually submit eligible Moodle Assignment submissions, or resubmit them after revision.',
     'Select whether students receive no report link, PDF, HTML, or both supported report formats.',
     'Controls whether students can see the returned percentage in Moodle.',
-    'Allows students to manually submit eligible file submissions when Manual check is enabled.',
-    'Allows students to manually resubmit eligible files after a previous completed check when Manual check is enabled.',
+    'Allows students to manually submit eligible Moodle Assignment submissions when Manual check is enabled.',
+    'Allows students to manually resubmit eligible Moodle Assignment submissions after a previous completed check when Manual check is enabled.',
     'Limits the number of permitted student resubmissions when a limit is configured.',
     'Defines the disclosure text shown to students when the plugin is enabled.',
     'Important: student permissions do not override the overall checking mode. Enabling student submission does not create a manual submission action unless Manual check is also enabled.',
@@ -225,27 +238,26 @@ console.log('\ntroubleshooting / FAQ');
   const TROUBLE = [
     ['PlagiarismSearch does not appear in the Assignment', 'Confirm that Moodle plagiarism plugins are enabled, the PlagiarismSearch plugin is installed and enabled, and you are configuring a Moodle Assignment.'],
     ['The plugin cannot be enabled successfully', 'Recheck the API URL, API User, and API Key. The plugin validates the API connection when it is enabled.'],
-    ['An online-text submission has no manual Submit button', 'This is expected in the current implementation. Use Auto check for the online-text submission workflow.'],
-    ['A file has no manual Submit or Resubmit action', 'Check Manual check, user capability, and the applicable student submit/resubmit settings.'],
+    ['Manual Submit or Resubmit is unavailable', 'Confirm Manual check is enabled, verify the user\'s permissions/capabilities, and review the applicable student submit/resubmit settings for the Assignment.'],
     ['A student cannot see the result', 'Check Allow students view reports and Allow students view plagiarism percentage.'],
     ['The result is still processing', 'Use Check status while the report remains In progress.'],
     ['Storage behavior is not what you expected', 'Check both Sources and Add to Storage. They control different behaviors.'],
   ];
-  const t = flat(tr);
-  ok('seven problems with their recommended checks', TROUBLE.every(([p, c]) => t.includes(p) && t.includes(c)) && (tr.match(/<dt>/g) || []).length === 7);
+  const t = norm(flat(tr));
+  ok('six problems with their recommended checks (the two manual items merged)', TROUBLE.every(([p, c]) => t.includes(norm(p)) && t.includes(norm(c))) && (tr.match(/<dt>/g) || []).length === 6);
 
   const faq = block('faq');
   const QA = [
     ['Does PlagiarismSearch work with Moodle?', 'Yes. PlagiarismSearch provides a Moodle plagiarism plugin for the Moodle Assignment workflow. The current confirmed compatibility range is Moodle 2.7–5.2.'],
-    ['Which Moodle activities does PlagiarismSearch support?', 'The current confirmed PlagiarismSearch integration supports Moodle Assignment (mod_assign) only. Do not assume support for Workshop, Forum, Quiz, or other Moodle activities unless a later plugin release explicitly adds them.'],
-    ['Can PlagiarismSearch check both files and online text in Moodle?', 'Yes. Automatic checking supports Moodle Assignment file submissions and online-text submissions. The current manual Submit/Resubmit workflow is file-based.'],
+    ['Which Moodle activity does this guide cover?', 'This guide covers the current PlagiarismSearch workflow for Moodle Assignment (mod_assign).'],
+    ['Can PlagiarismSearch check both files and online text in Moodle?', 'Yes. In Moodle Assignments, both file and online-text submissions can be checked. Automatic checking and manual checking are supported; manual actions depend on the configured permissions and plugin settings.'],
     ['Where do I get the API User and API Key for Moodle?', 'Sign in to your PlagiarismSearch account and open the API section. The API User and API Key used by the Moodle plugin are available there.'],
     ['Can Moodle submissions be checked automatically?', 'Yes. Enable Auto check in the PlagiarismSearch settings. For supported Moodle Assignment submissions, the plugin can automatically send new file and online-text submissions for checking.'],
     ['Can I compare Moodle submissions with our own stored documents?', 'Yes. The Sources setting can use Web, Storage, or Web + Storage. Searching Storage is separate from Add to Storage, which controls whether a new submission is added to Storage for future comparisons.'],
     ['Does the Moodle plugin include AI detection?', 'The plugin has a separate Detect AI option. When it is enabled, an AI-related result can be requested and displayed separately from the plagiarism/similarity result. AI detection and plagiarism detection are not the same analysis.'],
     ['Which report formats are available in Moodle?', 'The current plugin can provide PDF reports, HTML reports, both formats, or no report link, depending on the selected settings. A separate teacher review link can also be enabled.'],
     ['Can students see their plagiarism report?', 'Yes, if the administrator allows it. Student report access and percentage visibility are separate settings, so institutions can control what students can see.'],
-    ['Can students resubmit a paper after checking it?', 'Yes, for eligible file submissions when Manual check and student resubmission are enabled. Administrators can also configure a resubmission limit.'],
+    ['Can students resubmit a paper after checking it?', 'Yes, for eligible Moodle Assignment submissions when Manual check and student resubmission are enabled. Administrators can also configure a resubmission limit.'],
     ['Are all Moodle submissions automatically stored?', 'No. Storage behavior is configurable. Add to Storage controls whether a submitted document is added to Storage, while Sources controls whether Storage is searched during a check.'],
   ];
   const f = flat(faq);
@@ -263,7 +275,7 @@ console.log('\nbindings');
   const hero = block('moodle-integration');
   ok('primary CTA: Download Moodle Plugin → Moodle Marketplace', new RegExp('href="' + MARKET.replace(/[.\/]/g, '\\$&') + '"[^>]*>\\s*Download Moodle Plugin').test(hero));
   ok('secondary CTA: Start Setup → #installation', /href="#installation"[^>]*>\s*Start Setup/.test(hero));
-  ok('tertiary link: Open API Credentials → account', /href="account\.html"[^>]*>Open API Credentials/.test(hero));
+  ok('the hero has no Open API Credentials link — two setup actions and the contact line only', !/Open API Credentials/.test(hero) && !/href="account\.html"/.test(hero) && (hero.match(/class="btn-press/g) || []).length === 2);
   ok('support microcopy → contact-us', /href="contact-us\.html"[^>]*>Contact our team\./.test(hero));
   ok('"Open My API Credentials" in the connect section', /href="account\.html"[^>]*>\s*Open My API Credentials/.test(block('connect-your-account')));
   ok('installation links: Marketplace and GitHub Releases', block('installation').includes(MARKET) && block('installation').includes(GH));
@@ -291,6 +303,7 @@ console.log('\nvisual evidence');
   }));
   ok('every screenshot has a caption beside it', (body.match(/<figure class="shot"[\s\S]*?<figcaption>/g) || []).length === 5);
   ok('captions are neutral ("Example …" / locator), never "current interface"', !/current (Moodle )?interface/i.test(text) && (text.match(/Example (PlagiarismSearch settings|Moodle Assignment result view)/g) || []).length === 4);
+  ok('the result screenshot is framed as a file-submission example', /Example Moodle Assignment result view for a file submission/.test(text) && /It does not show the online-text workflow\./.test(text) && /alt="A Moodle Assignment grading row for a file submission/.test(body));
   ok('the masking is said out loud', /Credential values are masked/.test(text));
   ok('the raw reference captures are not in the public folder', !fs.readdirSync(path.join(SITE, 'assets', 'img', 'moodle')).some(f => /^image\d|raw|full/i.test(f)));
   ok('no credential value in the page (the reference key and user)', !/bbeabed|plaguser/i.test(html));
@@ -335,7 +348,8 @@ console.log('\ngates — open items, not defects');
 console.log('  G1    Marketplace + GitHub URLs were found by search on 2026-09-17, not supplied by the brief — confirm they are the official ones.');
 console.log('  G2    The GitHub README still says Moodle 2.7–4.5 and the Marketplace text still claims workshops/forums, a free trial and manager-issued keys: the brief\'s P1 sync task (§16).');
 console.log('  G3    /account/api has no page in the prototype; the three credential links go to account.html.');
-console.log('  G4    Page-local labels that are ours, not the brief\'s: "Control 1 / Control 2" on the Sources pair, the file-vs-online-text matrix cells, the two URL-parsing level tags, the FAQ H2.');
+console.log('  G4    Page-local labels that are ours, not the brief\'s: "Control 1 / Control 2" on the Sources pair, the matrix row labels, the two URL-parsing level tags, the FAQ H2.');
+console.log('  G6    Patch 2026-09-18: the resubmission FAQ answer was reworded by us ("eligible Moodle Assignment submissions") — the patch asked for it without supplying text. Same for the student-access intro ("eligible files" → "eligible Moodle Assignment submissions").');
 console.log('  G5    New page-local patterns (rail + jump menu, definition table, evidence figure) — not in the component library until approved.');
 
 console.log(failed ? '\n' + failed + ' check(s) FAILED' : '\nall checks passed');

@@ -61,7 +61,7 @@ console.log('\ninformation jobs');
 {
   const H2S = [
     ['comparison',               'PlagiarismSearch vs Turnitin®: what is actually different?'],
-    ['not-the-same-score',       'Your PlagiarismSearch result will not be the same as a Turnitin® score'],
+    ['not-the-same-score',       'A PlagiarismSearch result is not equivalent to a Turnitin® score'],
     ['which-option-fits',        'Which option fits your workflow?'],
     ['report',                   'Review the evidence behind each match'],
     ['sources-and-settings',     'Know what PlagiarismSearch checks against'],
@@ -89,12 +89,10 @@ console.log('\napproved copy');
   const COPY = [
     'Looking for a plagiarism check you can run directly? PlagiarismSearch lets individuals upload or paste their own content, review matching passages and sources, and use self-service plagiarism checking without an institutional PlagiarismSearch setup.',
     'PlagiarismSearch is an independent service. It is not affiliated with or endorsed by Turnitin, LLC and does not generate Turnitin Similarity Reports.',
-    'Independent service - not affiliated with Turnitin, LLC.',
     '150 words free - no registration required.',
     'Turnitin offers several products and institution-specific configurations. This comparison focuses on PlagiarismSearch self-service plagiarism checking and documented aspects of Turnitin Similarity / Feedback Studio that can be compared using current official information.',
     'Turnitin information on this page was last reviewed on September 15, 2026 against current official Turnitin documentation covering subscription access, Similarity Reports, source repositories and AI Writing Reports. Turnitin product availability and settings can vary by license, institution and configuration.',
-    'Different plagiarism-checking systems use different source collections, repositories, matching methods and settings. Because of those differences, a similarity percentage from PlagiarismSearch should not be treated as a prediction of the score that Turnitin may return.',
-    'PlagiarismSearch does not access Turnitin proprietary databases or its repository of submitted papers. Use the PlagiarismSearch report to review the matches and sources it finds - not to predict an official institutional result.',
+    'PlagiarismSearch and Turnitin® use different source collections, repositories, matching methods, and settings. Because of those differences, a PlagiarismSearch similarity percentage should not be treated as a prediction of the score an official Turnitin Similarity Report may return.',
     'You need to run your own plagiarism checks without relying on an institution to provide your PlagiarismSearch account.',
     'You want to review the matches and sources found by PlagiarismSearch before you submit your final version.',
     'You want to choose from current PlagiarismSearch plan options directly.',
@@ -102,7 +100,7 @@ console.log('\napproved copy');
     'Your school or organization already uses Turnitin® as part of its official workflow.',
     'You need the official Turnitin Similarity Report required by your institution.',
     'Your workflow depends on Turnitin® institutional repositories, assignment settings or integrations.',
-    'The two products should not be treated as interchangeable. The better fit depends on whether you need an independent self-service check or an institution-managed Turnitin® workflow.',
+    'The right workflow depends on whether you need independent self-service checking or an institution-managed Turnitin® process.',
     'The PlagiarismSearch report highlights matching or similar passages and connects them with the sources found during the check. Select a match to review the relevant source and inspect the result in context.',
     'See the text where a match or similarity was found.',
     'Review the sources associated with reported matches.',
@@ -113,7 +111,7 @@ console.log('\napproved copy');
     'Include academic database search when you want to compare text with indexed academic material. PlagiarismSearch provides access to over 500 million indexed academic texts when this search source is enabled.',
     'Personal or organization storage can also be used as comparison sources where available for the account.',
     'References and in-text citations can be excluded when appropriate for the purpose of the check.',
-    'These are PlagiarismSearch source collections. They are not Turnitin® databases.',
+    'These source options apply to PlagiarismSearch checks.',
     'PlagiarismSearch can run AI writing analysis as a separate check when that capability and AI-word balance are available. An AI-writing result does not mean that plagiarism occurred and does not prove authorship.',
     'Turnitin® also presents AI writing detection separately from its similarity result. Turnitin states that its AI model may misidentify text and should not be used as the sole basis for adverse action against a student.',
     'Your uploaded document is processed to perform the checks you select. The uploaded source document is not retained as a stored source document.',
@@ -121,7 +119,7 @@ console.log('\napproved copy');
     'Adding content to Storage is a separate action you control. Running a plagiarism check does not automatically add the document to Storage.',
     'PlagiarismSearch offers public self-service plan options for users who need more than the free check. Current prices, quotas, billing periods and plan entitlements should always come from the live pricing system.',
     '150 plagiarism words can be checked without registration. Registered users receive 300 plagiarism words per day.',
-    'Review the matches and sources PlagiarismSearch finds before you submit your work. Your result is a PlagiarismSearch report - not a Turnitin Similarity Report or a prediction of an official Turnitin score.',
+    'Review the matches and sources PlagiarismSearch finds before you submit your work.',
     'Turnitin® is a registered trademark of Turnitin, LLC. PlagiarismSearch is an independent service and is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC. References to Turnitin® on this page are used for comparative and consumer-information purposes. PlagiarismSearch does not provide access to Turnitin software or proprietary databases and does not generate Turnitin Similarity Reports.',
   ];
   const missing = COPY.filter(c => !has(c));
@@ -158,9 +156,11 @@ console.log('\ncomparison');
   const t = flat(table);
   const lost = CELLS.filter(c => !t.includes(c));
   ok('all twelve cells verbatim, as text in the table', !lost.length, lost.map(m => '“' + m.slice(0, 40) + '…”').join(' '));
-  ok('every Turnitin cell cites an official source', (table.match(/href="#source-\d"/g) || []).length === 6);
+  const badges = [...table.matchAll(/<a href="([^"]+)"([^>]*)class="src-ref/g)];
+  ok('every Turnitin cell carries a Source badge that opens the official guide itself', badges.length === 6 && badges.every(m => OFFICIAL.includes(m[1])));
+  ok('badges open in a new tab, safely', badges.every(m => /target="_blank"/.test(m[2]) && /rel="noopener noreferrer"/.test(m[2])));
   ok('each data cell names its product for the stacked phone layout', (table.match(/data-label="Turnitin® Similarity \/ Feedback Studio"/g) || []).length === 6 && (table.match(/data-label="PlagiarismSearch"/g) || []).length === 6);
-  ok('no winner marks in the table (ticks, crosses, colour-coded cells)', !/<svg/.test(table) && !/bg-(mint|teal|orange|red|green)/.test(table));
+  ok('no winner marks in the table (ticks, crosses, colour-coded cells)', !/M20 6 9 17|M18 6 6 18/.test(table) && !/bg-(mint|teal|orange|red|green)/.test(table));
   ok('"Last verified: September 15, 2026" is visible in the comparison', /Last verified: September 15, 2026/.test(flat(cmp)));
 }
 
@@ -171,8 +171,9 @@ console.log('\nsources');
   ok('the five official Turnitin guides are linked', OFFICIAL.every(u => external.includes(u)), OFFICIAL.filter(u => !external.includes(u)).join(' '));
   ok('no other external link in the page body', external.every(u => OFFICIAL.includes(u)), external.filter(u => !OFFICIAL.includes(u)).join(' '));
   ok('the source list sits inside the comparison act', OFFICIAL.every(u => section('comparison').includes(u)));
-  ok('source references resolve (#source-1…5)', [1, 2, 3, 4, 5].every(n => body.includes('id="source-' + n + '"')));
-  ok('the Turnitin AI caveat cites the AI Writing Report guide', /href="#source-5"/.test(section('ai-writing')));
+  ok('no internal #source-N anchors or targets remain', !/#source-\d|id="source-\d/.test(html) && !/:target/.test(html));
+  ok('every external link opens in a new tab with noopener noreferrer', [...body.matchAll(/<a href="https?:[^"]+"([^>]*)>/g)].every(m => /target="_blank"/.test(m[1]) && /rel="noopener noreferrer"/.test(m[1])));
+  ok('the Turnitin AI caveat cites the AI Writing Report guide, directly', section('ai-writing').includes('<a href="' + OFFICIAL[4] + '" target="_blank"'));
   ok('no link to plagiarismcheck.org', !/plagiarismcheck/i.test(html));
   const faq = section('turnitin-alternative-faq');
   const buy = faq.slice(faq.indexOf('Can individuals buy'), faq.indexOf('Do I need an institutional account'));
@@ -186,14 +187,15 @@ console.log('\ntrademark / deconfusion');
   ok('the hero is the first section and carries the shared form', body.indexOf('id="independent-checker"') < body.indexOf('id="comparison"') && /<textarea id="checkText"/.test(hero));
   ok('exactly one form on the page', (body.match(/<form\b/g) || []).length === 1);
   ok('plagiarism is the checked control; AI is not', /id="optPlag" checked/.test(hero) && !/id="optAI" checked/.test(hero));
-  ok('the short disclosure is in the hero, by the checker', flat(hero).includes('Independent service — not affiliated with Turnitin, LLC.'));
+  ok('the short disclosure under the checker is gone; the free line stays', !text.includes('Independent service — not affiliated with Turnitin, LLC.') && norm(flat(hero)).includes('150 words free — no registration required.'));
   ok('the independence sentence is in the hero too', flat(hero).includes('It is not affiliated with or endorsed by Turnitin, LLC'));
   ok('on a phone the order is H1 → form → independence card', hero.indexOf('<h1') < hero.indexOf('<textarea') && hero.indexOf('<textarea') < hero.indexOf('It is not affiliated with or endorsed'));
   ok('the full trademark notice is the last section of the page body', body.lastIndexOf('<section') === body.lastIndexOf('<section', body.indexOf('id="trademark-notice"')));
   /* the only <img> allowed are the service marks inside the form's input chips */
   ok('no imagery beyond the form\'s own service marks', !/<img\b(?![^>]*partners\/)/.test(body));
   ok('no Turnitin logo, screenshot or asset', !/(src|href)="[^"]*turnitin[^"]*\.(svg|png|jpe?g|webp)/i.test(html));
-  ok('the non-equivalence act says "not … a prediction"', /should not be treated as a prediction of the score that Turnitin may return/.test(flat(section('not-the-same-score'))));
+  ok('the non-equivalence act says "not … a prediction", in one paragraph', /should not be treated as a prediction of the score an official Turnitin Similarity Report may return/.test(flat(section('not-the-same-score'))) && (section('not-the-same-score').match(/<p class="mt-5/g) || []).length === 1 && !/does not access Turnitin proprietary databases or its repository/.test(text));
+  ok('the ≠ is replaced by a neutral label', !/≠/.test(body) && /Not directly interchangeable/.test(section('not-the-same-score')));
   ok('both lanes of the diagram are drawn alike (no winner)', (section('not-the-same-score').match(/bg-white\/\[\.04\] ring-1 ring-white\/10/g) || []).length === 2);
   const fit = section('which-option-fits');
   ok('"Which option fits": 4 reasons for PlagiarismSearch, 3 for Turnitin®, same shell', (fit.match(/<li class="flex items-start gap-3\.5 py-4">/g) || []).length === 7 && (fit.match(/<h3\b/g) || []).length === 2);
@@ -206,7 +208,8 @@ console.log('\nforbidden claims');
   const BAN = [
     [/works just like/i, 'works just like'], [/Turnitin[- ]like/i, 'Turnitin-like'], [/Turnitin[- ]level/i, 'Turnitin-level'],
     [/98\.5|on par with/i, 'accuracy equivalence'], [/\.edu\b/i, '.edu framing'], [/better alternative|better than|superior/i, 'superiority'],
-    [/same as Turnitin|equivalent/i, 'equivalence'], [/check your paper like/i, 'check like Turnitin'],
+    /* "is not equivalent to" is the approved headline of the 2026-09-18 patch */
+    [/same as Turnitin|(?<!not )equivalent/i, 'equivalence'], [/check your paper like/i, 'check like Turnitin'],
     [/billions/i, 'billions of sources'], [/\binstant|in seconds|in minutes|\bfast(er|est)?\b/i, 'speed promise'],
     [/built into every scan/i, 'AI in every scan'], [/GPT|ChatGPT|Gemini|Claude\b/, 'named LLMs'], [/human-written/i, 'human-written or not'],
     [/never leave|we do not store|never stored/i, 'storage absolute'], [/suggested fix|automatic(ally)? (fix|correct)/i, 'auto-fix'],
@@ -217,7 +220,7 @@ console.log('\nforbidden claims');
   const hit = BAN.filter(([re]) => re.test(text)).map(([, l]) => l);
   ok(BAN.length + ' forbidden patterns absent from the page body', !hit.length, hit.join(' · '));
   ok('never names PlagiarismSearch a "Turnitin checker" outside the approved FAQ question',
-     (text.match(/Turnitin®? checker/gi) || []).length === 1 && has('Is PlagiarismSearch a third-party Turnitin® checker?'));
+     (text.match(/Turnitin®? checker/gi) || []).length === 1 && has('Is PlagiarismSearch affiliated with Turnitin® or a third-party Turnitin® checker?'));
   ok('no Turnitin price anywhere', !/Turnitin[^.]{0,80}\$\d/.test(text));
 }
 
@@ -243,8 +246,7 @@ console.log('\nFAQ / CTA');
 {
   const faq = section('turnitin-alternative-faq');
   const QA = [
-    ['Is PlagiarismSearch affiliated with Turnitin®?', 'No. PlagiarismSearch is an independent plagiarism-checking service. It is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC.'],
-    ['Is PlagiarismSearch a third-party Turnitin® checker?', 'No. PlagiarismSearch does not connect to Turnitin software, access Turnitin proprietary databases, or generate Turnitin Similarity Reports. It is a separate plagiarism-checking service that can be used as an independent alternative.'],
+    ['Is PlagiarismSearch affiliated with Turnitin® or a third-party Turnitin® checker?', 'No. PlagiarismSearch is an independent service. It is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC; it does not access Turnitin software or proprietary databases and does not generate official Turnitin Similarity Reports.'],
     ['Will PlagiarismSearch give me the same similarity score as Turnitin®?', 'Not necessarily. Different services can use different source collections, repositories, matching methods and settings, so similarity results may differ. A PlagiarismSearch result should not be treated as a prediction of an official Turnitin score.'],
     ['Can individuals buy Turnitin® Similarity directly?', 'Turnitin currently states that Turnitin Feedback Studio and Similarity subscriptions are not sold directly to individuals. Access may be provided through an institution; Turnitin points individuals with personal similarity-checking needs toward iThenticate.'],
     ['Do I need an institutional account to use PlagiarismSearch?', 'No. PlagiarismSearch is available through its own self-service workflow and does not require your school or university to provide access.'],
@@ -253,14 +255,15 @@ console.log('\nFAQ / CTA');
     ['Does PlagiarismSearch check AI writing too?', 'AI writing analysis is available as a separate check when the capability and AI-word balance are available. AI detection and plagiarism checking answer different questions; an AI result does not itself mean plagiarism.'],
     ['How much can I check for free?', 'You can check up to 150 plagiarism words without registering. Registered users receive 300 plagiarism words per day.'],
   ];
-  ok('nine FAQ items', (faq.match(/class="faq-item/g) || []).length === 9);
+  ok('eight FAQ items (the two affiliation questions merged)', (faq.match(/class="faq-item/g) || []).length === 8);
   const f = flat(faq);
   const bad = QA.filter(([q, a]) => !f.includes(q) || !f.includes(a)).map(([q]) => q.slice(0, 30));
-  ok('nine questions and answers verbatim, answers in the HTML', !bad.length, bad.join(' · '));
-  ok('every question is a button with aria-expanded', (faq.match(/<button type="button" aria-expanded="(true|false)"/g) || []).length === 9);
+  ok('eight questions and answers verbatim, answers in the HTML', !bad.length, bad.join(' · '));
+  ok('every question is a button with aria-expanded', (faq.match(/<button type="button" aria-expanded="(true|false)"/g) || []).length === 8);
   ok('no accuracy-comparison question', !/how accurate/i.test(f));
   const close = section('independent-cta');
   ok('the closing CTA returns to the one real checker', /href="#independent-checker"/.test(close) && !/<form|<textarea/.test(close));
+  ok('the closing support line no longer repeats the non-equivalence sentence', !/prediction of an official Turnitin score/.test(flat(close)) && flat(close).includes('Review the matches and sources PlagiarismSearch finds before you submit your work.'));
   ok('closing microcopy', flat(close).includes('150 words free — no registration required.'));
 }
 

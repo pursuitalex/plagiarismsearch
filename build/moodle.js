@@ -61,10 +61,9 @@ const COPY = {
     h1: 'PlagiarismSearch Moodle Integration: Installation &amp; Setup',
     p1: 'Connect PlagiarismSearch to Moodle Assignments so file and online-text submissions can be sent for plagiarism checking directly from the Moodle workflow.',
     p2: 'Administrators can configure automatic checking, Web and Storage comparison sources, report access, student permissions, and optional AI detection from the PlagiarismSearch plugin settings.',
-    compat: `Current compatibility: Moodle ${MOODLE_RANGE} · ${ACTIVITY} only`,
+    compat: `Current compatibility: Moodle ${MOODLE_RANGE} · ${ACTIVITY}`,
     primary: 'Download Moodle Plugin',
     secondary: 'Start Setup',
-    tertiary: 'Open API Credentials',
     support: ['Need help with an institutional Moodle deployment?', 'Contact our team.'],
   },
 
@@ -76,7 +75,7 @@ const COPY = {
       ['Supported activity', ACTIVITY],
       ['Submission types', 'File submissions and online text'],
       ['Automatic checking', 'Available for file and online-text submissions'],
-      ['Manual checking', 'Available for file submissions, subject to permissions and settings'],
+      ['Manual checking', 'Available for file and online-text submissions, subject to permissions and settings'],
       ['Comparison sources', 'Web, Storage, or Web + Storage'],
       ['AI detection', 'Optional separate setting'],
       ['Reports', 'PDF, HTML, or both'],
@@ -107,7 +106,7 @@ const COPY = {
       ['Moodle administrator access', 'Required to enable plagiarism prevention, install the plugin, and configure site-wide settings.'],
       ['Supported Moodle version', `Your installation should be within the currently supported Moodle ${MOODLE_RANGE} range.`],
       ['PlagiarismSearch account', 'Required to obtain the API User and API Key used by the plugin.'],
-      ['Moodle Assignment workflow', 'The current confirmed integration supports Moodle Assignments only.'],
+      ['Moodle Assignment workflow', `This guide documents the current PlagiarismSearch workflow for ${ACTIVITY}.`],
     ],
   },
 
@@ -171,7 +170,7 @@ const COPY = {
       label: 'Group 2 — Checking behavior',
       rows: [
         ['Auto check', 'Automatically sends supported Moodle Assignment submissions for checking after the relevant submission event. This applies to Assignment file submissions and online text.'],
-        ['Manual check', 'Enables manual submission and resubmission controls for supported file submissions when the user has the required permission. Student access also depends on the student settings below.'],
+        ['Manual check', 'Enables manual checking controls for supported Moodle Assignment file and online-text submissions when the user has the required permission. Student access also depends on the student settings below.'],
       ],
     },
   },
@@ -228,15 +227,17 @@ const COPY = {
 
   assignment: {
     h2: 'Configure PlagiarismSearch for a Moodle Assignment',
-    critical: 'The current PlagiarismSearch Moodle integration supports the Assignment (mod_assign) activity only. It does not currently provide the confirmed PlagiarismSearch workflow for Moodle Workshop, Forum, or Quiz activities.',
+    activityLabel: 'Current documented activity',
+    activity: `This guide covers the current PlagiarismSearch workflow for ${ACTIVITY}.`,
     p: [
       'Create a new Moodle Assignment or edit an existing one. In the Assignment settings, find the PlagiarismSearch section and enable the integration.',
       'Supported checking and report settings can then use the site-wide defaults or be saved specifically for that Assignment. This allows administrators to establish a standard configuration while still supporting Assignment-level requirements where course configuration is permitted.',
     ],
     governanceLabel: 'Admin governance note',
     governance: 'If Only administrators can configure course settings is enabled at the site level, Assignment-level PlagiarismSearch configuration is restricted accordingly.',
-    splitLabel: 'File and online-text submissions are not identical workflows',
-    split: 'Automatic checking supports both Assignment file submissions and online text. The current manual Submit to PlagiarismSearch / Resubmit to PlagiarismSearch workflow is file-based.',
+    splitLabel: 'Checking behavior for file and online-text submissions',
+    split: 'Automatic and manual checking can be used for both Moodle Assignment file and online-text submissions. Manual actions remain subject to the configured permissions and checking settings.',
+    matrix: { cols: ['File submission', 'Online text'], rows: [['Auto check', 'Supported', 'Supported'], ['Manual checking', 'Supported, subject to permissions and settings', 'Supported, subject to permissions and settings']] },
   },
 
   url: {
@@ -254,7 +255,7 @@ const COPY = {
     h2: 'What Happens After a Student Submits Work',
     p: [
       'If Auto check is enabled, PlagiarismSearch listens for supported Moodle Assignment submission events and sends the submitted file or online text for checking.',
-      'For file submissions, Manual check can provide a Submit to PlagiarismSearch action when the current user has permission to use it. A completed file can also expose Resubmit to PlagiarismSearch when resubmission is allowed.',
+      'When Manual check is enabled, eligible file and online-text submissions can also be checked manually, subject to the configured permissions and student-access settings.',
       'While a report is being processed, Moodle can show an In progress status and a Check status link.',
       'After processing is complete, Moodle can display the returned percentage and the report links enabled by your configuration. If AI detection was enabled and an AI result was returned, the AI value is shown separately.',
     ],
@@ -264,12 +265,12 @@ const COPY = {
 
   students: {
     h2: 'Control What Students Can See and Do',
-    intro: 'Student access is configurable. Administrators can determine whether students can see report links, view the returned percentage, manually submit eligible files, or resubmit them after revision.',
+    intro: 'Student access is configurable. Administrators can determine whether students can see report links, view the returned percentage, manually submit eligible Moodle Assignment submissions, or resubmit them after revision.',
     rows: [
       ['Allow students view reports', 'Select whether students receive no report link, PDF, HTML, or both supported report formats.'],
       ['Allow students view plagiarism percentage', 'Controls whether students can see the returned percentage in Moodle.'],
-      ['Allow students submit papers', 'Allows students to manually submit eligible file submissions when Manual check is enabled.'],
-      ['Allow students re-submit papers', 'Allows students to manually resubmit eligible files after a previous completed check when Manual check is enabled.'],
+      ['Allow students submit papers', 'Allows students to manually submit eligible Moodle Assignment submissions when Manual check is enabled.'],
+      ['Allow students re-submit papers', 'Allows students to manually resubmit eligible Moodle Assignment submissions after a previous completed check when Manual check is enabled.'],
       ['The number of re-submits', 'Limits the number of permitted student resubmissions when a limit is configured.'],
       ['Student disclosure', 'Defines the disclosure text shown to students when the plugin is enabled.'],
     ],
@@ -282,8 +283,7 @@ const COPY = {
     rows: [
       ['PlagiarismSearch does not appear in the Assignment', 'Confirm that Moodle plagiarism plugins are enabled, the PlagiarismSearch plugin is installed and enabled, and you are configuring a Moodle Assignment.'],
       ['The plugin cannot be enabled successfully', 'Recheck the API URL, API User, and API Key. The plugin validates the API connection when it is enabled.'],
-      ['An online-text submission has no manual Submit button', 'This is expected in the current implementation. Use Auto check for the online-text submission workflow.'],
-      ['A file has no manual Submit or Resubmit action', 'Check Manual check, user capability, and the applicable student submit/resubmit settings.'],
+      ['Manual Submit or Resubmit is unavailable', 'Confirm Manual check is enabled, verify the user’s permissions/capabilities, and review the applicable student submit/resubmit settings for the Assignment.'],
       ['A student cannot see the result', 'Check Allow students view reports and Allow students view plagiarism percentage.'],
       ['The result is still processing', 'Use Check status while the report remains In progress.'],
       ['Storage behavior is not what you expected', 'Check both Sources and Add to Storage. They control different behaviors.'],
@@ -295,15 +295,15 @@ const COPY = {
     /* [question, answer, optional link] */
     items: [
       ['Does PlagiarismSearch work with Moodle?', `Yes. PlagiarismSearch provides a Moodle plagiarism plugin for the Moodle Assignment workflow. The current confirmed compatibility range is Moodle ${MOODLE_RANGE}.`],
-      ['Which Moodle activities does PlagiarismSearch support?', 'The current confirmed PlagiarismSearch integration supports Moodle Assignment (mod_assign) only. Do not assume support for Workshop, Forum, Quiz, or other Moodle activities unless a later plugin release explicitly adds them.'],
-      ['Can PlagiarismSearch check both files and online text in Moodle?', 'Yes. Automatic checking supports Moodle Assignment file submissions and online-text submissions. The current manual Submit/Resubmit workflow is file-based.'],
+      ['Which Moodle activity does this guide cover?', `This guide covers the current PlagiarismSearch workflow for ${ACTIVITY}.`],
+      ['Can PlagiarismSearch check both files and online text in Moodle?', 'Yes. In Moodle Assignments, both file and online-text submissions can be checked. Automatic checking and manual checking are supported; manual actions depend on the configured permissions and plugin settings.'],
       ['Where do I get the API User and API Key for Moodle?', 'Sign in to your PlagiarismSearch account and open the API section. The API User and API Key used by the Moodle plugin are available there.', ['Open API Credentials', API_CREDS]],
       ['Can Moodle submissions be checked automatically?', 'Yes. Enable Auto check in the PlagiarismSearch settings. For supported Moodle Assignment submissions, the plugin can automatically send new file and online-text submissions for checking.'],
       ['Can I compare Moodle submissions with our own stored documents?', 'Yes. The Sources setting can use Web, Storage, or Web + Storage. Searching Storage is separate from Add to Storage, which controls whether a new submission is added to Storage for future comparisons.'],
       ['Does the Moodle plugin include AI detection?', 'The plugin has a separate Detect AI option. When it is enabled, an AI-related result can be requested and displayed separately from the plagiarism/similarity result. AI detection and plagiarism detection are not the same analysis.'],
       ['Which report formats are available in Moodle?', 'The current plugin can provide PDF reports, HTML reports, both formats, or no report link, depending on the selected settings. A separate teacher review link can also be enabled.'],
       ['Can students see their plagiarism report?', 'Yes, if the administrator allows it. Student report access and percentage visibility are separate settings, so institutions can control what students can see.'],
-      ['Can students resubmit a paper after checking it?', 'Yes, for eligible file submissions when Manual check and student resubmission are enabled. Administrators can also configure a resubmission limit.'],
+      ['Can students resubmit a paper after checking it?', 'Yes, for eligible Moodle Assignment submissions when Manual check and student resubmission are enabled. Administrators can also configure a resubmission limit.'],
       ['Are all Moodle submissions automatically stored?', 'No. Storage behavior is configurable. Add to Storage controls whether a submitted document is added to Storage, while Sources controls whether Storage is searched during a check.'],
     ],
   },
@@ -334,8 +334,8 @@ const SHOT = {
     'PlagiarismSearch settings in Moodle: Report language, Report file type, Allow students view reports, Allow students view plagiarism percentage, Allow students submit papers, Allow students re-submit papers and The number of re-submits.',
     'Example PlagiarismSearch settings in Moodle — report and student-access controls. The values shown are one example configuration.'],
   result: ['result-teacher-view.png', 250, 220,
-    'A Moodle Assignment grading row: the submitted file name, the returned percentage, a Download .pdf report link and a Resubmit to PlagiarismSearch link.',
-    'Example Moodle Assignment result view — the file, the returned percentage, the PDF report link and the Resubmit action.'],
+    'A Moodle Assignment grading row for a file submission: the submitted file name, the returned percentage, a Download .pdf report link and a Resubmit to PlagiarismSearch link.',
+    'Example Moodle Assignment result view for a file submission — the file, the returned percentage, the PDF report link and the Resubmit action. It does not show the online-text workflow.'],
   locator: ['assignment-locator.png', 520, 140,
     'The Moodle Assignment settings form (Updating: Assignment) with a PlagiarismSearch section expanded and Enable PlagiarismSearch set to Yes.',
     'Where to look: the PlagiarismSearch section inside the Moodle Assignment settings. Shown as a locator only — it is not the full list of current settings.'],
@@ -472,7 +472,6 @@ ${eyebrow(COPY.hero.eyebrow)}
         <div class="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3">
           ${btnExternal(COPY.hero.primary, MARKETPLACE)}
           ${btnLight(COPY.hero.secondary, '#installation')}
-          <a href="${API_CREDS}" class="text-[13.5px] sm:text-[14px] ${LINK}">${COPY.hero.tertiary}</a>
         </div>
         <p class="mt-5 text-[13px] sm:text-[13.5px] text-ink-500">${COPY.hero.support[0]} <a href="${CONTACT}" class="${LINK}">${COPY.hero.support[1]}</a></p>
       </div>
@@ -581,19 +580,19 @@ ${sub('optional-ai-detection', COPY.ai.h3, paras(COPY.ai.p))}
 ${sub('report-access', COPY.reports.h3, `${defs(COPY.settings.heads, COPY.reports.rows)}
             <p class="${BODY} text-ink-700"><b class="font-semibold text-ink-900">${COPY.reports.langLabel}:</b> ${COPY.reports.langs}</p>`)}`);
 
-const docAssignment = () => docSection('assignment-setup', COPY.assignment.h2, `${callout('limit', COPY.assignment.critical, 'Supported activity')}
+const docAssignment = () => docSection('assignment-setup', COPY.assignment.h2, `${callout('note', COPY.assignment.activity, COPY.assignment.activityLabel)}
 ${paras(COPY.assignment.p)}
 ${figure('locator', 'Moodle · Assignment settings')}
 ${callout('note', COPY.assignment.governance, COPY.assignment.governanceLabel)}
-          <!-- file vs online text: the one distinction the page must never blur -->
+          <!-- file and online text, side by side: both modes cover both (patch 2026-09-18 — the
+               developer confirmed manual checking for online text; no button name is invented) -->
           <div class="rounded-2xl ring-1 ring-black/5 bg-white shadow-diffuse overflow-hidden">
             <p class="px-5 sm:px-6 pt-5 text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">${COPY.assignment.splitLabel}</p>
             <p class="px-5 sm:px-6 pt-2 pb-5 ${BODY} text-ink-700 max-w-[72ch]">${ui(COPY.assignment.split)}</p>
             <table class="matrix w-full text-left">
-              <thead><tr><th scope="col"><span class="sr-only">Checking mode</span></th><th scope="col">File submission</th><th scope="col">Online text</th></tr></thead>
+              <thead><tr><th scope="col"><span class="sr-only">Checking mode</span></th>${COPY.assignment.matrix.cols.map(c => `<th scope="col">${c}</th>`).join('')}</tr></thead>
               <tbody>
-                <tr><th scope="row"><span class="ui">Auto check</span></th><td>Supported</td><td>Supported</td></tr>
-                <tr><th scope="row">Manual Submit / Resubmit</th><td>Supported, subject to permissions and settings</td><td class="is-no">Not part of the current workflow — file-based</td></tr>
+${COPY.assignment.matrix.rows.map(([mode, a, b]) => `                <tr><th scope="row">${mode === 'Auto check' ? '<span class="ui">Auto check</span>' : mode}</th><td>${a}</td><td>${b}</td></tr>`).join('\n')}
               </tbody>
             </table>
           </div>
@@ -809,7 +808,6 @@ const STYLE = `
   .matrix thead th { border-top:0; background:#F8F9FB; font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#6B7280; }
   .matrix tbody th { font-weight:700; color:#111827; width:32%; }
   .matrix td { color:#1B7A50; font-weight:600; }
-  .matrix td.is-no { color:#B84431; }
   @media (min-width:640px) { .matrix { font-size:14.5px; } .matrix th, .matrix td { padding:14px 24px; } }
 
   /* ---------- troubleshooting ---------- */

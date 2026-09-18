@@ -12,7 +12,7 @@
    and each Turnitin cell carries the number of the official source that supports it. The
    non-equivalence act is the one dark act and the page's signature: two systems drawn
    side by side, the same four ingredients in each, two different reports at the bottom
-   and a ≠ between them. "Which option fits" gives Turnitin its own column and its own
+   and a neutral "not directly interchangeable" between them. "Which option fits" gives Turnitin its own column and its own
    three reasons. Nothing on the page borrows Turnitin's logo, UI, colours or report.
 
    The checker, the report and the closing band are the shared modules. The pricing
@@ -62,7 +62,6 @@ const COPY = {
     h1: 'An Independent Alternative to Turnitin® for Plagiarism Checking',
     support: 'Looking for a plagiarism check you can run directly? PlagiarismSearch lets individuals upload or paste their own content, review matching passages and sources, and use self-service plagiarism checking without an institutional PlagiarismSearch setup.',
     independence: 'PlagiarismSearch is an independent service. It is not affiliated with or endorsed by Turnitin, LLC and does not generate Turnitin Similarity Reports.',
-    disclosure: 'Independent service — not affiliated with Turnitin, LLC.',
     /* the checker's own copy — the homepage's, with the approved CTA and free line */
     placeholder: 'Paste or type your text here',
     formats: 'Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.',
@@ -103,10 +102,11 @@ const COPY = {
   },
 
   differ: {
-    h2: 'Your PlagiarismSearch result will not be the same as a Turnitin® score',
-    p1: 'Different plagiarism-checking systems use different source collections, repositories, matching methods and settings. Because of those differences, a similarity percentage from PlagiarismSearch should not be treated as a prediction of the score that Turnitin may return.',
-    p2: 'PlagiarismSearch does not access Turnitin proprietary databases or its repository of submitted papers. Use the PlagiarismSearch report to review the matches and sources it finds — not to predict an official institutional result.',
-    /* the diagram's labels — each one a noun from p1 */
+    h2: 'A PlagiarismSearch result is not equivalent to a Turnitin® score',
+    p: 'PlagiarismSearch and Turnitin® use different source collections, repositories, matching methods, and settings. Because of those differences, a PlagiarismSearch similarity percentage should not be treated as a prediction of the score an official Turnitin Similarity Report may return.',
+    /* patch 2026-09-18: the relation between the two results is a neutral label, not a ≠ */
+    relation: 'Not directly interchangeable',
+    /* the diagram's labels — each one a noun from the paragraph */
     parts: ['Source collections', 'Repositories', 'Matching methods', 'Settings'],
     lanes: [['PlagiarismSearch', 'PlagiarismSearch report'], ['Turnitin®', 'Turnitin Similarity Report']],
   },
@@ -130,7 +130,7 @@ const COPY = {
         ['Institution-managed features', 'Your workflow depends on Turnitin® institutional repositories, assignment settings or integrations.'],
       ],
     },
-    closing: 'The two products should not be treated as interchangeable. The better fit depends on whether you need an independent self-service check or an institution-managed Turnitin® workflow.',
+    closing: 'The right workflow depends on whether you need independent self-service checking or an institution-managed Turnitin® process.',
   },
 
   report: {
@@ -155,7 +155,7 @@ const COPY = {
       ['Storage', 'Personal or organization storage can also be used as comparison sources where available for the account.'],
       ['Exclusions', 'References and in-text citations can be excluded when appropriate for the purpose of the check.'],
     ],
-    boundary: 'These are PlagiarismSearch source collections. They are not Turnitin® databases.',
+    boundary: 'These source options apply to PlagiarismSearch checks.',
   },
 
   ai: {
@@ -188,8 +188,7 @@ const COPY = {
     h2: 'Turnitin Alternative FAQ',
     /* [question, answer, optional official source number shown after the answer] */
     items: [
-      ['Is PlagiarismSearch affiliated with Turnitin®?', 'No. PlagiarismSearch is an independent plagiarism-checking service. It is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC.'],
-      ['Is PlagiarismSearch a third-party Turnitin® checker?', 'No. PlagiarismSearch does not connect to Turnitin software, access Turnitin proprietary databases, or generate Turnitin Similarity Reports. It is a separate plagiarism-checking service that can be used as an independent alternative.'],
+      ['Is PlagiarismSearch affiliated with Turnitin® or a third-party Turnitin® checker?', 'No. PlagiarismSearch is an independent service. It is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC; it does not access Turnitin software or proprietary databases and does not generate official Turnitin Similarity Reports.'],
       ['Will PlagiarismSearch give me the same similarity score as Turnitin®?', 'Not necessarily. Different services can use different source collections, repositories, matching methods and settings, so similarity results may differ. A PlagiarismSearch result should not be treated as a prediction of an official Turnitin score.'],
       ['Can individuals buy Turnitin® Similarity directly?', 'Turnitin currently states that Turnitin Feedback Studio and Similarity subscriptions are not sold directly to individuals. Access may be provided through an institution; Turnitin points individuals with personal similarity-checking needs toward iThenticate.', 1],
       ['Do I need an institutional account to use PlagiarismSearch?', 'No. PlagiarismSearch is available through its own self-service workflow and does not require your school or university to provide access.'],
@@ -202,7 +201,7 @@ const COPY = {
 
   close: {
     h2: 'Run an independent plagiarism check',
-    support: 'Review the matches and sources PlagiarismSearch finds before you submit your work. Your result is a PlagiarismSearch report — not a Turnitin Similarity Report or a prediction of an official Turnitin score.',
+    support: 'Review the matches and sources PlagiarismSearch finds before you submit your work.',
     primary: 'Check for plagiarism',
     micro: '150 words free — no registration required.',
   },
@@ -236,8 +235,9 @@ const btnLight = (label, href) => `<a href="${href}"${ext(href)} class="btn-pres
           </a>`;
 const linkQuiet = (label, href) => `<a href="${href}"${ext(href)} class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">${label}</a>`;
 
-/* the reference to an official source: a quiet numbered pill that jumps to the list */
-const srcRef = n => `<a href="#source-${n}" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source ${n}: ${SOURCES[n - 1][0]}">Source ${n}</a>`;
+/* the reference to an official source: a quiet numbered pill that opens the official guide
+   itself, in a new tab (patch 2026-09-18 — the in-page jump to the registry barely moved) */
+const srcRef = n => `<a href="${SOURCES[n - 1][1]}" target="_blank" rel="noopener noreferrer" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source ${n}: ${SOURCES[n - 1][0]} (opens in a new tab)">Source ${n}<span class="text-ink-400">${extIcon}</span></a>`;
 
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.length * 18);
@@ -269,7 +269,8 @@ const section1 = () => `  <!-- ================= 01 · HERO / INDEPENDENT ALTERN
        The shared form (build/checker.js) on the right, and on the left the two things a
        visitor from a "Turnitin alternative" query has to learn before they type: what
        this is, and what it is not. The independence sentence is a card of its own, not
-       fine print, and the short disclosure sits under the form where the action is.
+       fine print. (The second, short disclosure under the form went with the 2026-09-18
+       patch: one statement in the hero is enough.)
        Three blocks, DOM order H1 → form → independence, so a phone opens on the checker. -->
   <section id="independent-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
     ${dots('heroDots')}
@@ -288,10 +289,6 @@ ${eyebrow('teal-400', COPY.hero.eyebrow)}
         <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
 ${checker.form(COPY.hero, ANCHOR)}
 ${checker.free(COPY.hero)}
-          <p class="rv mt-3 flex items-center justify-center gap-2 text-[12.5px] sm:text-[13px] font-medium text-ink-500 text-center">
-            ${ico(I.shield, '#6B7280', 14)}
-            <span>${COPY.hero.disclosure}</span>
-          </p>
         </div>
 
         <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
@@ -350,7 +347,7 @@ ${COPY.compare.rows.map(([topic, tii, ps, n]) => `            <tr role="row">
       </div>
 
       <!-- the evidence, directly under the claims it supports -->
-      <div id="sources" class="rv mt-6 sm:mt-8 grid lg:grid-cols-[.9fr_1.1fr] gap-6 lg:gap-12 rounded-2xl sm:rounded-3xl bg-ink-50 p-5 sm:p-7 lg:p-8">
+      <div class="rv mt-6 sm:mt-8 grid lg:grid-cols-[.9fr_1.1fr] gap-6 lg:gap-12 rounded-2xl sm:rounded-3xl bg-ink-50 p-5 sm:p-7 lg:p-8">
         <div class="min-w-0">
           <p class="${LABEL_CLS} text-ink-500 mb-3">${COPY.compare.verifiedLabel}</p>
           <p class="${BODY} text-ink-700 max-w-[62ch]">${COPY.compare.verification}</p>
@@ -358,9 +355,9 @@ ${COPY.compare.rows.map(([topic, tii, ps, n]) => `            <tr role="row">
         <div class="min-w-0">
           <p class="${LABEL_CLS} text-ink-500 mb-3">${COPY.compare.sourcesLabel}</p>
           <ol class="grid gap-2">
-${SOURCES.map(([label, href], i) => `            <li id="source-${i + 1}" class="src-item flex items-start gap-3 rounded-xl px-2 py-1.5 -mx-2">
+${SOURCES.map(([label, href], i) => `            <li class="flex items-start gap-3 py-1.5">
               <span class="shrink-0 w-6 h-6 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center text-[11.5px] font-bold text-ink-700 tabular-nums">${i + 1}</span>
-              <a href="${href}" rel="noopener" class="min-w-0 inline-flex items-start gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>${label}</span><span class="mt-1 text-ink-400">${extIcon}</span></a>
+              <a href="${href}" target="_blank" rel="noopener noreferrer" class="min-w-0 inline-flex items-start gap-1.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800 hover:text-ink-950 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300"><span>${label}</span><span class="mt-1 text-ink-400">${extIcon}</span></a>
             </li>`).join('\n')}
           </ol>
           <p class="mt-3 text-[12.5px] sm:text-[13px] text-ink-500">guides.turnitin.com — official Turnitin documentation.</p>
@@ -370,6 +367,7 @@ ${SOURCES.map(([label, href], i) => `            <li id="source-${i + 1}" class=
   </section>`;
 
 /* ═══════════════ 03 · NOT THE SAME SCORE — THE SIGNATURE ACT ═══════════════ */
+const RELATION = 'inline-flex whitespace-nowrap rounded-full bg-ink-800 ring-1 ring-white/20 px-4 py-2 text-[12.5px] sm:text-[13px] font-semibold text-white';
 const lane = ([name, result], i) => `          <div class="rounded-2xl sm:rounded-3xl bg-white/[.04] ring-1 ring-white/10 p-4 sm:p-5">
             <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight text-white mb-3.5">${name}</p>
             <ul class="grid gap-2">
@@ -382,7 +380,8 @@ ${COPY.differ.parts.map(p => `              <li class="flex items-center gap-2.5
 const section3 = () => `  <!-- ================= 03 · SIGNATURE · NOT THE SAME SCORE =================
        The page's one dark act, and the thing a competitor page will not say. The diagram
        is the first paragraph, drawn: two systems, the same four ingredients named in
-       each, two different reports, and a ≠ between the results. Both lanes are set
+       each, two different reports, and a neutral label on the bracket that joins the
+       results — "Not directly interchangeable", not an inequality sign. Both lanes are set
        alike — neither is the "good" one — and nothing in the right lane imitates
        Turnitin's product. Every label is a noun from the approved paragraph. -->
   <section id="not-the-same-score" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
@@ -392,17 +391,20 @@ const section3 = () => `  <!-- ================= 03 · SIGNATURE · NOT THE SAME
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-16 items-center">
         <div class="rv min-w-0">
-          <h2 class="${H2}">${penMark(COPY.differ.h2, 'not')}</h2>
-          <p class="mt-5 lg:mt-6 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[60ch]">${COPY.differ.p1}</p>
-          <p class="mt-4 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[60ch]">${COPY.differ.p2}</p>
+          <h2 class="${H2}">${penMark(COPY.differ.h2, 'not equivalent')}</h2>
+          <p class="mt-5 lg:mt-6 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[60ch]">${COPY.differ.p}</p>
         </div>
 
-        <div class="rv grid sm:grid-cols-[1fr_auto_1fr] gap-3 sm:gap-4 items-end" role="img" aria-label="Two separate systems: PlagiarismSearch and Turnitin each use their own source collections, repositories, matching methods and settings, and each produces its own report. The two results are not equal.">
+        <!-- two lanes, and the relation between their results as a neutral label on a
+             bracket that joins them — stacked on a phone, the label sits between the lanes -->
+        <div class="rv grid sm:grid-cols-2 gap-3 sm:gap-x-4 sm:gap-y-0" role="img" aria-label="Two separate systems: PlagiarismSearch and Turnitin each use their own source collections, repositories, matching methods and settings, and each produces its own report. The two results are not directly interchangeable.">
 ${lane(COPY.differ.lanes[0], 0)}
-          <div class="flex justify-center sm:pb-[18px]" aria-hidden="true">
-            <span class="w-11 h-11 rounded-full bg-orange-500 text-white flex items-center justify-center text-[19px] font-extrabold leading-none shadow-diffuse-lg">≠</span>
-          </div>
+          <p class="sm:hidden flex justify-center" aria-hidden="true"><span class="${RELATION}">${COPY.differ.relation}</span></p>
 ${lane(COPY.differ.lanes[1], 1)}
+          <div class="hidden sm:block sm:col-span-2 relative h-[46px]" aria-hidden="true">
+            <span class="absolute left-1/4 right-1/4 top-0 h-[22px] border-x border-b border-white/25 rounded-b-2xl"></span>
+            <span class="absolute left-1/2 top-[22px] -translate-x-1/2 -translate-y-1/2 ${RELATION}">${COPY.differ.relation}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -663,7 +665,7 @@ ${COPY.faq.items.map(([q, a, n], i) => `            <div class="faq-item${i === 
               </button>
               <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">${a}</p>${n ? `
-                <p class="mt-3"><a href="${SOURCES[n - 1][1]}" rel="noopener" class="inline-flex items-start gap-1.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-950 underline decoration-ink-300 underline-offset-4 transition-colors duration-300"><span>Official Turnitin guide: ${SOURCES[n - 1][0]}</span><span class="mt-1 text-ink-400">${extIcon}</span></a></p>` : ''}
+                <p class="mt-3"><a href="${SOURCES[n - 1][1]}" target="_blank" rel="noopener noreferrer" class="inline-flex items-start gap-1.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-950 underline decoration-ink-300 underline-offset-4 transition-colors duration-300"><span>Official Turnitin guide: ${SOURCES[n - 1][0]}</span><span class="mt-1 text-ink-400">${extIcon}</span></a></p>` : ''}
               </div></div></div>
             </div>`).join('\n')}
           </div>
@@ -717,7 +719,7 @@ const section12 = () => `  <!-- ================= 12 · TRADEMARK NOTICE =======
 const STYLE = `
 <style>
   [hidden] { display: none !important; }
-  section[id], [id^="source-"], #sources { scroll-margin-top: 100px; }
+  section[id] { scroll-margin-top: 100px; }
   .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
     clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
@@ -756,8 +758,6 @@ ${checker.style}
     .cmp td::before { content:attr(data-label); display:block; margin-bottom:6px;
       font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
   }
-  /* the source a reference jumped to answers for a moment */
-  .src-item:target { background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,.06); }
 
   .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
   .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
