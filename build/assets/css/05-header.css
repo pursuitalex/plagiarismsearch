@@ -1,0 +1,34 @@
+/* ═══ 05 · site header — island nav, phone burger, docking ═══════════════════════
+   The header is shell, not a section: one per page. Its hooks are data-* all the same,
+   so no rule here depends on an id. */
+.nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
+.nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
+.nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
+  transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
+.nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
+@media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
+
+/* below lg: burger + panel */
+.nav-burger-close { display:none; }
+[data-nav-burger][aria-expanded="true"] .nav-burger-open { display:none; }
+[data-nav-burger][aria-expanded="true"] .nav-burger-close { display:block; }
+
+.nav-panel { position:absolute; left:1rem; right:1rem; top:100%;
+  opacity:0; visibility:hidden; transform:translateY(-8px);
+  transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
+.nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
+@media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
+
+/* On phones the bar starts as the floating pill every other width has, and DOCKS once
+   the page scrolls: flush to the top edge, no side gutters, square corners. Every rule
+   here outranks the utilities it overrides, so its place in the cascade (it used to sit
+   in the header's own <style>, after Tailwind) makes no difference. */
+.site-header { transition: top .28s cubic-bezier(.32,.72,0,1), padding .28s cubic-bezier(.32,.72,0,1); }
+.site-header .site-nav { transition: border-radius .28s cubic-bezier(.32,.72,0,1), box-shadow .28s ease, background-color .28s ease; }
+@media (max-width: 639px) {
+  .site-header.is-docked { top: 0; padding-left: 0; padding-right: 0; }
+  .site-header.is-docked .site-nav { border-radius: 0; background-color: rgba(255,255,255,.94);
+    box-shadow: 0 1px 0 rgba(17,24,39,.07), 0 8px 24px -16px rgba(17,24,39,.18); }
+  .site-header.is-docked [data-nav-panel] { margin-left: .75rem; margin-right: .75rem; }
+}
+@media (prefers-reduced-motion: reduce) { .site-header, .site-header .site-nav { transition: none; } }

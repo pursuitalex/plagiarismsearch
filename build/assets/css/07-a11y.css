@@ -1,0 +1,11 @@
+/* ═══ 07 · focus, anchors, hidden ═════════════════════════════════════════════════ */
+[hidden] { display: none !important; }
+section[id] { scroll-margin-top: 100px; }
+
+a:focus-visible, button:focus-visible, select:focus-visible,
+[tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
+/* On a dark ground the ring goes light. The ground says so with data-surface="dark" on
+   the section (or footer) — not by inference from a colour utility, which would break
+   silently the day the section's background class changed. */
+[data-surface="dark"] a:focus-visible, [data-surface="dark"] button:focus-visible { outline-color: #6ED7E8; }

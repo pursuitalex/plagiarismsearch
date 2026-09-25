@@ -1,0 +1,8 @@
+/* ═══ 04 · buttons and numerals ══════════════════════════════════════════════════ */
+.btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
+.btn-press:active { transform:scale(.97); }
+/* circle stays put; only the arrow inside rotates 45° counter-clockwise */
+.icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+.group:hover .icon-orb svg { transform:rotate(-45deg); }
+
+.nums { font-variant-numeric: tabular-nums; }

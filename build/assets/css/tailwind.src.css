@@ -1,0 +1,7 @@
+/* Compiled by build/assets.js with tailwindcss 3.4.17 → site/assets/css/tailwind.css.
+   Linked AFTER site.css: the Play CDN appended its sheet as the last <style> in <head>,
+   so on equal specificity a utility has always won over our component rules. Keeping
+   that order is what keeps every approved page identical. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -81,14 +81,26 @@ console.log('\ndesign system');
 {
   const configs = new Set();
   const noConfig = [];
+  /* pages on the shared production assets carry no inline config: they link the static
+     build, whose theme must equal the inline one below */
+  const staticPages = pages.filter(f => read(f).includes('href="/assets/css/tailwind.css"'));
+  let inlineTheme = null;
   for (const f of pages) {
+    if (staticPages.includes(f)) continue;
     const s = read(f);
+    if (!inlineTheme && s.includes('tailwind.config')) {
+      const a = s.indexOf('tailwind.config'), ctx = { tailwind: {} };
+      require('vm').runInNewContext(s.slice(a, s.indexOf('</script>', a)), ctx);
+      inlineTheme = JSON.stringify(ctx.tailwind.config.theme);
+    }
     const a = s.indexOf('tailwind.config');
     if (a < 0) { noConfig.push(f); continue; }
     configs.add(crypto.createHash('sha1').update(s.slice(a, s.indexOf('</script>', a))).digest('hex'));
   }
   ok('tailwind.config identical on every page', configs.size === 1 && !noConfig.length,
      configs.size !== 1 ? configs.size + ' variants' : noConfig.join(', '));
+  ok(staticPages.length + ' page(s) on the shared assets: tailwind.config.js theme = the inline config',
+     JSON.stringify(require(path.join(__dirname, '..', 'tailwind.config.js')).theme) === inlineTheme, staticPages.join(', '));
 
   /* Eyebrows are the smallest type on the site and the easiest to drift. Scoped by
      letter-spacing, because 10px is also used throughout the mock UIs, which have their

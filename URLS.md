@@ -48,6 +48,8 @@ driven by this table.
 | `chat-bot.html` | `/plagiarism-checker-app` | built · out of global nav |  |
 | `plagiarism-check.html` | — | no approved path | Confirmed 2026-08-17: the homepage IS the Plagiarism Checker page. So this one has no approved address of its own. It stays on disk and leaves the navigation, the same treatment as the other delisted pages. |
 | `account.html` | — | no approved path | Log in / create account. The brief says only "keep existing authentication behavior" and names no path. |
+| `plagiarism-checker-for-students-poc.html` | — | no approved path | Proof of concept, not a page: the approved Students page rendered on the shared production assets (static Tailwind 3.4.17, site.css, site.js) instead of the Play CDN and inline blocks. Built by build/students.js beside the approved page; build/parity/students.js compares the two. |
+| `poc-sections.html` | — | no approved path | Proof of concept, not a page: sections copied verbatim out of the Students POC into an empty page that links only the shared assets. Built by build/poc-sections.js. |
 | `design-system.html` | — | no approved path | Internal reference sheet. Never part of the public site. |
 | `how-to-use-plagiarismsearch-google-add-on.html` | `/how-to-use-plagiarismsearch-google-add-on` | stub | Approved destination, page not designed yet. |
 | `testimonials.html` | `/testimonials` | stub | Approved destination, page not designed yet. |
@@ -61,8 +63,8 @@ driven by this table.
 ## Counts
 
 - 27 × built
+- 9 × no approved path
 - 8 × stub
-- 7 × no approved path
 - 4 × built · out of global nav
 
 ## Open

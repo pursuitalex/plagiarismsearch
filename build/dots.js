@@ -29,4 +29,8 @@ const dots = id => `<svg class="absolute inset-0 w-full h-full" aria-hidden="tru
         <rect width="100%" height="100%" fill="url(#${id})"></rect>
       </svg>`;
 
-module.exports = { dots, DOT };
+/* STATIC MODE — the same field as a CSS background (.dot-field in build/assets/css/
+   01-base.css): no <pattern>, so no id, so a section can be pasted twice on one page. */
+const dotField = () => `<div class="dot-field absolute inset-0" aria-hidden="true"></div>`;
+
+module.exports = { dots, dotField, DOT };

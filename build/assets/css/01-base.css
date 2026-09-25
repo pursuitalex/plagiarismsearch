@@ -1,0 +1,34 @@
+/* ═══ 01 · base — carried from the page head, unchanged ═══════════════════════════ */
+
+/* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
+   disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
+   grain sheet and the header render 150px wider than the page and open a white gutter that
+   no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
+   creates no scroll container, so position:sticky keeps working. */
+html { background:#fff; overflow-x: clip; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+::selection { background:#F36F5A; color:#fff; }
+
+/* grain overlay — page chrome, one <div class="grain"> per page */
+.grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px 256px; }
+
+/* mesh orbs (masked gradient — zero per-frame filter cost) */
+.orb { position:absolute; border-radius:9999px; pointer-events:none;
+  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+  mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+/* Orb presets. The glows used to carry their size, place and colour in style=""; the set
+   is finite, so each recurring glow is a class. Values are the inline ones, verbatim. */
+.orb-hero-teal  { width:860px; height:800px; left:-16%;  top:-400px;    background:rgba(44,195,219,.22); }
+.orb-hero-coral { width:700px; height:680px; right:-14%; top:-200px;    background:rgba(243,111,90,.13); }
+.orb-dark-teal  { width:620px; height:620px; left:-13%;  top:40px;      background:rgba(13,168,194,.12); }
+.orb-dark-coral { width:520px; height:520px; right:-10%; bottom:-120px; background:rgba(243,111,90,.10); }
+
+/* The dot field — the texture under a tinted hero and the closing band. A 22px cell with
+   a 2×2 rounded square in #DAE7ED, drawn as a CSS background rather than an SVG
+   <pattern>: a pattern needs an id, and an id breaks the moment a section is pasted
+   twice on one page. Same tile, same origin (the element's top-left), same colour. */
+.dot-field { pointer-events:none; background-size:22px 22px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Crect width='2' height='2' rx='0.65' fill='%23DAE7ED'/%3E%3C/svg%3E"); }

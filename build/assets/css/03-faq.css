@@ -1,0 +1,10 @@
+/* ═══ 03 · FAQ accordion ══════════════════════════════════════════════════════════
+   Every answer is in the HTML. Collapsing is an enhancement: without JS (no .js on
+   <html>) every answer stays open, so none is locked behind a button that cannot work. */
+.faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1); }
+.faq-item.open .faq-a { grid-template-rows:1fr; }
+.faq-a > div { overflow:hidden; }
+.faq-chev { transition:transform .45s cubic-bezier(.32,.72,0,1); }
+.faq-item.open .faq-chev { transform:rotate(180deg); }
+:where(html:not(.js)) .faq-a { grid-template-rows:1fr; }
+:where(html:not(.js)) .faq-chev { transform:rotate(180deg); }

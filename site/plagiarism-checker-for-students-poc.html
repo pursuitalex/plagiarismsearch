@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<meta name="description" content="Check essays, papers, assignments, and theses for matching text and sources before you submit. Review similarity, citations, references, and source context in a clear report." />
+<link rel="canonical" href="https://plagiarismsearch.com/plagiarism-checker-for-students" />
+<title>Plagiarism Checker for Students | PlagiarismSearch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/tailwind.css">
+<script>(function (h) {h.classList.add('js');if (!matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('js-motion');setTimeout(function () { if (!window.PS_READY) h.classList.remove('js', 'js-motion'); }, 3500);})(document.documentElement);</script>
+<script defer src="/assets/vendor/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="/assets/vendor/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="/assets/js/site.js"></script>
+</head>
+
+<body class="font-sans text-ink-900 bg-white">
+<div class="grain"></div>
+
+<header data-site-header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
+  <!-- On phones the bar starts as the floating pill every other width has, and DOCKS once
+       the page scrolls: flush to the top edge, no side gutters, square corners. One
+       class, toggled by the script at the foot of this element; nothing changes from sm
+       up. The transition is on the three properties that move and respects reduced
+       motion. -->
+  <div class="flex justify-center">
+  <nav class="site-nav pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+    <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-5 xl:pr-6">
+      <!-- the mark alone on phones, so Sign in and Check free fit beside it -->
+      <img src="/assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
+      <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
+    </a>
+    <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[230px]">
+            <div class="px-3 pt-2 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Core Products</div>
+            <a href="index.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
+            <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI Detector</a>
+            <a href="api.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Integrations</div>
+            <a href="integration-guide.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Moodle</a>
+            <a href="canvas-integration.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Canvas</a>
+            <a href="how-to-use-plagiarismsearch-google-add-on.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Google Docs</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-ink-900/5 text-ink-900 font-semibold" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[240px]">
+            <div class="px-3 pt-2 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">For organizations</div>
+            <a href="university-plagiarism-checker.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Education &amp; Institutions</a>
+            <a href="plagiarism-checker-for-organization.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">For individuals</div>
+            <a href="plagiarism-checker-for-students.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
+            <a href="plagiarism-checker-for-teachers.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
+          </div>
+        </div>
+      </div>
+      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Pricing</a>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Resources<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[190px]">
+            <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
+            <a href="blog.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[220px]">
+            <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why PlagiarismSearch</a>
+            <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Mission &amp; Values</a>
+            <a href="testimonials.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Reviews</a>
+            <a href="contact-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="min-w-0 flex items-center gap-2 ml-auto lg:ml-6 shrink-0">
+      <div class="nav-item relative hidden xl:block">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13.5px] font-medium text-ink-600 hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true" aria-label="Language">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          EN<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <a href="account.html" class="btn-press inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5">Check free</a>
+      <button type="button" data-nav-burger class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+        <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
+        <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
+      </button>
+    </div>
+  </nav>
+  </div>
+
+  <div id="navPanel" data-nav-panel class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
+    <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Core</div>
+      <a href="index.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
+      <a href="ai-detector.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI Detector</a>
+      <a href="api.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Integrations</div>
+      <a href="integration-guide.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Moodle</a>
+      <a href="canvas-integration.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Canvas</a>
+      <a href="how-to-use-plagiarismsearch-google-add-on.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Google Docs</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions &middot; For organizations</div>
+      <a href="university-plagiarism-checker.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Education &amp; Institutions</a>
+      <a href="plagiarism-checker-for-organization.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions &middot; For individuals</div>
+      <a href="plagiarism-checker-for-students.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
+      <a href="plagiarism-checker-for-teachers.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Resources</div>
+      <a href="help-center.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
+      <a href="blog.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
+      <a href="why-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why PlagiarismSearch</a>
+      <a href="mission.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Mission &amp; Values</a>
+      <a href="testimonials.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Reviews</a>
+      <a href="contact-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact</a>
+      <a href="prices.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 mt-1 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Pricing</a>
+      <div class="mt-3 pt-3 border-t border-ink-100 space-y-2">
+        <button type="button" class="w-full flex items-center justify-center gap-2 rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14px] font-medium text-ink-700 hover:bg-ink-50 transition-colors duration-200" aria-label="Language">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          English
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ================= 01 · HERO / REAL STUDENT CHECKER =================
+       The same form the homepage renders (build/checker.js), in a different hero: two
+       columns, the student's job on the left and the form on the right, so the page
+       opens on "before you submit" rather than on the generic category. The path under
+       the support line is the brief's own student story, drawn — labels, not copy. -->
+  <section id="student-checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+    <div class="orb absolute orb-hero-teal"></div>
+    <div class="orb absolute orb-hero-coral"></div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <!-- three blocks: DOM order H1 → form → path, so a phone has the checker on its first
+           screen; at lg the form takes the right column across both rows -->
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
+
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-1 lg:pt-4">
+          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">Plagiarism Checker for <span class="pen-word relative inline-block">Students<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 144 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c36-7 96-7 138-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
+          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch]">Check your essay, paper, assignment, thesis, or other coursework for matching text and sources before you submit. Review each match in context and decide what needs attention before you turn in your work.</p>
+        </div>
+
+        <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
+      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+        <form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+
+          <label for="student-checker-text" class="sr-only">Paste or type your text here</label>
+          <!-- the count belongs to the text, so it sits in the corner of the field
+               rather than in a footer two rows away from what it counts -->
+          <div class="relative mb-4">
+            <textarea id="student-checker-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
+            <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span data-checker-count>0</span> / 150 words</span>
+          </div>
+
+          <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+               formats line it carried reappears under the input chips instead. The two
+               are exclusive — one display query, never both on screen — so the approved
+               sentence still appears exactly once at any width. -->
+          <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+            <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+              <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
+            </span>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+            <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+            <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+            <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+            <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+          </div>
+          <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
+
+          <!-- The two checks sit beside the button they modify, not in a row of their own.
+               The row itself never wraps: the button keeps the right edge at every width,
+               and it is the checks that give — side by side where they fit, stacked below
+               640 where the pair needs about 300px and the form only has 295. -->
+          <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+            <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" checked class="sr-only peer">
+                <span class="sw on" data-switch></span>
+                <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
+              </label>
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <span class="sw" data-switch></span>
+                <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
+              </label>
+            </div>
+            <a href="#student-checker" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+              Check for plagiarism
+              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </a>
+          </div>
+        </form>
+      </div>
+      <p class="mt-5 sm:mt-6 flex items-center justify-center gap-2 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">
+        <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+        150 words free — no registration required.
+      </p>
+        </div>
+
+        <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
+          <!-- the pre-submission path: the brief's student story, as a strip -->
+          <ol class="flex flex-wrap items-center gap-y-2" aria-label="Before you submit">
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Draft</span>
+              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </li>
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-ink-900 text-white px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>Check</span>
+              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </li>
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Inspect the match and its source</span>
+              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </li>
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Revise deliberately</span>
+              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </li>
+            <li class="flex items-center">
+              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Submit</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 · COMPACT TRUST PROOF =================
+       The homepage rail, still: three verified facts in reading order, each column one
+       element so "500,000+ users" survives as a sentence. Static here — the page's
+       object is the checker and a roll beside it would compete. -->
+  <section data-component="proof-rail" class="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv flex flex-wrap items-start justify-center gap-x-12 sm:gap-x-16 lg:gap-x-24 gap-y-8 text-center">
+        <div class="flex flex-col items-center">
+          <div class="hidden sm:block h-[17px]" aria-hidden="true"></div>
+          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">500,000+</div></div>
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-2">users</div>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="text-[11px] sm:text-[11.5px] font-medium text-ink-500 h-[17px] leading-[17px]">Plagiarism checking in</div>
+          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">80+</div></div>
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-2">languages</div>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="hidden sm:block h-[17px]" aria-hidden="true"></div>
+          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><img src="/assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="h-full w-auto object-contain"></div>
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-2">BBB Accredited</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 · SIGNATURE · THE REPORT, BEFORE YOU SUBMIT =================
+       The dark act. The approved report (build/report.js), semantics untouched, and
+       under it the thing this page exists to say: "Similarity is not a plagiarism
+       grade." — set as a display statement on a white card, with the interpretation
+       callout beside it. No verdicts, thresholds, fixes or new fields. -->
+  <section id="before-you-submit" data-component="report-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+    <div class="orb absolute orb-dark-teal"></div>
+    <div class="orb absolute orb-dark-coral"></div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">Before You Submit</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Review every match before you submit</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[72ch]">A similarity score is only a starting point. Open a highlighted passage to see the matching source and its context, then review citations, references, and other report signals before deciding whether anything needs to change.</p>
+      </div>
+
+      <div data-report class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
+        <div class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+          <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
+            <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">#10248837</span>
+            <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
+              <span>Words: <b class="font-bold text-ink-800 tabular-nums">214</b></span>
+              <span>Uploaded at: <b class="font-bold text-ink-800">May 12, 2026</b></span>
+            </span>
+          </div>
+          <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
+            <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="0" aria-label="Matched passage — open its source"><span>Climate change and the economics of food</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="0" aria-label="Matched passage — open its source"><span>The economic implications of climate change extend beyond environmental damage and touch every part of modern agricultural systems.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-plag" role="button" tabindex="0" data-match="1" aria-label="Matched passage — open its source"><span>Recent studies have shown that rising global temperatures correlate with decreased yields in rain-fed regions, and that the effect compounds where irrigation is unavailable.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800">However, smallholder farmers in West Africa have adapted through diversified cropping patterns and drought-resistant millet varieties.</p>
+              <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-800">What the models leave out</p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai" role="button" tabindex="0" data-match="2" aria-label="Matched passage — open its source"><span>Most projections treat adaptation as a fixed parameter rather than a decision made season by season under uncertainty.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800"><span class="cab-mark cab-ai" role="button" tabindex="0" data-match="2" aria-label="Matched passage — open its source"><span>Field data from recent seasons supports this reading across tropical zones, though the sample remains too small to generalise from with confidence.</span></span></p>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800">Further work should separate the price effect from the yield effect before either is used to guide policy.</p>
+          </div>
+          <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50">
+            <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#F36F5A; background:#F36F5A80"></span>Plagiarism
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#EAB308; background:#EAB30880"></span>Similarities
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#A855F7; background:#A855F780"></span>AI probability
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#22C55E; background:#22C55E80"></span>Citations
+              </span>
+              <span class="flex items-center gap-2 text-[12px] sm:text-[12.5px] font-medium text-ink-600">
+                <span class="w-2.5 h-2.5 rounded-full ring-[1.5px] shrink-0" style="--tw-ring-color:#3B82F6; background:#3B82F680"></span>References
+              </span>
+          </div>
+        </div>
+
+        <div class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+          <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
+            <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
+            <div class="cab-in mb-4 last:mb-0">
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">Plagiarism</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:38.2%; background:#F36F5A"></span>
+                  </span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="38.2">38.2%</span>
+                </div>
+              </div>
+              <div class="cab-in mb-4 last:mb-0">
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">Total AI rate</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:12.4%; background:#A855F7"></span>
+                  </span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="12.4">12.4%</span>
+                </div>
+              </div>
+              <div class="cab-in mb-4 last:mb-0">
+                <p class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">AI probability</p>
+                <div class="flex items-center gap-3">
+                  <span class="flex-1 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                    <span class="cab-bar block h-full rounded-full" style="width:0%; background:#A855F7"></span>
+                  </span>
+                  <span class="cab-figure shrink-0 w-14 text-right text-[13px] sm:text-[13.5px] font-bold nums" data-to="0">0%</span>
+                </div>
+              </div>
+          </div>
+          <div class="shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
+            <span class="cab-tab on pt-3">Plagiarism</span>
+            <span class="cab-tab pt-3">AI</span>
+          </div>
+          <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
+            <ul class="absolute inset-0 divide-y divide-ink-100">
+              <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="0">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Climate volatility and agriculture vulnerability</span>
+                  <span class="block text-[12px] text-ink-500 truncate">nature.com/nclimate/vol-13</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">31.6%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="1">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Adaptation strategies in West African smallholding</span>
+                  <span class="block text-[12px] text-ink-500 truncate">cambridge.org/agricultural-economics</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">6.6%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="2">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Rain-fed yield variance under warming scenarios</span>
+                  <span class="block text-[12px] text-ink-500 truncate">sciencedirect.com/agsy/2024</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">4.1%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="3">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Millet cultivars and drought tolerance trials</span>
+                  <span class="block text-[12px] text-ink-500 truncate">fao.org/publications/cb9241</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">2.8%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="4">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Smallholder decision-making under uncertainty</span>
+                  <span class="block text-[12px] text-ink-500 truncate">jstor.org/stable/48729103</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">1.9%</span>
+              </li>
+                <li class="cab-src cab-in flex items-start justify-between gap-4 px-5 sm:px-6 py-4 transition-colors duration-300" data-src="5">
+                <span class="min-w-0">
+                  <span class="block text-[13px] sm:text-[13.5px] font-semibold tracking-tight truncate">Price transmission in West African grain markets</span>
+                  <span class="block text-[12px] text-ink-500 truncate">ifpri.org/publication/gm-2023</span>
+                </span>
+                <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">1.2%</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- the principle, as the page's one display statement; the callout beside it -->
+      <div class="rv mt-6 sm:mt-8 grid lg:grid-cols-[1.15fr_.85fr] gap-4 sm:gap-5 lg:gap-6 items-stretch">
+        <div class="rounded-3xl sm:rounded-4xl bg-white text-ink-900 p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
+          <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-4">Student principle</p>
+          <p class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-4 lg:mb-5">Similarity is <span class="pen-word relative inline-block">not<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 54 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c14-7 36-7 48-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span> a plagiarism grade.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[60ch]">A matching passage may be a quotation, a reference, common phrasing, a close paraphrase, or text that needs closer review. Look at the source and context instead of treating one percentage as a pass-or-fail result.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-4xl bg-teal-400/[.07] ring-1 ring-teal-400/25 p-6 sm:p-7 lg:p-8 flex items-start gap-4 sm:gap-5">
+          <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-400/15 ring-1 ring-teal-400/30 flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white font-semibold">PlagiarismSearch surfaces matching text and sources for review. It does not decide whether a passage is plagiarism.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 · REVIEW YOUR DRAFT — THE DECISION =================
+       Four steps, but drawn as the decision they describe rather than four equal cards:
+       the steps run down the left on one spine; beside them, what a match can be and
+       what revising can mean — every phrase lifted from steps 2 and 3. Step 4 loops
+       back to the checker because that is what the copy says it does. No automatic
+       fixes anywhere. -->
+  <section id="review-your-draft" data-component="workflow-decision" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Review Your Draft</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">What to do when you find a match</h2>
+      </div>
+
+      <div class="grid lg:grid-cols-[1.1fr_.9fr] gap-6 lg:gap-12 items-start">
+        <ol class="rv-kids relative space-y-4 sm:space-y-5">
+          <span class="absolute left-[21px] top-8 bottom-8 w-px bg-ink-200" aria-hidden="true"></span>
+          <li class="relative flex items-start gap-4 sm:gap-5">
+            <span class="relative z-[1] shrink-0 w-11 h-11 rounded-full bg-teal-100 text-teal-800 flex items-center justify-center text-[14px] font-bold tabular-nums">1</span>
+            <div class="min-w-0 flex-1 rounded-2xl sm:rounded-3xl bg-ink-50 px-5 py-4 sm:px-6 sm:py-5">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1">Step 1</p>
+              <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mb-1.5">Open the matched passage</h3>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[58ch]">Find the highlighted text in your report and open the source connected to that match.</p>
+            </div>
+          </li>
+          <li class="relative flex items-start gap-4 sm:gap-5">
+            <span class="relative z-[1] shrink-0 w-11 h-11 rounded-full bg-teal-100 text-teal-800 flex items-center justify-center text-[14px] font-bold tabular-nums">2</span>
+            <div class="min-w-0 flex-1 rounded-2xl sm:rounded-3xl bg-ink-50 px-5 py-4 sm:px-6 sm:py-5">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1">Step 2</p>
+              <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mb-1.5">Review the source and context</h3>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[58ch]">Check whether the match comes from a quotation, reference, common phrasing, a close paraphrase, or another passage that needs closer attention.</p>
+            </div>
+          </li>
+          <li class="relative flex items-start gap-4 sm:gap-5">
+            <span class="relative z-[1] shrink-0 w-11 h-11 rounded-full bg-teal-100 text-teal-800 flex items-center justify-center text-[14px] font-bold tabular-nums">3</span>
+            <div class="min-w-0 flex-1 rounded-2xl sm:rounded-3xl bg-ink-50 px-5 py-4 sm:px-6 sm:py-5">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1">Step 3</p>
+              <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mb-1.5">Revise where necessary</h3>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[58ch]">If the wording or attribution needs work, revise the passage appropriately — for example, correct the citation, use quotation marks where required, or rewrite the idea in your own words.</p>
+            </div>
+          </li>
+          <li class="relative flex items-start gap-4 sm:gap-5">
+            <span class="relative z-[1] shrink-0 w-11 h-11 rounded-full bg-ink-900 text-white flex items-center justify-center text-[14px] font-bold tabular-nums"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></span>
+            <div class="min-w-0 flex-1 rounded-2xl sm:rounded-3xl bg-ink-50 px-5 py-4 sm:px-6 sm:py-5">
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1">Step 4</p>
+              <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mb-1.5">Review the updated draft</h3>
+              <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[58ch]">If you make changes, you can check the revised paper again and review the updated matches before submission.</p>
+              <a href="#student-checker" class="mt-3 inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">Check for plagiarism</a>
+            </div>
+          </li>
+        </ol>
+
+        <!-- the decision beside the steps: what a match can be, what revising can mean -->
+        <div class="rv lg:sticky lg:top-28 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-7">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">A match may be</p>
+            </div>
+            <ul class="grid gap-2 mb-6">
+              <li class="flex items-center gap-3 rounded-xl bg-ink-50 px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800"><span class="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></span>A quotation</li>
+              <li class="flex items-center gap-3 rounded-xl bg-ink-50 px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800"><span class="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></span>A reference</li>
+              <li class="flex items-center gap-3 rounded-xl bg-ink-50 px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800"><span class="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></span>Common phrasing</li>
+              <li class="flex items-center gap-3 rounded-xl bg-ink-50 px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800"><span class="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></span>A close paraphrase</li>
+              <li class="flex items-center gap-3 rounded-xl bg-ink-50 px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800"><span class="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></span>A passage that needs closer attention</li>
+            </ul>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span>
+              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Revise appropriately</p>
+            </div>
+            <ul class="grid gap-2">
+              <li class="flex items-center gap-3 rounded-xl bg-teal-50 ring-1 ring-teal-600/10 px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Correct the citation</li>
+              <li class="flex items-center gap-3 rounded-xl bg-teal-50 ring-1 ring-teal-600/10 px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Use quotation marks where required</li>
+              <li class="flex items-center gap-3 rounded-xl bg-teal-50 ring-1 ring-teal-600/10 px-4 py-2.5 text-[13.5px] sm:text-[14px] font-semibold text-ink-800"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Rewrite the idea in your own words</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 · SOURCES & SETTINGS =================
+       Control-style evidence, academic first: two lists a student actually sets — what
+       to search and what to exclude — with the coverage fact as the one figure, and the
+       two qualifying lines set as the notes they are. Ticks, not switches: the page
+       cannot act on a control that moves. -->
+  <section id="sources-and-settings" data-component="sources-controls" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Sources &amp; Settings</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Control what your paper is checked against</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Choose the source collections and exclusions that fit your paper before you interpret the result. Search the web and academic databases, and exclude references or in-text citations when appropriate.</p>
+      </div>
+
+      <div class="rv-kids grid lg:grid-cols-[1fr_1fr_.85fr] gap-4 sm:gap-5 lg:gap-6">
+        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Search sources</span>
+          </div>
+          <ul class="divide-y divide-ink-100">
+            <li class="flex items-start gap-3 py-3">
+              <svg class="shrink-0 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Web</span>
+                <span class="block text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 mt-0.5">Search available web sources for matching or similar text.</span>
+              </span>
+            </li>
+            <li class="flex items-start gap-3 py-3">
+              <svg class="shrink-0 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Academic databases</span>
+                <span class="block text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 mt-0.5">Include academic database search when you want the paper compared with indexed academic material.</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Exclusions</span>
+          </div>
+          <ul class="divide-y divide-ink-100">
+            <li class="flex items-start gap-3 py-3">
+              <svg class="shrink-0 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Exclude references</span>
+                <span class="block text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 mt-0.5">Exclude the reference section when that fits the way you need to review the paper.</span>
+              </span>
+            </li>
+            <li class="flex items-start gap-3 py-3">
+              <svg class="shrink-0 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="min-w-0">
+                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Exclude in-text citations</span>
+                <span class="block text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 mt-0.5">Exclude in-text citations when appropriate for the check.</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7 flex flex-col justify-center">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></span>
+          <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none mt-5 mb-3">500 million</div>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/60">When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts.</p>
+        </div>
+      </div>
+
+      <div class="rv mt-4 sm:mt-5 lg:mt-6 grid sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+        <p class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 px-5 py-4 sm:px-6 sm:py-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Depending on your account, settings, and access, personal or organization storage may also be available as comparison sources.</p>
+        <p class="rounded-2xl sm:rounded-3xl bg-orange-50 ring-1 ring-orange-200 px-5 py-4 sm:px-6 sm:py-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-semibold">Changing the source collections or exclusions changes what the report can show, so review your settings before comparing results between checks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 06 · YOUR PAPER & REPORT =================
+       The lifecycle as one rail of four stations rather than four cards: the document
+       goes in, the file is not kept, the report is, and you can delete it. Storage is
+       the separate action it is, in its own card with the privacy link. No absolutes. -->
+  <section id="your-paper" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Your Paper &amp; Report</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Know what happens to your paper</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Your document is processed to perform the checks you select. The file you upload is not retained as a stored source document, while a generated report may remain in your account for convenient access.</p>
+      </div>
+
+      <ol class="rv-kids relative grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <span class="hidden lg:block absolute left-[10%] right-[10%] top-[22px] h-px bg-ink-200" aria-hidden="true"></span>
+        <li class="relative">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="relative z-[1] inline-flex ring-4 ring-white w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
+            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">01</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Upload &amp; process</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[36ch]">Your document is processed for the checks you select.</p>
+        </li>
+        <li class="relative">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="relative z-[1] inline-flex ring-4 ring-white w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">02</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Source document</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[36ch]">The uploaded file is not retained as a stored source document.</p>
+        </li>
+        <li class="relative">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="relative z-[1] inline-flex ring-4 ring-white w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">03</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Report</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[36ch]">Your generated report may remain in your account for convenient access.</p>
+        </li>
+        <li class="relative">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="relative z-[1] inline-flex ring-4 ring-white w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">04</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Delete</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[36ch]">You can permanently delete reports from your account.</p>
+        </li>
+      </ol>
+
+      <div class="rv mt-8 sm:mt-10 lg:mt-12 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7">
+        <div class="min-w-0">
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-1.5">If you choose Add to storage, that is a separate action you control.</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-semibold">Running a plagiarism check does not automatically add your paper to storage.</p>
+        </div>
+        <div class="shrink-0 sm:ml-auto"><a href="policy.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Read our Privacy Policy
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 07 · PLAGIARISM VS AI =================
+       Compact by instruction: one card, two halves, the critical line under them, one
+       quiet link. Plagiarism keeps the darker half. -->
+  <section id="plagiarism-vs-ai" data-component="ai-compare" class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[820px] mb-7 sm:mb-8 lg:mb-10">
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Plagiarism and AI writing are different checks</h2>
+      </div>
+      <div class="rv rounded-3xl sm:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+        <div class="rounded-[18px] sm:rounded-3xl bg-white shadow-inner-hl overflow-hidden">
+          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ink-100">
+            <div class="p-5 sm:p-6 lg:p-7 bg-ink-900 text-white">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+                <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/50">Plagiarism check</span>
+              </div>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/85">Plagiarism checking finds text that matches available sources and shows where those matches come from.</p>
+            </div>
+            <div class="p-5 sm:p-6 lg:p-7 flex flex-col">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg></span>
+                <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">AI writing check</span>
+              </div>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 mb-5">AI writing analysis provides a separate indicator for the text you choose to analyze. It does not replace source matching and does not prove authorship.</p>
+              <div class="mt-auto"><a href="ai-detector.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Explore AI Detector</a></div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 px-5 py-4 sm:px-6 sm:py-5 bg-orange-50 border-t border-orange-200/60">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+            <p class="text-[14.5px] sm:text-[15px] leading-relaxed text-ink-900 font-semibold">AI-generated text is not automatically plagiarism, and a low similarity result does not prove that a text was written by a human.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 08 · START FREE — THE COMPACT PRICING PATH =================
+       The two confirmed limits as two figures, the approved sentences beside them, and
+       the two ways on: back to the checker, or to the pricing owner. No matrix, no
+       prices, no plan names. -->
+  <section id="start-free" data-component="start-free" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-14 items-center">
+        <div class="rv min-w-0">
+        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Start Free</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Check a short passage before you choose a plan</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">You can check up to 150 words for plagiarism without registering. Registered users receive 300 plagiarism words per day.</p>
+          <p class="mt-3 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">If you need to check more, compare the current PlagiarismSearch plans and choose the option that fits your work.</p>
+          <div class="flex flex-wrap items-center gap-3 sm:gap-4 mt-7 lg:mt-8">
+            <a href="#student-checker" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Check for plagiarism
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+            <a href="prices.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">See all pricing options</a>
+          </div>
+        </div>
+
+        <div class="rv-kids grid sm:grid-cols-2 gap-4 sm:gap-5">
+          <div class="rounded-3xl sm:rounded-4xl bg-teal-50 ring-1 ring-teal-600/10 p-6 sm:p-7 lg:p-8">
+            <p class="text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-tightest nums leading-none text-teal-800">150</p>
+            <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mt-3">words</p>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-3">without registering</p>
+          </div>
+          <div class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
+            <p class="text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-tightest nums leading-none">300</p>
+            <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mt-3">plagiarism words per day</p>
+            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/60 mt-3">for registered users</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 09 · FAQ =================
+       Nine questions, full answers in the HTML, the accordion the site uses. -->
+  <section id="student-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
+        <div class="rv lg:sticky lg:top-28">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Plagiarism Checker for Students FAQ</h2>
+        </div>
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+            <div class="faq-item open">
+              <button type="button" aria-controls="student-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can I check my essay or paper before submitting it?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="student-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. You can paste text or upload a supported document and run a plagiarism check before submission. The report shows matching or similar passages and their sources so you can review the result in context.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="student-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Does a similarity percentage mean I plagiarized?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="student-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. Similarity means that some text matches or closely resembles text found in the sources included in your check. A match may come from a quotation, reference, common phrasing, a close paraphrase, or material that needs closer review.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="student-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">What is a safe similarity percentage for a student paper?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="student-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">There is no universal similarity percentage that proves a paper is plagiarism-free or automatically means that plagiarism occurred. Review the individual matches, their sources, and citation context, and follow any requirements set by your course or institution.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="student-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can I exclude references and in-text citations?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="student-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. PlagiarismSearch includes settings to exclude references and in-text citations when appropriate. Because exclusions affect what is checked and reported, review your settings before interpreting the result.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="student-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">What sources can my paper be checked against?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="student-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Depending on your settings and access, a plagiarism check can include web sources, academic databases, personal storage, or organization storage. When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="student-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Is my uploaded paper stored?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="student-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">The uploaded file is not retained as a stored source document after processing. A generated report may remain available in your account for convenience, and you can permanently delete it. Adding content to storage is a separate action you control.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="student-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can I check for AI-written text too?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="student-faq-a7"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. AI writing analysis can be added as a separate check when the capability and AI-word balance are available. Plagiarism checking and AI detection answer different questions: an AI result does not by itself mean plagiarism or prove authorship.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="student-faq-a8" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">How much can I check for free?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="student-faq-a8"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">You can check up to 150 words for plagiarism without registering. Registered users receive 300 plagiarism words per day.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="student-faq-a9" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Which file types can I upload?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="student-faq-a9"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">The checker accepts common document formats such as DOC/DOCX, PDF, TXT, PPT/PPTX, and XLS/XLSX, along with other supported formats. The current uploader shows the formats available at the time of your check.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 10 · FINAL CTA =================
+       The closing band (build/cta.js). One action, back to the one real checker. -->
+  <section id="student-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+        <div class="orb cta-glow-warm"></div>
+        <div class="orb cta-glow-cool"></div>
+      </div>
+
+    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
+      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Check your paper <span class="ring-word relative inline-block">before you<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> submit</h2>
+      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Paste your text or upload a document to review matching passages and sources in a clear report.</p>
+      <div class="rv flex flex-col items-center gap-4">
+        <a href="#student-checker" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+          Check for plagiarism
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+        <p class="flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700">
+          <svg class="shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          150 words free — no registration required.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-surface="dark" class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+
+    <!-- Brand row. The blurb that used to sit here carried "17 languages" and "500,000
+         writers"; DEC-0027 forbids marketing claims it does not supply, and supplies
+         none, so nothing replaces it. The rating tiles are review data, which the briefs
+         treat as a dynamic field — they hold a placeholder until production values are
+         frozen. Both are restored the moment approved copy and figures arrive. -->
+    <div class="grid sm:grid-cols-2 gap-8 sm:gap-10 items-center mb-10 sm:mb-13 lg:mb-16">
+      <a href="index.html" class="inline-flex items-center">
+        <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+      </a>
+      <div class="sm:justify-self-end">
+        <div class="flex gap-3">
+          <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="rounded-xl bg-white/[.05] ring-1 ring-white/10 hover:ring-white/25 hover:bg-white/[.08] px-3.5 py-2.5 text-left transition-colors duration-300"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold text-white nums">4.7</span></a>
+          <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="rounded-xl bg-white/[.05] ring-1 ring-white/10 hover:ring-white/25 hover:bg-white/[.08] px-3.5 py-2.5 text-left transition-colors duration-300"><span class="block text-[9px] font-bold tracking-widest text-white/40">SMARTCUSTOMER</span><span class="text-[12.5px] font-bold text-white nums">4.0</span></a>
+          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold text-white nums">4.3</span></span>
+        </div>
+        <p class="mt-2.5 text-[11px] font-medium text-white/30">Ratings on review platforms</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PRODUCTS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="index.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="ai-detector.html" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="api.html" class="hover:text-white transition-colors duration-300">API</a></li>
+          <li><a href="integration-guide.html" class="hover:text-white transition-colors duration-300">Moodle Integration</a></li>
+          <li><a href="canvas-integration.html" class="hover:text-white transition-colors duration-300">Canvas Integration</a></li>
+          <li><a href="how-to-use-plagiarismsearch-google-add-on.html" class="hover:text-white transition-colors duration-300">Google Docs Add-on</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="university-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">Education &amp; Institutions</a></li>
+          <li><a href="plagiarism-checker-for-organization.html" class="hover:text-white transition-colors duration-300">Business &amp; Teams</a></li>
+          <li><a href="plagiarism-checker-for-students.html" class="hover:text-white transition-colors duration-300">Students</a></li>
+          <li><a href="plagiarism-checker-for-teachers.html" class="hover:text-white transition-colors duration-300">Educators</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">POPULAR CHECKS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="powerpoint-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PowerPoint Plagiarism Checker</a></li>
+          <li><a href="pdf-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PDF Plagiarism Checker</a></li>
+          <li><a href="quote-checker-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Quote Checker</a></li>
+          <li><a href="turnitin-checker-alternative.html" class="hover:text-white transition-colors duration-300">Turnitin Alternative</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="help-center.html" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="user-manuals.html" class="hover:text-white transition-colors duration-300">User Guide</a></li>
+          <li><a href="blog.html" class="hover:text-white transition-colors duration-300">Blog</a></li>
+          <li><a href="newsroom.html" class="hover:text-white transition-colors duration-300">News</a></li>
+          <li><a href="originality-badges.html" class="hover:text-white transition-colors duration-300">Originality Badges</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="why-us.html" class="hover:text-white transition-colors duration-300">Why PlagiarismSearch</a></li>
+          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">Mission &amp; Values</a></li>
+          <li><a href="testimonials.html" class="hover:text-white transition-colors duration-300">Reviews</a></li>
+          <li><a href="contact-us.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="scholarship.html" class="hover:text-white transition-colors duration-300">Scholarship</a></li>
+          <li><a href="affiliate-program-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Affiliate Program</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PLANS &amp; LEGAL</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="prices.html" class="hover:text-white transition-colors duration-300">Pricing</a></li>
+          <li><a href="vip.html" class="hover:text-white transition-colors duration-300">VIP / High-volume</a></li>
+          <li><a href="policy.html" class="hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+          <li><a href="terms-of-use.html" class="hover:text-white transition-colors duration-300">Terms of Use</a></li>
+          <li><a href="cookie-policy.html" class="hover:text-white transition-colors duration-300">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="h-px bg-white/10 mb-6 sm:mb-7 lg:mb-8"></div>
+    <!-- The legal links live in the Plans & Legal column now, so this bar no longer
+         repeats them. DPA was never in the brief and is gone with them. -->
+    <div class="flex flex-wrap items-center gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>&copy; 2026 PlagiarismSearch. All rights reserved.</span>
+      <button type="button" class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70 hover:text-white transition-colors duration-300" aria-label="Language">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Back to top. Global chrome, so it lives in the shell rather than being copied on
+       to whichever page happens to be long today — index-v2 and the blog article both
+       run past fifteen thousand pixels.
+
+       It is fixed, so it is positioned against the viewport and the footer clipping its
+       own overflow does not reach it. That holds only while no ancestor carries a
+       transform: one here would make this footer-relative and it would vanish upward.
+
+       Inside the footer element on purpose. shell.js replaces a page from the opening
+       tag to the first closing one, so anything placed after that closing tag would
+       survive the replacement and be added again by every build. -->
+  <button type="button" data-to-top aria-label="Back to top"
+    class="fixed z-40 bottom-5 right-5 sm:bottom-7 sm:right-7 lg:bottom-9 lg:right-9
+           w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-ink-900 shadow-diffuse-lg
+           ring-2 ring-teal-600/45 flex items-center justify-center opacity-0 translate-y-3
+           pointer-events-none transition-[opacity,transform,background-color] duration-300
+           hover:bg-teal-50 hover:ring-teal-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-600/35">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+  </button>
+
+</footer>
+
+
+</body>
+</html>

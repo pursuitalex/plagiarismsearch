@@ -1,0 +1,50 @@
+/* ═══ 10 · the closing CTA band (build/cta.js) ════════════════════════════════════
+   Every knob is a custom property on .cta-band, so a page tunes numbers, not selectors,
+   and the band renders the same whatever the section's id is. (It used to be keyed to
+   the id — #student-cta, #student-ctaGlowWarm — so a band moved to another page, or
+   given another anchor, lost its glows.) Numbers carried over unchanged, with both
+   breakpoint steps. The glows follow .orb in this sheet, so their mask wins over the
+   orb default exactly as the id rule did. */
+.cta-band {
+  --cta-bg: #F2FCFC;
+  /* warm, upper left */
+  --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
+  --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
+  --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
+  --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
+  /* cool, lower right */
+  --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
+  --cta-o2-w: 954px;          --cta-o2-h: 950px;
+  --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
+  --cta-o2-mid: 65%;          --cta-o2-end: 100%;
+  background-color: var(--cta-bg);
+}
+.cta-glow-warm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+  background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+          mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+.cta-glow-cool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+  background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+          mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+/* tablet — about three quarters of the desktop figure */
+@media (max-width:1023px) {
+  .cta-band {
+    --cta-o1-w: 840px;  --cta-o1-h: 770px;
+    --cta-o1-x: -28%;   --cta-o1-y: -400px;
+    --cta-o2-w: 700px;  --cta-o2-h: 700px;
+    --cta-o2-x: 64%;    --cta-o2-y: 300px;
+  }
+}
+/* phone — half the size, softer, hard against the edges so the middle stays readable */
+@media (max-width:639px) {
+  .cta-band {
+    --cta-o1-alpha: .20;
+    --cta-o1-w: 560px;  --cta-o1-h: 520px;
+    --cta-o1-x: -38%;   --cta-o1-y: -250px;
+    --cta-o2-alpha: .12;
+    --cta-o2-w: 470px;  --cta-o2-h: 470px;
+    --cta-o2-x: 52%;    --cta-o2-y: 210px;
+  }
+}

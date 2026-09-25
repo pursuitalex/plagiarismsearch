@@ -20,7 +20,15 @@
      checker.script                   // word count + switches, inside a page script
 
    `copy` needs: placeholder, formats, inputs[{label, icon:'lucide'|'brand', path|file}],
-   checkPlagiarism, checkAI, cta, free. */
+   checkPlagiarism, checkAI, cta, free.
+
+   STATIC MODE — form(copy, anchor, ids, { static: true }) — for pages on the shared
+   production assets (build/assets.js). Same markup, same classes; only the hooks change:
+   JS finds the form by [data-checker], [data-checker-text], [data-checker-count] and
+   [data-switch] instead of by id, so two forms on one page cannot collide. The one id
+   left is the label/textarea pair, which accessibility needs and the template writes —
+   pass ids.text to namespace it per instance. Asset paths are root-relative. The
+   default (no opts) is byte-for-byte what every other page renders today. */
 
 const ICON = 'w-[14px] h-[14px] sm:w-4 sm:h-4';
 const UPLOAD = '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>';
@@ -28,9 +36,9 @@ const SPARKLES = '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 
 
 /* the four input methods */
 const NL12 = String.fromCharCode(10) + '            ';
-const chipGlyph = i => {
+const chipGlyph = (i, root = '') => {
   const glyph = i.icon === 'brand'
-    ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${ICON} shrink-0">`
+    ? `<img src="${root}assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${ICON} shrink-0">`
     : `<svg class="${ICON} shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
   return `<button type="button" class="qc-chip">${glyph}${i.label}</button>`;
 };
@@ -43,17 +51,18 @@ const INPUTS = [
   { label: 'By URL',      icon: 'lucide', path: '<path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/>' },
 ];
 
-const form = (S, anchor = '#checker', ids = {}) => {
+const form = (S, anchor = '#checker', ids = {}, opts = {}) => {
   const ta = ids.text || 'checkText', wc = ids.count || 'wordCount', plag = ids.plag || 'optPlag', ai = ids.ai || 'optAI';
+  const st = !!opts.static;
   return `      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-        <form class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+        <form${st ? ' data-checker' : ''} class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
           <label for="${ta}" class="sr-only">${S.placeholder}</label>
           <!-- the count belongs to the text, so it sits in the corner of the field
                rather than in a footer two rows away from what it counts -->
           <div class="relative mb-4">
-            <textarea id="${ta}" rows="4" class="qc-area block pr-24" placeholder="${S.placeholder}"></textarea>
-            <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span id="${wc}">0</span> / 150 words</span>
+            <textarea id="${ta}"${st ? ' data-checker-text' : ''} rows="4" class="qc-area block pr-24" placeholder="${S.placeholder}"></textarea>
+            <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span ${st ? 'data-checker-count' : `id="${wc}"`}>0</span> / 150 words</span>
           </div>
 
           <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
@@ -71,7 +80,7 @@ const form = (S, anchor = '#checker', ids = {}) => {
           </div>
 
           <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
-            ${(S.inputs || INPUTS).map(chipGlyph).join(NL12)}
+            ${(S.inputs || INPUTS).map(i => chipGlyph(i, st ? '/' : '')).join(NL12)}
           </div>
           <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">${S.formats}</p>
 
@@ -82,13 +91,13 @@ const form = (S, anchor = '#checker', ids = {}) => {
           <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
             <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
               <label class="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" id="${plag}" checked class="sr-only peer">
-                <span class="sw on" data-for="${plag}"></span>
+                <input type="checkbox"${st ? '' : ` id="${plag}"`} checked class="sr-only peer">
+                <span class="sw on" ${st ? 'data-switch' : `data-for="${plag}"`}></span>
                 <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">${S.checkPlagiarism}</span>
               </label>
               <label class="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" id="${ai}" class="sr-only peer">
-                <span class="sw" data-for="${ai}"></span>
+                <input type="checkbox"${st ? '' : ` id="${ai}"`} class="sr-only peer">
+                <span class="sw" ${st ? 'data-switch' : `data-for="${ai}"`}></span>
                 <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">${S.checkAI}</span>
               </label>
             </div>

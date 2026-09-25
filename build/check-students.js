@@ -11,7 +11,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const FILE = 'plagiarism-checker-for-students.html';
+/* node build/check-students.js [file] — the POC twin is checked with the same assertions */
+const FILE = process.argv[2] || 'plagiarism-checker-for-students.html';
 const html = fs.readFileSync(path.join(__dirname, '..', 'site', FILE), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 const flat = s => s.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]*>/g, ' ')
@@ -115,8 +116,11 @@ console.log('\napproved copy');
 console.log('\nthe checker');
 {
   const hero = section('student-checker');
-  ok('the hero carries the shared form (build/checker.js)', /<textarea id="checkText"/.test(hero) && /class="qc-drop/.test(hero) && /id="optPlag" checked/.test(hero));
-  ok('plagiarism is the checked control; AI is optional', /id="optPlag" checked/.test(hero) && /id="optAI" class/.test(hero) && !/id="optAI" checked/.test(hero));
+  /* the approved page hooks by id; the POC twin by data-* (the same form, the same order:
+     the plagiarism check first and checked, the AI check second and not) */
+  const checks = [...hero.matchAll(/<input type="checkbox"[^>]*>/g)].map(m => m[0]);
+  ok('the hero carries the shared form (build/checker.js)', /<textarea id="(checkText"|student-checker-text" data-checker-text)/.test(hero) && /class="qc-drop/.test(hero) && checks.length === 2);
+  ok('plagiarism is the checked control; AI is optional', / checked /.test(checks[0] || '') && !/ checked /.test(checks[1] || ''));
   ok('exactly one form on the page', (body.match(/<form\b/g) || []).length === 1);
   ok('no fake scan state or invented result in the form', !/scanning|\d+ sources found|similarity: \d/i.test(flat(hero)));
   const ctas = [...body.matchAll(/href="#student-checker"/g)].length;
@@ -129,7 +133,7 @@ console.log('\nthe checker');
 console.log('\nreport evidence');
 {
   const rep = section('before-you-submit');
-  ok('the approved report component is on the page, once', /cab-mark/.test(rep) && (body.match(/id="cabDoc"/g) || []).length === 1);
+  ok('the approved report component is on the page, once', /cab-mark/.test(rep) && (body.match(/id="cabDoc"|data-report[ >]/g) || []).length === 1);
   ok('AI probability stays a separate metric in the report', /Total AI rate/.test(rep) && /AI probability/.test(rep));
   ok('the principle is a display statement, not a caption', /<p class="text-\[clamp\(1\.6rem,2\.8vw,2\.4rem\)\][^>]*>[\s\S]*?Similarity is/.test(rep));
   ok('no verdict, threshold or fix language in the report act', !/verdict|safe (score|percentage)|threshold|automatic(ally)? (fix|correct)|suggested citation/i.test(flat(rep)));
@@ -178,7 +182,7 @@ console.log('\nFAQ');
   ok('the nine approved questions, in order', found.join('|') === QS.join('|'), found.length + ' found');
   ok('nine answers rendered in the HTML', (faq.match(/class="faq-a"/g) || []).length === 9);
   ok('the "safe percentage" answer says there is none', /There is no universal similarity percentage/.test(flat(faq)));
-  ok('accordion controls are buttons with aria-expanded', (faq.match(/<button type="button" aria-expanded=/g) || []).length === 9);
+  ok('accordion controls are buttons with aria-expanded', (faq.match(/<button type="button"(?: aria-controls="student-faq-a\d+")? aria-expanded=/g) || []).length === 9);
 }
 
 /* ── forbidden ──────────────────────────────────────────────────────────────── */

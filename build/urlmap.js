@@ -58,6 +58,8 @@ const BUILT = [
   /* no approved path */
   { file: 'plagiarism-check.html',       path: null, note: 'Confirmed 2026-08-17: the homepage IS the Plagiarism Checker page. So this one has no approved address of its own. It stays on disk and leaves the navigation, the same treatment as the other delisted pages.' },
   { file: 'account.html',                path: null, note: 'Log in / create account. The brief says only "keep existing authentication behavior" and names no path.' },
+  { file: 'plagiarism-checker-for-students-poc.html', path: null, note: 'Proof of concept, not a page: the approved Students page rendered on the shared production assets (static Tailwind 3.4.17, site.css, site.js) instead of the Play CDN and inline blocks. Built by build/students.js beside the approved page; build/parity/students.js compares the two.' },
+  { file: 'poc-sections.html', path: null, note: 'Proof of concept, not a page: sections copied verbatim out of the Students POC into an empty page that links only the shared assets. Built by build/poc-sections.js.' },
   { file: 'design-system.html',          path: null, note: 'Internal reference sheet. Never part of the public site.' },
 ];
 

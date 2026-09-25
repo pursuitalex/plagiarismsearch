@@ -1,0 +1,26 @@
+/* ═══ 06 · controls on phones ═════════════════════════════════════════════════════
+   Carried verbatim from the page head, and in the same place in the cascade: BEFORE the
+   component sheets. That order is load-bearing and slightly surprising — a component
+   that re-declares a size (08-checker's .qc-chip, .qc-area) wins over the phone size
+   here at every width, exactly as it did when these lived in two <style> blocks. Moving
+   this block after the components would change the approved phone layout. */
+@media (max-width: 639px) {
+  .qc-area, .rc-area, .sp-area { font-size: 14px; }
+  .fld, .cf-field { height: 44px; font-size: 14px; }
+  textarea.fld { height: auto; }
+  .stepper { height: 44px; }
+  .stepper input { font-size: 14px; }
+  .stepper button { width: 34px; font-size: 16px; }
+  .pa-select { height: 40px; font-size: 13px; }
+  .pa-step { height: 40px; }
+  .pa-step input { font-size: 13px; }
+  .pa-step button { width: 32px; font-size: 15px; }
+  .sp-select { height: 36px; font-size: 12px; }
+  .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
+  .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
+  .rc-stat b { font-size: 17px; }
+  .sp-row { font-size: 12px; }
+  .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
+  .cf-label { font-size: 11.5px; }
+  .ctl { font-size: 13.5px; }
+}

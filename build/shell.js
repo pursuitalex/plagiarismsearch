@@ -98,6 +98,9 @@ const PAGES = {
   'university-plagiarism-checker-v2.html': { active: 'solutions' },
   /* the Students page to the 2026-09-15 brief — the stub graduated */
   'plagiarism-checker-for-students.html': { active: 'solutions' },
+  /* the same page on the shared production assets — the static-assets proof of concept.
+     `static` gives it the chrome without inline <style>/<script> (see staticChrome) */
+  'plagiarism-checker-for-students-poc.html': { active: 'solutions', static: true },
   /* the Turnitin Alternative page to the 2026-09-15 brief — footer-only, so no active tab */
   'turnitin-checker-alternative.html': { active: null },
   /* the Moodle Integration guide to the 2026-09-15 brief — the stub graduated */
@@ -133,7 +136,8 @@ const V1_OF = { products: 'products', pricing: 'prices', resources: 'company', c
 /* design-system.html has its own shell and is not part of the site's navigation */
 /* pages.html is the prototype index, a review tool rather than a page of the site,
    so it carries no global header or footer to keep fresh. */
-const SKIP = new Set(['design-system.html', 'pages.html']);
+/* poc-sections.html is the section-reuse test page: it must carry nothing but the sections */
+const SKIP = new Set(['design-system.html', 'pages.html', 'poc-sections.html']);
 
 function render(tpl, page) {
   const active = VERSION === 'v1' ? V1_OF[page.active] ?? null : page.active;
@@ -153,6 +157,30 @@ function render(tpl, page) {
        page. It used to appear only on the homepage, which was drift, not a decision.
        A line placeholder: when empty the whole line goes, not just its contents. */
     .replace(/\{\{LANG_CHEV\}\}\n/, page.langChev === false ? '' : LANG_CHEV + '\n');
+}
+
+/* STATIC CHROME — for pages on the shared production assets (build/assets.js). The same
+   templates; their inline <style>/<script> are dropped (the rules live in site.css, the
+   behaviour in site.js), the id hooks become data-* hooks (the ids that accessibility
+   needs — navPanel for aria-controls — stay), the footer declares its dark surface for
+   the focus ring, and asset paths go root-relative. Each substitution must find its
+   anchor, so a template edit that moves one fails the build rather than the page. */
+function staticChrome(html, tag) {
+  const need = (a, b) => {
+    if (!html.includes(a)) throw new Error('static chrome (' + tag + '): no ' + a);
+    html = html.split(a).join(b);
+  };
+  html = html.replace(/\n[ \t]*<style>[\s\S]*?<\/style>/g, '').replace(/\n[ \t]*<script>[\s\S]*?<\/script>/g, '');
+  html = html.split('src="assets/').join('src="/assets/');
+  if (tag === 'header') {
+    need('<header class="site-header', '<header data-site-header class="site-header');
+    need('id="navBurger" ', 'data-nav-burger ');
+    need('<div id="navPanel" class="nav-panel', '<div id="navPanel" data-nav-panel class="nav-panel');
+  } else {
+    need('<footer class="', '<footer data-surface="dark" class="');
+    need('id="toTop" ', 'data-to-top ');
+  }
+  return html;
 }
 
 /* Replace one element by its tag boundaries. Every page was verified to hold at most
@@ -190,8 +218,9 @@ for (const file of found) {
   const before = fs.readFileSync(p, 'utf8');
   let after = before;
 
-  if (page.header !== false) after = swap(after, 'header', render(headerTpl, page), file);
-  after = swap(after, 'footer', render(footerTpl, page), file);
+  const chrome = (tpl, tag) => (page.static ? staticChrome(render(tpl, page), tag) : render(tpl, page));
+  if (page.header !== false) after = swap(after, 'header', chrome(headerTpl, 'header'), file);
+  after = swap(after, 'footer', chrome(footerTpl, 'footer'), file);
 
   /* Idempotent: writes the switcher onto the paired pages and strips it from every
      other, so removing a pair from version-switch.js cleans the widget out on the

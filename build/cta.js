@@ -49,6 +49,16 @@ const background = (id = 'cta') => `      <div class="absolute inset-0 overflow-
         <div id="${id}GlowCool" class="orb"></div>
       </div>`;
 
+/* STATIC MODE — the same layer for pages on the shared assets: the dot field as a CSS
+   background and the glows as classes (.cta-glow-warm / .cta-glow-cool, knobs on
+   .cta-band in build/assets/css/10-cta-band.css). No ids, so the band renders the same
+   on any page and under any anchor. The section adds class="cta-band". */
+const backgroundStatic = () => `      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+        <div class="orb cta-glow-warm"></div>
+        <div class="orb cta-glow-cool"></div>
+      </div>`;
+
 /* ── 3 · the ring mark ────────────────────────────────────────────────────────
    Applied at render, never stored in the approved-copy object: the briefs freeze the
    heading as one plain string, and every page checker compares it with tags stripped.
@@ -57,10 +67,12 @@ const background = (id = 'cta') => `      <div class="absolute inset-0 overflow-
    The SVG is sized in percentages of the span, so the viewBox stretches to whatever it
    wraps; a much shorter or much longer phrase distorts the loop into an egg. Pick a
    fragment near that length rather than rescaling the path. */
-const ringMark = (text, phrase) => {
-  const svg = '<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);">' +
+const ringMark = (text, phrase, opts = {}) => {
+  /* static: the box is the .ring-mark class and the path's hidden start state is CSS
+     (:where(.js-motion)), so without JS the ring simply shows */
+  const svg = '<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true"' + (opts.static ? '>' : ' style="left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);">') +
     '<path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" ' +
-    'stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg>';
+    'stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"' + (opts.static ? '' : ' opacity="0"') + '/></svg>';
   if (!text.includes(phrase)) throw new Error('ringMark: "' + phrase + '" not in "' + text + '"');
   return text.replace(phrase, `<span class="ring-word relative inline-block">${phrase}${svg}</span>`);
 };
@@ -137,4 +149,4 @@ const script = `
 /* the heading scale the band is allowed, and only here */
 const HEADING = 'text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02]';
 
-module.exports = { background, ringMark, style, script, HEADING };
+module.exports = { background, backgroundStatic, ringMark, style, script, HEADING };

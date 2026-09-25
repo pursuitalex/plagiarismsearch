@@ -1,0 +1,23 @@
+/* ═══ 02 · motion — reveal, pen mark, ring mark ═══════════════════════════════════
+   Fail-safe by construction. Nothing is hidden unless <html> carries .js-motion, which
+   the boot snippet in <head> sets only when scripts run and the reader has not asked for
+   reduced motion — and which is taken away again if GSAP or site.js never arrive. So:
+     .js-motion      → the hidden start state; site.js animates it in (the approved look)
+     no .js-motion   → the static final state (was .no-motion): no JS, reduced motion,
+                       a failed script — content is always there.
+   :where() keeps every selector at the specificity the old rule had, so the cascade
+   against utilities is unchanged. */
+:where(.js-motion) .rv { opacity:0; transform:translateY(40px); }
+:where(html:not(.js-motion)) .rv { opacity:1 !important; transform:none !important; }
+:where(.js-motion) .rv-kids > * { opacity:0; transform:translateY(40px); }
+:where(html:not(.js-motion)) .rv-kids > * { opacity:1 !important; transform:none !important; }
+
+/* pen mark — the drawn underline under one word of a heading */
+:where(.js-motion) .pen-underline { opacity:0; }
+:where(html:not(.js-motion)) .pen-word { color:#DC5A45; }
+
+/* ring mark — the loop round one word of the closing band's heading. Its box was an
+   inline style on every page; it is the same box everywhere, so it is a class. */
+.ring-mark { left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg); }
+:where(.js-motion) .ring-path { opacity:0; }
+:where(html:not(.js-motion)) .ring-word { color:#DC5A45; }

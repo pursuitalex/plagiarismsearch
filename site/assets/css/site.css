@@ -1,0 +1,255 @@
+/* site.css — built by build/assets.js from build/assets/css/. Do not edit here. */
+
+/* ═══ 01 · base — carried from the page head, unchanged ═══════════════════════════ */
+
+/* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
+   disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
+   grain sheet and the header render 150px wider than the page and open a white gutter that
+   no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
+   creates no scroll container, so position:sticky keeps working. */
+html { background:#fff; overflow-x: clip; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+::selection { background:#F36F5A; color:#fff; }
+
+/* grain overlay — page chrome, one <div class="grain"> per page */
+.grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px 256px; }
+
+/* mesh orbs (masked gradient — zero per-frame filter cost) */
+.orb { position:absolute; border-radius:9999px; pointer-events:none;
+  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
+  mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
+
+/* Orb presets. The glows used to carry their size, place and colour in style=""; the set
+   is finite, so each recurring glow is a class. Values are the inline ones, verbatim. */
+.orb-hero-teal  { width:860px; height:800px; left:-16%;  top:-400px;    background:rgba(44,195,219,.22); }
+.orb-hero-coral { width:700px; height:680px; right:-14%; top:-200px;    background:rgba(243,111,90,.13); }
+.orb-dark-teal  { width:620px; height:620px; left:-13%;  top:40px;      background:rgba(13,168,194,.12); }
+.orb-dark-coral { width:520px; height:520px; right:-10%; bottom:-120px; background:rgba(243,111,90,.10); }
+
+/* The dot field — the texture under a tinted hero and the closing band. A 22px cell with
+   a 2×2 rounded square in #DAE7ED, drawn as a CSS background rather than an SVG
+   <pattern>: a pattern needs an id, and an id breaks the moment a section is pasted
+   twice on one page. Same tile, same origin (the element's top-left), same colour. */
+.dot-field { pointer-events:none; background-size:22px 22px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Crect width='2' height='2' rx='0.65' fill='%23DAE7ED'/%3E%3C/svg%3E"); }
+
+/* ═══ 02 · motion — reveal, pen mark, ring mark ═══════════════════════════════════
+   Fail-safe by construction. Nothing is hidden unless <html> carries .js-motion, which
+   the boot snippet in <head> sets only when scripts run and the reader has not asked for
+   reduced motion — and which is taken away again if GSAP or site.js never arrive. So:
+     .js-motion      → the hidden start state; site.js animates it in (the approved look)
+     no .js-motion   → the static final state (was .no-motion): no JS, reduced motion,
+                       a failed script — content is always there.
+   :where() keeps every selector at the specificity the old rule had, so the cascade
+   against utilities is unchanged. */
+:where(.js-motion) .rv { opacity:0; transform:translateY(40px); }
+:where(html:not(.js-motion)) .rv { opacity:1 !important; transform:none !important; }
+:where(.js-motion) .rv-kids > * { opacity:0; transform:translateY(40px); }
+:where(html:not(.js-motion)) .rv-kids > * { opacity:1 !important; transform:none !important; }
+
+/* pen mark — the drawn underline under one word of a heading */
+:where(.js-motion) .pen-underline { opacity:0; }
+:where(html:not(.js-motion)) .pen-word { color:#DC5A45; }
+
+/* ring mark — the loop round one word of the closing band's heading. Its box was an
+   inline style on every page; it is the same box everywhere, so it is a class. */
+.ring-mark { left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg); }
+:where(.js-motion) .ring-path { opacity:0; }
+:where(html:not(.js-motion)) .ring-word { color:#DC5A45; }
+
+/* ═══ 03 · FAQ accordion ══════════════════════════════════════════════════════════
+   Every answer is in the HTML. Collapsing is an enhancement: without JS (no .js on
+   <html>) every answer stays open, so none is locked behind a button that cannot work. */
+.faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1); }
+.faq-item.open .faq-a { grid-template-rows:1fr; }
+.faq-a > div { overflow:hidden; }
+.faq-chev { transition:transform .45s cubic-bezier(.32,.72,0,1); }
+.faq-item.open .faq-chev { transform:rotate(180deg); }
+:where(html:not(.js)) .faq-a { grid-template-rows:1fr; }
+:where(html:not(.js)) .faq-chev { transform:rotate(180deg); }
+
+/* ═══ 04 · buttons and numerals ══════════════════════════════════════════════════ */
+.btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
+.btn-press:active { transform:scale(.97); }
+/* circle stays put; only the arrow inside rotates 45° counter-clockwise */
+.icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
+.group:hover .icon-orb svg { transform:rotate(-45deg); }
+
+.nums { font-variant-numeric: tabular-nums; }
+
+/* ═══ 05 · site header — island nav, phone burger, docking ═══════════════════════
+   The header is shell, not a section: one per page. Its hooks are data-* all the same,
+   so no rule here depends on an id. */
+.nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
+.nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
+.nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
+  transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
+.nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
+@media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
+
+/* below lg: burger + panel */
+.nav-burger-close { display:none; }
+[data-nav-burger][aria-expanded="true"] .nav-burger-open { display:none; }
+[data-nav-burger][aria-expanded="true"] .nav-burger-close { display:block; }
+
+.nav-panel { position:absolute; left:1rem; right:1rem; top:100%;
+  opacity:0; visibility:hidden; transform:translateY(-8px);
+  transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
+.nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
+@media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
+
+/* On phones the bar starts as the floating pill every other width has, and DOCKS once
+   the page scrolls: flush to the top edge, no side gutters, square corners. Every rule
+   here outranks the utilities it overrides, so its place in the cascade (it used to sit
+   in the header's own <style>, after Tailwind) makes no difference. */
+.site-header { transition: top .28s cubic-bezier(.32,.72,0,1), padding .28s cubic-bezier(.32,.72,0,1); }
+.site-header .site-nav { transition: border-radius .28s cubic-bezier(.32,.72,0,1), box-shadow .28s ease, background-color .28s ease; }
+@media (max-width: 639px) {
+  .site-header.is-docked { top: 0; padding-left: 0; padding-right: 0; }
+  .site-header.is-docked .site-nav { border-radius: 0; background-color: rgba(255,255,255,.94);
+    box-shadow: 0 1px 0 rgba(17,24,39,.07), 0 8px 24px -16px rgba(17,24,39,.18); }
+  .site-header.is-docked [data-nav-panel] { margin-left: .75rem; margin-right: .75rem; }
+}
+@media (prefers-reduced-motion: reduce) { .site-header, .site-header .site-nav { transition: none; } }
+
+/* ═══ 06 · controls on phones ═════════════════════════════════════════════════════
+   Carried verbatim from the page head, and in the same place in the cascade: BEFORE the
+   component sheets. That order is load-bearing and slightly surprising — a component
+   that re-declares a size (08-checker's .qc-chip, .qc-area) wins over the phone size
+   here at every width, exactly as it did when these lived in two <style> blocks. Moving
+   this block after the components would change the approved phone layout. */
+@media (max-width: 639px) {
+  .qc-area, .rc-area, .sp-area { font-size: 14px; }
+  .fld, .cf-field { height: 44px; font-size: 14px; }
+  textarea.fld { height: auto; }
+  .stepper { height: 44px; }
+  .stepper input { font-size: 14px; }
+  .stepper button { width: 34px; font-size: 16px; }
+  .pa-select { height: 40px; font-size: 13px; }
+  .pa-step { height: 40px; }
+  .pa-step input { font-size: 13px; }
+  .pa-step button { width: 32px; font-size: 15px; }
+  .sp-select { height: 36px; font-size: 12px; }
+  .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
+  .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
+  .rc-stat b { font-size: 17px; }
+  .sp-row { font-size: 12px; }
+  .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
+  .cf-label { font-size: 11.5px; }
+  .ctl { font-size: 13.5px; }
+}
+
+/* ═══ 07 · focus, anchors, hidden ═════════════════════════════════════════════════ */
+[hidden] { display: none !important; }
+section[id] { scroll-margin-top: 100px; }
+
+a:focus-visible, button:focus-visible, select:focus-visible,
+[tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
+/* On a dark ground the ring goes light. The ground says so with data-surface="dark" on
+   the section (or footer) — not by inference from a colour utility, which would break
+   silently the day the section's background class changed. */
+[data-surface="dark"] a:focus-visible, [data-surface="dark"] button:focus-visible { outline-color: #6ED7E8; }
+
+/* ═══ 08 · the quick-check form (build/checker.js) ════════════════════════════════ */
+.qc-area { width:100%; border:0; outline:none; background:transparent; resize:none;
+  font-size:15px; line-height:1.6; font-weight:500; color:#111827; }
+.qc-area::placeholder { color:#9CA3AF; font-weight:400; }
+
+.qc-chip { display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 14px;
+  border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12.5px; font-weight:600;
+  transition:background-color .2s ease, color .2s ease; }
+.qc-chip:hover { background:#E5E7EB; color:#111827; }
+.qc-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
+  transition:border-color .2s ease, background-color .2s ease; }
+.qc-drop:hover { border-color:#2CC3DB; background:#F0FAFC; }
+
+/* the two checks */
+.sw { width:38px; height:22px; border-radius:999px; background:rgba(16,24,40,.14);
+      position:relative; transition:background .25s cubic-bezier(.32,.72,0,1); flex:none; }
+.sw::after { content:''; position:absolute; top:3px; left:3px; width:16px; height:16px;
+      border-radius:999px; background:#fff; box-shadow:0 1px 3px rgba(16,24,40,.3);
+      transition:transform .25s cubic-bezier(.32,.72,0,1); }
+.sw.on { background:#0D9488; }
+.sw.on::after { transform:translateX(16px); }
+@media (prefers-reduced-motion: reduce) { .sw, .sw::after { transition:none; } }
+
+/* ═══ 09 · the report (build/report.js) ═══════════════════════════════════════════
+   Bar widths and legend colours stay in style="" on purpose: they are the report's data,
+   not its design, and in production they come from the result. */
+.cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease;
+  border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
+  box-shadow:inset 0 -2px 0 currentColor;
+  background-image:linear-gradient(var(--wash), var(--wash));
+  background-repeat:no-repeat; background-position:left center; background-size:100% 100%; }
+.cab-plag { --wash:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
+.cab-ai   { --wash:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
+.cab-plag.on { --wash:rgba(243,111,90,.4); }
+.cab-ai.on   { --wash:rgba(168,85,247,.34); }
+.cab-mark > span { color:#111827; }
+.cab-src.on { background:#F8F9FB; }
+.cab-tab { padding-bottom:10px; border-bottom:2px solid transparent; color:#4B5563; }
+.cab-tab.on { color:#06748A; border-bottom-color:#0991A8; }
+.cab-sources, .cab-foot { border-bottom-left-radius:1rem; border-bottom-right-radius:1rem; }
+@media (min-width:640px) {
+  .cab-sources, .cab-foot { border-bottom-left-radius:20px; border-bottom-right-radius:20px; }
+}
+@media (min-width:1024px) {
+  .cab-sources, .cab-foot { border-bottom-left-radius:1.5rem; border-bottom-right-radius:1.5rem; }
+}
+.cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
+  pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
+@media (prefers-reduced-motion: reduce) { .cab-mark { transition:none; } }
+
+/* ═══ 10 · the closing CTA band (build/cta.js) ════════════════════════════════════
+   Every knob is a custom property on .cta-band, so a page tunes numbers, not selectors,
+   and the band renders the same whatever the section's id is. (It used to be keyed to
+   the id — #student-cta, #student-ctaGlowWarm — so a band moved to another page, or
+   given another anchor, lost its glows.) Numbers carried over unchanged, with both
+   breakpoint steps. The glows follow .orb in this sheet, so their mask wins over the
+   orb default exactly as the id rule did. */
+.cta-band {
+  --cta-bg: #F2FCFC;
+  /* warm, upper left */
+  --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
+  --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
+  --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
+  --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
+  /* cool, lower right */
+  --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
+  --cta-o2-w: 954px;          --cta-o2-h: 950px;
+  --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
+  --cta-o2-mid: 65%;          --cta-o2-end: 100%;
+  background-color: var(--cta-bg);
+}
+.cta-glow-warm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+  background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+          mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+.cta-glow-cool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+  background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+          mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+/* tablet — about three quarters of the desktop figure */
+@media (max-width:1023px) {
+  .cta-band {
+    --cta-o1-w: 840px;  --cta-o1-h: 770px;
+    --cta-o1-x: -28%;   --cta-o1-y: -400px;
+    --cta-o2-w: 700px;  --cta-o2-h: 700px;
+    --cta-o2-x: 64%;    --cta-o2-y: 300px;
+  }
+}
+/* phone — half the size, softer, hard against the edges so the middle stays readable */
+@media (max-width:639px) {
+  .cta-band {
+    --cta-o1-alpha: .20;
+    --cta-o1-w: 560px;  --cta-o1-h: 520px;
+    --cta-o1-x: -38%;   --cta-o1-y: -250px;
+    --cta-o2-alpha: .12;
+    --cta-o2-w: 470px;  --cta-o2-h: 470px;
+    --cta-o2-x: 52%;    --cta-o2-y: 210px;
+  }
+}
