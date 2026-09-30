@@ -345,6 +345,9 @@ textarea.fld { height:auto; padding:12px 14px; resize:vertical; min-height:96px;
 .rc-stat { display:flex; flex-direction:column; gap:2px; }
 .rc-stat b { font-size:19px; font-weight:800; letter-spacing:-0.035em; line-height:1; }
 .rc-stat span { font-size:11px; font-weight:600; color:#9CA3AF; }
+/* Readability v2: the drop zone (site.js, module readability, [data-rc-drop]) — the
+   checker's dashed zone (.qc-drop), lit while a file is over it */
+.rc-drop.is-over { border-style:solid; border-color:#0CA9C3; background:#E8F8FB; box-shadow:0 0 0 4px rgba(12,169,195,.14); }
 
 /* Spell Check */
 .sp-area { width:100%; border:0; outline:none; background:transparent; resize:vertical;

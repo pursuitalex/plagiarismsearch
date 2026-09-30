@@ -1366,6 +1366,21 @@ PS.module('readability', () => {
     };
     area.addEventListener('input', score);
     readFile($('file'), t => { area.value = t; score(); });
+    /* an optional drop zone ([data-rc-drop], Readability v2): a text file dropped on it is
+       read into the box; .is-over marks the zone while a file is over it */
+    const drop = form.querySelector('[data-rc-drop]');
+    if (drop) {
+      ['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('is-over'); }));
+      ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, () => drop.classList.remove('is-over')));
+      drop.addEventListener('drop', e => {
+        e.preventDefault();
+        const f = e.dataTransfer && e.dataTransfer.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = () => { area.value = r.result; score(); area.focus(); };
+        r.readAsText(f);
+      });
+    }
     score();
   });
 });

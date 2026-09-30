@@ -331,7 +331,7 @@ ${V.map((v, i) => `          <li><a href="https://www.youtube.com/watch?v=${v.yo
   </section>`;
 
 /* check-testimonials.js holds the page to the data it rendered */
-module.exports = { D, SMART };
+module.exports = { D, SMART, tpCard, tpStars };   /* the Trustpilot card is reused by readability-v2.js */
 if (require.main !== module) return;
 
 const sections = [section1(), section2(), trustpilotWall(), videoStage(), sitejabberRows()];
