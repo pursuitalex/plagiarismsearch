@@ -73,7 +73,7 @@ const SIGNUP = {
   signupHref: 'account.html',
   cta: 'Sign Up Free',
   secondary: 'See Prices',
-  secondaryHref: 'prices-v2.html',
+  secondaryHref: 'prices.html',
   bonus: 'Bonus',
   offers: [
     { how: 'Register for free', get: 'Get 1,000 plagiarism words + 1,000 AI words', icon: 'mail' },

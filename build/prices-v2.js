@@ -1,4 +1,4 @@
-/* Generate site/prices-v2.html — the DEC-0042 Pricing page.
+/* Generate site/prices.html — the DEC-0042 Pricing page.
 
    Same shape as the other page generators: approved copy in COPY, verbatim, diffable
    against the brief line by line.
@@ -27,7 +27,7 @@
 
    On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
    no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
-   classes, asset paths are root-relative. Parity: node build/parity/run.js prices-v2.html
+   classes, asset paths are root-relative. Parity: node build/parity/run.js prices.html
 */
 const fs = require('fs');
 const path = require('path');
@@ -35,7 +35,7 @@ const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
-const OUT = 'prices-v2.html';
+const OUT = 'prices.html';
 const cta = require('./cta');
 const { dotField } = require('./dots');
 const banner = require('./banner');

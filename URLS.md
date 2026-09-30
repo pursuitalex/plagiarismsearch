@@ -11,30 +11,24 @@ driven by this table.
 
 | Prototype file | Production path | Status | Note |
 |---|---|---|---|
-| `index.html` | `/` | built | The Plagiarism Checker page. DEC-0030 governs its content. |
-| `index-v2.html` | — | no approved path | The DEC-0030 rebuild of the homepage, alongside the current one. Takes over `/` once approved; the old index is retired then, not before. |
-| `ai-detector.html` | `/ai-content-detector` | built |  |
-| `ai-detector-v2.html` | — | no approved path | The DEC-0038 rebuild of the AI Detector, alongside the current one. Takes over `/ai-content-detector` once approved; the old page is retired then, not before. Built by build/ai-v2.js, checked by build/check-ai.js. |
-| `api.html` | `/plagiarism-api` | built |  |
-| `api-v2.html` | — | no approved path | The DEC-0041 rebuild of the API page, alongside the current one. Takes over `/plagiarism-api` once approved; the old page is retired then, not before. Built by build/api-v2.js, checked by build/check-api.js. |
-| `prices.html` | `/prices` | built |  |
-| `prices-v2.html` | — | no approved path | The DEC-0042 rebuild of the Pricing page, alongside the current one. Takes over `/prices` once approved. Built by build/prices-v2.js, checked by build/check-prices.js. Its plan cards are a shell for the backend pricing widget; figures come from build/pricing-data.js, shared with the homepage. |
+| `index.html` | `/` | built | The Plagiarism Checker page, to DEC-0030. Built by build/home-v2.js, checked by build/check-home.js. Its plan cards take their figures from build/pricing-data.js. |
+| `ai-detector.html` | `/ai-content-detector` | built | The AI Detector, to DEC-0038. Built by build/ai-v2.js, checked by build/check-ai.js. |
+| `api.html` | `/plagiarism-api` | built | The API page, to DEC-0041. Built by build/api-v2.js, checked by build/check-api.js. |
+| `prices.html` | `/prices` | built | The Pricing page, to DEC-0042. Built by build/prices-v2.js, checked by build/check-prices.js. Its plan cards are a shell for the backend pricing widget; figures come from build/pricing-data.js, shared with the homepage. |
 | `terms-of-use.html` | `/terms-of-use` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
 | `policy.html` | `/policy` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
 | `cookie-policy.html` | `/cookie-policy` | built | Text carried over from the live page word for word; only the styling is new. Built by build/legal.js from the copy in build/legal/. |
 | `originality-badges.html` | `/originality-badges` | built | Copy and artwork carried over from the live page unchanged; the 129 badge images live in site/assets/img/badges/. Built by build/badges.js. |
 | `user-manuals.html` | `/user-manuals` | built | Category names and all twenty guide titles carried over unchanged; the arrangement is new. Built by build/manuals.js. Most guides still live on the production site and keep absolute addresses. |
 | `newsroom.html` | `/newsroom` | built | The news archive. All 68 items carried over from the seven live pages with their dates, wording and destinations intact; the arrangement is new. Built by build/newsroom.js from build/newsroom-data.json, which build/newsroom-fetch.js refreshes. |
-| `plagiarism-and-ai-check-report.html` | `/plagiarism-and-ai-check-report` | built | A User Guide article. All 26 blocks of the live page carried over in their original order and wording; the sections are cuts along seams the text itself makes. Built by build/report-guide.js from build/report-guide-data.json, which build/report-guide-fetch.js refreshes. |
-| `plagiarism-and-ai-check-report-v2.html` | `/plagiarism-and-ai-check-report` | built | The same guide rendered through build/article.js — the template lifted from the blog post: one centred 700px column, a contents box, and semantic blocks styled once. Built alongside v1 so the two approaches can be compared. |
+| `plagiarism-and-ai-check-report.html` | `/plagiarism-and-ai-check-report` | built | A User Guide article, rendered through build/article.js — the template lifted from the blog post: one centred 700px column, a contents box, and semantic blocks styled once. Built by build/report-guide-v2.js from build/report-guide-data.json (refreshed by build/report-guide-fetch.js), checked by build/check-report-guide-v2.js. |
 | `why-us.html` | `/why-us` | built |  |
 | `mission.html` | `/plagiarismsearch-mission-and-core-values` | built |  |
 | `contact-us.html` | `/contact-us` | built |  |
 | `help-center.html` | `/help-center` | built |  |
 | `blog.html` | `/blog` | built |  |
 | `blog-best-checker-2026.html` | `/blog/best-plagiarism-checker-in-2026` | built |  |
-| `university-plagiarism-checker.html` | `/university-plagiarism-checker` | built | The DEC-0043 institutional solution page, v1. Built by build/university.js, checked by build/check-university.js. Version switcher to v2. |
-| `university-plagiarism-checker-v2.html` | `/university-plagiarism-checker` | built | The University page to the v2 brief of 2026-09-04: nine sections, a proof type per act (hub, report, relationship map, source map, decision tree). Built by build/university-v2.js, checked by build/check-university-v2.js. |
+| `university-plagiarism-checker.html` | `/university-plagiarism-checker` | built | The University page to the v2 brief of 2026-09-04: nine sections, a proof type per act (hub, report, relationship map, source map, decision tree). Built by build/university-v2.js, checked by build/check-university-v2.js. |
 | `plagiarism-checker-for-students.html` | `/plagiarism-checker-for-students` | built | The Students page to the 2026-09-15 brief: the real checker in a two-column hero, the shared report with the student principle, a decision-shaped review workflow. Replaced the stub. Built by build/students.js, checked by build/check-students.js. |
 | `turnitin-checker-alternative.html` | `/turnitin-checker-alternative` | built | The Turnitin Alternative page to the 2026-09-15 brief: the real checker, a semantic comparison table with official Turnitin sources and a last-verified date, the non-equivalence act, a balanced fit section, the shared report, a pricing preview, the trademark notice. Footer only. Replaced the stub. Built by build/turnitin.js, checked by build/check-turnitin.js. |
 | `integration-guide.html` | `/integration-guide` | built | The Moodle Integration guide to the 2026-09-15 brief: a documentation-led page — compact product header, quick facts, a sticky On-this-page rail, definition tables, masked crops of the real plugin screens, troubleshooting, FAQ, support handoff. Replaced the stub. Built by build/moodle.js, checked by build/check-moodle.js. |
@@ -60,10 +54,10 @@ driven by this table.
 
 ## Counts
 
-- 27 × built
+- 25 × built
 - 8 × stub
-- 7 × no approved path
 - 4 × built · out of global nav
+- 3 × no approved path
 
 ## Open
 

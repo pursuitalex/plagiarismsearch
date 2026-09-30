@@ -1,4 +1,4 @@
-/* Check site/ai-detector-v2.html against DEC-0038.
+/* Check site/ai-detector.html against DEC-0038.
 
    Same discipline as check-home.js: the brief is specific enough to be testable, so it
    is tested rather than asserted. Every rule below quotes the clause it enforces.
@@ -24,7 +24,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const FILE = 'ai-detector-v2.html';
+const FILE = 'ai-detector.html';
 const html = fs.readFileSync(path.join(__dirname, '..', 'site', FILE), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 const text = body.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]*>/g, ' ')

@@ -1,4 +1,4 @@
-/* Check site/index-v2.html against DEC-0030.
+/* Check site/index.html against DEC-0030.
 
    The brief is specific enough to be testable, so it is tested rather than asserted.
    Every rule below quotes the clause it enforces.
@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const html = fs.readFileSync(path.join(__dirname, '..', 'site', 'index-v2.html'), 'utf8');
+const html = fs.readFileSync(path.join(__dirname, '..', 'site', 'index.html'), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 const text = body.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]*>/g, ' ')
                  .replace(/&amp;/g, '&').replace(/&mdash;/g, '—').replace(/&nbsp;/g, ' ')
@@ -249,5 +249,5 @@ console.log('\nstructure');
      (boxes.length === 2 && / checked\b/.test(boxes[0]) && !/ checked\b/.test(boxes[1])));
 }
 
-console.log('\n' + (failed ? failed + ' check(s) FAILED' : 'index-v2.html matches DEC-0030'));
+console.log('\n' + (failed ? failed + ' check(s) FAILED' : 'index.html matches DEC-0030'));
 process.exit(failed ? 1 : 0);

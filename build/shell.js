@@ -21,8 +21,6 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const TPL = path.join(__dirname, 'shell');
-/* the temporary v1/v2 review switcher — see build/version-switch.js */
-const vswitch = require('./version-switch');
 
 /* ── which navigation ────────────────────────────────────────────────────────
    'v2' is the approved DEC-0027 architecture. 'v1' is the navigation the site had
@@ -55,20 +53,14 @@ const LANG_CHEV = '        <svg width="11" height="11" viewBox="0 0 24 24" fill=
    home     the page IS the homepage, so logo and CTA become same-page anchors
    header   false for pages that deliberately have none                          */
 const PAGES = {
-  'index.html':                  { active: null, home: true },
-  /* the DEC-0030 homepage, built alongside the current one so the two can be compared
-     before either is retired. It is the checker page, so it anchors its own CTAs. */
-  'index-v2.html':               { active: null, home: true, static: true },
-  'ai-detector.html':            { active: 'products' },
-  /* the DEC-0038 AI Detector, built alongside the current one for the same reason
-     index-v2 is: nothing is retired until the replacement is accepted */
-  'ai-detector-v2.html':         { active: 'products', static: true },
-  'api.html':                    { active: 'products' },
-  /* the DEC-0041 rebuild, alongside the current one */
-  'api-v2.html':                 { active: 'products', static: true },
-  'prices.html':                 { active: 'pricing' },
-  /* the DEC-0042 rebuild, alongside the current one */
-  'prices-v2.html':              { active: 'pricing', static: true },
+  /* static: on the shared production assets — the chrome without inline <style>/<script>
+     (staticChrome). The v1 halves of the v1/v2 pairs were retired on 2026-09-30; the v2
+     pages took their names. */
+  /* the DEC-0030 homepage. It is the checker page, so it anchors its own CTAs. */
+  'index.html':                  { active: null, home: true, static: true },
+  'ai-detector.html':            { active: 'products', static: true },   /* DEC-0038 */
+  'api.html':                    { active: 'products', static: true },   /* DEC-0041 */
+  'prices.html':                 { active: 'pricing', static: true },    /* DEC-0042 */
   'help-center.html':            { active: 'resources' },
   'blog.html':                   { active: 'resources' },
   'blog-best-checker-2026.html': { active: 'resources' },
@@ -88,16 +80,12 @@ const PAGES = {
   /* the news archive — a real page now, not a stub. Reached from the footer and
      from the Help Center, so no header item lights up. */
   'newsroom.html':               { active: null },
-  /* a User Guide article, reached from user-manuals.html and from the newsroom */
+  /* a User Guide article through build/article.js, the blog post's template, reached
+     from user-manuals.html and from the newsroom */
   'plagiarism-and-ai-check-report.html': { active: null },
-  /* the same guide through build/article.js, the blog post's template, built
-     alongside so the two approaches can be compared before either is retired */
-  'plagiarism-and-ai-check-report-v2.html': { active: null },
   /* the DEC-0043 institutional page — a real page now, not a stub */
-  'university-plagiarism-checker.html': { active: 'solutions' },
-  'university-plagiarism-checker-v2.html': { active: 'solutions', static: true },
+  'university-plagiarism-checker.html': { active: 'solutions', static: true },
   /* the Students page to the 2026-09-15 brief — the stub graduated */
-  /* static: on the shared production assets — the chrome without inline <style>/<script> (staticChrome) */
   'plagiarism-checker-for-students.html': { active: 'solutions', static: true },
   /* the Turnitin Alternative page to the 2026-09-15 brief — footer-only, so no active tab */
   'turnitin-checker-alternative.html': { active: null, static: true },
@@ -219,10 +207,9 @@ for (const file of found) {
   if (page.header !== false) after = swap(after, 'header', chrome(headerTpl, 'header'), file);
   after = swap(after, 'footer', chrome(footerTpl, 'footer'), file);
 
-  /* Idempotent: writes the switcher onto the paired pages and strips it from every
-     other, so removing a pair from version-switch.js cleans the widget out on the
-     next build rather than leaving it stranded on a retired page. */
-  after = vswitch.apply(after, file);
+  /* the v1/v2 review switcher is retired (2026-09-30); strip any copy a page still has */
+  { const a = after.indexOf('<!-- VSWITCH -->'); const b = after.indexOf('<!-- /VSWITCH -->');
+    if (a > -1 && b > a) after = after.slice(0, a).replace(/\n+$/, '\n') + after.slice(b + '<!-- /VSWITCH -->'.length).replace(/^\n+/, ''); }
 
   if (after !== before) {
     changed++;

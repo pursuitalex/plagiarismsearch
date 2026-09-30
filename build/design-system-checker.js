@@ -175,8 +175,8 @@ const balance = (id, need, checks, price) => `          <div class="qc-alert is-
 ${checks.map(([name, have]) => `                <span><strong>${name}:</strong> You have <b>${have}</b> words available. This content contains <b>${need}</b> words.</span>`).join('\n')}
               </span>
               <span class="qc-alert-foot">
-                <span>Please reduce the text or <a href="prices-v2.html">top up your balance</a> to continue.</span>
-                <a href="prices-v2.html" class="qc-buy">Buy extra words <span class="qc-buy-price">${price}</span></a>
+                <span>Please reduce the text or <a href="prices.html">top up your balance</a> to continue.</span>
+                <a href="prices.html" class="qc-buy">Buy extra words <span class="qc-buy-price">${price}</span></a>
               </span>
             </div>
           </div>\n`;
@@ -410,7 +410,7 @@ const STATES = [
     about: 'If the report does not open by itself, the card says it is ready and links to it — the AI Detector’s completed state, in this form.',
     rules: [['Shows', 'role="status" line under the button row']],
     form: id => variant(id, { field: ids => field(ids, 86),
-      end: `          <p class="qc-status is-done" role="status">${svg(P.check, 15, 2)}Your report is ready. <a href="plagiarism-and-ai-check-report-v2.html">Open report</a></p>\n` }) },
+      end: `          <p class="qc-status is-done" role="status">${svg(P.check, 15, 2)}Your report is ready. <a href="plagiarism-and-ai-check-report.html">Open report</a></p>\n` }) },
 ];
 
 /* ── section markup ──────────────────────────────────────────────────────────── */

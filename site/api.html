@@ -5,302 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>PlagiarismSearch — Plagiarism API</title>
+<meta name="description" content="Integrate plagiarism checking into your product with the PlagiarismSearch API. Send text, files, or URLs, configure search sources, and receive a webhook when the report is ready." />
+<link rel="canonical" href="https://plagiarismsearch.com/plagiarism-api" />
+<title>Plagiarism Checker API &amp; Integration | PlagiarismSearch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Manrope', 'system-ui', 'sans-serif'],
-        serif: ['Newsreader', 'Georgia', 'serif'],
-      },
-      colors: {
-        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
-        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
-        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
-        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
-      },
-      letterSpacing: { tightest: '-0.035em' },
-      boxShadow: {
-        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
-        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
-        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
-      },
-      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
-    }
-  }
-}
-</script>
-<style>
-  /* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
-     disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
-     grain sheet and the header render 150px wider than the page and open a white gutter that
-     no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
-     creates no scroll container, so position:sticky in the scan scene keeps working. */
-  html { background:#fff; overflow-x: clip; }
-  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-  ::selection { background:#F36F5A; color:#fff; }
-  .nums { font-variant-numeric: tabular-nums; }
-
-  /* ---------- grain overlay ---------- */
-  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size:256px 256px; }
-
-  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
-  .orb { position:absolute; border-radius:9999px; pointer-events:none;
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
-    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
-
-  /* ---------- reveal (transform/opacity only) ---------- */
-  .rv { opacity:0; transform:translateY(40px); }
-  .no-motion .rv { opacity:1 !important; transform:none !important; }
-
-  /* ---------- shared micro-interactions ---------- */
-  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
-  .btn-press:active { transform:scale(.97); }
-  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
-  .group:hover .icon-orb svg { transform:rotate(-45deg); }
-
-
-  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-
-  /* ---------- lift cards ---------- */
-  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
-  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
-  @media (prefers-reduced-motion: reduce) { .hc-card { transition:none; } .hc-card:hover { transform:none; } }
-
-  /* ---------- pulse dot ---------- */
-  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
-  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
-  .no-motion .pulse-dot { animation:none; }
-
-  /* ---------- spotlight: the bento hover from the home page ---------- */
-  .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
-  .spotlight:hover { transform:translateY(-4px); }
-  @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
-
-  /* ---------- price matrix ---------- */
-  .pm-row { transition:background-color .15s ease; }
-  .pm-row:hover { background:#F2FAFB; }
-  .pm-best { position:relative; }
-  .pm-best::after { content:''; position:absolute; inset:0; border:1.5px solid #2CC3DB;
-    border-radius:14px; pointer-events:none; }
-
-  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
-    clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-
-
-
-  /* stepper: buttons sit inside the field, matching the VIP trial control */
-
-
-
-  /* ---------- island nav dropdowns ---------- */
-  .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
-  .nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
-  .nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
-    transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
-  .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
-  @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
-
-  /* ---------- lift cards (same recipe as the help-center category tiles) ---------- */
-  .hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
-  .hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
-  @media (prefers-reduced-motion: reduce) { .hc-card { transition:none; } .hc-card:hover { transform:none; } }
-
-  /* ---------- pulse dot (bot status) ---------- */
-  @keyframes hc-pulse { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.72); opacity:.5; } }
-  .pulse-dot { animation:hc-pulse 2.4s ease-in-out infinite; }
-  .no-motion .pulse-dot { animation:none; }
-
-
-  /* one measured value in a result column */
-
-  /* the locked column — real product feature, not computable in the browser */
-
-  /* ---------- code panel ---------- */
-  .code { font:12.5px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-    color:#C8D3E0; white-space:pre; overflow-x:auto; }
-  .code .k  { color:#8FD3E8; }              /* key */
-  .code .s  { color:#9FE3C0; }              /* string */
-  .code .n  { color:#F8A392; }              /* number */
-  .code .c  { color:#5A6474; }              /* comment / punctuation */
-  .code .m  { color:#F3B45A; font-weight:700; }  /* method */
-  .code::-webkit-scrollbar { height:6px; }
-  .code::-webkit-scrollbar-thumb { background:#2A303C; border-radius:9999px; }
-
-  .tab { font-size:11.5px; font-weight:700; letter-spacing:.04em; padding:5px 11px;
-    border-radius:9999px; color:#7E8899; }
-  .tab.on { background:rgba(255,255,255,.08); color:#E7EAF0; }
-
-  /* ---------- form ---------- */
-  .fld { width:100%; height:46px; padding:0 14px; border-radius:12px; border:1px solid #E5E7EB;
-    background:#fff; font:inherit; font-size:14.5px; font-weight:500; color:#111827;
-    transition:border-color .15s ease, box-shadow .15s ease; }
-  .fld::placeholder { color:#9CA3AF; font-weight:400; }
-  .fld:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
-  textarea.fld { height:auto; padding:12px 14px; resize:vertical; min-height:112px; line-height:1.6; }
-
-  /* stepper: buttons sit inside the field (same control as the VIP trial form) */
-  .stepper { display:flex; align-items:center; height:46px; border-radius:12px;
-    border:1px solid #E5E7EB; background:#fff; overflow:hidden;
-    transition:border-color .15s ease, box-shadow .15s ease; }
-  .stepper:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
-  .stepper button { width:38px; height:100%; flex:none; font-size:17px; font-weight:700;
-    color:#6B7280; background:none; border:0; cursor:pointer;
-    transition:color .15s ease, background-color .15s ease; }
-  .stepper button:hover { color:#111827; background:#F1F2F6; }
-  .stepper input { flex:1; min-width:0; height:100%; border:0; outline:none; text-align:center;
-    font:inherit; font-size:14.5px; font-weight:700; color:#111827; -moz-appearance:textfield; }
-  .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button {
-    -webkit-appearance:none; margin:0; }
-
-  /* ---------- report mock: highlight + legend, same colour coding as the product report ---------- */
-  .hl { background-repeat:no-repeat; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
-        box-decoration-break:clone; -webkit-box-decoration-break:clone; }
-  .hl-long    { background-image:linear-gradient(rgba(243,111,90,.16), rgba(243,111,90,.16)); color:#B84431; font-weight:600; }
-  .hl-passive { background-image:linear-gradient(rgba(154,106,222,.18), rgba(154,106,222,.18)); color:#6D3FB0; font-weight:600; }
-  .hl-term    { background-image:linear-gradient(rgba(12,169,195,.14), rgba(12,169,195,.14)); color:#06748A; font-weight:600; }
-
-  /* metric row inside the report panel */
-  .mt-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:6px; }
-  .mt-bar { height:6px; border-radius:9999px; background:#F1F2F6; overflow:hidden; }
-  .mt-bar i { display:block; height:100%; border-radius:9999px; }
-
-  /* ================= CONTROLS · checkbox, radio, groups =================
-     The native box is replaced, not hidden: appearance:none keeps the real input
-     in the layout, so the label, keyboard focus and :checked state all still work. */
-  .ck, .rd { appearance:none; -webkit-appearance:none; flex:none; margin:0;
-    width:18px; height:18px; border:1.5px solid #D1D5DB; background-color:#fff; cursor:pointer;
-    background-repeat:no-repeat; background-position:center;
-    transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }
-  .ck { border-radius:5px; }
-  .rd { border-radius:50%; }
-  .ck:hover, .rd:hover { border-color:#9CA3AF; }
-  .ck:checked { background-color:#0991A8; border-color:#0991A8;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-9'/%3E%3C/svg%3E"); background-size:12px 12px; }
-  .rd:checked { background-color:#0991A8; border-color:#0991A8;
-    background-image:radial-gradient(circle at center, #fff 0 3px, transparent 3.5px); }
-  .ck:focus-visible, .rd:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(12,169,195,.28); }
-  .ck[disabled], .rd[disabled] { background-color:#F1F2F6; border-color:#E5E7EB; cursor:not-allowed; }
-  .ck[disabled]:checked, .rd[disabled]:checked { background-color:#D1D5DB; border-color:#D1D5DB; }
-
-  /* the clickable row — the whole label is the hit area, not just the 18px box */
-  .ctl { display:flex; align-items:center; gap:10px; cursor:pointer;
-    font-size:14px; font-weight:500; color:#374151; }
-  .ctl.ctl-top { align-items:flex-start; }
-  .ctl.ctl-top .ck, .ctl.ctl-top .rd { margin-top:1px; }
-  .ctl:has(input[disabled]) { cursor:not-allowed; color:#9CA3AF; }
-
-  /* quiet group — a plain list of options */
-  .ctl-group { display:flex; flex-direction:column; gap:2px; }
-  .ctl-group > .ctl { padding:8px 10px; border-radius:10px; transition:background-color .15s ease; }
-  .ctl-group > .ctl:hover { background:#F8F9FB; }
-
-  /* boxed group — for a prominent either/or, where the option itself is the target */
-  .ctl-group-boxed { display:flex; flex-direction:column; gap:8px; }
-  .ctl-group-boxed > .ctl { padding:14px 16px; border-radius:12px; border:1px solid #E5E7EB;
-    background:#fff; transition:border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
-  .ctl-group-boxed > .ctl:hover { border-color:#D1D5DB; }
-  .ctl-group-boxed > .ctl:has(input:checked) { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; background:#F8FDFE; }
-
-  /* chipset — compact single-choice pills; radio semantics, no visible box */
-  .chipset { display:flex; flex-wrap:wrap; gap:8px; }
-  .chip-opt { position:relative; display:inline-flex; cursor:pointer; }
-  .chip-opt input { position:absolute; opacity:0; width:0; height:0; }
-  .chip-opt span { display:inline-flex; align-items:center; height:32px; padding:0 12px;
-    border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12px; font-weight:600;
-    transition:background-color .2s ease, color .2s ease, box-shadow .15s ease; }
-  .chip-opt:hover span { background:#E5E7EB; color:#111827; }
-  .chip-opt input:checked + span { background:#0A0E1A; color:#fff; }
-  .chip-opt input:focus-visible + span { box-shadow:0 0 0 3px rgba(12,169,195,.35); }
-  .chip-opt input[disabled] + span { background:#F8F9FB; color:#D1D5DB; cursor:not-allowed; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ck, .rd, .ctl-group > .ctl, .ctl-group-boxed > .ctl, .chip-opt span { transition:none; }
-  }
-
-  /* ---------- step rail: joins the numbered badges so the sequence reads ---------- */
-  .rail > li { position:relative; }
-  .rail > li:not(:last-child)::before {
-    content:''; position:absolute; left:38px; top:56px; bottom:-12px; width:2px;
-    background:#E5E7EB; border-radius:9999px; }
-  .rail > li > :first-child { position:relative; z-index:1; }
-
-  /* ---------- header below lg: burger + panel ---------- */
-  .nav-burger-close { display:none; }
-  #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
-  #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
-
-  .nav-panel { position:absolute; left:1rem; right:1rem; top:100%;
-    opacity:0; visibility:hidden; transform:translateY(-8px);
-    transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
-  .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
-  @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
-
-
-  /* ---------- controls on phones ----------
-     These sizes are declared in CSS rather than as utility classes, so they need
-     their own breakpoint. Field heights come down with the text so the controls
-     keep their proportions instead of turning into tall boxes with small labels. */
-  @media (max-width: 639px) {
-    .qc-area, .rc-area, .sp-area { font-size: 14px; }
-    .fld, .cf-field { height: 44px; font-size: 14px; }
-    textarea.fld { height: auto; }
-    .stepper { height: 44px; }
-    .stepper input { font-size: 14px; }
-    .stepper button { width: 34px; font-size: 16px; }
-    .pa-select { height: 40px; font-size: 13px; }
-    .pa-step { height: 40px; }
-    .pa-step input { font-size: 13px; }
-    .pa-step button { width: 32px; font-size: 15px; }
-    .sp-select { height: 36px; font-size: 12px; }
-    .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
-    .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
-    .rc-stat b { font-size: 17px; }
-    .sp-row { font-size: 12px; }
-    .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
-    .cf-label { font-size: 11.5px; }
-    .ctl { font-size: 13.5px; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/tailwind.css">
+<script>(function (h) {h.classList.add('js');if (!matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('js-motion');setTimeout(function () { if (!window.PS_READY) h.classList.remove('js', 'js-motion'); }, 3500);})(document.documentElement);</script>
+<script defer src="/assets/vendor/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="/assets/vendor/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="/assets/js/site.js"></script>
 </head>
 <body class="font-sans text-ink-900 bg-white">
-
 <div class="grain"></div>
 
-<!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
-<header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
+<header data-site-header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
   <!-- On phones the bar starts as the floating pill every other width has, and DOCKS once
        the page scrolls: flush to the top edge, no side gutters, square corners. One
        class, toggled by the script at the foot of this element; nothing changes from sm
        up. The transition is on the three properties that move and respects reduced
        motion. -->
-  <style>
-    .site-header { transition: top .28s cubic-bezier(.32,.72,0,1), padding .28s cubic-bezier(.32,.72,0,1); }
-    .site-header .site-nav { transition: border-radius .28s cubic-bezier(.32,.72,0,1), box-shadow .28s ease, background-color .28s ease; }
-    @media (max-width: 639px) {
-      .site-header.is-docked { top: 0; padding-left: 0; padding-right: 0; }
-      .site-header.is-docked .site-nav { border-radius: 0; background-color: rgba(255,255,255,.94);
-        box-shadow: 0 1px 0 rgba(17,24,39,.07), 0 8px 24px -16px rgba(17,24,39,.18); }
-      .site-header.is-docked #navPanel { margin-left: .75rem; margin-right: .75rem; }
-    }
-    @media (prefers-reduced-motion: reduce) { .site-header, .site-header .site-nav { transition: none; } }
-  </style>
   <div class="flex justify-center">
   <nav class="site-nav pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
     <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-5 xl:pr-6">
       <!-- the mark alone on phones, so Sign in and Check free fit beside it -->
-      <img src="assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
-      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
+      <img src="/assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
+      <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
     </a>
     <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
       <div class="nav-item relative">
@@ -362,7 +94,7 @@ tailwind.config = {
       </div>
       <a href="account.html" class="btn-press inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
       <a href="index.html#top" class="btn-press inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5">Check free</a>
-      <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+      <button type="button" data-nav-burger class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
         <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
         <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
       </button>
@@ -370,7 +102,7 @@ tailwind.config = {
   </nav>
   </div>
 
-  <div id="navPanel" class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
+  <div id="navPanel" data-nav-panel class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
     <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Core</div>
       <a href="index.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
@@ -404,424 +136,764 @@ tailwind.config = {
       </div>
     </div>
   </div>
-  <script>
-    (() => {
-      const h = document.currentScript.closest('.site-header');
-      if (!h) return;
-      const dock = () => h.classList.toggle('is-docked', scrollY > 8);
-      addEventListener('scroll', dock, { passive: true });
-      dock();
-    })();
-  </script>
 </header>
 
+<main>
+  <!-- ================= 01 · PRODUCT HERO / REAL API EVIDENCE =================
+       "Show the integration, not just promise that it is easy." The code is the proof,
+       so it sits beside the proposition rather than below the fold.
 
+       DOM order is fixed by the brief for below 1024: category, H1, copy, CTAs, proof
+       rail, code panel. That is the source order here, and the split is done with a grid
+       at lg — so the code never precedes the H1 in reading order at any width.
 
+       Every character in the tabs is the brief's. The Authorization line is the
+       developer-supplied example and stays until the preferred literal is given. -->
+  <section id="plagiarism-api" data-component="hero-code" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+    <div class="orb absolute orb-hero-teal"></div>
+    <div class="orb absolute orb-hero-coral"></div>
 
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[1fr_1.08fr] gap-10 lg:gap-14 items-center">
 
-
-
-<!-- ================= 01 · HERO ================= -->
-<section class="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F2FCFC]">
-  <div class="orb w-[640px] h-[640px] bg-orange-500/10 -left-52 -top-40"></div>
-  <div class="orb w-[560px] h-[560px] bg-teal-500/10 right-[-160px] top-48"></div>
-
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 grid lg:grid-cols-[.92fr_1.08fr] gap-10 sm:gap-14 lg:gap-16 items-center">
-    <div>
-      <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">API</span>
-      </div>
-      <h1 class="rv text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 lg:mb-5">
-        Integrated API-based
-        <span class="pen-word relative inline-block">plagiarism<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 180 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c48-7 122-7 174-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span>
-        checking system
-      </h1>
-      <p class="rv text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed max-w-[48ch] mb-4 lg:mb-5">
-        Have you been searching for some way to make the detection of plagiarism an automated
-        process? Our company offers an integrated API that should satisfy this requirement.
-      </p>
-      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed max-w-[48ch] mb-6 sm:mb-7 lg:mb-8">
-        The PlagiarismSearch system works effectively with any application and can easily be
-        integrated with your apps in less than 24 hours.
-      </p>
-
-      <div class="rv flex flex-wrap gap-3 mb-6 sm:mb-7 lg:mb-8">
-        <a href="#quote" class="btn-press group inline-flex items-center gap-2.5 rounded-full h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 text-[14px] sm:text-[15px] bg-orange-500 hover:bg-orange-600 transition-colors duration-300 text-white font-semibold">
-          Get it now
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a>
-        <a href="#steps" class="btn-press inline-flex items-center gap-2.5 rounded-full h-12 sm:h-14 px-5 sm:px-6 lg:px-7 text-[14px] sm:text-[15px] ring-1 ring-black/10 text-ink-900 font-semibold hover:bg-ink-900/5 transition-colors duration-300">
-          How to get it
-        </a>
-      </div>
-
-      <div class="rv flex flex-wrap items-center gap-x-4 sm:gap-x-5 lg:gap-x-6 gap-y-3">
-        <span class="flex items-baseline gap-1.5">
-          <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="24" data-suffix="h">0</span>
-          <span class="text-[12px] font-semibold text-ink-500">to integrate</span>
-        </span>
-        <span class="w-1 h-1 rounded-full bg-ink-200"></span>
-        <span class="flex items-baseline gap-1.5">
-          <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="14" data-suffix="B">0</span>
-          <span class="text-[12px] font-semibold text-ink-500">pages indexed</span>
-        </span>
-        <span class="w-1 h-1 rounded-full bg-ink-200"></span>
-        <span class="flex items-baseline gap-1.5">
-          <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="17" data-suffix="">0</span>
-          <span class="text-[12px] font-semibold text-ink-500">languages</span>
-        </span>
-      </div>
-    </div>
-
-    <!-- code panel — illustrative shape of a call, not published documentation -->
-    <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse-lg">
-      <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-ink-950 overflow-hidden">
-        <div class="flex items-center gap-2 px-4 lg:px-5 py-3.5 border-b border-white/10">
-          <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></span>
-          <span class="ml-3 flex gap-1">
-            <span class="tab on">Request</span>
-            <span class="tab">Response</span>
-          </span>
-          <span class="ml-auto text-[10px] font-bold tracking-widest text-white/30">EXAMPLE</span>
+        <div class="rv">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">REST API</span>
         </div>
+          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">Plagiarism Checker <span class="pen-word relative inline-block">API<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 54 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c14-7 36-7 48-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
+          <p class="text-[14.5px] sm:text-[15.5px] lg:text-[16px] leading-relaxed text-ink-600 max-w-[58ch] mb-7 lg:mb-8">Embed plagiarism checking into your product or workflow. Send text, documents, or public URLs, choose the search sources and scan settings you need, and receive a webhook when the report is ready.</p>
 
-        <div class="px-4 lg:px-5 py-4 lg:py-5 border-b border-white/[.07]">
-<div class="code"><span class="m">POST</span> /api/v1/reports
-<span class="c">Authorization:</span> <span class="s">Bearer &lt;your-token&gt;</span>
-<span class="c">Content-Type:</span> <span class="s">application/json</span>
-
-<span class="c">{</span>
-  <span class="k">"title"</span><span class="c">:</span>     <span class="s">"Thesis chapter 4"</span><span class="c">,</span>
-  <span class="k">"text"</span><span class="c">:</span>      <span class="s">"The economic implications of…"</span><span class="c">,</span>
-  <span class="k">"callback"</span><span class="c">:</span>  <span class="s">"https://yourapp.edu/hooks/ps"</span>
-<span class="c">}</span></div>
-        </div>
-
-        <div class="px-4 lg:px-5 py-4 lg:py-5">
-<div class="code"><span class="c">201 Created</span>
-
-<span class="c">{</span>
-  <span class="k">"id"</span><span class="c">:</span>          <span class="n">4821907</span><span class="c">,</span>
-  <span class="k">"status"</span><span class="c">:</span>      <span class="s">"processing"</span><span class="c">,</span>
-  <span class="k">"plagiarism"</span><span class="c">:</span>  <span class="n">null</span><span class="c">,</span>
-  <span class="k">"report_url"</span><span class="c">:</span>  <span class="s">"https://plagiarismsearch.com/r/4821907"</span>
-<span class="c">}</span></div>
-        </div>
-
-        <div class="flex items-center gap-3 px-4 lg:px-5 py-3.5 border-t border-white/10">
-          <span class="w-1.5 h-1.5 rounded-full bg-mint-400 pulse-dot"></span>
-          <span class="text-[11.5px] font-medium text-white/50">Results arrive on your callback when the scan completes</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 02 · WHO IT SUITS ================= -->
-<section class="relative py-16 sm:py-24 lg:py-32 bg-white">
-  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="rv text-center max-w-[660px] mx-auto mb-8 sm:mb-11 lg:mb-14">
-      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Quick overview</span>
-      </div>
-      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Built for heavy demand</h2>
-      <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed">
-        Our API is perfect for any organization where there is heavy demand in terms of users and the
-        amount of texts that need to be tested for plagiarism. You can integrate our system with any
-        applications you use.
-      </p>
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-[1080px] mx-auto">
-      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7">
-        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center mb-4 lg:mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 22v-4a2 2 0 1 0-4 0v4"/><path d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10"/><path d="M18 5v17"/><path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6"/><path d="M6 5v17"/><circle cx="12" cy="9" r="2"/></svg></span>
-        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight">Schools</h3>
-      </div>
-      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7">
-        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 lg:mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
-        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight">Universities</h3>
-      </div>
-      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7">
-        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-100 items-center justify-center mb-4 lg:mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
-        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight">Colleges</h3>
-      </div>
-      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-7">
-        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-4 lg:mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg></span>
-        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight">Publishing businesses</h3>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 03 · KEY FEATURES ================= -->
-<section class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
-  <div class="orb w-[600px] h-[600px] bg-orange-500/8 -left-40 top-20"></div>
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="rv text-center max-w-[620px] mx-auto mb-8 sm:mb-11 lg:mb-14">
-      <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Key features</span>
-      </div>
-      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Key features of our API and documentation</h2>
-    </div>
-
-    <!-- bento: the lead card carries the integration options, the rest sit around it -->
-    <div class="grid lg:grid-cols-5 gap-4 lg:gap-5 max-w-[1080px] mx-auto">
-
-      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
-        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-8 lg:p-9 h-full">
-          <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center mb-4 sm:mb-5 lg:mb-6"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg></span>
-          <h3 class="text-[20px] sm:text-[22px] lg:text-[24px] font-bold tracking-tight mb-3">Various integration methods</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[50ch] mb-5 sm:mb-6 lg:mb-7">
-            Which option fits depends on the customer&rsquo;s own systems &mdash; so the integration path is
-            chosen around what you already run, not the other way round.
-          </p>
-          <div class="flex flex-wrap gap-2">
-            <span class="rounded-full bg-ink-50 px-3.5 py-2 text-[12px] font-semibold text-ink-600">REST</span>
-            <span class="rounded-full bg-ink-50 px-3.5 py-2 text-[12px] font-semibold text-ink-600">Callbacks</span>
-            <span class="rounded-full bg-ink-50 px-3.5 py-2 text-[12px] font-semibold text-ink-600">Batch submission</span>
-            <span class="rounded-full bg-ink-50 px-3.5 py-2 text-[12px] font-semibold text-ink-600">Moodle plugin</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rv lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
-        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8 h-full">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 lg:mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg></span>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Extended functionality</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Everything the web product does, reachable from your own application.</p>
-        </div>
-      </div>
-
-      <div class="rv lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
-        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8 h-full">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-100 items-center justify-center mb-4 lg:mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Administration and management tools</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">A complete set, including the ability to control individual elements.</p>
-        </div>
-      </div>
-
-      <div class="rv lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
-        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-6 lg:p-8 h-full flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5 lg:gap-6">
-          <div class="min-w-0">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-4 lg:mb-5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877L2.702 13.83A2.404 2.404 0 0 1 1.996 12.126c0-.617.235-1.233.706-1.704L4.312 8.812c.23-.23.556-.338.877-.29.493.074.84.504 1.02.968a2.5 2.5 0 1 0 3.237-3.237c-.464-.18-.894-.527-.967-1.02a1.026 1.026 0 0 1 .289-.877l1.611-1.611A2.404 2.404 0 0 1 12.083 2.04c.617 0 1.234.235 1.704.706l1.568 1.568c.23.23.556.338.878.29.493-.074.84-.504 1.02-.968"/></svg></span>
-            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Ready-to-use Moodle plugin</h3>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Drop it into an existing Moodle install &mdash; no integration work needed.</p>
-          </div>
-          <span class="shrink-0 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 px-4 lg:px-5 py-4 text-center">
-            <span class="block text-[11px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-1">Setup</span>
-            <span class="block text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tightest nums">&lt; 24h</span>
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed max-w-[64ch] mx-auto text-center mt-8 sm:mt-10 lg:mt-12">
-      In many cases, the customers most interested in integrating our API have access to people who are
-      technically competent. But there is no need to be frightened by the technical documentation if you
-      do not have much technical expertise &mdash; it was created for IT experts, and our team will walk you
-      through it.
-    </p>
-  </div>
-</section>
-
-<!-- ================= 04 · HOW TO GET IT ================= -->
-<section id="steps" class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <!-- photo LEFT — the only photo on the page -->
-    <div class="grid lg:grid-cols-[1.02fr_.98fr] gap-10 sm:gap-14 lg:gap-16 items-center">
-
-      <div class="rv lg:order-1 relative">
-        <img src="assets/img/api/developer.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse">
-        <div class="hidden lg:block absolute -right-9 bottom-9 w-[44%] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white shadow-diffuse-lg px-4 lg:px-5 py-4">
-          <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">Integration</div>
-          <div class="flex items-end gap-2 mb-1.5">
-            <span class="text-[24px] sm:text-[26px] lg:text-[30px] font-extrabold tracking-tightest leading-none nums text-ink-900">&lt;24</span>
-            <span class="text-[13px] font-bold text-ink-400 pb-1">hours</span>
-          </div>
-          <div class="text-[11.5px] font-semibold text-ink-500">with our team on hand</div>
-        </div>
-      </div>
-
-      <div class="lg:order-2">
-        <div class="rv inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-mint-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Four steps</span>
-        </div>
-        <h2 class="rv text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-6 sm:mb-7 lg:mb-8">Here are the steps to get our plagiarism detection API</h2>
-
-        <ol class="rail space-y-3">
-      <li class="rv flex gap-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-50 p-4 lg:p-5">
-        <span class="flex items-center justify-center w-10 h-10 shrink-0 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
-        <span class="min-w-0 pt-0.5">
-          <span class="flex items-baseline gap-2 mb-1">
-            <span class="text-[11px] font-extrabold nums text-orange-600">1</span>
-            <span class="text-[15.5px] font-bold tracking-tight">Contact us</span>
-          </span>
-          <span class="block text-[13.5px] leading-relaxed text-ink-600">Write to <a href="mailto:services@plagiarismsearch.com" class="font-semibold text-teal-700 hover:text-teal-800 transition-colors">services@plagiarismsearch.com</a> for detailed information.</span>
-        </span>
-      </li>
-      <li class="rv flex gap-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-50 p-4 lg:p-5">
-        <span class="flex items-center justify-center w-10 h-10 shrink-0 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M9 15h6"/></svg></span>
-        <span class="min-w-0 pt-0.5">
-          <span class="flex items-baseline gap-2 mb-1">
-            <span class="text-[11px] font-extrabold nums text-orange-600">2</span>
-            <span class="text-[15.5px] font-bold tracking-tight">Describe your requirements</span>
-          </span>
-          <span class="block text-[13.5px] leading-relaxed text-ink-600">Tell us what your organization needs and we will provide a quote.</span>
-        </span>
-      </li>
-      <li class="rv flex gap-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-50 p-4 lg:p-5">
-        <span class="flex items-center justify-center w-10 h-10 shrink-0 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></span>
-        <span class="min-w-0 pt-0.5">
-          <span class="flex items-baseline gap-2 mb-1">
-            <span class="text-[11px] font-extrabold nums text-orange-600">3</span>
-            <span class="text-[15.5px] font-bold tracking-tight">Receive and integrate</span>
-          </span>
-          <span class="block text-[13.5px] leading-relaxed text-ink-600">Take the API and connect it to your systems &mdash; usually in under a day.</span>
-        </span>
-      </li>
-      <li class="rv flex gap-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-50 p-4 lg:p-5">
-        <span class="flex items-center justify-center w-10 h-10 shrink-0 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span>
-        <span class="min-w-0 pt-0.5">
-          <span class="flex items-baseline gap-2 mb-1">
-            <span class="text-[11px] font-extrabold nums text-orange-600">4</span>
-            <span class="text-[15.5px] font-bold tracking-tight">Stay in touch</span>
-          </span>
-          <span class="block text-[13.5px] leading-relaxed text-ink-600">Keep up with updates, and reach us whenever something needs a hand.</span>
-        </span>
-      </li>
-        </ol>
-
-        <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] font-semibold text-ink-700 mt-5 sm:mt-6 lg:mt-7">We will ensure you get instant help and a comprehensive response.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 05 · FREE TRIAL ================= -->
-<section class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
-  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-ink-950 text-white p-1.5 sm:p-2 ring-1 ring-white/10 shadow-diffuse-lg overflow-hidden">
-      <div class="relative rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] p-5 sm:p-8 lg:p-14 grid lg:grid-cols-[1.1fr_.9fr] gap-8 sm:gap-9 lg:gap-10 items-center overflow-hidden">
-        <div class="orb w-[420px] h-[420px] bg-teal-500/15 -right-24 -top-40"></div>
-        <div class="relative">
-          <div class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] text-teal-300 mb-3">FREE TRIAL</div>
-          <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-4">Test PlagiarismSearch for free</h2>
-          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-white/60 leading-relaxed max-w-[44ch]">
-            You want to get started now? Go ahead &mdash; register and receive free credits to test our API.
-          </p>
-        </div>
-        <div class="relative flex lg:justify-end">
-          <a href="#quote" class="btn-press group inline-flex items-center gap-2.5 rounded-full h-12 sm:h-14 bg-white text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-7 pr-2.5">
-            Start the free trial
-            <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/5 flex items-center justify-center">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </span>
+          <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-9 lg:mb-11">
+            <a href="https://plagiarismsearch.com/docs/" rel="noopener" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            View API documentation
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
+            <a href="#api-access" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">Request API access</a>
+          </div>
+
+          <!-- technical proof rail: each item one element, in reading order -->
+          <div class="grid sm:grid-cols-3 gap-4 sm:gap-5 pt-7 lg:pt-8 border-t border-ink-900/10">
+            <div>
+              <p class="text-[13.5px] font-bold tracking-tight mb-1">REST API</p>
+              <p class="text-[12.5px] leading-relaxed text-ink-500">Build plagiarism checking into your own application.</p>
+            </div>
+            <div>
+              <p class="text-[13.5px] font-bold tracking-tight mb-1">Text, files &amp; URLs</p>
+              <p class="text-[12.5px] leading-relaxed text-ink-500">Submit the content format your workflow already uses.</p>
+            </div>
+            <div>
+              <p class="text-[13.5px] font-bold tracking-tight mb-1">Asynchronous webhooks</p>
+              <p class="text-[12.5px] leading-relaxed text-ink-500">Receive a callback when the report has finished processing.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- min-w-0 is load-bearing. A grid item defaults to min-width:auto, so it refuses
+             to shrink below its content's min-content width — and a <pre> with
+             white-space:pre has an enormous one. Without this the panel measured 547px
+             inside a 375px viewport and the section's overflow-hidden CLIPPED the long
+             lines instead of letting .code-pre scroll them, which is exactly the
+             "changing code semantics" the brief rules out. -->
+        <div class="rv min-w-0">
+          <div data-code data-surface="dark" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 shadow-diffuse-lg overflow-hidden">
+            <div class="flex items-center gap-1 px-3 sm:px-4 pt-3 sm:pt-4 pb-0">
+              <button type="button" class="code-tab on" data-tab="Request" aria-current="true" aria-controls="plagiarism-api-panel-Request">Request</button>
+              <button type="button" class="code-tab" data-tab="Response" aria-current="false" aria-controls="plagiarism-api-panel-Response">Response</button>
+              <button type="button" class="code-tab" data-tab="Webhook" aria-current="false" aria-controls="plagiarism-api-panel-Webhook">Webhook</button>
+              <button type="button" class="code-copy ml-auto" data-copy aria-label="Copy the code sample">Copy</button>
+            </div>
+            <div class="code-panel on" data-panel="Request" id="plagiarism-api-panel-Request">
+              <pre class="code-pre"><code>curl -X POST \
+  'https://plagiarismsearch.com/api/v3/reports/create' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: your:authorization_token_123' \
+  -d '{
+    "callback_url": "https://your.app/plagiarismsearch/web-hook?id=100500",
+    "text": "Text to check for plagiarism."
+  }'</code></pre>
+
+            </div>
+            <div class="code-panel" data-panel="Response" id="plagiarism-api-panel-Response">
+              <pre class="code-pre"><code>{
+  "status": true,
+  "version": "3.1.0",
+  "code": 202,
+  "data": {
+    "id": 100500,
+    "progress": 0.58,
+    "status": 1,
+    "status_label": "processing"
+  }
+}</code></pre>
+              <p class="px-4 sm:px-5 lg:px-6 pb-4 text-[12px] leading-relaxed text-white/50">The API accepts the report and returns its ID while processing continues asynchronously.</p>
+            </div>
+            <div class="code-panel" data-panel="Webhook" id="plagiarism-api-panel-Webhook">
+              <pre class="code-pre"><code>curl -X POST \
+  'https://your.app/plagiarismsearch/web-hook?id=100500' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "event": "report.checked",
+    "id": 100500,
+    "plagiarism": 20.20,
+    "status": 2,
+    "status_label": "checked",
+    "checked_words": 540,
+    "words": 628,
+    "links": {
+      "self": "https://plagiarismsearch.com/api/v3/reports/100500"
+    }
+  }'</code></pre>
+              <p class="px-4 sm:px-5 lg:px-6 pb-4 text-[12px] leading-relaxed text-white/50">When the check is complete, PlagiarismSearch sends a report.checked event to the callback URL supplied with the request.</p>
+            </div>
+            <div class="px-4 sm:px-5 lg:px-6 py-3.5 border-t border-white/10">
+              <a href="https://plagiarismsearch.com/docs/" rel="noopener" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-white/70 hover:text-white decoration-white/30 underline underline-offset-4 transition-colors duration-300">View the full API reference</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= 06 · GET A QUOTE ================= -->
-<section id="quote" class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
-  <div class="orb w-[560px] h-[560px] bg-teal-500/8 -left-44 bottom-[-200px]"></div>
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="grid lg:grid-cols-[400px_1fr] gap-10 sm:gap-12 lg:gap-14 items-start">
-
-      <div class="rv lg:sticky lg:top-32">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+  <!-- ================= 02 · INPUTS =================
+       Exactly three concepts, each with the encoding that actually applies. No file
+       list: "Do not publish an exhaustive file-extension/size list until the current
+       API-specific allow-list and limits are confirmed." -->
+  <section id="api-inputs" data-component="input-grid" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[760px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
           <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Get a quote</span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Inputs</span>
         </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Get your quote now</h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed mb-5 sm:mb-6 lg:mb-7">
-          Tell us roughly how much you check and we will come back with a price. Prefer email?
-          <a href="mailto:services@plagiarismsearch.com" class="font-semibold text-teal-700 hover:text-teal-800 transition-colors">services@plagiarismsearch.com</a>
-        </p>
-        <div class="flex items-center gap-3 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 px-4 lg:px-5 py-4">
-          <span class="w-2 h-2 rounded-full bg-mint-500 pulse-dot shrink-0"></span>
-          <span class="text-[13.5px] font-semibold text-ink-700">We&rsquo;ll call you back in a few minutes</span>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Send text, documents, or public URLs</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Use the input method that fits the content already available in your system. Standard text and URL requests can use JSON, while document uploads use multipart form data.</p>
+      </div>
+
+      <div class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7 flex flex-col">
+          <div class="flex items-center justify-between gap-3 mb-4">
+            <span class="w-11 h-11 rounded-xl bg-white flex items-center justify-center ring-1 ring-black/5">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/></svg>
+            </span>
+            <span class="inline-flex items-center rounded-full bg-white ring-1 ring-black/5 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-ink-600">JSON</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2">Text</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Send text directly in a JSON request when the content already exists inside your product or workflow.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7 flex flex-col">
+          <div class="flex items-center justify-between gap-3 mb-4">
+            <span class="w-11 h-11 rounded-xl bg-white flex items-center justify-center ring-1 ring-black/5">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+            </span>
+            <span class="inline-flex items-center rounded-full bg-white ring-1 ring-black/5 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-ink-600">Multipart upload</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2">Documents</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Upload a supported document with multipart form data when the content you need to check is stored as a file.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7 flex flex-col">
+          <div class="flex items-center justify-between gap-3 mb-4">
+            <span class="w-11 h-11 rounded-xl bg-white flex items-center justify-center ring-1 ring-black/5">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>
+            </span>
+            <span class="inline-flex items-center rounded-full bg-white ring-1 ring-black/5 px-2.5 py-1 text-[11px] font-semibold tracking-tight text-ink-600">URL input</span>
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2">Public URLs</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Submit a public URL when the content you want to analyze is already available online.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 · SEARCH SCOPE & SCAN CONFIGURATION =================
+       The bento the brief encourages, carrying actual capabilities rather than generic
+       advantage cards. The 500M+ academic figure is approved; no web-corpus number is,
+       so none appears. AI is one card among six, not a product. -->
+  <section id="api-configuration" data-component="config-map" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[760px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Configuration</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Configure each plagiarism check around your workflow</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Choose where the API searches and adjust the options that matter for each check instead of using the same scan configuration for every document.</p>
+      </div>
+
+      <!-- The homepage capabilities grid is lg:grid-cols-5 with no tablet step, but it
+           carries four blocks and this carries six: one column from 640 to 1024 is a long
+           scroll. A plain two-up fills that band; the bento itself is unchanged, because
+           the spans are lg-only and do not apply until the five columns exist. -->
+      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
+        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </span>
+            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Search the web</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Enable web plagiarism search when the submitted content should be compared with sources available on the web.</p>
+
+          </div>
+        </div>
+        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            </span>
+            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Include the academic database</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Add PlagiarismSearch’s academic database to the scan when academic source coverage matters.</p>
+            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px] font-semibold tracking-tight text-teal-700">500M+ indexed academic texts</p>
+          </div>
+        </div>
+        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+            </span>
+            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Search your storage</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Search personal or organization storage when those repositories and permissions are available to the API account. Submitted content can also be added to storage when that workflow is enabled.</p>
+
+          </div>
+        </div>
+        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M21 3 3 21"/><path d="M16 21h5v-5"/></svg>
+            </span>
+            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Exclude references and quoted content</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Configure the check to exclude references and quoted or cited text when those parts should not affect the result.</p>
+
+          </div>
+        </div>
+        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+            </span>
+            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Control web and storage scope</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Exclude specific URLs from web search and narrow storage searches with the filters available in the API request.</p>
+
+          </div>
+        </div>
+        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+            </span>
+            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Add AI analysis when needed</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">AI checking is available through the same PlagiarismSearch API infrastructure. AI analysis uses the AI word balance available to the account.</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 · ACTUAL API WORKFLOW =================
+       A product workflow, not a sales workflow. The legacy "Contact us → Describe
+       requirements → Receive API → Stay in touch" is gone; these four are what the
+       integration actually does. No stock developer photograph: the brief calls for
+       actual product evidence, and the async callout is that evidence. -->
+  <section id="api-workflow" data-component="workflow-steps" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[760px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Workflow</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">How the PlagiarismSearch API workflow works</h2>
+      </div>
+
+      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">1</span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Submit</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Send text or a public URL as JSON, or upload a document with multipart form data.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">2</span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Configure</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Select the search sources and options required for the check and provide the callback_url where completion events should be sent.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">3</span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Process</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">The API creates the report and returns a 202 response with the report ID while plagiarism checking continues asynchronously.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">4</span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Receive</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">When processing is complete, PlagiarismSearch sends a report.checked webhook to your callback URL. Use the report ID and returned report link to continue the workflow inside your own system.</p>
         </div>
       </div>
 
-      <form id="quoteForm" class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-4 sm:p-7 lg:p-9" onsubmit="return false">
-        <div class="grid sm:grid-cols-2 gap-4 lg:gap-5 mb-4 lg:mb-5">
-        <div>
-          <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="qName">Name <span class="text-orange-600">*</span></label>
-          <input class="fld" id="qName" type="text" placeholder="Jordan Reeves" required>
+      <div data-surface="dark" class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
+
+        <div class="max-w-[54ch]">
+          <p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] text-white mb-3 lg:mb-4">Your integration <span class="text-orange-300">does not need to wait</span> for the plagiarism check to finish before continuing other work.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/65">The initial response identifies the report, and the completion webhook tells your system when the check is ready.</p>
         </div>
-        <div>
-          <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="qEmail">Email <span class="text-orange-600">*</span></label>
-          <input class="fld" id="qEmail" type="email" placeholder="name@company.com" required>
-        </div>
-        <div>
-          <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="qPhone">Phone <span class="text-orange-600">*</span></label>
-          <input class="fld" id="qPhone" type="tel" placeholder="+1 555 000 0000" required>
-        </div>
-        <div>
-          <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="qOrg">Organization</label>
-          <input class="fld" id="qOrg" type="text" placeholder="Optional">
-        </div>
-        <div>
-          <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="qLinkedIn">LinkedIn</label>
-          <input class="fld" id="qLinkedIn" type="url" placeholder="Optional">
-        </div>
-        <div>
-          <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="qFacebook">Facebook</label>
-          <input class="fld" id="qFacebook" type="url" placeholder="Optional">
-        </div>
-        <div>
-          <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="qDocs">Documents per month</label>
-          <div class="stepper">
-            <button type="button" data-step="-1" aria-label="Fewer">&minus;</button>
-            <input id="qDocs" type="number" value="500" min="1" inputmode="numeric">
-            <button type="button" data-step="1" aria-label="More">+</button>
+
+        <!-- The sequence, read top to bottom as time. Two hosts, three messages, and a
+             gap in the middle that is the whole point: the app is free between the 202
+             and the webhook.
+
+             Every label is a literal from the hero code samples — your.app and
+             plagiarismsearch.com are the two hosts in the curl commands, and the rest are
+             the endpoint, the status code, the processing label and the event name. A
+             diagram that quotes the contract needs no invented copy. -->
+        <div class="w-full lg:w-[400px] rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6">
+          <div class="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-white/10">
+            <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">your.app</code>
+            <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">plagiarismsearch.com</code>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 ">POST /api/v3/reports/create</code>
+              <div class="flex items-center gap-2" aria-hidden="true">
+                
+                <span class="flex-1 h-px bg-[#2CC3DB66]"></span>
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1 4.5h7M5 1.5l3 3-3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div>
+              <code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 text-right">202</code>
+              <div class="flex items-center gap-2" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="flex-1 h-px bg-[#2CC3DB66]"></span>
+                
+              </div>
+            </div>
+            <div class="flex items-center gap-3 py-1">
+              <span class="flex-1 border-t border-dashed border-white/15"></span>
+              <code class="shrink-0 text-[11.5px] sm:text-[12px] text-white/60">status_label: "processing"</code>
+              <span class="flex-1 border-t border-dashed border-white/15"></span>
+            </div>
+            <div>
+              <code class="block text-[12px] sm:text-[13px] font-semibold text-orange-300 mb-1.5 text-right">report.checked</code>
+              <div class="flex items-center gap-2" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#F58971" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="flex-1 h-px bg-[#F5897166]"></span>
+                
+              </div>
+            </div>
           </div>
         </div>
-        <div>
-          <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="qPages">Avg pages per document</label>
-          <div class="stepper">
-            <button type="button" data-step="-1" aria-label="Fewer">&minus;</button>
-            <input id="qPages" type="number" value="10" min="1" inputmode="numeric">
-            <button type="button" data-step="1" aria-label="More">+</button>
-          </div>
-        </div>
-        </div>
-
-        <div class="mb-4 lg:mb-5">
-          <label class="block text-[12.5px] font-bold text-ink-600 mb-2" for="qMsg">Message <span class="text-orange-600">*</span></label>
-          <textarea class="fld" id="qMsg" placeholder="What are you integrating, and roughly what volume?" required></textarea>
-        </div>
-
-        <label class="ctl ctl-top text-[13px] mb-5 sm:mb-6 lg:mb-7">
-          <input type="checkbox" class="ck" required>
-          I accept the <a href="#" class="font-semibold text-teal-700 hover:text-teal-800 transition-colors">Terms of Use</a> and <a href="#" class="font-semibold text-teal-700 hover:text-teal-800 transition-colors">Privacy Policy</a>
-        </label>
-
-        <div class="flex flex-wrap items-center gap-4">
-          <button type="submit" class="btn-press group flex items-center gap-2.5 rounded-full h-12 sm:h-14 bg-orange-500 hover:bg-orange-600 transition-colors duration-300 text-white text-[14px] sm:text-[15px] font-semibold pl-5 sm:pl-7 pr-2.5">
-            Get quote
-            <span class="icon-orb w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </span>
-          </button>
-          <span class="text-[12.5px] font-medium text-ink-400">Estimated volume: <b id="qVolume" class="font-extrabold text-ink-700 nums">1,500,000</b> words a month</span>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
+  <!-- ================= 05 · RESULT LIFECYCLE =================
+       Confirmed field concepts only — id, progress, status, status_label, the completion
+       webhook and the self link. "Do not claim PDF reports, HTML reports, detailed
+       source relations or other legacy Q&amp;A output features."
+
+       The field chips are the real names from the Response and Webhook tabs above, which
+       is the "actual product evidence" the brief asks for in place of stock imagery. -->
+  <section id="api-results" data-component="results-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute orb-deep-teal"></div>
+    <div class="orb absolute orb-deep-coral"></div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[1fr_1.05fr] gap-8 lg:gap-12 items-start">
+        <div class="rv lg:sticky lg:top-28 text-white">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">Results</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Use report status and result data in your own product</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-white/70 max-w-[56ch]">The API gives your application the information needed to track a check from submission to completion without forcing users into a separate manual checking flow.</p>
+          <div class="mt-6 lg:mt-7"><a href="https://plagiarismsearch.com/docs/" rel="noopener" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-white/70 hover:text-white decoration-white/30 underline underline-offset-4 transition-colors duration-300">See the complete response schema</a></div>
+
+          <!-- Field treatment, not a picture of a developer. Every name here appears in
+               the Response or Webhook sample in the hero, so it is the same contract the
+               reader just saw, named rather than re-quoted. -->
+          <div class="hidden lg:block mt-8 rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-5">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-3">Returned by the API</span>
+            <div class="flex flex-wrap gap-2">
+              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">id</code>
+              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">progress</code>
+              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">status</code>
+              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">status_label</code>
+              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">event</code>
+              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">checked_words</code>
+              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">words</code>
+              <code class="rounded-lg bg-white/[.07] px-2.5 py-1 text-[12px] font-medium text-teal-300">links.self</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="rv-kids space-y-4 sm:space-y-5">
+          <div class="rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-2">Step 01</span>
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-white mb-2">Track the report</h3>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[60ch]">Use the report id, processing progress, status, and status_label returned by the API to identify the check and follow its current state.</p>
+          </div>
+          <div class="rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-2">Step 02</span>
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-white mb-2">React when processing completes</h3>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[60ch]">The completion webhook identifies the checked report, returns its completion status and word counts, and includes a self link to the report resource.</p>
+          </div>
+          <div class="rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-2">Step 03</span>
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-white mb-2">Continue with the result</h3>
+            <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-white/65 max-w-[60ch]">Use the report resource and the current API response schema to bring the result data required by your workflow into your own application.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 06 · WORKFLOW USE CASES =================
+       Three genuinely distinct integration shapes. Not Schools / Universities / Colleges,
+       which the brief rejects as near-duplicate persona cards, and no Moodle card — that
+       cross-link is a separate later decision, not an API mechanic. -->
+  <section id="api-use-cases" data-component="use-cases" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[760px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Use cases</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Build plagiarism checking into the workflow you already use</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">The API is designed for systems that need plagiarism checking inside an existing product or document process rather than as a separate manual step.</p>
+      </div>
+
+      <div class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </span>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2.5">Education and LMS platforms</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Add plagiarism checks to workflows that process academic documents or student submissions. Configure web, academic, and permitted storage sources according to the needs of the integration.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
+          </span>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2.5">Publishing and content operations</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Run plagiarism checks as part of an editorial or pre-publication workflow without requiring every user to move into a separate checking interface.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          </span>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2.5">Products that process submitted documents</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Trigger plagiarism checks when users submit text, files, or URLs to your product, then use the webhook and report data to continue the process inside your own application.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 07 · DEVELOPER RESOURCES =================
+       One card, and it is meant to look that way. The API Q&amp;A page is gated until it is
+       synchronized with 3.1.0 and the brief forbids reserving an empty second slot — so
+       rather than leaving a hole, the single resource fills the width it has.
+
+       Reshaped 2026-08-25: the card was 820px inside a 1,200px column under act-sized
+       padding, and the surrounding air read as a missing sibling. Heading beside the
+       card instead of above it, card full width, padding cut to what one row needs. -->
+  <section id="api-resources" data-component="resources" class="relative py-12 sm:py-14 lg:py-16 bg-white overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv grid lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-12 items-center">
+
+        <div>
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Resources</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Move from evaluation to implementation</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Use the commercial API page to understand the product, then move into the technical resources when you are ready to work with the current API contract.</p>
+        </div>
+
+        <div class="rounded-3xl sm:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="rounded-[18px] sm:rounded-3xl bg-white shadow-inner-hl p-6 sm:p-7 lg:p-8">
+            <div class="flex items-start gap-4 sm:gap-5 mb-5 lg:mb-6">
+              <span class="shrink-0 w-12 h-12 rounded-2xl bg-teal-100 flex items-center justify-center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </span>
+              <div class="min-w-0">
+                <h3 class="text-[18px] sm:text-[20px] font-bold tracking-tight mb-1.5">API Documentation</h3>
+                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[58ch]">Review the current PlagiarismSearch RESTful API 3.1.0 reference for endpoints, request parameters, and response schemas.</p>
+              </div>
+            </div>
+
+            <!-- what the documentation actually contains, named from the contract the
+                 hero already showed. Not a second card: the same resource, described. -->
+            <div class="flex flex-wrap gap-2 pb-5 mb-5 border-b border-ink-100">
+              <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1.5 text-[12px] font-semibold text-ink-600">Endpoints</span>
+              <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1.5 text-[12px] font-semibold text-ink-600">Request parameters</span>
+              <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1.5 text-[12px] font-semibold text-ink-600">Response schemas</span>
+              <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1.5 text-[12px] font-semibold text-ink-600">API 3.1.0</span>
+            </div>
+
+            <a href="https://plagiarismsearch.com/docs/" rel="noopener" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Open API documentation
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 08 · ACCESS, TRIAL &amp; PRICING =================
+       Two paths and no price cards. The legacy Monthly / 3-Month / Yearly module is
+       rejected outright: pricing and entitlements come from the commercial source of
+       truth. No universal free trial, and no claim that every account gets API access. -->
+  <!-- The dark commercial callout DEC-0041 lists under encouraged reuse, and the page's
+       second dark act. Two paths, no price cards: pricing and entitlements come from the
+       commercial source of truth, not from here. -->
+  <section id="api-access" data-component="access-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute orb-access-coral"></div>
+    <div class="orb absolute orb-access-teal"></div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv text-center max-w-[760px] mx-auto mb-10 sm:mb-12 text-white">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">Access</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Choose the API access path that fits your implementation</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70">API access can be included in selected PlagiarismSearch plans or arranged separately for custom and higher-volume implementations. Trial access may also be available through supported trial or contact flows.</p>
+      </div>
+
+      <div class="rv-kids grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 max-w-[1000px] mx-auto">
+        <div class="rounded-3xl sm:rounded-[28px] bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7 lg:p-8 flex flex-col">
+          <h3 class="text-[17px] sm:text-[18px] font-bold tracking-tight text-white mb-2.5">Review available plans</h3>
+          <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70 max-w-[52ch] mb-6">See current PlagiarismSearch plans and the features included with each option.</p>
+          <div><a href="prices.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            View pricing
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7 lg:p-8 flex flex-col">
+          <h3 class="text-[17px] sm:text-[18px] font-bold tracking-tight text-white mb-2.5">Discuss API access or a trial</h3>
+          <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/70 max-w-[52ch] mb-6">Tell us what you are building and the approximate volume you expect to process. We can use those details to discuss access, evaluation options, or custom pricing.</p>
+          <div><a href="#api-quote" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Request API access
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 09 · API ACCESS / CUSTOM QUOTE FORM =================
+       The approved simplified data model: six fields, no Facebook or LinkedIn, and
+       estimated monthly WORDS rather than pages derived from a hidden 300-per-page
+       assumption. Organization and Phone carry no asterisk; Phone says Optional.
+
+       No consent checkbox. The brief ties this to the shared form's existing legal
+       behaviour — "If the shared form requires a visible consent checkbox" — and
+       contact-us.html, the shared inquiry form here, has none. Adding one would be
+       inventing a consent claim, which the same clause forbids.
+
+       No response-time promise anywhere, including the success state. -->
+  <section id="api-quote" data-component="inquiry-form" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-14 items-start">
+        <div class="rv lg:sticky lg:top-28">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Get access</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Request API access or a custom quote</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-ink-600 max-w-[56ch]">Share your integration requirements and expected volume. We’ll use the details to discuss the most appropriate API access, trial, or pricing option for your workflow.</p>
+          <p class="mt-6 lg:mt-7 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">
+            Prefer email? Contact us at <a href="mailto:services@plagiarismsearch.com" class="font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">services@plagiarismsearch.com</a>.
+          </p>
+        </div>
+
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8">
+          <form onsubmit="return false" novalidate>
+            <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
+              <div class="min-w-0">
+                <label class="cf-label" for="aq-0">Name <i>*</i></label>
+                <input class="cf-field" id="aq-0" type="text" placeholder="Jordan Reeves">
+
+              </div>
+              <div class="min-w-0">
+                <label class="cf-label" for="aq-1">Work email <i>*</i></label>
+                <input class="cf-field" id="aq-1" type="email" placeholder="name@company.com">
+
+              </div>
+              <div class="min-w-0">
+                <label class="cf-label" for="aq-2">Organization</label>
+                <input class="cf-field" id="aq-2" type="text" placeholder="Company, university, or platform">
+
+              </div>
+              <div class="min-w-0">
+                <label class="cf-label" for="aq-3">Phone <span class="font-medium text-ink-500">Optional</span></label>
+                <input class="cf-field" id="aq-3" type="tel" placeholder="+1 555 000 0000">
+
+              </div>
+              <div class="sm:col-span-2 sm:col-span-2">
+                <label class="cf-label" for="aq-4">Estimated monthly volume</label>
+                <input class="cf-field" id="aq-4" type="text" placeholder="e.g. 1,000,000 words">
+                <p class="mt-2 text-[12px] text-ink-500">An approximate figure is enough.</p>
+              </div>
+              <div class="sm:col-span-2 sm:col-span-2">
+                <label class="cf-label" for="aq-5">What are you integrating? <i>*</i></label>
+                <textarea class="cf-field" id="aq-5" rows="4" placeholder="Describe your product, platform, or workflow and any requirements that matter to the integration."></textarea>
+
+              </div>
+            </div>
+
+            <div class="mt-6 lg:mt-7">
+              <button type="submit" class="btn-press group flex items-center justify-center sm:justify-start gap-2.5 w-full sm:w-auto rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
+                Request API access
+                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+              </button>
+            </div>
+          </form>
+
+          <!-- the approved success state, rendered so its copy is checkable and carries
+               no response-time promise; the prototype form never submits -->
+          <div class="mt-6 pt-6 border-t border-ink-100" hidden id="aq-success">
+            <h3 class="text-[15.5px] font-bold tracking-tight mb-1.5">Your API request has been sent</h3>
+            <p class="text-[13px] leading-relaxed text-ink-600">Thank you. We’ve received your integration details.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 10 · PLAGIARISM API FAQ =================
+       Exactly nine, all rendered in HTML. The tenth — the legacy Q&amp;A cross-link — is
+       gated until that page is synchronized with 3.1.0, so the footer offers docs only. -->
+  <section id="api-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
+        <div class="rv lg:sticky lg:top-28">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Plagiarism API FAQ</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-ink-600">Need implementation details?</p>
+          <div class="mt-5 lg:mt-6"><a href="https://plagiarismsearch.com/docs/" rel="noopener" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">View API documentation</a></div>
+        </div>
+
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+            <div class="faq-item open">
+              <button type="button" aria-controls="api-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">What can I submit through the PlagiarismSearch API?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="api-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">You can submit text, upload a supported document, or provide a public URL for plagiarism checking. Text and URL requests can use JSON. File uploads use multipart form data. Use the current API documentation for the complete request schema and current file requirements.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="api-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Is the plagiarism check synchronous or asynchronous?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="api-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">The current API uses asynchronous processing. When you create a report, the API returns a 202 response with the report ID while the check continues. When processing is complete, PlagiarismSearch sends a completion event to the callback_url supplied with the request.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="api-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">How does the completion webhook work?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="api-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Include a callback_url when you create the report. After the check is complete, PlagiarismSearch sends a report.checked event to that URL. The webhook identifies the report, provides completion information, and includes a link to the report resource.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="api-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">What sources can the API search?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="api-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">A plagiarism check can use web search, the PlagiarismSearch academic database, and permitted personal or organization storage. The academic database contains more than 500 million indexed academic texts. The sources used for a particular check depend on the scan configuration and the access available to the API account.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="api-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can I exclude references, citations, or specific URLs?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="api-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">The API includes options for controlling parts of the plagiarism scan, including reference and quoted or cited-text exclusions, URL controls, and storage filtering. Use the current API reference for the exact parameters supported by API 3.1.0.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="api-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can I run AI detection through the same API?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="api-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. AI analysis is available through the same PlagiarismSearch API infrastructure rather than as a separate standalone API product. The account must have an available AI word balance for AI checking.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="api-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Which authentication methods does the API support?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="api-faq-a7"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">PlagiarismSearch API 3.1.0 supports Basic and Bearer authentication. Use the current API documentation for the exact authentication format required by your implementation.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="api-faq-a8" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">How can I get API access or a trial?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="api-faq-a8"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">API access may be included with selected plans or arranged separately depending on the implementation. Trial access may be available through supported trial flows or by contacting PlagiarismSearch. If you need custom access or pricing, send your requirements through the API request form on this page.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="api-faq-a9" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Does the API support plagiarism checking in multiple languages?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="api-faq-a9"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. The API supports multilingual plagiarism checking. Detection performance is strongest in English.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 11 · FINAL CTA =================
+       Dual next steps, in the approved hierarchy: the technical evaluator returns to the
+       docs, the buyer goes to the form. No third action, no free-trial button. -->
+  <section id="api-final-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+        <div class="orb cta-glow-warm"></div>
+        <div class="orb cta-glow-cool"></div>
+      </div>
+
+    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
+      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Ready to <span class="ring-word relative inline-block">evaluate<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> the PlagiarismSearch API?</h2>
+      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Review the API documentation to inspect the current technical contract, or send us your requirements if you need API access, trial options, or custom pricing.</p>
+      <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+        <a href="https://plagiarismsearch.com/docs/" rel="noopener" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+          View API documentation
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+        <a href="#api-quote" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">Request API access</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-surface="dark" class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
   <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
   <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 
@@ -832,7 +904,7 @@ tailwind.config = {
          frozen. Both are restored the moment approved copy and figures arrive. -->
     <div class="grid sm:grid-cols-2 gap-8 sm:gap-10 items-center mb-10 sm:mb-13 lg:mb-16">
       <a href="index.html" class="inline-flex items-center">
-        <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+        <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
       </a>
       <div class="sm:justify-self-end">
         <div class="flex gap-3">
@@ -872,6 +944,7 @@ tailwind.config = {
           <li><a href="pdf-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PDF Plagiarism Checker</a></li>
           <li><a href="quote-checker-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Quote Checker</a></li>
           <li><a href="turnitin-checker-alternative.html" class="hover:text-white transition-colors duration-300">Turnitin Alternative</a></li>
+          <li><a href="ua-plagiarism-check.html" class="hover:text-white transition-colors duration-300">UA Plagiarism Checker</a></li>
         </ul>
       </div>
       <div>
@@ -921,7 +994,7 @@ tailwind.config = {
   </div>
 
   <!-- Back to top. Global chrome, so it lives in the shell rather than being copied on
-       to whichever page happens to be long today — index-v2 and the blog article both
+       to whichever page happens to be long today — the homepage and the blog article both
        run past fifteen thousand pixels.
 
        It is fixed, so it is positioned against the viewport and the footer clipping its
@@ -931,7 +1004,7 @@ tailwind.config = {
        Inside the footer element on purpose. shell.js replaces a page from the opening
        tag to the first closing one, so anything placed after that closing tag would
        survive the replacement and be added again by every build. -->
-  <button type="button" id="toTop" aria-label="Back to top"
+  <button type="button" data-to-top aria-label="Back to top"
     class="fixed z-40 bottom-5 right-5 sm:bottom-7 sm:right-7 lg:bottom-9 lg:right-9
            w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-ink-900 shadow-diffuse-lg
            ring-2 ring-teal-600/45 flex items-center justify-center opacity-0 translate-y-3
@@ -940,188 +1013,6 @@ tailwind.config = {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
   </button>
 
-  <script>
-  (() => {
-    const btn = document.getElementById("toTop");
-    if (!btn) return;
-
-    /* Shows once a screenful and a bit is behind you: soon enough to be there when
-       wanted, late enough that a short page never summons it. */
-    let ticking = false;
-    const mark = () => {
-      const past = scrollY > innerHeight * 1.2;
-      btn.classList.toggle("opacity-0", !past);
-      btn.classList.toggle("translate-y-3", !past);
-      btn.classList.toggle("pointer-events-none", !past);
-      ticking = false;
-    };
-    addEventListener("scroll", () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(mark); }
-    }, { passive: true });
-    addEventListener("resize", mark, { passive: true });
-    mark();
-
-    btn.addEventListener("click", () => {
-      const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      scrollTo({ top: 0, behavior: still ? "auto" : "smooth" });
-      /* send the keyboard back with the page, or the next Tab resumes at the footer */
-      const first = document.querySelector("header a, header button");
-      if (first) first.focus({ preventScroll: true });
-    });
-  })();
-  </script>
 </footer>
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) document.documentElement.classList.add('no-motion');
-
-  if (!reduceMotion && window.gsap) {
-    gsap.registerPlugin(ScrollTrigger);
-
-    /* ================= reveals ================= */
-    const rvs = gsap.utils.toArray('.rv');
-    const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-    const later = rvs.filter(el => !inView.includes(el));
-
-    // first viewport: top-down cascade on load
-    inView.forEach(el => {
-      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-        delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-    });
-    // the rest reveal as they reach mid-screen
-    later.forEach(el => {
-      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 70%' } });
-    });
-
-    /* ================= pen marks — word colours in, then its underline draws =================
-       Reusable: any number per page. In-view marks wait out the reveal cascade;
-       lower ones fire when scrolled to. See DESIGN.md → Web build → Motion. */
-    gsap.utils.toArray('.pen-word').forEach(word => {
-      const line = word.querySelector('.pen-underline');
-      if (!line) return;
-      const len = line.getTotalLength();
-      gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-      const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-      const tl = gsap.timeline(inFirstView
-        ? { delay: 1 }
-        : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-      tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-        .set(line, { opacity: 1 }, .35)
-        .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-    });
-
-    /* ================= counters (mission stats) — cached writes ================= */
-    document.querySelectorAll('[data-count]').forEach(el => {
-      const target = parseFloat(el.dataset.count);
-      const suffix = el.dataset.suffix || '';
-      const dp = parseInt(el.dataset.decimals, 10) || 0;   // ratings need one decimal
-      const obj = { v: 0 };
-      let lastText = '';
-      gsap.to(obj, {
-        v: target, duration: 1.6, ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 85%' },
-        onUpdate: () => {
-          const text = obj.v.toFixed(dp) + suffix;
-          if (text !== lastText) { lastText = text; el.textContent = text; }
-        }
-      });
-    });
-  } else {
-    // reduced motion: final states, no tweens
-    document.querySelectorAll('[data-count]').forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
-  }
-})();
-</script>
-
-
-
-
-<script>
-(() => {
-  'use strict';
-  // same counter the home page uses, with decimals for the rating figures
-  if (!window.gsap || !window.ScrollTrigger) return;
-  document.querySelectorAll('[data-count]').forEach(el => {
-    const target = parseFloat(el.dataset.count);
-    const suffix = el.dataset.suffix || '';
-    const dp = parseInt(el.dataset.decimals, 10) || 0;
-    const obj = { v: 0 };
-    gsap.to(obj, {
-      v: target, duration: 1.6, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 90%' },
-      onUpdate: () => el.textContent = obj.v.toFixed(dp) + suffix,
-    });
-  });
-})();
-</script>
-
-<script>
-(() => {
-  'use strict';
-  const form = document.getElementById('quoteForm');
-  if (!form) return;
-
-  const docs = document.getElementById('qDocs');
-  const pages = document.getElementById('qPages');
-  const out = document.getElementById('qVolume');
-  const WORDS_PER_PAGE = 300;   // the figure the source form quotes
-
-  const clamp = el => Math.max(1, parseInt(el.value, 10) || 1);
-  function recalc() {
-    out.textContent = (clamp(docs) * clamp(pages) * WORDS_PER_PAGE).toLocaleString('en-US');
-  }
-
-  form.querySelectorAll('.stepper button').forEach(b => b.addEventListener('click', () => {
-    const input = b.parentElement.querySelector('input');
-    input.value = Math.max(1, clamp(input) + Number(b.dataset.step));
-    recalc();
-  }));
-  form.addEventListener('input', recalc);
-  [docs, pages].forEach(el => el.addEventListener('blur', () => { el.value = clamp(el); recalc(); }));
-  recalc();
-})();
-</script>
-
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  // the desktop menu takes over at lg — never leave the panel hanging open across it
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>
-<!-- VSWITCH · temporary review tool, remove with the retired version -->
-<div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[100] print:hidden">
-  <div class="flex items-center gap-1 rounded-full bg-white/95 backdrop-blur-md ring-1 ring-black/10 shadow-diffuse-lg p-1 pl-3">
-    <span class="text-[9px] font-bold uppercase tracking-[0.16em] text-ink-400">Version</span>
-    <div class="flex items-center gap-0.5 ml-1.5">
-      <span aria-current="page" class="rounded-full bg-ink-900 text-white text-[12px] font-bold px-3.5 py-1.5 tabular-nums">1</span>
-      <a href="api-v2.html" class="rounded-full text-[12px] font-bold text-ink-500 hover:text-ink-900 hover:bg-ink-100 px-3.5 py-1.5 tabular-nums transition-colors duration-200">2</a>
-    </div>
-  </div>
-</div>
-<!-- /VSWITCH -->
 </body>
 </html>

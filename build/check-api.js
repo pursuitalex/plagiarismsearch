@@ -1,4 +1,4 @@
-/* Check site/api-v2.html against DEC-0041.
+/* Check site/api.html against DEC-0041.
 
    DEC-0041 ships its own FIXED-STRING CHECKLIST — eleven headings, three tab labels and
    six CTA labels it calls "intentionally machine-checkable". That table is transcribed
@@ -17,7 +17,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const FILE = 'api-v2.html';
+const FILE = 'api.html';
 const html = fs.readFileSync(path.join(__dirname, '..', 'site', FILE), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 const text = body.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]*>/g, ' ')

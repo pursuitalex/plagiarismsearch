@@ -39,7 +39,7 @@ const compact = banner({
   h2: 'Need a custom or high-volume option?',
   lead: 'If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.',
   leadMax: '62ch',
-  action: banner.btn('Explore high-volume options', 'prices-v2.html#high-volume'),
+  action: banner.btn('Explore high-volume options', 'prices.html#high-volume'),
   static: true,
 }).replace('py-10 sm:py-12 lg:py-14 bg-white', 'py-0')       /* the showcase supplies its own rhythm */
   .replace('max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10', 'max-w-none');
@@ -72,7 +72,7 @@ ${cta.backgroundStatic()}
           <div class="relative max-w-[880px] mx-auto px-6 text-center">
             <h2 class="${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark('Try plagiarism checking before you choose a plan', 'before you choose', { static: true })}</h2>
             <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Check up to 150 words without creating an account. See how the plagiarism checker works first, then return when you are ready to choose a plan.</p>
-            <a href="prices-v2.html#free-check" class="btn-press group inline-flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+            <a href="prices.html#free-check" class="btn-press group inline-flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
               Try a free plagiarism check
               <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>

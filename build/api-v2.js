@@ -1,4 +1,4 @@
-/* Generate site/api-v2.html — the DEC-0041 Plagiarism API page.
+/* Generate site/api.html — the DEC-0041 Plagiarism API page.
 
    Same shape as build/home-v2.js and build/ai-v2.js: approved copy in COPY, verbatim,
    diffable against the brief line by line.
@@ -21,7 +21,7 @@
 
    On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
    no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
-   classes, asset paths are root-relative. Parity: node build/parity/run.js api-v2.html
+   classes, asset paths are root-relative. Parity: node build/parity/run.js api.html
 */
 const fs = require('fs');
 const path = require('path');
@@ -29,7 +29,7 @@ const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
-const OUT = 'api-v2.html';
+const OUT = 'api.html';
 const cta = require('./cta');
 const { dotField } = require('./dots');   /* the closing band — recipe and reasoning live there */
 

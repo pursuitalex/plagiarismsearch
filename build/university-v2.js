@@ -1,4 +1,4 @@
-/* Generate site/university-plagiarism-checker-v2.html — the University page to the
+/* Generate site/university-plagiarism-checker.html — the University page to the
    v2 brief of 2026-09-04.
 
    v1 (build/university.js) translated the first brief's fact lists into card grids,
@@ -22,7 +22,7 @@
 
    On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
    no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
-   classes, asset paths are root-relative. Parity: node build/parity/run.js university-plagiarism-checker-v2.html
+   classes, asset paths are root-relative. Parity: node build/parity/run.js university-plagiarism-checker.html
 */
 const fs = require('fs');
 const path = require('path');
@@ -30,7 +30,7 @@ const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
-const OUT = 'university-plagiarism-checker-v2.html';
+const OUT = 'university-plagiarism-checker.html';
 const cta = require('./cta');
 const { dotField } = require('./dots');
 const banner = require('./banner');

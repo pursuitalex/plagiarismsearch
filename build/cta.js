@@ -1,6 +1,6 @@
 /* The closing CTA band — the one before the footer, on every page that has one.
 
-   Single source so the band cannot drift page to page. index-v2.html established it and
+   Single source so the band cannot drift page to page. index.html established it and
    still carries its own inline copy of these rules; this module is where new pages get
    them, and where the recipe is written down.
 

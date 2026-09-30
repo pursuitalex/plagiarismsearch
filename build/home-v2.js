@@ -1,4 +1,4 @@
-/* Generate site/index-v2.html — the DEC-0030 homepage.
+/* Generate site/index.html — the DEC-0030 homepage.
 
    The approved baseline is the source of copy. Every string the brief fixes is held in
    COPY below, verbatim, so it can be diffed against the brief line by line instead of
@@ -13,14 +13,14 @@
 
    On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
    no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
-   classes, asset paths are root-relative. Parity: node build/parity/run.js index-v2.html
+   classes, asset paths are root-relative. Parity: node build/parity/run.js index.html
 */
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
-const OUT = 'index-v2.html';
+const OUT = 'index.html';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    APPROVED COPY — DEC-0030, 2026-08-14. Verbatim.
@@ -811,7 +811,7 @@ const section11 = () => `
 
 const section12 = () => `
   <!-- ================= 12 · FAQ ================= -->
-  <section data-component="faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section id="faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <!-- Heading left, questions right: a long accordion under a centred heading pushes
            the last question a screen and a half from its own title. The left column sticks,

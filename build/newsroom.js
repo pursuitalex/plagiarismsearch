@@ -624,7 +624,7 @@ const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.
 /* ─────────────────────────────────────────────────────────────────────────────
    Assemble
    ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
+const donor = fs.readFileSync(path.join(__dirname, 'shell', 'head-cdn.html'), 'utf8');
 let head = donor.slice(0, donor.indexOf('<body'));
 head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>');
 if (/name="description"/.test(head)) {

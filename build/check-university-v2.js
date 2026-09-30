@@ -1,4 +1,4 @@
-/* Check site/university-plagiarism-checker-v2.html against the University v2 brief of
+/* Check site/university-plagiarism-checker.html against the University v2 brief of
    2026-09-04.
 
    The brief separates LOCKED COPY (must appear, unreworded) from INFORMATION CONTRACTS
@@ -11,7 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const FILE = 'university-plagiarism-checker-v2.html';
+const FILE = 'university-plagiarism-checker.html';
 const html = fs.readFileSync(path.join(__dirname, '..', 'site', FILE), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 const flat = s => s.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]*>/g, ' ')
@@ -274,7 +274,8 @@ console.log('\nstructure');
   const gridSections = ['institutional-management', 'institutional-sources', 'university-plagiarism-checker']
     .filter(id => (section(id).match(/<h3\b/g) || []).length >= 3 && /grid (sm:|md:|lg:)grid-cols-[3-5]/.test(section(id)));
   ok('no equal-card grid outside deployment', !gridSections.length, gridSections.join(', '));
-  ok('the version switcher pairs with v1', /VSWITCH/.test(html) && /href="university-plagiarism-checker\.html"/.test(html));
+  /* v1 is retired (2026-09-30): this page is the University page, with no switcher */
+  ok('no version switcher: v1 is retired', !/VSWITCH/.test(html));
 }
 
 console.log('\ngates — open items, not defects');

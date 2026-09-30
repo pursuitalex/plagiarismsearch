@@ -1,4 +1,4 @@
-/* Build site/plagiarism-and-ai-check-report-v2.html.
+/* Build site/plagiarism-and-ai-check-report.html.
 
    The same 26 blocks as v1, in the same order, through build/article.js — the template
    taken from the blog post. The point of the exercise is that this file styles nothing:
@@ -25,7 +25,7 @@ const { page, style } = require('./article');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
-const OUT = 'plagiarism-and-ai-check-report-v2.html';
+const OUT = 'plagiarism-and-ai-check-report.html';
 
 const src = require('./report-guide-data.json');
 const B = src.paras;
@@ -159,7 +159,7 @@ const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.
 })();
 <\/script>`;
 
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
+const donor = fs.readFileSync(path.join(__dirname, 'shell', 'head-cdn.html'), 'utf8');
 let head = donor.slice(0, donor.indexOf('<body'));
 head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + src.meta.title + '</title>');
 if (/name="description"/.test(head)) {

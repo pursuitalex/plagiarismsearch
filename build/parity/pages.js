@@ -23,7 +23,7 @@ module.exports = {
     },
     } },
   },
-  'index-v2.html': {
+  'index.html': {
     /* against 04c8e24, the homepage before the static assets: */
     byRef: { '04c8e24': {
     /* Differences taken on purpose when the homepage moved to the shared components. The
@@ -43,7 +43,7 @@ module.exports = {
     },
     } },
   },
-  'prices-v2.html': {
+  'prices.html': {
     /* the AI package selector: the chosen row fills and the button names it */
     async behaviour(page, width, { sleep }) {
       /* only where the selector is (a section served alone may be another one) */
@@ -59,7 +59,7 @@ module.exports = {
       return r;
     },
   },
-  'ai-detector-v2.html': {
+  'ai-detector.html': {
     /* the AI checker flow: under 100 characters the field objects; at 100 the auth gate
        opens and takes focus; typing past 100 clears the objection */
     async behaviour(page, width, { sleep }) {

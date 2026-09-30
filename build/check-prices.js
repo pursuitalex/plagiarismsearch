@@ -1,4 +1,4 @@
-/* Check site/prices-v2.html against DEC-0042 and the Targeted Corrections v2 batch
+/* Check site/prices.html against DEC-0042 and the Targeted Corrections v2 batch
    of 2026-09-04.
 
    Same discipline as the other page checkers: the brief is testable, so it is tested.
@@ -17,7 +17,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const FILE = 'prices-v2.html';
+const FILE = 'prices.html';
 const html = fs.readFileSync(path.join(__dirname, '..', 'site', FILE), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 const text = body.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]*>/g, ' ')

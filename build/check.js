@@ -148,8 +148,8 @@ console.log('\ndesign system');
 /* DESIGN.md § Section rhythm: every generated hero on the #F2FCFC tint carries the dot
    field, and it comes before the orbs. Hand-written and stub pages are not swept. */
 {
-  const HERO_PAGES = ['index-v2.html', 'ai-detector-v2.html', 'api-v2.html', 'prices-v2.html',
-                      'university-plagiarism-checker.html', 'university-plagiarism-checker-v2.html', 'newsroom.html'];
+  const HERO_PAGES = ['index.html', 'ai-detector.html', 'api.html', 'prices.html',
+                      'university-plagiarism-checker.html', 'university-plagiarism-checker.html', 'newsroom.html'];
   const bad = [];
   for (const f of HERO_PAGES) {
     const html = fs.readFileSync(path.join(SITE, f), 'utf8');

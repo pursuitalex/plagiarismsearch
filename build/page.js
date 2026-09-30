@@ -24,7 +24,7 @@ const SITE = path.join(__dirname, '..', 'site');
 const esc = s => String(s).replace(/"/g, '&quot;');
 
 function donor() {
-  const d = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
+  const d = fs.readFileSync(path.join(__dirname, 'shell', 'head-cdn.html'), 'utf8');
   const head = d.slice(0, d.indexOf('<body'));
   const bodyTag = d.slice(d.indexOf('<body'), d.indexOf('>', d.indexOf('<body')) + 1);
   const a = head.indexOf('<script src="https://cdn.tailwindcss.com"></script>');

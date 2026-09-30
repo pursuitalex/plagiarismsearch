@@ -1,4 +1,4 @@
-/* Generate site/ai-detector-v2.html — the DEC-0038 AI Detector page.
+/* Generate site/ai-detector.html — the DEC-0038 AI Detector page.
 
    Same shape as build/home-v2.js, for the same reason: the approved baseline is the
    source of copy, so every string the brief fixes is held in COPY below verbatim and
@@ -17,14 +17,14 @@
 
    The old ai-detector.html is left alone. It carries eight separate forbidden claims
    and every one of its content blocks is on the brief's reject list, so this is a new
-   file beside it rather than an edit — the index-v2.html precedent, and the same
+   file beside it rather than an edit — the index.html precedent, and the same
    reason: nothing is retired until Olex accepts the replacement.
 
    Run:  node build/ai-v2.js  →  node build/shell.js  →  node build/check-ai.js
 
    On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
    no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
-   classes, asset paths are root-relative. Parity: node build/parity/run.js ai-detector-v2.html
+   classes, asset paths are root-relative. Parity: node build/parity/run.js ai-detector.html
 */
 const fs = require('fs');
 const path = require('path');
@@ -32,7 +32,7 @@ const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
-const OUT = 'ai-detector-v2.html';
+const OUT = 'ai-detector.html';
 const cta = require('./cta');
 const { dotField } = require('./dots');
 const banner = require('./banner');   /* the closing band — recipe and reasoning live there */

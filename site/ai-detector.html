@@ -5,172 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>PlagiarismSearch — AI Text Detector</title>
+<meta name="description" content="Paste text or upload a document to check for AI-written content. Review AI Probability, Total AI Rate, and highlighted passages in one report." />
+<link rel="canonical" href="https://plagiarismsearch.com/ai-content-detector" />
+<title>AI Detector &amp; AI Checker for Documents | PlagiarismSearch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-/* Identical token set to index.html — copy verbatim, never edit independently (see DESIGN.md → Web build). */
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Manrope', 'system-ui', 'sans-serif'],
-        serif: ['Newsreader', 'Georgia', 'serif'],
-      },
-      colors: {
-        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
-        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
-        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
-        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
-      },
-      letterSpacing: { tightest: '-0.035em' },
-      boxShadow: {
-        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
-        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
-        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
-      },
-      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
-    }
-  }
-}
-</script>
-<style>
-  /* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
-     disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
-     grain sheet and the header render 150px wider than the page and open a white gutter that
-     no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
-     creates no scroll container, so position:sticky in the scan scene keeps working. */
-  html { background:#fff; overflow-x: clip; }
-  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-  ::selection { background:#F36F5A; color:#fff; }
-  .nums { font-variant-numeric: tabular-nums; }
-
-  /* ---------- grain overlay ---------- */
-  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size:256px 256px; }
-
-  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
-  .orb { position:absolute; border-radius:9999px; pointer-events:none;
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
-    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
-
-  /* ---------- reveal (transform/opacity only) ---------- */
-  .rv { opacity:0; transform:translateY(40px); }
-  .no-motion .rv { opacity:1 !important; transform:none !important; }
-
-  /* ---------- shared micro-interactions ---------- */
-  .btn-press { transition:transform .2s cubic-bezier(.32,.72,0,1); }
-  .btn-press:active { transform:scale(.97); }
-  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
-  .group:hover .icon-orb svg { transform:rotate(-45deg); }
-
-
-  /* ---------- pen mark: highlighted word + hand-drawn underline (reusable, see DESIGN.md) ---------- */
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-
-  /* ---------- AI pricing rows ---------- */
-  .ai-row { transition:background-color .15s ease; }
-  .ai-row:hover { background:#F2FAFB; }
-
-  /* ---------- quick-check form ---------- */
-  .qc-area { width:100%; border:0; outline:none; background:transparent; resize:none;
-    font-size:15px; line-height:1.6; font-weight:500; color:#111827; }
-  .qc-area::placeholder { color:#9CA3AF; font-weight:400; }
-
-  /* the drop zone is the only dashed edge on the site — it has to read as "put a file here" */
-  .qc-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
-    transition:border-color .2s ease, background-color .2s ease; }
-  .qc-drop:hover { border-color:#2CC3DB; background:#F0FAFC; }
-
-  .qc-chip { display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 14px;
-    border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12.5px; font-weight:600;
-    transition:background-color .2s ease, color .2s ease; }
-  .qc-chip:hover { background:#E5E7EB; color:#111827; }
-
-  /* ---------- island nav dropdowns ---------- */
-  .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
-  .nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
-  .nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
-    transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
-  .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
-  @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
-  /* ---------- step rail: joins the numbered badges so the sequence reads ---------- */
-  .rail > li { position:relative; }
-  .rail > li:not(:last-child)::before {
-    content:''; position:absolute; left:38px; top:56px; bottom:-12px; width:2px;
-    background:#E5E7EB; border-radius:9999px; }
-  .rail > li > :first-child { position:relative; z-index:1; }
-
-  /* ---------- header below lg: burger + panel ---------- */
-  .nav-burger-close { display:none; }
-  #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
-  #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
-
-  .nav-panel { position:absolute; left:1rem; right:1rem; top:100%;
-    opacity:0; visibility:hidden; transform:translateY(-8px);
-    transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
-  .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
-  @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
-
-
-  /* ---------- controls on phones ----------
-     These sizes are declared in CSS rather than as utility classes, so they need
-     their own breakpoint. Field heights come down with the text so the controls
-     keep their proportions instead of turning into tall boxes with small labels. */
-  @media (max-width: 639px) {
-    .qc-area, .rc-area, .sp-area { font-size: 14px; }
-    .fld, .cf-field { height: 44px; font-size: 14px; }
-    textarea.fld { height: auto; }
-    .stepper { height: 44px; }
-    .stepper input { font-size: 14px; }
-    .stepper button { width: 34px; font-size: 16px; }
-    .pa-select { height: 40px; font-size: 13px; }
-    .pa-step { height: 40px; }
-    .pa-step input { font-size: 13px; }
-    .pa-step button { width: 32px; font-size: 15px; }
-    .sp-select { height: 36px; font-size: 12px; }
-    .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
-    .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
-    .rc-stat b { font-size: 17px; }
-    .sp-row { font-size: 12px; }
-    .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
-    .cf-label { font-size: 11.5px; }
-    .ctl { font-size: 13.5px; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/tailwind.css">
+<script>(function (h) {h.classList.add('js');if (!matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('js-motion');setTimeout(function () { if (!window.PS_READY) h.classList.remove('js', 'js-motion'); }, 3500);})(document.documentElement);</script>
+<script defer src="/assets/vendor/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="/assets/vendor/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="/assets/js/site.js"></script>
 </head>
 <body class="font-sans text-ink-900 bg-white">
-
 <div class="grain"></div>
 
-<!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
-<header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
+<header data-site-header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
   <!-- On phones the bar starts as the floating pill every other width has, and DOCKS once
        the page scrolls: flush to the top edge, no side gutters, square corners. One
        class, toggled by the script at the foot of this element; nothing changes from sm
        up. The transition is on the three properties that move and respects reduced
        motion. -->
-  <style>
-    .site-header { transition: top .28s cubic-bezier(.32,.72,0,1), padding .28s cubic-bezier(.32,.72,0,1); }
-    .site-header .site-nav { transition: border-radius .28s cubic-bezier(.32,.72,0,1), box-shadow .28s ease, background-color .28s ease; }
-    @media (max-width: 639px) {
-      .site-header.is-docked { top: 0; padding-left: 0; padding-right: 0; }
-      .site-header.is-docked .site-nav { border-radius: 0; background-color: rgba(255,255,255,.94);
-        box-shadow: 0 1px 0 rgba(17,24,39,.07), 0 8px 24px -16px rgba(17,24,39,.18); }
-      .site-header.is-docked #navPanel { margin-left: .75rem; margin-right: .75rem; }
-    }
-    @media (prefers-reduced-motion: reduce) { .site-header, .site-header .site-nav { transition: none; } }
-  </style>
   <div class="flex justify-center">
   <nav class="site-nav pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
     <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-5 xl:pr-6">
       <!-- the mark alone on phones, so Sign in and Check free fit beside it -->
-      <img src="assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
-      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
+      <img src="/assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
+      <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
     </a>
     <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
       <div class="nav-item relative">
@@ -232,7 +94,7 @@ tailwind.config = {
       </div>
       <a href="account.html" class="btn-press inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
       <a href="index.html#top" class="btn-press inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5">Check free</a>
-      <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+      <button type="button" data-nav-burger class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
         <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
         <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
       </button>
@@ -240,7 +102,7 @@ tailwind.config = {
   </nav>
   </div>
 
-  <div id="navPanel" class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
+  <div id="navPanel" data-nav-panel class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
     <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Core</div>
       <a href="index.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
@@ -274,460 +136,900 @@ tailwind.config = {
       </div>
     </div>
   </div>
-  <script>
-    (() => {
-      const h = document.currentScript.closest('.site-header');
-      if (!h) return;
-      const dock = () => h.classList.toggle('is-docked', scrollY > 8);
-      addEventListener('scroll', dock, { passive: true });
-      dock();
-    })();
-  </script>
 </header>
 
-<!-- ================= 01 · HERO ================= -->
-<section class="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F2FCFC]">
-  <div class="orb w-[640px] h-[640px] bg-orange-500/10 -left-52 -top-40"></div>
-  <div class="orb w-[560px] h-[560px] bg-teal-500/10 right-[-160px] top-48"></div>
+<main>
+  <!-- ================= 01 · HERO + REAL AI CHECKER =================
+       "The real AI checker is the dominant above-the-fold product object." So the
+       tool is the largest thing here and both ways in — paste and upload — are given
+       equal weight: the drop zone is a full-width panel, not an icon beside the field.
 
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 grid lg:grid-cols-[1.05fr_.95fr] gap-10 sm:gap-12 lg:gap-14 items-center">
-    <div>
-      <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">AI text detector</span>
+       The five required tool states ship in the HTML rather than being built by script
+       on demand. They are inert here (this is a prototype, and check.js requires the
+       forms submit nowhere), but they are the states the real flow must use, and
+       leaving them in the markup is what keeps a plagiarism status string from
+       drifting back into the AI flow unnoticed. -->
+  <section id="ai-checker" data-component="hero-ai-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
+    <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+    <div class="orb absolute orb-ai-hero-teal"></div>
+    <div class="orb absolute orb-ai-hero-coral"></div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv text-center max-w-[760px] mx-auto mb-8 sm:mb-10 lg:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">AI Detector</span>
+        </div>
+        <h1 class="text-[clamp(2.1rem,4.4vw,3.5rem)] font-extrabold tracking-tightest leading-[1.05] mb-4 lg:mb-5"><span class="pen-word relative inline-block">AI Detector<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 198 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c50-7 133-7 192-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span> for Text and Documents</h1>
+        <p class="text-[14.5px] sm:text-[15.5px] lg:text-[16px] leading-relaxed text-ink-600">Paste text or upload a document to review AI-writing signals in a report that separates overall AI likelihood from the share and location of flagged passages.</p>
       </div>
-      <h1 class="rv text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">AI Text <span class="pen-word relative inline-block">Detector<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span></h1>
-      <p class="rv text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed max-w-[52ch] mb-6 sm:mb-7 lg:mb-9">
-        In-depth analysis of the text to specify the probability of AI tools usage — across full
-        documents, not just short excerpts.
-      </p>
-      <div class="rv flex flex-wrap items-center gap-3">
-        <a href="#plans" class="btn-press inline-flex items-center rounded-full ring-1 ring-ink-200 bg-white/60 text-[14px] sm:text-[15px] font-semibold h-12 sm:h-14 px-5 sm:px-6 lg:px-7 hover:bg-white transition-colors duration-300">See AI pricing</a>
-      </div>
-      <div class="rv flex flex-wrap items-center gap-x-4 lg:gap-x-5 gap-y-2 mt-6 sm:mt-7 lg:mt-8 text-[12.5px] font-semibold text-ink-500">
-        <span class="flex items-center gap-2 text-teal-700"><img src="assets/svg/trustpilot-icon.svg" alt="" class="w-4 h-4">4.7 on Trustpilot</span>
-        <span class="w-1 h-1 rounded-full bg-ink-200"></span>
-        <span class="flex items-center gap-2"><img src="assets/svg/google-icon.svg" alt="" class="w-4 h-4">490K Google Docs installs</span>
-        <span class="w-1 h-1 rounded-full bg-ink-200"></span>
-        <span>1,000 words free daily</span>
-      </div>
-    </div>
 
-    <!-- quick check — same widget as the plagiarism page, counting against the AI limit -->
-    <div class="rv relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-      <form class="qc-form rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+        <form data-ai-check class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
-        <h2 class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest leading-tight mb-3">Paste text or upload a file</h2>
+          <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-3 lg:mb-4">Paste text or upload a document</h2>
 
-        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 mb-4 pb-4 border-b border-ink-100">
-          <div class="flex items-center gap-2">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
-            <span class="text-[13px] font-bold">Free check — up to 1,000 words daily</span>
+          <label for="aiText" class="sr-only">Paste text or upload a document</label>
+          <div class="relative mb-3">
+            <textarea id="aiText" rows="4" class="qc-area block" placeholder="Paste your text here…"></textarea>
           </div>
-          <span class="text-[11.5px] font-medium text-ink-400">Registered users</span>
-        </div>
+          <p class="text-[12px] sm:text-[12.5px] text-ink-500 mb-4">Minimum: 100 characters. For a more reliable result, we recommend 150–200 words or more.</p>
 
-        <textarea rows="4" class="qc-area mb-4" aria-label="Text for AI check"
-          placeholder="Paste your text here. Full documents give a far more accurate probability than short excerpts."></textarea>
+          <!-- Inline validation, tied to the field it is about. role="alert" so a screen
+               reader hears it when it appears rather than only on the next focus move. -->
+          <p data-too-short role="alert" hidden class="flex items-start gap-2 -mt-2 mb-4 text-[12.5px] font-medium text-orange-700">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            Please enter at least 100 characters or upload a document.
+          </p>
 
-        <div class="qc-drop flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
-          <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-          </span>
-          <span class="min-w-0 flex-1">
-            <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
-            <span class="block text-[12px] text-ink-500">to upload the documents for AI check</span>
-          </span>
-          <button type="button" class="btn-press w-full sm:w-auto shrink-0 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[12.5px] font-semibold px-4 py-2.5 sm:py-2">Upload file</button>
-        </div>
-
-        <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
-          <button type="button" class="qc-chip">Dropbox</button>
-          <button type="button" class="qc-chip">OneDrive</button>
-          <button type="button" class="qc-chip">Attach file</button>
-          <button type="button" class="qc-chip">by URL</button>
-        </div>
-
-        <div class="flex items-center justify-between gap-3">
-          <span class="text-[12px] font-medium text-ink-400 nums"><span class="qc-count">0</span> / 1,000 words</span>
-          <button type="submit" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
-            Check your text
-            <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <!-- Upload is a peer of the editor, not a footnote to it: "File/document upload
+               is visually prominent and not relegated to a minor icon." Below md there is
+               no pointer to drag with, so the panel becomes a plain upload button. -->
+          <div class="qc-drop flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-4 mb-3">
+            <span class="w-11 h-11 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
             </span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[13.5px] font-bold tracking-tight"><span class="hidden md:inline">Drag and drop a document here</span><span class="md:hidden">Upload file</span></span>
+              <span class="block text-[12px] text-ink-500">PlagiarismSearch extracts the readable text for AI analysis.</span>
+            </span>
+            <button type="button" class="qc-chip shrink-0">Upload file</button>
+          </div>
 
-<!-- ================= 02 · HUMAN VS AI ================= -->
-<section class="relative py-16 sm:py-24 lg:py-32 bg-white">
-  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <!-- image LEFT — hero above had it right; page alternates side to side -->
-    <div class="grid lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-16 items-center">
-
-      <div class="rv lg:order-2">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Human vs AI</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Identify human vs<br>AI-generated text.</h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed mb-4 lg:mb-5">
-          The rapid growth of generative AI in education, business communication, recruitment and
-          digital media has created a real need for reliable tools to verify text authenticity. Our
-          detector determines whether a document was written by a human, generated by AI, or
-          contains a mix of both.
-        </p>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed mb-4 lg:mb-5">
-          Trained on extensive datasets of human-written and AI-generated content, the model
-          recognises outputs from today's most advanced large language models — including GPT-5,
-          Claude, Gemini, LLaMA 2 and Mistral — down to subtle stylistic signatures.
-        </p>
-        <div class="flex gap-3.5 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-50 ring-1 ring-orange-200 p-4 lg:p-5">
-          <svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-          <p class="text-[14px] leading-relaxed text-ink-700">
-            AI detection is <strong class="font-semibold text-ink-900">a valuable indicator rather
-            than a final verdict</strong>. Accuracy is highest on complete documents — short
-            excerpts give the model too little to work with.
+          <!-- file error, tied to the upload area rather than the page -->
+          <p id="stUnreadable" role="alert" hidden class="flex items-start gap-2 -mt-1 mb-3 text-[12.5px] font-medium text-orange-700">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            We couldn’t identify readable text in this file. Try another document or paste the text directly.
           </p>
-        </div>
-      </div>
 
-      <!-- schematic report mock — built in HTML from the real cabinet anatomy (IMAGES.md §3.5) -->
-      <div class="rv lg:order-1">
-        <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-3 lg:p-4">
-          <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white shadow-diffuse overflow-hidden" aria-hidden="true">
-            <!-- window chrome -->
-            <div class="flex items-center gap-1.5 px-4 lg:px-5 py-3.5 border-b border-ink-100">
-              <span class="w-2 h-2 rounded-full bg-ink-200"></span>
-              <span class="w-2 h-2 rounded-full bg-ink-200"></span>
-              <span class="w-2 h-2 rounded-full bg-ink-200"></span>
-              <span class="ml-3 h-2 w-28 rounded-full bg-ink-100"></span>
-            </div>
+          <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
+            <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+            <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+            <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+            <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+          </div>
 
-            <div class="grid grid-cols-[1.35fr_1fr]">
-              <!-- document with highlighted passages -->
-              <div class="p-4 lg:p-5 space-y-2.5 border-r border-ink-100">
-                <div class="h-2 w-4/5 rounded-full bg-ink-200"></div>
-                <div class="h-2 w-full rounded-full bg-ink-200"></div>
-                <div class="relative">
-                  <div class="h-5 w-full rounded-md" style="background:rgba(154,106,222,.22)"></div>
-                  <span class="absolute -left-1.5 -top-1.5 w-4 h-4 rounded-full text-white text-[8px] font-bold flex items-center justify-center" style="background:#6D3FB0">1</span>
-                </div>
-                <div class="h-5 w-11/12 rounded-md" style="background:rgba(154,106,222,.22)"></div>
-                <div class="h-2 w-3/4 rounded-full bg-ink-200"></div>
-                <div class="h-5 w-full rounded-md bg-orange-500/20"></div>
-                <div class="h-2 w-2/3 rounded-full bg-ink-200"></div>
-                <div class="h-2 w-5/6 rounded-full bg-ink-200"></div>
-                <div class="h-2 w-1/2 rounded-full bg-ink-200"></div>
+          <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 border-t border-ink-100">
+            <a href="#ai-pricing" class="text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">View AI pricing</a>
+            <button type="submit" id="runCheck" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+              Check for AI
+              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </button>
+          </div>
+
+          <!-- Run states. The checker itself changes; there is no separate page block,
+               which is what the batch rules out. -->
+          <p id="stProcessing" role="status" hidden class="flex items-center gap-2.5 mt-4 pt-4 border-t border-ink-100 text-[13px] font-semibold text-ink-700">
+            <span class="w-3.5 h-3.5 rounded-full border-2 border-teal-500 border-t-transparent animate-spin" aria-hidden="true"></span>
+            Analyzing your text for AI-writing signals…
+          </p>
+          <p id="stCompleted" role="status" hidden class="flex items-center gap-2.5 mt-4 pt-4 border-t border-ink-100 text-[13px] font-semibold text-mint-700">
+            <svg class="shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Your AI report is ready.
+          </p>
+          <div id="stBalance" role="alert" hidden class="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-4 pt-4 border-t border-ink-100 text-[13px] font-semibold text-orange-700">
+            You don’t have enough AI words for this check.
+            <a href="#ai-pricing" class="underline decoration-orange-300 underline-offset-4 hover:text-orange-800 transition-colors duration-300">View AI pricing</a>
+          </div>
+
+          <!-- THE AUTH GATE. Not a second form and not a persistent card: it is a state of
+               this card, revealed only when an unauthenticated visitor presses Check for AI.
+               The copy is the approved copy, unchanged; only its display condition moved.
+               Both actions go to the shared account route, the same one every other page
+               in this prototype uses for the auth flow. -->
+          <div data-auth-gate hidden class="mt-4 pt-5 border-t border-ink-100">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+              <div class="min-w-0 flex-1">
+                <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-1.5">Create an account to run your AI check</p>
+                <p class="text-[13px] leading-relaxed text-ink-600">New accounts receive a one-time 1,000-word credit that can be used for AI or plagiarism checking.</p>
               </div>
-
-              <!-- report metrics — the cabinet's signature element -->
-              <div class="p-4 lg:p-5">
-                <div class="text-[9.5px] font-bold tracking-[0.14em] uppercase text-ink-400 mb-4">Report</div>
-
-                <div class="mb-3.5">
-                  <div class="flex items-baseline justify-between mb-1.5">
-                    <span class="text-[10.5px] font-semibold text-ink-600">Plagiarism</span>
-                    <span class="text-[10.5px] font-bold nums text-ink-800">7.3%</span>
-                  </div>
-                  <div class="relative h-1.5 rounded-full bg-ink-100"><div class="absolute inset-y-0 left-0 w-[7%] rounded-full bg-orange-500"></div></div>
-                </div>
-
-                <div class="mb-3.5">
-                  <div class="flex items-baseline justify-between mb-1.5">
-                    <span class="text-[10.5px] font-semibold text-ink-600">Total AI rate</span>
-                    <span class="text-[10.5px] font-bold nums text-ink-800">81.3%</span>
-                  </div>
-                  <div class="relative h-1.5 rounded-full bg-ink-100"><div class="absolute inset-y-0 left-0 w-[81%] rounded-full bg-teal-500"></div></div>
-                </div>
-
-                <div class="mb-4 lg:mb-5">
-                  <div class="flex items-baseline justify-between mb-1.5">
-                    <span class="text-[10.5px] font-semibold text-ink-600">AI probability</span>
-                    <span class="text-[10.5px] font-bold nums text-ink-800">100%</span>
-                  </div>
-                  <div class="relative h-1.5 rounded-full bg-ink-100"><div class="absolute inset-y-0 left-0 w-full rounded-full" style="background:#6D3FB0"></div></div>
-                </div>
-
-                <div class="h-px bg-ink-100 mb-4"></div>
-                <div class="space-y-2.5">
-                  <div class="flex items-center gap-2"><span class="h-2 flex-1 rounded-full bg-ink-200"></span><span class="text-[9.5px] font-bold nums text-ink-500 shrink-0">3.2%</span></div>
-                  <div class="flex items-center gap-2"><span class="h-2 w-3/4 rounded-full bg-ink-200"></span><span class="text-[9.5px] font-bold nums text-ink-500 shrink-0 ml-auto">2.7%</span></div>
-                  <div class="flex items-center gap-2"><span class="h-2 w-2/3 rounded-full bg-ink-200"></span><span class="text-[9.5px] font-bold nums text-ink-500 shrink-0 ml-auto">1.3%</span></div>
-                </div>
+              <div class="shrink-0 flex flex-col items-start sm:items-end gap-2">
+                <a href="account.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Create free account
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+                <a href="account.html" class="text-[12.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">Already have an account? Log in</a>
               </div>
             </div>
+          </div>
+        </form>
+      </div>
 
-            <!-- legend, as in the real report -->
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-4 lg:px-5 py-3 border-t border-ink-100">
-              <span class="flex items-center gap-1.5 text-[9.5px] font-semibold text-ink-500"><span class="w-2 h-2 rounded-full bg-orange-500"></span>Plagiarism</span>
-              <span class="flex items-center gap-1.5 text-[9.5px] font-semibold text-ink-500"><span class="w-2 h-2 rounded-full" style="background:#6D3FB0"></span>AI probability</span>
-              <span class="flex items-center gap-1.5 text-[9.5px] font-semibold text-ink-500"><span class="w-2 h-2 rounded-full bg-mint-500"></span>Citations</span>
-              <span class="flex items-center gap-1.5 text-[9.5px] font-semibold text-ink-500"><span class="w-2 h-2 rounded-full bg-teal-500"></span>References</span>
+      <!-- Compact product proof rail. Each item is one element in reading order so the
+           approved sentence survives whole for a crawler and a screen reader. -->
+      <div class="rv-kids max-w-[1000px] mx-auto mt-10 sm:mt-12 lg:mt-14 grid sm:grid-cols-3 gap-4 sm:gap-5">
+        <div class="rounded-2xl sm:rounded-[20px] bg-white ring-1 ring-black/5 shadow-diffuse px-5 py-5 sm:px-6 sm:py-6 flex flex-col">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-teal-100 items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </span>
+          <p class="text-[26px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tightest nums leading-none">500,000+</p>
+          <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-1.5 mb-1.5">users</p>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Across PlagiarismSearch</p>
+        </div>
+        <div class="rounded-2xl sm:rounded-[20px] bg-white ring-1 ring-black/5 shadow-diffuse px-5 py-5 sm:px-6 sm:py-6 flex flex-col">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-ink-100 items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01"/><path d="M6 18h.01"/></svg>
+          </span>
+          <p class="text-[15px] sm:text-[16px] font-bold tracking-tight leading-snug mb-1.5">Processed on our infrastructure</p>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Checked content is not sent to an external AI detector provider.</p>
+        </div>
+        <div class="rounded-2xl sm:rounded-[20px] bg-white ring-1 ring-black/5 shadow-diffuse px-5 py-5 sm:px-6 sm:py-6 flex flex-col">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-orange-100 items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          </span>
+          <p class="text-[15px] sm:text-[16px] font-bold tracking-tight leading-snug mb-1.5">Text or document</p>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Paste text or upload a file for analysis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 · SIGNATURE: AI-ONLY REPORT + METRICS =================
+       The page's whole argument: "do not win by claiming more certainty than
+       competitors; win by showing the result more clearly."
+
+       Rebuilt 2026-08-25. The previous version was a schematic — grey bars and bracket tokens
+       tokens — which the correction batch called out as looking like a Figma placeholder
+       rather than a product. It now reproduces the real report's own layout: readable
+       document text with violet flagged passages on the left, the Report information
+       panel with its two metrics and the Plagiarism / AI tab pair on the right.
+
+       The split follows the batch: the report takes ~65% of the content width and the
+       three metric explanations ~35%, so the evidence outweighs the commentary. It used
+       to be the other way round.
+
+       The Plagiarism tab label is present and that is a recorded deviation — see
+       DECISIONS.md § DEC-U03. No plagiarism PERCENTAGE appears: the real panel carries
+       only the two AI metrics, and the tabs switch the passage list, not the figures. -->
+  <section id="ai-report" data-component="report-ai-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute orb-ai-report-teal"></div>
+    <div class="orb absolute orb-ai-report-violet"></div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[760px] mb-10 sm:mb-12 lg:mb-14 text-white">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">The report</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Understand your AI detection report</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[70ch]">A single percentage can be easy to misread. PlagiarismSearch separates the result into three levels so you can see what the detector says about the document as a whole, how much of the text is flagged, and where those signals appear.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-[1.85fr_1fr] gap-6 lg:gap-8">
+
+        <!-- the report itself — the dominant object in this section -->
+        <div class="rv min-w-0 rounded-3xl sm:rounded-4xl bg-white/[.06] ring-1 ring-white/10 p-1.5 sm:p-2">
+          <div class="min-w-0 rounded-[18px] sm:rounded-3xl bg-white overflow-hidden">
+
+            <div class="grid sm:grid-cols-[1.5fr_1fr]">
+
+              <!-- document -->
+              <div class="min-w-0 p-4 sm:p-5 lg:p-6 border-b sm:border-b-0 sm:border-r border-ink-100">
+                <div class="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-ink-100">
+                  <span class="text-[11.5px] font-semibold text-ink-500 tabular-nums">#11549335</span>
+                  <span class="text-[11px] text-ink-500 tabular-nums">Words: 1443</span>
+                </div>
+                <p class="text-[12.5px] sm:text-[13px] leading-[1.85] text-ink-700 mb-3.5">Urban transport planning has changed considerably over the past two decades. Cities that once measured success by road capacity now look at how many journeys can be completed without a car at all.</p>
+                <p class="text-[12.5px] sm:text-[13px] leading-[1.85] text-ink-700 mb-3.5">Several factors contribute to this shift. <span class="ai-hl ai-hl-on">The widespread adoption of integrated ticketing has made multi-modal journeys significantly more convenient for daily commuters, while real-time arrival data has reduced the perceived cost of waiting.</span> Local authorities have also revised how street space is allocated.</p>
+                <p class="text-[12.5px] sm:text-[13px] leading-[1.85] text-ink-700 mb-3.5">Evidence from comparable programmes suggests the effects are cumulative rather than immediate. <span class="ai-hl ai-hl-on">Sustained investment across a decade tends to produce more durable changes in travel behaviour than short-term interventions concentrated in a single corridor.</span> Measurement remains difficult, and results vary between districts.</p>
+              </div>
+
+              <!-- Report information -->
+              <div class="min-w-0 p-4 sm:p-5 lg:p-6 bg-ink-50/60">
+                <h3 class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-4">Report information</h3>
+
+                <div class="mb-4">
+                  <div class="text-[12px] font-medium text-ink-600 mb-1.5">Total AI rate</div>
+                  <div class="flex items-center gap-3">
+                    <div class="flex-1 h-1.5 rounded-full bg-ink-200 overflow-hidden">
+                      <div class="h-full rounded-full" style="width:13.44%;background:#9A6ADE"></div>
+                    </div>
+                    <span class="shrink-0 text-[12.5px] font-semibold tabular-nums text-ink-900">13.44%</span>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="text-[12px] font-medium text-ink-600 mb-1.5">AI probability</div>
+                  <div class="flex items-center gap-3">
+                    <div class="flex-1 h-1.5 rounded-full bg-ink-200 overflow-hidden">
+                      <div class="h-full rounded-full" style="width:12.5%;background:#9A6ADE"></div>
+                    </div>
+                    <span class="shrink-0 text-[12.5px] font-semibold tabular-nums text-ink-900">12.5%</span>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-4 -mx-4 sm:-mx-5 lg:-mx-6 px-4 sm:px-5 lg:px-6 pt-3 mt-4 bg-ink-100 border-y border-ink-200">
+                  <span class="text-[12.5px] font-semibold pb-2.5 text-ink-600">Plagiarism</span>
+                  <span class="text-[12.5px] font-semibold pb-2.5 text-teal-700 border-b-2 border-teal-500">AI</span>
+                </div>
+
+                <!-- the flagged passages, the same runs the document highlights -->
+                <div class="mt-3 space-y-2.5">
+                  <p class="text-[11.5px] leading-relaxed text-ink-500 pb-2.5 border-b border-ink-100 last:border-0">The widespread adoption of integrated ticketing has made multi-modal journeys significantly more convenient for daily commuters, while real-time arrival data has reduced the perceived cost of waiting.</p>
+                  <p class="text-[11.5px] leading-relaxed text-ink-500 pb-2.5 border-b border-ink-100 last:border-0">Sustained investment across a decade tends to produce more durable changes in travel behaviour than short-term interventions concentrated in a single corridor.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- the three layers, compact: they explain the report, they do not compete with it -->
+        <div class="rv-kids flex flex-col gap-3 sm:gap-4">
+          <div class="flex-1 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-1.5">01 · Document-level likelihood</span>
+            <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight text-white mb-1.5">AI Probability</h3>
+            <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-white/65">The percentage likelihood that the analyzed text, considered as a whole, was AI-generated.</p>
+          </div>
+          <div class="flex-1 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-1.5">02 · Share of flagged text</span>
+            <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight text-white mb-1.5">Total AI Rate</h3>
+            <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-white/65">The share of the document made up of passages flagged as AI-generated.</p>
+          </div>
+          <div class="flex-1 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-4 sm:p-5">
+            <span class="block text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mb-1.5">03 · Location and passage-level signal</span>
+            <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight text-white mb-1.5">Highlighted passages</h3>
+            <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-white/65">See where AI-writing signals appear in the document. Individual highlighted sentences or passages can show their own AI probability.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- The critical interpretation callout, as an informer rather than another card:
+           icon chip, tinted ring, content offset beside it. Teal and an info mark —
+           the coral warning triangle belongs to the interpretation section, which
+           cautions rather than explains. -->
+      <div class="rv mt-6 sm:mt-8 rounded-3xl bg-teal-400/[.07] ring-1 ring-teal-400/25 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5">
+        <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-400/15 ring-1 ring-teal-400/30 flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </span>
+        <div class="min-w-0">
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/80 mb-3">AI Probability and Total AI Rate are not the same metric. AI Probability describes the document-level likelihood. Total AI Rate describes how much of the document is contained in passages flagged as AI-generated.</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white font-semibold">These values are detection indicators, not proof of authorship.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 · DOCUMENT / FILE CHECKING =================
+       An established organic wedge, so it gets a section of its own rather than a line
+       in the hero. Four equal blocks, no keyword cards: "Do not turn this into
+       repetitive AI detector for PDF / DOCX / PPT / students / teachers cards."
+       No extension list either — the authoritative allow-list is not available. -->
+  <section id="document-ai-checker" data-component="document-grid" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <!-- Recomposed 2026-08-26 at Olex's request: the drop-zone widget that stood
+           beside this text is gone and the text is centred.
+
+           It was a second piece of product chrome directly above the bento below,
+           competing with the bento instead of setting it up — and the hero already
+           shows the same checker forty lines earlier. Centred header over a bento is
+           the idiom sections 01, 08 and 09 use, so this now matches them. -->
+      <div class="rv text-center max-w-[760px] mx-auto mb-10 sm:mb-12 lg:mb-16">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Documents</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Check AI-written text in complete documents</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Paste text directly into the AI checker for a quick analysis, or upload a document when you want to review the text from a complete file. Document upload makes it easier to check longer essays, reports, articles, and other written work without copying the entire text into the editor.</p>
+      </div>
+
+      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
+        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/></svg>
+            </span>
+            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Paste text</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Use the editor when the text is already available to copy and paste. Pasted text must contain at least 100 characters.</p>
+          </div>
+        </div>
+        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            </span>
+            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Upload a document</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Upload a supported document and let PlagiarismSearch extract the readable text for AI analysis.</p>
+          </div>
+        </div>
+        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
+            </span>
+            <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2.5">Give the detector enough context</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">For a more reliable result, we recommend checking at least 150–200 words whenever possible. Longer samples give the detector more context than very short excerpts.</p>
+          </div>
+        </div>
+        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse spotlight">
+          <div class="min-w-0 h-full rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-7 lg:p-8 flex flex-col">
+            <span class="inline-flex w-12 h-12 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center mb-4 sm:mb-5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+            </span>
+            <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-2.5">Check text in different languages</h3>
+            <p class="flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">PlagiarismSearch can process text in any language. Detection accuracy is highest in English, so results in other languages should be interpreted with that limitation in mind.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 · RESPONSIBLE INTERPRETATION =================
+       Recomposed 2026-08-25. It was a 50/50 split with a lone H2 on the left and three
+       stacked paragraphs on the right — the batch called it sparse and disconnected, and
+       it was: the most important sentence on the page sat as one card among equals.
+
+       The section now has a job distinct from the report above it. The report answers
+       'what are the three signals?'; this answers 'how do I use them?' — so it reads as
+       a sequence: intro, three numbered steps, then the clarification as the thing the
+       whole section builds to.
+
+       The 70% sentence is the signature callout now, not a note beside paragraphs. The
+       consequential-use note sits under it at lower priority, which is where the batch
+       puts it. -->
+  <section id="interpret-ai-results" data-component="interpret" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+
+      <div class="rv max-w-[760px] mb-7 sm:mb-8">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Interpretation</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Use AI detection as a signal, not a verdict</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">AI detection estimates patterns associated with AI-generated writing. It cannot prove who wrote a text or, by itself, establish that a person used AI.</p>
+      </div>
+
+      <!-- Reorganised 2026-08-26. Olex flagged the tail of this section: two bare
+           paragraphs in a two-column grid with a third loose under them, sitting after
+           the callout with no container and nothing holding them together.
+
+           The cause was ordering, not styling. body[1] — "Review the document-level AI
+           Probability together with Total AI Rate and the highlighted passages" — is the
+           prose form of the three numbered cards, and it was stranded BELOW them, after
+           the callout. It now introduces the steps it describes, which is the one place
+           on the page it does any work.
+
+           That leaves two genuine caveats, and they are caveats rather than paragraphs,
+           so they take the icon-chip card from section 3's bento: same shell, same 44px
+           tinted chip, same 3+2 bento spans. No new component. The labels are eyebrow
+           register, lifted from each sentence's own words. -->
+      <p class="rv text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mb-5 lg:mb-6">Review the document-level AI Probability together with Total AI Rate and the highlighted passages. Looking at these signals together provides more context than relying on a single percentage.</p>
+
+      <!-- Recomposed 2026-08-26 at Olex's request: the three steps run down the left and
+           the correction stands beside them at full height.
+
+           It reads better this way than as a 3-across row above a full-width band. The
+           steps are a sequence, and a vertical list is what a sequence looks like; each
+           card is now a wide short row, so the number sits beside the text rather than
+           stacked on top of it, which is what that shape wants.
+
+           The right panel had room to spare once it was half-width and full-height, so
+           it carries the diagram the sentence asks for: the same document twice, once
+           with a single figure over the whole of it (AI Probability) and once with the
+           flagged runs marked and no figure at all (Total AI Rate). That IS the
+           correction — one is a number about everything, the other is which parts.
+           70% is the sentence's own number; no second number is invented, and the marks
+           are partial-width for the same reason. -->
+      <div class="grid lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 mb-4 lg:mb-5">
+
+        <div class="rv-kids min-w-0 flex flex-col gap-4 sm:gap-5">
+          <div class="flex-1 flex items-center gap-4 sm:gap-5 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+            <span class="shrink-0 inline-flex w-10 h-10 rounded-full bg-ink-900 text-white text-[13px] font-bold items-center justify-center tabular-nums">1</span>
+            <div class="min-w-0">
+              <h3 class="text-[15px] sm:text-[16px] lg:text-[16.5px] font-bold tracking-tight">Document-level likelihood</h3>
+              <p class="mt-1 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Start with AI Probability.</p>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center gap-4 sm:gap-5 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+            <span class="shrink-0 inline-flex w-10 h-10 rounded-full bg-ink-900 text-white text-[13px] font-bold items-center justify-center tabular-nums">2</span>
+            <div class="min-w-0">
+              <h3 class="text-[15px] sm:text-[16px] lg:text-[16.5px] font-bold tracking-tight">Share of flagged text</h3>
+              <p class="mt-1 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Compare Total AI Rate.</p>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center gap-4 sm:gap-5 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+            <span class="shrink-0 inline-flex w-10 h-10 rounded-full bg-ink-900 text-white text-[13px] font-bold items-center justify-center tabular-nums">3</span>
+            <div class="min-w-0">
+              <h3 class="text-[15px] sm:text-[16px] lg:text-[16.5px] font-bold tracking-tight">Highlighted passages</h3>
+              <p class="mt-1 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Inspect the exact passages and context.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- the sentence the section exists for -->
+        <div data-surface="dark" class="rv min-w-0 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-7 lg:p-8 flex flex-col">
+          <span class="shrink-0 w-11 h-11 rounded-2xl bg-white/10 flex items-center justify-center mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          </span>
+          <p class="text-[15.5px] sm:text-[16.5px] lg:text-[17.5px] font-bold tracking-tight leading-[1.42] text-white"><span class="text-orange-300">A 70% AI Probability does not mean that 70% of the text was written by AI.</span> AI Probability describes the likelihood for the document as a whole. Use Total AI Rate to understand the share of text contained in passages flagged as AI-generated.</p>
+
+          <div class="mt-auto pt-6 lg:pt-7">
+            <div class="grid grid-cols-2 gap-3 sm:gap-3.5" aria-hidden="true">
+
+              <!-- one figure, and it is about the whole thing -->
+              <div class="min-w-0 rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-3.5 sm:p-4">
+                <p class="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/60 mb-3 truncate">AI Probability</p>
+                <div class="relative rounded-xl ring-1 ring-white/15 px-3 py-3 space-y-1.5">
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[62%]"></span><span class="block h-1.5 rounded-full bg-white/20 w-[38%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[100%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[34%]"></span><span class="block h-1.5 rounded-full bg-white/20 w-[66%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[100%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[48%]"></span><span class="block h-1.5 rounded-full bg-white/20 w-[52%]"></span></span>
+                  <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-ink-950 ring-1 ring-orange-400/45 px-2.5 py-0.5 text-[10.5px] font-bold tabular-nums text-orange-200">70%</span>
+                </div>
+              </div>
+
+              <!-- which parts, and no figure at all -->
+              <div class="min-w-0 rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-3.5 sm:p-4">
+                <p class="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/60 mb-3 truncate">Total AI Rate</p>
+                <div class="rounded-xl ring-1 ring-white/15 px-3 py-3 space-y-1.5">
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[62%]"></span><span class="block h-1.5 rounded-full bg-ai-mark w-[38%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[100%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-ai-mark w-[34%]"></span><span class="block h-1.5 rounded-full bg-white/20 w-[66%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[100%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[48%]"></span><span class="block h-1.5 rounded-full bg-ai-mark w-[52%]"></span></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- ================= 03 · ADVANTAGES ================= -->
-<section class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
-  <div class="orb w-[520px] h-[520px] bg-orange-500/8 right-[-140px] top-10"></div>
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="rv text-center max-w-[620px] mx-auto mb-8 sm:mb-11 lg:mb-14">
-      <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Advantages</span>
-      </div>
-      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Advantages of our AI checker</h2>
-      <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed">Our AI-generated content and GPT detector exceeds other models for a number of reasons.</p>
-    </div>
 
-    <!-- illustration convention: grey card, white plate at content width, icon modest inside -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[1080px] mx-auto">
-      <article class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="assets/img/ai/adv-accuracy.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">Accuracy</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Proven high accuracy compared to other AI detectors.</p>
-      </article>
-      <article class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="assets/img/ai/adv-updates.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">Continuous improvements</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Regularly updated with the newest AI models — GPT-5, Claude, Gemini.</p>
-      </article>
-      <article class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="assets/img/ai/adv-safety.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">Safety</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Your documents remain private, with GDPR-compliant processing.</p>
-      </article>
-      <article class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="assets/img/ai/adv-nostorage.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">No data storage</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Uploaded documents are handled under our Privacy Policy.</p>
-      </article>
-      <article class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="assets/img/ai/adv-speed.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">Speed</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Get results in seconds, even for long documents.</p>
-      </article>
-      <article class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="assets/img/ai/adv-confidence.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tightest mb-2">Confidence</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Trusted by thousands of students, educators and businesses worldwide.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 04 · HOW TO CHECK ================= -->
-<section class="relative py-16 sm:py-24 lg:py-32 bg-white">
-  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <!-- photo RIGHT — the report mock in section 02 sits on the left -->
-    <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-10 sm:gap-14 lg:gap-16 items-center">
-
-      <div>
-        <div class="rv inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-mint-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Four steps</span>
-        </div>
-        <h2 class="rv text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-6 sm:mb-7 lg:mb-8">How to check whether the text is AI-generated</h2>
-
-        <ol class="rail space-y-3">
-        <li class="rv flex gap-4 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
-          <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-white ring-1 ring-black/5 text-[14px] font-extrabold nums text-orange-600">1</span>
-          <span class="pt-1">
-            <span class="block text-[15.5px] font-bold tracking-tight mb-1">Create an account</span>
-            <span class="block text-[13.5px] leading-relaxed text-ink-600">Sign up or sign in. Please note you have to provide your actual email.</span>
+      <!-- the two caveats, at the weight the batch gives them -->
+      <div class="rv-kids grid lg:grid-cols-5 gap-4 lg:gap-5">
+        <div class="min-w-0 lg:col-span-2 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-ink-100 items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
           </span>
-        </li>
-        <li class="rv flex gap-4 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
-          <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-white ring-1 ring-black/5 text-[14px] font-extrabold nums text-orange-600">2</span>
-          <span class="pt-1">
-            <span class="block text-[15.5px] font-bold tracking-tight mb-1">Choose a plan</span>
-            <span class="block text-[13.5px] leading-relaxed text-ink-600">Pick the pricing plan that matches the volume you check.</span>
+          <p class="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-ink-500 mb-2">Sample length</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Short samples give the detector less context, which is why we recommend 150–200 words or more whenever possible.</p>
+        </div>
+        <div class="min-w-0 lg:col-span-3 rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-orange-100 items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
           </span>
-        </li>
-        <li class="rv flex gap-4 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
-          <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-white ring-1 ring-black/5 text-[14px] font-extrabold nums text-orange-600">3</span>
-          <span class="pt-1">
-            <span class="block text-[15.5px] font-bold tracking-tight mb-1">Submit the document</span>
-            <span class="block text-[13.5px] leading-relaxed text-ink-600">Upload the file you need to check for AI-generated text.</span>
-          </span>
-        </li>
-        <li class="rv flex gap-4 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">
-          <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-white ring-1 ring-black/5 text-[14px] font-extrabold nums text-orange-600">4</span>
-          <span class="pt-1">
-            <span class="block text-[15.5px] font-bold tracking-tight mb-1">Get the score</span>
-            <span class="block text-[13.5px] leading-relaxed text-ink-600">Receive our findings and an accurate probability score.</span>
-          </span>
-        </li>
-        </ol>
-      </div>
-
-      <!-- the hero's photo moved here: a person reading a document belongs beside the steps -->
-      <div class="rv relative">
-        <img src="assets/img/ai/hero.webp" alt="" width="1100" height="825" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse">
-        <div class="hidden lg:block absolute -left-9 bottom-9 w-[43%] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white shadow-diffuse-lg px-4 lg:px-5 py-4">
-          <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">AI probability</div>
-          <div class="flex items-end gap-2 mb-2.5">
-            <span class="text-[24px] sm:text-[26px] lg:text-[30px] font-extrabold tracking-tightest leading-none nums text-ink-900">81.3</span>
-            <span class="text-[13px] font-bold text-ink-400 pb-1">%</span>
-          </div>
-          <div class="relative h-2 rounded-full bg-ink-100">
-            <div class="absolute inset-y-0 left-0 rounded-full bg-teal-500" style="width:81.3%"></div>
-          </div>
+          <p class="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-ink-500 mb-2">Consequential review</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">If an AI result is being considered in an academic or other consequential review, use the report as one source of evidence and consider the surrounding context before making a decision.</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= 05 · API ================= -->
-<section class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
-  <div class="orb w-[560px] h-[560px] bg-teal-500/8 -left-44 bottom-[-200px]"></div>
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-ink-950 text-white p-1.5 sm:p-2 ring-1 ring-white/10 shadow-diffuse-lg overflow-hidden">
-      <div class="relative rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] p-5 sm:p-8 lg:p-14 grid lg:grid-cols-[1.05fr_.95fr] gap-8 sm:gap-9 lg:gap-10 items-center overflow-hidden">
-        <div class="orb w-[420px] h-[420px] bg-orange-500/15 -right-24 -top-40"></div>
-        <div class="relative">
-          <div class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] text-teal-300 mb-3">AI CONTENT DETECTOR API</div>
-          <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-4">Detection inside your own workflow.</h2>
-          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-white/60 leading-relaxed max-w-[52ch] mb-4">
-            Integrate our detector into your business platforms or custom content workflows. All
-            users of our tool have key access to the API.
-          </p>
-          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-white/60 leading-relaxed max-w-[52ch] mb-6 sm:mb-7 lg:mb-8">
-            Contact us to receive a unique proposal for the AI Content Detector API.
-          </p>
-          <div class="flex flex-wrap gap-3">
-            <a href="mailto:services@plagiarismsearch.com" class="btn-press group inline-flex items-center gap-3 rounded-full h-12 sm:h-14 bg-white text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-7 pr-2.5">
-              Request API access
-              <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/5 flex items-center justify-center">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </span>
-            </a>
-            <a href="vip.html" class="btn-press inline-flex items-center rounded-full h-12 sm:h-14 px-5 sm:px-6 lg:px-7 text-[14px] sm:text-[15px] ring-1 ring-white/20 text-white font-semibold hover:bg-white/10 transition-colors duration-300">VIP &amp; institutions</a>
-          </div>
-        </div>
-
-        <!-- schematic API panel — request in, verdict out -->
-        <div class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-4 sm:p-5 lg:p-6" aria-hidden="true">
-          <div class="flex items-center gap-2 mb-4 lg:mb-5">
-            <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-            <span class="text-[9.5px] font-bold tracking-[0.16em] uppercase text-white/40">Endpoint</span>
-          </div>
-          <div class="space-y-2.5 mb-4 sm:mb-5 lg:mb-6">
-            <div class="flex items-center gap-2.5">
-              <span class="rounded-md bg-teal-500/90 text-[9px] font-bold px-2 py-1">POST</span>
-              <span class="h-2 flex-1 rounded-full bg-white/15"></span>
-            </div>
-            <div class="h-2 w-4/5 rounded-full bg-white/10"></div>
-            <div class="h-2 w-2/3 rounded-full bg-white/10"></div>
-          </div>
-          <div class="h-px bg-white/10 mb-4 lg:mb-5"></div>
-          <div class="flex items-baseline justify-between mb-2">
-            <span class="text-[10.5px] font-semibold text-white/60">ai_probability</span>
-            <span class="text-[16px] sm:text-[17px] lg:text-[18px] font-extrabold tracking-tightest nums">100%</span>
-          </div>
-          <div class="relative h-1.5 rounded-full bg-white/10 mb-4"><div class="absolute inset-y-0 left-0 w-full rounded-full bg-teal-400"></div></div>
-          <div class="flex items-baseline justify-between mb-2">
-            <span class="text-[10.5px] font-semibold text-white/60">plagiarism</span>
-            <span class="text-[16px] sm:text-[17px] lg:text-[18px] font-extrabold tracking-tightest nums">7.3%</span>
-          </div>
-          <div class="relative h-1.5 rounded-full bg-white/10"><div class="absolute inset-y-0 left-0 w-[7%] rounded-full bg-orange-500"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 06 · AI PRICING ================= -->
-<section id="plans" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="grid lg:grid-cols-[400px_1fr] gap-10 sm:gap-12 lg:gap-14 items-start">
-
-      <div class="rv lg:sticky lg:top-32">
+  <!-- ================= 05 · AI DETECTION VS PLAGIARISM =================
+       Stated once, compactly, and this is the ONLY plagiarism cross-link in the body.
+       "Do not spread plagiarism vocabulary through the AI page." -->
+  <section id="ai-vs-plagiarism" data-component="compare-split" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv text-center max-w-[720px] mx-auto mb-10 sm:mb-12">
         <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Pricing plans</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Two different checks</span>
         </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Choose the pricing plan</h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed mb-5 sm:mb-6 lg:mb-7">
-          Word-based packages for editors, agencies and LMS integrations. Register first and check
-          up to <span class="font-semibold text-ink-900">1,000 words daily for free</span> — fast
-          and confidential.
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">AI-generated text and plagiarism are different</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">An AI detector and a plagiarism checker answer different questions.</p>
+      </div>
+
+      <div class="rv-kids grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 max-w-[1000px] mx-auto">
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8">
+          <span class="w-11 h-11 rounded-xl bg-teal-50 flex items-center justify-center mb-4">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6a6 6 0 1 0 6 6"/><circle cx="12" cy="12" r="1.5" fill="#0991A8"/></svg>
+          </span>
+          <h3 class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-2.5">AI Detector</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">AI detection estimates whether writing shows patterns associated with AI generation and highlights the parts of the text that contribute to the result.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7 lg:p-8">
+          <span class="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </span>
+          <h3 class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-2.5">Plagiarism Checker</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[52ch]">Plagiarism checking compares text with available sources to identify matching or similar passages for review.</p>
+        </div>
+      </div>
+
+      <!-- Lead and support, split at the copy's own sentence boundary — see the note in
+           build/ai-v2.js. The CTA needs something to sit under; two equal paragraphs
+           gave it nothing. -->
+      <div class="rv max-w-[1000px] mx-auto mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-50 p-7 sm:p-9 lg:p-11 text-center">
+        <p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.3] text-ink-900 mb-3 lg:mb-4">AI-generated text is <span class="text-orange-600">not automatically plagiarism</span>, and a matching source does not prove that AI was used.</p>
+        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[62ch] mx-auto">If you need both checks, run them as separate analyses and interpret each report according to what it measures.</p>
+        <div class="mt-7 lg:mt-8 flex justify-center"><a href="index.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Check for plagiarism
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 06 · AI DATA HANDLING / REPORT LIFECYCLE =================
+       The section that replaces the old page's "No data storage" card. What is true is
+       narrower and it is said exactly: processed on our infrastructure, not sent to an
+       external provider, report kept for convenience, deletable by the user. -->
+  <section id="ai-data-handling" data-component="lifecycle" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv max-w-[760px] mb-10 sm:mb-12">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Data handling</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Your AI check is processed on PlagiarismSearch infrastructure</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">AI checks are processed on PlagiarismSearch infrastructure. Checked content is not sent to an external AI detector provider.</p>
+      </div>
+
+      <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex items-center gap-2 mb-3">
+            <span class="w-7 h-7 rounded-full bg-ink-900 text-white text-[12px] font-bold flex items-center justify-center tabular-nums">1</span>
+          </span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Submit</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Paste text or upload a document for AI analysis.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex items-center gap-2 mb-3">
+            <span class="w-7 h-7 rounded-full bg-ink-900 text-white text-[12px] font-bold flex items-center justify-center tabular-nums">2</span>
+          </span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Process</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">The AI check runs on PlagiarismSearch infrastructure without sending the checked content to an external AI detector provider.</p>
+        </div>
+        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex items-center gap-2 mb-3">
+            <span class="w-7 h-7 rounded-full bg-ink-900 text-white text-[12px] font-bold flex items-center justify-center tabular-nums">3</span>
+          </span>
+          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Review or delete</h3>
+          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">The generated AI report may remain available in your account for convenience. You can permanently delete the report when you no longer need it.</p>
+        </div>
+      </div>
+
+      <div class="rv mt-6 lg:mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">For broader information about account data and privacy practices, read the PlagiarismSearch Privacy Policy.</p>
+        <span class="shrink-0"><a href="policy.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Read the Privacy Policy</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 07 · AI DETECTION THROUGH THE API =================
+       A compact banner, not an act. This was a full dark section until the 2026-08-25
+       batch cut it back: API is secondary here, and it was interrupting
+       checker -> report -> understanding -> pricing.
+
+       Reworked 2026-08-26: it was a heading and two paragraphs set at one size, one
+       colour and one weight, which is why it read as a block of undifferentiated text.
+       Now: eyebrow, a heading with room to breathe, a lead, the point of the section
+       raised into a pill, the detail set quieter beneath it, then the CTA — and a small
+       schematic that draws the sentence rather than repeating it.
+
+       Not one word is rewritten. The approved sentences are split at their own full
+       stops and given the weight each one's job deserves. -->
+  <section id="ai-api" data-component="banner" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div data-surface="dark" class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
+        <div class="orb absolute orb-banner orb-banner-teal"></div>
+        <div class="relative grid lg:grid-cols-[1.4fr_1fr] gap-7 lg:gap-12 items-center">
+          <div class="min-w-0 text-white">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-3.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">API</span>
+        </div>
+            <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-3">Add AI detection to your own workflow</h2>
+            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60 max-w-[54ch]">AI checking is available through the same PlagiarismSearch API infrastructure used for the main service.</p>
+            <p class="inline-flex items-center gap-2 rounded-full bg-teal-400/10 ring-1 ring-teal-400/30 px-3.5 py-1.5 mt-3 text-[12.5px] sm:text-[13px] font-semibold text-teal-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>It is not a separate AI API product.
+            </p>
+            <p class="mt-3.5 text-[13px] sm:text-[13.5px] leading-relaxed text-white/50 max-w-[58ch]">AI checks use AI-specific checking limits or credits within the API workflow. Use the main PlagiarismSearch API page to review current access options and implementation details.</p>
+          </div>
+          <div class="min-w-0">
+          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
+            <p class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
+              <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
+              PlagiarismSearch API
+            </p>
+            <div class="space-y-3 pl-6">
+              <div class="relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3">
+                <span class="absolute right-full top-1/2 -bottom-3 w-6 border-t border-l border-white/15 rounded-tl-2xl" aria-hidden="true"></span>
+                <span class="shrink-0 w-10 h-10 rounded-xl bg-white/[.07] ring-1 ring-white/10 flex items-center justify-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5AD3E4" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m8 11 2 2 4-4"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </span>
+                <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/85 leading-snug">Plagiarism</span>
+              </div>
+              <div class="relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3">
+                <span class="absolute right-full -top-3 bottom-1/2 w-6 border-b border-l border-white/15 rounded-bl-2xl" aria-hidden="true"></span>
+                <span class="shrink-0 w-10 h-10 rounded-xl bg-white/[.07] ring-1 ring-white/10 flex items-center justify-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+                </span>
+                <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/85 leading-snug">AI</span>
+              </div>
+            </div>
+          </div>
+            <div class="mt-5"><a href="api.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Explore the PlagiarismSearch API
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 08 · AI PRICING =================
+       DYNAMIC. These are the approved 2026-08-20 values and they may be used in the
+       prototype; production reads the authoritative backend. Grouped by billing —
+       the grouping is layout, the eight rows and their values are the baseline.
+
+       Pricing comes AFTER the product is understood, per the approved story. It is not
+       the legacy "checker → pricing → advantages" order. -->
+  <section id="ai-pricing" data-component="packages" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv text-center max-w-[720px] mx-auto mb-7 sm:mb-9">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">AI pricing</span>
+        </div>
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Choose an AI word package for your checking volume</h2>
+        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">AI checking is priced by word allowance. Choose a one-time package or a recurring plan based on how much text you expect to analyze.</p>
+
+        <!-- the free credit is a perk, not a third paragraph. rounded-2xl rather than
+             rounded-full because the sentence wraps to two lines under 420px. -->
+        <p class="inline-flex items-start gap-2.5 mt-5 rounded-2xl bg-teal-50 ring-1 ring-black/5 px-4 py-2.5 text-[12.5px] sm:text-[13px] font-semibold leading-relaxed text-ink-700 text-left">
+          <svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>
+          New accounts receive a one-time 1,000-word credit that can be used for AI checking.
         </p>
-        <a href="prices.html" class="btn-press inline-flex items-center gap-2.5 rounded-full h-12 sm:h-14 px-5 sm:px-6 lg:px-7 text-[14px] sm:text-[15px] bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white font-semibold">
-          All plagiarism plans
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </div>
+
+      <!-- the interface instruction, where it instructs -->
+      <p class="rv max-w-[1100px] mx-auto mb-4 lg:mb-5 text-center text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">Select an AI word allowance, then continue with the chosen package.</p>
+
+      <div class="rv-kids grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 max-w-[1100px] mx-auto">
+        <fieldset class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col" data-group="0">
+          <legend class="sr-only">One-time AI word packages</legend>
+          <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">One-time</h3>
+            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500">AI words</span>
+          </div>
+          <div class="flex-1 space-y-2">
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-0" value="10,000" class="sr-only" checked data-words="10,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">10,000</span>
+              <span class="ml-auto text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 tabular-nums">$4.95</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-0" value="50,000" class="sr-only"  data-words="50,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">50,000</span>
+              <span class="ml-auto text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 tabular-nums">$9.95</span>
+            </label>
+          </div>
+          <a href="account.html" data-cta="0" data-prefix="Continue with" data-suffix="words" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Continue with 10,000 words</a>
+        </fieldset>
+        <fieldset class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col" data-group="1">
+          <legend class="sr-only">Monthly AI word packages</legend>
+          <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Monthly</h3>
+            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500">AI words</span>
+          </div>
+          <div class="flex-1 space-y-2">
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-1" value="100,000" class="sr-only" checked data-words="100,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">100,000</span>
+              <span class="ml-auto text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 tabular-nums">$12.95/month</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-1" value="300,000" class="sr-only"  data-words="300,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">300,000</span>
+              <span class="ml-auto text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 tabular-nums">$25.95/month</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-1" value="500,000" class="sr-only"  data-words="500,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">500,000</span>
+              <span class="ml-auto text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 tabular-nums">$35.95/month</span>
+            </label>
+          </div>
+          <a href="account.html" data-cta="1" data-prefix="Continue with" data-suffix="words" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Continue with 100,000 words</a>
+        </fieldset>
+        <fieldset class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col" data-group="2">
+          <legend class="sr-only">Yearly AI word packages</legend>
+          <div class="flex items-baseline justify-between gap-3 mb-4 lg:mb-5">
+            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">Yearly</h3>
+            <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500">AI words</span>
+          </div>
+          <div class="flex-1 space-y-2">
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-2" value="1,000,000" class="sr-only" checked data-words="1,000,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">1,000,000</span>
+              <span class="ml-auto text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 tabular-nums">$55.95/year</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-2" value="3,000,000" class="sr-only"  data-words="3,000,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">3,000,000</span>
+              <span class="ml-auto text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 tabular-nums">$125.95/year</span>
+            </label>
+            <label class="pkg flex items-center gap-3 rounded-2xl px-3 py-3 cursor-pointer">
+              <input type="radio" name="pkg-2" value="5,000,000" class="sr-only"  data-words="5,000,000">
+              <span class="pkg-dot shrink-0 w-[18px] h-[18px] rounded-full border-2 border-ink-300 flex items-center justify-center" aria-hidden="true"></span>
+              <span class="text-[14.5px] sm:text-[15px] font-bold tracking-tight tabular-nums">5,000,000</span>
+              <span class="ml-auto text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 tabular-nums">$215.95/year</span>
+            </label>
+          </div>
+          <a href="account.html" data-cta="2" data-prefix="Continue with" data-suffix="words" class="btn-press mt-5 lg:mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold px-5 py-2.5">Continue with 1,000,000 words</a>
+        </fieldset>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 09 · AI DETECTOR FAQ =================
+       Every answer is in the rendered HTML, not fetched on click — the brief requires
+       it and a crawler needs it. Ten questions, exactly the approved ten: no "what is
+       AI" filler, no model-name keyword questions, no audience variations. -->
+  <section id="ai-detector-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
+        <div class="rv lg:sticky lg:top-28">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+        </div>
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">AI Detector FAQ</h2>
+          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-ink-600">Still have a question about your account, reports, or AI checking?</p>
+          <div class="mt-5 lg:mt-6"><a href="https://plagiarismsearch.com/faq-and-support" rel="noopener" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Visit the Help Center</a></div>
+        </div>
+
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+            <div class="faq-item open">
+              <button type="button" aria-controls="ai-detector-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">What does AI Probability mean?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">AI Probability is the percentage likelihood that the analyzed text, considered as a whole, was AI-generated. It is a document-level detection indicator. It does not represent the percentage of the document that was generated by AI, and it is not proof of authorship.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="ai-detector-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">What does Total AI Rate mean?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Total AI Rate is the share of the document made up of passages flagged as AI-generated. It complements AI Probability by showing how much of the text is contained in flagged passages rather than the overall likelihood for the document.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="ai-detector-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Why can AI Probability and Total AI Rate be different?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">They measure different things. AI Probability describes the likelihood that the document as a whole was AI-generated. Total AI Rate describes the amount of text contained in passages flagged as AI-generated. The two percentages therefore should not be expected to match.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="ai-detector-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Does a high AI Probability prove that a text was written by AI?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. AI detection is probabilistic. A high AI Probability means the detector found stronger AI-writing signals in the document, but it does not prove who wrote the text or establish by itself that AI was used. Review Total AI Rate, the highlighted passages, and the context of the document before drawing a conclusion.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="ai-detector-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Can I upload a document instead of pasting text?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. You can paste text directly into the AI checker or upload a supported document. PlagiarismSearch uses broad document-format support for uploaded files. If readable text cannot be extracted from a file, paste the text directly into the checker instead.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="ai-detector-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">How much text should I check?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Pasted text must contain at least 100 characters. For a more reliable AI detection result, we recommend checking at least 150–200 words whenever possible because a longer sample gives the detector more context.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="ai-detector-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">What languages can the AI detector check?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a7"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">PlagiarismSearch can process text in any language. Detection accuracy is highest in English, so results for other languages should be interpreted with that limitation in mind.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="ai-detector-faq-a8" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Is AI-generated text the same as plagiarism?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a8"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. AI generation and plagiarism are different issues. AI detection looks for patterns associated with AI-generated writing. Plagiarism checking compares text with available sources to identify matching or similar passages. AI-generated text is not automatically plagiarism, and a source match does not prove that AI was used.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="ai-detector-faq-a9" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">What happens to my text and report after an AI check?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a9"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">AI checks are processed on PlagiarismSearch infrastructure, and checked content is not sent to an external AI detector provider. Generated reports may remain available in your account for convenience, and you can permanently delete them. For broader information about account data and privacy practices, see the Privacy Policy.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-controls="ai-detector-faq-a10" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+                <span class="text-[15.5px] font-bold tracking-tight">Is AI checking free?</span>
+                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </button>
+              <div class="faq-a" id="ai-detector-faq-a10"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">New accounts receive a one-time 1,000-word credit that can be used for AI or plagiarism checking. This is not a recurring daily AI allowance. Additional AI checks use the AI word balance available with the selected package.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 10 · FINAL CTA =================
+       "Do not render a second checker form. The CTA returns the user to the real tool."
+       So both actions are anchors back up the page, not a new input.
+
+       The band is the shared closing CTA — dot field, two masked glows, hero-scale
+       heading, one ring mark. Recipe and reasoning in build/cta.js.
+
+       The ring goes round "AI-writing" because that is what this page is for, and it is
+       ten characters — the length the loop was drawn for. No eyebrow chip: the homepage
+       band has one ("Free check") but that is approved copy there, and inventing a label
+       here would be new visible text the baseline does not carry. -->
+  <section id="ai-final-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+        <div class="orb cta-glow-warm"></div>
+        <div class="orb cta-glow-cool"></div>
+      </div>
+
+    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
+      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Check your text for <span class="ring-word relative inline-block">AI-writing<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> signals</h2>
+      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[56ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Paste text or upload a document to review AI Probability, Total AI Rate, and highlighted passages in one report.</p>
+      <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+        <a href="#ai-checker" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          Start AI check
+          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
         </a>
-      </div>
-
-      <!-- min-w-0: without it the grid track refuses to shrink below the table's min-width
-           and the whole page scrolls sideways on mobile -->
-      <div class="rv min-w-0 rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-        <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden">
-          <div class="overflow-x-auto">
-            <table class="w-full text-left min-w-[440px]">
-              <thead class="bg-ink-900 text-white">
-                <tr class="text-[10.5px] font-bold uppercase" style="letter-spacing:.08em">
-                  <th class="px-4 sm:px-5 lg:px-6 py-4">AI words</th>
-                  <th class="px-4 sm:px-5 lg:px-6 py-4">Billing</th>
-                  <th class="px-4 sm:px-5 lg:px-6 py-4 text-right">Price</th>
-                </tr>
-              </thead>
-              <tbody class="text-[14.5px]">
-                <tr class="ai-row bg-white"><td class="px-4 sm:px-5 lg:px-6 py-3.5 font-semibold nums">10,000</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-ink-500">one-time</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-right font-bold nums">$4.95</td></tr>
-                <tr class="ai-row bg-ink-50"><td class="px-4 sm:px-5 lg:px-6 py-3.5 font-semibold nums">50,000</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-ink-500">one-time</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-right font-bold nums">$9.95</td></tr>
-                <tr class="ai-row bg-white"><td class="px-4 sm:px-5 lg:px-6 py-3.5 font-semibold nums">100,000</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-ink-500">monthly</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-right font-bold nums">$12.95</td></tr>
-                <tr class="ai-row bg-ink-50"><td class="px-4 sm:px-5 lg:px-6 py-3.5 font-semibold nums">300,000</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-ink-500">monthly</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-right font-bold nums">$25.95</td></tr>
-                <tr class="ai-row bg-white"><td class="px-4 sm:px-5 lg:px-6 py-3.5 font-semibold nums">500,000</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-ink-500">monthly</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-right font-bold nums">$35.95</td></tr>
-                <tr class="ai-row bg-ink-50"><td class="px-4 sm:px-5 lg:px-6 py-3.5 font-semibold nums">1,000,000</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-ink-500">yearly</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-right font-bold nums">$55.95</td></tr>
-                <tr class="ai-row bg-white"><td class="px-4 sm:px-5 lg:px-6 py-3.5 font-semibold nums">3,000,000</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-ink-500">yearly</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-right font-bold nums">$125.95</td></tr>
-                <tr class="ai-row bg-ink-50"><td class="px-4 sm:px-5 lg:px-6 py-3.5 font-semibold nums">5,000,000</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-ink-500">yearly</td><td class="px-4 sm:px-5 lg:px-6 py-3.5 text-right font-bold nums">$215.95</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <a href="#ai-pricing" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">View AI pricing</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
-<!-- ================= 07 · CTA ================= -->
-<section class="relative py-16 sm:py-24 lg:py-28 overflow-hidden bg-[#F2FCFC]">
-  <div class="orb w-[700px] h-[640px] bg-orange-500/12 left-[-180px] -top-64"></div>
-  <div class="orb w-[600px] h-[600px] bg-teal-500/10 right-[-140px] -bottom-72"></div>
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-    <h2 class="rv text-[clamp(1.9rem,3.6vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4">Checking your work is easy.</h2>
-    <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 mb-6 sm:mb-7 lg:mb-8 max-w-[46ch] mx-auto">Press the button and enjoy our service — 150 words on the spot, no account needed.</p>
-    <a href="index.html#top" class="rv btn-press group inline-flex items-center gap-3 rounded-full h-12 sm:h-14 bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[14px] sm:text-[15px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5">
-      Check your text
-      <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </span>
-    </a>
-  </div>
-</section>
-
-<footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
+<footer data-surface="dark" class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
   <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
   <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 
@@ -738,7 +1040,7 @@ tailwind.config = {
          frozen. Both are restored the moment approved copy and figures arrive. -->
     <div class="grid sm:grid-cols-2 gap-8 sm:gap-10 items-center mb-10 sm:mb-13 lg:mb-16">
       <a href="index.html" class="inline-flex items-center">
-        <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+        <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
       </a>
       <div class="sm:justify-self-end">
         <div class="flex gap-3">
@@ -778,6 +1080,7 @@ tailwind.config = {
           <li><a href="pdf-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PDF Plagiarism Checker</a></li>
           <li><a href="quote-checker-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Quote Checker</a></li>
           <li><a href="turnitin-checker-alternative.html" class="hover:text-white transition-colors duration-300">Turnitin Alternative</a></li>
+          <li><a href="ua-plagiarism-check.html" class="hover:text-white transition-colors duration-300">UA Plagiarism Checker</a></li>
         </ul>
       </div>
       <div>
@@ -827,7 +1130,7 @@ tailwind.config = {
   </div>
 
   <!-- Back to top. Global chrome, so it lives in the shell rather than being copied on
-       to whichever page happens to be long today — index-v2 and the blog article both
+       to whichever page happens to be long today — the homepage and the blog article both
        run past fifteen thousand pixels.
 
        It is fixed, so it is positioned against the viewport and the footer clipping its
@@ -837,7 +1140,7 @@ tailwind.config = {
        Inside the footer element on purpose. shell.js replaces a page from the opening
        tag to the first closing one, so anything placed after that closing tag would
        survive the replacement and be added again by every build. -->
-  <button type="button" id="toTop" aria-label="Back to top"
+  <button type="button" data-to-top aria-label="Back to top"
     class="fixed z-40 bottom-5 right-5 sm:bottom-7 sm:right-7 lg:bottom-9 lg:right-9
            w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-ink-900 shadow-diffuse-lg
            ring-2 ring-teal-600/45 flex items-center justify-center opacity-0 translate-y-3
@@ -846,157 +1149,6 @@ tailwind.config = {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
   </button>
 
-  <script>
-  (() => {
-    const btn = document.getElementById("toTop");
-    if (!btn) return;
-
-    /* Shows once a screenful and a bit is behind you: soon enough to be there when
-       wanted, late enough that a short page never summons it. */
-    let ticking = false;
-    const mark = () => {
-      const past = scrollY > innerHeight * 1.2;
-      btn.classList.toggle("opacity-0", !past);
-      btn.classList.toggle("translate-y-3", !past);
-      btn.classList.toggle("pointer-events-none", !past);
-      ticking = false;
-    };
-    addEventListener("scroll", () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(mark); }
-    }, { passive: true });
-    addEventListener("resize", mark, { passive: true });
-    mark();
-
-    btn.addEventListener("click", () => {
-      const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      scrollTo({ top: 0, behavior: still ? "auto" : "smooth" });
-      /* send the keyboard back with the page, or the next Tab resumes at the footer */
-      const first = document.querySelector("header a, header button");
-      if (first) first.focus({ preventScroll: true });
-    });
-  })();
-  </script>
 </footer>
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) document.documentElement.classList.add('no-motion');
-
-  if (!reduceMotion && window.gsap) {
-    gsap.registerPlugin(ScrollTrigger);
-
-    /* ================= reveals ================= */
-    const rvs = gsap.utils.toArray('.rv');
-    const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-    const later = rvs.filter(el => !inView.includes(el));
-
-    // first viewport: top-down cascade on load
-    inView.forEach(el => {
-      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-        delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-    });
-    // the rest reveal as they reach mid-screen
-    later.forEach(el => {
-      gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 70%' } });
-    });
-
-    /* ================= pen marks — word colours in, then its underline draws =================
-       Reusable: any number per page. In-view marks wait out the reveal cascade;
-       lower ones fire when scrolled to. See DESIGN.md → Web build → Motion. */
-    gsap.utils.toArray('.pen-word').forEach(word => {
-      const line = word.querySelector('.pen-underline');
-      if (!line) return;
-      const len = line.getTotalLength();
-      gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-      const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-      const tl = gsap.timeline(inFirstView
-        ? { delay: 1 }
-        : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-      tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-        .set(line, { opacity: 1 }, .35)
-        .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-    });
-
-    /* ================= counters (mission stats) — cached writes ================= */
-    document.querySelectorAll('[data-count]').forEach(el => {
-      const target = parseFloat(el.dataset.count);
-      const suffix = el.dataset.suffix || '';
-      const dp = parseInt(el.dataset.decimals, 10) || 0;   // ratings need one decimal
-      const obj = { v: 0 };
-      let lastText = '';
-      gsap.to(obj, {
-        v: target, duration: 1.6, ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 85%' },
-        onUpdate: () => {
-          const text = obj.v.toFixed(dp) + suffix;
-          if (text !== lastText) { lastText = text; el.textContent = text; }
-        }
-      });
-    });
-  } else {
-    // reduced motion: final states, no tweens
-    document.querySelectorAll('[data-count]').forEach(el => el.textContent = el.dataset.count + (el.dataset.suffix || ''));
-  }
-})();
-</script>
-
-
-<script>
-(() => {
-  'use strict';
-  // live word counter — the free ceiling is the whole point of this form
-  const form = document.querySelector('.qc-form');
-  if (!form) return;
-  const area = form.querySelector('.qc-area');
-  const out = form.querySelector('.qc-count');
-  if (!area || !out) return;
-  area.addEventListener('input', () => {
-    const words = area.value.trim() ? area.value.trim().split(/\s+/).length : 0;
-    out.textContent = words.toLocaleString('en-US');
-    out.style.color = words > 1000 ? '#DC5A45' : '';
-  });
-})();
-</script>
-
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  // the desktop menu takes over at lg — never leave the panel hanging open across it
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>
-<!-- VSWITCH · temporary review tool, remove with the retired version -->
-<div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[100] print:hidden">
-  <div class="flex items-center gap-1 rounded-full bg-white/95 backdrop-blur-md ring-1 ring-black/10 shadow-diffuse-lg p-1 pl-3">
-    <span class="text-[9px] font-bold uppercase tracking-[0.16em] text-ink-400">Version</span>
-    <div class="flex items-center gap-0.5 ml-1.5">
-      <span aria-current="page" class="rounded-full bg-ink-900 text-white text-[12px] font-bold px-3.5 py-1.5 tabular-nums">1</span>
-      <a href="ai-detector-v2.html" class="rounded-full text-[12px] font-bold text-ink-500 hover:text-ink-900 hover:bg-ink-100 px-3.5 py-1.5 tabular-nums transition-colors duration-200">2</a>
-    </div>
-  </div>
-</div>
-<!-- /VSWITCH -->
 </body>
 </html>
