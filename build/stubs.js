@@ -36,12 +36,8 @@ const STUBS = [
     note: 'The Teachers URL audit closed on 2026-08-20: Educators lands here, and no second educator address is created. The page itself will be rewritten separately around real educator use cases.' },
 ];
 
-/* Reuse a real page head so the stubs carry the identical tailwind.config, fonts and
-   base styles. Hand-copying it would drift within a week and the check would catch it
-   as eighteen design systems instead of one. */
-const donor = fs.readFileSync(path.join(SITE, 'help-center.html'), 'utf8');
-const head = donor.slice(0, donor.indexOf('<body'));
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
+/* the shared page shell (build/page.js): the shared assets, no CSS or JS of the page's own */
+const shell = require('./page');
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -51,13 +47,7 @@ function page(s) {
     ? 'Provisional path · not approved'
     : '/' + s.slug;
 
-  return head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + esc(title) + '</title>') + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-  <section class="relative pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 bg-[#F2FCFC] overflow-hidden">
+  return shell.render({ title: esc(title), sections: [`  <section data-component="stub" class="relative pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 bg-[#F2FCFC] overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
       <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
@@ -95,13 +85,7 @@ function page(s) {
         </a>
       </div>
     </div>
-  </section>
-</main>
-
-<footer></footer>
-</body>
-</html>
-`;
+  </section>`] });
 }
 
 /* shell.js reads this list so the two never drift — a stub missing from the shell's

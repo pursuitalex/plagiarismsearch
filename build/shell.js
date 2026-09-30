@@ -61,22 +61,22 @@ const PAGES = {
   'ai-detector.html':            { active: 'products', static: true },   /* DEC-0038 */
   'api.html':                    { active: 'products', static: true },   /* DEC-0041 */
   'prices.html':                 { active: 'pricing', static: true },    /* DEC-0042 */
-  'help-center.html':            { active: 'resources' },
-  'blog.html':                   { active: 'resources' },
-  'blog-best-checker-2026.html': { active: 'resources' },
-  'why-us.html':                 { active: 'company' },
-  'mission.html':                { active: 'company' },
-  'contact-us.html':             { active: 'company' },
+  'help-center.html':            { active: 'resources', static: true },
+  'blog.html':                   { active: 'resources', static: true },
+  'blog-best-checker-2026.html': { active: 'resources', static: true },
+  'why-us.html':                 { active: 'company', static: true },
+  'mission.html':                { active: 'company', static: true },
+  'contact-us.html':             { active: 'company', static: true },
 
   /* built and kept, but outside the global navigation per DEC-0027 §5 — plus
      plagiarism-check.html, which the homepage supersedes as the checker page */
-  'plagiarism-check.html':       { active: null },
+  'plagiarism-check.html':       { active: null, static: true },
   /* legal: reachable from the footer, so no header item lights up */
-  'terms-of-use.html':           { active: null },
-  'policy.html':                 { active: null },
-  'cookie-policy.html':          { active: null },
-  'originality-badges.html':     { active: 'resources' },
-  'user-manuals.html':           { active: 'resources' },
+  'terms-of-use.html':           { active: null, static: true },
+  'policy.html':                 { active: null, static: true },
+  'cookie-policy.html':          { active: null, static: true },
+  'originality-badges.html':     { active: 'resources', static: true },
+  'user-manuals.html':           { active: 'resources', static: true },
   /* the news archive — a real page now, not a stub. Reached from the footer and
      from the Help Center, so no header item lights up. */
   'newsroom.html':               { active: null, static: true },
@@ -97,15 +97,15 @@ const PAGES = {
   'pdf-plagiarism-checker.html': { active: null, static: true },
   /* Business & Teams to the 2026-09-15 brief — the stub graduated */
   'plagiarism-checker-for-organization.html': { active: 'solutions', static: true },
-  'paper-analysis.html':         { active: null },
-  'readability-check.html':      { active: null },
-  'spell-check.html':            { active: null },
-  'chat-bot.html':               { active: null },
-  'vip.html':                    { active: null },
+  'paper-analysis.html':         { active: null, static: true },
+  'readability-check.html':      { active: null, static: true },
+  'spell-check.html':            { active: null, static: true },
+  'chat-bot.html':               { active: null, static: true },
+  'vip.html':                    { active: null, static: true },
 
   /* the account screen drops the menu bar on purpose — a header invites you to leave
      a page whose only job is to get you in. It keeps the footer. */
-  'account.html':                { active: null, header: false },
+  'account.html':                { active: null, header: false, static: true },
 };
 
 /* Placeholder pages, read from build/stubs.js rather than listed again here. Their
@@ -113,7 +113,7 @@ const PAGES = {
    the right dropdown without being named twice. */
 const GROUP_TO_NAV = { Products: 'products', Solutions: 'solutions', Company: 'company', Footer: null };
 for (const s of require('./stubs')) {
-  PAGES[s.slug + '.html'] = { active: GROUP_TO_NAV[s.group.split(' ')[0]] ?? null };
+  PAGES[s.slug + '.html'] = { active: GROUP_TO_NAV[s.group.split(' ')[0]] ?? null, static: true };
 }
 
 /* v1 had four top-level items and no Solutions destinations */

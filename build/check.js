@@ -79,28 +79,15 @@ console.log('\nlinks');
 /* ── 4. one design system, not eighteen ─────────────────────────────────── */
 console.log('\ndesign system');
 {
-  const configs = new Set();
-  const noConfig = [];
-  /* pages on the shared production assets carry no inline config: they link the static
-     build, whose theme must equal the inline one below */
-  const staticPages = pages.filter(f => read(f).includes('href="/assets/css/tailwind.css"'));
-  let inlineTheme = null;
-  for (const f of pages) {
-    if (staticPages.includes(f)) continue;
+  /* Every page is on the shared production assets (since 2026-09-30): one theme, in
+     tailwind.config.js, compiled once. No page may bring the Play CDN or an inline
+     config back — that would be a second design system. */
+  const off = pages.filter(f => {
     const s = read(f);
-    if (!inlineTheme && s.includes('tailwind.config')) {
-      const a = s.indexOf('tailwind.config'), ctx = { tailwind: {} };
-      require('vm').runInNewContext(s.slice(a, s.indexOf('</script>', a)), ctx);
-      inlineTheme = JSON.stringify(ctx.tailwind.config.theme);
-    }
-    const a = s.indexOf('tailwind.config');
-    if (a < 0) { noConfig.push(f); continue; }
-    configs.add(crypto.createHash('sha1').update(s.slice(a, s.indexOf('</script>', a))).digest('hex'));
-  }
-  ok('tailwind.config identical on every page', configs.size === 1 && !noConfig.length,
-     configs.size !== 1 ? configs.size + ' variants' : noConfig.join(', '));
-  ok(staticPages.length + ' page(s) on the shared assets: tailwind.config.js theme = the inline config',
-     JSON.stringify(require(path.join(__dirname, '..', 'tailwind.config.js')).theme) === inlineTheme, staticPages.join(', '));
+    return !s.includes('href="/assets/css/tailwind.css"') || s.includes('cdn.tailwindcss.com') || /tailwind\.config\s*=/.test(s);
+  });
+  ok('every page on the shared assets: no Play CDN, no inline tailwind.config', !off.length, off.join(', '));
+  ok('one theme: tailwind.config.js', !!require(path.join(__dirname, '..', 'tailwind.config.js')).theme.extend);
 
   /* Eyebrows are the smallest type on the site and the easiest to drift. Scoped by
      letter-spacing, because 10px is also used throughout the mock UIs, which have their

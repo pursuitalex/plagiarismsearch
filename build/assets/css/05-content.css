@@ -1,0 +1,29 @@
+/* ═══ 05 · content pages — Help Center cards, search, rows, the avatar stack ═══════
+   The hand-written content pages' components (Help Center, Blog, Why Us, Contact, the
+   tools). Values verbatim from their former <style>. They sit before 06-controls-phone,
+   as they did in those pages, so the phone size of the search field wins on a phone.
+   The pulsing dot is the site's (22-home), one animation on every page. */
+
+/* a card that lifts and tints under the pointer, its arrow nudging on */
+.hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+.hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
+.hc-go svg { transition:transform .25s cubic-bezier(.32,.72,0,1); }
+.hc-card:hover .hc-go svg { transform:translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .hc-card, .hc-go svg { transition:none; } }
+@media (prefers-reduced-motion: reduce) { .hc-card:hover { transform:none; } }
+
+/* the Help Center search field */
+.hc-search { width:100%; height:56px; padding:0 116px 0 50px; border-radius:9999px;
+  border:1px solid #E5E7EB; background:#fff; color:#111827; font-size:15px; font-weight:500;
+  transition:border-color .15s ease, box-shadow .15s ease; }
+.hc-search::placeholder { color:#9CA3AF; font-weight:400; }
+.hc-search:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+.hc-search::-webkit-search-cancel-button { -webkit-appearance:none; }
+
+/* a row in a list of options that tints under the pointer */
+.ai-row { transition:background-color .15s ease; }
+.ai-row:hover { background:#F2FAFB; }
+
+/* overlapping avatars (Why Us) */
+.avatar-stack img { filter: drop-shadow(-1px 0 2px rgba(17,24,39,.07)); }
+.avatar-stack img + img { margin-left: -10px; }

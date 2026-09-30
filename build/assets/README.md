@@ -1,13 +1,14 @@
 # Shared production assets
 
 Replaces the Tailwind Play CDN and the `<style>`/`<script>` blocks that every page
-carried. **Status: all 11 master pages are on it** (Home, Students, PDF, UA, Organization,
-University, Turnitin, Pricing, API, AI Detector, Moodle Integration). Each one was migrated
-and passed its parity run against the approved page at commit `04c8e24`. The
+carried. **Status: every page is on it.** The 11 master pages (Home, Students, PDF, UA, Organization,
+University, Turnitin, Pricing, API, AI Detector, Moodle Integration) were migrated first,
+each passing its parity run against the approved page at commit `04c8e24`. The
 design-system page is on it too (checked against `db7d735`), and so are the report guide
-and the Newsroom (checked against `40f96a2`). The v1 pages were retired on 2026-09-30.
-The remaining hand-written pages (stubs, legal, manuals, the blog, account and the old
-tools) still use the CDN, with their head from `build/shell/head-cdn.html`.
+and the Newsroom (checked against `40f96a2`). The v1 pages were retired on 2026-09-30, and the same day every remaining page moved
+too: stubs, legal, the user guide, the badges, the prototype index and the hand-written
+pages (Help Center, Blog, Why Us, Mission, Contact, VIP, Account and the free tools). No
+page uses the Play CDN; every head is build/shell/head.html with the shared assets.
 
 The design-system page adds two files of its own, `ds.css` and `ds.js` (source
 `build/assets/ds/`, linked with `head({ ds: true })`): the spec sheet around the

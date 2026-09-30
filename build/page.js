@@ -23,19 +23,21 @@ const assets = require('./assets');
 const SITE = path.join(__dirname, '..', 'site');
 const esc = s => String(s).replace(/"/g, '&quot;');
 
-function donor() {
-  const d = fs.readFileSync(path.join(__dirname, 'shell', 'head-cdn.html'), 'utf8');
-  const head = d.slice(0, d.indexOf('<body'));
+/* the page head: build/shell/head.html (meta, title, fonts) with the shared assets in
+   place of {{ASSETS}} — the one head every page shares */
+function donor(ds) {
+  const d = fs.readFileSync(path.join(__dirname, 'shell', 'head.html'), 'utf8');
+  if (!d.includes('{{ASSETS}}')) throw new Error('page.js: build/shell/head.html has no {{ASSETS}}');
+  const head = d.slice(0, d.indexOf('<body')).replace('{{ASSETS}}', assets.head({ ds }));
   const bodyTag = d.slice(d.indexOf('<body'), d.indexOf('>', d.indexOf('<body')) + 1);
-  const a = head.indexOf('<script src="https://cdn.tailwindcss.com"></script>');
-  const b = head.indexOf('</style>', a);
-  if (a < 0 || b < 0) throw new Error('page.js: the donor head is not the expected shape');
-  return { head: head.slice(0, a) + assets.head() + head.slice(b + '</style>'.length), bodyTag };
+  return { head, bodyTag };
 }
 
-function render({ title, meta, canonical, lang = 'en', sections }) {
+/* chrome: false — an internal review page (the prototype index): no grain, no site header
+   or footer. ds: 'css' — it also links ds.css, the internal pages' own CSS (not ds.js). */
+function render({ title, meta, canonical, lang = 'en', sections, chrome = true, ds = false, mainClass = '' }) {
   if (!title || !sections || !sections.length) throw new Error('page.render: title and sections are required');
-  const d = donor();
+  const d = donor(ds);
   let head = d.head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + title + '</title>');
   if (lang !== 'en') head = head.replace(/<html([^>]*)\blang="[^"]*"/, '<html$1lang="' + lang + '"');
   if (meta) {
@@ -44,6 +46,14 @@ function render({ title, meta, canonical, lang = 'en', sections }) {
       : head.replace('<title>', '<meta name="description" content="' + esc(meta) + '" />\n<title>');
   }
   if (canonical) head = head.replace('<title>', '<link rel="canonical" href="' + canonical + '" />\n<title>');
+  const main = mainClass ? `<main class="${mainClass}">` : '<main>';
+  if (!chrome) return head + d.bodyTag + `
+${main}
+${sections.join('\n\n')}
+</main>
+</body>
+</html>
+`;
   return head + d.bodyTag + `
 <div class="grain"></div>
 

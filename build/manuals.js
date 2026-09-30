@@ -109,10 +109,8 @@ if (!groups.length) throw new Error('no categories found');
 const total = groups.reduce((n, g) => n + g.links.length, 0);
 if (total !== 20) throw new Error('expected 20 guides, found ' + total);
 
-/* ── the head, borrowed so the tailwind config stays one config ───────────── */
-const donor = fs.readFileSync(path.join(SITE, 'help-center.html'), 'utf8');
-const head = donor.slice(0, donor.indexOf('<body'));
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
+/* the shared page shell (build/page.js): the shared assets, no CSS or JS of the page's own */
+const shell = require('./page');
 
 const ARROW = '<svg class="shrink-0 mt-1 text-ink-300 group-hover:text-teal-600 transition-colors duration-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
 const OUT   = '<svg class="shrink-0 mt-1 text-ink-300" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>';
@@ -133,7 +131,7 @@ const link = l => {
    to transparency so the plate shows through their interiors rather than a white box. */
 const card = g => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
           <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 mb-4 lg:mb-5 py-5 sm:py-6 flex items-center justify-center">
-            <img src="assets/img/ug/${ICONS[g.name] || 'cat-services'}.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+            <img src="/assets/img/ug/${ICONS[g.name] || 'cat-services'}.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <div class="flex items-baseline gap-3 mb-4 lg:mb-5">
             <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">${g.name}</h2>
@@ -144,26 +142,12 @@ ${g.links.map(link).join('\n')}
           </ul>
         </div>`;
 
-const html = head.replace(/<title>[\s\S]*?<\/title>/, '<title>User Guide | PlagiarismSearch</title>') + `
-<style>
-  /* the homepage accordion, in the two rules that make it work */
-  .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .32s cubic-bezier(.32,.72,0,1); }
-  .faq-a > div { overflow:hidden; }
-  .faq-item.open .faq-a { grid-template-rows:1fr; }
-  .faq-chev { background:#F1F2F6; color:#6B7280; transition:transform .32s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
-  .faq-item.open .faq-chev { background:#FDE5E0; color:#B84431; transform:rotate(180deg); }
-</style>
-${bodyTag}
-<div class="grain"></div>
-
-<header></header>
-
-<main>
+const html = shell.render({ title: 'User Guide | PlagiarismSearch', sections: [`
   <!-- The guide index. Category names and guide titles are the live page's own, unchanged;
        the arrangement is new. Four cards rather than four stacked lists, each showing how
        many guides it holds, and an outbound mark on the links that leave this prototype
        for the live site — which most of them do, because the guides live there. -->
-  <section class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F7F9FA]">
+  <section data-component="user-guide" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F7F9FA]">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
     </div>
@@ -206,15 +190,15 @@ ${groups.map(card).join('\n')}
 
         <!-- every answer is in the rendered HTML, not fetched on click -->
         <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse" id="faqList">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${faqs.map((f, i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="manuals-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">${f.q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${f.a}</p></div></div>
+              <div class="faq-a" id="manuals-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${f.a}</p></div></div>
             </div>`).join('\n')}
           </div>
         </div>
@@ -233,25 +217,7 @@ ${faqs.map((f, i) => `            <div class="faq-item${i === 0 ? ' open' : ''}"
       </div>
 
     </div>
-  </section>
-</main>
-
-<footer></footer>
-
-<script>
-(() => {
-  /* answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => q.addEventListener('click', () => {
-    const item = q.closest('.faq-item');
-    const wasOpen = item.classList.contains('open');
-    item.parentElement.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
-  }));
-})();
-<\/script>
-</body>
-</html>
-`;
+  </section>`] });
 
 fs.writeFileSync(path.join(SITE, 'user-manuals.html'), html);
 console.log('  ok  site/user-manuals.html  ' + groups.length + ' categories, ' + total + ' guides');

@@ -41,9 +41,8 @@ const LOCAL = {
 };
 
 /* ── the head, borrowed from a real page so the tailwind config stays one config ── */
-const donor = fs.readFileSync(path.join(SITE, 'help-center.html'), 'utf8');
-const head = donor.slice(0, donor.indexOf('<body'));
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
+/* the shared page shell (build/page.js): the shared assets, no CSS or JS of the page's own */
+const shell = require('./page');
 
 /* ── type, in one place so the three pages cannot drift ───────────────────── */
 const T = {
@@ -177,36 +176,12 @@ function render(page) {
 
   const others = PAGES.filter(p => p.slug !== page.slug);
 
-  return { blocks: blocks.length, sections: sections.length, html: head
-    .replace(/<title>[\s\S]*?<\/title>/, '<title>' + page.title + ' | PlagiarismSearch</title>') + `
-<style>
-  /* numbered list, drawn rather than left to the browser so it carries our own type */
-  .counter { counter-reset: step; }
-  .counter > li { counter-increment: step; }
-  .counter > li::before {
-    content: counter(step);
-    position: absolute; left: 0; top: .15em;
-    width: 1.6em; height: 1.6em;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 999px; background: #E8F8FB; color: #0991A8;
-    font-size: .74em; font-weight: 800; font-variant-numeric: tabular-nums;
-  }
-</style>
-${bodyTag}
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-  <!-- No .rv here on purpose. That class ships hidden and is revealed by a script that
-       lives in each page body, not in the shared head, so a generated page wearing it
-       would hide its own text for ever. A legal document should not fade in anyway.
-
-       Legal pages are reference, not reading: the text is the site's own, carried over
+  /* the numbered list's counter is site.css (26-article), the one the article template draws */
+  return { blocks: blocks.length, sections: sections.length, html: shell.render({ title: page.title + ' | PlagiarismSearch', sections: [`  <!-- Legal pages are reference, not reading: the text is the site's own, carried over
        word for word, and only its dress is new. One centred column at the site's reading
        size, a contents list built from the document's own headings, and no decoration
-       competing with the clauses. -->
-  <section class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-white">
+       competing with the clauses. A legal document does not fade in. -->
+  <section data-component="legal" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-white">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
     </div>
@@ -246,13 +221,7 @@ ${others.map(o => `            <a href="${o.slug}.html" class="btn-press inline-
 
       </div>
     </div>
-  </section>
-</main>
-
-<footer></footer>
-</body>
-</html>
-` };
+  </section>`] }) };
 }
 
 let built = 0;

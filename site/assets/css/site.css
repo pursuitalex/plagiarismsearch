@@ -92,6 +92,45 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 
 .nums { font-variant-numeric: tabular-nums; }
 
+/* ═══ 05 · the account screen — sign-in / sign-up tabs ═════════════════════════════
+   Behaviour: site.js, module auth-tabs. Values verbatim from the page's former <style>. */
+@keyframes authIn { from { opacity:0; transform:translateY(8px); } }
+.auth-panel { animation:authIn .3s cubic-bezier(.32,.72,0,1); }
+.auth-panel.hidden-panel { display:none; }
+@media (prefers-reduced-motion: reduce) { .auth-panel { animation:none; } }
+.auth-tab { transition:background-color .25s ease, color .25s ease; }
+.auth-tab.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+
+/* ═══ 05 · content pages — Help Center cards, search, rows, the avatar stack ═══════
+   The hand-written content pages' components (Help Center, Blog, Why Us, Contact, the
+   tools). Values verbatim from their former <style>. They sit before 06-controls-phone,
+   as they did in those pages, so the phone size of the search field wins on a phone.
+   The pulsing dot is the site's (22-home), one animation on every page. */
+
+/* a card that lifts and tints under the pointer, its arrow nudging on */
+.hc-card { transition:background-color .25s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+.hc-card:hover { background:#F1F2F6; transform:translateY(-3px); }
+.hc-go svg { transition:transform .25s cubic-bezier(.32,.72,0,1); }
+.hc-card:hover .hc-go svg { transform:translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .hc-card, .hc-go svg { transition:none; } }
+@media (prefers-reduced-motion: reduce) { .hc-card:hover { transform:none; } }
+
+/* the Help Center search field */
+.hc-search { width:100%; height:56px; padding:0 116px 0 50px; border-radius:9999px;
+  border:1px solid #E5E7EB; background:#fff; color:#111827; font-size:15px; font-weight:500;
+  transition:border-color .15s ease, box-shadow .15s ease; }
+.hc-search::placeholder { color:#9CA3AF; font-weight:400; }
+.hc-search:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+.hc-search::-webkit-search-cancel-button { -webkit-appearance:none; }
+
+/* a row in a list of options that tints under the pointer */
+.ai-row { transition:background-color .15s ease; }
+.ai-row:hover { background:#F2FAFB; }
+
+/* overlapping avatars (Why Us) */
+.avatar-stack img { filter: drop-shadow(-1px 0 2px rgba(17,24,39,.07)); }
+.avatar-stack img + img { margin-left: -10px; }
+
 /* ═══ 05 · site header — island nav, phone burger, docking ═══════════════════════
    The header is shell, not a section: one per page. Its hooks are data-* all the same,
    so no rule here depends on an id. */
@@ -250,6 +289,110 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 }
 
 @media (prefers-reduced-motion: reduce) { .btn:active { transform:none; } }
+
+/* the field as a textarea: grows, and pads top and bottom */
+textarea.fld { height:auto; padding:12px 14px; resize:vertical; min-height:96px; }
+
+/* stepper — a number field between − and + (VIP). Phone sizes: 06-controls-phone.
+   Behaviour: site.js, module stepper. */
+.stepper { display:flex; align-items:stretch; height:48px; border-radius:8px; border:1px solid #E5E7EB;
+  background:#fff; overflow:hidden; transition:border-color .15s ease, box-shadow .15s ease; }
+.stepper:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+.stepper input { flex:1 1 0; min-width:0; border:0; outline:none; background:transparent; text-align:center;
+  font-size:15px; font-weight:500; color:#111827; }
+.stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+.stepper input[type=number] { -moz-appearance:textfield; appearance:textfield; }
+.step-btn { width:52px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; color:#4B5563;
+  transition:background-color .15s ease, color .15s ease; }
+.step-btn:hover { background:#F8F9FB; }
+.step-btn:active { background:#F1F2F6; }
+
+/* ═══ 05 · the free tools — Readability, Spell Check, Paper Analysis, the old checker ══
+   Values verbatim from the tool pages' former <style>. They sit before 06-controls-phone,
+   as they did in those pages, so the phone sizes there win on a phone.
+   One name changed so it cannot meet a site component of the same name: the steps rail
+   is .step-rail (.rail is the Moodle guide's sticky rail). */
+
+/* the pricing matrix rows, the recommended cell ringed */
+.pm-row { transition:background-color .15s ease; }
+.pm-row:hover { background:#F2FAFB; }
+.pm-best { position:relative; }
+.pm-best::after { content:''; position:absolute; inset:0; border:1.5px solid #2CC3DB;
+  border-radius:14px; pointer-events:none; }
+
+/* passages marked in a sample text */
+.hl { background-repeat:no-repeat; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
+  box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+.hl-long    { background-image:linear-gradient(rgba(243,111,90,.16), rgba(243,111,90,.16)); color:#B84431; font-weight:600; }
+.hl-passive { background-image:linear-gradient(rgba(154,106,222,.18), rgba(154,106,222,.18)); color:#6D3FB0; font-weight:600; }
+.hl-term    { background-image:linear-gradient(rgba(12,169,195,.14), rgba(12,169,195,.14)); color:#06748A; font-weight:600; }
+
+/* a metric with its bar */
+.mt-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:6px; }
+.mt-bar { height:6px; border-radius:9999px; background:#F1F2F6; overflow:hidden; }
+.mt-bar i { display:block; height:100%; border-radius:9999px; }
+
+/* Readability */
+.rc-area { width:100%; border:0; outline:none; background:transparent; resize:vertical;
+  min-height:132px; font-size:15px; line-height:1.6; font-weight:500; color:#111827; }
+.rc-area::placeholder { color:#9CA3AF; font-weight:400; }
+.rc-scale { position:relative; height:8px; border-radius:9999px; overflow:hidden;
+  background:linear-gradient(90deg,#B84431 0%,#F36F5A 30%,#F3B45A 50%,#5ED2A0 72%,#2AA46C 100%); }
+.rc-needle { position:absolute; top:-4px; width:4px; height:16px; border-radius:9999px;
+  background:#0A0E1A; box-shadow:0 0 0 2px #fff; transform:translateX(-2px);
+  transition:left .35s cubic-bezier(.32,.72,0,1); }
+:where(html:not(.js-motion)) .rc-needle { transition:none; }
+.rc-stat { display:flex; flex-direction:column; gap:2px; }
+.rc-stat b { font-size:19px; font-weight:800; letter-spacing:-0.035em; line-height:1; }
+.rc-stat span { font-size:11px; font-weight:600; color:#9CA3AF; }
+
+/* Spell Check */
+.sp-area { width:100%; border:0; outline:none; background:transparent; resize:vertical;
+  min-height:190px; font-size:15px; line-height:1.7; font-weight:500; color:#111827; }
+.sp-area::placeholder { color:#9CA3AF; font-weight:400; }
+.sp-select { height:38px; padding:0 34px 0 12px; border-radius:10px; border:1px solid #E5E7EB;
+  background:#fff; font:inherit; font-size:12.5px; font-weight:600; color:#111827;
+  appearance:none; cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 11px center; background-size:13px; }
+.sp-select:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
+.sp-row { display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+  padding:5px 0; font-size:12.5px; }
+.sp-row span { color:#6B7280; }
+.sp-row b { font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; color:#111827; }
+.sp-col-h { font-size:10px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase;
+  color:#9CA3AF; margin-bottom:8px; }
+.sp-locked { position:relative; }
+.sp-locked .sp-row b { color:#D1D5DB; }
+
+/* Paper Analysis */
+.pa-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
+  transition:border-color .2s ease, background-color .2s ease; }
+.pa-drop:hover, .pa-drop.drag { border-color:#2CC3DB; background:#F0FAFC; }
+.pa-drop:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
+.pa-select { width:100%; height:42px; padding:0 36px 0 14px; border-radius:12px;
+  border:1px solid #E5E7EB; background:#fff; font:inherit; font-size:13.5px; font-weight:600;
+  color:#111827; appearance:none; cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 12px center; background-size:14px; }
+.pa-select:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
+.pa-step { display:flex; align-items:center; height:42px; border-radius:12px; border:1px solid #E5E7EB;
+  background:#fff; overflow:hidden; }
+.pa-step:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
+.pa-step button { width:34px; height:100%; flex:none; font-size:16px; font-weight:700; color:#6B7280;
+  background:none; border:0; cursor:pointer; transition:color .15s ease, background-color .15s ease; }
+.pa-step button:hover { color:#111827; background:#F1F2F6; }
+.pa-step input { flex:1; min-width:0; height:100%; border:0; outline:none; text-align:center;
+  font:inherit; font-size:13.5px; font-weight:700; color:#111827; -moz-appearance:textfield; }
+.pa-step input::-webkit-outer-spin-button, .pa-step input::-webkit-inner-spin-button {
+  -webkit-appearance:none; margin:0; }
+
+/* numbered steps on one line (Paper Analysis, the old checker) */
+.step-rail > li { position:relative; }
+.step-rail > li:not(:last-child)::before {
+  content:''; position:absolute; left:38px; top:56px; bottom:-12px; width:2px;
+  background:#E5E7EB; border-radius:9999px; }
+.step-rail > li > :first-child { position:relative; z-index:1; }
 
 /* ═══ 06 · controls on phones ═════════════════════════════════════════════════════
    Carried verbatim from the page head, and in the same place in the cascade: BEFORE the
@@ -879,6 +1022,8 @@ select.cf-field { appearance:none; cursor:pointer;
 /* the pulsing dot of a status pill (the closing band's "Free check") */
 @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.45; transform:scale(.8); } }
 .pulse-dot { animation:pulse-dot 2.2s ease-in-out infinite; }
+/* a reader who asked for less motion gets a still dot (the older pages already did this) */
+@media (prefers-reduced-motion: reduce) { .pulse-dot { animation:none; } }
 
 /* ═══ 23 · the reviews carousel (homepage) ═══════════════════════════════════════
    Behaviour: site.js, module carousel ([data-carousel]). Values verbatim; the rail was

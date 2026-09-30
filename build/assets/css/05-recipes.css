@@ -121,3 +121,20 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .btn:active { transform:none; } }
+
+/* the field as a textarea: grows, and pads top and bottom */
+textarea.fld { height:auto; padding:12px 14px; resize:vertical; min-height:96px; }
+
+/* stepper — a number field between − and + (VIP). Phone sizes: 06-controls-phone.
+   Behaviour: site.js, module stepper. */
+.stepper { display:flex; align-items:stretch; height:48px; border-radius:8px; border:1px solid #E5E7EB;
+  background:#fff; overflow:hidden; transition:border-color .15s ease, box-shadow .15s ease; }
+.stepper:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+.stepper input { flex:1 1 0; min-width:0; border:0; outline:none; background:transparent; text-align:center;
+  font-size:15px; font-weight:500; color:#111827; }
+.stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+.stepper input[type=number] { -moz-appearance:textfield; appearance:textfield; }
+.step-btn { width:52px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; color:#4B5563;
+  transition:background-color .15s ease, color .15s ease; }
+.step-btn:hover { background:#F8F9FB; }
+.step-btn:active { background:#F1F2F6; }

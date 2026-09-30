@@ -53,7 +53,16 @@ const EXTRA = { ...(require('./pages')[FILE] || {}) };
 /* --ref=<commit>: compare against another approved state (e.g. the commit before a design fix) */
 const REF = (process.argv.find(a => a.startsWith('--ref=')) || '').slice('--ref='.length) || EXTRA.ref || DEFAULT_REF;
 /* acceptances recorded against this baseline (build/parity/pages.js, byRef) */
-Object.assign(EXTRA, (EXTRA.byRef || {})[REF] || {});
+{
+  /* '*' in pages.js holds what every page shares against a baseline; a page's own entry
+     adds to it (its accept keys merge with the shared ones) */
+  /* keyed by short hash, so HEAD finds what was recorded against the commit it names */
+  const key = execFileSync('git', ['rev-parse', '--short=7', REF], { cwd: ROOT }).toString().trim();
+  const pick = t => (t && (t[REF] || t[key])) || {};
+  const all = pick((require('./pages')['*'] || {}).byRef);
+  const own = pick(EXTRA.byRef);
+  Object.assign(EXTRA, all, own, { accept: { ...(all.accept || {}), ...(EXTRA.accept || {}), ...(own.accept || {}) } });
+}
 
 /* the approved page, from git */
 const baseDir = path.join(__dirname, 'out', 'baseline');
@@ -162,6 +171,14 @@ async function open(browser, url, { width = 1440, reduced = false, js = true, bl
   if (reduced) await page.evaluate(() => document.getAnimations().forEach(a => {
     if (a.constructor.name === 'CSSAnimation' && a.effect && a.effect.getTiming().iterations === Infinity) { a.pause(); a.currentTime = 0; }
   }));
+  /* Lazy images load when the browser decides they are near the viewport, which differs
+     from one load to the next: in the measured states every image is loaded first. */
+  if (reduced) await page.evaluate(async () => {
+    const imgs = [...document.images];
+    imgs.forEach(i => { if (i.loading === 'lazy') i.loading = 'eager'; });
+    await Promise.all(imgs.map(i => (i.complete ? null : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 4000); }))));
+    await Promise.all(imgs.map(i => (i.decode ? i.decode().catch(() => {}) : null)));
+  });
   return { ctx, page, errors };
 }
 
@@ -210,11 +227,17 @@ const snapshot = ([props, rootSel]) => {
   const skip = el => ['SCRIPT', 'STYLE', 'NOSCRIPT', 'LINK', 'META', 'TEMPLATE'].includes(el.tagName)
     || (el.closest('svg') && el.tagName.toLowerCase() !== 'svg')
     || (el.tagName.toLowerCase() === 'svg' && el.querySelector('pattern'))   /* the old dot field */
-    || el.classList.contains('dot-field');                                    /* the new dot field */
+    || el.classList.contains('dot-field')                                     /* the new dot field */
+    /* a <main> with no class of its own is a bare wrapper: the older hand-written pages had
+       none, the migrated ones wrap the same sections in one, and it draws nothing */
+    || (el.tagName === 'MAIN' && !el.getAttribute('class'));
   const all = rootSel ? [root, ...root.querySelectorAll('*')] : [...root.querySelectorAll('*')];
   return all.filter(el => !skip(el)).map(el => {
     const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
-    return { tag: el.tagName.toLowerCase(), cls: (el.getAttribute('class') || '').slice(0, 50),
+    /* an image is compared by the file it shows (its name: one page may say assets/…, the
+       other /assets/…), so the reuse test can leave the image's raster to the browser */
+    const src = el.tagName === 'IMG' ? (el.currentSrc || el.src || '').split('/').pop() : '';
+    return { tag: el.tagName.toLowerCase(), cls: (el.getAttribute('class') || '').slice(0, 50), src,
       box: [r.left - o.left, r.top - o.top, r.width, r.height].map(n => Math.round(n * 100) / 100),
       s: props.map(p => cs.getPropertyValue(p)) };
   });
@@ -231,11 +254,15 @@ const compareSnaps = (sa, sb) => {
   /* nor is a gradient whose every stop is fully transparent: it paints what none paints */
   const clear = v => v === 'none' ||
     (/^(linear|radial)-gradient\(/.test(v) && !/rgba?\(|#[0-9a-f]{3,8}/i.test(v.replace(/rgba\([^()]*,\s*0\)/g, '')));
+  /* the identity transform draws exactly what none draws (a still frame of an animation) */
+  const identity = v => v === 'none' || v === 'matrix(1, 0, 0, 1, 0, 0)';
   const unpainted = (p, e, f) => (p in width && e.s[width[p]] === '0px' && f.s[width[p]] === '0px')
+    || (p === 'transform' && identity(e.s[PROPS.indexOf(p)]) && identity(f.s[PROPS.indexOf(p)]))
     || (p === 'background-image' && clear(e.s[PROPS.indexOf(p)]) && clear(f.s[PROPS.indexOf(p)]));
   sa.forEach((e, i) => {
     const f = sb[i];
     if (e.box.some((v, k) => Math.abs(v - f.box[k]) > .01)) diffs.push(`${e.tag}.${e.cls.split(' ')[0]} box ${e.box} vs ${f.box}`);
+    if (e.src !== f.src) diffs.push(`${e.tag}.${e.cls.split(' ')[0]} src: ${e.src} ≠ ${f.src}`);
     PROPS.forEach((p, k) => { if (e.s[k] !== f.s[k] && !unpainted(p, e, f)) diffs.push(`${e.tag}.${e.cls.split(' ')[0]} ${p}: ${e.s[k].slice(0, 140)} ≠ ${f.s[k].slice(0, 140)}`); });
   });
   return diffs;
@@ -395,7 +422,14 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
       .map(re => (h.match(new RegExp(re)) || [])[1]);
     ok('content', 'title, description, canonical, lang identical', same(meta(base), meta(current)), JSON.stringify(meta(current)));
     /* The text as served: scripts and <template> contents are not text. */
-    const text = h => h.slice(h.indexOf('<main'), h.indexOf('</main>')).replace(/<script[\s\S]*?<\/script>|<template[\s\S]*?<\/template>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    /* The page's content: <main> where it has one, else what lies between the site header
+       and the footer (the older hand-written pages had no <main>) */
+    const content = h => {
+      if (h.indexOf('<main') >= 0) return h.slice(h.indexOf('<main'), h.indexOf('</main>'));
+      const a = h.indexOf('</header>') >= 0 ? h.indexOf('</header>') : h.indexOf('<body');
+      return h.slice(a, h.indexOf('<footer'));
+    };
+    const text = h => content(h).replace(/<script[\s\S]*?<\/script>|<template[\s\S]*?<\/template>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     const same0 = text(base) === text(current);
     /* The text as rendered, after the scripts ran (reduced motion, so no odometer is mid-roll).
        This is the check that must hold. The served text may differ in one approved way only:
@@ -405,8 +439,9 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
       const x = await open(browser, url, { reduced: true });
       const t = await x.page.evaluate(() => {
         const out = [];
-        const w = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT, {
-          acceptNode: n => n.parentElement.closest('script, template, style') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+        /* the body outside the site chrome, so a page with <main> and one without compare */
+        const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+          acceptNode: n => n.parentElement.closest('script, template, style, header, footer, body > div[class*="z-[100]"]') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
         while (w.nextNode()) out.push(w.currentNode.nodeValue);
         return out.join(' ').replace(/\s+/g, ' ').trim();
       });
@@ -421,10 +456,13 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
       const unfilled = h => h
         .replace(/(class="[^"]*\bjs-(?:price|term|rate)\b[^"]*">)[^<]*</g, '$1<')
         .replace(/(class="[^"]*\bjs-feats\b[^"]*">)[\s\S]*?(<\/ul>)/g, '$1$2')
-        .replace(/(data-period-note(?:="[^"]*")?[^>]*>)[^<]*</g, '$1<');
+        .replace(/(data-period-note(?:="[^"]*")?[^>]*>)[^<]*</g, '$1<')
+        /* a count-up figure: the approved page served 0 and its script wrote the number;
+           the page now serves the number (the rendered text above holds either way) */
+        .replace(/(<[^>]*\bdata-count="[^"]*"[^>]*>)[^<]*</g, '$1<');
       const eq = text(unfilled(current)) === text(unfilled(base));
-      ok('content', 'served text identical except the price slots, now rendered from the pricing data source', eq,
-         eq ? '' : 'served text differs outside the price slots');
+      ok('content', 'served text identical except the slots a script used to fill (prices from the pricing data source, count-up figures)', eq,
+         eq ? '' : 'served text differs outside those slots');
     }
   }
 
@@ -531,8 +569,12 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
        sits exactly where a static one would, but Chrome may paint it on its own layer,
        with different text anti-aliasing, in one context and not the other: the Pricing AI
        packages column differed by 5,262 anti-aliased pixels at identical geometry, and by
-       0 once both were static. */
-    const hide = name => `.site-header,[data-to-top],.grain,footer,body > div[class*="z-[100]"],main > :not([data-component="${name}"]){display:none!important} .sticky,.sm\\:sticky,.md\\:sticky,.lg\\:sticky,.xl\\:sticky{position:static!important}`;
+       0 once both were static.
+       Images are hidden for the pixel comparison of a section alone: Chrome resamples a
+       scaled photo or icon, tile by tile, differently in two contexts (Help Center's hero
+       photo, the tools' icons: up to 43/255 at identical geometry). The element snapshot
+       still holds each image to its box and to the file it shows. */
+    const hide = name => `.site-header,[data-to-top],.grain,footer,body > div[class*="z-[100]"],main > :not([data-component="${name}"]){display:none!important} .sticky,.sm\\:sticky,.md\\:sticky,.lg\\:sticky,.xl\\:sticky{position:static!important} main img{visibility:hidden!important}`;
     for (const w of WIDTHS) {
       for (const s of sections) {
         const b = await open(browser, B, { width: w, reduced: true });
@@ -548,7 +590,13 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
           if (!d2.px) { console.log(`  note   ${w}px ${s.name}: ${d.px} px on the first load, 0 on a fresh one (noise)`); d = d2; }
         }
         const diffs = compareSnaps(await b.page.evaluate(snapshot, [PROPS, sel]), await t.page.evaluate(snapshot, [PROPS, sel]));
-        ok('reuse', `${w}px ${s.name} ${d.size}: ${d.px} px, ${diffs.length} element differences`, d.px === 0 && !diffs.length, diffs.slice(0, 3).join(' | '));
+        /* EXTRA.acceptReuse['<section>@<width>'] = { maxPx, maxDelta, reason }: resampling measured
+           and bounded for one section at one width, with every element identical */
+        const rt = (EXTRA.acceptReuse || {})[s.name + '@' + w];
+        if (d.px && !diffs.length && rt && d.px <= rt.maxPx && d.maxDelta <= rt.maxDelta) {
+          console.log(`  ACCEPT ${w}px ${s.name}: ${d.px} px, max channel delta ${d.maxDelta}/255 — ${rt.reason}`);
+          results.push({ group: 'reuse', label: `${w}px ${s.name} ${d.px} px (accepted)`, pass: true });
+        } else ok('reuse', `${w}px ${s.name} ${d.size}: ${d.px} px` + (d.px ? ` (max channel delta ${d.maxDelta}/255)` : '') + `, ${diffs.length} element differences`, d.px === 0 && !diffs.length, diffs.slice(0, 3).join(' | '));
         if (t.errors.length) ok('reuse', `${w}px ${s.name}: script errors alone`, false, t.errors.join(' | '));
         await b.ctx.close(); await t.ctx.close();
       }

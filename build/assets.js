@@ -110,7 +110,8 @@ const boot = () => fs.readFileSync(path.join(SRC, 'js', 'boot.js'), 'utf8')
 
 /* What a page puts in <head> to use the system — the only CSS/JS it carries.
    { ds: true } adds the design-system page's tools: ds.css between site.css and
-   tailwind.css (where its former <style> sat against the CDN sheet), ds.js after site.js. */
+   tailwind.css (where its former <style> sat against the CDN sheet), ds.js after site.js.
+   { ds: 'css' } links ds.css only (the prototype index). */
 const head = ({ ds = false } = {}) => [
   '<link rel="stylesheet" href="/assets/css/site.css">',
   ds && '<link rel="stylesheet" href="/assets/css/ds.css">',
@@ -119,7 +120,7 @@ const head = ({ ds = false } = {}) => [
   '<script defer src="/assets/vendor/gsap/' + GSAP_VERSION + '/gsap.min.js"></script>',
   '<script defer src="/assets/vendor/gsap/' + GSAP_VERSION + '/ScrollTrigger.min.js"></script>',
   '<script defer src="/assets/js/site.js"></script>',
-  ds && '<script defer src="/assets/js/ds.js"></script>',
+  ds === true && '<script defer src="/assets/js/ds.js"></script>',
 ].filter(Boolean).join('\n');
 
 module.exports = { build, head, boot, TW_VERSION, GSAP_VERSION, PREFIX_TARGETS };

@@ -73,11 +73,8 @@ GROUPS.forEach(([name, test]) => {
 const rest = pages.filter(p => !taken.has(p.file));
 if (rest.length) grouped.push(['Everything else', rest]);
 
-/* ── markup. The head is borrowed from a real page so the tailwind config is the
-      same one every other page carries — check.js counts distinct configs. ──── */
-const donor = fs.readFileSync(path.join(SITE, 'help-center.html'), 'utf8');
-const head = donor.slice(0, donor.indexOf('<body'));
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
+/* ── markup: the shared shell without the site chrome; the cards' CSS is ds.css ── */
+const shell = require('./page');
 
 const esc = s => String(s).replace(/&(?!(amp|lt|gt|quot|#\d+|rsquo|mdash|nbsp);)/g, '&amp;')
                           .replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -115,31 +112,7 @@ ${list.map(card).join('\n')}
 const stubs = pages.filter(p => p.stub).length;
 const unmapped = pages.filter(p => p.status === 'not in the URL map').length;
 
-const html = head.replace(/<title>[\s\S]*?<\/title>/, '<title>Prototype index — every page</title>') + `
-<style>
-  .pg-card { display:flex; flex-direction:column; gap:.45rem; height:100%;
-    border-radius:.875rem; background:#fff; padding:.9rem 1rem;
-    box-shadow:0 1px 2px rgba(0,0,0,.04); outline:1px solid rgba(0,0,0,.06);
-    transition:outline-color .2s ease, box-shadow .2s ease, transform .2s ease; }
-  .pg-card:hover { outline-color:#0991A8; box-shadow:0 6px 20px -8px rgba(0,0,0,.18); transform:translateY(-1px); }
-  .pg-row { display:flex; align-items:center; gap:.5rem; }
-  .pg-name { font-size:13.5px; font-weight:700; letter-spacing:-.01em; color:#111827; }
-  .pg-h1 { font-size:12px; color:#6B7280; line-height:1.45; }
-  .pg-foot { display:flex; align-items:center; gap:.5rem; margin-top:auto; padding-top:.45rem;
-    border-top:1px solid #F1F2F6; }
-  .pg-file { font-size:11px; color:#9CA3AF; font-variant-numeric:tabular-nums; }
-  .pg-url { margin-left:auto; font-size:11px; font-weight:600; color:#0991A8; }
-  .pg-none { color:#D1D5DB; font-weight:500; }
-  .pg-tag { font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.12em;
-    padding:.15rem .4rem; border-radius:.35rem; }
-  .pg-tag-stub { background:#FDE5E0; color:#B84431; }
-  .pg-tag-quiet { background:#F1F2F6; color:#6B7280; }
-  @media (min-width:640px) { .pg-card { border-radius:1rem; } }
-</style>
-${bodyTag}
-
-<main class="min-h-screen bg-[#F7F9FA] py-10 sm:py-14 lg:py-16">
-  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10">
+const html = shell.render({ title: 'Prototype index — every page', chrome: false, ds: 'css', mainClass: 'min-h-screen bg-[#F7F9FA] py-10 sm:py-14 lg:py-16', sections: [`  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10">
 
     <div class="mb-8 sm:mb-10 lg:mb-12">
       <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Prototype index</div>
@@ -154,12 +127,7 @@ ${bodyTag}
 
 ${grouped.map(section).join('\n\n')}
 
-  </div>
-</main>
-
-</body>
-</html>
-`;
+  </div>`] });
 
 fs.writeFileSync(path.join(SITE, SELF), html);
 console.log('  site/' + SELF + ' — ' + pages.length + ' pages, ' +
