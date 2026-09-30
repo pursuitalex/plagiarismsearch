@@ -28,6 +28,7 @@
 const fs = require('fs');
 const path = require('path');
 const page = require('./page');
+const faq = require('./sections/faq');   /* the FAQ: one library template */
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
@@ -655,32 +656,13 @@ ${eyebrow('teal-400', COPY.pricing.eyebrow)}
 const section10 = () => `  <!-- ================= 10 · FAQ =================
        Nine questions, the confusion ones first, every answer in the HTML. The answer about
        buying Turnitin directly is followed by the official purchase guide. -->
-  <section id="turnitin-alternative-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('orange-500', 'Questions', 'ink')}
-          <h2 class="${H2}">${COPY.faq.h2}</h2>
-        </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-${COPY.faq.items.map(([q, a, n], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-controls="turnitin-alternative-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="turnitin-alternative-faq-a${i + 1}"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
-                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">${a}</p>${n ? `
-                <p class="mt-3"><a href="${SOURCES[n - 1][1]}" target="_blank" rel="noopener noreferrer" class="inline-flex items-start gap-1.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-950 underline decoration-ink-300 underline-offset-4 transition-colors duration-300"><span>Official Turnitin guide: ${SOURCES[n - 1][0]}</span><span class="mt-1 text-ink-400">${extIcon}</span></a></p>` : ''}
-              </div></div></div>
-            </div>`).join('\n')}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${faq.section({
+  id: 'turnitin-alternative-faq', ns: 'turnitin-alternative-faq', bg: 'white', space: 'md', layout: 'fluid',
+  head: { eyebrow: 'Questions', eyebrowBg: 'tint', title: COPY.faq.h2 },
+  rich: true,
+  items: COPY.faq.items.map(([q, a, n]) => ({ q, a,
+    link: n ? { label: 'Official Turnitin guide: ' + SOURCES[n - 1][0], href: SOURCES[n - 1][1], target: '_blank', rel: 'noopener noreferrer', icon: extIcon } : null })),
+})}`;
 
 /* ═══════════════ 11 · FINAL CTA ═══════════════ */
 const section11 = () => `  <!-- ================= 11 · FINAL CTA =================

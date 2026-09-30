@@ -122,7 +122,9 @@ const V1_OF = { products: 'products', pricing: 'prices', resources: 'company', c
 /* design-system.html has its own shell and is not part of the site's navigation */
 /* pages.html is the prototype index, a review tool rather than a page of the site,
    so it carries no global header or footer to keep fresh. */
-const SKIP = new Set(['design-system.html', 'pages.html']);
+/* section-library.html is the Section Library's copy-paste catalogue (build/section-library.js),
+   an internal review page like the index. */
+const SKIP = new Set(['design-system.html', 'pages.html', 'section-library.html']);
 
 function render(tpl, page) {
   const active = VERSION === 'v1' ? V1_OF[page.active] ?? null : page.active;

@@ -2,7 +2,13 @@
 /* Compiled by build/assets.js with tailwindcss 3.4.17 → site/assets/css/tailwind.css.
    Linked AFTER site.css: the Play CDN appended its sheet as the last \3c style> in <head>,
    so on equal specificity a utility has always won over our component rules. Keeping
-   that order is what keeps every approved page identical. */
+   that order is what keeps every approved page identical.
+
+   The Section Library (build/sections/*.css) is compiled here, in the same run, between
+   components and utilities: its @apply resolves to the utilities' own values, and a
+   utility still comes last. Not in @layer — see build/sections/section-head.css.
+   (@import instead of @tailwind: an @import must come first in the file; the output of
+   "tailwindcss/base" etc. is exactly what the three @tailwind directives produced.) */
 
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
@@ -590,6 +596,646 @@ video {
   .container {
     max-width: 1536px;
   }
+}
+
+/* ═══ Section Header — the library primitive ════════════════════════════════════════
+   Template: build/sections/section-head.js · contract: for now inside the FAQ's
+   (build/sections/faq.contract.js); it gets its own when a second component adopts it.
+
+   The head most sections open with: an eyebrow pill (dot + label), the h2, an intro line,
+   and optionally a quiet "more" link under it. Four classes an editor can read:
+
+     .section-eyebrow            the pill           data-bg="white" (default) | "tint"
+       .section-eyebrow-dot        its dot
+       .section-eyebrow-label      its label
+     .section-title              the h2
+     .section-intro              the intro line     data-size="lead" (default) | "small"
+     .section-more               the spacing above the more link (a wrapper <div>, or the link itself)
+     .section-link               the quiet more link
+
+   How it is written (the rule for every library component):
+   · Compiled in the SAME Tailwind run as the utilities (build/assets/css/tailwind.src.css
+     imports this file between components and utilities), with @apply, so every value is
+     the utility's own value — the ring + shadow composition included.
+   · Outside @layer on purpose: @layer components drops a rule whose class Tailwind has not
+     seen in content, and a section that exists only in the CMS would lose its CSS.
+   · A property is set by a class OR by a utility on the same element, never both. The
+     utilities come after this file, so a stray utility would silently win.
+   · Variants are data-* attributes wrapped in :where(), so every selector here weighs
+     (0,1,0) like a utility and the later rule wins by order alone.
+   · A variant restates each breakpoint it changes: a later base rule overrides an earlier
+     @media rule of the same weight, and that is what the variants rely on.
+   · Spacing between the parts belongs to the component that hosts the head (see faq.css
+     for the FAQ's two models); the defaults below are the common model. */
+
+.section-eyebrow {
+  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .section-eyebrow {
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-eyebrow {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* on a white section the pill takes the tint, so it still reads as a chip */
+
+.section-eyebrow:where([data-bg="tint"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 249 251 / var(--tw-bg-opacity, 1));
+}
+
+.section-eyebrow-dot {
+  height: 0.375rem;
+  width: 0.375rem;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 111 90 / var(--tw-bg-opacity, 1));
+}
+
+.section-eyebrow-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .section-eyebrow-label {
+    font-size: 10.5px;
+  }
+}
+
+.section-title {
+  font-size: clamp(1.9rem,3.4vw,2.9rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.section-intro {
+  margin-top: 1rem;
+  font-size: 14.5px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .section-intro {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-intro {
+    margin-top: 1.25rem;
+    font-size: 15.5px;
+  }
+}
+
+/* the smaller intro: stays at 15px from sm up (AI Detector, API) */
+
+@media (min-width: 1024px) {
+  .section-intro:where([data-size="small"]) {
+    font-size: 15px;
+  }
+}
+
+.section-more {
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .section-more {
+    margin-top: 1.5rem;
+  }
+}
+
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 13px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  -webkit-text-decoration-color: #D1D5DB;
+          text-decoration-color: #D1D5DB;
+  text-underline-offset: 4px;
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.section-link:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .section-link {
+    font-size: 13.5px;
+  }
+}
+
+/* ═══ FAQ — library component ═══════════════════════════════════════════════════════
+   Template: build/sections/faq.js · contract: build/sections/faq.contract.js
+   Behaviour: build/assets/js/50-faq.js ([data-faq], .faq-item, .faq-q, .open)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   section.faq                 data-bg="white|tint"  data-space="md|lg"  data-layout="fluid|fluid-narrow|fixed"
+     .faq-inner                the 1280px container
+       .faq-grid               head column + list column
+         .faq-aside            the sticky head column (Section Header inside)
+         .faq-frame            the soft outer frame     data-variant="doc" when used on its own in a guide
+           .faq-list[data-faq]
+             .faq-item(.open)
+               (.faq-heading)  optional heading (h3) around the button
+               button.faq-q  > .faq-q-text + .faq-chev(svg)
+               .faq-a#id > div > .faq-a-body
+                                p.faq-a-body — a one-paragraph answer
+                                div.faq-a-body > p, p … (p.faq-a-more > a.faq-a-link) — a rich answer
+
+   Two other roots, for the FAQ inside another component: the grid alone (.faq-grid with
+   data-layout, the user guide) and the frame alone (.faq-frame, the Moodle guide). The
+   layout selectors below therefore match the variant on .faq OR on a root .faq-grid. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+
+.faq {
+  position: relative;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 640px) {
+  .faq {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .faq {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+
+  .faq:where([data-space="md"]) {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+.faq:where([data-bg="tint"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 249 251 / var(--tw-bg-opacity, 1));
+}
+
+.faq-inner {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .faq-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .faq-inner {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* ── the grid: three approved layouts ───────────────────────────────────────────
+   fluid          0.85fr / 1.15fr — the product pages
+   fluid-narrow   0.8fr / 1.2fr   — the Ukrainian page
+   fixed          380px / 1fr     — the homepage and the user guide; its head keeps the
+                  homepage's spacing model (the title carries the gap, the intro none),
+                  its link sits bare under the intro, and its container is not positioned */
+
+.faq-grid {
+  display: grid;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .faq-grid {
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 3.5rem;
+  }
+
+  :where(.faq[data-layout="fluid-narrow"]) .faq-grid,
+.faq-grid:where([data-layout="fluid-narrow"]) {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+}
+
+:where(.faq[data-layout="fixed"]) .faq-grid,
+.faq-grid:where([data-layout="fixed"]) {
+  gap: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  :where(.faq[data-layout="fixed"]) .faq-grid,
+.faq-grid:where([data-layout="fixed"]) {
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.faq[data-layout="fixed"]) .faq-grid,
+.faq-grid:where([data-layout="fixed"]) {
+    grid-template-columns: 380px 1fr;
+    gap: 3.5rem;
+  }
+}
+
+:where(.faq[data-layout="fixed"]) > .faq-inner {
+  position: static;
+}
+
+@media (min-width: 1024px) {
+  .faq-aside {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 7rem;
+  }
+
+  :where(.faq[data-layout="fixed"], .faq-grid[data-layout="fixed"]) .faq-aside {
+    top: 8rem;
+  }
+}
+
+:where(.faq[data-layout="fixed"], .faq-grid[data-layout="fixed"]) .section-title {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+  :where(.faq[data-layout="fixed"], .faq-grid[data-layout="fixed"]) .section-title {
+    margin-bottom: 1.25rem;
+  }
+}
+
+:where(.faq[data-layout="fixed"], .faq-grid[data-layout="fixed"]) .section-intro {
+  margin-top: 0px;
+}
+
+@media (min-width: 1024px) {
+  :where(.faq[data-layout="fixed"], .faq-grid[data-layout="fixed"]) .section-intro {
+    margin-top: 0px;
+  }
+}
+
+/* ── the list ────────────────────────────────────────────────────────────────── */
+
+.faq-frame {
+  border-radius: 1.5rem;
+  background-color: rgb(0 0 0 / .02);
+  padding: 0.375rem;
+  --tw-shadow: 0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08);
+  --tw-shadow-colored: 0 1px 2px var(--tw-shadow-color), 0 20px 40px -15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .faq-frame {
+    border-radius: 28px;
+    padding: 0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .faq-frame {
+    border-radius: 2rem;
+  }
+}
+
+.faq-list > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+  --tw-divide-opacity: 1;
+  border-color: rgb(241 242 246 / var(--tw-divide-opacity, 1));
+}
+
+.faq-list {
+  overflow: hidden;
+  border-radius: 18px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  --tw-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+  --tw-shadow-colored: inset 0 1px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+@media (min-width: 640px) {
+  .faq-list {
+    border-radius: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .faq-list {
+    border-radius: calc(2rem - 0.5rem);
+  }
+}
+
+.faq-heading {
+  margin: 0px;
+}
+
+.faq-q {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .faq-q {
+    gap: 1.25rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .faq-q {
+    gap: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+.faq-q-text {
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.faq-chev {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+}
+
+.faq-a-body {
+  max-width: 72ch;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .faq-a-body {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .faq-a-body {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1.75rem;
+  }
+}
+
+/* the answer text: the one paragraph itself, or each paragraph of a rich answer except
+   the follow-up link's own */
+
+p.faq-a-body,
+.faq-a-body > p:not(.faq-a-more) {
+  font-size: 13.5px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  p.faq-a-body,
+.faq-a-body > p:not(.faq-a-more) {
+    font-size: 14.5px;
+  }
+}
+
+.faq-a-body > p + p {
+  margin-top: 0.75rem;
+}
+
+/* a link inside the answer text */
+
+.faq-link {
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity, 1));
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  -webkit-text-decoration-color: #D1D5DB;
+          text-decoration-color: #D1D5DB;
+  text-underline-offset: 4px;
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.faq-link:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+/* the follow-up link under a rich answer (an official source, a place in the product) */
+
+.faq-a-link {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  font-size: 13px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  -webkit-text-decoration-color: #D1D5DB;
+          text-decoration-color: #D1D5DB;
+  text-underline-offset: 4px;
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.faq-a-link:hover {
+  --tw-text-opacity: 1;
+  color: rgb(10 14 26 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .faq-a-link {
+    font-size: 13.5px;
+  }
+}
+
+.faq-a-link-icon {
+  margin-top: 0.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
+
+/* ── variant: doc — the list alone in a guide's reading column ───────────────────
+   It keeps the phone/tablet sizes from lg up (the column is narrow) and uses the guide's
+   body colour and link. */
+
+@media (min-width: 1024px) {
+  .faq-frame:where([data-variant="doc"]) {
+    border-radius: 28px;
+  }
+
+  :where(.faq-frame[data-variant="doc"]) .faq-list {
+    border-radius: 20px;
+  }
+
+  :where(.faq-frame[data-variant="doc"]) .faq-q {
+    gap: 1.25rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  :where(.faq-frame[data-variant="doc"]) .faq-a-body {
+    padding-bottom: 1.5rem;
+  }
+}
+
+:where(.faq-frame[data-variant="doc"]) p.faq-a-body,
+:where(.faq-frame[data-variant="doc"]) .faq-a-body > p:not(.faq-a-more) {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+}
+
+:where(.faq-frame[data-variant="doc"]) .faq-a-link {
+  align-items: center;
+  font-size: 13.5px;
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity, 1));
+}
+
+:where(.faq-frame[data-variant="doc"]) .faq-a-link:hover {
+  -webkit-text-decoration-color: #6B7280;
+          text-decoration-color: #6B7280;
+}
+
+@media (min-width: 640px) {
+  :where(.faq-frame[data-variant="doc"]) .faq-a-link {
+    font-size: 14px;
+  }
+}
+
+:where(.faq-frame[data-variant="doc"]) .faq-a-link-icon {
+  margin-top: 0px;
+}
+
+/* ── behaviour: the accordion (moved from build/assets/css/03-faq.css) ─────────────
+   Every answer is in the HTML. Collapsing is an enhancement: without JS (no .js on
+   <html>) every answer stays open, so none is locked behind a button that cannot work. */
+
+.faq-a {
+  display:grid;
+  grid-template-rows:0fr;
+  transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1);
+}
+
+.faq-item.open .faq-a {
+  grid-template-rows:1fr;
+}
+
+.faq-a > div {
+  overflow:hidden;
+}
+
+/* The chevron sits in a 32px round chip: grey until its answer is open, then the accent,
+   so the colour follows a click. One look on every page (2026-09-30). The transition keeps
+   the transform in its list, or the rotation would lose its easing. */
+
+.faq-chev {
+  background:#F1F2F6;
+  color:#4B5563;
+  transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease;
+}
+
+.faq-item.open .faq-chev {
+  transform:rotate(180deg);
+  background:#FDE5E0;
+  color:#B84431;
+}
+
+:where(html:not(.js)) .faq-a {
+  grid-template-rows:1fr;
+}
+
+:where(html:not(.js)) .faq-chev {
+  transform:rotate(180deg);
 }
 
 .sr-only {
@@ -3274,6 +3920,10 @@ video {
   padding-bottom: 0.375rem;
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
 .pb-12 {
   padding-bottom: 3rem;
 }
@@ -3312,6 +3962,10 @@ video {
 
 .pb-6 {
   padding-bottom: 1.5rem;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
 }
 
 .pl-1 {
@@ -3372,6 +4026,10 @@ video {
 
 .pt-1 {
   padding-top: 0.25rem;
+}
+
+.pt-10 {
+  padding-top: 2.5rem;
 }
 
 .pt-16 {
@@ -5328,10 +5986,6 @@ video {
     padding-bottom: 1.25rem;
   }
 
-  .sm\:pb-6 {
-    padding-bottom: 1.5rem;
-  }
-
   .sm\:pb-8 {
     padding-bottom: 2rem;
   }
@@ -5350,6 +6004,14 @@ video {
 
   .sm\:pt-10 {
     padding-top: 2.5rem;
+  }
+
+  .sm\:pt-12 {
+    padding-top: 3rem;
+  }
+
+  .sm\:pt-14 {
+    padding-top: 3.5rem;
   }
 
   .sm\:pt-2 {
@@ -5997,10 +6659,6 @@ video {
     grid-template-columns: 232px minmax(0,1fr);
   }
 
-  .lg\:grid-cols-\[380px_1fr\] {
-    grid-template-columns: 380px 1fr;
-  }
-
   .lg\:grid-cols-\[400px_1fr\] {
     grid-template-columns: 400px 1fr;
   }
@@ -6306,10 +6964,6 @@ video {
     padding-bottom: 1.5rem;
   }
 
-  .lg\:pb-7 {
-    padding-bottom: 1.75rem;
-  }
-
   .lg\:pl-5 {
     padding-left: 1.25rem;
   }
@@ -6332,6 +6986,10 @@ video {
 
   .lg\:pt-12 {
     padding-top: 3rem;
+  }
+
+  .lg\:pt-16 {
+    padding-top: 4rem;
   }
 
   .lg\:pt-2 {

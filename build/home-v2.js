@@ -334,6 +334,7 @@ const { dotField } = require('./dots');
 const cta = require('./cta');
 const pricing = require('./pricing');
 const page = require('./page');
+const faq = require('./sections/faq');   /* the FAQ: one library template */
 /* the quick-check form is shared too — build/checker.js — so Students and PDF render
    the same component; the homepage's markup is unchanged */
 const checker = require('./checker');
@@ -811,39 +812,13 @@ const section11 = () => `
 
 const section12 = () => `
   <!-- ================= 12 · FAQ ================= -->
-  <section id="faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <!-- Heading left, questions right: a long accordion under a centred heading pushes
-           the last question a screen and a half from its own title. The left column sticks,
-           so the section keeps its name in view while you read down the list. -->
-      <div class="grid lg:grid-cols-[380px_1fr] gap-10 sm:gap-12 lg:gap-14 items-start">
-      <div class="rv lg:sticky lg:top-32">
-        ${eyebrow('Questions')}
-        <h2 class="${H2} mb-4 lg:mb-5">${S.s12.h2}</h2>
-        <p class="${LEAD} text-ink-600">${S.s12.intro}</p>
-        <a href="${S.s12.helpHref}" class="inline-flex items-center gap-2 mt-5 lg:mt-6 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.help}</svg>
-          ${S.s12.help}
-        </a>
-      </div>
-
-      <!-- every answer is in the rendered HTML, not fetched on click -->
-      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse" id="faqList">
-        <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-          ${S.s12.items.map(([q, a], i) => `<div class="faq-item${i === 0 ? ' open' : ''}">
-            <button type="button" aria-controls="home-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
-            </button>
-            <div class="faq-a" id="home-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
-          </div>`).join('\n          ')}
-        </div>
-      </div>
-      </div>
-    </div>
-  </section>`;
+${faq.section({
+  id: 'faq', ns: 'home-faq', bg: 'white', space: 'md', layout: 'fixed',
+  head: { eyebrow: 'Questions', title: S.s12.h2, intro: S.s12.intro,
+          more: { label: S.s12.help, href: S.s12.helpHref,
+                  icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.help}</svg>` } },
+  items: S.s12.items.map(([q, a]) => ({ q, a })),
+})}`;
 
 const section13 = () => `
   <!-- ================= 13 · FINAL CTA =================

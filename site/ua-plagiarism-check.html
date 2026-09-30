@@ -697,100 +697,82 @@
 
   <!-- ================= 10 · FAQ =================
        Nine questions, full answers in the HTML, the accordion the site uses. -->
-  <section id="faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-28 bg-ink-50">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Поширені запитання</h2>
-        </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-            <div class="faq-item open">
-              <button type="button" aria-controls="ua-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Скільки тексту можна перевірити на плагіат безкоштовно?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ua-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Без реєстрації можна перевірити до 150 слів. Для зареєстрованих користувачів доступно 300 слів для перевірки на плагіат щодня. Для більших обсягів можна скористатися платним тарифом.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="ua-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Що показує звіт PlagiarismSearch?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ua-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Звіт показує знайдені текстові збіги, відповідні джерела та пов’язані з ними фрагменти документа. Ви можете перейти від позначеного тексту до джерела й самостійно перевірити контекст.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="ua-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Чи означає знайдений збіг, що в тексті є плагіат?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ua-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Ні. Текстовий збіг сам по собі не є автоматичним висновком про плагіат. Важливо перевірити джерело, контекст, цитування й правила, за якими оцінюється конкретний текст.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="ua-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Чи можна перевірити PDF на плагіат?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ua-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Так, PlagiarismSearch може аналізувати PDF, якщо файл містить машинозчитуваний текстовий шар. Сервіс не виконує OCR: текст, який існує лише всередині сканованого зображення, не буде розпізнано. У змішаному PDF аналізується текст із тих сторінок, де він доступний як текст.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="ua-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Який максимальний розмір файлу?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ua-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Для гостей максимальний розмір підтримуваного файла становить 2 МБ, для користувачів, які увійшли в акаунт, — 24 МБ. За одну операцію можна додати до 10 файлів.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="ua-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">З якими джерелами може порівнюватися текст?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ua-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Залежно від доступних налаштувань перевірка може використовувати вебджерела, академічну базу, а також персональне чи організаційне сховище. Не всі джерела обов’язково використовуються в кожній перевірці.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="ua-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Чи зберігається мій документ після перевірки?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ua-faq-a7"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Завантажений вихідний документ не зберігається як окремий документ після звичайної перевірки. Згенерований звіт може залишатися у вашому акаунті для повторного перегляду, і його можна видалити. Додавання документа до Storage є окремою керованою дією.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="ua-faq-a8" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Чи можна використати звіт PlagiarismSearch як офіційний звіт для університету?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ua-faq-a8"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Вимоги різних університетів відрізняються. Звіт PlagiarismSearch можна використовувати для самоперевірки й роботи зі знайденими збігами, але чи приймає конкретний заклад такий звіт як офіційний документ, потрібно уточнювати безпосередньо в університеті.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="ua-faq-a9" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Чим перевірка на плагіат відрізняється від AI-детектора?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ua-faq-a9"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Перевірка на плагіат шукає схожість між вашим текстом і доступними джерелами. AI-детектор оцінює інші ознаки — наскільки текст схожий на машинно згенерований. Це різні сигнали, і один не підтверджує інший.</p></div></div>
-            </div>
+<section id="faq" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <h2 class="section-title">Поширені запитання</h2>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="ua-faq-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">Скільки тексту можна перевірити на плагіат безкоштовно?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="ua-faq-a1"><div><p class="faq-a-body">Без реєстрації можна перевірити до 150 слів. Для зареєстрованих користувачів доступно 300 слів для перевірки на плагіат щодня. Для більших обсягів можна скористатися платним тарифом.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="ua-faq-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Що показує звіт PlagiarismSearch?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="ua-faq-a2"><div><p class="faq-a-body">Звіт показує знайдені текстові збіги, відповідні джерела та пов’язані з ними фрагменти документа. Ви можете перейти від позначеного тексту до джерела й самостійно перевірити контекст.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="ua-faq-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Чи означає знайдений збіг, що в тексті є плагіат?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="ua-faq-a3"><div><p class="faq-a-body">Ні. Текстовий збіг сам по собі не є автоматичним висновком про плагіат. Важливо перевірити джерело, контекст, цитування й правила, за якими оцінюється конкретний текст.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="ua-faq-a4" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Чи можна перевірити PDF на плагіат?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="ua-faq-a4"><div><p class="faq-a-body">Так, PlagiarismSearch може аналізувати PDF, якщо файл містить машинозчитуваний текстовий шар. Сервіс не виконує OCR: текст, який існує лише всередині сканованого зображення, не буде розпізнано. У змішаному PDF аналізується текст із тих сторінок, де він доступний як текст.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="ua-faq-a5" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Який максимальний розмір файлу?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="ua-faq-a5"><div><p class="faq-a-body">Для гостей максимальний розмір підтримуваного файла становить 2 МБ, для користувачів, які увійшли в акаунт, — 24 МБ. За одну операцію можна додати до 10 файлів.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="ua-faq-a6" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">З якими джерелами може порівнюватися текст?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="ua-faq-a6"><div><p class="faq-a-body">Залежно від доступних налаштувань перевірка може використовувати вебджерела, академічну базу, а також персональне чи організаційне сховище. Не всі джерела обов’язково використовуються в кожній перевірці.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="ua-faq-a7" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Чи зберігається мій документ після перевірки?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="ua-faq-a7"><div><p class="faq-a-body">Завантажений вихідний документ не зберігається як окремий документ після звичайної перевірки. Згенерований звіт може залишатися у вашому акаунті для повторного перегляду, і його можна видалити. Додавання документа до Storage є окремою керованою дією.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="ua-faq-a8" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Чи можна використати звіт PlagiarismSearch як офіційний звіт для університету?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="ua-faq-a8"><div><p class="faq-a-body">Вимоги різних університетів відрізняються. Звіт PlagiarismSearch можна використовувати для самоперевірки й роботи зі знайденими збігами, але чи приймає конкретний заклад такий звіт як офіційний документ, потрібно уточнювати безпосередньо в університеті.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="ua-faq-a9" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Чим перевірка на плагіат відрізняється від AI-детектора?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="ua-faq-a9"><div><p class="faq-a-body">Перевірка на плагіат шукає схожість між вашим текстом і доступними джерелами. AI-детектор оцінює інші ознаки — наскільки текст схожий на машинно згенерований. Це різні сигнали, і один не підтверджує інший.</p></div></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 11 · FINAL CTA =================
        The closing band (build/cta.js). One action, back to the one real checker with the

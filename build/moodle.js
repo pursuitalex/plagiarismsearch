@@ -30,6 +30,7 @@
 const fs = require('fs');
 const path = require('path');
 const page = require('./page');
+const faq = require('./sections/faq');   /* the FAQ: one library template */
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
@@ -666,22 +667,16 @@ ${COPY.trouble.rows.map(([k, v]) => `            <div>
             </div>`).join('\n')}
           </dl>`);
 
-const docFaq = () => docSection('faq', COPY.faq.h2, `          <div class="rounded-3xl sm:rounded-[28px] bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-            <div data-faq class="rounded-[18px] sm:rounded-[20px] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-${COPY.faq.items.map(([q, a, l], i) => `              <div class="faq-item${i === 0 ? ' open' : ''}">
-                <h3 class="m-0"><button type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" aria-controls="faq-a-${i}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
-                  <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-                  <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                  </span>
-                </button></h3>
-                <div class="faq-a" id="faq-a-${i}"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 max-w-[72ch]">
-                  <p class="${BODY} text-ink-700">${ui(a)}</p>${l ? `
-                  <p class="mt-3">${link(l[0], l[1])}</p>` : ''}
-                </div></div></div>
-              </div>`).join('\n')}
-            </div>
-          </div>`);
+/* The FAQ library block without its section shell (build/sections/faq.js, frame): the
+   guide's own section and h2 hold it. The doc variant keeps the reading column's compact
+   sizes, body colour and link; each question sits in an h3 for the guide's outline. */
+const docFaq = () => docSection('faq', COPY.faq.h2, faq.frame({
+  ns: 'moodle-faq', variant: 'doc', heading: 'h3', reveal: false, rich: true,
+  items: COPY.faq.items.map(([q, a, l]) => {
+    const ext = l && /^https?:/.test(l[1]);
+    return { q, a: ui(a), link: l ? { label: l[0], href: l[1], rel: ext ? 'noopener' : '', icon: ext ? extIcon : '' } : null };
+  }),
+}).split('\n').map(x => (x ? '          ' + x : x)).join('\n'));
 
 const section3 = () => `  <!-- ================= 03 · THE GUIDE =================
        One reading column and its rail. The rail is sticky from lg and marks the section

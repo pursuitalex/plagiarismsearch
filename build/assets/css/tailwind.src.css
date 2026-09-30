@@ -1,7 +1,15 @@
 /* Compiled by build/assets.js with tailwindcss 3.4.17 → site/assets/css/tailwind.css.
    Linked AFTER site.css: the Play CDN appended its sheet as the last <style> in <head>,
    so on equal specificity a utility has always won over our component rules. Keeping
-   that order is what keeps every approved page identical. */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+   that order is what keeps every approved page identical.
+
+   The Section Library (build/sections/*.css) is compiled here, in the same run, between
+   components and utilities: its @apply resolves to the utilities' own values, and a
+   utility still comes last. Not in @layer — see build/sections/section-head.css.
+   (@import instead of @tailwind: an @import must come first in the file; the output of
+   "tailwindcss/base" etc. is exactly what the three @tailwind directives produced.) */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "../../sections/section-head.css";
+@import "../../sections/faq.css";
+@import "tailwindcss/utilities";

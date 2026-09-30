@@ -698,104 +698,86 @@
 
   <!-- ================= 08 · FAQ =================
        Nine PDF-specific questions, full answers in the HTML. No timing promise. -->
-  <section id="pdf-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+<section id="pdf-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Questions</span>
         </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">PDF Plagiarism Checker FAQ</h2>
-        </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-            <div class="faq-item open">
-              <button type="button" aria-controls="pdf-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can I upload a PDF directly for plagiarism checking?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="pdf-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. You can upload a PDF directly without converting it to DOCX or copying the text manually. PlagiarismSearch extracts the machine-readable text available in the PDF and uses it for the check.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="pdf-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Does PlagiarismSearch read scanned PDF files?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="pdf-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">PlagiarismSearch does not perform OCR on image-only scans. If the visible text exists only inside scanned page images and the PDF has no text layer, that text cannot be submitted for plagiarism checking.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="pdf-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">What happens if my PDF contains both text and scanned pages?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="pdf-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">The checker analyzes the text that can be extracted from the PDF. If some pages contain only scanned images, the text inside those images is not analyzed.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="pdf-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Does the checker analyze every visible word in a PDF?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="pdf-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">It analyzes extractable text, not every visually displayed element. Text that appears only inside an image or scan is not read with OCR.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="pdf-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">How large can my PDF file be?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="pdf-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">The upload size limit is 2 MB for guests and 24 MB for signed-in users.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="pdf-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can I upload more than one PDF?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="pdf-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. You can upload up to 10 files at once.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="pdf-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">What sources can my PDF be checked against?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="pdf-faq-a7"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Depending on the settings and account access, a plagiarism check can use web sources, academic databases, personal storage, or organization storage. Reference and in-text citation exclusions are also available.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="pdf-faq-a8" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Is my uploaded PDF stored?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="pdf-faq-a8"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">The uploaded source document is not retained as a stored source document. A generated report may remain available in your account for convenience and can be permanently deleted. Adding content to Storage is a separate action.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="pdf-faq-a9" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">How much can I check for free?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="pdf-faq-a9"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">You can check up to 150 plagiarism words without registering. Registered users receive 300 plagiarism words per day.</p></div></div>
-            </div>
+        <h2 class="section-title">PDF Plagiarism Checker FAQ</h2>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="pdf-faq-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">Can I upload a PDF directly for plagiarism checking?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="pdf-faq-a1"><div><p class="faq-a-body">Yes. You can upload a PDF directly without converting it to DOCX or copying the text manually. PlagiarismSearch extracts the machine-readable text available in the PDF and uses it for the check.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="pdf-faq-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Does PlagiarismSearch read scanned PDF files?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="pdf-faq-a2"><div><p class="faq-a-body">PlagiarismSearch does not perform OCR on image-only scans. If the visible text exists only inside scanned page images and the PDF has no text layer, that text cannot be submitted for plagiarism checking.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="pdf-faq-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What happens if my PDF contains both text and scanned pages?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="pdf-faq-a3"><div><p class="faq-a-body">The checker analyzes the text that can be extracted from the PDF. If some pages contain only scanned images, the text inside those images is not analyzed.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="pdf-faq-a4" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Does the checker analyze every visible word in a PDF?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="pdf-faq-a4"><div><p class="faq-a-body">It analyzes extractable text, not every visually displayed element. Text that appears only inside an image or scan is not read with OCR.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="pdf-faq-a5" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">How large can my PDF file be?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="pdf-faq-a5"><div><p class="faq-a-body">The upload size limit is 2 MB for guests and 24 MB for signed-in users.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="pdf-faq-a6" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can I upload more than one PDF?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="pdf-faq-a6"><div><p class="faq-a-body">Yes. You can upload up to 10 files at once.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="pdf-faq-a7" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What sources can my PDF be checked against?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="pdf-faq-a7"><div><p class="faq-a-body">Depending on the settings and account access, a plagiarism check can use web sources, academic databases, personal storage, or organization storage. Reference and in-text citation exclusions are also available.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="pdf-faq-a8" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Is my uploaded PDF stored?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="pdf-faq-a8"><div><p class="faq-a-body">The uploaded source document is not retained as a stored source document. A generated report may remain available in your account for convenience and can be permanently deleted. Adding content to Storage is a separate action.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="pdf-faq-a9" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">How much can I check for free?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="pdf-faq-a9"><div><p class="faq-a-body">You can check up to 150 plagiarism words without registering. Registered users receive 300 plagiarism words per day.</p></div></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 09 · FINAL CTA =================
        The closing band (build/cta.js). One action, back to the one real checker. -->

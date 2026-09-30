@@ -17,6 +17,7 @@ module.exports = {
   content: [
     './site/*.html',
     './build/*.js',
+    './build/sections/*.js',
     './build/shell/*.html',
     './build/assets/js/*.js', './build/assets/ds/*.js',
   ],

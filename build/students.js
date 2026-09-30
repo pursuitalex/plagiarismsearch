@@ -23,6 +23,7 @@
    components it uses live in build/assets/css and build/assets/js. Hooks are data-*,
    decorative styles are classes, asset paths are root-relative. */
 const page = require('./page');
+const faq = require('./sections/faq');   /* the FAQ: one library template */
 const fs = require('fs');
 const path = require('path');
 
@@ -569,29 +570,11 @@ ${eyebrow('teal-400', COPY.free.eyebrow, 'ink')}
 /* ═══════════════ 09 · FAQ ═══════════════ */
 const section9 = () => `  <!-- ================= 09 · FAQ =================
        Nine questions, full answers in the HTML, the accordion the site uses. -->
-  <section id="student-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('orange-500', 'Questions')}
-          <h2 class="${H2}">${COPY.faq.h2}</h2>
-        </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-${COPY.faq.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-controls="student-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="student-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
-            </div>`).join('\n')}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${faq.section({
+  id: 'student-faq', ns: 'student-faq', bg: 'tint', space: 'lg', layout: 'fluid',
+  head: { eyebrow: 'Questions', title: COPY.faq.h2 },
+  items: COPY.faq.items.map(([q, a]) => ({ q, a })),
+})}`;
 
 /* ═══════════════ 10 · FINAL CTA ═══════════════ */
 const section10 = () => `  <!-- ================= 10 · FINAL CTA =================

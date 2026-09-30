@@ -1,0 +1,140 @@
+/* ═══ FAQ — library component ═══════════════════════════════════════════════════════
+   Template: build/sections/faq.js · contract: build/sections/faq.contract.js
+   Behaviour: build/assets/js/50-faq.js ([data-faq], .faq-item, .faq-q, .open)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   section.faq                 data-bg="white|tint"  data-space="md|lg"  data-layout="fluid|fluid-narrow|fixed"
+     .faq-inner                the 1280px container
+       .faq-grid               head column + list column
+         .faq-aside            the sticky head column (Section Header inside)
+         .faq-frame            the soft outer frame     data-variant="doc" when used on its own in a guide
+           .faq-list[data-faq]
+             .faq-item(.open)
+               (.faq-heading)  optional heading (h3) around the button
+               button.faq-q  > .faq-q-text + .faq-chev(svg)
+               .faq-a#id > div > .faq-a-body
+                                p.faq-a-body — a one-paragraph answer
+                                div.faq-a-body > p, p … (p.faq-a-more > a.faq-a-link) — a rich answer
+
+   Two other roots, for the FAQ inside another component: the grid alone (.faq-grid with
+   data-layout, the user guide) and the frame alone (.faq-frame, the Moodle guide). The
+   layout selectors below therefore match the variant on .faq OR on a root .faq-grid. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.faq {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-white;
+}
+.faq:where([data-space="md"]) { @apply lg:py-28; }
+.faq:where([data-bg="tint"]) { @apply bg-ink-50; }
+
+.faq-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+
+/* ── the grid: three approved layouts ───────────────────────────────────────────
+   fluid          0.85fr / 1.15fr — the product pages
+   fluid-narrow   0.8fr / 1.2fr   — the Ukrainian page
+   fixed          380px / 1fr     — the homepage and the user guide; its head keeps the
+                  homepage's spacing model (the title carries the gap, the intro none),
+                  its link sits bare under the intro, and its container is not positioned */
+.faq-grid {
+  @apply grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start;
+}
+:where(.faq[data-layout="fluid-narrow"]) .faq-grid,
+.faq-grid:where([data-layout="fluid-narrow"]) {
+  @apply lg:grid-cols-[0.8fr_1.2fr];
+}
+:where(.faq[data-layout="fixed"]) .faq-grid,
+.faq-grid:where([data-layout="fixed"]) {
+  @apply lg:grid-cols-[380px_1fr] gap-10 sm:gap-12 lg:gap-14;
+}
+:where(.faq[data-layout="fixed"]) > .faq-inner {
+  @apply static;
+}
+
+.faq-aside {
+  @apply lg:sticky lg:top-28;
+}
+:where(.faq[data-layout="fixed"], .faq-grid[data-layout="fixed"]) .faq-aside {
+  @apply lg:top-32;
+}
+:where(.faq[data-layout="fixed"], .faq-grid[data-layout="fixed"]) .section-title {
+  @apply mb-4 lg:mb-5;
+}
+:where(.faq[data-layout="fixed"], .faq-grid[data-layout="fixed"]) .section-intro {
+  @apply mt-0 lg:mt-0;
+}
+
+/* ── the list ────────────────────────────────────────────────────────────────── */
+.faq-frame {
+  @apply rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse;
+}
+.faq-list {
+  @apply rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden;
+}
+.faq-heading {
+  @apply m-0;
+}
+.faq-q {
+  @apply w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6;
+}
+.faq-q-text {
+  @apply text-[15.5px] font-bold tracking-tight;
+}
+.faq-chev {
+  @apply shrink-0 w-8 h-8 rounded-full flex items-center justify-center;
+}
+
+.faq-a-body {
+  @apply px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch];
+}
+/* the answer text: the one paragraph itself, or each paragraph of a rich answer except
+   the follow-up link's own */
+p.faq-a-body,
+.faq-a-body > p:not(.faq-a-more) {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600;
+}
+.faq-a-body > p + p {
+  @apply mt-3;
+}
+/* a link inside the answer text */
+.faq-link {
+  @apply font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300;
+}
+/* the follow-up link under a rich answer (an official source, a place in the product) */
+.faq-a-link {
+  @apply inline-flex items-start gap-1.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-950 underline decoration-ink-300 underline-offset-4 transition-colors duration-300;
+}
+.faq-a-link-icon {
+  @apply mt-1 text-ink-400;
+}
+
+/* ── variant: doc — the list alone in a guide's reading column ───────────────────
+   It keeps the phone/tablet sizes from lg up (the column is narrow) and uses the guide's
+   body colour and link. */
+.faq-frame:where([data-variant="doc"]) { @apply lg:rounded-[28px]; }
+:where(.faq-frame[data-variant="doc"]) .faq-list { @apply lg:rounded-[20px]; }
+:where(.faq-frame[data-variant="doc"]) .faq-q { @apply lg:gap-5 lg:py-5; }
+:where(.faq-frame[data-variant="doc"]) .faq-a-body { @apply lg:pb-6; }
+:where(.faq-frame[data-variant="doc"]) p.faq-a-body,
+:where(.faq-frame[data-variant="doc"]) .faq-a-body > p:not(.faq-a-more) { @apply text-ink-700; }
+:where(.faq-frame[data-variant="doc"]) .faq-a-link {
+  @apply items-center text-[13.5px] sm:text-[14px] text-ink-800 hover:decoration-ink-500;
+}
+:where(.faq-frame[data-variant="doc"]) .faq-a-link-icon { @apply mt-0; }
+
+/* ── behaviour: the accordion (moved from build/assets/css/03-faq.css) ─────────────
+   Every answer is in the HTML. Collapsing is an enhancement: without JS (no .js on
+   <html>) every answer stays open, so none is locked behind a button that cannot work. */
+.faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1); }
+.faq-item.open .faq-a { grid-template-rows:1fr; }
+.faq-a > div { overflow:hidden; }
+/* The chevron sits in a 32px round chip: grey until its answer is open, then the accent,
+   so the colour follows a click. One look on every page (2026-09-30). The transition keeps
+   the transform in its list, or the rotation would lose its easing. */
+.faq-chev { background:#F1F2F6; color:#4B5563;
+  transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
+.faq-item.open .faq-chev { transform:rotate(180deg); background:#FDE5E0; color:#B84431; }
+:where(html:not(.js)) .faq-a { grid-template-rows:1fr; }
+:where(html:not(.js)) .faq-chev { transform:rotate(180deg); }

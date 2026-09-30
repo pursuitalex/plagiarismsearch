@@ -265,7 +265,9 @@ console.log('\ntroubleshooting / FAQ');
   const f = flat(faq);
   const bad = QA.filter(([q, a]) => !f.includes(q) || !f.includes(a)).map(([q]) => q.slice(0, 28));
   ok('eleven FAQ items, questions and answers verbatim, answers in the HTML', (faq.match(/class="faq-item/g) || []).length === 11 && !bad.length, bad.join(' · '));
-  ok('FAQ buttons are keyboard-reachable and expose their state', (faq.match(/<button type="button" aria-expanded="(true|false)" aria-controls="faq-a-\d+"/g) || []).length === 11);
+  /* the library template (build/sections/faq.js) writes aria-controls before aria-expanded
+     and namespaces the ids per instance: moodle-faq-a1 … */
+  ok('FAQ buttons are keyboard-reachable and expose their state', (faq.match(/<button type="button" aria-controls="moodle-faq-a\d+" aria-expanded="(true|false)"/g) || []).length === 11);
   ok('the credentials answer links to the account API area', /Where do I get the API User[\s\S]*?href="account\.html"[^>]*>Open API Credentials/.test(faq));
 }
 
