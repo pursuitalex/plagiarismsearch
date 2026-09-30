@@ -287,7 +287,7 @@ const ground = (html, from, to) => {
   return open.replace(from, to) + html.slice(open.length);
 };
 const sections = [section1(), section2(), section3(), section4(), termsRules(), termsSequence(),
-  ground(v1.section5(), 'bg-white', 'bg-[#F7FAFC]'), ground(v1.section6(), 'bg-ink-50', 'bg-white'),
+  ground(v1.section5(), 'bg-white', 'bg-[#F7FAFC]'), ground(v1.section6(), 'data-bg="tint"', 'data-bg="white"'),
   ground(v1.section7(), 'bg-white', 'bg-[#F7FAFC]')];
 const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections });
 fs.writeFileSync(path.join(SITE, OUT), html);

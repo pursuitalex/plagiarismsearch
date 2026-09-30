@@ -1117,114 +1117,91 @@
 
 
   <!-- ================= 12 · FAQ ================= -->
-  <section id="faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <!-- Heading left, questions right: a long accordion under a centred heading pushes
-           the last question a screen and a half from its own title. The left column sticks,
-           so the section keeps its name in view while you read down the list. -->
-      <div class="grid lg:grid-cols-[380px_1fr] gap-10 sm:gap-12 lg:gap-14 items-start">
-      <div class="rv lg:sticky lg:top-32">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+<section id="faq" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Questions</span>
         </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Plagiarism Checker FAQ</h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Answers to common questions about plagiarism checking, sources, privacy, AI analysis, supported languages, file types, and free use.</p>
-        <a href="help-center.html" class="inline-flex items-center gap-2 mt-5 lg:mt-6 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">
+        <h2 class="section-title">Plagiarism Checker FAQ</h2>
+        <p class="section-intro">Answers to common questions about plagiarism checking, sources, privacy, AI analysis, supported languages, file types, and free use.</p>
+        <a href="help-center.html" class="section-more section-link">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
           More questions? Visit the Help Center.
         </a>
       </div>
-
-      <!-- every answer is in the rendered HTML, not fetched on click -->
-      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse" id="faqList">
-        <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
           <div class="faq-item open">
-            <button type="button" aria-controls="home-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">What does PlagiarismSearch check for?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
+            <button type="button" aria-controls="home-faq-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">What does PlagiarismSearch check for?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
-            <div class="faq-a" id="home-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">PlagiarismSearch compares the text you submit with the source collections enabled for your check and highlights matching or similar passages in the report. Depending on your settings, the check can include web sources, academic databases, personal storage, or organization storage. The report gives you evidence to review rather than an automatic plagiarism verdict.</p></div></div>
+            <div class="faq-a" id="home-faq-a1"><div><p class="faq-a-body">PlagiarismSearch compares the text you submit with the source collections enabled for your check and highlights matching or similar passages in the report. Depending on your settings, the check can include web sources, academic databases, personal storage, or organization storage. The report gives you evidence to review rather than an automatic plagiarism verdict.</p></div></div>
           </div>
           <div class="faq-item">
-            <button type="button" aria-controls="home-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">Does similarity automatically mean plagiarism?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
+            <button type="button" aria-controls="home-faq-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Does similarity automatically mean plagiarism?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
-            <div class="faq-a" id="home-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. Similarity means that some text matches or closely resembles text found in the sources checked. A match can come from a quotation, reference, common phrasing, or material that needs closer review, so source context and citation information matter.</p></div></div>
+            <div class="faq-a" id="home-faq-a2"><div><p class="faq-a-body">No. Similarity means that some text matches or closely resembles text found in the sources checked. A match can come from a quotation, reference, common phrasing, or material that needs closer review, so source context and citation information matter.</p></div></div>
           </div>
           <div class="faq-item">
-            <button type="button" aria-controls="home-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">What sources can the plagiarism checker search?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
+            <button type="button" aria-controls="home-faq-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What sources can the plagiarism checker search?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
-            <div class="faq-a" id="home-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Depending on your settings and access, the checker can search web sources, academic databases, personal storage, and organization storage. When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts. Not every source collection is necessarily included in every check.</p></div></div>
+            <div class="faq-a" id="home-faq-a3"><div><p class="faq-a-body">Depending on your settings and access, the checker can search web sources, academic databases, personal storage, and organization storage. When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts. Not every source collection is necessarily included in every check.</p></div></div>
           </div>
           <div class="faq-item">
-            <button type="button" aria-controls="home-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">Can I exclude references and in-text citations?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
+            <button type="button" aria-controls="home-faq-a4" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can I exclude references and in-text citations?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
-            <div class="faq-a" id="home-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. The checker includes settings to exclude references and in-text citations when appropriate. Because exclusions change what is checked and reported, review your settings before interpreting the result.</p></div></div>
+            <div class="faq-a" id="home-faq-a4"><div><p class="faq-a-body">Yes. The checker includes settings to exclude references and in-text citations when appropriate. Because exclusions change what is checked and reported, review your settings before interpreting the result.</p></div></div>
           </div>
           <div class="faq-item">
-            <button type="button" aria-controls="home-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">Is my uploaded document stored?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
+            <button type="button" aria-controls="home-faq-a5" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Is my uploaded document stored?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
-            <div class="faq-a" id="home-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Uploaded source documents are not retained as documents after processing. Generated reports may remain in your account for convenience, and you can permanently delete them. If you choose Add to storage, that is a separate action you control.</p></div></div>
+            <div class="faq-a" id="home-faq-a5"><div><p class="faq-a-body">Uploaded source documents are not retained as documents after processing. Generated reports may remain in your account for convenience, and you can permanently delete them. If you choose Add to storage, that is a separate action you control.</p></div></div>
           </div>
           <div class="faq-item">
-            <button type="button" aria-controls="home-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">Can I check for AI-written text at the same time?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
+            <button type="button" aria-controls="home-faq-a6" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can I check for AI-written text at the same time?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
-            <div class="faq-a" id="home-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Keep Check for plagiarism on and optionally add Check for AI writing. The two analyses answer different questions: plagiarism checking looks for source matches and similarity, while AI detection provides a separate AI-writing indicator. An AI result does not by itself mean plagiarism or prove authorship.</p></div></div>
+            <div class="faq-a" id="home-faq-a6"><div><p class="faq-a-body">Yes. Keep Check for plagiarism on and optionally add Check for AI writing. The two analyses answer different questions: plagiarism checking looks for source matches and similarity, while AI detection provides a separate AI-writing indicator. An AI result does not by itself mean plagiarism or prove authorship.</p></div></div>
           </div>
           <div class="faq-item">
-            <button type="button" aria-controls="home-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">Which languages does the plagiarism checker support?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
+            <button type="button" aria-controls="home-faq-a7" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Which languages does the plagiarism checker support?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
-            <div class="faq-a" id="home-faq-a7"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">PlagiarismSearch supports plagiarism checking in 80+ languages.</p></div></div>
+            <div class="faq-a" id="home-faq-a7"><div><p class="faq-a-body">PlagiarismSearch supports plagiarism checking in 80+ languages.</p></div></div>
           </div>
           <div class="faq-item">
-            <button type="button" aria-controls="home-faq-a8" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">Which file types can I upload?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
+            <button type="button" aria-controls="home-faq-a8" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Which file types can I upload?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
-            <div class="faq-a" id="home-faq-a8"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">The checker accepts common file types such as DOC/DOCX, PDF, TXT, PPT/PPTX, and XLS/XLSX, along with other supported document formats. The uploader shows the formats accepted by the current checker.</p></div></div>
+            <div class="faq-a" id="home-faq-a8"><div><p class="faq-a-body">The checker accepts common file types such as DOC/DOCX, PDF, TXT, PPT/PPTX, and XLS/XLSX, along with other supported document formats. The uploader shows the formats accepted by the current checker.</p></div></div>
           </div>
           <div class="faq-item">
-            <button type="button" aria-controls="home-faq-a9" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-              <span class="text-[15.5px] font-bold tracking-tight">Can I try the plagiarism checker without registration?</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
+            <button type="button" aria-controls="home-faq-a9" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can I try the plagiarism checker without registration?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
-            <div class="faq-a" id="home-faq-a9"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. You can check up to 150 words for plagiarism without registering.</p></div></div>
+            <div class="faq-a" id="home-faq-a9"><div><p class="faq-a-body">Yes. You can check up to 150 words for plagiarism without registering.</p></div></div>
           </div>
         </div>
       </div>
-      </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
   <!-- ================= 13 · FINAL CTA =================

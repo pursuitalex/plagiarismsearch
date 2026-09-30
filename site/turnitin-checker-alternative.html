@@ -873,112 +873,96 @@
   <!-- ================= 10 · FAQ =================
        Nine questions, the confusion ones first, every answer in the HTML. The answer about
        buying Turnitin directly is followed by the official purchase guide. -->
-  <section id="turnitin-alternative-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+<section id="turnitin-alternative-faq" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow" data-bg="tint">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Questions</span>
         </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Turnitin Alternative FAQ</h2>
-        </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-            <div class="faq-item open">
-              <button type="button" aria-controls="turnitin-alternative-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Is PlagiarismSearch affiliated with Turnitin® or a third-party Turnitin® checker?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="turnitin-alternative-faq-a1"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
-                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">No. PlagiarismSearch is an independent service. It is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC; it does not access Turnitin software or proprietary databases and does not generate official Turnitin Similarity Reports.</p>
-              </div></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="turnitin-alternative-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Will PlagiarismSearch give me the same similarity score as Turnitin®?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="turnitin-alternative-faq-a2"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
-                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Not necessarily. Different services can use different source collections, repositories, matching methods and settings, so similarity results may differ. A PlagiarismSearch result should not be treated as a prediction of an official Turnitin score.</p>
-              </div></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="turnitin-alternative-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can individuals buy Turnitin® Similarity directly?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="turnitin-alternative-faq-a3"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
-                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Turnitin currently states that Turnitin Feedback Studio and Similarity subscriptions are not sold directly to individuals. Access may be provided through an institution; Turnitin points individuals with personal similarity-checking needs toward iThenticate.</p>
-                <p class="mt-3"><a href="https://guides.turnitin.com/hc/en-us/articles/37985974637453-How-to-purchase-a-Turnitin-subscription" target="_blank" rel="noopener noreferrer" class="inline-flex items-start gap-1.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-950 underline decoration-ink-300 underline-offset-4 transition-colors duration-300"><span>Official Turnitin guide: How to purchase a Turnitin subscription</span><span class="mt-1 text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
-              </div></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="turnitin-alternative-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Do I need an institutional account to use PlagiarismSearch?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="turnitin-alternative-faq-a4"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
-                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">No. PlagiarismSearch is available through its own self-service workflow and does not require your school or university to provide access.</p>
-              </div></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="turnitin-alternative-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Is a similarity percentage proof of plagiarism?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="turnitin-alternative-faq-a5"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
-                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">No. A similarity percentage shows matched or similar text found against the sources used for a check. The context of each match still needs to be reviewed before deciding what it means.</p>
-              </div></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="turnitin-alternative-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can I use PlagiarismSearch before submitting through my institution?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="turnitin-alternative-faq-a6"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
-                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">You can use PlagiarismSearch to review your own draft before submission, subject to your institution's rules. Because PlagiarismSearch and Turnitin® use different systems and source collections, do not assume that the two services will return the same result.</p>
-              </div></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="turnitin-alternative-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Does PlagiarismSearch check AI writing too?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="turnitin-alternative-faq-a7"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
-                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">AI writing analysis is available as a separate check when the capability and AI-word balance are available. AI detection and plagiarism checking answer different questions; an AI result does not itself mean plagiarism.</p>
-              </div></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="turnitin-alternative-faq-a8" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">How much can I check for free?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="turnitin-alternative-faq-a8"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
-                <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">You can check up to 150 plagiarism words without registering. Registered users receive 300 plagiarism words per day.</p>
-              </div></div></div>
-            </div>
+        <h2 class="section-title">Turnitin Alternative FAQ</h2>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="turnitin-alternative-faq-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">Is PlagiarismSearch affiliated with Turnitin® or a third-party Turnitin® checker?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="turnitin-alternative-faq-a1"><div><div class="faq-a-body">
+              <p>No. PlagiarismSearch is an independent service. It is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC; it does not access Turnitin software or proprietary databases and does not generate official Turnitin Similarity Reports.</p>
+            </div></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="turnitin-alternative-faq-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Will PlagiarismSearch give me the same similarity score as Turnitin®?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="turnitin-alternative-faq-a2"><div><div class="faq-a-body">
+              <p>Not necessarily. Different services can use different source collections, repositories, matching methods and settings, so similarity results may differ. A PlagiarismSearch result should not be treated as a prediction of an official Turnitin score.</p>
+            </div></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="turnitin-alternative-faq-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can individuals buy Turnitin® Similarity directly?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="turnitin-alternative-faq-a3"><div><div class="faq-a-body">
+              <p>Turnitin currently states that Turnitin Feedback Studio and Similarity subscriptions are not sold directly to individuals. Access may be provided through an institution; Turnitin points individuals with personal similarity-checking needs toward iThenticate.</p>
+              <p class="faq-a-more"><a href="https://guides.turnitin.com/hc/en-us/articles/37985974637453-How-to-purchase-a-Turnitin-subscription" target="_blank" rel="noopener noreferrer" class="faq-a-link"><span>Official Turnitin guide: How to purchase a Turnitin subscription</span><span class="faq-a-link-icon"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
+            </div></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="turnitin-alternative-faq-a4" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Do I need an institutional account to use PlagiarismSearch?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="turnitin-alternative-faq-a4"><div><div class="faq-a-body">
+              <p>No. PlagiarismSearch is available through its own self-service workflow and does not require your school or university to provide access.</p>
+            </div></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="turnitin-alternative-faq-a5" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Is a similarity percentage proof of plagiarism?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="turnitin-alternative-faq-a5"><div><div class="faq-a-body">
+              <p>No. A similarity percentage shows matched or similar text found against the sources used for a check. The context of each match still needs to be reviewed before deciding what it means.</p>
+            </div></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="turnitin-alternative-faq-a6" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can I use PlagiarismSearch before submitting through my institution?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="turnitin-alternative-faq-a6"><div><div class="faq-a-body">
+              <p>You can use PlagiarismSearch to review your own draft before submission, subject to your institution's rules. Because PlagiarismSearch and Turnitin® use different systems and source collections, do not assume that the two services will return the same result.</p>
+            </div></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="turnitin-alternative-faq-a7" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Does PlagiarismSearch check AI writing too?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="turnitin-alternative-faq-a7"><div><div class="faq-a-body">
+              <p>AI writing analysis is available as a separate check when the capability and AI-word balance are available. AI detection and plagiarism checking answer different questions; an AI result does not itself mean plagiarism.</p>
+            </div></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="turnitin-alternative-faq-a8" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">How much can I check for free?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="turnitin-alternative-faq-a8"><div><div class="faq-a-body">
+              <p>You can check up to 150 plagiarism words without registering. Registered users receive 300 plagiarism words per day.</p>
+            </div></div></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 11 · FINAL CTA =================
        The closing band (build/cta.js). One action, back to the one real checker — and the

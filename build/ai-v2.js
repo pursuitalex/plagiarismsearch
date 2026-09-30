@@ -29,6 +29,7 @@
 const fs = require('fs');
 const path = require('path');
 const page = require('./page');
+const faq = require('./sections/faq');   /* the FAQ: one library template */
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
@@ -920,32 +921,12 @@ const section9 = () => `  <!-- ================= 09 · AI DETECTOR FAQ =========
        Every answer is in the rendered HTML, not fetched on click — the brief requires
        it and a crawler needs it. Ten questions, exactly the approved ten: no "what is
        AI" filler, no model-name keyword questions, no audience variations. -->
-  <section id="ai-detector-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('orange-500', 'Questions')}
-          ${h2(COPY.s9.h2)}
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-ink-600">${COPY.s9.footer}</p>
-          <div class="mt-5 lg:mt-6">${linkQuiet(COPY.s9.cta, COPY.s9.ctaHref)}</div>
-        </div>
-
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-${COPY.s9.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-controls="ai-detector-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="ai-detector-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
-            </div>`).join('\n')}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${faq.section({
+  id: 'ai-detector-faq', ns: 'ai-detector-faq', bg: 'white', space: 'lg', layout: 'fluid',
+  head: { eyebrow: 'Questions', title: COPY.s9.h2, intro: COPY.s9.footer, introSize: 'small',
+          more: { label: COPY.s9.cta, href: COPY.s9.ctaHref, rel: /^https?:/.test(COPY.s9.ctaHref) ? 'noopener' : '' } },
+  items: COPY.s9.items.map(([q, a]) => ({ q, a })),
+})}`;
 
 /* ═══════════════ 10 · FINAL CTA ═══════════════ */
 const section10 = () => `  <!-- ================= 10 · FINAL CTA =================

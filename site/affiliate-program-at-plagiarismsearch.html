@@ -401,87 +401,75 @@
   </section>
 
   <!-- ================= 06 · FAQ =================
-       Six questions, full answers in the HTML (the shared faq module). The live page's
-       "Couldn't find the answer…" sits under the heading, linked to the form. -->
-  <section id="affiliate-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Frequently Asked Questions</h2>
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[52ch]">Get quick and helpful information addressing common queries and concerns about our affiliate program.</p>
-
-          <div class="mt-8 lg:mt-10 rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
-            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-4 mb-1.5">Couldn't find the answer to your question?</h3>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">We would like to hear from you! PlagiarismSearch team is here to respond to all your inquiries.</p>
-            <p class="mt-2 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-5">Send us your questions, suggestions, and comments using the form below and we will get back to you as soon as possible.</p>
-            <a href="contact-us.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
-            Contact Us
-            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-          </a>
-          </div>
+       The library FAQ (build/sections/faq.js): six questions, full answers in the HTML.
+       The live page's "Couldn't find the answer…" sits under the heading as the aside
+       slot, linked to the form. -->
+<section id="affiliate-faq" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-intro">Get quick and helpful information addressing common queries and concerns about our affiliate program.</p>
+        <div data-slot="aside" class="mt-8 lg:mt-10 rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7">
+          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
+          <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-4 mb-1.5">Couldn't find the answer to your question?</h3>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">We would like to hear from you! PlagiarismSearch team is here to respond to all your inquiries.</p>
+          <p class="mt-2 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-5">Send us your questions, suggestions, and comments using the form below and we will get back to you as soon as possible.</p>
+          <a href="contact-us.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                    Contact Us
+                    <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+                  </a>
         </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-            <div class="faq-item open">
-              <button type="button" aria-controls="affiliate-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Who can become a PlagiarismSearch affiliate?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="affiliate-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Each registered PlagiarismSearch user is welcome to become our affiliate. Over time, individuals such as digital marketers, content creators, bloggers, marketing agencies, and influencers have been successful as PlagiarismSearch.com affiliates. If you are none of the above, you may also join our affiliate program by referring your friends to our service.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="affiliate-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">What is the minimum payout for cash commissions?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="affiliate-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">You may request your earnings to be transferred to your payment account as soon as you have 50$ or more on your balance.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="affiliate-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Is there a payment for becoming a PlagiarismSearch.com affiliate?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="affiliate-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. Our affiliate program is free of charge.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="affiliate-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Is it necessary to purchase PlagiarismSearch products prior to becoming an affiliate?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="affiliate-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. To join our affiliate program, you need to register yourself with our platform, but it is not necessary to make a purchase of the service.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="affiliate-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Is there a limit of the referrals I may bring to PlagiarismSearch.com?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="affiliate-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No, there is no limit of the referrals. We encourage you to spread awareness about our services to as many people as possible.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="affiliate-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Where can I view my earnings and credits?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="affiliate-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">When you are logged in to your account, go to My Profile on the top right corner and choose Invite Friends from the menu. Scroll down the page to see your individual affiliate link and your earnings/credits.</p></div></div>
-            </div>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="affiliate-faq-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">Who can become a PlagiarismSearch affiliate?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="affiliate-faq-a1"><div><p class="faq-a-body">Each registered PlagiarismSearch user is welcome to become our affiliate. Over time, individuals such as digital marketers, content creators, bloggers, marketing agencies, and influencers have been successful as PlagiarismSearch.com affiliates. If you are none of the above, you may also join our affiliate program by referring your friends to our service.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="affiliate-faq-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What is the minimum payout for cash commissions?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="affiliate-faq-a2"><div><p class="faq-a-body">You may request your earnings to be transferred to your payment account as soon as you have 50$ or more on your balance.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="affiliate-faq-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Is there a payment for becoming a PlagiarismSearch.com affiliate?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="affiliate-faq-a3"><div><p class="faq-a-body">No. Our affiliate program is free of charge.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="affiliate-faq-a4" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Is it necessary to purchase PlagiarismSearch products prior to becoming an affiliate?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="affiliate-faq-a4"><div><p class="faq-a-body">No. To join our affiliate program, you need to register yourself with our platform, but it is not necessary to make a purchase of the service.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="affiliate-faq-a5" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Is there a limit of the referrals I may bring to PlagiarismSearch.com?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="affiliate-faq-a5"><div><p class="faq-a-body">No, there is no limit of the referrals. We encourage you to spread awareness about our services to as many people as possible.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="affiliate-faq-a6" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Where can I view my earnings and credits?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="affiliate-faq-a6"><div><p class="faq-a-body">When you are logged in to your account, go to My Profile on the top right corner and choose Invite Friends from the menu. Scroll down the page to see your individual affiliate link and your earnings/credits.</p></div></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 07 · CLOSING CTA =================
        The closing band (build/cta.js) with the live page's own closing lines: the lead

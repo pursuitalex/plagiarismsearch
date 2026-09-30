@@ -28,6 +28,7 @@
 const fs = require('fs');
 const path = require('path');
 const page = require('./page');
+const faq = require('./sections/faq');   /* the FAQ: one library template */
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
@@ -241,6 +242,8 @@ const btnLight = (label, href) => `<a href="${href}"${ext(href)} class="btn-pres
           </a>`;
 const linkQuiet = (label, href, dark) => `<a href="${href}"${ext(href)} class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold ${dark ? 'text-white/70 hover:text-white decoration-white/30' : 'text-ink-500 hover:text-ink-900 decoration-ink-300'} underline underline-offset-4 transition-colors duration-300">${label}</a>`;
 const inline = (label, href) => `<a href="${href}"${ext(href)} class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">${label}</a>`;
+/* the same link inside a FAQ answer: the library's class (build/sections/faq.css) */
+const faqLink = (label, href) => `<a href="${href}"${ext(href)} class="faq-link">${label}</a>`;
 
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.replace(/&amp;/g, '&').length * 18);
@@ -746,34 +749,16 @@ ${COPY.inquiry.needs.map((n, i) => `                  <label class="need-opt cur
 const section10 = () => `  <!-- ================= 10 · BUSINESS FAQ =================
        Nine questions, full answers in the HTML, the two crawlable links the brief asks
        for set on the phrases that reference them. -->
-  <section id="business-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('orange-500', 'Questions')}
-          <h2 class="${H2}">${COPY.faq.h2}</h2>
-        </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-${COPY.faq.items.map(([q, a], i) => {
-  const l = COPY.faq.links[i];
-  const answer = l ? a.replace(l[0], inline(l[0], l[1])) : a;
-  if (l && answer === a) throw new Error('FAQ link phrase not found: ' + l[0]);
-  return `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-controls="business-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${answer}</p></div></div>
-            </div>`;
-}).join('\n')}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${faq.section({
+  id: 'business-faq', ns: 'business-faq', bg: 'tint', space: 'lg', layout: 'fluid',
+  head: { eyebrow: 'Questions', title: COPY.faq.h2 },
+  items: COPY.faq.items.map(([q, a], i) => {
+    const l = COPY.faq.links[i];
+    const answer = l ? a.replace(l[0], faqLink(l[0], l[1])) : a;
+    if (l && answer === a) throw new Error('FAQ link phrase not found: ' + l[0]);
+    return { q, a: answer };
+  }),
+})}`;
 
 /* ═══════════════ 11 · FINAL CTA ═══════════════ */
 const section11 = () => `  <!-- ================= 11 · FINAL CTA =================

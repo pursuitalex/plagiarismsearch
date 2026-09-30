@@ -60,6 +60,7 @@ const BUILT = [
   { file: 'plagiarism-check.html',       path: null, note: 'Confirmed 2026-08-17: the homepage IS the Plagiarism Checker page. So this one has no approved address of its own. It stays on disk and leaves the navigation, the same treatment as the other delisted pages.' },
   { file: 'account.html',                path: null, note: 'Log in / create account. The brief says only "keep existing authentication behavior" and names no path.' },
   { file: 'design-system.html',          path: null, note: 'Internal reference sheet. Never part of the public site.' },
+  { file: 'section-library.html',        path: null, note: 'Internal: the Section Library catalogue — each library component and variant, live, with its copy-paste HTML and content contract. Never part of the public site. Built by build/section-library.js; validated by build/check-library.js.' },
 ];
 
 const rows = [];

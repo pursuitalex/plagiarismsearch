@@ -27,6 +27,7 @@
 const fs = require('fs');
 const path = require('path');
 const page = require('./page');
+const faq = require('./sections/faq');   /* the FAQ: one library template */
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
@@ -256,6 +257,8 @@ const btnDark = (label, href) => `<a href="${href}"${ext(href)} class="btn-press
 const linkQuiet = (label, href, dark) => `<a href="${href}"${ext(href)} class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold ${dark ? 'text-white/70 hover:text-white decoration-white/30' : 'text-ink-500 hover:text-ink-900 decoration-ink-300'} underline underline-offset-4 transition-colors duration-300">${label}</a>`;
 
 const inline = (label, href) => `<a href="${href}"${ext(href)} class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">${label}</a>`;
+/* the same link inside a FAQ answer: the library's class (build/sections/faq.css) */
+const faqLink = (label, href) => `<a href="${href}"${ext(href)} class="faq-link">${label}</a>`;
 
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.length * 18);
@@ -746,34 +749,14 @@ ${COPY.s7.fields.map(([label, spec, required, helper, kind, wide], i) => {
 /* ═══════════════ 08 · UNIVERSITY FAQ ═══════════════ */
 const section8 = () => `  <!-- ================= 08 · UNIVERSITY FAQ =================
        Nine questions, full answers in the HTML, the four answer links the brief attaches. -->
-  <section id="university-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('orange-500', COPY.s8.eyebrow)}
-          ${h2(COPY.s8.h2)}
-        </div>
-
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-${COPY.s8.items.map(([q, a], i) => {
-  const links = COPY.s8.links[i];
-  const tail = links ? ' ' + links.map(([l, h]) => inline(l, h)).join(' · ') : '';
-  return `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-controls="university-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}${tail}</p></div></div>
-            </div>`;
-}).join('\n')}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${faq.section({
+  id: 'university-faq', ns: 'university-faq', bg: 'tint', space: 'lg', layout: 'fluid',
+  head: { eyebrow: COPY.s8.eyebrow, title: COPY.s8.h2 },
+  items: COPY.s8.items.map(([q, a], i) => {
+    const links = COPY.s8.links[i];
+    return { q, a: a + (links ? ' ' + links.map(([l, h]) => faqLink(l, h)).join(' · ') : '') };
+  }),
+})}`;
 
 /* ═══════════════ 09 · FINAL CTA ═══════════════ */
 const section9 = () => `  <!-- ================= 09 · FINAL CTA =================

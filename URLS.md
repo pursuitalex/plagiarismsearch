@@ -50,6 +50,7 @@ driven by this table.
 | `plagiarism-check.html` | — | no approved path | Confirmed 2026-08-17: the homepage IS the Plagiarism Checker page. So this one has no approved address of its own. It stays on disk and leaves the navigation, the same treatment as the other delisted pages. |
 | `account.html` | — | no approved path | Log in / create account. The brief says only "keep existing authentication behavior" and names no path. |
 | `design-system.html` | — | no approved path | Internal reference sheet. Never part of the public site. |
+| `section-library.html` | — | no approved path | Internal: the Section Library catalogue — each library component and variant, live, with its copy-paste HTML and content contract. Never part of the public site. Built by build/section-library.js; validated by build/check-library.js. |
 | `how-to-use-plagiarismsearch-google-add-on.html` | `/how-to-use-plagiarismsearch-google-add-on` | stub | Approved destination, page not designed yet. |
 | `powerpoint-plagiarism-checker.html` | `/powerpoint-plagiarism-checker` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
 | `quote-checker-at-plagiarismsearch.html` | `/quote-checker-at-plagiarismsearch` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
@@ -59,7 +60,7 @@ driven by this table.
 ## Counts
 
 - 28 × built
-- 7 × no approved path
+- 8 × no approved path
 - 5 × stub
 - 4 × built · out of global nav
 

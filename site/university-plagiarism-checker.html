@@ -933,105 +933,86 @@
 
   <!-- ================= 08 · UNIVERSITY FAQ =================
        Nine questions, full answers in the HTML, the four answer links the brief attaches. -->
-  <section id="university-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">QUESTIONS</span>
+<section id="university-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">QUESTIONS</span>
         </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">University Plagiarism Checker FAQ</h2>
-        </div>
-
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-            <div class="faq-item open">
-              <button type="button" aria-controls="university-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can our university manage multiple users and institutional checking resources?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. PlagiarismSearch Organization Management lets an administrator create an organization, invite members, manage access, and distribute plagiarism-checking words. If the institution also uses AI detection, AI words can be allocated separately. Personal balance remains separate from organization balance.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="university-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can our institution compare new submissions with its own documents?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes, when Organization Storage is enabled and the relevant permissions are available. Organization Storage can be used as an additional comparison source alongside the external sources selected for the check.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="university-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Does every checked document automatically enter Organization Storage?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. Running a plagiarism check does not automatically add the document to Organization Storage. Storage is a separate workflow used when the institution wants selected material to be available for future comparisons.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="university-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">What sources can be included in an institutional plagiarism check?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Depending on the selected configuration and available access, a check can use web sources, the PlagiarismSearch academic database with more than 500 million indexed academic texts, and permitted Organization Storage. References and in-text citations can also be excluded when appropriate.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="university-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Does PlagiarismSearch integrate with Moodle and Canvas?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. PlagiarismSearch supports LMS integration paths for Moodle and Canvas. In Moodle, administrators can configure when checks run, which sources are searched, whether work is added to Storage, and what report information students can see. Use the dedicated integration pages for current setup details. <a href="integration-guide.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Moodle</a> · <a href="canvas-integration.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Canvas</a></p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="university-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can our institution use the API instead of an LMS integration?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Institutions with their own platform or custom technical workflow can integrate plagiarism checking through the PlagiarismSearch API. The organization workspace, LMS integrations, and API are separate deployment paths. <a href="api.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">PlagiarismSearch API</a></p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="university-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can our institution also use AI detection?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a7"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. AI detection is available as a separate analysis within the PlagiarismSearch ecosystem. Organizations that use AI checking can allocate AI word balance separately from plagiarism-checking balance. AI-generated text is not automatically plagiarism. <a href="ai-detector.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">AI detection</a></p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="university-faq-a8" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Does the plagiarism report automatically determine that a student plagiarized?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a8"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. The report identifies matching and similar passages and connects them to detected sources. Educators should review the matches, citations, references, and surrounding context before deciding how the result should be interpreted academically.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="university-faq-a9" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">How do we get institutional pricing?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="university-faq-a9"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Institutional requirements can vary by number of users, checking volume, Storage needs, and integration workflow. Send your requirements through the institutional inquiry form on this page so PlagiarismSearch can discuss an appropriate setup and pricing path. <a href="#institutional-inquiry" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Request institutional pricing</a></p></div></div>
-            </div>
+        <h2 class="section-title">University Plagiarism Checker FAQ</h2>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="university-faq-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">Can our university manage multiple users and institutional checking resources?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="university-faq-a1"><div><p class="faq-a-body">Yes. PlagiarismSearch Organization Management lets an administrator create an organization, invite members, manage access, and distribute plagiarism-checking words. If the institution also uses AI detection, AI words can be allocated separately. Personal balance remains separate from organization balance.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="university-faq-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can our institution compare new submissions with its own documents?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="university-faq-a2"><div><p class="faq-a-body">Yes, when Organization Storage is enabled and the relevant permissions are available. Organization Storage can be used as an additional comparison source alongside the external sources selected for the check.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="university-faq-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Does every checked document automatically enter Organization Storage?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="university-faq-a3"><div><p class="faq-a-body">No. Running a plagiarism check does not automatically add the document to Organization Storage. Storage is a separate workflow used when the institution wants selected material to be available for future comparisons.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="university-faq-a4" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What sources can be included in an institutional plagiarism check?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="university-faq-a4"><div><p class="faq-a-body">Depending on the selected configuration and available access, a check can use web sources, the PlagiarismSearch academic database with more than 500 million indexed academic texts, and permitted Organization Storage. References and in-text citations can also be excluded when appropriate.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="university-faq-a5" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Does PlagiarismSearch integrate with Moodle and Canvas?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="university-faq-a5"><div><p class="faq-a-body">Yes. PlagiarismSearch supports LMS integration paths for Moodle and Canvas. In Moodle, administrators can configure when checks run, which sources are searched, whether work is added to Storage, and what report information students can see. Use the dedicated integration pages for current setup details. <a href="integration-guide.html" class="faq-link">Moodle</a> · <a href="canvas-integration.html" class="faq-link">Canvas</a></p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="university-faq-a6" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can our institution use the API instead of an LMS integration?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="university-faq-a6"><div><p class="faq-a-body">Yes. Institutions with their own platform or custom technical workflow can integrate plagiarism checking through the PlagiarismSearch API. The organization workspace, LMS integrations, and API are separate deployment paths. <a href="api.html" class="faq-link">PlagiarismSearch API</a></p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="university-faq-a7" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can our institution also use AI detection?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="university-faq-a7"><div><p class="faq-a-body">Yes. AI detection is available as a separate analysis within the PlagiarismSearch ecosystem. Organizations that use AI checking can allocate AI word balance separately from plagiarism-checking balance. AI-generated text is not automatically plagiarism. <a href="ai-detector.html" class="faq-link">AI detection</a></p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="university-faq-a8" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Does the plagiarism report automatically determine that a student plagiarized?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="university-faq-a8"><div><p class="faq-a-body">No. The report identifies matching and similar passages and connects them to detected sources. Educators should review the matches, citations, references, and surrounding context before deciding how the result should be interpreted academically.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="university-faq-a9" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">How do we get institutional pricing?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="university-faq-a9"><div><p class="faq-a-body">Institutional requirements can vary by number of users, checking volume, Storage needs, and integration workflow. Send your requirements through the institutional inquiry form on this page so PlagiarismSearch can discuss an appropriate setup and pricing path. <a href="#institutional-inquiry" class="faq-link">Request institutional pricing</a></p></div></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 09 · FINAL CTA =================
        The closing band (build/cta.js). Primary returns to the form; secondary sends the

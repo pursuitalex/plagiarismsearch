@@ -902,104 +902,86 @@
   <!-- ================= 10 · BUSINESS FAQ =================
        Nine questions, full answers in the HTML, the two crawlable links the brief asks
        for set on the phrases that reference them. -->
-  <section id="business-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Questions</span>
+<section id="business-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Questions</span>
         </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Business &amp; Teams FAQ</h2>
-        </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-            <div class="faq-item open">
-              <button type="button" aria-controls="business-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can multiple people use PlagiarismSearch through one organization?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. An administrator can create an organization, invite members, and manage their access to organization resources. Members can also be blocked or unblocked when needed.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="business-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can an administrator control what organization members can access?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Organization Management includes permissions related to Organization Storage and its use, including searching organization storage during plagiarism checks and viewing documents stored there.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="business-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">How do organization and personal balances work together?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Organization plagiarism and AI balances are managed separately from each member’s personal balance. A member can keep a private personal balance that the administrator and other members do not access, while also receiving organization resources allocated by the administrator.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="business-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Are checked documents automatically added to Organization Storage?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. Running a plagiarism check does not automatically add the checked document to Organization Storage. Storage is a separate action and depends on the organization workflow and the member’s permissions.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="business-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can Organization Storage be used as a plagiarism-checking source?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Organization Storage can be used as an additional comparison source when organization storage search is enabled and the member has the relevant permission.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="business-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can we integrate plagiarism checking into our own platform?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. PlagiarismSearch provides an API for programmatic plagiarism-checking workflows. API access may be included in some packages or purchased separately. See the <a href="api.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Plagiarism API page</a> for the current integration workflow and developer documentation.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="business-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Can an organization use AI detection too?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a7"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Administrators can allocate organization AI-word balance to members. AI detection is a separate analysis from plagiarism checking and requires available AI-word balance.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="business-faq-a8" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">What happens to uploaded documents and reports?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a8"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Uploaded source documents are not retained as stored documents after the check. Generated reports can remain available in the account for convenience and can be permanently deleted by the user. Organization Storage is a separate repository workflow.</p></div></div>
-            </div>
-            <div class="faq-item">
-              <button type="button" aria-controls="business-faq-a9" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">Do you offer custom pricing for larger organizations?</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="business-faq-a9"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Standard plans are available on the <a href="prices.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Pricing page</a>, while larger customers can use custom contracts and pricing. Send a business inquiry if your organization has larger-volume, API, or other custom commercial requirements.</p></div></div>
-            </div>
+        <h2 class="section-title">Business &amp; Teams FAQ</h2>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="business-faq-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">Can multiple people use PlagiarismSearch through one organization?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="business-faq-a1"><div><p class="faq-a-body">Yes. An administrator can create an organization, invite members, and manage their access to organization resources. Members can also be blocked or unblocked when needed.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="business-faq-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can an administrator control what organization members can access?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="business-faq-a2"><div><p class="faq-a-body">Yes. Organization Management includes permissions related to Organization Storage and its use, including searching organization storage during plagiarism checks and viewing documents stored there.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="business-faq-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">How do organization and personal balances work together?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="business-faq-a3"><div><p class="faq-a-body">Organization plagiarism and AI balances are managed separately from each member’s personal balance. A member can keep a private personal balance that the administrator and other members do not access, while also receiving organization resources allocated by the administrator.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="business-faq-a4" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Are checked documents automatically added to Organization Storage?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="business-faq-a4"><div><p class="faq-a-body">No. Running a plagiarism check does not automatically add the checked document to Organization Storage. Storage is a separate action and depends on the organization workflow and the member’s permissions.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="business-faq-a5" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can Organization Storage be used as a plagiarism-checking source?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="business-faq-a5"><div><p class="faq-a-body">Yes. Organization Storage can be used as an additional comparison source when organization storage search is enabled and the member has the relevant permission.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="business-faq-a6" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can we integrate plagiarism checking into our own platform?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="business-faq-a6"><div><p class="faq-a-body">Yes. PlagiarismSearch provides an API for programmatic plagiarism-checking workflows. API access may be included in some packages or purchased separately. See the <a href="api.html" class="faq-link">Plagiarism API page</a> for the current integration workflow and developer documentation.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="business-faq-a7" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can an organization use AI detection too?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="business-faq-a7"><div><p class="faq-a-body">Yes. Administrators can allocate organization AI-word balance to members. AI detection is a separate analysis from plagiarism checking and requires available AI-word balance.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="business-faq-a8" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What happens to uploaded documents and reports?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="business-faq-a8"><div><p class="faq-a-body">Uploaded source documents are not retained as stored documents after the check. Generated reports can remain available in the account for convenience and can be permanently deleted by the user. Organization Storage is a separate repository workflow.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="business-faq-a9" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Do you offer custom pricing for larger organizations?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="business-faq-a9"><div><p class="faq-a-body">Yes. Standard plans are available on the <a href="prices.html" class="faq-link">Pricing page</a>, while larger customers can use custom contracts and pricing. Send a business inquiry if your organization has larger-volume, API, or other custom commercial requirements.</p></div></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 11 · FINAL CTA =================
        The closing band (build/cta.js). A business action and the standard-pricing

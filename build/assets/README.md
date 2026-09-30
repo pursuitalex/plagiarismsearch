@@ -20,7 +20,7 @@ components it shows come from `site.css` and `site.js`, exactly as on every page
 | File | What | Source |
 |---|---|---|
 | `site/assets/css/site.css` | our CSS | `build/assets/css/NN-*.css`, concatenated in file order |
-| `site/assets/css/tailwind.css` | Tailwind utilities + preflight | `tailwind.config.js`, tailwindcss **3.4.17** + autoprefixer |
+| `site/assets/css/tailwind.css` | Tailwind utilities + preflight, and between them the Section Library's component CSS | `tailwind.config.js`, `build/assets/css/tailwind.src.css` (imports `build/sections/*.css`), tailwindcss **3.4.17** + autoprefixer |
 | `site/assets/js/site.js` | our JS | `build/assets/js/NN-*.js`, one module per component |
 | `site/assets/vendor/gsap/3.12.5/` | GSAP + ScrollTrigger | `node_modules/gsap`, pinned |
 | boot snippet (inline, `<head>`) | `.js` / `.js-motion` + fail-safe | `build/assets/js/boot.js` |
@@ -60,8 +60,15 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
    Where two approved pages drew the same component differently, the difference is a named
    variant, never a page selector. The migration found five and kept each as a variant;
    all five were unified on 2026-09-30, so there are none today.
-4. **Markup keeps its utilities.** Every top-level element of `<main>` has a stable root
-   hook, `data-component="…"`, and the behaviour hooks it needs (catalogue below).
+4. **Markup keeps its utilities — except in the Section Library.** Every top-level element
+   of `<main>` has a stable root hook, `data-component="…"`, and the behaviour hooks it
+   needs (catalogue below). A library component (pilot, 2026-09-30: the FAQ and the Section
+   Header) is written with semantic classes instead: one template in `build/sections/<name>.js`
+   called by every generator, its CSS in `build/sections/<name>.css` compiled with `@apply`
+   in the Tailwind run (between components and utilities, outside `@layer`), variants as
+   `data-*` in `:where()`, a content contract in `build/sections/<name>.contract.js`, checked
+   by `node build/check-library.js`. Copy-paste catalogue: `site/section-library.html`.
+   The FAQ's accordion CSS moved there from `03-faq.css`.
 5. **No id is a CSS or JS hook.** Ids exist for in-page anchors and for accessibility
    pairs only.
 6. **Accessibility ids are rendered, not scripted.** `label for`/`id` on the checker field

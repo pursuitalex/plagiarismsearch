@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>Section Library — FAQ | PlagiarismSearch (internal)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/tailwind.css">
+<script>(function (h) {h.classList.add('js');if (!matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('js-motion');setTimeout(function () { if (!window.PS_READY) h.classList.remove('js', 'js-motion'); }, 3500);})(document.documentElement);</script>
+<script defer src="/assets/vendor/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="/assets/vendor/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="/assets/js/site.js"></script>
+</head>
+<body class="font-sans text-ink-900 bg-white">
+<main class="min-h-screen bg-[#F7F9FA]">
+  <section class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-14 lg:pt-16 pb-8">
+    <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Section Library · пілот</p>
+    <h1 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-4">FAQ</h1>
+    <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+      <p>Готовий HTML секції FAQ для вставки в body сторінки CMS. Стилі й поведінка — у спільних <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">site.css</code> / <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">tailwind.css</code> / <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">site.js</code>; сторінка не несе власного CSS чи JS. Копіюйте фрагмент із поля під прикладом цілком, потім змінюйте лише те, що дозволено в таблиці нижче.</p>
+      <p>Перед публікацією перевірте вставку: збережіть HTML у файл і запустіть <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">node build/check-library.js файл.html</code> (або <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">… --stdin</code>). Валідатор назве рядок і причину, якщо щось зламано.</p>
+      <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/faq.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/faq.css</code>, <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/section-head.css</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/faq.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/</code></p>
+    </div>
+  </section>
+
+  <section class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pb-10 space-y-8">
+    <div>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h2>
+      <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці; можна прибрати, якщо на FAQ ніхто не посилається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіанти секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg, data-space, data-layout на &lt;section&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише значення зі списку variants</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Надпис-пігулка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-eyebrow-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; блок .section-eyebrow можна прибрати цілком</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Фон пігулки</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg на .section-eyebrow</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">white | tint</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Заголовок H2</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст (обов’язковий); допускаються &lt;br&gt;, &lt;em&gt;, &lt;strong&gt;</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Вступ</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.section-intro</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; можна прибрати; data-size = lead | small</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Посилання під вступом</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">a.section-link (у div.section-more або сам із класом section-more)</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст, href, rel; іконку &lt;svg&gt; можна прибрати, але не змінювати; блок можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Питання</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.faq-q-text</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише текст, без тегів</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Відповідь (один абзац)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.faq-a-body</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; усередині — a.faq-link, strong, em, br</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Відповідь (кілька абзаців)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.faq-a-body &gt; p</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">кожен абзац — простий &lt;p&gt; без класів; ті самі inline-теги</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Посилання під відповіддю</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.faq-a-more &gt; a.faq-a-link</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст, href, target/rel; лише в останньому абзаці div.faq-a-body</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Кількість питань</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.faq-item</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">копіюйте або видаляйте цілий .faq-item; перший завжди class="faq-item open" + aria-expanded="true", решта — без open + "false"</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Id відповідей</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">id на .faq-a і aria-controls на кнопці</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">&lt;простір-імен&gt;-a1, -a2 … — однакові пари, унікальні на сторінці; при копіюванні секції змініть простір імен</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+    <div>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h2>
+      <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+        <li>усі класи й обгортки &lt;div&gt; (зокрема порожній &lt;div&gt; усередині .faq-a) — від них залежать вигляд, анімація і JS</li>
+        <li>data-component="faq" на секції і data-faq на .faq-list — гачки для JS і перевірок</li>
+        <li>кнопка: type="button", class="faq-q", aria-controls + aria-expanded</li>
+        <li>іконки &lt;svg&gt; (шеврон, іконка посилання) — копіюються як є</li>
+        <li>клас rv на .faq-aside і .faq-frame — анімація появи (можна прибрати лише обидва разом і лише за рішенням дизайну)</li>
+        <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) усередині FAQ</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h2>
+      <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">white</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">tint</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. фон секції: white — білий, tint — світло-сірий (ink-50). Чергуйте з сусідніми секціями.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-space</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">lg</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">md</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. вертикальні відступи на десктопі: lg — 128px (lg:py-32), md — 112px (lg:py-28). На телефоні/планшеті однакові.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">fluid</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">fluid-narrow</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">fixed</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. сітка: fluid — 0.85fr/1.15fr (продуктові сторінки); fluid-narrow — 0.8fr/1.2fr (UA); fixed — 380px/1fr (головна, User Guide) зі своїм ритмом заголовка.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">grid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">fluid</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">fluid-narrow</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">fixed</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. те саме, що data-layout секції — коли FAQ стоїть усередині іншого компонента без власної секції.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">frame</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-variant</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">doc</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. doc — список усередині колонки документації (Moodle guide): компактніші відступи на десктопі, колір тексту ink-700, посилання в стилі гайду.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">eyebrow</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">white</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">tint</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. фон «пігулки» над заголовком: white (за замовчуванням) або tint (ink-50) — щоб пігулка читалась на білій секції.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">intro</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-size</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">lead</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">small</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. розмір вступу: lead (за замовчуванням) — 14.5/15/15.5px; small — 14.5/15/15px (так затверджено на AI Detector і API).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+    <div>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h2>
+      <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="index.html">index.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">white · md · fixed</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ; посилання з іконкою (без обгортки)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ai-detector.html">ai-detector.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">white · lg · fluid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ small; посилання</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="api.html">api.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">white · lg · fluid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ small; посилання</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="prices.html">prices.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">tint · lg · fluid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ; посилання; a.faq-link у відповіді 7</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-organization.html">plagiarism-checker-for-organization.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">tint · lg · fluid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; a.faq-link у відповідях</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="university-plagiarism-checker.html">university-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">tint · lg · fluid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка «QUESTIONS»; a.faq-link у відповідях</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="pdf-plagiarism-checker.html">pdf-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">tint · lg · fluid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-students.html">plagiarism-checker-for-students.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">tint · lg · fluid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="turnitin-checker-alternative.html">turnitin-checker-alternative.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">white · md · fluid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка tint; розгорнуті відповіді; посилання на джерело</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ua-plagiarism-check.html">ua-plagiarism-check.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">tint · md · fluid-narrow</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">без пігулки</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="user-manuals.html">user-manuals.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">grid</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">fixed</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">усередині user-guide; без .rv; margin хоста</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="integration-guide.html">integration-guide.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">frame</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">doc</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">усередині гайду; h3; без .rv</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </section>
+
+  <!-- ── 1 · faq-fluid.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 1</p>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid (базовий)</h2>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Продуктова сторінка: сіра секція, пігулка, заголовок, вступ і тихе посилання під ним; відповіді одним абзацом, у відповіді може бути посилання a.faq-link. Копія — Pricing FAQ.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: prices (так само, але без вступу/посилання: pdf, students, organization, university) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid.html</code></p>
+    </div>
+  </div>
+
+<section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Questions</span>
+        </div>
+        <h2 class="section-title">Pricing FAQ</h2>
+        <p class="section-intro">Need help with an existing plan or account?</p>
+        <div class="section-more"><a href="https://plagiarismsearch.com/faq-and-support" rel="noopener" class="section-link">Visit the Help Center</a></div>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="example-faq-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">How do I choose the right PlagiarismSearch plan?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-a1"><div><p class="faq-a-body">Start with how much content you expect to check and which additional features you need. Use the One-time, Monthly, 3-Months, and Yearly tabs to compare the current price, checking allowance, billing period, and included features for each plan.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Do one-time packages expire?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-a2"><div><p class="faq-a-body">No. A purchased one-time quota does not expire, so you can use it when you need it rather than within a fixed billing period.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What if the standard plans do not fit my volume?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-a3"><div><p class="faq-a-body">Explore the VIP options if you need a higher-volume or custom arrangement beyond the standard pricing choices. <a href="vip.html" class="faq-link">View VIP options</a></p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-1">HTML для копіювання</label>
+    <textarea id="snippet-1" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+  &lt;div class="faq-inner"&gt;
+    &lt;div class="faq-grid"&gt;
+      &lt;div class="faq-aside rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Questions&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;Pricing FAQ&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Need help with an existing plan or account?&lt;/p&gt;
+        &lt;div class="section-more"&gt;&lt;a href="https://plagiarismsearch.com/faq-and-support" rel="noopener" class="section-link"&gt;Visit the Help Center&lt;/a&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="faq-frame rv"&gt;
+        &lt;div class="faq-list" data-faq&gt;
+          &lt;div class="faq-item open"&gt;
+            &lt;button type="button" aria-controls="example-faq-a1" aria-expanded="true" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;How do I choose the right PlagiarismSearch plan?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-a1"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;Start with how much content you expect to check and which additional features you need. Use the One-time, Monthly, 3-Months, and Yearly tabs to compare the current price, checking allowance, billing period, and included features for each plan.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-a2" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Do one-time packages expire?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-a2"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;No. A purchased one-time quota does not expire, so you can use it when you need it rather than within a fixed billing period.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-a3" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;What if the standard plans do not fit my volume?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-a3"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;Explore the VIP options if you need a higher-volume or custom arrangement beyond the standard pricing choices. &lt;a href="vip.html" class="faq-link"&gt;View VIP options&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── 2 · faq-fluid-title-only.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 2</p>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid, лише заголовок</h2>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Той самий блок без вступу й посилання — найчастіша конфігурація. Копія — Students FAQ.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: students, pdf, organization, university · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid-title-only.html</code></p>
+    </div>
+  </div>
+
+<section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Questions</span>
+        </div>
+        <h2 class="section-title">Plagiarism Checker for Students FAQ</h2>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="example-faq-title-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">Can I check my essay or paper before submitting it?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-title-a1"><div><p class="faq-a-body">Yes. You can paste text or upload a supported document and run a plagiarism check before submission. The report shows matching or similar passages and their sources so you can review the result in context.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-title-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Does a similarity percentage mean I plagiarized?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-title-a2"><div><p class="faq-a-body">No. Similarity means that some text matches or closely resembles text found in the sources included in your check. A match may come from a quotation, reference, common phrasing, a close paraphrase, or material that needs closer review.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-title-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What is a safe similarity percentage for a student paper?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-title-a3"><div><p class="faq-a-body">There is no universal similarity percentage that proves a paper is plagiarism-free or automatically means that plagiarism occurred. Review the individual matches, their sources, and citation context, and follow any requirements set by your course or institution.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-2">HTML для копіювання</label>
+    <textarea id="snippet-2" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+  &lt;div class="faq-inner"&gt;
+    &lt;div class="faq-grid"&gt;
+      &lt;div class="faq-aside rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Questions&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;Plagiarism Checker for Students FAQ&lt;/h2&gt;
+      &lt;/div&gt;
+      &lt;div class="faq-frame rv"&gt;
+        &lt;div class="faq-list" data-faq&gt;
+          &lt;div class="faq-item open"&gt;
+            &lt;button type="button" aria-controls="example-faq-title-a1" aria-expanded="true" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Can I check my essay or paper before submitting it?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-title-a1"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;Yes. You can paste text or upload a supported document and run a plagiarism check before submission. The report shows matching or similar passages and their sources so you can review the result in context.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-title-a2" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Does a similarity percentage mean I plagiarized?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-title-a2"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;No. Similarity means that some text matches or closely resembles text found in the sources included in your check. A match may come from a quotation, reference, common phrasing, a close paraphrase, or material that needs closer review.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-title-a3" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;What is a safe similarity percentage for a student paper?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-title-a3"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;There is no universal similarity percentage that proves a paper is plagiarism-free or automatically means that plagiarism occurred. Review the individual matches, their sources, and citation context, and follow any requirements set by your course or institution.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── 3 · faq-fluid-small-intro.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 3</p>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid, білий фон, малий вступ</h2>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Біла секція; вступ data-size="small" (15px і на десктопі). Копія — AI Detector FAQ.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ai-detector, api · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid-small-intro.html</code></p>
+    </div>
+  </div>
+
+<section id="example-faq-small" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Questions</span>
+        </div>
+        <h2 class="section-title">AI Detector FAQ</h2>
+        <p class="section-intro" data-size="small">Still have a question about your account, reports, or AI checking?</p>
+        <div class="section-more"><a href="https://plagiarismsearch.com/faq-and-support" rel="noopener" class="section-link">Visit the Help Center</a></div>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="example-faq-small-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">What does AI Probability mean?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-small-a1"><div><p class="faq-a-body">AI Probability is the percentage likelihood that the analyzed text, considered as a whole, was AI-generated. It is a document-level detection indicator. It does not represent the percentage of the document that was generated by AI, and it is not proof of authorship.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-small-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What does Total AI Rate mean?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-small-a2"><div><p class="faq-a-body">Total AI Rate is the share of the document made up of passages flagged as AI-generated. It complements AI Probability by showing how much of the text is contained in flagged passages rather than the overall likelihood for the document.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-small-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Why can AI Probability and Total AI Rate be different?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-small-a3"><div><p class="faq-a-body">They measure different things. AI Probability describes the likelihood that the document as a whole was AI-generated. Total AI Rate describes the amount of text contained in passages flagged as AI-generated. The two percentages therefore should not be expected to match.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-3">HTML для копіювання</label>
+    <textarea id="snippet-3" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-small" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
+  &lt;div class="faq-inner"&gt;
+    &lt;div class="faq-grid"&gt;
+      &lt;div class="faq-aside rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Questions&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;AI Detector FAQ&lt;/h2&gt;
+        &lt;p class="section-intro" data-size="small"&gt;Still have a question about your account, reports, or AI checking?&lt;/p&gt;
+        &lt;div class="section-more"&gt;&lt;a href="https://plagiarismsearch.com/faq-and-support" rel="noopener" class="section-link"&gt;Visit the Help Center&lt;/a&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="faq-frame rv"&gt;
+        &lt;div class="faq-list" data-faq&gt;
+          &lt;div class="faq-item open"&gt;
+            &lt;button type="button" aria-controls="example-faq-small-a1" aria-expanded="true" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;What does AI Probability mean?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-small-a1"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;AI Probability is the percentage likelihood that the analyzed text, considered as a whole, was AI-generated. It is a document-level detection indicator. It does not represent the percentage of the document that was generated by AI, and it is not proof of authorship.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-small-a2" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;What does Total AI Rate mean?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-small-a2"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;Total AI Rate is the share of the document made up of passages flagged as AI-generated. It complements AI Probability by showing how much of the text is contained in flagged passages rather than the overall likelihood for the document.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-small-a3" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Why can AI Probability and Total AI Rate be different?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-small-a3"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;They measure different things. AI Probability describes the likelihood that the document as a whole was AI-generated. Total AI Rate describes the amount of text contained in passages flagged as AI-generated. The two percentages therefore should not be expected to match.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── 4 · faq-fluid-rich.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 4</p>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid, розгорнуті відповіді з посиланням на джерело</h2>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Біла секція з меншими відступами (data-space="md"), пігулка на тінті (data-bg="tint"); кожна відповідь — div.faq-a-body з абзацами, під відповіддю може стояти p.faq-a-more з посиланням. Копія — Turnitin Alternative FAQ.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: turnitin-checker-alternative; так само — багатоабзацні відповіді (scholarship після злиття) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid-rich.html</code></p>
+    </div>
+  </div>
+
+<section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow" data-bg="tint">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Questions</span>
+        </div>
+        <h2 class="section-title">Turnitin Alternative FAQ</h2>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="example-faq-rich-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">Is PlagiarismSearch affiliated with Turnitin® or a third-party Turnitin® checker?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-rich-a1"><div><div class="faq-a-body">
+              <p>No. PlagiarismSearch is an independent service. It is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC; it does not access Turnitin software or proprietary databases and does not generate official Turnitin Similarity Reports.</p>
+            </div></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-rich-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Will PlagiarismSearch give me the same similarity score as Turnitin®?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-rich-a2"><div><div class="faq-a-body">
+              <p>Not necessarily. Different services can use different source collections, repositories, matching methods and settings, so similarity results may differ. A PlagiarismSearch result should not be treated as a prediction of an official Turnitin score.</p>
+            </div></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-rich-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Can individuals buy Turnitin® Similarity directly?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-rich-a3"><div><div class="faq-a-body">
+              <p>Turnitin currently states that Turnitin Feedback Studio and Similarity subscriptions are not sold directly to individuals. Access may be provided through an institution; Turnitin points individuals with personal similarity-checking needs toward iThenticate.</p>
+              <p class="faq-a-more"><a href="https://guides.turnitin.com/hc/en-us/articles/37985974637453-How-to-purchase-a-Turnitin-subscription" target="_blank" rel="noopener noreferrer" class="faq-a-link"><span>Official Turnitin guide: How to purchase a Turnitin subscription</span><span class="faq-a-link-icon"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
+            </div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-4">HTML для копіювання</label>
+    <textarea id="snippet-4" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
+  &lt;div class="faq-inner"&gt;
+    &lt;div class="faq-grid"&gt;
+      &lt;div class="faq-aside rv"&gt;
+        &lt;div class="section-eyebrow" data-bg="tint"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Questions&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;Turnitin Alternative FAQ&lt;/h2&gt;
+      &lt;/div&gt;
+      &lt;div class="faq-frame rv"&gt;
+        &lt;div class="faq-list" data-faq&gt;
+          &lt;div class="faq-item open"&gt;
+            &lt;button type="button" aria-controls="example-faq-rich-a1" aria-expanded="true" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Is PlagiarismSearch affiliated with Turnitin® or a third-party Turnitin® checker?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-rich-a1"&gt;&lt;div&gt;&lt;div class="faq-a-body"&gt;
+              &lt;p&gt;No. PlagiarismSearch is an independent service. It is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC; it does not access Turnitin software or proprietary databases and does not generate official Turnitin Similarity Reports.&lt;/p&gt;
+            &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-rich-a2" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Will PlagiarismSearch give me the same similarity score as Turnitin®?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-rich-a2"&gt;&lt;div&gt;&lt;div class="faq-a-body"&gt;
+              &lt;p&gt;Not necessarily. Different services can use different source collections, repositories, matching methods and settings, so similarity results may differ. A PlagiarismSearch result should not be treated as a prediction of an official Turnitin score.&lt;/p&gt;
+            &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-rich-a3" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Can individuals buy Turnitin® Similarity directly?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-rich-a3"&gt;&lt;div&gt;&lt;div class="faq-a-body"&gt;
+              &lt;p&gt;Turnitin currently states that Turnitin Feedback Studio and Similarity subscriptions are not sold directly to individuals. Access may be provided through an institution; Turnitin points individuals with personal similarity-checking needs toward iThenticate.&lt;/p&gt;
+              &lt;p class="faq-a-more"&gt;&lt;a href="https://guides.turnitin.com/hc/en-us/articles/37985974637453-How-to-purchase-a-Turnitin-subscription" target="_blank" rel="noopener noreferrer" class="faq-a-link"&gt;&lt;span&gt;Official Turnitin guide: How to purchase a Turnitin subscription&lt;/span&gt;&lt;span class="faq-a-link-icon"&gt;&lt;svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 3h6v6"/&gt;&lt;path d="M10 14 21 3"/&gt;&lt;path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+            &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── 5 · faq-fluid-narrow.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 5</p>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid-narrow, без пігулки</h2>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Сітка 0.8fr/1.2fr, лише заголовок, менші відступи. Копія — UA FAQ.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ua-plagiarism-check · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid-narrow.html</code></p>
+    </div>
+  </div>
+
+<section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <h2 class="section-title">Поширені запитання</h2>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="example-faq-narrow-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">Скільки тексту можна перевірити на плагіат безкоштовно?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-narrow-a1"><div><p class="faq-a-body">Без реєстрації можна перевірити до 150 слів. Для зареєстрованих користувачів доступно 300 слів для перевірки на плагіат щодня. Для більших обсягів можна скористатися платним тарифом.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-narrow-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Що показує звіт PlagiarismSearch?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-narrow-a2"><div><p class="faq-a-body">Звіт показує знайдені текстові збіги, відповідні джерела та пов’язані з ними фрагменти документа. Ви можете перейти від позначеного тексту до джерела й самостійно перевірити контекст.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-narrow-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Чи означає знайдений збіг, що в тексті є плагіат?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-narrow-a3"><div><p class="faq-a-body">Ні. Текстовий збіг сам по собі не є автоматичним висновком про плагіат. Важливо перевірити джерело, контекст, цитування й правила, за якими оцінюється конкретний текст.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-5">HTML для копіювання</label>
+    <textarea id="snippet-5" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
+  &lt;div class="faq-inner"&gt;
+    &lt;div class="faq-grid"&gt;
+      &lt;div class="faq-aside rv"&gt;
+        &lt;h2 class="section-title"&gt;Поширені запитання&lt;/h2&gt;
+      &lt;/div&gt;
+      &lt;div class="faq-frame rv"&gt;
+        &lt;div class="faq-list" data-faq&gt;
+          &lt;div class="faq-item open"&gt;
+            &lt;button type="button" aria-controls="example-faq-narrow-a1" aria-expanded="true" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Скільки тексту можна перевірити на плагіат безкоштовно?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-narrow-a1"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;Без реєстрації можна перевірити до 150 слів. Для зареєстрованих користувачів доступно 300 слів для перевірки на плагіат щодня. Для більших обсягів можна скористатися платним тарифом.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-narrow-a2" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Що показує звіт PlagiarismSearch?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-narrow-a2"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;Звіт показує знайдені текстові збіги, відповідні джерела та пов’язані з ними фрагменти документа. Ви можете перейти від позначеного тексту до джерела й самостійно перевірити контекст.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-narrow-a3" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Чи означає знайдений збіг, що в тексті є плагіат?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-narrow-a3"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;Ні. Текстовий збіг сам по собі не є автоматичним висновком про плагіат. Важливо перевірити джерело, контекст, цитування й правила, за якими оцінюється конкретний текст.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── 6 · faq-fixed.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 6</p>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fixed (головна)</h2>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Ліва колонка фіксована 380px, свій ритм заголовка; посилання з іконкою стоїть без обгортки (a.section-more.section-link). Копія — Home FAQ.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: index (головна); user-manuals — як вбудований блок · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fixed.html</code></p>
+    </div>
+  </div>
+
+<section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed">
+  <div class="faq-inner">
+    <div class="faq-grid">
+      <div class="faq-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Questions</span>
+        </div>
+        <h2 class="section-title">Plagiarism Checker FAQ</h2>
+        <p class="section-intro">Answers to common questions about plagiarism checking, sources, privacy, AI analysis, supported languages, file types, and free use.</p>
+        <a href="help-center.html" class="section-more section-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          More questions? Visit the Help Center.
+        </a>
+      </div>
+      <div class="faq-frame rv">
+        <div class="faq-list" data-faq>
+          <div class="faq-item open">
+            <button type="button" aria-controls="example-faq-fixed-a1" aria-expanded="true" class="faq-q">
+              <span class="faq-q-text">What does PlagiarismSearch check for?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-fixed-a1"><div><p class="faq-a-body">PlagiarismSearch compares the text you submit with the source collections enabled for your check and highlights matching or similar passages in the report. Depending on your settings, the check can include web sources, academic databases, personal storage, or organization storage. The report gives you evidence to review rather than an automatic plagiarism verdict.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-fixed-a2" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">Does similarity automatically mean plagiarism?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-fixed-a2"><div><p class="faq-a-body">No. Similarity means that some text matches or closely resembles text found in the sources checked. A match can come from a quotation, reference, common phrasing, or material that needs closer review, so source context and citation information matter.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-controls="example-faq-fixed-a3" aria-expanded="false" class="faq-q">
+              <span class="faq-q-text">What sources can the plagiarism checker search?</span>
+              <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="faq-a" id="example-faq-fixed-a3"><div><p class="faq-a-body">Depending on your settings and access, the checker can search web sources, academic databases, personal storage, and organization storage. When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts. Not every source collection is necessarily included in every check.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-6">HTML для копіювання</label>
+    <textarea id="snippet-6" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
+  &lt;div class="faq-inner"&gt;
+    &lt;div class="faq-grid"&gt;
+      &lt;div class="faq-aside rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Questions&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;Plagiarism Checker FAQ&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Answers to common questions about plagiarism checking, sources, privacy, AI analysis, supported languages, file types, and free use.&lt;/p&gt;
+        &lt;a href="help-center.html" class="section-more section-link"&gt;
+          &lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/&gt;&lt;line x1="12" x2="12.01" y1="17" y2="17"/&gt;&lt;/svg&gt;
+          More questions? Visit the Help Center.
+        &lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div class="faq-frame rv"&gt;
+        &lt;div class="faq-list" data-faq&gt;
+          &lt;div class="faq-item open"&gt;
+            &lt;button type="button" aria-controls="example-faq-fixed-a1" aria-expanded="true" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;What does PlagiarismSearch check for?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-fixed-a1"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;PlagiarismSearch compares the text you submit with the source collections enabled for your check and highlights matching or similar passages in the report. Depending on your settings, the check can include web sources, academic databases, personal storage, or organization storage. The report gives you evidence to review rather than an automatic plagiarism verdict.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-fixed-a2" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;Does similarity automatically mean plagiarism?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-fixed-a2"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;No. Similarity means that some text matches or closely resembles text found in the sources checked. A match can come from a quotation, reference, common phrasing, or material that needs closer review, so source context and citation information matter.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="faq-item"&gt;
+            &lt;button type="button" aria-controls="example-faq-fixed-a3" aria-expanded="false" class="faq-q"&gt;
+              &lt;span class="faq-q-text"&gt;What sources can the plagiarism checker search?&lt;/span&gt;
+              &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="faq-a" id="example-faq-fixed-a3"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;Depending on your settings and access, the checker can search web sources, academic databases, personal storage, and organization storage. When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts. Not every source collection is necessarily included in every check.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── 7 · faq-grid-embedded.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 7</p>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ усередині іншого компонента (без секції)</h2>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Лише сітка .faq-grid з data-layout — коли FAQ є частиною іншої секції. Відступ зверху — утиліти margin хоста (дозволено лише m*-). Без .rv, як затверджено на User Guide.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: user-manuals (всередині user-guide) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-grid-embedded.html</code></p>
+    </div>
+  </div>
+
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 pb-4">
+<div class="faq-grid mt-12 sm:mt-16 lg:mt-20" data-layout="fixed">
+  <div class="faq-aside">
+    <div class="section-eyebrow">
+      <span class="section-eyebrow-dot"></span>
+      <span class="section-eyebrow-label">Questions</span>
+    </div>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-intro">Find out the answers to the most frequently asked questions about our service</p>
+    <a href="help-center.html" class="section-more section-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+      More questions? Visit the Help Center.
+    </a>
+  </div>
+  <div class="faq-frame">
+    <div class="faq-list" data-faq>
+      <div class="faq-item open">
+        <button type="button" aria-controls="example-faq-grid-a1" aria-expanded="true" class="faq-q">
+          <span class="faq-q-text">Is PlagiarismSearch really able to identify plagiarism?</span>
+          <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+        </button>
+        <div class="faq-a" id="example-faq-grid-a1"><div><p class="faq-a-body">PlagiarismSearch.com provides an accurate plagiarism analysis of the scanned text. Your paper will be compared to billions of web pages and sources from various databases. The plagiarized parts will be marked with different colors. Please check these sentences to see if they contain a reference to the source, if you want to eliminate possible plagiarism charges from your educator.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" aria-controls="example-faq-grid-a2" aria-expanded="false" class="faq-q">
+          <span class="faq-q-text">Will my paper be saved at any databases by PlagiarismSearch?</span>
+          <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+        </button>
+        <div class="faq-a" id="example-faq-grid-a2"><div><p class="faq-a-body">No. Your paper will not be added to any databases by PlagiarismSearch.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" aria-controls="example-faq-grid-a3" aria-expanded="false" class="faq-q">
+          <span class="faq-q-text">How can I be sure that you are not going to use the texts I have submitted for checking?</span>
+          <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+        </button>
+        <div class="faq-a" id="example-faq-grid-a3"><div><p class="faq-a-body">Our rules and policies are very strict regarding your rights. You can go through them carefully, so that every aspect will be clear to you.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-7">HTML для копіювання</label>
+    <textarea id="snippet-7" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid mt-12 sm:mt-16 lg:mt-20" data-layout="fixed"&gt;
+  &lt;div class="faq-aside"&gt;
+    &lt;div class="section-eyebrow"&gt;
+      &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+      &lt;span class="section-eyebrow-label"&gt;Questions&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;h2 class="section-title"&gt;Frequently Asked Questions&lt;/h2&gt;
+    &lt;p class="section-intro"&gt;Find out the answers to the most frequently asked questions about our service&lt;/p&gt;
+    &lt;a href="help-center.html" class="section-more section-link"&gt;
+      &lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/&gt;&lt;line x1="12" x2="12.01" y1="17" y2="17"/&gt;&lt;/svg&gt;
+      More questions? Visit the Help Center.
+    &lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="faq-frame"&gt;
+    &lt;div class="faq-list" data-faq&gt;
+      &lt;div class="faq-item open"&gt;
+        &lt;button type="button" aria-controls="example-faq-grid-a1" aria-expanded="true" class="faq-q"&gt;
+          &lt;span class="faq-q-text"&gt;Is PlagiarismSearch really able to identify plagiarism?&lt;/span&gt;
+          &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;div class="faq-a" id="example-faq-grid-a1"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;PlagiarismSearch.com provides an accurate plagiarism analysis of the scanned text. Your paper will be compared to billions of web pages and sources from various databases. The plagiarized parts will be marked with different colors. Please check these sentences to see if they contain a reference to the source, if you want to eliminate possible plagiarism charges from your educator.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="faq-item"&gt;
+        &lt;button type="button" aria-controls="example-faq-grid-a2" aria-expanded="false" class="faq-q"&gt;
+          &lt;span class="faq-q-text"&gt;Will my paper be saved at any databases by PlagiarismSearch?&lt;/span&gt;
+          &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;div class="faq-a" id="example-faq-grid-a2"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;No. Your paper will not be added to any databases by PlagiarismSearch.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="faq-item"&gt;
+        &lt;button type="button" aria-controls="example-faq-grid-a3" aria-expanded="false" class="faq-q"&gt;
+          &lt;span class="faq-q-text"&gt;How can I be sure that you are not going to use the texts I have submitted for checking?&lt;/span&gt;
+          &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;div class="faq-a" id="example-faq-grid-a3"&gt;&lt;div&gt;&lt;p class="faq-a-body"&gt;Our rules and policies are very strict regarding your rights. You can go through them carefully, so that every aspect will be clear to you.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</textarea>
+  </div>
+
+  <!-- ── 8 · faq-frame-doc.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 8</p>
+      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Лише список у колонці документації (doc)</h2>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Тільки .faq-frame з data-variant="doc": компактні розміри на десктопі, текст ink-700, посилання в стилі гайду; кожне питання в &lt;h3 class="faq-heading"&gt; для структури документа. Заголовок дає сама секція гайду.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: integration-guide (Moodle) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-frame-doc.html</code></p>
+    </div>
+  </div>
+
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 pb-4">
+<div class="faq-frame" data-variant="doc">
+  <div class="faq-list" data-faq>
+    <div class="faq-item open">
+      <h3 class="faq-heading"><button type="button" aria-controls="example-faq-doc-a1" aria-expanded="true" class="faq-q">
+        <span class="faq-q-text">Does PlagiarismSearch work with Moodle?</span>
+        <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button></h3>
+      <div class="faq-a" id="example-faq-doc-a1"><div><div class="faq-a-body">
+        <p>Yes. PlagiarismSearch provides a Moodle plagiarism plugin for the Moodle Assignment workflow. The current confirmed compatibility range is Moodle 2.7–5.2.</p>
+      </div></div></div>
+    </div>
+    <div class="faq-item">
+      <h3 class="faq-heading"><button type="button" aria-controls="example-faq-doc-a2" aria-expanded="false" class="faq-q">
+        <span class="faq-q-text">Where do I get the API User and API Key for Moodle?</span>
+        <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button></h3>
+      <div class="faq-a" id="example-faq-doc-a2"><div><div class="faq-a-body">
+        <p>Sign in to your PlagiarismSearch account and open the API section. The API User and API Key used by the Moodle plugin are available there.</p>
+        <p class="faq-a-more"><a href="account.html" class="faq-a-link">Open API Credentials</a></p>
+      </div></div></div>
+    </div>
+    <div class="faq-item">
+      <h3 class="faq-heading"><button type="button" aria-controls="example-faq-doc-a3" aria-expanded="false" class="faq-q">
+        <span class="faq-q-text">Can Moodle submissions be checked automatically?</span>
+        <span class="faq-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button></h3>
+      <div class="faq-a" id="example-faq-doc-a3"><div><div class="faq-a-body">
+        <p>Yes. Enable <span class="ui">Auto check</span> in the PlagiarismSearch settings. For supported Moodle Assignment submissions, the plugin can automatically send new file and online-text submissions for checking.</p>
+      </div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-8">HTML для копіювання</label>
+    <textarea id="snippet-8" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
+  &lt;div class="faq-list" data-faq&gt;
+    &lt;div class="faq-item open"&gt;
+      &lt;h3 class="faq-heading"&gt;&lt;button type="button" aria-controls="example-faq-doc-a1" aria-expanded="true" class="faq-q"&gt;
+        &lt;span class="faq-q-text"&gt;Does PlagiarismSearch work with Moodle?&lt;/span&gt;
+        &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/button&gt;&lt;/h3&gt;
+      &lt;div class="faq-a" id="example-faq-doc-a1"&gt;&lt;div&gt;&lt;div class="faq-a-body"&gt;
+        &lt;p&gt;Yes. PlagiarismSearch provides a Moodle plagiarism plugin for the Moodle Assignment workflow. The current confirmed compatibility range is Moodle 2.7–5.2.&lt;/p&gt;
+      &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="faq-item"&gt;
+      &lt;h3 class="faq-heading"&gt;&lt;button type="button" aria-controls="example-faq-doc-a2" aria-expanded="false" class="faq-q"&gt;
+        &lt;span class="faq-q-text"&gt;Where do I get the API User and API Key for Moodle?&lt;/span&gt;
+        &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/button&gt;&lt;/h3&gt;
+      &lt;div class="faq-a" id="example-faq-doc-a2"&gt;&lt;div&gt;&lt;div class="faq-a-body"&gt;
+        &lt;p&gt;Sign in to your PlagiarismSearch account and open the API section. The API User and API Key used by the Moodle plugin are available there.&lt;/p&gt;
+        &lt;p class="faq-a-more"&gt;&lt;a href="account.html" class="faq-a-link"&gt;Open API Credentials&lt;/a&gt;&lt;/p&gt;
+      &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="faq-item"&gt;
+      &lt;h3 class="faq-heading"&gt;&lt;button type="button" aria-controls="example-faq-doc-a3" aria-expanded="false" class="faq-q"&gt;
+        &lt;span class="faq-q-text"&gt;Can Moodle submissions be checked automatically?&lt;/span&gt;
+        &lt;span class="faq-chev"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/button&gt;&lt;/h3&gt;
+      &lt;div class="faq-a" id="example-faq-doc-a3"&gt;&lt;div&gt;&lt;div class="faq-a-body"&gt;
+        &lt;p&gt;Yes. Enable &lt;span class="ui"&gt;Auto check&lt;/span&gt; in the PlagiarismSearch settings. For supported Moodle Assignment submissions, the plugin can automatically send new file and online-text submissions for checking.&lt;/p&gt;
+      &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</textarea>
+  </div>
+</main>
+</body>
+</html>

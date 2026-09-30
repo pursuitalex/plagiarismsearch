@@ -32,6 +32,7 @@ const fs = require('fs');
 const path = require('path');
 const page = require('./page');
 const { dotField } = require('./dots');
+const faq = require('./sections/faq');   /* the FAQ: one library template */
 
 const SITE = path.join(__dirname, '..', 'site');
 const OUT = 'scholarship.html';
@@ -364,29 +365,13 @@ ${COPY.requirement.prompts.map((p, i) => `            <li class="flex items-cent
 
 /* ═══════════════ 06 · FAQ ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · FAQ =================
-       Six questions, full answers in the HTML (the shared faq module). -->
-  <section id="scholarship-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-          <h2 class="${H2}">${COPY.faq.h2}</h2>
-        </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
-${COPY.faq.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-controls="scholarship-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
-                <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-                <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </span>
-              </button>
-              <div class="faq-a" id="scholarship-faq-a${i + 1}"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 grid gap-2.5">${a.map(p => `<p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch] [&_strong]:text-ink-900 [&_strong]:font-semibold">${p}</p>`).join('')}</div></div></div>
-            </div>`).join('\n')}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+       The library FAQ (build/sections/faq.js): six questions, full answers in the HTML;
+       the round dates are rich answers, several paragraphs with <strong>. -->
+${faq.section({
+  id: 'scholarship-faq', ns: 'scholarship-faq', bg: 'tint', space: 'lg', layout: 'fluid',
+  head: { title: COPY.faq.h2 },
+  items: COPY.faq.items.map(([q, a]) => (a.length > 1 ? { q, paras: a } : { q, a: a[0] })),
+})}`;
 
 /* ═══════════════ 07 · APPLICATION FORM ═══════════════ */
 const F = COPY.form;

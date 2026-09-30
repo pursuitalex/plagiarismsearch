@@ -1,0 +1,62 @@
+/* ═══ Section Header — the library primitive ════════════════════════════════════════
+   Template: build/sections/section-head.js · contract: for now inside the FAQ's
+   (build/sections/faq.contract.js); it gets its own when a second component adopts it.
+
+   The head most sections open with: an eyebrow pill (dot + label), the h2, an intro line,
+   and optionally a quiet "more" link under it. Four classes an editor can read:
+
+     .section-eyebrow            the pill           data-bg="white" (default) | "tint"
+       .section-eyebrow-dot        its dot
+       .section-eyebrow-label      its label
+     .section-title              the h2
+     .section-intro              the intro line     data-size="lead" (default) | "small"
+     .section-more               the spacing above the more link (a wrapper <div>, or the link itself)
+     .section-link               the quiet more link
+
+   How it is written (the rule for every library component):
+   · Compiled in the SAME Tailwind run as the utilities (build/assets/css/tailwind.src.css
+     imports this file between components and utilities), with @apply, so every value is
+     the utility's own value — the ring + shadow composition included.
+   · Outside @layer on purpose: @layer components drops a rule whose class Tailwind has not
+     seen in content, and a section that exists only in the CMS would lose its CSS.
+   · A property is set by a class OR by a utility on the same element, never both. The
+     utilities come after this file, so a stray utility would silently win.
+   · Variants are data-* attributes wrapped in :where(), so every selector here weighs
+     (0,1,0) like a utility and the later rule wins by order alone.
+   · A variant restates each breakpoint it changes: a later base rule overrides an earlier
+     @media rule of the same weight, and that is what the variants rely on.
+   · Spacing between the parts belongs to the component that hosts the head (see faq.css
+     for the FAQ's two models); the defaults below are the common model. */
+
+.section-eyebrow {
+  @apply inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6;
+}
+/* on a white section the pill takes the tint, so it still reads as a chip */
+.section-eyebrow:where([data-bg="tint"]) {
+  @apply bg-ink-50;
+}
+.section-eyebrow-dot {
+  @apply w-1.5 h-1.5 rounded-full bg-orange-500;
+}
+.section-eyebrow-label {
+  @apply text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700;
+}
+
+.section-title {
+  @apply text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08];
+}
+
+.section-intro {
+  @apply mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600;
+}
+/* the smaller intro: stays at 15px from sm up (AI Detector, API) */
+.section-intro:where([data-size="small"]) {
+  @apply lg:text-[15px];
+}
+
+.section-more {
+  @apply mt-5 lg:mt-6;
+}
+.section-link {
+  @apply inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300;
+}
