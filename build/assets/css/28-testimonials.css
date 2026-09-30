@@ -1,0 +1,102 @@
+/* ═══ 28 · testimonials — the "Show more" list and the video facade (Reviews) ══════
+   Behaviour: site.js, modules show-more and video.
+
+   Show more: every card is in the HTML. The later ones wait (.more-later) only while
+   the script is there to show them — without it, or when the boot fail-safe takes .js
+   off, every card shows and the button, which would do nothing, steps aside. */
+/* specificity (0,2,0)+ on purpose: site.css loads before tailwind.css, and a card's own
+   .flex (0,1,0) would otherwise win and show the card */
+html.js .more-later { display:none; }
+html:not(.js) [data-show-more-btn] { display:none; }
+
+/* A card's rating, light: build/reviews.js stars() draws ten SVGs per rating, which is
+   right for a handful of summaries and ~170 KB for a wall of a hundred cards. This is
+   the same row — the same star, ink-200 under orange-500, 14px stars 1px apart — as two
+   repeating backgrounds, the lit one clipped to the rating (its width is the data, set
+   inline as a percentage, like stars()). */
+.rt { position:relative; display:inline-block; width:74px; height:14px; flex:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='14' viewBox='0 0 25.7 24'%3E%3Cpath fill='%23E5E7EB' d='m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z'/%3E%3C/svg%3E") 0 0 / 15px 14px repeat-x; }
+.rt > span { position:absolute; inset:0 auto 0 0; overflow:hidden;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='14' viewBox='0 0 25.7 24'%3E%3Cpath fill='%23F36F5A' d='m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z'/%3E%3C/svg%3E") 0 0 / 15px 14px repeat-x; }
+
+/* the video facade: a still and a play button until a click asks for the player, so
+   the page loads nothing from YouTube that nobody pressed play on */
+.vf-thumb { display:block; width:100%; aspect-ratio:16/9; object-fit:cover; }
+.vf-frame { display:block; width:100%; aspect-ratio:16/9; border:0; }
+.vf-play { transition:transform .35s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
+[data-video]:hover .vf-play { transform:scale(1.06); background:#fff; }
+[data-video]:focus-visible { outline:2px solid #7FE0EE; outline-offset:3px; }
+
+/* ── Reviews v2 (testimonials-v2.html): each platform's cards in its own manner ──────
+   Olex, 2026-09-30: "Trustpilot blocks in Trustpilot's style, SmartCustomer blocks in
+   SmartCustomer's". The manner, not the marks: their star rows, avatars and colours,
+   no logo drawn. */
+
+/* Trustpilot: a star in a square, green by the score (their scale: 5 #00B67A,
+   4 #73CF11, 3 #FFCE00, 2 #FF8622, 1 #FF3722), empty squares #DCDCE6. A part-lit
+   square takes its fill from --f, set inline as the data (like .rt's width). */
+.tp-stars { display:inline-flex; gap:2px; --tp:#00B67A; }
+.tp-stars[data-score="4"] { --tp:#73CF11; }
+.tp-stars[data-score="3"] { --tp:#FFCE00; }
+.tp-star { width:18px; height:18px; flex:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='m12 3.2 2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.8l-5.4 2.9 1.2-6-4.5-4.2 6.1-.7z'/%3E%3C/svg%3E") center / 76% no-repeat,
+             linear-gradient(90deg, var(--tp) var(--f, 100%), #DCDCE6 var(--f, 100%)); }
+.tp-star.is-off { --f:0%; }
+.tp-stars.is-lg .tp-star { width:30px; height:30px; }
+.tp-stars.is-lg { gap:3px; }
+
+/* SmartCustomer: round-cornered gold stars, empty ones light grey */
+.sc-stars { display:inline-flex; gap:2px; }
+.sc-star { width:20px; height:20px; flex:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFB400' stroke='%23FFB400' stroke-width='1.5' stroke-linejoin='round' d='m12 2.8 2.8 5.8 6.3.8-4.6 4.4 1.2 6.3L12 17l-5.7 3.1 1.2-6.3-4.6-4.4 6.3-.8z'/%3E%3C/svg%3E") center / contain no-repeat; }
+.sc-star.is-off { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23DADDE3' stroke='%23DADDE3' stroke-width='1.5' stroke-linejoin='round' d='m12 2.8 2.8 5.8 6.3.8-4.6 4.4 1.2 6.3L12 17l-5.7 3.1 1.2-6.3-4.6-4.4 6.3-.8z'/%3E%3C/svg%3E"); }
+.sc-stars.is-lg .sc-star { width:28px; height:28px; }
+
+/* Masonry: CSS columns; a card never splits across two */
+.masonry > * { break-inside:avoid; }
+
+/* Marquee (site.js, module marquee): a row runs sideways forever — the real cards, then
+   one aria-hidden inert copy, the track moving by exactly half its width. Cards space
+   with margin, not gap, so the half is exact. Stops under the pointer, under focus, and
+   on the pause button; a reader who asked for less motion gets a still row that scrolls
+   by hand, without the copy. */
+.mq { overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.mq-track { display:flex; width:max-content; align-items:flex-start; animation:mq-left 190s linear infinite; }
+.mq-track.is-right { animation-name:mq-right; }
+.mq-group { display:flex; align-items:flex-start; }
+.mq-group > * { margin-right:16px; }
+@keyframes mq-left  { from { transform:translateX(0); }    to { transform:translateX(-50%); } }
+@keyframes mq-right { from { transform:translateX(-50%); } to { transform:translateX(0); } }
+.mq:hover .mq-track, .mq:focus-within .mq-track, [data-marquee].is-paused .mq-track { animation-play-state:paused; }
+/* with site.js the module drives the rows itself (it can slow down rather than stop) */
+[data-marquee].is-driven .mq-track { animation:none; }
+
+/* the cards in a row: one height; the title keeps two lines, the text fades out at the
+   foot. The full review opens in the popup (.sc-pop), built from the card itself. */
+.sc-card { display:flex; flex-direction:column; height:300px; cursor:default; }
+.sc-card:focus-visible { outline:2px solid #1E7FD0; outline-offset:3px; }
+.sc-title { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.sc-clip { flex:1; min-height:0; overflow:hidden;
+  -webkit-mask-image:linear-gradient(#000 62%, transparent); mask-image:linear-gradient(#000 62%, transparent); }
+
+/* the popup: the same card, whole, fixed over the row, zooming out of its card */
+.sc-pop { position:fixed; z-index:60; left:0; top:0; pointer-events:auto;
+  transform-origin:var(--ox, 50%) var(--oy, 0); transform:scale(var(--s0, .9)); opacity:0;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1), opacity .14s ease; }
+.sc-pop.is-open { transform:scale(1); opacity:1; }
+.sc-pop .sc-card { height:auto; width:100% !important; box-shadow:0 24px 60px -12px rgba(15,23,42,.28), 0 0 0 1px rgba(15,23,42,.06); }
+.sc-pop .sc-title { display:block; -webkit-line-clamp:unset; overflow:visible; }
+.sc-pop .sc-clip { overflow:visible; -webkit-mask-image:none; mask-image:none; }
+@media (prefers-reduced-motion: reduce) { .sc-pop { transition:opacity .01s; } }
+@media (prefers-reduced-motion: reduce) {
+  .mq { overflow-x:auto; -webkit-mask-image:none; mask-image:none; padding-bottom:8px; }
+  .mq-track { animation:none; }
+  .mq-group[data-marquee-copy], [data-marquee-toggle] { display:none; }
+}
+
+/* the video stage (site.js, module video-stage): the playlist item on stage */
+.vs-pick[aria-current="true"] { background:rgba(255,255,255,.1); box-shadow:inset 0 0 0 1px rgba(255,255,255,.28); }
+.vs-pick[aria-current="true"] .vs-now { opacity:1; }
+.vs-pick:focus-visible { outline:2px solid #7FE0EE; outline-offset:3px; }

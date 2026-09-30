@@ -1,6 +1,6 @@
 # PlagiarismSearch — Image Style Guide (IMAGES.md)
 
-> Операційний документ для генерації зображень через **Magnific MCP** (модель `imagen-nano-banana-2` / Nano Banana Pro).
+> Операційний документ для генерації зображень через **Magnific MCP** (модель `imagen-nano-banana-2` / Nano Banana Pro; ілюстровані сторінки 2026-09 — Nano Banana 2 у 2K і фото-стиль bithide, див. §8).
 > Стилістична система запозичена з дослідження **turnitin.com** (solution-сторінки, 2026-07-24) і транспонована в **нашу палітру** (DESIGN.md).
 > Правила розміщення зображень у верстці — DESIGN.md → «Web build» → Card recipes (плашка в картці / вирізка для standalone).
 
@@ -68,13 +68,25 @@
 | Третій акцент (рідко, success) | yellow `#FFE000` | **mint-400 `#5ED2A0`** |
 | UI-бари плейсхолдерів | сірі | **ink-200 `#E5E7EB`** / ink-300 |
 | Тло карток/колажів | білий/сірий | **білий `#FFFFFF`**, поля ink-50 `#F8F9FB` |
-| Теплота фото | тепле світло | зберігаємо теплоту, але реквізит/акценти в кадрі — з нашої палітри (бірюзовий светр, кораловий нотатник) |
+| Теплота фото | тепле світло | зберігаємо теплоту; одяг людей — **різноманітний і природний**, не під колір бренду (див. ЗАКОН ГАРДЕРОБА нижче); бренд-кольори несуть HTML-чипи й іконки, а не одяг |
 
-Правило: **максимум 2 акценти на зображення** (teal + orange); mint — тільки для "оригінально/пройдено". Жовтого в нас нема — не використовувати.
+Правило: **максимум 2 акценти на зображення** (teal + orange); mint — тільки для "оригінально/пройдено". Жовтого в нас нема — не використовувати. (Це про графіку — іконки, панелі, UI-моки. Для одягу людей на фото діє закон нижче.)
+
+#### ЗАКОН ГАРДЕРОБА (Olex, 2026-09-30)
+
+**Одяг людей на фото — не під колір бренду.** Раніше кожен промпт вимагав «one garment in muted teal or coral», і сторінки вийшли з людьми лише в бірюзовому й кораловому — це читається як постановка, а не як життя. Тепер:
+
+- Одяг **різноманітний, природний, буденний**: денім, білий, кремовий, сірий, беж, кемел, оливковий, темно-синій, графітовий, теракотовий, приглушений зелений, смужка, дрібна клітинка — те, що люди справді носять.
+- **Бірюзовий і кораловий не заборонені, але не обов'язкові** і не частіше ніж на одній людині з трьох-чотирьох у межах сторінки. Не вписувати їх у промпт за замовчуванням.
+- **На одній сторінці — різні палітри одягу** в різних кадрах: не два светри одного кольору підряд.
+- Уникати лише того, що кричить і сперечається з інтерфейсом: неон, насичені яскраві жовтий/фіолетовий/рожевий, великі логотипи й написи на одязі.
+- Бренд-акцент на фото дають **HTML-чипи з іконками teal/coral поверх**, а не гардероб. Грейд лишається спільним (§8.1), тож різний одяг не розбиває серію.
+
+У промпті замість кольору бренду — конкретний буденний опис: `a light-wash denim shirt over a white t-shirt`, `an oatmeal knit sweater`, `a navy crewneck`, `an olive overshirt`, `a grey hoodie`.
 
 ### 2.2 Політика щодо фотографії
 
-DESIGN.md забороняє «Stock photos» — це про **випадковий сток**. Згенерована постановча фотографія в цій системі дозволена як окремий санкціонований тип: єдиний грейд (тепле світло, м'яке боке), контрольований кастинг, наші кольори в реквізиті, і **завжди** в масці/колажі — ніколи гола фотографія на всю секцію. Якщо замовник відхилить фото-напрям — типи A/B/C нижче мають ілюстративний фолбек (див. 3.2-B).
+DESIGN.md забороняє «Stock photos» — це про **випадковий сток**. Згенерована постановча фотографія в цій системі дозволена як окремий санкціонований тип: єдиний грейд (тепле світло, м'яке боке), контрольований кастинг, природний різноманітний одяг (закон гардероба, §2.1) з бренд-акцентом на HTML-чипах поверх, і **завжди** в масці/колажі — ніколи гола фотографія на всю секцію. Якщо замовник відхилить фото-напрям — типи A/B/C нижче мають ілюстративний фолбек (див. 3.2-B).
 
 ### 2.3 Два треки зображень на сайті (не змішувати в одній секції)
 
@@ -112,8 +124,8 @@ no glassmorphism, no gradients on background.
 **Промпт — тільки фото** (той самий, що для типу B, спосіб A):
 ```text
 Warm candid documentary photograph of [SUBJECT], natural light, shallow depth of field,
-soft bokeh background, subjects NOT looking at camera, [MOOD], one garment in muted teal
-or coral. The subjects fill the frame. IMPORTANT: this is a plain full-bleed photograph
+soft bokeh background, subjects NOT looking at camera, [MOOD], [WARDROBE — everyday
+clothing in natural varied colours, see the wardrobe law]. The subjects fill the frame. IMPORTANT: this is a plain full-bleed photograph
 that reaches every edge of the canvas — no rounded corners, no mask, no frame, no border,
 no white margin, no padding, no UI cards, no overlays, no graphic elements of any kind.
 Natural realistic colours, soft warm grade. No text, no letters, no numbers, no logos,
@@ -188,7 +200,7 @@ Turnitin: «Progress · 99% of 100% completed», список 39/44/20/15%). У�
 ```text
 [A — дефолт] Warm candid documentary photograph of [SUBJECT] at work, natural light,
 shallow depth of field, soft bokeh background, subject NOT looking at camera, casual
-clothing with one garment in muted teal or coral. The subjects fill the frame.
+everyday clothing in natural varied colours ([WARDROBE]). The subjects fill the frame.
 IMPORTANT: this is a plain full-bleed photograph that reaches every edge of the canvas —
 no rounded corners, no mask, no frame, no border, no white margin, no padding, no UI
 cards, no overlays. Natural realistic colours, soft warm grade.
@@ -208,7 +220,7 @@ No text, no letters, no numbers, no logos, no watermarks.
 Warm candid photograph of [PERSON — e.g. "a smiling professor in his 50s holding a
 tablet"], torso and head, inside a perfect circle mask on pure white background, warm
 natural light, blurred interior background, friendly direct eye contact allowed here.
-One accent garment or prop in teal #2CC3DB or coral #F36F5A. + STYLE BLOCK
+Everyday clothing in natural varied colours (wardrobe law, §2.1). + STYLE BLOCK
 ```
 
 ### 3.4 Тип D — Дуотонові спот-іконки (садити 72–96px)
@@ -535,6 +547,81 @@ words. + STYLE BLOCK
 | Генерація впала з `NSFW: Content detected` | хибне спрацювання на «concentric ripple rings» | не сперечатися — переформулювати метафору (стало: `broadcast signal arcs`) |
 
 **Норма щільності на сторінку:** 1 hero + 1–2 великі (колаж/мок) + набір іконок під сітку. Для сітки з 6 іконок баланс акцентів **3 teal / 3 coral**, чергуючи по сітці — суцільно бірюзовий набір читається холодним.
+
+---
+
+## 8. Фото-стиль «Revenue Infrastructure» (bithide) — затверджено Olex, 2026-09-30
+
+Уточнення до типів A/B для **ілюстрованих сторінок** (Affiliate v2, далі Scholarship v2, Reviews v2). Композиційні закони §3 (колаж не запікається, закон обличь, закон фону, реальний текст на панелях) діють без змін — змінюється лише **характер самої фотографії**.
+
+### 8.1 Референс
+
+Блок «Revenue Infrastructure — Turn wallet activity into a P&L line» на https://bithide.vercel.app/ (шість фото-карток: rev-fiat, rev-payinout, rev-swap, rev-card, rev-gas, rev-aml). Що з нього береться:
+
+| Ознака | Як у референсі | Як у нас |
+|---|---|---|
+| Світло | яскраве денне з великих вікон, high-key, без драматичних тіней | так само |
+| Простір | чисті сучасні інтер'єри: білі стіни, світле дерево, живі рослини, повітря в кадрі | так само; для нас — домашня студія, бібліотека, кав'ярня кампусу, коворкінг |
+| Люди | несценічні, зайняті пристроєм (телефон, ноутбук, планшет), погляд у пристрій, не в камеру | так само (закон погляду §5) |
+| Глибина | мала глибина різкості, фон м'яко розмитий, 1–3 розмиті людини на фоні допустимі | так само |
+| Грейд | прохолодно-нейтральні чисті білі, одяг у блакитному | **легка корекція під наш сайт**: трохи тепліше (як mission/contact), не суттєво |
+| Одяг | буденний, переважно світлі нейтральні й блакитні тони | **різноманітний і природний** — ЗАКОН ГАРДЕРОБА (§2.1): не під колір бренду, різні палітри в різних кадрах сторінки |
+| UI у кадрі | на екранах — світлий інтерфейс | екрани **розмиті, без читабельного вмісту** (жодних логотипів і цифр у растрі) |
+| Оверлеї | напівпрозорі «скляні» чипи («Payment received +1,450 USDT») | **не запікаємо**. Чипи — реальний HTML (біла пігулка/картка з `shadow-diffuse-lg`, кругла іконка teal/coral), тільки факти зі сторінки |
+
+### 8.2 Промпт (фото, тип A/B)
+
+```text
+Bright airy editorial lifestyle photograph of [SUBJECT — who, doing what with which device],
+in a sunlit modern [PLACE — home studio / campus library cafe / coworking loft], [PROPS — a
+ceramic coffee mug, a small potted plant, a notebook]. Large windows with soft natural
+daylight, high-key clean interior, white walls, green plants and light wood shelves softly
+blurred in the background, shallow depth of field. Candid, natural, subject NOT looking at
+the camera, [FRAMING — subject slightly left of centre with calm empty wall space on the
+right, for the chips]. [He/She] wears [WARDROBE — everyday clothing in a natural colour,
+different from the other photos on the page, e.g. a light-wash denim shirt over a white
+t-shirt / an oatmeal knit sweater / an olive overshirt]. Realistic
+commercial lifestyle photography, crisp focus on the subject, clean fresh whites with a very
+gentle warm natural grade, true-to-life skin tones. The [device] screen shows a soft blurred
+light interface with no readable content. IMPORTANT: this is a plain full-bleed photograph
+that reaches every edge of the canvas — no rounded corners, no mask, no frame, no border, no
+white margin, no UI cards, no overlays, no graphic elements. No text, no letters, no numbers,
+no logos, no watermarks.
+```
+
+`[FRAMING]` планувати під чипи заздалегідь: вільна стіна/вікно зверху й стільниця знизу — «тихі» зони для HTML-чипів (закон обличь §3.1).
+
+### 8.3 Генерація
+
+- **Модель:** Magnific MCP → **Google Nano Banana 2** (`imagen-nano-banana-2-flash`), **resolution `2k`** — вибір Olex для цих сторінок. (Не плутати: `imagen-nano-banana-2` — це Nano Banana Pro, на ньому були лише пробні кадри.)
+- **Аспект:** hero — `4:5`; секційне фото — `3:2`; аркуш іконок 4×2 — `16:9` (клітинки ≈ квадратні).
+- **Кількість:** `count: 2` на кожен промпт, обираємо один. Відбраковка: читабельний логотип/бренд у кадрі (на першій генерації Affiliate — «RØDE» на мікрофоні), обличчя в «тихій» зоні, розірваний контур іконки.
+- Іконки — тип D (§3.4) без змін: один аркуш на сторінку, еталонне формулювання ваги лінії, акценти навпіл teal/coral.
+- **Логотипи на ноутбуках.** Модель майже завжди малює яблуко Apple (або Dell) на кришці, навіть з `plain lid with no logo` у промпті — 5 з 7 кадрів із ноутбуком. Кадр не перегенеровуємо, а чистимо локально (sharp, raw-пікселі):
+  - кришка **пряма до камери** → латка з тієї ж кришки поруч (вище/нижче) з м'якою альфою по краях ~15px;
+  - кришка **під кутом** (градієнт відблиску в двох напрямках) → латка й інтерполяція по рядках дають видиму смугу; працює **гармонічне заповнення**: бокс навколо логотипу, межа фіксована, всередині ~4000 ітерацій «піксель = середнє 4 сусідів».
+  Перевіряти кроп 500×300 навколо місця до і після, очима.
+
+### 8.4 Обробка — `build/image-assets.js`
+
+```bash
+node build/image-assets.js config.json
+# { "out": "site/assets/img/<page>",
+#   "photos": [ { "src": "hero.png", "name": "hero", "width": 1000 }, { "src": "how.png", "name": "how", "width": 1200 } ],
+#   "sheet":  { "src": "icons.png", "cols": 4, "rows": 2, "names": ["icon-…", …] } }
+```
+
+- Фото → WebP q78, ширина 1000 (hero) / 1200 (секція): ~80 КБ.
+- Аркуш → межі гліфа за «фарбою» (будь-який канал < 200, інсет 6px), один крок `resize(288, 288, contain)` на прозорому (закон квадрата §3.4, перевіряється метаданими), білий → альфа з розмноженням кольору від білого: на білій плашці піксель у піксель як рендер, на будь-якому іншому тлі — чисті краї.
+
+### 8.5 Верстка (рецепти mission/contact)
+
+- **Hero:** текст ліворуч, фото праворуч `w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse`, 1–2 чипи `sm:absolute` на тихих зонах; **на телефоні чипи падають під фото** (`mt-3 flex flex-col gap-2.5 sm:mt-0`) — факт не губиться і не лягає на обличчя.
+- **Секція з фото:** фото + чип в одній колонці, текст/список у другій; шахматка сторін (DESIGN.md → Checkerboard imagery).
+- **Іконки:** illustration card — сіра картка `bg-ink-50` → біла плашка на ширину контенту → іконка 64px по центру (contact-us «Pick whichever suits you»).
+- **Чипи:** тільки реальні факти сторінки («30% commission · on every new client», «90 days · 90-Day Cookie Window»), без вигаданих цифр.
+
+Зразок: `site/affiliate-program-at-plagiarismsearch-v2.html` (build/affiliate-v2.js), ассети `site/assets/img/affiliate/`.
 
 ---
 

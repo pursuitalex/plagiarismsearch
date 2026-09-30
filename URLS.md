@@ -34,6 +34,12 @@ driven by this table.
 | `integration-guide.html` | `/integration-guide` | built | The Moodle Integration guide to the 2026-09-15 brief: a documentation-led page — compact product header, quick facts, a sticky On-this-page rail, definition tables, masked crops of the real plugin screens, troubleshooting, FAQ, support handoff. Replaced the stub. Built by build/moodle.js, checked by build/check-moodle.js. |
 | `ua-plagiarism-check.html` | `/ua/plagiarism-check` | built | The Ukrainian dedicated checker to the 2026-09-16 brief — the AR-03 master. Ukrainian content, English shell and product UI by decision. Flat file in the prototype; the production path is /ua/plagiarism-check. Built by build/ua.js, checked by build/check-ua.js. |
 | `pdf-plagiarism-checker.html` | `/pdf-plagiarism-checker` | built | The PDF Plagiarism Checker to the 2026-09-15 brief: protect-first — title and route kept, the real checker first, the text-based / scan-only / mixed extraction act as the signature, no OCR. Replaced the stub. Built by build/pdf.js, checked by build/check-pdf.js. |
+| `affiliate-program-at-plagiarismsearch.html` | `/affiliate-program-at-plagiarismsearch` | built | The Affiliate Program. No brief: the live page's copy word for word, the architecture new — a facts hero, the three tools, the steps as the editorial list, the two programs as an offer pair with the cash model dark, five reasons, the FAQ, the closing band. Footer only. Replaced the stub. Built by build/affiliate.js, checked by build/check-affiliate.js. |
+| `testimonials.html` | `/testimonials` | built | Reviews. No brief: everything is the live page's, read into build/testimonials-data.json by build/testimonials-fetch.js — the three rating tiles, Trustpilot and Sitejabber each as a summary with a featured quote and all their cards (58 and 42, nine at a time behind "Show more"), the four video reviews as click-to-play facades. Built by build/testimonials.js, checked by build/check-testimonials.js. |
+| `scholarship.html` | `/scholarship` | built | The 2026 Scholarship. No brief: the live page's copy word for word, the architecture new — the prize as a contest card in the hero with the winners as link chips, an editorial split, the dark act, the fifteen terms as a numbered grid, the five prompts as a numbered list, the FAQ, the application form (#app-form-1, inert). Footer only. Replaced the stub. Built by build/scholarship.js, checked by build/check-scholarship.js. |
+| `affiliate-program-at-plagiarismsearch-v2.html` | — | no approved path | The Affiliate Program, illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Same live copy; photographs in the bithide "Revenue Infrastructure" manner with HTML chips, duotone spot icons on white plates (the Mission/Contact recipes). Built by build/affiliate-v2.js, checked by build/check-affiliate.js with the file name. |
+| `testimonials-v2.html` | — | no approved path | Reviews, illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Same live data; a hero photograph with the two platforms' ratings as chips, the platform tiles with spot icons beside a photograph, Trustpilot in its own manner as a masonry wall, SmartCustomer (the live Sitejabber, renamed with its profile figures) as two running rows of equal cards with a zoom popup, the four videos on a stage with a playlist (IMAGES.md §8, wardrobe law). Built by build/testimonials-v2.js, checked by build/check-testimonials.js with the file name. |
+| `scholarship-v2.html` | — | no approved path | The Scholarship, illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Same live copy; the prize as a chip over the hero photograph, the four contest facts as spot-icon cards, a photograph for "try your luck", spot icons in the dark act (IMAGES.md §8). Built by build/scholarship-v2.js, checked by build/check-scholarship.js with the file name. |
 | `plagiarism-checker-for-organization.html` | `/plagiarism-checker-for-organization` | built | Business & Teams to the 2026-09-15 brief: no checker; the managed organization in the hero, Organization Management as a bento led by the personal-vs-organization separation, Storage as two tracks, workspace-vs-API as one split card, the business inquiry as the conversion. Replaced the stub. Built by build/business.js, checked by build/check-business.js. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
 | `paper-analysis.html` | `/rate-my-paper` | built · out of global nav |  |
@@ -44,20 +50,17 @@ driven by this table.
 | `account.html` | — | no approved path | Log in / create account. The brief says only "keep existing authentication behavior" and names no path. |
 | `design-system.html` | — | no approved path | Internal reference sheet. Never part of the public site. |
 | `how-to-use-plagiarismsearch-google-add-on.html` | `/how-to-use-plagiarismsearch-google-add-on` | stub | Approved destination, page not designed yet. |
-| `testimonials.html` | `/testimonials` | stub | Approved destination, page not designed yet. |
 | `powerpoint-plagiarism-checker.html` | `/powerpoint-plagiarism-checker` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
 | `quote-checker-at-plagiarismsearch.html` | `/quote-checker-at-plagiarismsearch` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
-| `scholarship.html` | `/scholarship` | stub | Approved destination, page not designed yet. |
-| `affiliate-program-at-plagiarismsearch.html` | `/affiliate-program-at-plagiarismsearch` | stub | Approved destination, page not designed yet. |
 | `canvas-integration.html` | `/canvas-integration` | stub | Treated as live: Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate. The address closed with it — the point-fix brief of 2026-08-20 approves /canvas-integration as final, so the filename is no longer provisional. |
 | `plagiarism-checker-for-teachers.html` | `/plagiarism-checker-for-teachers` | stub | The Teachers URL audit closed on 2026-08-20: Educators lands here, and no second educator address is created. The page itself will be rewritten separately around real educator use cases. |
 
 ## Counts
 
-- 25 × built
-- 8 × stub
+- 28 × built
+- 6 × no approved path
+- 5 × stub
 - 4 × built · out of global nav
-- 3 × no approved path
 
 ## Open
 

@@ -23,11 +23,8 @@ const SITE = path.join(ROOT, 'site');
    note          why it is not built, when that is not simply "not built yet"       */
 const STUBS = [
   { slug: 'how-to-use-plagiarismsearch-google-add-on', label: 'Google Docs Add-on',    group: 'Products · Integrations' },
-  { slug: 'testimonials',                          label: 'Reviews',                   group: 'Company' },
   { slug: 'powerpoint-plagiarism-checker',         label: 'PowerPoint Plagiarism Checker', group: 'Footer · Popular Checks',   note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
   { slug: 'quote-checker-at-plagiarismsearch',     label: 'Quote Checker',             group: 'Footer · Popular Checks',       note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
-  { slug: 'scholarship',                           label: 'Scholarship',               group: 'Footer · Company' },
-  { slug: 'affiliate-program-at-plagiarismsearch', label: 'Affiliate Program',         group: 'Footer · Company' },
 
   /* no approved slug yet — the filenames below are provisional and marked as such */
   { slug: 'canvas-integration',                    label: 'Canvas',                    group: 'Products · Integrations',

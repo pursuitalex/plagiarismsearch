@@ -97,6 +97,18 @@ const PAGES = {
   'pdf-plagiarism-checker.html': { active: null, static: true },
   /* Business & Teams to the 2026-09-15 brief — the stub graduated */
   'plagiarism-checker-for-organization.html': { active: 'solutions', static: true },
+  /* the Affiliate Program — no brief, the live copy verbatim (2026-09-30); footer-only */
+  'affiliate-program-at-plagiarismsearch.html': { active: null, static: true },
+  /* its illustrated version, beside it until one is picked (build/version-switch.js) */
+  'affiliate-program-at-plagiarismsearch-v2.html': { active: null, static: true },
+  /* the Scholarship — no brief, the live copy verbatim (2026-09-30); footer-only */
+  'scholarship.html': { active: null, static: true },
+  /* its illustrated version, beside it until one is picked (build/version-switch.js) */
+  'scholarship-v2.html': { active: null, static: true },
+  /* Reviews — no brief, the live page's reviews via build/testimonials-data.json (2026-09-30) */
+  'testimonials.html': { active: 'company', static: true },
+  /* its illustrated version, beside it until one is picked (build/version-switch.js) */
+  'testimonials-v2.html': { active: 'company', static: true },
   'paper-analysis.html':         { active: null, static: true },
   'readability-check.html':      { active: null, static: true },
   'spell-check.html':            { active: null, static: true },
@@ -123,6 +135,9 @@ const V1_OF = { products: 'products', pricing: 'prices', resources: 'company', c
 /* pages.html is the prototype index, a review tool rather than a page of the site,
    so it carries no global header or footer to keep fresh. */
 const SKIP = new Set(['design-system.html', 'pages.html']);
+
+/* the temporary v1/v2 review switcher */
+const vswitch = require('./version-switch');
 
 function render(tpl, page) {
   const active = VERSION === 'v1' ? V1_OF[page.active] ?? null : page.active;
@@ -207,9 +222,9 @@ for (const file of found) {
   if (page.header !== false) after = swap(after, 'header', chrome(headerTpl, 'header'), file);
   after = swap(after, 'footer', chrome(footerTpl, 'footer'), file);
 
-  /* the v1/v2 review switcher is retired (2026-09-30); strip any copy a page still has */
-  { const a = after.indexOf('<!-- VSWITCH -->'); const b = after.indexOf('<!-- /VSWITCH -->');
-    if (a > -1 && b > a) after = after.slice(0, a).replace(/\n+$/, '\n') + after.slice(b + '<!-- /VSWITCH -->'.length).replace(/^\n+/, ''); }
+  /* The v1/v2 review switcher (build/version-switch.js). Idempotent: writes it onto the
+     paired pages and strips it from every other, so removing a pair cleans it out. */
+  after = vswitch.apply(after, file);
 
   if (after !== before) {
     changed++;

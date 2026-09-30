@@ -459,20 +459,37 @@
 
     <!-- Brand row. The blurb that used to sit here carried "17 languages" and "500,000
          writers"; DEC-0027 forbids marketing claims it does not supply, and supplies
-         none, so nothing replaces it. The rating tiles are review data, which the briefs
-         treat as a dynamic field — they hold a placeholder until production values are
-         frozen. Both are restored the moment approved copy and figures arrive. -->
+         none, so nothing replaces it.
+
+         The app badge (Olex, 2026-09-30, variant A; App Store only until there is a
+         Google Play listing). Apple's rules, followed to the letter
+         (developer.apple.com/app-store/marketing/guidelines):
+         - the official artwork, unmodified — the black "Download on the App Store"
+           badge from Apple's marketing toolbox, its grey border part of the artwork;
+         - 40px high, Apple's onscreen minimum;
+         - clear space of a quarter of its height (10px) on every side: the p-2.5 box;
+         - subordinate to the main message: the footer, beside the logo;
+         - the credit line once, in the legal line of the bottom bar.
+         When a Google Play badge joins it: App Store stays first and stays the black
+         badge; Google Play goes after it at the same height or larger, with its own
+         quarter-height clear space, and its credit line joins Apple's. -->
     <div class="grid sm:grid-cols-2 gap-8 sm:gap-10 items-center mb-10 sm:mb-13 lg:mb-16">
       <a href="index.html" class="inline-flex items-center">
         <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
       </a>
-      <div class="sm:justify-self-end">
-        <div class="flex gap-3">
-          <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="rounded-xl bg-white/[.05] ring-1 ring-white/10 hover:ring-white/25 hover:bg-white/[.08] px-3.5 py-2.5 text-left transition-colors duration-300"><span class="block text-[9px] font-bold tracking-widest text-white/40">TRUSTPILOT</span><span class="text-[12.5px] font-bold text-white nums">4.7</span></a>
-          <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="rounded-xl bg-white/[.05] ring-1 ring-white/10 hover:ring-white/25 hover:bg-white/[.08] px-3.5 py-2.5 text-left transition-colors duration-300"><span class="block text-[9px] font-bold tracking-widest text-white/40">SMARTCUSTOMER</span><span class="text-[12.5px] font-bold text-white nums">4.0</span></a>
-          <span class="rounded-xl bg-white/[.05] ring-1 ring-white/10 px-3.5 py-2.5 text-left"><span class="block text-[9px] font-bold tracking-widest text-white/40">G2</span><span class="text-[12.5px] font-bold text-white nums">4.3</span></span>
-        </div>
-        <p class="mt-2.5 text-[11px] font-medium text-white/30">Ratings on review platforms</p>
+      <div class="sm:justify-self-end flex flex-wrap items-center -m-2.5">
+        <a href="https://apps.apple.com/us/app/plagiarismsearch/id6789566745" rel="nofollow noopener" class="block p-2.5 rounded-xl focus-visible:outline-offset-0">
+          <img src="/assets/svg/stores/app-store-badge-black-en.svg" alt="Download on the App Store" width="120" height="40" class="block h-10 w-auto">
+        </a>
+        <!-- Google Play: the official "Get it on Google Play" web badge (Partner Marketing
+             Hub, English, updated 2025-11-17), unmodified. Second after App Store, the same
+             40px height (Google: the same size or larger than the other badges; minimum
+             28px), a quarter of its height clear on every side (the p-2.5 box; between the
+             two badges the two boxes make 20px). PLACEHOLDER LINK (a Play Store search for now, so no page carries a dead in-page anchor): the listing URL comes
+             from Olex later (2026-09-30) — replace the href with the Play Store address. -->
+        <a href="https://play.google.com/store/search?q=PlagiarismSearch&amp;c=apps" rel="nofollow noopener" class="block p-2.5 rounded-xl focus-visible:outline-offset-0">
+          <img src="/assets/svg/stores/google-play-badge-en.svg" alt="Get it on Google Play" width="135" height="40" class="block h-10 w-auto">
+        </a>
       </div>
     </div>
 
@@ -543,14 +560,26 @@
     <div class="h-px bg-white/10 mb-6 sm:mb-7 lg:mb-8"></div>
     <!-- The legal links live in the Plans & Legal column now, so this bar no longer
          repeats them. DPA was never in the brief and is gone with them. -->
+    <!-- The review ratings moved here from the brand row when the app badge took their
+         place (variant A). They are review data, which the briefs treat as a dynamic
+         field — placeholders until production values are frozen. -->
     <div class="flex flex-wrap items-center gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
       <span>&copy; 2026 PlagiarismSearch. All rights reserved.</span>
+      <span class="flex flex-wrap items-center gap-x-4 gap-y-1" aria-label="Ratings on review platforms">
+        <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="hover:text-white transition-colors duration-300">Trustpilot <b class="font-bold text-white/80 nums">4.7</b></a>
+        <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="hover:text-white transition-colors duration-300">SmartCustomer <b class="font-bold text-white/80 nums">4.0</b></a>
+        <span>G2 <b class="font-bold text-white/80 nums">4.3</b></span>
+      </span>
       <button type="button" class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70 hover:text-white transition-colors duration-300" aria-label="Language">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         EN
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
       </button>
     </div>
+    <!-- The stores' credit lines, required once wherever their badges appear (Apple:
+         Legal Requirements, credit both Apple and the Apple Logo; Google Play the same). The international
+         form, the site being served outside the U.S. as well. -->
+    <p class="mt-5 text-[11px] leading-relaxed text-white/30 max-w-[88ch]">Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC.</p>
   </div>
 
   <!-- Back to top. Global chrome, so it lives in the shell rather than being copied on

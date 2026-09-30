@@ -112,6 +112,10 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 | doc-nav | `[data-doc-nav]`, `[data-spy]`, `details[data-jump]`, `[data-jump-now]` | section spy, jump menu |
 | modal | `[data-modal-open="id"]`, `.md`, `[data-close]` | open, close, Escape, focus trap and return |
 | news-archive | `[data-archive]`, `.tp-btn[data-topic]`, `.news-item`, `.yr-group`, `[data-pager]` (`-count`, `-nums`, `-prev`, `-next`), `[data-archive-empty]` | topic filter and pager; words in data-* |
+| show-more | `[data-show-more="n"]`, `.more-later`, `[data-show-more-btn]` | shows the next n cards, focus to the first; all cards in the HTML, shown without JS |
+| video | `a[data-video="YouTube id"]`, `data-video-title`, `data-video-frame-class` | click-to-play facade: the link becomes a youtube-nocookie player; a plain link without JS. Exposes `PS.videoFrame` |
+| video-stage | `[data-video-stage]`, `[data-stage]`, `a[data-video-pick]` (`data-name`, `data-line`), `[data-caption-name]`, `[data-caption-line]` | a playlist pick plays on the stage and takes the caption; picks are YouTube links without JS |
+| marquee | `[data-marquee]`, `.mq` / `.mq-track` / `.mq-group`, `[data-marquee-copy]` (aria-hidden, nothing focusable), `[data-marquee-toggle]`, `[data-marquee-pop]`, `.sc-card` | rows run by CSS without JS; with it the module drives them: slower under pointer/focus, the toggle stops them (aria-pressed), the card's full review opens as a popup zoomed out of the card (hover, keyboard focus, tap; Escape closes). Still rows without the copy under reduced motion |
 
 Component recipes with no behaviour live in `site.css` only: buttons (`.btn`), badge,
 field (`.fld`), checkbox, radio and chipset (`05-recipes`), and the checker's states
