@@ -73,9 +73,10 @@ const chip = (pos, tone, icon, label) => `        <span class="${pos} flex items
           <span class="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-ink-800">${esc(label)}</span>
         </span>`;
 
-/* the Contact page's illustration card: grey card, white plate, spot icon */
-const spotCard = (icon, head, body, extraBody = '') => `        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+/* the Contact page's illustration card, turned for a tint section: white card, the plate
+   in the section's tint — on the tint, a grey card and white plate sink into the ground */
+const spotCard = (icon, head, body, extraBody = '') => `        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="${IMG}${icon}.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">${esc(head)}</h3>
@@ -112,7 +113,8 @@ ${H.tiles.map(([label, href]) => { const [name, fig] = tileParts(label); return 
 
         <div class="rv min-w-0 rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
           <form data-readability data-bands='[[0,""]]' onsubmit="return false" class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
-            <textarea data-rc="text" class="rc-area mb-4 rounded-xl sm:rounded-[14px] bg-ink-50/60 ring-1 ring-black/[.06] focus:ring-teal-500 px-4 py-3 transition-shadow duration-200" aria-labelledby="rc-lead"></textarea>
+            <label for="rc-text" class="flex items-center gap-2 mb-2.5"><span class="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center shrink-0">${ico('<path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/>', '#fff', 13, 2.4)}</span><span class="text-[14px] font-bold tracking-tight text-ink-900">${esc(C.acceptance.items[0][0])}</span></label>
+            <textarea id="rc-text" data-rc="text" class="rc-area mb-4 rounded-xl sm:rounded-[14px] bg-ink-50/60 ring-1 ring-black/[.06] focus:ring-teal-500 px-4 py-3 transition-shadow duration-200" placeholder="${esc(C.acceptance.items[0][1])}" aria-describedby="rc-lead"></textarea>
 
             <label for="rc-file" data-rc-drop class="rc-drop qc-drop flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4 cursor-pointer">
               <span class="qc-drop-icon">${ico(I.upload, 'currentColor', 18)}</span>

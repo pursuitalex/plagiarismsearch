@@ -33,6 +33,8 @@ const PAIRS = {
   'readability-check-v2.html': { other: 'readability-check.html',    self: 2 },
   'spell-check.html':          { other: 'spell-check-v2.html', self: 1 },
   'spell-check-v2.html':       { other: 'spell-check.html',    self: 2 },
+  'paper-analysis.html':       { other: 'paper-analysis-v2.html', self: 1 },
+  'paper-analysis-v2.html':    { other: 'paper-analysis.html',    self: 2 },
 };
 
 const OPEN = '<!-- VSWITCH · temporary review tool, remove with the retired version -->';

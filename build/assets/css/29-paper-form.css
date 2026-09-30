@@ -1,0 +1,51 @@
+/* ═══ 29 · the paper-analysis order form, v2 (Rate my paper v2) ══════════════════════
+   Behaviour: site.js, module paper-form. The matrix is plain radios, so the checked cell
+   is marked by CSS alone and works without JS. */
+
+/* the matrix: a level column that stays put while the deadlines scroll on a phone */
+.pf-table { border-collapse:separate; border-spacing:6px; min-width:560px; width:100%; }
+.pf-table th { font-weight:600; }
+.pf-table thead th { font-size:12px; color:#6B7280; text-align:center; padding:4px 0 2px; transition:color .2s ease; }
+.pf-table tbody th { font-size:13px; color:#374151; text-align:left; white-space:nowrap; padding-right:6px; transition:color .2s ease;
+  position:sticky; left:0; z-index:1; background:#fff; }
+.pf-table th.is-on { color:#111827; font-weight:800; }
+.pf-cell { display:block; cursor:pointer; }
+.pf-cell > span { display:flex; align-items:center; justify-content:center; height:44px; border-radius:12px;
+  background:#F4F6F8; font-size:14px; font-weight:700; color:#1F2937; font-variant-numeric:tabular-nums;
+  transition:background-color .2s ease, color .2s ease, box-shadow .2s ease; }
+.pf-cell:hover > span { background:#E8F8FB; box-shadow:inset 0 0 0 1px #A7E3ED; }
+.pf-cell input:checked + span { background:#111827; color:#fff; box-shadow:0 6px 16px -6px rgba(17,24,39,.45); }
+.pf-cell input:focus-visible + span { outline:2px solid #0CA9C3; outline-offset:2px; }
+
+/* a phone: no sideways scroll — each level's name sits above its six prices, which share
+   the width; the deadlines head the lot once */
+@media (max-width:639px) {
+  .pf-table, .pf-table thead, .pf-table tbody { display:block; min-width:0; }
+  .pf-table tr { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:4px; }
+  .pf-table td { display:block; }
+  .pf-table thead th:first-child { display:none; }
+  .pf-table thead th { font-size:11px; padding-bottom:0; }
+  .pf-table tbody th { grid-column:1 / -1; position:static; padding:12px 0 2px; font-size:12.5px; }
+  .pf-cell > span { height:40px; border-radius:10px; font-size:12.5px; letter-spacing:-.01em; }
+}
+
+/* the services: a whole row is the control */
+.pf-service { display:flex; align-items:flex-start; gap:14px; padding:14px 16px; border-radius:14px; cursor:pointer;
+  box-shadow:inset 0 0 0 1px #E5E7EB; transition:background-color .2s ease, box-shadow .2s ease; }
+.pf-service:hover { background:#F8FAFB; }
+.pf-service:has(input:checked) { background:#F2FCFC; box-shadow:inset 0 0 0 1.5px #0CA9C3; }
+.pf-service input { margin-top:3px; width:18px; height:18px; accent-color:#0991A8; flex:none; }
+
+/* the stepper */
+.pf-step { display:flex; align-items:center; height:44px; border-radius:12px; box-shadow:inset 0 0 0 1px #E5E7EB; background:#fff; }
+.pf-step button { width:40px; height:100%; font-size:18px; font-weight:600; color:#4B5563; }
+.pf-step button:hover { color:#111827; }
+.pf-step input { width:100%; min-width:0; text-align:center; font-weight:800; font-size:15px; border:0; outline:none; background:transparent; font-variant-numeric:tabular-nums; }
+
+/* the summary lists a service only while its checkbox is on — CSS alone, so it holds without JS */
+.pf-sum-line { display:none; }
+form:has(#pf-sv1:checked) [data-pf-sum="pf-sv1"],
+form:has(#pf-sv2:checked) [data-pf-sum="pf-sv2"],
+form:has(#pf-sv4:checked) [data-pf-sum="pf-sv4"] { display:flex; }
+
+.pf-drop.is-over { border-style:solid; border-color:#0CA9C3; background:#E8F8FB; box-shadow:0 0 0 4px rgba(12,169,195,.14); }

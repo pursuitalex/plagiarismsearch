@@ -65,7 +65,7 @@ console.log('\nthe calculator');
   ok('every hook the readability module reads', !lost.length, lost.join(', '));
   ok('inert: onsubmit="return false"', /<form data-readability[^>]*onsubmit="return false"/.test(body));
   ok('the drop zone and "Attach file" reach the file input', /<label for="rc-file" data-rc-drop/.test(body) && /<label for="rc-file" class="qc-chip/.test(body) && /<input id="rc-file" type="file" data-rc="file"/.test(body));
-  ok('the box is labelled by the lead', /<textarea data-rc="text"[^>]*aria-labelledby="rc-lead"/.test(body) && /id="rc-lead"/.test(body));
+  ok('the box is labelled "Simple text", its live line the placeholder, the lead its description', /<label for="rc-text"[\s\S]*?>Simple text<\/span><\/label>/.test(body) && /<textarea id="rc-text" data-rc="text"[^>]*placeholder="Paste your text into our web-based software to get instant analysis and recommended improvements\."[^>]*aria-describedby="rc-lead"/.test(body) && /id="rc-lead"/.test(body));
   ok('"Start checking" goes back to the checker', (body.match(/href="#readability-checker-top"/g) || []).length >= 2 && /<section id="readability-checker-top"/.test(body));
 }
 

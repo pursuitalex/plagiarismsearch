@@ -206,13 +206,13 @@ ${A.body.map(p => `          <p class="${BODY}">${esc(p)}</p>`).join('\n')}
         </div>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-${A.tabs.map((t, i) => `        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 ring-1 ring-black/[.03] p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+${A.tabs.map((t, i) => `        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="${IMG}${TAB_ICON[i]}.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-3">${esc(t)}</h3>
           <ul class="flex flex-wrap gap-1.5" role="list">
-${tabRows(i).map(r => `            <li class="rounded-full bg-white ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">${esc(r)}</li>`).join('\n')}
+${tabRows(i).map(r => `            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">${esc(r)}</li>`).join('\n')}
           </ul>
         </div>`).join('\n')}
       </div>

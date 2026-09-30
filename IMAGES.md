@@ -619,7 +619,7 @@ node build/image-assets.js config.json
 
 - **Hero:** текст ліворуч, фото праворуч `w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse`, 1–2 чипи `sm:absolute` на тихих зонах; **на телефоні чипи падають під фото** (`mt-3 flex flex-col gap-2.5 sm:mt-0`) — факт не губиться і не лягає на обличчя.
 - **Секція з фото:** фото + чип в одній колонці, текст/список у другій; шахматка сторін (DESIGN.md → Checkerboard imagery).
-- **Іконки:** illustration card — сіра картка `bg-ink-50` → біла плашка на ширину контенту → іконка 64px по центру (contact-us «Pick whichever suits you»).
+- **Іконки:** illustration card — сіра картка `bg-ink-50` → біла плашка на ширину контенту → іконка 64px по центру (contact-us «Pick whichever suits you»). Це рецепт для **білої** секції. На сірій секції (`bg-[#F7FAFC]`) картка стає **білою** (`bg-white ring-1 ring-black/[.05]`), а плашка бере колір секції (`bg-[#F7FAFC]`). `ink-50` (#F8F9FB) на #F7FAFC зливається з фоном. Olex, 2026-09-30: внутрішня поверхня чергується із зовнішньою.
 - **Чипи:** тільки реальні факти сторінки («30% commission · on every new client», «90 days · 90-Day Cookie Window»), без вигаданих цифр.
 
 Зразок: `site/affiliate-program-at-plagiarismsearch-v2.html` (build/affiliate-v2.js), ассети `site/assets/img/affiliate/`.

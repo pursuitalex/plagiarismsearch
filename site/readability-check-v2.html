@@ -162,7 +162,8 @@
 
         <div class="rv min-w-0 rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
           <form data-readability data-bands='[[0,""]]' onsubmit="return false" class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
-            <textarea data-rc="text" class="rc-area mb-4 rounded-xl sm:rounded-[14px] bg-ink-50/60 ring-1 ring-black/[.06] focus:ring-teal-500 px-4 py-3 transition-shadow duration-200" aria-labelledby="rc-lead"></textarea>
+            <label for="rc-text" class="flex items-center gap-2 mb-2.5"><span class="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center shrink-0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/></svg></span><span class="text-[14px] font-bold tracking-tight text-ink-900">Simple text</span></label>
+            <textarea id="rc-text" data-rc="text" class="rc-area mb-4 rounded-xl sm:rounded-[14px] bg-ink-50/60 ring-1 ring-black/[.06] focus:ring-teal-500 px-4 py-3 transition-shadow duration-200" placeholder="Paste your text into our web-based software to get instant analysis and recommended improvements." aria-describedby="rc-lead"></textarea>
 
             <label for="rc-file" data-rc-drop class="rc-drop qc-drop flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4 cursor-pointer">
               <span class="qc-drop-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
@@ -259,29 +260,29 @@
           </a></div>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-text.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Simple text</h3>
           <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Paste your text into our web-based software to get instant analysis and recommended improvements.</p>
         </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-files.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Your files</h3>
           <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Check your documents in all available formats (doc, docx, txt, RTF, PDF, xls, xlsx, html, epub, xml, odt, org etc.).</p>
         </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-url.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Website URL</h3>
           <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Insert the link into the software to check readability score of the entire website page.</p>
         </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-cloud.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Dropbox &amp; OneDrive</h3>
@@ -326,29 +327,29 @@
         <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Who needs to check readability score?</h2>
       </div>
       <div class="grid md:grid-cols-2 gap-4">
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-students.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Students</h3>
           <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">If you are one of those students who barely cope with their academic load, it is likely you need to receive useful hints to improve your writing skills. Therefore, our Readability Checker can turn into your life-saver. You will instantly see the drawbacks in your essays and you will learn to eliminate those flaws owing to our tool.</p>
         </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-websites.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Websites owners</h3>
           <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Imagine a website full of obscure language and indiscernible terms. You will lose your potential customers if the content on your pages looks vague. Although it may seem that people rarely read your texts, they actually notice all the mistakes or unusual sentences. Consequently, it is highly advisable to scan your content via our Readability Checker.</p>
         </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-marketers.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Marketers</h3>
           <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">If you promote something, you should do it in an enticing manner. If your products require detailed descriptions, they have to appeal to your prospective customers. Just ask yourself, “Will modern busy audience ever read lengthy and intricate texts?” Of course, the answer is “No.” Using our Readability Checker will make your marketing strategies illuminating even to the most demanding clients. You will forget about advertising opacity once and for all!</p>
         </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-writers.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Content writers</h3>
@@ -608,15 +609,15 @@
         <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">The following two suggestions will make your Flesch reading ease score feedback more beneficial:</h2>
       </div>
       <div class="grid md:grid-cols-2 gap-4">
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-succinct.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Make your sentences more succinct</h3>
           <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Not everyone perceives the advice to shorten your sentences correctly. It does not mean that your text should be full of short sentences. However, if it is possible not to make your sentence too extensive, then it is better to divide it into two average-length sentences. Succinct sentences are more appealing to your readers. It helps your audience not to use all their energy and attention to interpret your complex and long-winded writing. Shorter sentences will definitely contribute to higher readability score.</p>
         </div>
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
             <img src="/assets/img/readability/icon-terms.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
           </div>
           <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Do not misuse complicated terms</h3>

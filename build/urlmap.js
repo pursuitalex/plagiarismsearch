@@ -53,6 +53,7 @@ const BUILT = [
 
   /* built, kept, but outside the global navigation per DEC-0027 §5 */
   { file: 'paper-analysis.html',         path: '/rate-my-paper',            delisted: true },
+  { file: 'paper-analysis-v2.html', path: null, note: 'Rate my paper (Paper analysis), illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Every word the live page's (build/paper-data.json); the order form rebuilt to be read at a glance — the document, one level × deadline price table, the services, and a summary that shows the sum. Built by build/paper-v2.js.' },
   { file: 'spell-check.html',            path: '/spell-checker',            delisted: true },
   { file: 'readability-check.html',      path: '/readability-checker',      delisted: true },
   { file: 'chat-bot.html',               path: '/plagiarism-checker-app',   delisted: true },

@@ -110,6 +110,7 @@ const PAGES = {
   /* its illustrated version, beside it until one is picked (build/version-switch.js) */
   'testimonials-v2.html': { active: 'company', static: true },
   'paper-analysis.html':         { active: null, static: true },
+  'paper-analysis-v2.html':      { active: null, static: true },
   'readability-check.html':      { active: null, static: true },
   /* its illustrated version, beside it until one is picked (build/version-switch.js) */
   'readability-check-v2.html':   { active: null, static: true },
