@@ -148,6 +148,14 @@ console.log('\npricing widget');
   ok('four fixed tab labels in order',
      tabs.join(' · ') === 'One-time · Monthly · 3-Months · Yearly', tabs.join(' · ') || 'none');
 
+  /* the live page's "Recurring payments" switch (Olex, 2026-09-30): one, under the tabs on a white pill,
+     disabled on the initial One-time tab; every recurring card has its one-off price */
+  const island = JSON.parse((plans.match(/data-pricing-data>([\s\S]*?)<\/script>/) || [])[1] || '{}');
+  const lacking = ['monthly', 'quarterly', 'yearly'].flatMap(k => ['light', 'standard', 'premium'].filter(t => !(island[k] && island[k][t] && island[k][t].single)).map(t => k + '.' + t));
+  ok('"Recurring payments" switch under the tabs, off on One-time, a one-off price for all nine recurring cards',
+     (plans.match(/data-recurring/g) || []).length === 1 && /<input type="checkbox" class="sr-only" data-recurring data-default-on disabled>[\s\S]*?Recurring payments\s*<\/label>/.test(plans) && !lacking.length,
+     lacking.join(', '));
+
   /* "Use Recommended, not Most popular" */
   ok('recommendation label is Recommended', /Recommended/i.test(plans) && !/most popular/i.test(text));
 

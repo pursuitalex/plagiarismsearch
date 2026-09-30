@@ -27,6 +27,12 @@
 /* 2026-07-22. Nothing below was invented. When the widget lands, delete this object and */
 /* the switcher markup that reads it — nothing else in the section depends on it. */
 
+/* RECURRING PAYMENTS (2026-09-30). Monthly, 3-Months and Yearly are subscriptions by
+   default; each card on the live page carries a "Recurring payments" switch, on by default,
+   and turning it off buys the same package once, at a higher price and through a different
+   checkout. `single` is that one-off price and rate, read off plagiarismsearch.com/prices by
+   switching each of the nine cards (2026-09-30). The Pricing page shows one switch for all
+   three cards (60-pricing.js, [data-recurring]); the homepage has none and ignores it. */
 const PLANS = {
   onetime: {
     note: 'One payment · packages never expire',
@@ -38,23 +44,23 @@ const PLANS = {
   monthly: {
     note: 'Recurring billing · cancel anytime',
     term: '/ month',
-    light:    { price: '$22.95',  rate: '$0.23', feats: ['100 plagiarism checks', '30-day validity'] },
-    standard: { price: '$34.95',  rate: '$0.12', feats: ['300 plagiarism checks', 'API access', 'Report storage', '30-day validity'] },
-    premium:  { price: '$54.95',  rate: '$0.09', feats: ['300 plagiarism checks', '300 AI checks', 'API access', 'Report storage', '30-day validity'] }
+    light:    { price: '$22.95',  rate: '$0.23', single: { price: '$27.95', rate: '$0.28' }, feats: ['100 plagiarism checks', '30-day validity'] },
+    standard: { price: '$34.95',  rate: '$0.12', single: { price: '$41.95', rate: '$0.14' }, feats: ['300 plagiarism checks', 'API access', 'Report storage', '30-day validity'] },
+    premium:  { price: '$54.95',  rate: '$0.09', single: { price: '$65.95', rate: '$0.11' }, feats: ['300 plagiarism checks', '300 AI checks', 'API access', 'Report storage', '30-day validity'] }
   },
   quarterly: {
     note: 'Recurring billing every 3 months · cancel anytime',
     term: '/ 3 months',
-    light:    { price: '$34.95',  rate: '$0.17', feats: ['100 plagiarism checks', '100 AI checks', '90-day validity'] },
-    standard: { price: '$64.95',  rate: '$0.10', feats: ['300 plagiarism checks', '300 AI checks', 'API access', 'Report storage', '90-day validity'] },
-    premium:  { price: '$89.95',  rate: '$0.07', feats: ['500 plagiarism checks', '500 AI checks', 'API access', 'Report storage', '90-day validity'] }
+    light:    { price: '$34.95',  rate: '$0.17', single: { price: '$41.95', rate: '$0.21' }, feats: ['100 plagiarism checks', '100 AI checks', '90-day validity'] },
+    standard: { price: '$64.95',  rate: '$0.10', single: { price: '$77.95', rate: '$0.12' }, feats: ['300 plagiarism checks', '300 AI checks', 'API access', 'Report storage', '90-day validity'] },
+    premium:  { price: '$89.95',  rate: '$0.07', single: { price: '$107.95', rate: '$0.09' }, feats: ['500 plagiarism checks', '500 AI checks', 'API access', 'Report storage', '90-day validity'] }
   },
   yearly: {
     note: 'Recurring billing yearly · best per-word rate',
     term: '/ year',
-    light:    { price: '$114.95', rate: '$0.11', feats: ['1,000 plagiarism checks', '365-day validity'] },
-    standard: { price: '$174.95', rate: '$0.06', feats: ['3,000 plagiarism checks', 'API access', 'Report storage', '365-day validity'] },
-    premium:  { price: '$259.95', rate: '$0.04', feats: ['3,000 plagiarism checks', '3,000 AI checks', 'API access', 'Report storage', '365-day validity'] }
+    light:    { price: '$114.95', rate: '$0.11', single: { price: '$137.95', rate: '$0.14' }, feats: ['1,000 plagiarism checks', '365-day validity'] },
+    standard: { price: '$174.95', rate: '$0.06', single: { price: '$209.95', rate: '$0.07' }, feats: ['3,000 plagiarism checks', 'API access', 'Report storage', '365-day validity'] },
+    premium:  { price: '$259.95', rate: '$0.04', single: { price: '$311.95', rate: '$0.05' }, feats: ['3,000 plagiarism checks', '3,000 AI checks', 'API access', 'Report storage', '365-day validity'] }
   }
 };
 

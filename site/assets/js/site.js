@@ -977,6 +977,11 @@ PS.module('faq', () => {
      [data-period-note]          optional: the period's note
      [data-period-only="…"]      optional: shown for that period only
      data-pricing-animate        on the section: the values fade up on a switch
+     input[data-recurring]       optional: the "Recurring payments" switch. On, a card shows
+                                 the subscription price; off, its one-off `single` price. A
+                                 period with no `single` (One-time) cannot recur, so there
+                                 the switch shows off and is disabled; the choice returns
+                                 with the next recurring period.
    Values first, motion second — a price must never wait on an animation frame. */
 PS.module('pricing', () => {
   document.querySelectorAll('[data-pricing]').forEach(root => {
@@ -990,6 +995,9 @@ PS.module('pricing', () => {
     const note = root.querySelector('[data-period-note]');
     const only = [...root.querySelectorAll('[data-period-only]')];
     const animate = root.hasAttribute('data-pricing-animate');
+    const recur = root.querySelector('input[data-recurring]');
+    let wantRecur = recur ? recur.hasAttribute('data-default-on') || recur.checked : true;
+    let current = root.dataset.pricing || 'onetime';
     const lineOf = el => {
       const t = el.querySelector('template[data-pricing-feat]') || root.querySelector(':scope > template[data-pricing-feat], template[data-pricing-feat]');
       return t ? t.innerHTML : '{feat}';
@@ -999,6 +1007,10 @@ PS.module('pricing', () => {
     const render = (key, fade) => {
       const period = PLANS[key];
       if (!period) return;
+      current = key;
+      const canRecur = ['light', 'standard', 'premium'].some(t => period[t] && period[t].single);
+      if (recur) { recur.disabled = !canRecur; recur.checked = canRecur && wantRecur; }
+      const once = canRecur && recur && !wantRecur;
       tabs.forEach(b => {
         b.classList.toggle('active', b.dataset.period === key);
         if (b.hasAttribute('aria-pressed')) b.setAttribute('aria-pressed', String(b.dataset.period === key));
@@ -1010,9 +1022,10 @@ PS.module('pricing', () => {
         if (!tier) return;
         const feats = card.querySelector('.js-feats');
         const line = lineOf(card);
-        card.querySelector('.js-price').textContent = tier.price;
+        const shown = once && tier.single ? tier.single : tier;
+        card.querySelector('.js-price').textContent = shown.price;
         card.querySelector('.js-term').textContent = period.term;
-        card.querySelector('.js-rate').textContent = tier.rate;
+        card.querySelector('.js-rate').textContent = shown.rate;
         feats.innerHTML = tier.feats.map(f => line.split('{feat}').join(f)).join('');
         if (fade && animate && window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
           gsap.fromTo([card.querySelector('.js-price'), card.querySelector('.js-rate'), feats],
@@ -1021,7 +1034,8 @@ PS.module('pricing', () => {
       });
     };
     tabs.forEach(b => b.addEventListener('click', () => render(b.dataset.period, true)));
-    render(root.dataset.pricing || 'onetime', false);
+    if (recur) recur.addEventListener('change', () => { wantRecur = recur.checked; render(current, true); });
+    render(current, false);
   });
 });
 

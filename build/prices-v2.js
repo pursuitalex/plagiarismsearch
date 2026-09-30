@@ -66,6 +66,8 @@ const COPY = {
     support: 'Compare one-time, monthly, 3-month, and yearly options and choose the plan that fits how much content you expect to check. The pricing cards show the current price, checking allowance, billing period, and included features for each plan.',
     /* fixed by the brief, in this order */
     tabs: [['onetime', 'One-time'], ['monthly', 'Monthly'], ['quarterly', '3-Months'], ['yearly', 'Yearly']],
+    /* the live page's own switch label, verbatim (plagiarismsearch.com/prices, 2026-09-30) */
+    recurring: 'Recurring payments',
     recommended: 'Recommended',
     /* the ONLY helper line approved for this page. The homepage's per-period notes are
        deliberately not rendered here: "Do not add a static subtitle such as Recurring
@@ -242,10 +244,18 @@ ${eyebrow('teal-400', COPY.s1.eyebrow)}
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600">${COPY.s1.support}</p>
       </div>
 
-      <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
+      <!-- the tabs, and under them the live page's "Recurring payments" switch on a white
+           pill: one for the three cards (Olex, 2026-09-30). Off on One-time, which cannot
+           recur. -->
+      <div class="rv flex flex-col items-center gap-3 mb-8 sm:mb-10 lg:mb-12">
         <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto">
 ${COPY.s1.tabs.map(([k, label]) => `          <button type="button" data-period="${k}" aria-pressed="${k === 'onetime'}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600${k === 'onetime' ? ' active' : ''}">${label}</button>`).join('\n')}
         </div>
+        <label class="pr-switch inline-flex items-center gap-2.5 rounded-full bg-white ring-1 ring-black/5 shadow-sm pl-2 pr-4 py-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 whitespace-nowrap">
+          <input type="checkbox" class="sr-only" data-recurring data-default-on disabled>
+          <span class="pr-switch-track" aria-hidden="true"></span>
+          ${COPY.s1.recurring}
+        </label>
       </div>
 
       <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto">

@@ -767,6 +767,19 @@ select.cf-field { appearance:none; cursor:pointer;
 .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
 .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
 
+/* the "Recurring payments" switch (60-pricing.js, input[data-recurring]): a 36×20 track,
+   teal when on; dimmed and inert on One-time, which cannot recur */
+.pr-switch { cursor:pointer; transition:opacity .2s ease; }
+.pr-switch-track { position:relative; flex:none; width:36px; height:20px; border-radius:9999px; background:#D1D5DB;
+  transition:background-color .2s ease; }
+.pr-switch-track::after { content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:9999px;
+  background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.2); transition:transform .2s ease; }
+.pr-switch input:checked + .pr-switch-track { background:#0991A8; }
+.pr-switch input:checked + .pr-switch-track::after { transform:translateX(16px); }
+.pr-switch input:focus-visible + .pr-switch-track { outline:2px solid #0CA9C3; outline-offset:2px; }
+.pr-switch:has(input:disabled) { opacity:.45; cursor:not-allowed; }
+@media (prefers-reduced-motion: reduce) { .pr-switch-track, .pr-switch-track::after { transition:none; } }
+
 /* ═══ 18 · the AI package selector (Pricing: .ai-opt) and the lifting card ════════
    One radio group; the checked row fills and its dot ticks. The rows are labels, so the
    whole row is the target; focus lands on the hidden radio and the ring is drawn on the
