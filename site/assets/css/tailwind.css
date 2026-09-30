@@ -2230,6 +2230,10 @@ p.faq-a-body,
   min-height: 140px;
 }
 
+.min-h-\[220px\] {
+  min-height: 220px;
+}
+
 .min-h-\[60px\] {
   min-height: 60px;
 }
@@ -2638,6 +2642,10 @@ p.faq-a-body,
 
 .max-w-\[16ch\] {
   max-width: 16ch;
+}
+
+.max-w-\[18ch\] {
+  max-width: 18ch;
 }
 
 .max-w-\[36ch\] {
@@ -4628,6 +4636,10 @@ p.faq-a-body,
   font-size: clamp(2.2rem,4.8vw,3.6rem);
 }
 
+.text-\[clamp\(2\.3rem\2c 5vw\2c 3\.8rem\)\] {
+  font-size: clamp(2.3rem,5vw,3.8rem);
+}
+
 .text-\[clamp\(2\.4rem\2c 5\.2vw\2c 3\.85rem\)\] {
   font-size: clamp(2.4rem,5.2vw,3.85rem);
 }
@@ -5311,6 +5323,10 @@ p.faq-a-body,
 
 .ring-black\/5 {
   --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+.ring-black\/\[\.03\] {
+  --tw-ring-color: rgb(0 0 0 / .03);
 }
 
 .ring-black\/\[\.04\] {
@@ -7520,6 +7536,10 @@ p.faq-a-body,
     border-right-width: 1px;
   }
 
+  .lg\:border-t-0 {
+    border-top-width: 0px;
+  }
+
   .lg\:border-\[\#E4E8EE\] {
     --tw-border-opacity: 1;
     border-color: rgb(228 232 238 / var(--tw-border-opacity, 1));
@@ -7870,6 +7890,10 @@ p.faq-a-body,
 
   .xl\:grid {
     display: grid;
+  }
+
+  .xl\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .xl\:grid-cols-6 {

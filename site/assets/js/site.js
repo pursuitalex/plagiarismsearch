@@ -1303,7 +1303,8 @@ PS.module('word-count', () => {
    readability — form[data-readability]: Flesch reading ease and Flesch-Kincaid grade over
      the text in [data-rc="text"]; the level bands are the form's data-bands (JSON); the
      hint's data-empty / data-short / data-ok are its three messages.
-   spell — form[data-spell]: counts and eight readability indices over [data-sp="text"];
+   spell — form[data-spell]: counts and eight readability indices over [data-sp="text"]
+     (an optional drop zone [data-sp-drop]; readability's is [data-rc-drop]);
      the word count's data-one / data-many, the reading times' data-unit.
    paper-analysis — form[data-paper]: the price of a paper from its pages, deadline, level
      and add-ons. The rate matrix is the form's JSON island ([data-pa-rates]), the same
@@ -1325,6 +1326,21 @@ const readFile = (input, then) => input && input.addEventListener('change', e =>
   r.onload = () => then(r.result);
   r.readAsText(f);
 });
+/* an optional drop zone (the v2 tool pages): a text file dropped on it is read and handed
+   on; .is-over marks the zone while a file is over it */
+const dropFile = (zone, then) => {
+  if (!zone) return;
+  ['dragenter', 'dragover'].forEach(t => zone.addEventListener(t, e => { e.preventDefault(); zone.classList.add('is-over'); }));
+  ['dragleave', 'drop'].forEach(t => zone.addEventListener(t, () => zone.classList.remove('is-over')));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    const f = e.dataTransfer && e.dataTransfer.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => then(r.result);
+    r.readAsText(f);
+  });
+};
 
 PS.module('readability', () => {
   document.querySelectorAll('form[data-readability]').forEach(form => {
@@ -1366,21 +1382,7 @@ PS.module('readability', () => {
     };
     area.addEventListener('input', score);
     readFile($('file'), t => { area.value = t; score(); });
-    /* an optional drop zone ([data-rc-drop], Readability v2): a text file dropped on it is
-       read into the box; .is-over marks the zone while a file is over it */
-    const drop = form.querySelector('[data-rc-drop]');
-    if (drop) {
-      ['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('is-over'); }));
-      ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, () => drop.classList.remove('is-over')));
-      drop.addEventListener('drop', e => {
-        e.preventDefault();
-        const f = e.dataTransfer && e.dataTransfer.files[0];
-        if (!f) return;
-        const r = new FileReader();
-        r.onload = () => { area.value = r.result; score(); area.focus(); };
-        r.readAsText(f);
-      });
-    }
+    dropFile(form.querySelector('[data-rc-drop]'), t => { area.value = t; score(); area.focus(); });
     score();
   });
 });
@@ -1437,6 +1439,10 @@ PS.module('spell', () => {
     };
     area.addEventListener('input', analyse);
     readFile($('file'), t => { area.value = t; analyse(); });
+    dropFile(form.querySelector('[data-sp-drop]'), t => { area.value = t; analyse(); area.focus(); });
+    /* the result panel's Language row echoes the language picked (Spell v2) */
+    const echo = form.querySelector('[data-sp-lang-echo]');
+    if (echo && $('lang')) $('lang').addEventListener('change', () => { echo.textContent = $('lang').value; });
     analyse();
   });
 });

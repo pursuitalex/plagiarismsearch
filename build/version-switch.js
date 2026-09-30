@@ -31,6 +31,8 @@ const PAIRS = {
   /* the free tools, redesigned from the live copy (2026-09-30) */
   'readability-check.html':    { other: 'readability-check-v2.html', self: 1 },
   'readability-check-v2.html': { other: 'readability-check.html',    self: 2 },
+  'spell-check.html':          { other: 'spell-check-v2.html', self: 1 },
+  'spell-check-v2.html':       { other: 'spell-check.html',    self: 2 },
 };
 
 const OPEN = '<!-- VSWITCH · temporary review tool, remove with the retired version -->';

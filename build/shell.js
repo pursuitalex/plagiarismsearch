@@ -114,6 +114,8 @@ const PAGES = {
   /* its illustrated version, beside it until one is picked (build/version-switch.js) */
   'readability-check-v2.html':   { active: null, static: true },
   'spell-check.html':            { active: null, static: true },
+  /* its illustrated version, beside it until one is picked (build/version-switch.js) */
+  'spell-check-v2.html':         { active: null, static: true },
   'chat-bot.html':               { active: null, static: true },
   'vip.html':                    { active: null, static: true },
 

@@ -1,6 +1,11 @@
 /* Turn generated renders into site assets, by IMAGES.md §8.
    usage: node build/image-assets.js <config.json>
-   config: { out, photos: [{src, name, width}], sheet: {src, cols, rows, names: [...]} } */
+   config: { out, photos: [{src, name, width, clean}], sheet: {src, cols, rows, names: [...]} }
+
+   clean: [[left, top, width, height], …] in the render's own pixels — boxes to fill
+   (a maker's mark on a laptop lid, IMAGES.md §8.3). Each box is filled harmonically: its
+   border stays, the inside relaxes to the average of its neighbours, so a lid's sheen and
+   gradient carry straight through where a copied patch leaves a seam. */
 const R = require('path').join(__dirname, '..') + '/';
 const sharp = require(R + 'node_modules/sharp');
 const fs = require('fs');
@@ -25,10 +30,29 @@ async function whiteToAlpha(buf, w, h) {
   return sharp(px, { raw: { width: w, height: h, channels: 4 } });
 }
 
+async function clean(src, boxes) {
+  const { data, info } = await sharp(src).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const w = info.width;
+  for (const [L, T, W, H] of boxes) {
+    for (let c = 0; c < 3; c++) {
+      const a = new Float32Array((W + 2) * (H + 2));
+      for (let y = -1; y <= H; y++) for (let x = -1; x <= W; x++) a[(y + 1) * (W + 2) + (x + 1)] = data[((T + y) * w + (L + x)) * 4 + c];
+      let s = 0, n = 0;
+      for (let y = 0; y < H + 2; y++) for (let x = 0; x < W + 2; x++) if (!y || !x || y === H + 1 || x === W + 1) { s += a[y * (W + 2) + x]; n++; }
+      for (let y = 1; y <= H; y++) for (let x = 1; x <= W; x++) a[y * (W + 2) + x] = s / n;
+      for (let it = 0; it < 5000; it++) for (let y = 1; y <= H; y++) for (let x = 1; x <= W; x++) { const i = y * (W + 2) + x; a[i] = (a[i - 1] + a[i + 1] + a[i - W - 2] + a[i + W + 2]) / 4; }
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) data[((T + y) * w + (L + x)) * 4 + c] = Math.round(a[(y + 1) * (W + 2) + (x + 1)]);
+    }
+  }
+  return sharp(data, { raw: { width: w, height: info.height, channels: 4 } }).png().toBuffer();
+}
+
 (async () => {
   for (const p of cfg.photos || []) {
     const out = path.join(cfg.out, p.name + '.webp');
-    await sharp(p.src).resize(p.width).webp({ quality: 78 }).toFile(out);
+    const input = p.clean ? await clean(p.src, p.clean) : p.src;
+    if (p.clean) await sharp(input).extract({ left: Math.max(0, p.clean[0][0] - 120), top: Math.max(0, p.clean[0][1] - 120), width: p.clean[0][2] + 240, height: p.clean[0][3] + 240 }).toFile(path.join(require('os').tmpdir(), 'clean-' + p.name + '.png'));
+    await sharp(input).resize(p.width).webp({ quality: 78 }).toFile(out);
     const m = await sharp(out).metadata();
     console.log('photo ' + p.name + '.webp ' + m.width + 'x' + m.height + ' ' + Math.round(fs.statSync(out).size / 1024) + ' KB');
   }

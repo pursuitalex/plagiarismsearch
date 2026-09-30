@@ -38,7 +38,7 @@
 .rc-stat span { font-size:11px; font-weight:600; color:#9CA3AF; }
 /* Readability v2: the drop zone (site.js, module readability, [data-rc-drop]) — the
    checker's dashed zone (.qc-drop), lit while a file is over it */
-.rc-drop.is-over { border-style:solid; border-color:#0CA9C3; background:#E8F8FB; box-shadow:0 0 0 4px rgba(12,169,195,.14); }
+.rc-drop.is-over, .sp-drop.is-over { border-style:solid; border-color:#0CA9C3; background:#E8F8FB; box-shadow:0 0 0 4px rgba(12,169,195,.14); }
 
 /* Spell Check */
 .sp-area { width:100%; border:0; outline:none; background:transparent; resize:vertical;
@@ -52,7 +52,8 @@
 .sp-select:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
 .sp-row { display:flex; align-items:baseline; justify-content:space-between; gap:10px;
   padding:5px 0; font-size:12.5px; }
-.sp-row span { color:#6B7280; }
+.sp-row span, .sp-row dt { color:#6B7280; }
+.sp-row dd { margin:0; }
 .sp-row b { font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; color:#111827; }
 .sp-col-h { font-size:10px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase;
   color:#9CA3AF; margin-bottom:8px; }
