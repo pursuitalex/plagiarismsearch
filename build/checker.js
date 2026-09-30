@@ -27,9 +27,7 @@
    JS finds the form by [data-checker], [data-checker-text], [data-checker-count] and
    [data-switch] instead of by id, so two forms on one page cannot collide. The one id
    left is the label/textarea pair, which accessibility needs and the template writes —
-   pass ids.text to namespace it per instance. Asset paths are root-relative.
-   opts.arrive === false writes data-checker-arrive="off": an in-page link to the form
-   scrolls to it without putting the caret in the field (the homepage). The
+   pass ids.text to namespace it per instance. Asset paths are root-relative. The
    default (no opts) is byte-for-byte what every other page renders today. */
 
 const ICON = 'w-[14px] h-[14px] sm:w-4 sm:h-4';
@@ -57,7 +55,7 @@ const form = (S, anchor = '#checker', ids = {}, opts = {}) => {
   const ta = ids.text || 'checkText', wc = ids.count || 'wordCount', plag = ids.plag || 'optPlag', ai = ids.ai || 'optAI';
   const st = !!opts.static;
   return `      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-        <form${st ? ' data-checker' : ''}${st && opts.arrive === false ? ' data-checker-arrive="off"' : ''} class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+        <form${st ? ' data-checker' : ''} class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
           <label for="${ta}" class="sr-only">${S.placeholder}</label>
           <!-- the count belongs to the text, so it sits in the corner of the field

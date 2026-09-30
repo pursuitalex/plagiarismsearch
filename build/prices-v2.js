@@ -257,7 +257,7 @@ ${dark ? '          <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-
           <div class="relative">
             <div class="flex items-center justify-between gap-3 mb-1.5">
               <span class="text-[11px] font-bold tracking-[0.16em] uppercase ${dark ? 'text-teal-300' : 'text-orange-700'}">${LABEL[tier]}</span>
-${dark ? `              <span class="text-[9.5px] font-bold tracking-widest bg-orange-700 text-white rounded-full px-2.5 py-1 uppercase">${COPY.s1.recommended}</span>` : ''}
+${dark ? `              <span class="text-[9.5px] font-bold tracking-widest bg-orange-500 text-white rounded-full px-2.5 py-1 uppercase">${COPY.s1.recommended}</span>` : ''}
             </div>
             <div class="flex items-end gap-1.5 mb-3">
               <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price">${PLANS.onetime[tier].price}</span>

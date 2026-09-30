@@ -56,7 +56,8 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 3. **CSS belongs to components, not pages.** A rule that exists for one component lives in
    that component's partial, even if the component is used once. No page carries CSS.
    Where two approved pages drew the same component differently, the difference is a named
-   variant (`.cab-tabs-light`, `.faq-chev-tint`), never a page selector.
+   variant, never a page selector. The migration found five and kept each as a variant;
+   all five were unified on 2026-09-30, so there are none today.
 4. **Markup keeps its utilities.** Every top-level element of `<main>` has a stable root
    hook, `data-component="…"`, and the behaviour hooks it needs (catalogue below).
 5. **No id is a CSS or JS hook.** Ids exist for in-page anchors and for accessibility
@@ -95,7 +96,7 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 | motion | `.rv`, `.rv-kids` (`data-stagger`), `.pen-word`, `.ring-word` | reveals and marks |
 | hero-title | `[data-hero-title]` + `[data-hero-support]` | words rise, support follows, pen draws |
 | odometer | `.od-num` | statistics roll |
-| checker | `form[data-checker]`, `[data-checker-text]`, `[data-checker-count]`, `[data-switch]` | count, switches; in-page link focuses the field unless `data-checker-arrive="off"` |
+| checker | `form[data-checker]`, `[data-checker-text]`, `[data-checker-count]`, `[data-switch]` | count, switches; an in-page link to the form focuses its field |
 | form-arrive | `form[data-focus-first="ms"]` | a link to the form focuses its first field |
 | report | `[data-report]` (`.cab-mark`, `.cab-src`) | select a passage |
 | report-pass | `[data-report-doc]`, `[data-report-side]`, `[data-report-scan]` | the scan plays once |

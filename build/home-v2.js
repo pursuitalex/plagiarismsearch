@@ -214,7 +214,7 @@ const eyebrow = (text, dark = false) => `<div class="inline-flex items-center ga
         </div>`;
 
 /* one word takes the accent colour, then its underline draws itself */
-const pen = w => `<span class="pen-word pen-static-plain relative inline-block">${w}<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span>`;
+const pen = w => `<span class="pen-word relative inline-block">${w}<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span>`;
 
 /* One word of the hero title inside a box that clips it, so the word can rise out of
    nothing on load. The box is a plain rectangle: a transform inside a rounded clip
@@ -358,7 +358,7 @@ const section1 = () => `
         <p data-hero-support class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">${S.s1.support}</p>
       </div>
 
-${checker.form(S.s1, '#checker', { text: 'checker-text' }, { static: true, arrive: false })}
+${checker.form(S.s1, '#checker', { text: 'checker-text' }, { static: true })}
 
 ${checker.free(S.s1)}
     </div>
@@ -467,7 +467,7 @@ const section4 = () => `
               ${CAB.metrics.map(cabMetric).join(NL14)}
             </div>
 
-            <div class="cab-in cab-tabs-light shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
+            <div class="cab-in shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
               <span class="cab-tab on pt-3">Plagiarism</span>
               <span class="cab-tab pt-3">AI</span>
             </div>
@@ -833,7 +833,7 @@ const section12 = () => `
           ${S.s12.items.map(([q, a], i) => `<div class="faq-item${i === 0 ? ' open' : ''}">
             <button type="button" aria-controls="home-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-              <span class="faq-chev faq-chev-tint shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>

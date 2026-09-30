@@ -30,10 +30,3 @@
 .cab-beam { background-image:linear-gradient(to bottom,
   rgba(13,168,194,.22) 0%, rgba(13,168,194,.13) 38%,
   rgba(13,168,194,.05) 70%, rgba(13,168,194,0) 100%); }
-
-/* The homepage's tab strip keeps its approved, lighter colours. The product pages
-   darkened theirs (#4B5563 / #06748A) for contrast on the bg-ink-100 strip; the
-   homepage was not re-approved with them. One look for both is a design call —
-   flagged for review, not made in a refactor. */
-.cab-tabs-light .cab-tab { color:#6B7280; }
-.cab-tabs-light .cab-tab.on { color:#0991A8; }

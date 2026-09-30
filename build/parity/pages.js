@@ -1,17 +1,19 @@
 /* Page-specific extras for the parity harness (build/parity/run.js), keyed by file.
    behaviour(page, width, { sleep }) → an object of results, run on both the approved
-   and the migrated page and compared. */
+   and the migrated page and compared. reuse: false skips the section reuse test.
+   byRef['<commit>']: acceptances that hold only against that baseline (the decisions
+   taken when the page moved off it), so --ref=<commit> reproduces that comparison. */
 module.exports = {
   'design-system.html': {
-    /* approved with the checker states and the modal, after the static-assets POC */
-    ref: 'db7d735',
     /* the spec sheet is not built from site sections, so there is nothing to reuse */
     reuse: false,
-    /* The approved page drew the components with its own copies of their CSS, which had
+    /* against db7d735, the page approved with the checker states and the modal:
+       The approved page drew the components with its own copies of their CSS, which had
        drifted from the site: no phone sizes for the field, checkbox, radio and chip (06),
        no tabular .nums, older transition timings on .btn-press and .icon-orb, the
        browser's focus ring. On the shared assets it shows them as every page does.
        Classified 2026-09-30; any other property that differs fails. */
+    byRef: { db7d735: {
     acceptGeometry: {
       props: ['font-size', 'line-height', 'padding-left', 'padding-right', 'grid-template-rows', 'transition-duration', 'transition-property'],
       reason: 'the components now render with the site CSS (phone sizes, tabular numerals, current transitions)',
@@ -19,8 +21,11 @@ module.exports = {
     accept: {
       focusRings: 'the site focus ring (teal; light on dark grounds) replaces the browser default the approved page fell back to',
     },
+    } },
   },
   'index-v2.html': {
+    /* against 04c8e24, the homepage before the static assets: */
+    byRef: { '04c8e24': {
     /* Differences taken on purpose when the homepage moved to the shared components. The
        approved homepage had neither: its FAQ never set aria-expanded, and its links fell
        back to the browser's default focus ring. Every other page has both. */
@@ -36,6 +41,7 @@ module.exports = {
     acceptPixels: {
       1440: { maxPx: 60, maxDelta: 8, reason: 'sub-pixel anti-aliasing where the closing band ends on a fractional y; geometry identical' },
     },
+    } },
   },
   'prices-v2.html': {
     /* the AI package selector: the chosen row fills and the button names it */

@@ -5,11 +5,11 @@
    link drawing. Values verbatim from the page's former <style>.
 
    Anchors. The guide's anchors clear the site header, and under lg the jump menu beneath
-   it. As approved, a .doc-section keeps 104px at every width: the page's 132px rule for
-   it under lg lost on specificity to section[id], and the computed value is what was
-   signed off. A .doc-sub gets 132px under lg. (Flagged for review, not changed here.) */
+   it: 104px, and 132px under lg. (The page's own 132px rule for a .doc-section once lost
+   on specificity to section[id], so a heading reached from the jump menu sat under it on
+   a phone; fixed 2026-09-30.) */
 .doc-section[id], .doc-sub[id] { scroll-margin-top: 104px; }
-@media (max-width:1023px) { .doc-sub[id] { scroll-margin-top: 132px; } }
+@media (max-width:1023px) { .doc-section[id], .doc-sub[id] { scroll-margin-top: 132px; } }
 
 /* ---------- the hero link: two marks, two straight tracks, the plugin between ----------
    One 340×330 box; tiles, the pill and the side labels are placed in percentages of it,

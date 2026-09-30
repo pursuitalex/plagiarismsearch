@@ -67,29 +67,21 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 :where(.js-motion) .ring-path { opacity:0; }
 :where(html:not(.js-motion)) .ring-word { color:#DC5A45; }
 
-/* The homepage's pen words keep their text colour when there is no motion (only the
-   underline shows); the product pages turn the word coral, as its animation ends.
-   Kept as approved on each; one static look for both is a design call, flagged. */
-:where(html:not(.js-motion)) .pen-word.pen-static-plain { color:inherit; }
-
 /* ═══ 03 · FAQ accordion ══════════════════════════════════════════════════════════
    Every answer is in the HTML. Collapsing is an enhancement: without JS (no .js on
    <html>) every answer stays open, so none is locked behind a button that cannot work. */
 .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1); }
 .faq-item.open .faq-a { grid-template-rows:1fr; }
 .faq-a > div { overflow:hidden; }
-.faq-chev { transition:transform .45s cubic-bezier(.32,.72,0,1); }
-.faq-item.open .faq-chev { transform:rotate(180deg); }
+/* The chevron sits in a 32px round chip: grey until its answer is open, then the accent,
+   so the colour follows a click. One look on every page (2026-09-30); the product pages
+   had lost the tint, which lived in the homepage's own CSS, and kept only the markup. The
+   transition keeps the transform in its list, or the rotation would lose its easing. */
+.faq-chev { background:#F1F2F6; color:#4B5563;
+  transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
+.faq-item.open .faq-chev { transform:rotate(180deg); background:#FDE5E0; color:#B84431; }
 :where(html:not(.js)) .faq-a { grid-template-rows:1fr; }
 :where(html:not(.js)) .faq-chev { transform:rotate(180deg); }
-
-/* The tinted chevron (homepage): grey until its answer is open, then the accent — the
-   state follows .faq-item.open, so the colour follows a click. The product pages carry
-   the bare chevron; two looks, flagged for review. Its transition keeps the transform
-   in the list, or the rotation would lose its easing. */
-.faq-chev-tint { background:#F1F2F6; color:#4B5563;
-  transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
-.faq-item.open .faq-chev-tint { background:#FDE5E0; color:#B84431; }
 
 /* ═══ 04 · buttons and numerals ══════════════════════════════════════════════════ */
 .btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
@@ -500,13 +492,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   rgba(13,168,194,.22) 0%, rgba(13,168,194,.13) 38%,
   rgba(13,168,194,.05) 70%, rgba(13,168,194,0) 100%); }
 
-/* The homepage's tab strip keeps its approved, lighter colours. The product pages
-   darkened theirs (#4B5563 / #06748A) for contrast on the bg-ink-100 strip; the
-   homepage was not re-approved with them. One look for both is a design call —
-   flagged for review, not made in a refactor. */
-.cab-tabs-light .cab-tab { color:#6B7280; }
-.cab-tabs-light .cab-tab.on { color:#0991A8; }
-
 /* ═══ 10 · the closing CTA band (build/cta.js) ════════════════════════════════════
    Every knob is a custom property on .cta-band, so a page tunes numbers, not selectors,
    and the band renders the same whatever the section's id is. (It used to be keyed to
@@ -724,11 +709,11 @@ select.cf-field { appearance:none; cursor:pointer;
    link drawing. Values verbatim from the page's former <style>.
 
    Anchors. The guide's anchors clear the site header, and under lg the jump menu beneath
-   it. As approved, a .doc-section keeps 104px at every width: the page's 132px rule for
-   it under lg lost on specificity to section[id], and the computed value is what was
-   signed off. A .doc-sub gets 132px under lg. (Flagged for review, not changed here.) */
+   it: 104px, and 132px under lg. (The page's own 132px rule for a .doc-section once lost
+   on specificity to section[id], so a heading reached from the jump menu sat under it on
+   a phone; fixed 2026-09-30.) */
 .doc-section[id], .doc-sub[id] { scroll-margin-top: 104px; }
-@media (max-width:1023px) { .doc-sub[id] { scroll-margin-top: 132px; } }
+@media (max-width:1023px) { .doc-section[id], .doc-sub[id] { scroll-margin-top: 132px; } }
 
 /* ---------- the hero link: two marks, two straight tracks, the plugin between ----------
    One 340×330 box; tiles, the pill and the side labels are placed in percentages of it,

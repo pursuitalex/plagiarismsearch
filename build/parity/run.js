@@ -1,7 +1,7 @@
 /* Parity harness — any master page, approved version vs migrated version.
 
-   The approved version is the page as committed at REF (the last commit before the
-   static-assets migration began), served from build/parity/out/baseline/. The migrated
+   The approved version is the page as committed at REF (the last commit by default, or
+   --ref=<commit>), served from build/parity/out/baseline/. The migrated
    version is the page in site/ now. A real Chrome (installed, via playwright-core) at
    375 / 768 / 1440, device scale 1.
 
@@ -33,7 +33,10 @@ const pixelmatch = require('pixelmatch');
 const postcss = require('postcss');
 const { start } = require('./serve');
 
-const DEFAULT_REF = '04c8e24';
+/* The approved state is the last commit: a refactor must not change what was committed.
+   (The static-assets migration was checked against 04c8e24, the last page on the CDN,
+   and the design-system page against db7d735: pass --ref= to rerun those comparisons.) */
+const DEFAULT_REF = 'HEAD';
 const ROOT = path.join(__dirname, '..', '..');
 const FILE = process.argv[2];
 if (!FILE) { console.error('usage: node build/parity/run.js <page.html> [--quick]'); process.exit(2); }
@@ -45,15 +48,37 @@ const PORT = 4200 + Math.floor(Math.random() * 400);
 const URL = `http://localhost:${PORT}/`;
 const OUT = path.join(__dirname, 'out', FILE.replace(/\.html$/, ''));
 fs.mkdirSync(OUT, { recursive: true });
-const EXTRA = (require('./pages')[FILE] || {});
+const EXTRA = { ...(require('./pages')[FILE] || {}) };
 /* a page approved after 04c8e24 (the design-system page) names its own approved commit */
 /* --ref=<commit>: compare against another approved state (e.g. the commit before a design fix) */
 const REF = (process.argv.find(a => a.startsWith('--ref=')) || '').slice('--ref='.length) || EXTRA.ref || DEFAULT_REF;
+/* acceptances recorded against this baseline (build/parity/pages.js, byRef) */
+Object.assign(EXTRA, (EXTRA.byRef || {})[REF] || {});
 
 /* the approved page, from git */
 const baseDir = path.join(__dirname, 'out', 'baseline');
 fs.mkdirSync(baseDir, { recursive: true });
-fs.writeFileSync(path.join(baseDir, FILE), execFileSync('git', ['show', REF + ':site/' + FILE], { cwd: ROOT, maxBuffer: 64 << 20 }));
+/* A baseline already on the static assets links /assets/css/… and /assets/js/…, which
+   would resolve to the files in site/ now — both pages would load the same CSS and JS,
+   and a change to them could never show. So the baseline's own site.css, tailwind.css
+   and site.js (and ds.*) are taken from REF and its links pointed at those copies. */
+{
+  /* --from=<file>: the approved page had another name at REF (a v2 page before it took the v1 name) */
+  const FROM = (process.argv.find(a => a.startsWith('--from=')) || '').slice('--from='.length) || FILE;
+  let html = execFileSync('git', ['show', REF + ':site/' + FROM], { cwd: ROOT, maxBuffer: 64 << 20 }).toString();
+  if (/(href|src)="\/assets\/(css|js)\//.test(html)) {
+    for (const f of ['css/site.css', 'css/tailwind.css', 'css/ds.css', 'js/site.js', 'js/ds.js']) {
+      let body;
+      try { body = execFileSync('git', ['show', REF + ':site/assets/' + f], { cwd: ROOT, maxBuffer: 64 << 20, stdio: ['ignore', 'pipe', 'ignore'] }); }
+      catch { continue; }                                   /* not in that commit */
+      const to = path.join(baseDir, '__ref-assets', f);
+      fs.mkdirSync(path.dirname(to), { recursive: true });
+      fs.writeFileSync(to, body);
+    }
+    html = html.replace(/(href|src)="\/assets\/(css|js)\//g, (m, a, k) => `${a}="/__base/__ref-assets/${k}/`);
+  }
+  fs.writeFileSync(path.join(baseDir, FILE), html);
+}
 const current = fs.readFileSync(path.join(ROOT, 'site', FILE), 'utf8');
 
 /* the reuse pages: each section alone, under the page's own <head> */
@@ -339,6 +364,9 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
     const a = await open(browser, A);
     const cdnCss = await a.page.evaluate(() => { const s = [...document.querySelectorAll('head style')].find(x => /--tw-border-spacing-x/.test(x.textContent)); return s ? s.textContent : ''; });
     await a.ctx.close();
+    /* a baseline that is already on the static assets has no CDN sheet to contain */
+    if (!cdnCss) console.log('  note   the approved page already uses the static tailwind.css — nothing to compare');
+    else {
     const cdn = ruleIndex(cdnCss);
     const ours = ruleIndex(fs.readFileSync(path.join(ROOT, 'site', 'assets', 'css', 'tailwind.css'), 'utf8'));
     fs.writeFileSync(path.join(OUT, 'cdn.css'), cdnCss);
@@ -356,6 +384,7 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
     }
     ok('css', `${cdn.size} CDN rules: ${lacking.length} declarations missing from ours, ${missing.length} selectors not found`, cdn.size > 0 && !lacking.length && !missing.length, [...lacking.slice(0, 3), ...missing.slice(0, 3)].join(' | '));
     ok('css', 'extra declarations are harmless prefixes only: ' + ([...extra].join(', ') || 'none'), !where.length, where.slice(0, 4).join(' | '));
+    }
   }
 
   /* 1 · content */
