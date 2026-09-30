@@ -11,363 +11,28 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Manrope', 'system-ui', 'sans-serif'],
-        serif: ['Newsreader', 'Georgia', 'serif'],
-      },
-      colors: {
-        orange: { 50:'#FEF4F1',100:'#FDE5E0',200:'#FBC9BF',300:'#F8A392',400:'#F58971',500:'#F36F5A',600:'#DC5A45',700:'#B84431',800:'#8C2E1F',900:'#5D1E13' },
-        teal:   { 50:'#E8F8FB',100:'#D3F1F6',200:'#A7E3ED',300:'#6ED7E8',400:'#2CC3DB',500:'#0CA9C3',600:'#0991A8',700:'#06748A',800:'#045566',900:'#023744' },
-        mint:   { 50:'#EDFAF4',100:'#DCF5EA',200:'#B3E9D1',400:'#5ED2A0',500:'#3AC184',600:'#2AA46C',700:'#1B7A50' },
-        ink:    { 0:'#FFFFFF',50:'#F8F9FB',100:'#F1F2F6',200:'#E5E7EB',300:'#D1D5DB',400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',800:'#1F2937',900:'#111827',950:'#0A0E1A' },
-      },
-      letterSpacing: { tightest: '-0.035em' },
-      boxShadow: {
-        'diffuse': '0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08)',
-        'diffuse-lg': '0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12)',
-        'inner-hl': 'inset 0 1px 0 rgba(255,255,255,.45)',
-      },
-      borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
-    }
-  }
-}
-</script>
-<style>
-  /* A fixed layer sizes against window.innerWidth, not the layout viewport. When the two
-     disagree — a narrowed preview pane reports innerWidth 540 inside a 390px viewport — the
-     grain sheet and the header render 150px wider than the page and open a white gutter that
-     no in-flow element accounts for. overflow-x:clip on the root removes it; unlike hidden it
-     creates no scroll container, so position:sticky in the scan scene keeps working. */
-  html { background:#fff; overflow-x: clip; }
-  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-  ::selection { background:#F36F5A; color:#fff; }
-
-  /* ---------- grain overlay ---------- */
-  .grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size:256px 256px; }
-
-  /* ---------- mesh orbs (masked gradient — zero per-frame filter cost) ---------- */
-  .orb { position:absolute; border-radius:9999px; pointer-events:none;
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%);
-    mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) 48%, transparent 74%); }
-
-  /* ---------- reveal (transform/opacity only — compositor-friendly) ---------- */
-  .rv { opacity:0; transform:translateY(40px); }
-  .no-motion .rv { opacity:1 !important; transform:none !important; }
-  .hero-float, #scanLine, #probBar { will-change: transform; }
-
-  /* ---------- scan highlights ---------- */
-  .hl { background-repeat:no-repeat; background-size:0% 100%; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
-        transition:color .3s ease; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
-  .hl-orange { background-image:linear-gradient(to right, rgba(243,111,90,.16), rgba(243,111,90,.16)); }
-  .hl-teal   { background-image:linear-gradient(to right, rgba(12,169,195,.14), rgba(12,169,195,.14)); }
-  /* AI highlight — violet, matching the product report's colour coding */
-  .hl-ai     { background-image:linear-gradient(to right, rgba(154,106,222,.18), rgba(154,106,222,.18)); }
-  .hl.on-orange { color:#B84431; font-weight:600; }
-  .hl.on-teal { color:#06748A; font-weight:600; }
-  .hl.on-ai { color:#6D3FB0; font-weight:600; }
-
-  /* scan legend — dots light up as each category is found */
-  .lg-item { opacity:.35; transition:opacity .45s cubic-bezier(.32,.72,0,1); }
-  .lg-item.found { opacity:1; }
-  .lg-dot { box-shadow:0 0 0 0 currentColor; transition:box-shadow .45s cubic-bezier(.32,.72,0,1); }
-  .lg-item.found .lg-dot { box-shadow:0 0 0 3px color-mix(in srgb, currentColor 22%, transparent); }
-  .no-motion .lg-item { opacity:1; }
-
-  /* ================= CTA SECTION · single source of truth =================
-     Every visual knob of the closing CTA lives here as a custom property.
-     Edit these numbers (or drive them live with ?tune=cta) — nothing else needs touching.
-     Breakpoint overrides go in the two media queries at the bottom of this block. */
-  #cta {
-    /* base plate */
-    --cta-bg:          #F2FCFC;
-    /* wash: a soft directional gradient laid over the plate */
-    --cta-wash-angle:  180deg;
-    --cta-wash-from:   rgba(255,255,255,0);
-    --cta-wash-mid:    rgba(255,255,255,0);
-    --cta-wash-midpos: 50%;
-    --cta-wash-to:     rgba(255,255,255,0);
-    /* glow 1 — warm, upper left */
-    --cta-o1-rgb:   243,111,90;
-    --cta-o1-alpha: .25;
-    --cta-o1-w:     1138px;
-    --cta-o1-h:     1040px;
-    --cta-o1-x:     -22.2%;
-    --cta-o1-y:     -546px;
-    --cta-o1-mid:   54.1%;   /* where the mask drops to 50% */
-    --cta-o1-end:   83.2%;   /* where it reaches full transparency */
-    /* glow 2 — cool, lower right */
-    --cta-o2-rgb:   13,168,194;
-    --cta-o2-alpha: .15;
-    --cta-o2-w:     954px;
-    --cta-o2-h:     950px;
-    --cta-o2-x:     74.2%;
-    --cta-o2-y:     374px;
-    --cta-o2-mid:   65%;
-    --cta-o2-end:   100%;
-
-    background-color: var(--cta-bg);
-    background-image: linear-gradient(var(--cta-wash-angle),
-      var(--cta-wash-from) 0%, var(--cta-wash-mid) var(--cta-wash-midpos), var(--cta-wash-to) 100%);
-  }
-  #ctaOrb1 { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
-    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
-            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
-  #ctaOrb2 { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
-    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
-            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
-
-  /* ---- CTA · tablet (max 1023px) ---- */
-  @media (max-width:1023px) { #cta { } }
-  /* ---- CTA · mobile (max 639px) ---- */
-  @media (max-width:639px)  { #cta { } }
-
-  /* ---------- Trustpilot review rail ---------- */
-  .tp-scroll { scrollbar-width:none; -ms-overflow-style:none; }
-  .tp-scroll::-webkit-scrollbar { display:none; }
-  .tp-star { width:16px; height:16px; background:#00B67A; display:flex; align-items:center; justify-content:center; }
-  .tp-nav { transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1), box-shadow .3s ease; }
-  .tp-nav:hover { transform:translateY(-50%) scale(1.06); }
-  .tp-nav:active { transform:translateY(-50%) scale(.96); }
-  .tp-nav[disabled] { opacity:0 !important; pointer-events:none; }
-  .tp-dot { transition:width .35s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
-
-  /* ---------- language live-scan block ---------- */
-  .pill-lang { transition: background-color .3s ease, color .3s ease, box-shadow .3s ease; }
-  .pill-lang.active { background:#111827; color:#fff; }
-
-  /* ---------- pen annotations (reduced-motion: static final state) ---------- */
-  .no-motion #freeWord, .no-motion #oneWord { color:#DC5A45; }
-  .no-motion #oneUnderline, .no-motion #freeCirclePath { opacity:1; }
-
-  /* ---------- hero paper document (Flow font renders text as redacted bars) ---------- */
-  .font-flow { font-family:'Flow Circular', cursive; }
-  /* drop-shadow on the parent: clip-path on the sheet would eat its own box-shadow,
-     while a parent filter wraps the already-clipped silhouette (incl. the dog-ear) */
-  .paper-doc { filter: drop-shadow(0 1px 2px rgba(17,24,39,.05)) drop-shadow(0 18px 36px rgba(17,24,39,.13)); }
-  .paper-doc .paper-sheet {
-    clip-path: polygon(0 0, calc(100% - 52px) 0, 100% 52px, 100% 100%, 0 100%);
-    border: 1px solid rgba(17,24,39,.07);
-    border-radius: 16px; /* rounds 3 corners + curves the border; the 4th is cut by the clip */
-  }
-  .paper-doc .paper-fold {
-    position:absolute; top:0; right:0; width:52px; height:52px;
-    background: linear-gradient(225deg, rgba(0,0,0,0) 50%, #E9EBF0 50%, #F8F9FB 98%);
-    border-bottom-left-radius: 12px;
-    filter: drop-shadow(-5px 5px 6px rgba(17,24,39,.10));
-  }
-
-  /* ---------- hero avatar stack (Figma 5379:2064 — 32px circles on a 22px step) ---------- */
-  .avatar-stack img { filter: drop-shadow(-1px 0 2px rgba(17,24,39,.07)); }
-  .avatar-stack img + img { margin-left: -10px; }
-
-  /* ---------- breathing bar ---------- */
-  @keyframes breathe { 0%,100% { width:26%; } 50% { width:38%; } }
-  .breathe { animation:breathe 4.5s cubic-bezier(.45,0,.25,1) infinite; }
-  .no-motion .breathe { animation:none; width:32%; }
-
-  @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1);} 50% { opacity:.45; transform:scale(.8);} }
-  .pulse-dot { animation:pulse-dot 2.2s ease-in-out infinite; }
-
-  /* ---------- FAQ accordion ---------- */
-  .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1); }
-  .faq-item.open .faq-a { grid-template-rows:1fr; }
-  .faq-a > div { overflow:hidden; }
-  .faq-chev { transition:transform .45s cubic-bezier(.32,.72,0,1); }
-  .faq-item.open .faq-chev { transform:rotate(180deg); }
-
-  /* ---------- persona fade ---------- */
-  /* All three panels share one grid cell, so the holder is exactly as tall as the tallest
-     of them at any width. It used to be min-h-[380px] with the inactive panels absolutely
-     positioned: a number picked for the desktop panel, which left 69px of dead space under
-     the active one on a phone and read as a broken gap above the reviews rail. */
-  .persona-panel { grid-area:1/1; transition:opacity .45s cubic-bezier(.32,.72,0,1), transform .45s cubic-bezier(.32,.72,0,1); }
-  .persona-panel.hidden-panel { opacity:0; transform:translateY(14px); pointer-events:none; }
-
-  /* ---------- buttons ---------- */
-  .btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
-  .btn-press:active { transform:scale(.97); }
-  /* circle stays put; only the arrow inside rotates 45° counter-clockwise */
-  .icon-orb svg { transition:transform .35s cubic-bezier(.32,.72,0,1); }
-  .group:hover .icon-orb svg { transform:rotate(-45deg); }
-
-  .nums { font-variant-numeric: tabular-nums; }
-
-  /* ---------- island nav dropdowns ---------- */
-  .nav-chev { opacity:.45; transition:transform .2s cubic-bezier(.32,.72,0,1); }
-  .nav-item:hover .nav-chev, .nav-item:focus-within .nav-chev { transform:rotate(180deg); }
-  .nav-drop { opacity:0; visibility:hidden; transform:translate(-50%,-6px);
-    transition:opacity .2s ease, transform .2s cubic-bezier(.32,.72,0,1), visibility .2s; }
-  .nav-item:hover .nav-drop, .nav-item:focus-within .nav-drop { opacity:1; visibility:visible; transform:translate(-50%,0); }
-  @media (prefers-reduced-motion: reduce) { .nav-drop, .nav-chev { transition:none; } }
-  /* ---------- header below lg: burger + panel ---------- */
-  .nav-burger-close { display:none; }
-  #navBurger[aria-expanded="true"] .nav-burger-open { display:none; }
-  #navBurger[aria-expanded="true"] .nav-burger-close { display:block; }
-
-  .nav-panel { position:absolute; left:1rem; right:1rem; top:100%;
-    opacity:0; visibility:hidden; transform:translateY(-8px);
-    transition:opacity .22s ease, transform .22s cubic-bezier(.32,.72,0,1), visibility .22s; }
-  .nav-panel.open { opacity:1; visibility:visible; transform:translateY(0); }
-  @media (prefers-reduced-motion: reduce) { .nav-panel { transition:none; } }
-
-
-  /* ---------- controls on phones ----------
-     These sizes are declared in CSS rather than as utility classes, so they need
-     their own breakpoint. Field heights come down with the text so the controls
-     keep their proportions instead of turning into tall boxes with small labels. */
-  @media (max-width: 639px) {
-    .qc-area, .rc-area, .sp-area { font-size: 14px; }
-    .fld, .cf-field { height: 44px; font-size: 14px; }
-    textarea.fld { height: auto; }
-    .stepper { height: 44px; }
-    .stepper input { font-size: 14px; }
-    .stepper button { width: 34px; font-size: 16px; }
-    .pa-select { height: 40px; font-size: 13px; }
-    .pa-step { height: 40px; }
-    .pa-step input { font-size: 13px; }
-    .pa-step button { width: 32px; font-size: 15px; }
-    .sp-select { height: 36px; font-size: 12px; }
-    .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
-    .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
-    .rc-stat b { font-size: 17px; }
-    .sp-row { font-size: 12px; }
-    .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
-    .cf-label { font-size: 11.5px; }
-    .ctl { font-size: 13.5px; }
-  }
-  /* the scan scene pins and scrubs only from lg up; below that it is a normal section */
-  @media (min-width: 1024px) { #scanWrap { height: 285vh; } }
-
-</style>
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/tailwind.css">
+<script>(function (h) {h.classList.add('js');if (!matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('js-motion');setTimeout(function () { if (!window.PS_READY) h.classList.remove('js', 'js-motion'); }, 3500);})(document.documentElement);</script>
+<script defer src="/assets/vendor/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="/assets/vendor/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="/assets/js/site.js"></script>
 </head>
-
-<style>
-  /* [hidden] must actually hide: Tailwind's display utilities share specificity with the
-     attribute selector and come later in the sheet, so a hidden element carrying .flex
-     still renders. */
-  [hidden] { display: none !important; }
-
-  /* Anchor landings clear the sticky header. The header is fixed at top:20 and its bar
-     ends at 76px; 100 leaves the section label fully visible with air above. */
-  section[id] { scroll-margin-top: 100px; }
-
-  a:focus-visible, button:focus-visible, summary:focus-visible,
-  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
-    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible { outline-color: #6ED7E8; }
-
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-  /* the period switcher, same control as the homepage widget */
-  .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
-  .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
-
-  /* the AI package selector. The selected row is tinted AND carries the filled dot with
-     a check mark, so the state survives without colour. Keyboard focus lands on the
-     hidden radio, so the ring is drawn on the row that contains it. */
-  .ai-opt { transition:background-color .15s ease; }
-  .ai-opt:hover { background:#F2FAFB; }
-  .ai-opt.on { background:#E6F4F7; }
-  .ai-opt .ai-dot { background:#fff; transition:background-color .15s ease, box-shadow .15s ease; }
-  .ai-opt .ai-dot svg { opacity:0; }
-  .ai-opt.on .ai-dot { background:#0991A8; box-shadow:inset 0 0 0 1px #0991A8; }
-  .ai-opt.on .ai-dot svg { opacity:1; }
-  .ai-opt:has(input:focus-visible) { outline:2px solid #6ED7E8; outline-offset:-2px; }
-
-  /* the bento hover from the homepage capabilities grid */
-  .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
-  .spotlight:hover { transform:translateY(-4px); }
-  @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
-
-  /* pen and ring marks — the reduced-motion fallback is mandatory */
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-
-  /* ===== closing CTA · one place for every knob — see build/cta.js ===== */
-  #free-check {
-    --cta-bg: #F2FCFC;
-    /* warm, upper left */
-    --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
-    --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
-    --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
-    --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
-    /* cool, lower right */
-    --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
-    --cta-o2-w: 954px;          --cta-o2-h: 950px;
-    --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
-    --cta-o2-mid: 65%;          --cta-o2-end: 100%;
-    background-color: var(--cta-bg);
-  }
-  #free-checkGlowWarm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
-    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
-            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
-  #free-checkGlowCool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
-    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
-            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
-
-  /* tablet — about three quarters of the desktop figure */
-  @media (max-width:1023px) {
-    #free-check {
-      --cta-o1-w: 840px;  --cta-o1-h: 770px;
-      --cta-o1-x: -28%;   --cta-o1-y: -400px;
-      --cta-o2-w: 700px;  --cta-o2-h: 700px;
-      --cta-o2-x: 64%;    --cta-o2-y: 300px;
-    }
-  }
-  /* phone — half the size, softer, hard against the edges so the middle stays readable */
-  @media (max-width:639px) {
-    #free-check {
-      --cta-o1-alpha: .20;
-      --cta-o1-w: 560px;  --cta-o1-h: 520px;
-      --cta-o1-x: -38%;   --cta-o1-y: -250px;
-      --cta-o2-alpha: .12;
-      --cta-o2-w: 470px;  --cta-o2-h: 470px;
-      --cta-o2-x: 52%;    --cta-o2-y: 210px;
-    }
-  }
-
-  /* the ring's reduced-motion fallback is mandatory: colour and path are both scripted */
-  .no-motion .ring-word { color:#DC5A45; }
-  .no-motion .ring-path { opacity:1; }
-</style>
 <body class="font-sans text-ink-900 bg-white">
 <div class="grain"></div>
 
-<header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
+<header data-site-header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
   <!-- On phones the bar starts as the floating pill every other width has, and DOCKS once
        the page scrolls: flush to the top edge, no side gutters, square corners. One
        class, toggled by the script at the foot of this element; nothing changes from sm
        up. The transition is on the three properties that move and respects reduced
        motion. -->
-  <style>
-    .site-header { transition: top .28s cubic-bezier(.32,.72,0,1), padding .28s cubic-bezier(.32,.72,0,1); }
-    .site-header .site-nav { transition: border-radius .28s cubic-bezier(.32,.72,0,1), box-shadow .28s ease, background-color .28s ease; }
-    @media (max-width: 639px) {
-      .site-header.is-docked { top: 0; padding-left: 0; padding-right: 0; }
-      .site-header.is-docked .site-nav { border-radius: 0; background-color: rgba(255,255,255,.94);
-        box-shadow: 0 1px 0 rgba(17,24,39,.07), 0 8px 24px -16px rgba(17,24,39,.18); }
-      .site-header.is-docked #navPanel { margin-left: .75rem; margin-right: .75rem; }
-    }
-    @media (prefers-reduced-motion: reduce) { .site-header, .site-header .site-nav { transition: none; } }
-  </style>
   <div class="flex justify-center">
   <nav class="site-nav pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
     <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-5 xl:pr-6">
       <!-- the mark alone on phones, so Sign in and Check free fit beside it -->
-      <img src="assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
-      <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
+      <img src="/assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
+      <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
     </a>
     <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
       <div class="nav-item relative">
@@ -429,7 +94,7 @@ tailwind.config = {
       </div>
       <a href="account.html" class="btn-press inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
       <a href="index.html#top" class="btn-press inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5">Check free</a>
-      <button type="button" id="navBurger" class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+      <button type="button" data-nav-burger class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
         <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
         <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
       </button>
@@ -437,7 +102,7 @@ tailwind.config = {
   </nav>
   </div>
 
-  <div id="navPanel" class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
+  <div id="navPanel" data-nav-panel class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
     <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
       <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Core</div>
       <a href="index.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
@@ -471,15 +136,6 @@ tailwind.config = {
       </div>
     </div>
   </div>
-  <script>
-    (() => {
-      const h = document.currentScript.closest('.site-header');
-      if (!h) return;
-      const dock = () => h.classList.toggle('is-docked', scrollY > 8);
-      addEventListener('scroll', dock, { passive: true });
-      dock();
-    })();
-  </script>
 </header>
 
 <main>
@@ -492,17 +148,10 @@ tailwind.config = {
        Only ONE helper line is approved for this page — the one-time note. The homepage's
        per-period notes are deliberately not rendered: the brief forbids inventing
        billing or cancellation wording in the design layer. -->
-  <section id="plans" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
-    <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
-        <defs>
-          <pattern id="heroDots" width="22" height="22" patternUnits="userSpaceOnUse">
-            <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#heroDots)"></rect>
-      </svg>
-    <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
-    <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
+  <section id="plans" data-component="pricing-widget" data-pricing="onetime" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
+    <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+    <div class="orb absolute orb-hero-teal"></div>
+    <div class="orb absolute orb-hero-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv text-center max-w-[760px] mx-auto mb-8 sm:mb-10 lg:mb-12">
@@ -510,13 +159,13 @@ tailwind.config = {
           <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">PRICING</span>
         </div>
-        <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">Plagiarism Checker <span class="pen-word relative inline-block">Pricing<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 126 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c32-7 84-7 120-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span> &amp; Plans</h1>
+        <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">Plagiarism Checker <span class="pen-word relative inline-block">Pricing<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 126 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c32-7 84-7 120-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span> &amp; Plans</h1>
         <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600">Compare one-time, monthly, 3-month, and yearly options and choose the plan that fits how much content you expect to check. The pricing cards show the current price, checking allowance, billing period, and included features for each plan.</p>
       </div>
 
       <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
-        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
-          <button type="button" data-period="onetime" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">One-time</button>
+        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto">
+          <button type="button" data-period="onetime" aria-pressed="true" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600 active">One-time</button>
           <button type="button" data-period="monthly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">Monthly</button>
           <button type="button" data-period="quarterly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">3-Months</button>
           <button type="button" data-period="yearly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">Yearly</button>
@@ -532,16 +181,16 @@ tailwind.config = {
 
             </div>
             <div class="flex items-end gap-1.5 mb-3">
-              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price"></span>
-              <span class="text-[12.5px] font-medium text-ink-500 pb-1.5 js-term"></span>
+              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price">$9.95</span>
+              <span class="text-[12.5px] font-medium text-ink-500 pb-1.5 js-term">/ one-time</span>
             </div>
-            <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-600 px-3 py-1 text-[11.5px] font-bold tabular-nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+            <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-600 px-3 py-1 text-[11.5px] font-bold tabular-nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">$1.00</span>&nbsp;/ 1,000 words</div>
             <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
-            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"></ul>
+            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>1 plagiarism check</li><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>1 AI check</li><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No expiry</li></ul>
             <a href="index.html" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Light</a>
           </div>
         </div>
-        <div data-tier="standard" class="relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden">
+        <div data-tier="standard" data-surface="dark" class="relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden">
           <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>
           <div class="relative">
             <div class="flex items-center justify-between gap-3 mb-1.5">
@@ -549,12 +198,12 @@ tailwind.config = {
               <span class="text-[9.5px] font-bold tracking-widest bg-orange-700 text-white rounded-full px-2.5 py-1 uppercase">Recommended</span>
             </div>
             <div class="flex items-end gap-1.5 mb-3">
-              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price"></span>
-              <span class="text-[12.5px] font-medium text-white/50 pb-1.5 js-term"></span>
+              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price">$17.95</span>
+              <span class="text-[12.5px] font-medium text-white/50 pb-1.5 js-term">/ one-time</span>
             </div>
-            <div class="inline-flex items-center rounded-full bg-white/10 text-white/70 px-3 py-1 text-[11.5px] font-bold tabular-nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+            <div class="inline-flex items-center rounded-full bg-white/10 text-white/70 px-3 py-1 text-[11.5px] font-bold tabular-nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">$0.90</span>&nbsp;/ 1,000 words</div>
             <div class="h-px bg-white/10 mb-5 sm:mb-6 lg:mb-7"></div>
-            <ul class="space-y-3.5 text-[13.5px] font-medium text-white/80 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"></ul>
+            <ul class="space-y-3.5 text-[13.5px] font-medium text-white/80 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>10 plagiarism checks</li><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>10 AI checks</li><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No expiry</li></ul>
             <a href="index.html" class="btn-press block text-center rounded-full bg-white text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Standard</a>
           </div>
         </div>
@@ -566,19 +215,21 @@ tailwind.config = {
 
             </div>
             <div class="flex items-end gap-1.5 mb-3">
-              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price"></span>
-              <span class="text-[12.5px] font-medium text-ink-500 pb-1.5 js-term"></span>
+              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price">$41.95</span>
+              <span class="text-[12.5px] font-medium text-ink-500 pb-1.5 js-term">/ one-time</span>
             </div>
-            <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-600 px-3 py-1 text-[11.5px] font-bold tabular-nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+            <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-600 px-3 py-1 text-[11.5px] font-bold tabular-nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">$0.42</span>&nbsp;/ 1,000 words</div>
             <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
-            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"></ul>
+            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>50 plagiarism checks</li><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>50 AI checks</li><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No expiry</li></ul>
             <a href="index.html" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Premium</a>
           </div>
         </div>
       </div>
 
       <!-- the one approved helper, shown only on the one-time tab -->
-      <p id="onetimeHelper" hidden class="rv mt-6 lg:mt-7 text-center text-[13px] sm:text-[13.5px] font-semibold text-ink-600">Pay once. Your purchased quota does not expire.</p>
+      <p data-period-only="onetime" class="rv mt-6 lg:mt-7 text-center text-[13px] sm:text-[13.5px] font-semibold text-ink-600">Pay once. Your purchased quota does not expire.</p>
+      <template data-pricing-feat><li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>{feat}</li></template>
+      <script type="application/json" data-pricing-data>{"onetime":{"note":"One payment · packages never expire","term":"/ one-time","light":{"price":"$9.95","rate":"$1.00","feats":["1 plagiarism check","1 AI check","No expiry"]},"standard":{"price":"$17.95","rate":"$0.90","feats":["10 plagiarism checks","10 AI checks","No expiry"]},"premium":{"price":"$41.95","rate":"$0.42","feats":["50 plagiarism checks","50 AI checks","No expiry"]}},"monthly":{"note":"Recurring billing · cancel anytime","term":"/ month","light":{"price":"$22.95","rate":"$0.23","feats":["100 plagiarism checks","30-day validity"]},"standard":{"price":"$34.95","rate":"$0.12","feats":["300 plagiarism checks","API access","Report storage","30-day validity"]},"premium":{"price":"$54.95","rate":"$0.09","feats":["300 plagiarism checks","300 AI checks","API access","Report storage","30-day validity"]}},"quarterly":{"note":"Recurring billing every 3 months · cancel anytime","term":"/ 3 months","light":{"price":"$34.95","rate":"$0.17","feats":["100 plagiarism checks","100 AI checks","90-day validity"]},"standard":{"price":"$64.95","rate":"$0.10","feats":["300 plagiarism checks","300 AI checks","API access","Report storage","90-day validity"]},"premium":{"price":"$89.95","rate":"$0.07","feats":["500 plagiarism checks","500 AI checks","API access","Report storage","90-day validity"]}},"yearly":{"note":"Recurring billing yearly · best per-word rate","term":"/ year","light":{"price":"$114.95","rate":"$0.11","feats":["1,000 plagiarism checks","365-day validity"]},"standard":{"price":"$174.95","rate":"$0.06","feats":["3,000 plagiarism checks","API access","Report storage","365-day validity"]},"premium":{"price":"$259.95","rate":"$0.04","feats":["3,000 plagiarism checks","3,000 AI checks","API access","Report storage","365-day validity"]}}}</script>
     </div>
   </section>
 
@@ -587,7 +238,7 @@ tailwind.config = {
        the one with a proof figure, so it gets the lead: a tall double-bezel card with the
        figure in the homepage's statistic treatment. The other two stack beside it in the
        same vocabulary at the smaller size. Same words, three weights. -->
-  <section id="core-value" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="core-value" data-component="value-groups" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
         <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
@@ -644,9 +295,9 @@ tailwind.config = {
 
        DYNAMIC: this is the approved 2026-08-24 snapshot for the prototype, "not a
        permission to create a second manual billing source". -->
-  <section id="ai-pricing" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
-    <div class="orb absolute" style="width:880px;height:820px;left:-14%;top:-360px;background:rgba(44,195,219,.20)"></div>
-    <div class="orb absolute" style="width:700px;height:680px;right:-12%;bottom:-320px;background:rgba(243,111,90,.12)"></div>
+  <section id="ai-pricing" data-component="ai-packages" data-surface="dark" data-ai-package class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute orb-deep-teal"></div>
+    <div class="orb absolute orb-deep-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1fr_1.25fr] gap-8 lg:gap-14 items-start">
@@ -685,7 +336,7 @@ tailwind.config = {
                   <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500 text-right">Current price</span>
                 </div>
                 <div class="divide-y divide-ink-100">
-                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer on">
                     <input type="radio" name="aiPackage" value="10000" data-billing="One-time" data-price="$4.95" class="sr-only" checked>
                     <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
                       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -768,7 +419,7 @@ tailwind.config = {
                invent one. data-purchase-hook and the data-ai-* attributes are the
                developer's binding point. -->
           <div class="mt-5 sm:mt-6">
-            <button type="button" id="aiContinue" data-purchase-hook="ai-package" data-ai-words="10000" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            <button type="button" data-purchase-hook="ai-package" data-ai-words="10000" data-ai-billing="One-time" data-ai-price="$4.95" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
               <span>Continue with <span class="js-ai-words tabular-nums">10,000</span> AI words</span>
               <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/15 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
             </button>
@@ -791,10 +442,10 @@ tailwind.config = {
        The shell is build/banner.js — the same block the AI Detector page gives its API
        and the University page gives AI checking. It used to carry its own heading size
        and padding here; that was drift, not a decision. -->
-  <section id="high-volume" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
+  <section id="high-volume" data-component="banner" class="relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
-        <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:rgba(243,111,90,.18)"></div>
+      <div data-surface="dark" class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
+        <div class="orb absolute orb-banner orb-banner-coral"></div>
         <div class="relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
           <div class="min-w-0 flex-1 text-white">
         <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-3.5">
@@ -824,7 +475,7 @@ tailwind.config = {
        What keeps it secondary is the section, not the card: a short band rather than a
        full act. The heading is the page's h2, set left like every other section heading;
        the row runs to 1200. Words are DEC-0042's. -->
-  <section id="services" class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
+  <section id="services" data-component="services" class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-7 sm:mb-8 lg:mb-10">
         <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
@@ -885,7 +536,7 @@ tailwind.config = {
   <!-- ================= 06 · PRICING FAQ =================
        Seven exact questions. Every answer is in the rendered HTML — the brief requires it
        and any later schema must match the visible copy exactly. -->
-  <section id="pricing-faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
+  <section id="pricing-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
@@ -899,69 +550,69 @@ tailwind.config = {
         </div>
 
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
             <div class="faq-item open">
-              <button type="button" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="pricing-faq-a1" aria-expanded="true" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">How do I choose the right PlagiarismSearch plan?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Start with how much content you expect to check and which additional features you need. Use the One-time, Monthly, 3-Months, and Yearly tabs to compare the current price, checking allowance, billing period, and included features for each plan.</p></div></div>
+              <div class="faq-a" id="pricing-faq-a1"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Start with how much content you expect to check and which additional features you need. Use the One-time, Monthly, 3-Months, and Yearly tabs to compare the current price, checking allowance, billing period, and included features for each plan.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="pricing-faq-a2" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Do one-time packages expire?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. A purchased one-time quota does not expire, so you can use it when you need it rather than within a fixed billing period.</p></div></div>
+              <div class="faq-a" id="pricing-faq-a2"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. A purchased one-time quota does not expire, so you can use it when you need it rather than within a fixed billing period.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="pricing-faq-a3" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Is AI checking included with every plagiarism plan?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Not necessarily. AI allowance is plan-specific. If AI checking is included with a plan, the current pricing widget shows the available AI allowance in that plan’s features. Separate AI word packages are also available on this page.</p></div></div>
+              <div class="faq-a" id="pricing-faq-a3"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Not necessarily. AI allowance is plan-specific. If AI checking is included with a plan, the current pricing widget shows the available AI allowance in that plan’s features. Separate AI word packages are also available on this page.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="pricing-faq-a4" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Do all plans include API access and report storage?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. API access and report storage are plan-specific features. Check the current pricing widget to see which options are included with the plan you are considering.</p></div></div>
+              <div class="faq-a" id="pricing-faq-a4"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">No. API access and report storage are plan-specific features. Check the current pricing widget to see which options are included with the plan you are considering.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="pricing-faq-a5" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Can I buy AI checking separately?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Separate AI word packages are available for users who need additional AI checking volume. AI checks use an AI word balance that is separate from plagiarism checking.</p></div></div>
+              <div class="faq-a" id="pricing-faq-a5"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. Separate AI word packages are available for users who need additional AI checking volume. AI checks use an AI word balance that is separate from plagiarism checking.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="pricing-faq-a6" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">Can I try PlagiarismSearch before I buy a plan?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. You can run a plagiarism check of up to 150 words without creating an account. New accounts also receive a one-time 1,000-word credit that can be used for plagiarism or AI checking.</p></div></div>
+              <div class="faq-a" id="pricing-faq-a6"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Yes. You can run a plagiarism check of up to 150 words without creating an account. New accounts also receive a one-time 1,000-word credit that can be used for plagiarism or AI checking.</p></div></div>
             </div>
             <div class="faq-item">
-              <button type="button" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="pricing-faq-a7" aria-expanded="false" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">What if the standard plans do not fit my volume?</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Explore the VIP options if you need a higher-volume or custom arrangement beyond the standard pricing choices. <a href="vip.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">View VIP options</a></p></div></div>
+              <div class="faq-a" id="pricing-faq-a7"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">Explore the VIP options if you need a higher-volume or custom arrangement beyond the standard pricing choices. <a href="vip.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">View VIP options</a></p></div></div>
             </div>
           </div>
         </div>
@@ -972,22 +623,15 @@ tailwind.config = {
   <!-- ================= 07 · FINAL FREE-CHECK CTA =================
        "Do not render a second checker inside this section." One action, to the primary
        Plagiarism Checker owner at /. Plagiarism only: no AI, and no "full engine". -->
-  <section id="free-check" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+  <section id="free-check" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <svg class="absolute inset-0 w-full h-full" aria-hidden="true">
-          <defs>
-            <pattern id="free-checkDots" width="22" height="22" patternUnits="userSpaceOnUse">
-              <rect width="2" height="2" rx="0.65" fill="#DAE7ED"></rect>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#free-checkDots)"></rect>
-        </svg>
-        <div id="free-checkGlowWarm" class="orb"></div>
-        <div id="free-checkGlowCool" class="orb"></div>
+        <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+        <div class="orb cta-glow-warm"></div>
+        <div class="orb cta-glow-cool"></div>
       </div>
 
     <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Try plagiarism checking <span class="ring-word relative inline-block">before you choose<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span> a plan</h2>
+      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Try plagiarism checking <span class="ring-word relative inline-block">before you choose<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> a plan</h2>
       <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Check up to 150 words without creating an account. See how the plagiarism checker works first, then return when you are ready to choose a plan.</p>
       <div class="rv flex justify-center">
         <a href="index.html" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
@@ -1002,7 +646,7 @@ tailwind.config = {
   </section>
 </main>
 
-<footer class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
+<footer data-surface="dark" class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
   <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
   <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 
@@ -1013,7 +657,7 @@ tailwind.config = {
          frozen. Both are restored the moment approved copy and figures arrive. -->
     <div class="grid sm:grid-cols-2 gap-8 sm:gap-10 items-center mb-10 sm:mb-13 lg:mb-16">
       <a href="index.html" class="inline-flex items-center">
-        <img src="assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+        <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
       </a>
       <div class="sm:justify-self-end">
         <div class="flex gap-3">
@@ -1112,7 +756,7 @@ tailwind.config = {
        Inside the footer element on purpose. shell.js replaces a page from the opening
        tag to the first closing one, so anything placed after that closing tag would
        survive the replacement and be added again by every build. -->
-  <button type="button" id="toTop" aria-label="Back to top"
+  <button type="button" data-to-top aria-label="Back to top"
     class="fixed z-40 bottom-5 right-5 sm:bottom-7 sm:right-7 lg:bottom-9 lg:right-9
            w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-ink-900 shadow-diffuse-lg
            ring-2 ring-teal-600/45 flex items-center justify-center opacity-0 translate-y-3
@@ -1121,321 +765,7 @@ tailwind.config = {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
   </button>
 
-  <script>
-  (() => {
-    const btn = document.getElementById("toTop");
-    if (!btn) return;
-
-    /* Shows once a screenful and a bit is behind you: soon enough to be there when
-       wanted, late enough that a short page never summons it. */
-    let ticking = false;
-    const mark = () => {
-      const past = scrollY > innerHeight * 1.2;
-      btn.classList.toggle("opacity-0", !past);
-      btn.classList.toggle("translate-y-3", !past);
-      btn.classList.toggle("pointer-events-none", !past);
-      ticking = false;
-    };
-    addEventListener("scroll", () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(mark); }
-    }, { passive: true });
-    addEventListener("resize", mark, { passive: true });
-    mark();
-
-    btn.addEventListener("click", () => {
-      const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      scrollTo({ top: 0, behavior: still ? "auto" : "smooth" });
-      /* send the keyboard back with the page, or the next Tab resumes at the footer */
-      const first = document.querySelector("header a, header button");
-      if (first) first.focus({ preventScroll: true });
-    });
-  })();
-  </script>
 </footer>
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-
-  gsap.utils.toArray('.rv-kids').forEach(group => {
-    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
-      scrollTrigger: { trigger: group, start: 'top 80%' } });
-  });
-
-  gsap.utils.toArray('.pen-word').forEach(word => {
-    const line = word.querySelector('.pen-underline');
-    if (!line) return;
-    const len = line.getTotalLength();
-    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-    const tl = gsap.timeline(inFirstView
-      ? { delay: 1 }
-      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-      .set(line, { opacity: 1 }, .35)
-      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-  });
-
-  /* ring mark — the closing act loops a word instead of underlining it. Same trick as
-     the pen mark, longer path, and it waits until the word is well inside the viewport. */
-  gsap.utils.toArray('.ring-word').forEach(word => {
-    const path = word.querySelector('.ring-path');
-    if (!path) return;
-    const len = path.getTotalLength();
-    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-    gsap.timeline({ scrollTrigger: { trigger: word, start: 'top 75%', once: true } })
-      .to(word, { color: '#DC5A45', duration: .4, ease: 'power2.out' })
-      .set(path, { opacity: 1 }, .15)
-      .to(path, { strokeDashoffset: 0, duration: .9, ease: 'power2.inOut' }, .15);
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-
-  /* ── the pricing widget shell ────────────────────────────────────────────────
-     PLACEHOLDER DATA. DEC-0042 makes every figure here backend-driven; this exists so
-     the shell has something to render until a developer connects the authoritative
-     production widget, and it is the same object the homepage uses so the two pages
-     cannot show different prices.
-
-     The per-period notes the homepage renders are deliberately absent: this brief
-     approves exactly one helper line, the one-time one, and forbids inventing billing
-     or cancellation wording in the design layer. */
-  const PLANS = {
-    "onetime": {
-      "note": "One payment · packages never expire",
-      "term": "/ one-time",
-      "light": {
-        "price": "$9.95",
-        "rate": "$1.00",
-        "feats": [
-          "1 plagiarism check",
-          "1 AI check",
-          "No expiry"
-        ]
-      },
-      "standard": {
-        "price": "$17.95",
-        "rate": "$0.90",
-        "feats": [
-          "10 plagiarism checks",
-          "10 AI checks",
-          "No expiry"
-        ]
-      },
-      "premium": {
-        "price": "$41.95",
-        "rate": "$0.42",
-        "feats": [
-          "50 plagiarism checks",
-          "50 AI checks",
-          "No expiry"
-        ]
-      }
-    },
-    "monthly": {
-      "note": "Recurring billing · cancel anytime",
-      "term": "/ month",
-      "light": {
-        "price": "$22.95",
-        "rate": "$0.23",
-        "feats": [
-          "100 plagiarism checks",
-          "30-day validity"
-        ]
-      },
-      "standard": {
-        "price": "$34.95",
-        "rate": "$0.12",
-        "feats": [
-          "300 plagiarism checks",
-          "API access",
-          "Report storage",
-          "30-day validity"
-        ]
-      },
-      "premium": {
-        "price": "$54.95",
-        "rate": "$0.09",
-        "feats": [
-          "300 plagiarism checks",
-          "300 AI checks",
-          "API access",
-          "Report storage",
-          "30-day validity"
-        ]
-      }
-    },
-    "quarterly": {
-      "note": "Recurring billing every 3 months · cancel anytime",
-      "term": "/ 3 months",
-      "light": {
-        "price": "$34.95",
-        "rate": "$0.17",
-        "feats": [
-          "100 plagiarism checks",
-          "100 AI checks",
-          "90-day validity"
-        ]
-      },
-      "standard": {
-        "price": "$64.95",
-        "rate": "$0.10",
-        "feats": [
-          "300 plagiarism checks",
-          "300 AI checks",
-          "API access",
-          "Report storage",
-          "90-day validity"
-        ]
-      },
-      "premium": {
-        "price": "$89.95",
-        "rate": "$0.07",
-        "feats": [
-          "500 plagiarism checks",
-          "500 AI checks",
-          "API access",
-          "Report storage",
-          "90-day validity"
-        ]
-      }
-    },
-    "yearly": {
-      "note": "Recurring billing yearly · best per-word rate",
-      "term": "/ year",
-      "light": {
-        "price": "$114.95",
-        "rate": "$0.11",
-        "feats": [
-          "1,000 plagiarism checks",
-          "365-day validity"
-        ]
-      },
-      "standard": {
-        "price": "$174.95",
-        "rate": "$0.06",
-        "feats": [
-          "3,000 plagiarism checks",
-          "API access",
-          "Report storage",
-          "365-day validity"
-        ]
-      },
-      "premium": {
-        "price": "$259.95",
-        "rate": "$0.04",
-        "feats": [
-          "3,000 plagiarism checks",
-          "3,000 AI checks",
-          "API access",
-          "Report storage",
-          "365-day validity"
-        ]
-      }
-    }
-  };
-
-  const tabs = [...document.querySelectorAll('#periodTabs .period-btn')];
-  const cards = [...document.querySelectorAll('[data-tier]')];
-  const helper = document.getElementById('onetimeHelper');
-  if (!tabs.length || !cards.length) return;
-
-  const render = key => {
-    const period = PLANS[key];
-    if (!period) return;
-    tabs.forEach(t => {
-      const on = t.dataset.period === key;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-pressed', String(on));
-    });
-    helper.hidden = key !== 'onetime';
-    cards.forEach(card => {
-      const tier = period[card.dataset.tier];
-      if (!tier) return;
-      card.querySelector('.js-price').textContent = tier.price;
-      card.querySelector('.js-term').textContent = period.term;
-      card.querySelector('.js-rate').textContent = tier.rate;
-      card.querySelector('.js-feats').innerHTML = tier.feats.map(f =>
-        '<li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>' + f + '</li>').join('');
-    });
-  };
-
-  tabs.forEach(t => t.addEventListener('click', () => render(t.dataset.period)));
-  render('onetime');
-
-  /* ── the AI package selector ──────────────────────────────────────────────
-     One radio group; the checked one names the allowance on the button and stamps it
-     on the data hook a developer binds the real purchase flow to. */
-  const radios = [...document.querySelectorAll('input[name="aiPackage"]')];
-  const go = document.getElementById('aiContinue');
-  if (radios.length && go) {
-    const fmt = n => Number(n).toLocaleString('en-US');
-    const syncAi = () => {
-      const r = radios.find(x => x.checked) || radios[0];
-      radios.forEach(x => x.closest('.ai-opt').classList.toggle('on', x === r));
-      go.querySelector('.js-ai-words').textContent = fmt(r.value);
-      go.dataset.aiWords = r.value;
-      go.dataset.aiBilling = r.dataset.billing;
-      go.dataset.aiPrice = r.dataset.price;
-    };
-    radios.forEach(x => x.addEventListener('change', syncAi));
-    syncAi();
-  }
-
-  /* FAQ: answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      const list = item.parentElement;
-      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-      list.querySelectorAll('.faq-q').forEach(b =>
-        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
-    });
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>
 <!-- VSWITCH · temporary review tool, remove with the retired version -->
 <div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[100] print:hidden">
   <div class="flex items-center gap-1 rounded-full bg-white/95 backdrop-blur-md ring-1 ring-black/10 shadow-diffuse-lg p-1 pl-3">

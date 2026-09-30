@@ -155,7 +155,9 @@ console.log('\ndesign system');
     const html = fs.readFileSync(path.join(SITE, f), 'utf8');
     const open = html.indexOf('<section');
     const first = html.slice(open, html.indexOf('</section>', open));
-    const d = first.indexOf('Dots" width="22"'), o = first.indexOf('class="orb');
+    /* the field is an SVG <pattern> (…Dots" width="22") or, on the shared assets, .dot-field */
+    const at = [first.indexOf('Dots" width="22"'), first.indexOf('class="dot-field')].filter(i => i >= 0);
+    const d = at.length ? Math.min(...at) : -1, o = first.indexOf('class="orb');
     if (d < 0 || (o >= 0 && d > o)) bad.push(f + (d < 0 ? ' (no field)' : ' (field over the orbs)'));
   }
   ok(HERO_PAGES.length + ' tinted heroes carry the dot field under the orbs', !bad.length, bad.join(', '));

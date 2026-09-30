@@ -1,0 +1,26 @@
+/* ═══ 22 · statistics odometer, hero title, pulse dot (homepage) ══════════════════
+   Values verbatim from the homepage's former <style> and the donor head.
+
+   Odometer (site.js, module odometer). Every character sits in a box of the same
+   height, digits and separators alike, so the comma and the plus keep their line with
+   the reels beside them. A reel is twenty cells — ten digits twice — which makes one
+   digit exactly 5% of it and the resting offset a percentage rather than a measured
+   pixel. The cell is slightly taller than an em: at leading-none an extrabold digit
+   sits tight against the box and the clip would shave it. The reel must be a block: a
+   transform does not apply to a non-replaced inline element. The page ships the plain
+   figure; reels exist only while motion runs. */
+.od-num { --od-h:1.15em; }
+.od, .od-s { display:inline-block; height:var(--od-h); line-height:var(--od-h); vertical-align:top; }
+.od { overflow:hidden; }
+.od-r { display:block; }
+.od-d { display:block; height:var(--od-h); line-height:var(--od-h); }
+
+/* Hero title (site.js, module hero-title): each word rises out of its own clip. The
+   padding makes room for descenders inside the clip, the negative margin gives the
+   line its height back. */
+.hw { display:inline-block; overflow:hidden; vertical-align:bottom; padding-bottom:.22em; margin-bottom:-.22em; }
+.hw-in { display:inline-block; }
+
+/* the pulsing dot of a status pill (the closing band's "Free check") */
+@keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.45; transform:scale(.8); } }
+.pulse-dot { animation:pulse-dot 2.2s ease-in-out infinite; }

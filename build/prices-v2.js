@@ -24,17 +24,23 @@
    Everything the batch does not name is preserved as DEC-0042 built it.
 
    Run:  node build/prices-v2.js  →  node build/shell.js  →  node build/check-prices.js
+
+   On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
+   no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
+   classes, asset paths are root-relative. Parity: node build/parity/run.js prices-v2.html
 */
 const fs = require('fs');
 const path = require('path');
+const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'prices-v2.html';
 const cta = require('./cta');
-const { dots } = require('./dots');
+const { dotField } = require('./dots');
 const banner = require('./banner');
-const { PLANS, LABEL } = require('./pricing-data');   /* TAGLINE is the homepage's; DEC-0042 grants no plan subtitle */
+const { PLANS, LABEL } = require('./pricing-data');
+const pricing = require('./pricing');   /* TAGLINE is the homepage's; DEC-0042 grants no plan subtitle */
 
 const HELP = 'https://plagiarismsearch.com/faq-and-support';   /* live production, no page here */
 
@@ -209,7 +215,7 @@ const linkQuiet = (label, href, dark) => `<a href="${href}"${ext(href)} class="i
 /* pen mark — DESIGN.md § Motion. One per heading. */
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.length * 18);
-  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg>`;
+  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg>`;
   return text.replace(phrase, `<span class="pen-word relative inline-block">${phrase}${svg}</span>`);
 };
 
@@ -223,10 +229,10 @@ const section1 = () => `  <!-- ================= 01 · PRICING HERO + MAIN WIDGE
        Only ONE helper line is approved for this page — the one-time note. The homepage's
        per-period notes are deliberately not rendered: the brief forbids inventing
        billing or cancellation wording in the design layer. -->
-  <section id="plans" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
-    ${dots('heroDots')}
-    <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
-    <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
+  <section id="plans" data-component="pricing-widget" data-pricing="onetime" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
+    ${dotField()}
+    <div class="orb absolute orb-hero-teal"></div>
+    <div class="orb absolute orb-hero-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv text-center max-w-[760px] mx-auto mb-8 sm:mb-10 lg:mb-12">
@@ -236,15 +242,15 @@ ${eyebrow('teal-400', COPY.s1.eyebrow)}
       </div>
 
       <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
-        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
-${COPY.s1.tabs.map(([k, label]) => `          <button type="button" data-period="${k}" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">${label}</button>`).join('\n')}
+        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto">
+${COPY.s1.tabs.map(([k, label]) => `          <button type="button" data-period="${k}" aria-pressed="${k === 'onetime'}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-600${k === 'onetime' ? ' active' : ''}">${label}</button>`).join('\n')}
         </div>
       </div>
 
       <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto">
 ${['light', 'standard', 'premium'].map(tier => {
   const dark = tier === 'standard';
-  return `        <div data-tier="${tier}" class="${dark
+  return `        <div data-tier="${tier}"${dark ? ' data-surface="dark"' : ''} class="${dark
     ? 'relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden'
     : 'rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7'}">
 ${dark ? '          <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>' : ''}
@@ -254,12 +260,12 @@ ${dark ? '          <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-
 ${dark ? `              <span class="text-[9.5px] font-bold tracking-widest bg-orange-700 text-white rounded-full px-2.5 py-1 uppercase">${COPY.s1.recommended}</span>` : ''}
             </div>
             <div class="flex items-end gap-1.5 mb-3">
-              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price"></span>
-              <span class="text-[12.5px] font-medium ${dark ? 'text-white/50' : 'text-ink-500'} pb-1.5 js-term"></span>
+              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none tabular-nums js-price">${PLANS.onetime[tier].price}</span>
+              <span class="text-[12.5px] font-medium ${dark ? 'text-white/50' : 'text-ink-500'} pb-1.5 js-term">${PLANS.onetime.term}</span>
             </div>
-            <div class="inline-flex items-center rounded-full ${dark ? 'bg-white/10 text-white/70' : 'bg-ink-50 text-ink-600'} px-3 py-1 text-[11.5px] font-bold tabular-nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+            <div class="inline-flex items-center rounded-full ${dark ? 'bg-white/10 text-white/70' : 'bg-ink-50 text-ink-600'} px-3 py-1 text-[11.5px] font-bold tabular-nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">${PLANS.onetime[tier].rate}</span>&nbsp;/ 1,000 words</div>
             <div class="h-px ${dark ? 'bg-white/10' : 'bg-ink-100'} mb-5 sm:mb-6 lg:mb-7"></div>
-            <ul class="space-y-3.5 text-[13.5px] font-medium ${dark ? 'text-white/80' : 'text-ink-700'} min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"></ul>
+            <ul class="space-y-3.5 text-[13.5px] font-medium ${dark ? 'text-white/80' : 'text-ink-700'} min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats">${pricing.feats(PLANS.onetime[tier].feats, pricing.LINES.check)}</ul>
             <a href="index.html" class="btn-press block text-center rounded-full ${dark
               ? 'bg-white text-ink-900 hover:bg-ink-50'
               : 'ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50'} text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start ${LABEL[tier]}</a>
@@ -269,7 +275,9 @@ ${dark ? `              <span class="text-[9.5px] font-bold tracking-widest bg-o
       </div>
 
       <!-- the one approved helper, shown only on the one-time tab -->
-      <p id="onetimeHelper" hidden class="rv mt-6 lg:mt-7 text-center text-[13px] sm:text-[13.5px] font-semibold text-ink-600">${COPY.s1.onetimeHelper}</p>
+      <p data-period-only="onetime" class="rv mt-6 lg:mt-7 text-center text-[13px] sm:text-[13.5px] font-semibold text-ink-600">${COPY.s1.onetimeHelper}</p>
+      ${pricing.template(pricing.LINES.check)}
+      ${pricing.island()}
     </div>
   </section>`;
 
@@ -279,7 +287,7 @@ const section2 = () => `  <!-- ================= 02 · CORE PRODUCT VALUE ======
        the one with a proof figure, so it gets the lead: a tall double-bezel card with the
        figure in the homepage's statistic treatment. The other two stack beside it in the
        same vocabulary at the smaller size. Same words, three weights. -->
-  <section id="core-value" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="core-value" data-component="value-groups" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', COPY.s2.eyebrow, 'ink')}
@@ -321,9 +329,9 @@ const section3 = () => `  <!-- ================= 03 · AI PRICING ==============
 
        DYNAMIC: this is the approved 2026-08-24 snapshot for the prototype, "not a
        permission to create a second manual billing source". -->
-  <section id="ai-pricing" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
-    <div class="orb absolute" style="width:880px;height:820px;left:-14%;top:-360px;background:rgba(44,195,219,.20)"></div>
-    <div class="orb absolute" style="width:700px;height:680px;right:-12%;bottom:-320px;background:rgba(243,111,90,.12)"></div>
+  <section id="ai-pricing" data-component="ai-packages" data-surface="dark" data-ai-package class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute orb-deep-teal"></div>
+    <div class="orb absolute orb-deep-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1fr_1.25fr] gap-8 lg:gap-14 items-start">
@@ -357,7 +365,7 @@ ${eyebrowDark('teal-400', COPY.s3.eyebrow)}
 ${COPY.s3.tableHeads.map((h, i) => `                  <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-ink-500${i === 2 ? ' text-right' : ''}">${h}</span>`).join('\n')}
                 </div>
                 <div class="divide-y divide-ink-100">
-${COPY.s3.packages.map(([words, billing, price]) => `                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer">
+${COPY.s3.packages.map(([words, billing, price]) => `                  <label class="ai-opt grid grid-cols-[2rem_1fr_auto_auto] sm:grid-cols-[2.25rem_1fr_7rem_7rem] gap-x-3 sm:gap-x-4 items-center px-4 sm:px-5 py-3 sm:py-3.5 cursor-pointer${words === COPY.s3.defaultPackage ? ' on' : ''}">
                     <input type="radio" name="aiPackage" value="${words.replace(/,/g, '')}" data-billing="${billing}" data-price="${price}" class="sr-only"${words === COPY.s3.defaultPackage ? ' checked' : ''}>
                     <span class="ai-dot w-5 h-5 rounded-full ring-1 ring-inset ring-ink-300 flex items-center justify-center" aria-hidden="true">
                       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -377,7 +385,7 @@ ${COPY.s3.packages.map(([words, billing, price]) => `                  <label cl
                invent one. data-purchase-hook and the data-ai-* attributes are the
                developer's binding point. -->
           <div class="mt-5 sm:mt-6">
-            <button type="button" id="aiContinue" data-purchase-hook="ai-package" data-ai-words="${COPY.s3.defaultPackage.replace(/,/g, '')}" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            <button type="button" data-purchase-hook="ai-package" data-ai-words="${COPY.s3.defaultPackage.replace(/,/g, '')}" data-ai-billing="${COPY.s3.packages.find(p => p[0] === COPY.s3.defaultPackage)[1]}" data-ai-price="${COPY.s3.packages.find(p => p[0] === COPY.s3.defaultPackage)[2]}" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
               <span>${COPY.s3.continueLabel[0]}<span class="js-ai-words tabular-nums">${COPY.s3.defaultPackage}</span>${COPY.s3.continueLabel[1]}</span>
               <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/15 items-center justify-center">${arrow}</span>
             </button>
@@ -404,7 +412,7 @@ const section4 = () => `  <!-- ================= 04 · OTHER WRITING SERVICES ==
        What keeps it secondary is the section, not the card: a short band rather than a
        full act. The heading is the page's h2, set left like every other section heading;
        the row runs to 1200. Words are DEC-0042's. -->
-  <section id="services" class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
+  <section id="services" data-component="services" class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-7 sm:mb-8 lg:mb-10">
 ${eyebrow('orange-500', COPY.s4.eyebrow)}
@@ -455,13 +463,14 @@ ${banner({
     h2: COPY.s5.h2,
     lead: COPY.s5.body, leadMax: '62ch',
     action: banner.btn(COPY.s5.cta, COPY.s5.ctaHref),
+    static: true,
   })}`;
 
 /* ═══════════════ 06 · PRICING FAQ ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · PRICING FAQ =================
        Seven exact questions. Every answer is in the rendered HTML — the brief requires it
        and any later schema must match the visible copy exactly. -->
-  <section id="pricing-faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
+  <section id="pricing-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
@@ -472,15 +481,15 @@ ${eyebrow('orange-500', 'Questions')}
         </div>
 
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${COPY.s6.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="pricing-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}${i === 6 ? ` <a href="${COPY.s6.inAnswerHref}" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">${COPY.s6.inAnswerCta}</a>` : ''}</p></div></div>
+              <div class="faq-a" id="pricing-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}${i === 6 ? ` <a href="${COPY.s6.inAnswerHref}" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">${COPY.s6.inAnswerCta}</a>` : ''}</p></div></div>
             </div>`).join('\n')}
           </div>
         </div>
@@ -492,11 +501,11 @@ ${COPY.s6.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? 
 const section7 = () => `  <!-- ================= 07 · FINAL FREE-CHECK CTA =================
        "Do not render a second checker inside this section." One action, to the primary
        Plagiarism Checker owner at /. Plagiarism only: no AI, and no "full engine". -->
-  <section id="free-check" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.background('free-check')}
+  <section id="free-check" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+${cta.backgroundStatic()}
 
     <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s7.h2, 'before you choose')}</h2>
+      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s7.h2, 'before you choose', { static: true })}</h2>
       <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.s7.support}</p>
       <div class="rv flex justify-center">
         <a href="${COPY.s7.ctaHref}" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
@@ -511,237 +520,15 @@ ${cta.background('free-check')}
   </section>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Page-local styles.
+   Assemble — the shared page shell (build/page.js). The components' CSS and JS live in
+   build/assets/ (site.css, site.js); the page carries none of its own.
    ───────────────────────────────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  /* [hidden] must actually hide: Tailwind's display utilities share specificity with the
-     attribute selector and come later in the sheet, so a hidden element carrying .flex
-     still renders. */
-  [hidden] { display: none !important; }
-
-  /* Anchor landings clear the sticky header. The header is fixed at top:20 and its bar
-     ends at 76px; 100 leaves the section label fully visible with air above. */
-  section[id] { scroll-margin-top: 100px; }
-
-  a:focus-visible, button:focus-visible, summary:focus-visible,
-  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
-    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible { outline-color: #6ED7E8; }
-
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-  /* the period switcher, same control as the homepage widget */
-  .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
-  .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
-
-  /* the AI package selector. The selected row is tinted AND carries the filled dot with
-     a check mark, so the state survives without colour. Keyboard focus lands on the
-     hidden radio, so the ring is drawn on the row that contains it. */
-  .ai-opt { transition:background-color .15s ease; }
-  .ai-opt:hover { background:#F2FAFB; }
-  .ai-opt.on { background:#E6F4F7; }
-  .ai-opt .ai-dot { background:#fff; transition:background-color .15s ease, box-shadow .15s ease; }
-  .ai-opt .ai-dot svg { opacity:0; }
-  .ai-opt.on .ai-dot { background:#0991A8; box-shadow:inset 0 0 0 1px #0991A8; }
-  .ai-opt.on .ai-dot svg { opacity:1; }
-  .ai-opt:has(input:focus-visible) { outline:2px solid #6ED7E8; outline-offset:-2px; }
-
-  /* the bento hover from the homepage capabilities grid */
-  .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
-  .spotlight:hover { transform:translateY(-4px); }
-  @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
-
-  /* pen and ring marks — the reduced-motion fallback is mandatory */
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-${cta.style('free-check')}
-</style>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Behaviour.
-   ───────────────────────────────────────────────────────────────────────────── */
-const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-
-  gsap.utils.toArray('.rv-kids').forEach(group => {
-    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
-      scrollTrigger: { trigger: group, start: 'top 80%' } });
-  });
-
-  gsap.utils.toArray('.pen-word').forEach(word => {
-    const line = word.querySelector('.pen-underline');
-    if (!line) return;
-    const len = line.getTotalLength();
-    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-    const tl = gsap.timeline(inFirstView
-      ? { delay: 1 }
-      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-      .set(line, { opacity: 1 }, .35)
-      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-  });
-${cta.script}
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-
-  /* ── the pricing widget shell ────────────────────────────────────────────────
-     PLACEHOLDER DATA. DEC-0042 makes every figure here backend-driven; this exists so
-     the shell has something to render until a developer connects the authoritative
-     production widget, and it is the same object the homepage uses so the two pages
-     cannot show different prices.
-
-     The per-period notes the homepage renders are deliberately absent: this brief
-     approves exactly one helper line, the one-time one, and forbids inventing billing
-     or cancellation wording in the design layer. */
-  const PLANS = ${JSON.stringify(PLANS, null, 2).split('\n').join('\n  ')};
-
-  const tabs = [...document.querySelectorAll('#periodTabs .period-btn')];
-  const cards = [...document.querySelectorAll('[data-tier]')];
-  const helper = document.getElementById('onetimeHelper');
-  if (!tabs.length || !cards.length) return;
-
-  const render = key => {
-    const period = PLANS[key];
-    if (!period) return;
-    tabs.forEach(t => {
-      const on = t.dataset.period === key;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-pressed', String(on));
-    });
-    helper.hidden = key !== 'onetime';
-    cards.forEach(card => {
-      const tier = period[card.dataset.tier];
-      if (!tier) return;
-      card.querySelector('.js-price').textContent = tier.price;
-      card.querySelector('.js-term').textContent = period.term;
-      card.querySelector('.js-rate').textContent = tier.rate;
-      card.querySelector('.js-feats').innerHTML = tier.feats.map(f =>
-        '<li class="flex items-start gap-2.5"><svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>' + f + '</li>').join('');
-    });
-  };
-
-  tabs.forEach(t => t.addEventListener('click', () => render(t.dataset.period)));
-  render('onetime');
-
-  /* ── the AI package selector ──────────────────────────────────────────────
-     One radio group; the checked one names the allowance on the button and stamps it
-     on the data hook a developer binds the real purchase flow to. */
-  const radios = [...document.querySelectorAll('input[name="aiPackage"]')];
-  const go = document.getElementById('aiContinue');
-  if (radios.length && go) {
-    const fmt = n => Number(n).toLocaleString('en-US');
-    const syncAi = () => {
-      const r = radios.find(x => x.checked) || radios[0];
-      radios.forEach(x => x.closest('.ai-opt').classList.toggle('on', x === r));
-      go.querySelector('.js-ai-words').textContent = fmt(r.value);
-      go.dataset.aiWords = r.value;
-      go.dataset.aiBilling = r.dataset.billing;
-      go.dataset.aiPrice = r.dataset.price;
-    };
-    radios.forEach(x => x.addEventListener('change', syncAi));
-    syncAi();
-  }
-
-  /* FAQ: answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      const list = item.parentElement;
-      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-      list.querySelectorAll('.faq-q').forEach(b =>
-        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
-    });
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Assemble
-   ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>');
-if (/name="description"/.test(head)) {
-  head = head.replace(/<meta name="description"[^>]*>/,
-    '<meta name="description" content="' + COPY.meta + '" />');
-} else {
-  head = head.replace('<title>',
-    '<meta name="description" content="' + COPY.meta + '" />\n<title>');
-}
-head = head.replace('<title>', '<link rel="canonical" href="' + COPY.canonical + '" />\n<title>');
-
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
-/* Corrections v2 §7: high-volume/custom access continues the pricing intent; the
-   writing services are peripheral and stay behind it. The section numbers in the
-   builders keep their DEC-0042 names; only the page order changes. */
 const sections = [section1, section2, section3, section5, section4, section6, section7];
 
-const html = head + STYLE + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${sections.map(f => f()).join('\n\n')}
-</main>
-
-<footer></footer>
-
-${SCRIPT}
-</body>
-</html>
-`;
-
+const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
 fs.writeFileSync(path.join(SITE, OUT), html);
 
 const count = re => (html.match(re) || []).length;
 console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
 console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' +
-            count(/<h2\b/g) + ' h2, ' + count(/class="faq-item/g) + ' faq items');
+            count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/class="faq-item/g) + ' faq items');

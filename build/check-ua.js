@@ -117,15 +117,15 @@ console.log('\napproved copy');
 console.log('\nchecker / report');
 {
   const hero = section('checker');
-  ok('the hero is the first section and carries the shared form', body.indexOf('<section') === body.indexOf('<section id="checker"') && /<textarea id="checkText"/.test(hero));
+  ok('the hero is the first section and carries the shared form', body.indexOf('<section') === body.indexOf('<section id="checker"') && /<textarea id="(checkText|[a-z-]+-checker-text)"/.test(hero));
   ok('exactly one form on the page', (body.match(/<form\b/g) || []).length === 1);
-  ok('plagiarism is the checked control; AI is not', /id="optPlag" checked/.test(hero) && !/id="optAI" checked/.test(hero));
+  ok('plagiarism is the checked control; AI is not', /(id="optPlag"|<input type="checkbox") checked/.test(hero) && !/(id="optAI"|<input type="checkbox"(?! checked)[^>]*>[\s\S]*?<input type="checkbox") checked/.test(hero));
   ok('no CTA in the hero besides the form\'s own action', (hero.match(/class="btn-press/g) || []).length === 1);
   ok('on a phone the order is H1 → form', hero.indexOf('<h1') < hero.indexOf('<textarea'));
   ok('the free line sits with the form', hero.indexOf('<textarea') < hero.indexOf('До 150 слів без реєстрації'));
-  ok('the hero carries the dot field under its orbs', /id="heroDots"/.test(hero) && hero.indexOf('heroDots') < hero.indexOf('class="orb'));
+  ok('the hero carries the dot field under its orbs', /id="heroDots"|class="dot-field/.test(hero) && hero.search(/heroDots|class="dot-field/) < hero.indexOf('class="orb'));
   const rep = section('report');
-  ok('the shared report is rendered once, interactive', (body.match(/id="cabDoc"/g) || []).length === 1 && /cab-mark/.test(rep) && /cab-src/.test(rep));
+  ok('the shared report is rendered once, interactive', (body.match(/id="cabDoc"|<div data-report[ >]/g) || []).length === 1 && /cab-mark/.test(rep) && /cab-src/.test(rep));
   ok('fragment → source → context is drawn', /Фрагмент[\s\S]*Джерело[\s\S]*Контекст/.test(flat(rep)));
   ok('the report never says "Plagiarism detected"', !/plagiarism detected/i.test(rep));
   ok('untranslated product UI is marked lang="en" (form, report, reviews)', (body.match(/lang="en"/g) || []).length === 3);
@@ -137,11 +137,11 @@ console.log('\nuniversity proof');
   const uni = section('ua-universities');
   const files = [...uni.matchAll(/universities-ua\/(Component-\d+\.png)"/g)].map(m => m[1]);
   ok('ten approved marks, Component-6 (legacy НАУ) omitted', files.length === 10 && !files.includes('Component-6.png') && new Set(files).size === 10, files.join(' '));
-  ok('every mark is a local copy that exists in the repo', [...uni.matchAll(/<img[^>]*src="([^"]+)"/g)].every(m => m[1].startsWith('assets/img/universities-ua/') && fs.existsSync(path.join(SITE, m[1]))));
+  ok('every mark is a local copy that exists in the repo', [...uni.matchAll(/<img[^>]*src="([^"]+)"/g)].every(m => /^\/?assets\/img\/universities-ua\//.test(m[1]) && fs.existsSync(path.join(SITE, m[1].replace(/^\//, '')))));
   ok('every mark names its institution (alt), none is called a partner or client', [...uni.matchAll(/alt="([^"]*)"/g)].every(m => m[1].length > 10) && !/партнер(?!ство)|клієнт|співпрацю(ють|ємо)/i.test(flat(uni).replace('Це не означає партнерство, офіційне схвалення або інституційну співпрацю', '')));
   ok('НАУ is not named anywhere', !/авіаційн/i.test(html));
   ok('the deconfusion note is inside the module', /Це не означає партнерство/.test(flat(uni)));
-  ok('marks are never scaled above their own size and are not redrawn', /\.uni img \{[^}]*max-width:213px/.test(html));
+  ok('marks are never scaled above their own size and are not redrawn', /\.uni img \{[^}]*max-width:213px/.test(html + fs.readFileSync(path.join(SITE, 'assets', 'css', 'site.css'), 'utf8')));
   ok('placed after the report, before the controls', body.indexOf('id="report"') < body.indexOf('id="ua-universities"') && body.indexOf('id="ua-universities"') < body.indexOf('id="sources"'));
   const src = fs.readFileSync(path.join(__dirname, 'ua.js'), 'utf8');
   ok('removable: one flag, one self-contained section', /const UNIVERSITY_PROOF = true;/.test(src) && /UNIVERSITY_PROOF && section3/.test(src));
@@ -191,7 +191,7 @@ console.log('\nFAQ');
   const f = flat(faq);
   const bad = QA.filter(([q, a]) => !f.includes(q) || !f.includes(a)).map(([q]) => q.slice(0, 26));
   ok('nine questions and answers verbatim, answers in the HTML', (faq.match(/class="faq-item/g) || []).length === 9 && !bad.length, bad.join(' · '));
-  ok('every question is a button with aria-expanded', (faq.match(/<button type="button" aria-expanded="(true|false)"/g) || []).length === 9);
+  ok('every question is a button with aria-expanded', (faq.match(/<button type="button" (?:aria-controls="[^"]+" )?aria-expanded="(true|false)"/g) || []).length === 9);
 }
 
 /* ── the negative contract ──────────────────────────────────────────────────── */

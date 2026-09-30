@@ -1,0 +1,7 @@
+/* ═══ 13 · cells sharing one sheet (UA: the four source cells) ═══════════════════ */
+.cells > div { border-top:1px solid #EEF0F3; }
+.cells > div:first-child { border-top:0; }
+@media (min-width:768px) {
+  .cells > div:nth-child(2) { border-top:0; }
+  .cells > div:nth-child(even) { border-left:1px solid #EEF0F3; }
+}

@@ -9,7 +9,7 @@
      modal.shell({ id, title, body })   // the overlay, hidden until opened
      modal.card({ id, title, body })    // the card alone — the design-system page shows it inline
      modal.signup(copy)                 // body: the "See your full report" sign-up offer
-     modal.script                       // [data-modal-open="id"] opens; [data-close] closes
+     behaviour: site.js (module modal)   [data-modal-open="id"] opens; [data-close] closes
 
    The overlay starts hidden and opens with .is-open, not with the hidden attribute, so the
    card can fade in. Below 640 it keeps the same centred card with a 16px gutter. */
@@ -63,55 +63,8 @@ ${S.offers.map(o => `          <li class="flex items-center gap-3 rounded-2xl bg
         </ul>
       </div>`;
 
-const style = `  /* ---------- modal (build/modal.js) ---------- */
-  .md { transition:visibility 0s linear .2s; }
-  .md[hidden] { display:flex; visibility:hidden; pointer-events:none; }
-  .md-backdrop { opacity:0; transition:opacity .2s ease; }
-  .md-card { opacity:0; transform:translateY(8px) scale(.98); transition:opacity .2s ease, transform .25s cubic-bezier(.32,.72,0,1); }
-  .md.is-open { transition:none; }
-  .md.is-open .md-backdrop { opacity:1; }
-  .md.is-open .md-card { opacity:1; transform:none; }
-  @media (prefers-reduced-motion: reduce) { .md-card { transform:none; transition:opacity .15s ease; } }`;
-
-/* open, close, trap, return focus, lock the page behind */
-const script = `
-  /* modals (build/modal.js) */
-  (function () {
-    var opener = null, open = null;
-    var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), textarea, select, [tabindex]:not([tabindex="-1"])';
-    function show(m, from) {
-      opener = from || document.activeElement; open = m;
-      m.hidden = false;
-      document.documentElement.style.overflow = 'hidden';
-      /* read a layout value so the closed styles apply first and the card animates in,
-         then focus once .is-open has made it visible — a hidden element takes no focus */
-      void m.offsetWidth;
-      m.classList.add('is-open');
-      (m.querySelector('[data-autofocus]') || m.querySelector(FOCUSABLE)).focus();
-    }
-    function hide() {
-      if (!open) return;
-      var m = open; open = null;
-      m.classList.remove('is-open');
-      m.hidden = true;
-      document.documentElement.style.overflow = '';
-      if (opener) { opener.focus(); opener = null; }
-    }
-    document.addEventListener('click', function (e) {
-      var o = e.target.closest('[data-modal-open]');
-      if (o) { e.preventDefault(); show(document.getElementById(o.getAttribute('data-modal-open')), o); return; }
-      if (open && e.target.closest('[data-close]') && open.contains(e.target)) hide();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (!open) return;
-      if (e.key === 'Escape') { hide(); return; }
-      if (e.key !== 'Tab') return;
-      var f = [].slice.call(open.querySelectorAll(FOCUSABLE)).filter(function (x) { return x.offsetParent !== null; });
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    });
-  })();`;
+/* The modal's CSS is build/assets/css/25-modal.css and its behaviour site.js's modal module
+   (build/assets/js/85-modal.js): nothing to paste into a page. */
 
 /* the offer's copy, as the product shows it today */
 const SIGNUP = {
@@ -128,4 +81,4 @@ const SIGNUP = {
   ],
 };
 
-module.exports = { shell, card, signup, style, script, SIGNUP };
+module.exports = { shell, card, signup, SIGNUP };

@@ -16,22 +16,13 @@
    take the shape their job needs and nothing is added to make the page longer.
 
    Run:  node build/assets.js  →  node build/students.js  →  node build/shell.js
-         →  node build/check-students.js
+         →  node build/check-students.js  →  node build/parity/run.js plagiarism-checker-for-students.html
 
-   TWO OUTPUTS, ONE SOURCE (proof of concept, 2026-09-25). The approved page is written
-   exactly as before. Beside it, plagiarism-checker-for-students-poc.html is the same page
-   on the shared production assets (build/assets.js): no Play CDN, no <style> or <script>
-   blocks in the page, the Tailwind build and site.css/site.js linked from <head>. Same
-   markup and classes; what changes is only what couples a section to its page — ids used
-   as style or script hooks become data-* hooks, the decorative inline styles become
-   classes, SVG pattern ids become a CSS background, asset paths go root-relative. The
-   STATIC flag below is the only switch; build/parity/students.js proves the two render
-   the same. */
-/* `STATIC` is flipped while the POC is rendered, then back. Everything that differs
-   between the two outputs reads it through the helpers under "Visual vocabulary". */
-let STATIC = false;
-const OUT_POC = 'plagiarism-checker-for-students-poc.html';
-const assets = require('./assets');
+   On the shared production assets (build/assets.js, build/page.js) since 2026-09-25 —
+   the page that proved the model. No Play CDN, no <style> or <script> of its own: the
+   components it uses live in build/assets/css and build/assets/js. Hooks are data-*,
+   decorative styles are classes, asset paths are root-relative. */
+const page = require('./page');
 const fs = require('fs');
 const path = require('path');
 
@@ -40,7 +31,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'plagiarism-checker-for-students.html';
 const cta = require('./cta');
 const checker = require('./checker');
-const { dots, dotField } = require('./dots');
+const { dotField } = require('./dots');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -199,16 +190,12 @@ const btnLight = (label, href) => `<a href="${href}"${ext(href)} class="btn-pres
           </a>`;
 const linkQuiet = (label, href, dark) => `<a href="${href}"${ext(href)} class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold ${dark ? 'text-white/70 hover:text-white decoration-white/30' : 'text-ink-500 hover:text-ink-900 decoration-ink-300'} underline underline-offset-4 transition-colors duration-300">${label}</a>`;
 
-/* POC helpers — identity when STATIC is false */
-const orb = (preset, style) => STATIC
-  ? `<div class="orb absolute orb-${preset}"></div>`
-  : `<div class="orb absolute" style="${style}"></div>`;
-const hook = attrs => (STATIC ? ' ' + attrs : '');
-const asset = p => (STATIC ? '/' : '') + p;
+/* a glow, by preset (build/assets/css/01-base.css) */
+const orb = preset => `<div class="orb absolute orb-${preset}"></div>`;
 
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.length * 18);
-  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"${STATIC ? '' : ' opacity="0"'}/></svg>`;
+  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg>`;
   return text.replace(phrase, `<span class="pen-word relative inline-block">${phrase}${svg}</span>`);
 };
 
@@ -246,10 +233,10 @@ const section1 = () => `  <!-- ================= 01 · HERO / REAL STUDENT CHECK
        columns, the student's job on the left and the form on the right, so the page
        opens on "before you submit" rather than on the generic category. The path under
        the support line is the brief's own student story, drawn — labels, not copy. -->
-  <section id="student-checker"${hook('data-component="hero-checker"')} class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${STATIC ? dotField() : dots('heroDots')}
-    ${orb('hero-teal', 'width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)')}
-    ${orb('hero-coral', 'width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)')}
+  <section id="student-checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    ${dotField()}
+    ${orb('hero-teal')}
+    ${orb('hero-coral')}
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <!-- three blocks: DOM order H1 → form → path, so a phone has the checker on its first
@@ -262,7 +249,7 @@ const section1 = () => `  <!-- ================= 01 · HERO / REAL STUDENT CHECK
         </div>
 
         <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-${STATIC ? checker.form(COPY.hero, ANCHOR, { text: 'student-checker-text' }, { static: true }) : checker.form(COPY.hero, ANCHOR)}
+${checker.form(COPY.hero, ANCHOR, { text: 'student-checker-text' }, { static: true })}
 ${checker.free(COPY.hero)}
         </div>
 
@@ -284,7 +271,7 @@ const section2 = () => `  <!-- ================= 02 · COMPACT TRUST PROOF =====
        The homepage rail, still: three verified facts in reading order, each column one
        element so "500,000+ users" survives as a sentence. Static here — the page's
        object is the checker and a roll beside it would compete. -->
-  <section${hook('data-component="proof-rail"')} class="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100">
+  <section data-component="proof-rail" class="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv flex flex-wrap items-start justify-center gap-x-12 sm:gap-x-16 lg:gap-x-24 gap-y-8 text-center">
         <div class="flex flex-col items-center">
@@ -299,7 +286,7 @@ const section2 = () => `  <!-- ================= 02 · COMPACT TRUST PROOF =====
         </div>
         <div class="flex flex-col items-center">
           <div class="hidden sm:block h-[17px]" aria-hidden="true"></div>
-          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><img src="${asset('assets/svg/partners/bbb.svg')}" alt="" aria-hidden="true" loading="lazy" decoding="async" class="h-full w-auto object-contain"></div>
+          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><img src="/assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="h-full w-auto object-contain"></div>
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-2">BBB Accredited</div>
         </div>
       </div>
@@ -312,9 +299,9 @@ const section3 = () => `  <!-- ================= 03 · SIGNATURE · THE REPORT, 
        under it the thing this page exists to say: "Similarity is not a plagiarism
        grade." — set as a display statement on a white card, with the interpretation
        callout beside it. No verdicts, thresholds, fixes or new fields. -->
-  <section id="before-you-submit"${hook('data-component="report-dark" data-surface="dark"')} class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    ${orb('dark-teal', 'width:620px;height:620px;left:-13%;top:40px;background:rgba(13,168,194,.12)')}
-    ${orb('dark-coral', 'width:520px;height:520px;right:-10%;bottom:-120px;background:rgba(243,111,90,.10)')}
+  <section id="before-you-submit" data-component="report-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+    ${orb('dark-teal')}
+    ${orb('dark-coral')}
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
@@ -323,8 +310,8 @@ ${eyebrowDark('teal-400', COPY.report.eyebrow)}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[72ch]">${COPY.report.intro}</p>
       </div>
 
-      <div${hook('data-report')} class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
-        <div${STATIC ? '' : ' id="cabDoc"'} class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+      <div data-report class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
+        <div class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
           <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
             <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">${CAB.id}</span>
             <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
@@ -340,7 +327,7 @@ ${eyebrowDark('teal-400', COPY.report.eyebrow)}
           </div>
         </div>
 
-        <div${STATIC ? '' : ' id="cabSide"'} class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+        <div class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
           <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
             <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
             ${CAB.metrics.map(cabMetric).join(NL14)}
@@ -379,7 +366,7 @@ const section4 = () => `  <!-- ================= 04 · REVIEW YOUR DRAFT — THE
        what revising can mean — every phrase lifted from steps 2 and 3. Step 4 loops
        back to the checker because that is what the copy says it does. No automatic
        fixes anywhere. -->
-  <section id="review-your-draft"${hook('data-component="workflow-decision"')} class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="review-your-draft" data-component="workflow-decision" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', COPY.workflow.eyebrow, 'ink')}
@@ -429,7 +416,7 @@ const section5 = () => `  <!-- ================= 05 · SOURCES & SETTINGS ======
        to search and what to exclude — with the coverage fact as the one figure, and the
        two qualifying lines set as the notes they are. Ticks, not switches: the page
        cannot act on a control that moves. -->
-  <section id="sources-and-settings"${hook('data-component="sources-controls"')} class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
+  <section id="sources-and-settings" data-component="sources-controls" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
 ${eyebrow('teal-400', COPY.sources.eyebrow)}
@@ -477,7 +464,7 @@ const section6 = () => `  <!-- ================= 06 · YOUR PAPER & REPORT =====
        The lifecycle as one rail of four stations rather than four cards: the document
        goes in, the file is not kept, the report is, and you can delete it. Storage is
        the separate action it is, in its own card with the privacy link. No absolutes. -->
-  <section id="your-paper"${hook('data-component="lifecycle-rail"')} class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="your-paper" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', COPY.paper.eyebrow, 'ink')}
@@ -511,7 +498,7 @@ ${COPY.paper.steps.map(([head, body], i) => `        <li class="relative">
 const section7 = () => `  <!-- ================= 07 · PLAGIARISM VS AI =================
        Compact by instruction: one card, two halves, the critical line under them, one
        quiet link. Plagiarism keeps the darker half. -->
-  <section id="plagiarism-vs-ai"${hook('data-component="ai-compare"')} class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
+  <section id="plagiarism-vs-ai" data-component="ai-compare" class="relative py-12 sm:py-14 lg:py-16 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-7 sm:mb-8 lg:mb-10">
         <h2 class="${H2}">${COPY.ai.h2}</h2>
@@ -549,7 +536,7 @@ const section8 = () => `  <!-- ================= 08 · START FREE — THE COMPAC
        The two confirmed limits as two figures, the approved sentences beside them, and
        the two ways on: back to the checker, or to the pricing owner. No matrix, no
        prices, no plan names. -->
-  <section id="start-free"${hook('data-component="start-free"')} class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="start-free" data-component="start-free" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-14 items-center">
         <div class="rv min-w-0">
@@ -582,7 +569,7 @@ ${eyebrow('teal-400', COPY.free.eyebrow, 'ink')}
 /* ═══════════════ 09 · FAQ ═══════════════ */
 const section9 = () => `  <!-- ================= 09 · FAQ =================
        Nine questions, full answers in the HTML, the accordion the site uses. -->
-  <section id="student-faq"${hook('data-component="faq"')} class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
+  <section id="student-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
@@ -590,15 +577,15 @@ ${eyebrow('orange-500', 'Questions')}
           <h2 class="${H2}">${COPY.faq.h2}</h2>
         </div>
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div${hook('data-faq')} class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${COPY.faq.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button"${STATIC ? ` aria-controls="student-faq-a${i + 1}"` : ''} aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="student-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"${STATIC ? ` id="student-faq-a${i + 1}"` : ''}><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
+              <div class="faq-a" id="student-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
             </div>`).join('\n')}
           </div>
         </div>
@@ -609,11 +596,11 @@ ${COPY.faq.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ?
 /* ═══════════════ 10 · FINAL CTA ═══════════════ */
 const section10 = () => `  <!-- ================= 10 · FINAL CTA =================
        The closing band (build/cta.js). One action, back to the one real checker. -->
-  <section id="student-cta"${hook('data-component="cta-band"')} class="${STATIC ? 'cta-band ' : ''}relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${STATIC ? cta.backgroundStatic() : cta.background('student-cta')}
+  <section id="student-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+${cta.backgroundStatic()}
 
     <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.close.h2, 'before you', { static: STATIC })}</h2>
+      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.close.h2, 'before you', { static: true })}</h2>
       <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.close.support}</p>
       <div class="rv flex flex-col items-center gap-4">
         <a href="${ANCHOR}" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
@@ -631,205 +618,11 @@ ${STATIC ? cta.backgroundStatic() : cta.background('student-cta')}
   </section>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Page-local styles. The .cab-* rules are the report component's contract, carried
-   verbatim; the form's rules come from build/checker.js.
+   Assemble — the shared page shell (build/page.js)
    ───────────────────────────────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  [hidden] { display: none !important; }
-  section[id] { scroll-margin-top: 100px; }
-
-  a:focus-visible, button:focus-visible, select:focus-visible,
-  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
-    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible { outline-color: #6ED7E8; }
-
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-${checker.style}
-
-  /* ---------- the shared report component ---------- */
-  .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease;
-    border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
-    box-shadow:inset 0 -2px 0 currentColor;
-    background-image:linear-gradient(var(--wash), var(--wash));
-    background-repeat:no-repeat; background-position:left center; background-size:100% 100%; }
-  .cab-plag { --wash:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
-  .cab-ai   { --wash:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
-  .cab-plag.on { --wash:rgba(243,111,90,.4); }
-  .cab-ai.on   { --wash:rgba(168,85,247,.34); }
-  .cab-mark > span { color:#111827; }
-  .cab-src.on { background:#F8F9FB; }
-  .cab-tab { padding-bottom:10px; border-bottom:2px solid transparent; color:#4B5563; }
-  .cab-tab.on { color:#06748A; border-bottom-color:#0991A8; }
-  .cab-sources, .cab-foot { border-bottom-left-radius:1rem; border-bottom-right-radius:1rem; }
-  @media (min-width:640px) {
-    .cab-sources, .cab-foot { border-bottom-left-radius:20px; border-bottom-right-radius:20px; }
-  }
-  @media (min-width:1024px) {
-    .cab-sources, .cab-foot { border-bottom-left-radius:1.5rem; border-bottom-right-radius:1.5rem; }
-  }
-  .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
-    pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
-  @media (prefers-reduced-motion: reduce) { .cab-mark { transition:none; } }
-
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-${cta.style('student-cta')}
-</style>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Behaviour — the form's own, the report's own, the accordion, the burger.
-   ───────────────────────────────────────────────────────────────────────────── */
-const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-
-  gsap.utils.toArray('.rv-kids').forEach(group => {
-    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
-      scrollTrigger: { trigger: group, start: 'top 80%' } });
-  });
-
-  gsap.utils.toArray('.pen-word').forEach(word => {
-    const line = word.querySelector('.pen-underline');
-    if (!line) return;
-    const len = line.getTotalLength();
-    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-    const tl = gsap.timeline(inFirstView
-      ? { delay: 1 }
-      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-      .set(line, { opacity: 1 }, .35)
-      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-  });
-${cta.script}
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-${checker.script(ANCHOR)}
-
-  /* the report: selecting a passage highlights it and its source */
-  const marks = [...document.querySelectorAll('.cab-mark')];
-  const sources = [...document.querySelectorAll('.cab-src')];
-  const pick = i => {
-    marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
-    sources.forEach(s => s.classList.toggle('on', s.dataset.src === String(i)));
-  };
-  marks.forEach(m => {
-    m.addEventListener('click', () => pick(m.dataset.match));
-    m.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(m.dataset.match); }
-    });
-  });
-  if (marks.length) pick(marks[0].dataset.match);
-
-  /* FAQ: answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      const list = item.parentElement;
-      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-      list.querySelectorAll('.faq-q').forEach(b =>
-        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
-    });
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Assemble
-   ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>');
-if (/name="description"/.test(head)) {
-  head = head.replace(/<meta name="description"[^>]*>/,
-    '<meta name="description" content="' + COPY.meta + '" />');
-} else {
-  head = head.replace('<title>',
-    '<meta name="description" content="' + COPY.meta + '" />\n<title>');
-}
-head = head.replace('<title>', '<link rel="canonical" href="' + COPY.canonical + '" />\n<title>');
-
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
 const sections = [section1, section2, section3, section4, section5, section6, section7, section8, section9, section10];
-
-/* The POC head: the donor's, minus the Play CDN, its config and the base <style> —
-   plus the shared assets. Nothing else in <head> changes. */
-const staticHead = h => {
-  const a = h.indexOf('<script src="https://cdn.tailwindcss.com"></script>');
-  const b = h.indexOf('</style>', a);
-  if (a < 0 || b < 0) throw new Error('static head: the donor head is not the expected shape');
-  return h.slice(0, a) + assets.head() + h.slice(b + '</style>'.length);
-};
-
-const page = () => (STATIC ? staticHead(head) : head + STYLE) + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${sections.map(f => f()).join('\n\n')}
-</main>
-
-<footer></footer>
-
-${STATIC ? '' : SCRIPT}
-</body>
-</html>
-`;
-
-const html = page();
+const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
 fs.writeFileSync(path.join(SITE, OUT), html);
-STATIC = true;
-const poc = page();
-STATIC = false;
-fs.writeFileSync(path.join(SITE, OUT_POC), poc);
-console.log('  site/' + OUT_POC + ' — ' + poc.length + ' bytes (shared assets)');
 
 const count = re => (html.match(re) || []).length;
 console.log('  site/' + OUT + ' — ' + html.length + ' bytes');

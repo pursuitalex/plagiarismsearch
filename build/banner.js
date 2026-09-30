@@ -56,7 +56,17 @@ const eyebrow = (dot, label) => `        <div class="inline-flex items-center ga
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">${label}</span>
         </div>`;
 
-const banner = ({ id, orb = 'rgba(44,195,219,.18)', eyebrow: eb, h2, lead, leadMax = '54ch', after = '', action = '', aside = '', actionUnder = 'text' }) => {
+/* STATIC MODE — banner({ …, static: true }) for pages on the shared assets: the section
+   names itself (data-component="banner"), the box declares its dark ground for the focus
+   ring (data-surface), and the glow is a class — .orb-banner plus a colour preset from the
+   finite set below (build/assets/css/11-banner.css). Default output is unchanged. */
+const ORB_PRESET = {
+  'rgba(44,195,219,.18)': 'teal', 'rgba(243,111,90,.18)': 'coral',
+  'rgba(243,111,90,.16)': 'coral-soft', 'rgba(154,106,222,.18)': 'violet',
+};
+
+const banner = ({ id, orb = 'rgba(44,195,219,.18)', eyebrow: eb, h2, lead, leadMax = '54ch', after = '', action = '', aside = '', actionUnder = 'text', static: st = false }) => {
+  if (st && !ORB_PRESET[orb]) throw new Error('banner: no glow preset for ' + orb);
   if (!id || !h2 || !lead) throw new Error('banner: id, h2 and lead are required');
   const text = `          <div class="min-w-0${aside ? '' : ' flex-1'} text-white">
 ${eb ? eyebrow(eb[0], eb[1]) : ''}
@@ -77,10 +87,10 @@ ${aside}
   const grid = aside
     ? 'relative grid lg:grid-cols-[1.4fr_1fr] gap-7 lg:gap-12 items-center'
     : 'relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12';
-  return `  <section id="${id}" class="${SECTION}">
+  return `  <section id="${id}"${st ? ' data-component="banner"' : ''} class="${SECTION}">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="${BOX}">
-        <div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:${orb}"></div>
+      <div${st ? ' data-surface="dark"' : ''} class="${BOX}">
+        ${st ? `<div class="orb absolute orb-banner orb-banner-${ORB_PRESET[orb]}"></div>` : `<div class="orb absolute" style="width:520px;height:500px;right:-6%;top:-220px;background:${orb}"></div>`}
         <div class="${grid}">
 ${text}
 ${right}

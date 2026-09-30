@@ -34,6 +34,14 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
    twice on one page. Same tile, same origin (the element's top-left), same colour. */
 .dot-field { pointer-events:none; background-size:22px 22px;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Crect width='2' height='2' rx='0.65' fill='%23DAE7ED'/%3E%3C/svg%3E"); }
+.orb-deep-teal  { width:880px; height:820px; left:-14%;  top:-360px;    background:rgba(44,195,219,.20); }
+.orb-deep-coral { width:700px; height:680px; right:-12%; bottom:-320px; background:rgba(243,111,90,.12); }
+.orb-access-coral { width:820px; height:780px; right:-14%; top:-340px;    background:rgba(243,111,90,.18); }
+.orb-access-teal  { width:660px; height:640px; left:-10%;  bottom:-300px; background:rgba(44,195,219,.16); }
+.orb-ai-hero-teal     { width:820px; height:760px; left:-14%;  top:-380px;    background:rgba(44,195,219,.22); }
+.orb-ai-hero-coral    { width:680px; height:660px; right:-12%; top:-180px;    background:rgba(243,111,90,.14); }
+.orb-ai-report-teal   { width:900px; height:820px; left:-16%;  top:-300px;    background:rgba(44,195,219,.20); }
+.orb-ai-report-violet { width:720px; height:700px; right:-14%; bottom:-320px; background:rgba(154,106,222,.18); }
 
 /* ═══ 02 · motion — reveal, pen mark, ring mark ═══════════════════════════════════
    Fail-safe by construction. Nothing is hidden unless <html> carries .js-motion, which
@@ -59,6 +67,11 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 :where(.js-motion) .ring-path { opacity:0; }
 :where(html:not(.js-motion)) .ring-word { color:#DC5A45; }
 
+/* The homepage's pen words keep their text colour when there is no motion (only the
+   underline shows); the product pages turn the word coral, as its animation ends.
+   Kept as approved on each; one static look for both is a design call, flagged. */
+:where(html:not(.js-motion)) .pen-word.pen-static-plain { color:inherit; }
+
 /* ═══ 03 · FAQ accordion ══════════════════════════════════════════════════════════
    Every answer is in the HTML. Collapsing is an enhancement: without JS (no .js on
    <html>) every answer stays open, so none is locked behind a button that cannot work. */
@@ -69,6 +82,14 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 .faq-item.open .faq-chev { transform:rotate(180deg); }
 :where(html:not(.js)) .faq-a { grid-template-rows:1fr; }
 :where(html:not(.js)) .faq-chev { transform:rotate(180deg); }
+
+/* The tinted chevron (homepage): grey until its answer is open, then the accent — the
+   state follows .faq-item.open, so the colour follows a click. The product pages carry
+   the bare chevron; two looks, flagged for review. Its transition keeps the transform
+   in the list, or the rotation would lose its easing. */
+.faq-chev-tint { background:#F1F2F6; color:#4B5563;
+  transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
+.faq-item.open .faq-chev-tint { background:#FDE5E0; color:#B84431; }
 
 /* ═══ 04 · buttons and numerals ══════════════════════════════════════════════════ */
 .btn-press { transition:transform .25s cubic-bezier(.32,.72,0,1), box-shadow .25s ease; }
@@ -114,6 +135,130 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 }
 @media (prefers-reduced-motion: reduce) { .site-header, .site-header .site-nav { transition: none; } }
 
+/* ═══ 05 · component recipes — buttons, badge, field, checkbox / radio / chipset ═════
+   The recipes the design system specifies (site/design-system.html draws each one).
+   Values verbatim from that page's former <style>. They sit before 06-controls-phone,
+   whose phone-size overrides for .fld, .ctl and .chip-opt must come after the base rules.
+   The button press moves 1px; under reduced motion it does not. */
+/* ---------- BUTTON RECIPES ----------
+   Heights + padding are the Figma spec (xs 32 / sm 40 / md 48 / lg 56).
+   Hover + active bind to deeper palette shades so white text clears WCAG AA —
+   the default 500 shades are the brand-locked exception (see Contrast notes). */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:.5em;
+       font-weight:600; border-radius:12px; white-space:nowrap; cursor:pointer;
+       border:1px solid transparent; user-select:none;
+       transition: background-color .15s ease-out, border-color .15s ease-out, color .15s ease-out, transform .15s cubic-bezier(.32,.72,0,1); }
+.btn:focus-visible { outline:2px solid #0CA9C3; outline-offset:2px; }
+.btn:active { transform:translateY(1px); }
+.btn[disabled] { opacity:.4; pointer-events:none; }
+
+.btn-xs { height:32px; padding:0 12px; font-size:13px; }
+.btn-sm { height:40px; padding:0 16px; font-size:14px; }
+.btn-md { height:48px; padding:0 20px; font-size:15px; }
+.btn-lg { height:56px; padding:0 28px; font-size:16px; }
+
+.btn-caps { text-transform:uppercase; font-weight:700; }
+.btn-caps.btn-xs { letter-spacing:.08em; }
+.btn-caps.btn-sm { letter-spacing:.07em; }
+.btn-caps.btn-md { letter-spacing:.055em; }
+.btn-caps.btn-lg { letter-spacing:.04em; }
+
+.btn-primary   { background:#F36F5A; color:#fff; }
+.btn-primary:hover  { background:#B84431; }
+.btn-primary:active { background:#8C2E1F; }
+
+.btn-secondary { background:#fff; color:#111827; border-color:#E5E7EB; }
+.btn-secondary:hover  { background:#F8F9FB; border-color:#D1D5DB; }
+.btn-secondary:active { background:#F1F2F6; border-color:#9CA3AF; }
+
+.btn-ghost     { background:transparent; color:#374151; }
+.btn-ghost:hover  { background:#F1F2F6; color:#111827; }
+.btn-ghost:active { background:#E5E7EB; }
+
+.btn-danger    { background:#DC4444; color:#fff; }
+.btn-danger:hover  { background:#A32222; }
+.btn-danger:active { background:#7C1717; }
+
+.btn-dark      { background:#111827; color:#fff; }
+.btn-dark:hover  { background:#1F2937; }
+.btn-dark:active { background:#0A0E1A; }
+
+.btn-teal      { background:#0CA9C3; color:#fff; }
+.btn-teal:hover  { background:#06748A; }
+.btn-teal:active { background:#045566; }
+
+/* ---------- badge ---------- */
+.badge { display:inline-flex; align-items:center; gap:.35em; border-radius:999px; font-weight:700;
+         text-transform:uppercase; white-space:nowrap; }
+.badge-sm { height:20px; padding:0 8px; font-size:9.5px; letter-spacing:.09em; }
+.badge-md { height:26px; padding:0 11px; font-size:11px; letter-spacing:.07em; }
+
+/* ---------- input ---------- */
+.fld { width:100%; border-radius:8px; border:1px solid #E5E7EB; background:#fff; color:#111827;
+       font-weight:500; transition:border-color .15s ease, box-shadow .15s ease; }
+.fld::placeholder { color:#9CA3AF; font-weight:400; }
+.fld-sm { height:40px; padding:0 12px; font-size:14px; }
+.fld-md { height:48px; padding:0 14px; font-size:15px; }
+.fld-lg { height:56px; padding:0 16px; font-size:16px; }
+.fld:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+.fld-error { border-color:#DC4444; box-shadow:0 0 0 1px #DC4444; }
+.fld[disabled] { background:#F1F2F6; color:#9CA3AF; cursor:not-allowed; }
+
+/* ================= CONTROLS · checkbox, radio, groups =================
+   The native box is replaced, not hidden: appearance:none keeps the real input
+   in the layout, so the label, keyboard focus and :checked state all still work. */
+.ck, .rd { appearance:none; -webkit-appearance:none; flex:none; margin:0;
+  width:18px; height:18px; border:1.5px solid #D1D5DB; background-color:#fff; cursor:pointer;
+  background-repeat:no-repeat; background-position:center;
+  transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }
+.ck { border-radius:5px; }
+.rd { border-radius:50%; }
+.ck:hover, .rd:hover { border-color:#9CA3AF; }
+.ck:checked { background-color:#0991A8; border-color:#0991A8;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-9'/%3E%3C/svg%3E"); background-size:12px 12px; }
+.rd:checked { background-color:#0991A8; border-color:#0991A8;
+  background-image:radial-gradient(circle at center, #fff 0 3px, transparent 3.5px); }
+.ck:focus-visible, .rd:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(12,169,195,.28); }
+.ck[disabled], .rd[disabled] { background-color:#F1F2F6; border-color:#E5E7EB; cursor:not-allowed; }
+.ck[disabled]:checked, .rd[disabled]:checked { background-color:#D1D5DB; border-color:#D1D5DB; }
+
+/* the clickable row — the whole label is the hit area, not just the 18px box */
+.ctl { display:flex; align-items:center; gap:10px; cursor:pointer;
+  font-size:14px; font-weight:500; color:#374151; }
+.ctl.ctl-top { align-items:flex-start; }
+.ctl.ctl-top .ck, .ctl.ctl-top .rd { margin-top:1px; }
+.ctl:has(input[disabled]) { cursor:not-allowed; color:#9CA3AF; }
+
+/* quiet group — a plain list of options */
+.ctl-group { display:flex; flex-direction:column; gap:2px; }
+.ctl-group > .ctl { padding:8px 10px; border-radius:10px; transition:background-color .15s ease; }
+.ctl-group > .ctl:hover { background:#F8F9FB; }
+
+/* boxed group — for a prominent either/or, where the option itself is the target */
+.ctl-group-boxed { display:flex; flex-direction:column; gap:8px; }
+.ctl-group-boxed > .ctl { padding:14px 16px; border-radius:12px; border:1px solid #E5E7EB;
+  background:#fff; transition:border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+.ctl-group-boxed > .ctl:hover { border-color:#D1D5DB; }
+.ctl-group-boxed > .ctl:has(input:checked) { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; background:#F8FDFE; }
+
+/* chipset — compact single-choice pills; radio semantics, no visible box */
+.chipset { display:flex; flex-wrap:wrap; gap:8px; }
+.chip-opt { position:relative; display:inline-flex; cursor:pointer; }
+.chip-opt input { position:absolute; opacity:0; width:0; height:0; }
+.chip-opt span { display:inline-flex; align-items:center; height:32px; padding:0 12px;
+  border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12px; font-weight:600;
+  transition:background-color .2s ease, color .2s ease, box-shadow .15s ease; }
+.chip-opt:hover span { background:#E5E7EB; color:#111827; }
+.chip-opt input:checked + span { background:#0A0E1A; color:#fff; }
+.chip-opt input:focus-visible + span { box-shadow:0 0 0 3px rgba(12,169,195,.35); }
+.chip-opt input[disabled] + span { background:#F8F9FB; color:#D1D5DB; cursor:not-allowed; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ck, .rd, .ctl-group > .ctl, .ctl-group-boxed > .ctl, .chip-opt span { transition:none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .btn:active { transform:none; } }
+
 /* ═══ 06 · controls on phones ═════════════════════════════════════════════════════
    Carried verbatim from the page head, and in the same place in the cascade: BEFORE the
    component sheets. That order is load-bearing and slightly surprising — a component
@@ -145,7 +290,7 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 [hidden] { display: none !important; }
 section[id] { scroll-margin-top: 100px; }
 
-a:focus-visible, button:focus-visible, select:focus-visible,
+a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visible,
 [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
   outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
 /* On a dark ground the ring goes light. The ground says so with data-surface="dark" on
@@ -176,6 +321,152 @@ a:focus-visible, button:focus-visible, select:focus-visible,
 .sw.on::after { transform:translateX(16px); }
 @media (prefers-reduced-motion: reduce) { .sw, .sw::after { transition:none; } }
 
+/* ═══ 08b · the quick-check form · states ════════════════════════════════════════════
+   The states the form can be in, drawn on the design-system page (Checker states). No
+   page ships them yet: the binding to the production checker toggles these classes
+   (is-focus / is-near / is-over / is-armed / is-disabled / is-reading / is-ready /
+   is-error / is-busy). Every property a state changes lives here, not in a utility on
+   the same element, so a state class never loses to a utility. Values verbatim. */
+/* focus: the field has no border of its own, so the card carries the ring */
+.qc-shell { outline:2px solid transparent; outline-offset:-1px; transition:outline-color .15s ease; }
+.qc-shell:has(.qc-area:focus), .qc-shell.is-focus { outline-color:#0CA9C3; }
+
+/* input chips */
+.qc-chip:focus-visible, .qc-chip.is-focus { outline:2px solid #0CA9C3; outline-offset:2px; }
+.qc-chip.is-active { background:#111827; color:#fff; }
+.qc-chip[aria-disabled="true"] { background:#F8F9FB; color:#C4C8CF; cursor:not-allowed; }
+.qc-chip[aria-disabled="true"] img { opacity:.4; filter:grayscale(1); }
+
+/* the word count: quiet, amber from 90% of the free limit, orange-700 past it */
+.qc-count { font-size:12px; font-weight:500; color:#9CA3AF; transition:color .2s ease; }
+.qc-count.is-near { color:#B45309; }
+.qc-count.is-over { color:#B84431; font-weight:700; }
+
+/* the drop zone: armed while a file is dragged anywhere over the page, over when it
+   is dragged onto the zone, disabled when the batch is full */
+.qc-drop-icon { width:40px; height:40px; border-radius:12px; flex:none; display:flex; align-items:center;
+  justify-content:center; background:#fff; color:#0991A8; box-shadow:0 0 0 1px rgba(0,0,0,.05);
+  transition:transform .25s cubic-bezier(.32,.72,0,1), background-color .2s ease, color .2s ease; }
+.qc-drop-title { display:block; font-size:13.5px; font-weight:700; letter-spacing:-.01em; color:#111827; }
+.qc-drop-hint { display:block; font-size:12px; color:#6B7280; }
+.qc-drop.is-armed { border-color:#2CC3DB; background:#F0FAFC; }
+.qc-drop.is-over { border-style:solid; border-color:#0CA9C3; background:#E8F8FB; box-shadow:0 0 0 4px rgba(12,169,195,.14); }
+.qc-drop.is-over .qc-drop-icon { background:#0CA9C3; color:#fff; transform:translateY(-2px); }
+.qc-drop.is-disabled, .qc-drop.is-disabled:hover { border-color:#E5E7EB; background:#F8F9FB; cursor:not-allowed; }
+.qc-drop.is-disabled .qc-drop-icon { background:#F1F2F6; color:#9CA3AF; box-shadow:none; }
+.qc-drop.is-disabled .qc-drop-title { color:#6B7280; }
+.qc-drop:focus-visible { outline:2px solid #0CA9C3; outline-offset:2px; }
+
+/* files: one row per file, the state in the row, the error under the name */
+.qc-files { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+.qc-files-head { display:flex; align-items:center; justify-content:space-between; gap:12px;
+  font-size:12px; font-weight:600; color:#6B7280; font-variant-numeric:tabular-nums; }
+.qc-files-head button { font-weight:700; color:#374151; text-decoration:underline; text-decoration-color:#D1D5DB; text-underline-offset:3px; }
+.qc-files-head button:hover { color:#111827; }
+.qc-file { position:relative; overflow:hidden; display:flex; align-items:center; gap:12px; min-height:60px;
+  padding:10px 10px 10px 12px; border-radius:14px; background:#F8F9FB; box-shadow:inset 0 0 0 1px rgba(17,24,39,.06); }
+.qc-file-type { flex:none; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; background:#fff; color:#374151;
+  box-shadow:0 0 0 1px rgba(0,0,0,.06); }
+.qc-file-type[data-ext="pdf"] { background:#FEF4F1; color:#B84431; }
+.qc-file-type[data-ext="doc"], .qc-file-type[data-ext="docx"] { background:#E8F8FB; color:#06748A; }
+.qc-file-type[data-ext="ppt"], .qc-file-type[data-ext="pptx"] { background:#FFFBEB; color:#B45309; }
+.qc-file-type[data-ext="xls"], .qc-file-type[data-ext="xlsx"] { background:#EDFAF4; color:#1B7A50; }
+.qc-file-body { min-width:0; flex:1; }
+.qc-file-name { display:block; font-size:13.5px; font-weight:700; color:#111827; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.qc-file-meta { display:flex; align-items:center; gap:6px; margin-top:1px; font-size:12px; font-weight:500; color:#6B7280; font-variant-numeric:tabular-nums; }
+.qc-file-meta svg { flex:none; }
+.qc-file-msg { display:block; margin-top:2px; font-size:12px; font-weight:500; line-height:1.45; color:#B84431; }
+.qc-file-msg a { font-weight:700; text-decoration:underline; text-decoration-color:#F8A392; text-underline-offset:3px; }
+.qc-file-ok { color:#2AA46C; }
+.qc-file-act { flex:none; display:flex; gap:2px; }
+.qc-file-btn { width:32px; height:32px; border-radius:9999px; display:inline-flex; align-items:center; justify-content:center;
+  color:#6B7280; transition:background-color .15s ease, color .15s ease; }
+.qc-file-btn:hover { background:#E5E7EB; color:#111827; }
+.qc-file-btn:focus-visible { outline:2px solid #0CA9C3; outline-offset:1px; }
+.qc-file-bar { position:absolute; left:0; right:0; bottom:0; height:3px; overflow:hidden; background:rgba(12,169,195,.14); }
+.qc-file-bar > i { display:block; height:100%; width:var(--p, 0%); background:#0CA9C3; border-radius:0 3px 3px 0; transition:width .3s ease; }
+.qc-file.is-reading .qc-file-bar > i { width:30%; animation:qc-indet 1.3s cubic-bezier(.4,0,.2,1) infinite; }
+.qc-file.is-error { background:#FEF4F1; box-shadow:inset 0 0 0 1px #FBC9BF; }
+.qc-file.is-error .qc-file-btn:hover { background:#FDE5E0; color:#8C2E1F; }
+
+/* messages: a note sits under what it is about; an alert speaks for the whole form */
+.qc-note { display:flex; align-items:flex-start; gap:8px; margin:-4px 0 14px; font-size:12.5px; font-weight:500; line-height:1.5; }
+.qc-note svg { flex:none; margin-top:2px; }
+.qc-note a { font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.qc-note.is-error { color:#B84431; }
+.qc-note.is-error a { text-decoration-color:#F8A392; }
+.qc-note.is-warn { color:#92400E; }
+.qc-note.is-warn a { text-decoration-color:#FCD34D; }
+.qc-note.is-info { color:#4B5563; }
+.qc-alert { display:flex; align-items:flex-start; gap:10px; margin-bottom:14px; padding:12px 12px 12px 14px;
+  border-radius:14px; font-size:13px; line-height:1.55; }
+.qc-alert > svg { flex:none; margin-top:2px; }
+.qc-alert-body { min-width:0; flex:1; }
+.qc-alert-title { display:block; font-weight:700; }
+.qc-alert-actions { display:flex; flex-wrap:wrap; gap:4px 16px; margin-top:6px; }
+.qc-alert-actions a, .qc-alert-actions button { font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.qc-alert .qc-file-btn { margin:-6px -4px -6px 0; color:inherit; }
+.qc-alert .qc-file-btn:hover { background:rgba(17,24,39,.06); color:inherit; }
+.qc-alert.is-error { background:#FEF4F1; color:#8C2E1F; box-shadow:inset 0 0 0 1px #FBC9BF; }
+.qc-alert.is-error > svg { color:#B84431; }
+.qc-alert.is-warn { background:#FFFBEB; color:#78350F; box-shadow:inset 0 0 0 1px #FDE68A; }
+.qc-alert.is-warn > svg { color:#B45309; }
+.qc-alert.is-info { background:#E8F8FB; color:#045566; box-shadow:inset 0 0 0 1px #A7E3ED; }
+.qc-alert.is-info > svg { color:#0991A8; }
+.qc-alert.is-success { background:#EDFAF4; color:#1B7A50; box-shadow:inset 0 0 0 1px #B3E9D1; }
+.qc-alert.is-success > svg { color:#2AA46C; }
+
+/* the balance alert: a line per check, then the way on under a hairline */
+.qc-alert-lines { display:flex; flex-direction:column; gap:2px; }
+.qc-alert-lines b { font-weight:800; font-variant-numeric:tabular-nums; }
+.qc-alert-foot { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px;
+  margin-top:10px; padding-top:10px; border-top:1px solid rgba(140,46,31,.14); }
+.qc-alert-foot a:not(.qc-buy) { font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.qc-buy { flex:none; display:inline-flex; align-items:center; gap:10px; height:36px; padding:0 5px 0 14px; border-radius:9999px;
+  background:#fff; color:#111827; font-size:13px; font-weight:600; box-shadow:0 0 0 1px #FBC9BF;
+  transition:box-shadow .15s ease; }
+.qc-buy:hover { box-shadow:0 0 0 1px #F58971; }
+.qc-buy:focus-visible { outline:2px solid #0CA9C3; outline-offset:2px; }
+.qc-buy-price { display:inline-flex; align-items:center; height:26px; padding:0 9px; border-radius:9999px;
+  background:#FEF4F1; color:#8C2E1F; font-size:12px; font-weight:700; font-variant-numeric:tabular-nums; }
+.qc-file-done { color:#1B7A50; font-weight:600; }
+.qc-cta[aria-disabled="true"]:not([aria-busy="true"]) { cursor:not-allowed; }
+
+/* by URL: the field opens under the chips */
+.qc-url { display:flex; align-items:center; gap:8px; height:48px; margin-bottom:12px; padding:0 5px 0 14px;
+  border-radius:14px; border:1px solid #E5E7EB; background:#fff; transition:border-color .15s ease, box-shadow .15s ease; }
+.qc-url > svg { flex:none; color:#9CA3AF; }
+.qc-url input { min-width:0; flex:1; height:100%; border:0; outline:0; background:transparent; font:inherit;
+  font-size:14px; font-weight:500; color:#111827; }
+.qc-url input::placeholder { color:#9CA3AF; font-weight:400; }
+.qc-url:focus-within, .qc-url.is-focus { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+.qc-url.is-error { border-color:#F58971; box-shadow:0 0 0 1px #F58971; }
+.qc-url + .qc-note { margin-top:-6px; }
+.qc-url-btn { flex:none; display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 16px; border-radius:10px;
+  background:#111827; color:#fff; font-size:13px; font-weight:600; transition:background-color .15s ease; }
+.qc-url-btn:hover { background:#1F2937; }
+.qc-url-btn[aria-busy="true"] { background:#374151; cursor:progress; }
+
+/* busy: the check is starting — the form holds still, the button says so */
+.qc-spin { display:inline-block; flex:none; width:14px; height:14px; border-radius:9999px;
+  border:2px solid currentColor; border-top-color:transparent; animation:qc-spin .8s linear infinite; }
+.qc-form.is-busy .qc-area, .qc-form.is-busy .qc-files, .qc-form.is-busy .qc-drop,
+.qc-form.is-busy .qc-chip, .qc-form.is-busy label { opacity:.5; pointer-events:none; transition:opacity .2s ease; }
+.qc-cta[aria-busy="true"] { cursor:progress; }
+.qc-status { display:flex; align-items:center; gap:10px; margin-top:16px; padding-top:16px; border-top:1px solid #F1F2F6;
+  font-size:13px; font-weight:600; color:#374151; }
+.qc-status.is-done { color:#1B7A50; }
+.qc-status a { text-decoration:underline; text-underline-offset:3px; }
+
+@keyframes qc-spin { to { transform:rotate(360deg); } }
+@keyframes qc-indet { from { transform:translateX(-100%); } to { transform:translateX(340%); } }
+@media (prefers-reduced-motion: reduce) {
+  .qc-spin { animation:none; border-top-color:currentColor; opacity:.5; }
+  .qc-file.is-reading .qc-file-bar > i { animation:none; width:100%; opacity:.45; }
+  .qc-shell, .qc-drop-icon, .qc-file-bar > i { transition:none; }
+}
+
 /* ═══ 09 · the report (build/report.js) ═══════════════════════════════════════════
    Bar widths and legend colours stay in style="" on purpose: they are the report's data,
    not its design, and in production they come from the result. */
@@ -202,6 +493,19 @@ a:focus-visible, button:focus-visible, select:focus-visible,
 .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
   pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
 @media (prefers-reduced-motion: reduce) { .cab-mark { transition:none; } }
+
+/* The pass (site.js, module report-pass): the wash behind the scan line. Wider and
+   stronger than a thin band, in the brand blue, with four stops so the falloff tapers. */
+.cab-beam { background-image:linear-gradient(to bottom,
+  rgba(13,168,194,.22) 0%, rgba(13,168,194,.13) 38%,
+  rgba(13,168,194,.05) 70%, rgba(13,168,194,0) 100%); }
+
+/* The homepage's tab strip keeps its approved, lighter colours. The product pages
+   darkened theirs (#4B5563 / #06748A) for contrast on the bg-ink-100 strip; the
+   homepage was not re-approved with them. One look for both is a design call —
+   flagged for review, not made in a refactor. */
+.cab-tabs-light .cab-tab { color:#6B7280; }
+.cab-tabs-light .cab-tab.on { color:#0991A8; }
 
 /* ═══ 10 · the closing CTA band (build/cta.js) ════════════════════════════════════
    Every knob is a custom property on .cta-band, so a page tunes numbers, not selectors,
@@ -253,3 +557,393 @@ a:focus-visible, button:focus-visible, select:focus-visible,
     --cta-o2-x: 52%;    --cta-o2-y: 210px;
   }
 }
+
+/* ═══ 11 · the compact dark banner (build/banner.js) ══════════════════════════════
+   Its glow used to be an inline style with the colour passed per page; the colours form
+   a finite set, so the glow is a class and the colour a preset. Values verbatim. */
+.orb-banner { width:520px; height:500px; right:-6%; top:-220px; }
+.orb-banner-teal       { background:rgba(44,195,219,.18); }
+.orb-banner-coral      { background:rgba(243,111,90,.18); }
+.orb-banner-coral-soft { background:rgba(243,111,90,.16); }
+.orb-banner-violet     { background:rgba(154,106,222,.18); }
+
+/* ═══ 12 · a row of institution marks (UA: .uni) ══════════════════════════════════
+   The approved assets are 213×90 plates that already carry their own light ground, so
+   the plate IS the tile: no second box around it, never scaled above its own size, and
+   one quiet tone until it is pointed at. */
+.uni li { display:flex; align-items:center; justify-content:center; }
+.uni img { display:block; width:100%; max-width:213px; height:auto; aspect-ratio:213/90; border-radius:14px;
+  filter:grayscale(1); opacity:.85; transition:filter .3s ease, opacity .3s ease; }
+.uni li:hover img { filter:none; opacity:1; }
+@media (prefers-reduced-motion: reduce) { .uni img { transition:none; } }
+
+/* ═══ 13 · cells sharing one sheet (UA: the four source cells) ═══════════════════ */
+.cells > div { border-top:1px solid #EEF0F3; }
+.cells > div:first-child { border-top:0; }
+@media (min-width:768px) {
+  .cells > div:nth-child(2) { border-top:0; }
+  .cells > div:nth-child(even) { border-left:1px solid #EEF0F3; }
+}
+
+/* ═══ 14 · inquiry forms — fields, labels, the multi-select chip (Business, University) ═══
+   After 06-controls-phone on purpose: .cf-field and .cf-label re-declare the sizes that
+   block sets on phones, and the approved pages have always shown these (48px fields,
+   12px labels) at every width. */
+
+/* the multi-select: a chip that fills when its checkbox is checked, and says so with a
+   tick, not only with colour; focus lands on the hidden input, so the ring is drawn on
+   the chip */
+.need-chip { transition:background-color .15s ease, color .15s ease, box-shadow .15s ease; }
+.need-chip .need-tick { display:none; }
+.need-opt input:checked + .need-chip { background:#111827; color:#fff; box-shadow:inset 0 0 0 1px #111827; }
+.need-opt input:checked + .need-chip .need-tick { display:block; }
+.need-opt input:focus-visible + .need-chip { outline:2px solid #0CA9C3; outline-offset:3px; }
+.need-opt:hover .need-chip { background:#F3F4F6; }
+.need-opt:hover input:checked + .need-chip { background:#1F2937; }
+
+/* the inquiry-form fields */
+.cf-label { display:block; font-size:12px; font-weight:700; letter-spacing:.01em; color:#4B5563; margin-bottom:7px; padding:0; }
+.cf-label i { font-style:normal; color:#B84431; }
+.cf-field { width:100%; height:48px; padding:0 14px; border-radius:10px; border:1px solid #E5E7EB;
+  background:#fff; color:#111827; font-size:14.5px; font-weight:500; font-family:inherit;
+  transition:border-color .15s ease, box-shadow .15s ease; }
+.cf-field::placeholder { color:#9CA3AF; font-weight:400; }
+.cf-field:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+textarea.cf-field { height:auto; padding:12px 14px; line-height:1.6; resize:none; }
+select.cf-field { appearance:none; cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+
+/* dashed rings: Tailwind's ring is a shadow and cannot dash, so these are borders */
+.ring-dashed { box-shadow:none !important; border:1px dashed currentColor; }
+.ring-dashed.ring-ink-300 { border-color:#D1D5DB; }
+.ring-dashed.ring-teal-300 { border-color:#6ED7E8; }
+
+/* ═══ 16 · the comparison table (Turnitin Alternative: .cmp) ══════════════════════
+   One white sheet inside the bezel; the two product columns are the same width and the
+   same ground. Under 768px every row becomes a card and each cell names its product. */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.cmp { border-collapse:separate; border-spacing:0; background:#fff; border-radius:18px; overflow:hidden; table-layout:fixed; }
+.cmp th, .cmp td { vertical-align:top; padding:20px 24px; border-bottom:1px solid #EEF0F3; }
+.cmp thead th { background:#F8F9FB; padding-top:16px; padding-bottom:16px; vertical-align:middle; }
+.cmp tbody tr:last-child th, .cmp tbody tr:last-child td { border-bottom:0; }
+.cmp .cmp-topic { width:22%; }
+.cmp td + td, .cmp thead th + th + th { border-left:1px solid #EEF0F3; }
+.cmp td, .cmp thead th + th { border-left:1px solid #EEF0F3; }
+@media (min-width:1024px) { .cmp { border-radius:24px; } .cmp th, .cmp td { padding:24px 28px; } }
+@media (max-width:767px) {
+  .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display:block; width:auto; }
+  .cmp { background:transparent; border-radius:0; overflow:visible; }
+  .cmp thead { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+  .cmp tbody tr { background:#fff; border-radius:16px; overflow:hidden; }
+  .cmp tbody tr + tr { margin-top:8px; }
+  .cmp .cmp-topic { width:auto; background:#F8F9FB; padding:14px 18px; border-bottom:1px solid #EEF0F3; }
+  .cmp td { padding:16px 18px; border-left:0 !important; }
+  .cmp tbody tr td:last-child { border-bottom:0; }
+  .cmp tbody tr:last-child td { border-bottom:1px solid #EEF0F3; }
+  .cmp tbody tr:last-child td:last-child { border-bottom:0; }
+  .cmp td::before { content:attr(data-label); display:block; margin-bottom:6px;
+    font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
+}
+
+/* ═══ 17 · pricing periods (build/pricing.js, 60-pricing.js) ═════════════════════ */
+.period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+.period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+
+/* ═══ 18 · the AI package selector (Pricing: .ai-opt) and the lifting card ════════
+   One radio group; the checked row fills and its dot ticks. The rows are labels, so the
+   whole row is the target; focus lands on the hidden radio and the ring is drawn on the
+   row. */
+.ai-opt { transition:background-color .15s ease; }
+.ai-opt:hover { background:#F2FAFB; }
+.ai-opt.on { background:#E6F4F7; }
+.ai-opt .ai-dot { background:#fff; transition:background-color .15s ease, box-shadow .15s ease; }
+.ai-opt .ai-dot svg { opacity:0; }
+.ai-opt.on .ai-dot { background:#0991A8; box-shadow:inset 0 0 0 1px #0991A8; }
+.ai-opt.on .ai-dot svg { opacity:1; }
+.ai-opt:has(input:focus-visible) { outline:2px solid #6ED7E8; outline-offset:-2px; }
+
+/* a card that lifts a little under the pointer */
+.spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
+.spotlight:hover { transform:translateY(-4px); }
+@media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
+
+/* ═══ 19 · the code block — language tabs, Copy, panels (API) ════════════════════
+   "Code text must remain readable; horizontal scrolling inside the code container is
+   preferred to shrinking text or changing code semantics." So the pre scrolls in its
+   own box and the page never gains a horizontal scrollbar. Without JS every panel shows:
+   the tabs cannot switch, so no sample is locked behind one. */
+.code-tab { padding:7px 13px; border-radius:9999px; font-size:12.5px; font-weight:600;
+  color:rgba(255,255,255,.5); transition:background-color .2s ease, color .2s ease; }
+.code-tab:hover { color:rgba(255,255,255,.8); }
+.code-tab.on { background:rgba(255,255,255,.1); color:#fff; }
+.code-copy { padding:7px 13px; border-radius:9999px; font-size:12px; font-weight:600;
+  color:rgba(255,255,255,.45); transition:background-color .2s ease, color .2s ease; }
+.code-copy:hover { background:rgba(255,255,255,.08); color:#fff; }
+.code-panel { display:none; }
+.code-panel.on { display:block; }
+:where(html:not(.js)) .code-panel { display:block; }
+.code-pre { overflow-x:auto; padding:18px 16px 16px; margin:0;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size:12.5px; line-height:1.75; color:rgba(255,255,255,.82);
+  -webkit-overflow-scrolling:touch; }
+.code-pre::-webkit-scrollbar { height:6px; }
+.code-pre::-webkit-scrollbar-thumb { background:rgba(255,255,255,.18); border-radius:3px; }
+@media (min-width:640px) { .code-pre { padding:22px 20px 18px; font-size:13px; } }
+
+/* ═══ 20 · the AI example and its placeholders (AI Detector) ═════════════════════
+   The AI-marked passage of the example report. Named .ai-hl / .ai-hl-on, not .hl-ai /
+   .on-ai: the homepage's scan scene uses those names for a different highlight, and in
+   one shared sheet the two would bleed into each other. Values verbatim. */
+.bg-ai-mark { background:rgba(154,106,222,.85); }
+.ai-hl { background:rgba(154,106,222,.22); border-radius:.35rem; padding:.05em .18em; margin:-.05em -.18em;
+  box-shadow:inset 0 -2px 0 rgba(154,106,222,.5);
+  box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+.ai-hl-on { color:#6D3FB0; }
+
+/* redacted text: Flow Circular renders text as bars */
+.font-flow { font-family:'Flow Circular', cursive; }
+
+/* a placeholder the brief leaves open, drawn as a dashed box */
+.ph { border:1px dashed rgba(16,24,40,.22); border-radius:.5rem; }
+.ph-dark { border:1px dashed rgba(255,255,255,.24); border-radius:.5rem; }
+
+/* package cards: a radio row that fills when chosen (AI Detector pricing) */
+.pkg { transition:background-color .2s ease, box-shadow .2s ease; }
+.pkg:hover { background:#F8F9FB; }
+.pkg:has(input:checked) { background:#E8F8FB; box-shadow:inset 0 0 0 1.5px #0CA9C3; }
+.pkg:has(input:checked) .pkg-dot { border-color:#0CA9C3; }
+.pkg:has(input:checked) .pkg-dot::after { content:''; width:8px; height:8px; border-radius:9999px; background:#0CA9C3; }
+.pkg:has(input:focus-visible) { box-shadow:inset 0 0 0 2px #0CA9C3, 0 0 0 3px rgba(12,169,195,.25); }
+
+/* ═══ 21 · documentation devices (Moodle Integration guide) ═══════════════════════
+   The reading column and everything set inside it: Moodle's own words, definition
+   tables, the at-a-glance sheet, numbered steps, the schematic, evidence figures, the
+   file/online-text matrix, troubleshooting, the rail and the jump menu — and the hero's
+   link drawing. Values verbatim from the page's former <style>.
+
+   Anchors. The guide's anchors clear the site header, and under lg the jump menu beneath
+   it. As approved, a .doc-section keeps 104px at every width: the page's 132px rule for
+   it under lg lost on specificity to section[id], and the computed value is what was
+   signed off. A .doc-sub gets 132px under lg. (Flagged for review, not changed here.) */
+.doc-section[id], .doc-sub[id] { scroll-margin-top: 104px; }
+@media (max-width:1023px) { .doc-sub[id] { scroll-margin-top: 132px; } }
+
+/* ---------- the hero link: two marks, two straight tracks, the plugin between ----------
+   One 340×330 box; tiles, the pill and the side labels are placed in percentages of it,
+   so they meet the SVG tracks at every size. */
+.hero-link { position:relative; width:100%; max-width:340px; aspect-ratio:340/330; margin:0 auto; }
+.hero-link > svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.hero-link-tile { position:absolute; display:flex; align-items:center; justify-content:center; border-radius:20px;
+  background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,.05), 0 18px 40px -22px rgba(16,24,40,.28); }
+.hero-link-tile.is-top { left:14.7%; top:0; width:70.6%; height:29.1%; }
+.hero-link-tile.is-bottom { left:14.7%; top:70.9%; width:70.6%; height:29.1%; }
+.hero-link-tile img { display:block; width:72%; height:auto; }
+.hero-link-plug { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 14px 0 11px;
+  border-radius:999px; background:#111827; color:#fff; font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  box-shadow:0 0 0 5px rgba(242,252,252,.9), 0 10px 24px -10px rgba(16,24,40,.5); }
+.hero-link-side { position:absolute; left:67.65%; top:50%; transform:translate(12px,-50%); max-width:92px; font-size:12px; font-weight:600; line-height:1.3; color:#374151; }
+.hero-link-side.is-left { left:32.35%; transform:translate(calc(-100% - 12px),-50%); text-align:right; }
+@media (max-width:1023px) { .hero-link { max-width:300px; margin:0; } .hero-link-tile { border-radius:16px; } }
+@media (prefers-reduced-motion: reduce) { .hero-link-pulse { display:none; } }
+
+/* Moodle's own words */
+.ui { font-weight:600; color:#111827; background:#F3F4F6; border-radius:6px; padding:.08em .4em;
+  box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+.bg-orange-50 .ui { background:rgba(184,68,49,.10); }
+.bg-teal-50 .ui, .bg-ink-50 .ui, .deftable dt .ui { background:#E9EBEF; }
+
+/* ---------- the reading column ---------- */
+.doc-section { display:grid; gap:20px; padding-bottom:56px; margin-bottom:56px; border-bottom:1px solid #EEF0F3; }
+.doc-section:last-child { border-bottom:0; margin-bottom:0; padding-bottom:0; }
+.doc-section > h2 { margin-bottom:4px; }
+.doc-sub { display:grid; gap:16px; padding-top:28px; margin-top:8px; border-top:1px dashed #E1E4E9; }
+.group-label { margin-top:8px; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#B84431; }
+@media (min-width:1024px) { .doc-section { gap:22px; padding-bottom:72px; margin-bottom:72px; } }
+
+/* ---------- the definition table ---------- */
+.deftable { border-radius:16px; box-shadow:0 0 0 1px rgba(0,0,0,.06); overflow:hidden; background:#fff; }
+.deftable-head { display:none; }
+.deftable-row { padding:14px 16px; border-top:1px solid #EEF0F3; }
+.deftable-row:first-child { border-top:0; }
+.deftable dt { font-size:14px; font-weight:700; color:#111827; letter-spacing:-.01em; margin-bottom:6px; }
+.deftable dd { font-size:13.5px; line-height:1.6; color:#374151; }
+@media (min-width:640px) {
+  .deftable-head, .deftable-row { display:grid; grid-template-columns:minmax(0,.38fr) minmax(0,.62fr); gap:24px; }
+  .deftable-head { padding:11px 20px; background:#F8F9FB; border-bottom:1px solid #EEF0F3;
+    font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
+  .deftable-row { padding:16px 20px; }
+  .deftable dt { margin-bottom:0; font-size:14.5px; }
+  .deftable dd { font-size:14.5px; }
+}
+
+/* ---------- at a glance ---------- */
+.glance-row { display:grid; gap:2px; padding:13px 18px; border-top:1px solid #EEF0F3; }
+.glance-row:first-child { border-top:0; }
+.glance dt { font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
+.glance dd { font-size:15px; font-weight:700; letter-spacing:-.01em; color:#111827; }
+@media (min-width:640px) {
+  .glance-row { grid-template-columns:200px minmax(0,1fr); gap:20px; align-items:baseline; padding:14px 24px; }
+  .glance dd { font-size:15.5px; }
+}
+
+/* ---------- numbered steps on one spine ---------- */
+.steps { position:relative; display:grid; gap:16px; counter-reset:none; }
+.steps::before { content:""; position:absolute; left:15px; top:16px; bottom:16px; width:1px; background:#E1E4E9; }
+.steps > li { position:relative; display:flex; align-items:flex-start; gap:16px; }
+.steps-n { position:relative; z-index:1; flex:none; width:31px; height:31px; border-radius:999px; background:#D4F3F8; color:#06748A;
+  display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums;
+  box-shadow:0 0 0 4px #fff; }
+.steps-tight { gap:12px; }
+
+/* ---------- the schematic ---------- */
+.flow { margin:4px 0 0; }
+.flow ol { display:grid; gap:22px; }
+.flow li { position:relative; }
+.flow li span { display:flex; align-items:center; justify-content:center; text-align:center; min-height:56px; padding:10px 12px;
+  border-radius:14px; background:#F8F9FB; box-shadow:0 0 0 1px rgba(0,0,0,.06);
+  font-size:12.5px; font-weight:600; line-height:1.35; color:#1F2937; }
+.flow li.is-ps span { background:#111827; color:#fff; box-shadow:none; }
+.flow li + li::before { content:""; position:absolute; left:50%; top:-16px; width:1px; height:10px; background:#9CA3AF; }
+.flow li + li::after { content:""; position:absolute; left:50%; top:-9px; width:6px; height:6px; margin-left:-3px;
+  border-right:1px solid #9CA3AF; border-bottom:1px solid #9CA3AF; transform:rotate(45deg); }
+.flow figcaption, .shot figcaption { margin-top:10px; font-size:12.5px; line-height:1.5; color:#6B7280; }
+@media (min-width:768px) {
+  .flow ol { grid-template-columns:repeat(5, minmax(0,1fr)); gap:22px; }
+  .flow li span { height:100%; min-height:76px; }
+  .flow li + li::before { left:-17px; top:50%; width:11px; height:1px; }
+  .flow li + li::after { left:-11px; top:50%; margin-left:0; margin-top:-3px; transform:rotate(-45deg); }
+}
+
+/* ---------- the evidence figure (its max-width comes from the screenshot's own size) ---------- */
+.shot { margin:4px 0 0; width:100%; }
+.shot-frame { border-radius:16px; background:#F3F4F6; box-shadow:0 0 0 1px rgba(0,0,0,.06); padding:0 8px 8px; }
+.shot-tag { display:flex; align-items:center; gap:5px; height:30px; padding:0 6px; }
+.shot-tag span { width:7px; height:7px; border-radius:999px; background:#D1D5DB; }
+.shot-tag b { margin-left:8px; font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#6B7280; }
+.shot img { display:block; width:100%; height:auto; border-radius:10px; background:#fff; padding:8px 9px; box-shadow:0 0 0 1px rgba(0,0,0,.05); }
+
+/* ---------- file vs online text ---------- */
+.matrix { border-top:1px solid #EEF0F3; border-collapse:collapse; font-size:13.5px; }
+.matrix th, .matrix td { padding:12px 16px; border-top:1px solid #EEF0F3; vertical-align:top; line-height:1.5; }
+.matrix thead th { border-top:0; background:#F8F9FB; font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#6B7280; }
+.matrix tbody th { font-weight:700; color:#111827; width:32%; }
+.matrix td { color:#1B7A50; font-weight:600; }
+@media (min-width:640px) { .matrix { font-size:14.5px; } .matrix th, .matrix td { padding:14px 24px; } }
+
+/* ---------- troubleshooting ---------- */
+.trouble { display:grid; gap:12px; }
+.trouble > div { border-radius:16px; box-shadow:0 0 0 1px rgba(0,0,0,.06); background:#fff; padding:16px 18px; }
+.trouble dt { display:flex; align-items:flex-start; gap:12px; font-size:15px; font-weight:700; letter-spacing:-.01em; color:#111827; }
+.trouble-q { flex:none; width:22px; height:22px; border-radius:999px; background:#FDE6E1; color:#B84431; font-size:12.5px; font-weight:800;
+  display:flex; align-items:center; justify-content:center; margin-top:1px; }
+.trouble dd { margin:10px 0 0 34px; font-size:14px; line-height:1.6; color:#374151; }
+@media (min-width:768px) {
+  .trouble > div { display:grid; grid-template-columns:minmax(0,.42fr) minmax(0,.58fr); gap:28px; padding:18px 22px; }
+  .trouble dd { margin:0; font-size:14.5px; }
+}
+
+/* ---------- the rail and the jump menu (behaviour: site.js, module doc-nav) ---------- */
+.rail { position:sticky; top:112px; }
+.rail ul { display:grid; border-left:1px solid #E1E4E9; }
+.rail-link { display:block; margin-left:-1px; padding:7px 0 7px 16px; border-left:2px solid transparent;
+  font-size:13.5px; font-weight:500; color:#6B7280; transition:color .2s ease, border-color .2s ease; }
+.rail-link:hover { color:#111827; }
+.rail-link.on { color:#111827; font-weight:700; border-left-color:#0991A8; }
+
+.jump { position:sticky; top:68px; z-index:30; margin:0 -16px; background:rgba(255,255,255,.94);
+  -webkit-backdrop-filter:saturate(1.4) blur(10px); backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid #EEF0F3; }
+@media (min-width:640px) { .jump { margin:0 -24px; top:84px; } }
+.jump summary { list-style:none; display:flex; align-items:center; gap:12px; min-height:48px; padding:0 16px; cursor:pointer;
+  font-size:13.5px; font-weight:700; color:#111827; }
+@media (min-width:640px) { .jump summary { padding:0 24px; } }
+.jump summary::-webkit-details-marker { display:none; }
+.jump-now { margin-left:auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; color:#6B7280; }
+.jump-chev { flex:none; transition:transform .25s ease; }
+.jump[open] .jump-chev { transform:rotate(180deg); }
+.jump nav { padding:4px 8px 12px; }
+@media (min-width:640px) { .jump nav { padding:4px 16px 12px; } }
+.jump-link { display:flex; align-items:center; min-height:44px; padding:0 8px; border-radius:10px; font-size:14.5px; font-weight:500; color:#374151; }
+.jump-link.on { background:#F3F4F6; color:#111827; font-weight:700; }
+@media (prefers-reduced-motion: reduce) { .jump-chev, .rail-link { transition:none; } }
+
+/* ═══ 22 · statistics odometer, hero title, pulse dot (homepage) ══════════════════
+   Values verbatim from the homepage's former <style> and the donor head.
+
+   Odometer (site.js, module odometer). Every character sits in a box of the same
+   height, digits and separators alike, so the comma and the plus keep their line with
+   the reels beside them. A reel is twenty cells — ten digits twice — which makes one
+   digit exactly 5% of it and the resting offset a percentage rather than a measured
+   pixel. The cell is slightly taller than an em: at leading-none an extrabold digit
+   sits tight against the box and the clip would shave it. The reel must be a block: a
+   transform does not apply to a non-replaced inline element. The page ships the plain
+   figure; reels exist only while motion runs. */
+.od-num { --od-h:1.15em; }
+.od, .od-s { display:inline-block; height:var(--od-h); line-height:var(--od-h); vertical-align:top; }
+.od { overflow:hidden; }
+.od-r { display:block; }
+.od-d { display:block; height:var(--od-h); line-height:var(--od-h); }
+
+/* Hero title (site.js, module hero-title): each word rises out of its own clip. The
+   padding makes room for descenders inside the clip, the negative margin gives the
+   line its height back. */
+.hw { display:inline-block; overflow:hidden; vertical-align:bottom; padding-bottom:.22em; margin-bottom:-.22em; }
+.hw-in { display:inline-block; }
+
+/* the pulsing dot of a status pill (the closing band's "Free check") */
+@keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.45; transform:scale(.8); } }
+.pulse-dot { animation:pulse-dot 2.2s ease-in-out infinite; }
+
+/* ═══ 23 · the reviews carousel (homepage) ═══════════════════════════════════════
+   Behaviour: site.js, module carousel ([data-carousel]). Values verbatim; the rail was
+   keyed to #revTrack and is the class .rev-track now.
+
+   The rail runs the full viewport; the reading zone stays the container's. A mask
+   dissolves the cards from the screen edge to where the content column starts, so
+   resting cards sit in the 1200px zone at full strength and their neighbours peek from
+   inside the fade. --rev-edge is screen edge to content edge: the centring gap plus the
+   container gutter. Card width is pinned to the content zone, not the track, so three
+   rest inside the column exactly. scroll-padding keeps the snap points on the content
+   edge rather than the track edge. */
+.no-bar { scrollbar-width:none; -ms-overflow-style:none; }
+.no-bar::-webkit-scrollbar { display:none; }
+
+.rev-track { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 16px);
+  margin-inline:calc(50% - 50vw);
+  padding-inline:var(--rev-edge); scroll-padding-inline:var(--rev-edge);
+  -webkit-mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent);
+          mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent); }
+.rev-track > div { flex-basis:86%; }
+@media (min-width:640px)  { .rev-track { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 24px); }
+                            .rev-track > div { flex-basis:54%; } }
+@media (min-width:1024px) { .rev-track { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 40px); }
+                            .rev-track > div { flex-basis:calc((min(100vw, 1280px) - 80px - 3rem) / 3); } }
+
+/* the arrows are a hover affordance, but focus reaches them too, or the control is
+   mouse-only; hidden entirely when there is nothing to scroll */
+.rev-nav { opacity:0; pointer-events:none;
+           transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1); }
+.group:hover .rev-nav, .rev-nav:focus-visible { opacity:1; pointer-events:auto; }
+.rev-nav[hidden] { display:none; }
+.rev-nav:hover { transform:translateY(-50%) scale(1.06); }
+.rev-dot { width:7px; height:7px; border-radius:999px; background:rgba(255,255,255,.22);
+           transition:width .3s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
+.rev-dot.on { width:22px; background:#fff; }
+@media (hover: none) { .rev-nav { opacity:1; pointer-events:auto; } }
+
+/* ═══ 25 · the modal (build/modal.js) ═════════════════════════════════════════════
+   One recipe for every popup. The overlay starts hidden and opens with .is-open (site.js,
+   module modal), not only with the hidden attribute, so the card can fade in. Values
+   verbatim. */
+.md { transition:visibility 0s linear .2s; }
+/* A closed modal stays laid out (invisible) so its card can fade out. The shared
+   [hidden] rule (07-a11y) is display:none !important, so this one must be too; at
+   .md[hidden] it outranks the shared rule for the modal only. */
+.md[hidden] { display:flex !important; visibility:hidden; pointer-events:none; }
+.md-backdrop { opacity:0; transition:opacity .2s ease; }
+.md-card { opacity:0; transform:translateY(8px) scale(.98); transition:opacity .2s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+.md.is-open { transition:none; }
+.md.is-open .md-backdrop { opacity:1; }
+.md.is-open .md-card { opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce) { .md-card { transform:none; transition:opacity .15s ease; } }

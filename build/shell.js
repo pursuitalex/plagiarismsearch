@@ -58,17 +58,17 @@ const PAGES = {
   'index.html':                  { active: null, home: true },
   /* the DEC-0030 homepage, built alongside the current one so the two can be compared
      before either is retired. It is the checker page, so it anchors its own CTAs. */
-  'index-v2.html':               { active: null, home: true },
+  'index-v2.html':               { active: null, home: true, static: true },
   'ai-detector.html':            { active: 'products' },
   /* the DEC-0038 AI Detector, built alongside the current one for the same reason
      index-v2 is: nothing is retired until the replacement is accepted */
-  'ai-detector-v2.html':         { active: 'products' },
+  'ai-detector-v2.html':         { active: 'products', static: true },
   'api.html':                    { active: 'products' },
   /* the DEC-0041 rebuild, alongside the current one */
-  'api-v2.html':                 { active: 'products' },
+  'api-v2.html':                 { active: 'products', static: true },
   'prices.html':                 { active: 'pricing' },
   /* the DEC-0042 rebuild, alongside the current one */
-  'prices-v2.html':              { active: 'pricing' },
+  'prices-v2.html':              { active: 'pricing', static: true },
   'help-center.html':            { active: 'resources' },
   'blog.html':                   { active: 'resources' },
   'blog-best-checker-2026.html': { active: 'resources' },
@@ -95,22 +95,20 @@ const PAGES = {
   'plagiarism-and-ai-check-report-v2.html': { active: null },
   /* the DEC-0043 institutional page — a real page now, not a stub */
   'university-plagiarism-checker.html': { active: 'solutions' },
-  'university-plagiarism-checker-v2.html': { active: 'solutions' },
+  'university-plagiarism-checker-v2.html': { active: 'solutions', static: true },
   /* the Students page to the 2026-09-15 brief — the stub graduated */
-  'plagiarism-checker-for-students.html': { active: 'solutions' },
-  /* the same page on the shared production assets — the static-assets proof of concept.
-     `static` gives it the chrome without inline <style>/<script> (see staticChrome) */
-  'plagiarism-checker-for-students-poc.html': { active: 'solutions', static: true },
+  /* static: on the shared production assets — the chrome without inline <style>/<script> (staticChrome) */
+  'plagiarism-checker-for-students.html': { active: 'solutions', static: true },
   /* the Turnitin Alternative page to the 2026-09-15 brief — footer-only, so no active tab */
-  'turnitin-checker-alternative.html': { active: null },
+  'turnitin-checker-alternative.html': { active: null, static: true },
   /* the Moodle Integration guide to the 2026-09-15 brief — the stub graduated */
-  'integration-guide.html': { active: 'products' },
+  'integration-guide.html': { active: 'products', static: true },
   /* the Ukrainian dedicated checker, /ua/plagiarism-check — English shell by decision (2026-09-18) */
-  'ua-plagiarism-check.html': { active: null },
+  'ua-plagiarism-check.html': { active: null, static: true },
   /* the PDF Plagiarism Checker to the 2026-09-15 brief — footer-led, no nav item */
-  'pdf-plagiarism-checker.html': { active: null },
+  'pdf-plagiarism-checker.html': { active: null, static: true },
   /* Business & Teams to the 2026-09-15 brief — the stub graduated */
-  'plagiarism-checker-for-organization.html': { active: 'solutions' },
+  'plagiarism-checker-for-organization.html': { active: 'solutions', static: true },
   'paper-analysis.html':         { active: null },
   'readability-check.html':      { active: null },
   'spell-check.html':            { active: null },
@@ -136,8 +134,7 @@ const V1_OF = { products: 'products', pricing: 'prices', resources: 'company', c
 /* design-system.html has its own shell and is not part of the site's navigation */
 /* pages.html is the prototype index, a review tool rather than a page of the site,
    so it carries no global header or footer to keep fresh. */
-/* poc-sections.html is the section-reuse test page: it must carry nothing but the sections */
-const SKIP = new Set(['design-system.html', 'pages.html', 'poc-sections.html']);
+const SKIP = new Set(['design-system.html', 'pages.html']);
 
 function render(tpl, page) {
   const active = VERSION === 'v1' ? V1_OF[page.active] ?? null : page.active;

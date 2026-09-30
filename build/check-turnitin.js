@@ -184,9 +184,9 @@ console.log('\nsources');
 console.log('\ntrademark / deconfusion');
 {
   const hero = section('independent-checker');
-  ok('the hero is the first section and carries the shared form', body.indexOf('id="independent-checker"') < body.indexOf('id="comparison"') && /<textarea id="checkText"/.test(hero));
+  ok('the hero is the first section and carries the shared form', body.indexOf('id="independent-checker"') < body.indexOf('id="comparison"') && /<textarea id="(checkText|[a-z-]+-checker-text)"/.test(hero));
   ok('exactly one form on the page', (body.match(/<form\b/g) || []).length === 1);
-  ok('plagiarism is the checked control; AI is not', /id="optPlag" checked/.test(hero) && !/id="optAI" checked/.test(hero));
+  ok('plagiarism is the checked control; AI is not', /(id="optPlag"|<input type="checkbox") checked/.test(hero) && !/(id="optAI"|<input type="checkbox"(?! checked)[^>]*>[\s\S]*?<input type="checkbox") checked/.test(hero));
   ok('the short disclosure under the checker is gone; the free line stays', !text.includes('Independent service — not affiliated with Turnitin, LLC.') && norm(flat(hero)).includes('150 words free — no registration required.'));
   ok('the independence sentence is in the hero too', flat(hero).includes('It is not affiliated with or endorsed by Turnitin, LLC'));
   ok('on a phone the order is H1 → form → independence card', hero.indexOf('<h1') < hero.indexOf('<textarea') && hero.indexOf('<textarea') < hero.indexOf('It is not affiliated with or endorsed'));
@@ -228,7 +228,7 @@ console.log('\nforbidden claims');
 console.log('\nproduct acts');
 {
   const rep = section('report');
-  ok('the shared report is rendered (build/report.js), once', (body.match(/id="cabDoc"/g) || []).length === 1 && /cab-mark/.test(rep) && /cab-src/.test(rep));
+  ok('the shared report is rendered (build/report.js), once', (body.match(/id="cabDoc"|<div data-report[ >]/g) || []).length === 1 && /cab-mark/.test(rep) && /cab-src/.test(rep));
   ok('the report uses no Turnitin vocabulary as UI', !/Similarity Report|Turnitin/i.test(flat(rep)));
   ok('the page has one dark act only — the non-equivalence one', (body.match(/<section[^>]*bg-ink-950/g) || []).length === 1 && /bg-ink-950/.test(section('not-the-same-score').slice(0, 200)));
   ok('four source items as a definition list', (section('sources-and-settings').match(/<dt\b/g) || []).length === 4);
@@ -236,8 +236,14 @@ console.log('\nproduct acts');
   ok('data handling links to the privacy policy', /href="policy\.html"/.test(section('your-document')) && (section('your-document').match(/<li class="relative">/g) || []).length === 3);
   ok('data handling says nothing about Turnitin', !/Turnitin/.test(flat(section('your-document'))));
   const pr = section('pricing');
-  ok('pricing preview: three plan cards, a period switcher, "View all pricing" → prices.html', (pr.match(/data-tier="/g) || []).length === 3 && /id="periodTabs"/.test(pr) && /href="prices\.html"[^>]*>\s*View all pricing/.test(pr));
-  ok('no price is frozen into the pricing markup (values are written by the widget script)', !/\$\d/.test(flat(pr)));
+  ok('pricing preview: three plan cards, a period switcher, "View all pricing" → prices.html', (pr.match(/data-tier="/g) || []).length === 3 && /id="periodTabs"|class="period-btn/.test(pr) && /href="prices\.html"[^>]*>\s*View all pricing/.test(pr));
+  /* since 2026-09-25 (Olex): initial prices may be in the HTML, only from build/pricing-data.js */
+  {
+    const { PLANS } = require('./pricing-data');
+    const allowed = new Set(Object.values(PLANS.onetime).flatMap(v => v && typeof v === 'object' ? [v.price, v.rate] : []));
+    const shown = [...new Set([...flat(pr).matchAll(/\$\d[\d,]*(?:\.\d\d)?/g)].map(m => m[0]))];
+    ok('every price in the pricing markup comes from the pricing data source', shown.every(p => allowed.has(p)), shown.filter(p => !allowed.has(p)).join(', '));
+  }
   ok('no static billing helper ("cancel anytime") on the page', !/cancel anytime/i.test(text));
 }
 
@@ -259,7 +265,7 @@ console.log('\nFAQ / CTA');
   const f = flat(faq);
   const bad = QA.filter(([q, a]) => !f.includes(q) || !f.includes(a)).map(([q]) => q.slice(0, 30));
   ok('eight questions and answers verbatim, answers in the HTML', !bad.length, bad.join(' · '));
-  ok('every question is a button with aria-expanded', (faq.match(/<button type="button" aria-expanded="(true|false)"/g) || []).length === 8);
+  ok('every question is a button with aria-expanded', (faq.match(/<button type="button" (?:aria-controls="[^"]+" )?aria-expanded="(true|false)"/g) || []).length === 8);
   ok('no accuracy-comparison question', !/how accurate/i.test(f));
   const close = section('independent-cta');
   ok('the closing CTA returns to the one real checker', /href="#independent-checker"/.test(close) && !/<form|<textarea/.test(close));
@@ -277,7 +283,7 @@ console.log('\nhygiene');
   const local = [...new Set([...body.matchAll(/href="([a-z0-9-]+\.html)(#[^"]*)?"/g)].map(m => m[1]))];
   const gone = local.filter(f => !fs.existsSync(path.join(__dirname, '..', 'site', f)));
   ok('every local page link exists', !gone.length, gone.join(', '));
-  ok('the hero carries the dot field under its orbs', /id="heroDots"/.test(section('independent-checker')) && section('independent-checker').indexOf('heroDots') < section('independent-checker').indexOf('class="orb'));
+  ok('the hero carries the dot field under its orbs', /id="heroDots"|class="dot-field/.test(section('independent-checker')) && section('independent-checker').search(/heroDots|class="dot-field/) < section('independent-checker').indexOf('class="orb'));
   ok('header and footer were injected by build/shell.js', /<header[^>]*>\s*\S/.test(html) && /<footer[^>]*>\s*\S/.test(html));
 }
 

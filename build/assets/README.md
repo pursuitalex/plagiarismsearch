@@ -1,9 +1,17 @@
 # Shared production assets
 
 Replaces the Tailwind Play CDN and the `<style>`/`<script>` blocks that every page
-carried. **Status: proof of concept on Students only**
-(`site/plagiarism-checker-for-students-poc.html`). The other master pages still use the
-CDN until each is migrated and passes its parity run.
+carried. **Status: all 11 master pages are on it** (Home v2, Students, PDF, UA,
+Organization, University v2, Turnitin, Pricing v2, API v2, AI Detector v2, Moodle
+Integration). Each one was migrated and passed its parity run against the approved page
+at commit `04c8e24`. The design-system page is on it too, checked against its approved
+version at `db7d735`. Pages that are not masters (stubs, legal, manuals, v1 pages) still use
+the CDN.
+
+The design-system page adds two files of its own, `ds.css` and `ds.js` (source
+`build/assets/ds/`, linked with `head({ ds: true })`): the spec sheet around the
+components, such as swatches, rendered ramps, the state list and copy-to-clipboard. The
+components it shows come from `site.css` and `site.js`, exactly as on every page.
 
 ## Output
 
@@ -28,7 +36,9 @@ Build: `npm run build:assets`. Every version is pinned exactly in `package.json`
 <script defer src="/assets/js/site.js"></script>
 ```
 
-That is the whole page-level CSS/JS. The body holds only markup.
+That is the whole page-level CSS/JS. `build/page.js` writes it: a generator passes its
+title, meta, canonical, `lang` and its sections, and nothing else. The body holds only
+markup. The one `<script>` a body may hold is data: a pricing section's JSON island.
 
 ## The model
 
@@ -45,44 +55,87 @@ That is the whole page-level CSS/JS. The body holds only markup.
    must precede `08-checker` (see the note in that file).
 3. **CSS belongs to components, not pages.** A rule that exists for one component lives in
    that component's partial, even if the component is used once. No page carries CSS.
-4. **Markup keeps its utilities.** A reusable section has a stable root hook,
-   `data-component="…"`, and the behaviour hooks it needs: `data-checker`, `data-report`,
-   `data-faq`, `.cta-band`.
+   Where two approved pages drew the same component differently, the difference is a named
+   variant (`.cab-tabs-light`, `.faq-chev-tint`), never a page selector.
+4. **Markup keeps its utilities.** Every top-level element of `<main>` has a stable root
+   hook, `data-component="…"`, and the behaviour hooks it needs (catalogue below).
 5. **No id is a CSS or JS hook.** Ids exist for in-page anchors and for accessibility
    pairs only.
 6. **Accessibility ids are rendered, not scripted.** `label for`/`id` on the checker field
    and `aria-controls`/`id` on the FAQ are written by the template, namespaced per instance
    (`student-checker-text`, `student-faq-a3`). The HTML is correct before JS runs, and JS
-   never creates or rewrites them. The one exception would be a component whose instances
-   are created in the browser (none today).
+   never creates or rewrites them.
 7. **JS is modular in source, one file in production.** Each module registers an init.
    Every init wires each instance it finds by its `data-*` hook, once (`data-*-ready`),
    inside its own try/catch. Two of the same component on one page do not share state.
    Nothing in `site.js` looks up a page id.
 8. **Progressive enhancement.** Every piece of content is in the HTML. Reveals hide content
-   only under `html.js-motion`, the FAQ collapses only under `html.js`, and the pen and ring
-   marks show their final state without JS. The boot snippet removes both classes if
-   `site.js` has not reported in within 3.5 s. The motion module removes `.js-motion` if
-   GSAP is missing. Scroll triggers are `clamp()`ed, so a section that ends a page still
-   reveals.
-9. **Inline `style=""` only for data.** Report bar widths and legend colours stay inline.
-   Decorative values are classes: orb presets (`.orb-hero-teal` …), `.ring-mark`,
-   `.dot-field`, `.cta-glow-*`.
+   only under `html.js-motion`, the FAQ collapses only under `html.js`, code panels are all
+   visible without JS, and the pen and ring marks show their final state without JS. The
+   boot snippet removes both classes if `site.js` has not reported in within 3.5 s. The
+   motion module removes `.js-motion` if GSAP is missing. Scroll-triggered animations are
+   tracked, and whatever a page can never scroll to (a short page, a section that ends
+   one) plays once the page is at its end. Reachable triggers fire where they always did.
+9. **Inline `style=""` only for data.** Report bar widths, legend colours, star ratings
+   and a screenshot's own width stay inline. Decorative values are classes: orb presets
+   (`.orb-hero-teal` …), `.ring-mark`, `.dot-field`, `.cta-glow-*`, `.hero-link-tile.is-top`.
 10. **Surfaces are declared.** `data-surface="dark"` switches the focus ring. It is never
     inferred from a background utility.
 11. **Paths.** Assets are root-relative (`/assets/…`). The SVG `<pattern>` dot field
     became a CSS background, so no SVG ids are left in reusable sections.
+12. **Prices come from one source.** A pricing section renders its initial period from
+    `build/pricing-data.js` (the stand-in for the backend) and carries the same data once as
+    a JSON island. The script only switches periods. Nothing is typed into a page by hand.
+
+## Hooks (site.js modules)
+
+| Module | Hook | Does |
+|---|---|---|
+| header | `[data-site-header]`, `[data-nav-burger]`, `[data-nav-panel]`, `[data-to-top]` | phone dock, burger, back to top |
+| motion | `.rv`, `.rv-kids` (`data-stagger`), `.pen-word`, `.ring-word` | reveals and marks |
+| hero-title | `[data-hero-title]` + `[data-hero-support]` | words rise, support follows, pen draws |
+| odometer | `.od-num` | statistics roll |
+| checker | `form[data-checker]`, `[data-checker-text]`, `[data-checker-count]`, `[data-switch]` | count, switches; in-page link focuses the field unless `data-checker-arrive="off"` |
+| form-arrive | `form[data-focus-first="ms"]` | a link to the form focuses its first field |
+| report | `[data-report]` (`.cab-mark`, `.cab-src`) | select a passage |
+| report-pass | `[data-report-doc]`, `[data-report-side]`, `[data-report-scan]` | the scan plays once |
+| carousel | `[data-carousel]`, `-track`, `-prev`, `-next`, `-dots` (`data-dot-label`) | reviews rail |
+| faq | `[data-faq]` | accordion |
+| pricing | `[data-pricing="period"]`, JSON island, `template[data-pricing-feat]` | period switch |
+| ai-package | `[data-ai-package]`, `[data-purchase-hook="ai-package"]` | package pick |
+| package-cta | `[data-group]` + `[data-cta]` | button names the package |
+| code | `[data-code]` | code sample tabs, copy |
+| ai-check | `form[data-ai-check]`, `[data-too-short]`, `[data-auth-gate]` | the AI checker flow |
+| doc-nav | `[data-doc-nav]`, `[data-spy]`, `details[data-jump]`, `[data-jump-now]` | section spy, jump menu |
+| modal | `[data-modal-open="id"]`, `.md`, `[data-close]` | open, close, Escape, focus trap and return |
+
+Component recipes with no behaviour live in `site.css` only: buttons (`.btn`), badge,
+field (`.fld`), checkbox, radio and chipset (`05-recipes`), and the checker's states
+(`.qc-*.is-*`, in `08-checker`), which the binding to the production checker toggles.
 
 ## Proof
 
-`npm run parity:students` (real Chrome, 375 / 768 / 1440):
+`node build/parity/run.js <page.html>` (real Chrome, 375 / 768 / 1440), against the page
+as approved at `04c8e24` (or the commit a page names in `build/parity/pages.js`):
 
-- CDN CSS ⊆ static CSS, rule by rule
-- full-page pixels, exact
-- 699 elements × 65 computed properties + box
-- behaviour on both pages
-- reduced motion, no JS, GSAP blocked, `site.js` blocked
-- four sections copied verbatim into `site/poc-sections.html`, compared element by element
-  and pixel by pixel
+0. CDN CSS ⊆ static CSS, rule by rule; extras are prefixes only
+1. title, meta, canonical, lang and the text of `<main>` identical
+2. full-page pixels, exact
+3. every element × 65 computed properties + box (a border colour on a zero-width border is
+   not compared: it is never painted)
+4. behaviour on both pages: first view, checker, report, FAQ, periods, code tabs, the
+   checker link, page extras (`build/parity/pages.js`), back to top, focus rings, dock, burger
+5. reduced motion, no JS, GSAP blocked, `site.js` blocked
+6. reuse: every top-level `[data-component]` served alone in an empty page with only the
+   shared assets, compared pixel by pixel and element by element at three widths, then its
+   behaviour alone
 
-Output goes to `build/parity/out/`.
+Third-party responses (fonts, the CDN) are recorded once per run and replayed to both
+pages, so text metrics cannot drift between them. A pixel difference is measured twice, in
+fresh browser contexts, and passes only if the second measurement is exactly 0.
+
+A difference that was decided rather than missed is named in `build/parity/pages.js`
+with its reason: `accept` (a behaviour key), `acceptPixels` (bounded anti-aliasing at
+one width, with geometry identical) or `acceptGeometry` (a whitelist of properties). The
+run prints each one as ACCEPT, and anything outside it still fails. `--section=<name>`
+runs only the reuse test for one section. Output goes to `build/parity/out/`.

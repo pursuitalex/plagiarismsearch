@@ -164,7 +164,7 @@ console.log('\ninformation contracts');
   /* the real report, once, semantics intact */
   const rep = section('institutional-report');
   ok('the approved report component is on the page', /cab-mark/.test(rep) && /Report information/.test(rep));
-  ok('the report is used once', (body.match(/id="cabDoc"/g) || []).length === 1);
+  ok('the report is used once', (body.match(/id="cabDoc"|<div data-report[ >]/g) || []).length === 1);
   ok('the three reading steps are not three cards',
      (rep.match(/<li\b/g) || []).length >= 3 && !/<h3\b[^>]*>\s*See the match/.test(rep));
 }
@@ -216,7 +216,7 @@ console.log('\nFAQ');
   ok('answer 6 links the API', /href="api\.html"[^>]*>PlagiarismSearch API</.test(faq));
   ok('answer 7 links AI detection', /href="ai-detector\.html"[^>]*>AI detection</.test(faq));
   ok('answer 9 links the inquiry form', /href="#institutional-inquiry"[^>]*>Request institutional pricing</.test(faq));
-  ok('accordion controls are buttons with aria-expanded', (faq.match(/<button type="button" aria-expanded=/g) || []).length === 9);
+  ok('accordion controls are buttons with aria-expanded', (faq.match(/<button type="button" (?:aria-controls="[^"]+" )?aria-expanded=/g) || []).length === 9);
 }
 
 /* ── forbidden / unconfirmed ─────────────────────────────────────────────────── */
@@ -261,7 +261,7 @@ console.log('\nstructure');
   ok('every in-page anchor resolves', !dead.length, dead.join(', '));
 
   /* the compact banner is the shared one, and it is compact */
-  ok('AI is the shared compact banner', /id="institutional-ai" class="relative py-10 sm:py-12 lg:py-14/.test(body));
+  ok('AI is the shared compact banner', /id="institutional-ai" (?:data-component="banner" )?class="relative py-10 sm:py-12 lg:py-14/.test(body));
   ok('no AI report demo in the AI block', !/cab-mark/.test(section('institutional-ai')));
 
   /* h3s: only where a genuine subsection exists — the four control items, the three

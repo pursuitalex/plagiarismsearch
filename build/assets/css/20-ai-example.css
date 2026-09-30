@@ -1,0 +1,24 @@
+/* ═══ 20 · the AI example and its placeholders (AI Detector) ═════════════════════
+   The AI-marked passage of the example report. Named .ai-hl / .ai-hl-on, not .hl-ai /
+   .on-ai: the homepage's scan scene uses those names for a different highlight, and in
+   one shared sheet the two would bleed into each other. Values verbatim. */
+.bg-ai-mark { background:rgba(154,106,222,.85); }
+.ai-hl { background:rgba(154,106,222,.22); border-radius:.35rem; padding:.05em .18em; margin:-.05em -.18em;
+  box-shadow:inset 0 -2px 0 rgba(154,106,222,.5);
+  box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+.ai-hl-on { color:#6D3FB0; }
+
+/* redacted text: Flow Circular renders text as bars */
+.font-flow { font-family:'Flow Circular', cursive; }
+
+/* a placeholder the brief leaves open, drawn as a dashed box */
+.ph { border:1px dashed rgba(16,24,40,.22); border-radius:.5rem; }
+.ph-dark { border:1px dashed rgba(255,255,255,.24); border-radius:.5rem; }
+
+/* package cards: a radio row that fills when chosen (AI Detector pricing) */
+.pkg { transition:background-color .2s ease, box-shadow .2s ease; }
+.pkg:hover { background:#F8F9FB; }
+.pkg:has(input:checked) { background:#E8F8FB; box-shadow:inset 0 0 0 1.5px #0CA9C3; }
+.pkg:has(input:checked) .pkg-dot { border-color:#0CA9C3; }
+.pkg:has(input:checked) .pkg-dot::after { content:''; width:8px; height:8px; border-radius:9999px; background:#0CA9C3; }
+.pkg:has(input:focus-visible) { box-shadow:inset 0 0 0 2px #0CA9C3, 0 0 0 3px rgba(12,169,195,.25); }

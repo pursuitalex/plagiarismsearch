@@ -20,6 +20,8 @@ const path = require('path');
 const SITE = path.join(__dirname, '..', 'site');
 const FILE = 'integration-guide.html';
 const html = fs.readFileSync(path.join(SITE, FILE), 'utf8');
+/* the page's CSS lives in the shared sheet since the static-assets migration */
+const css = fs.readFileSync(path.join(SITE, 'assets', 'css', 'site.css'), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 const flat = s => s.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]*>/g, ' ')
   .replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ')
@@ -97,8 +99,8 @@ console.log('\nin-page navigation');
   const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]));
   const spies = [...body.matchAll(/data-spy="([^"]+)"/g)].map(m => m[1]);
   ok('every navigation target exists', spies.every(s => ids.has(s)), spies.filter(s => !ids.has(s)).join(', '));
-  ok('jump links are full-size tap targets (min-height 44px)', /\.jump-link \{[^}]*min-height:44px/.test(html));
-  ok('anchors clear the sticky bars (scroll-margin-top set)', /scroll-margin-top:\s*104px/.test(html) && /scroll-margin-top:\s*132px/.test(html));
+  ok('jump links are full-size tap targets (min-height 44px)', /\.jump-link \{[^}]*min-height:44px/.test(css));
+  ok('anchors clear the sticky bars (scroll-margin-top set)', /scroll-margin-top:\s*104px/.test(css) && /scroll-margin-top:\s*132px/.test(css));
 }
 
 /* ── the frozen facts ───────────────────────────────────────────────────────── */
@@ -299,15 +301,15 @@ console.log('\nvisual evidence');
   const hero = block('moodle-integration');
   const marks = [...hero.matchAll(/<img\b[^>]*>/g)].map(m => m[0]);
   ok('the hero link: Moodle\'s official mark and ours, named, with the plugin between them and pulses on the line',
-     marks.length === 2 && /src="assets\/svg\/partners\/moodle\.svg" alt="Moodle"/.test(marks[0]) && /src="assets\/svg\/logo\.svg" alt="PlagiarismSearch"/.test(marks[1]) &&
+     marks.length === 2 && /src="\/?assets\/svg\/partners\/moodle\.svg" alt="Moodle"/.test(marks[0]) && /src="\/?assets\/svg\/logo\.svg" alt="PlagiarismSearch"/.test(marks[1]) &&
      /class="hero-link-plug"/.test(hero) && (hero.match(/<animateMotion/g) || []).length >= 2 && /role="img" aria-label="Moodle and PlagiarismSearch connected/.test(hero));
   ok('the link draws straight tracks only — no curves', !/ Q\d| C\d/.test((hero.match(/<svg viewBox="0 0 340 330"[\s\S]*?<\/svg>/) || [' Q0'])[0]));
-  ok('the pulses stop under reduced motion, and the hero still has no checker or screenshot', /prefers-reduced-motion: reduce\) \{ \.hero-link-pulse \{ display:none/.test(html) && !/<form|<textarea|class="shot"/.test(hero));
+  ok('the pulses stop under reduced motion, and the hero still has no checker or screenshot', /prefers-reduced-motion: reduce\) \{ \.hero-link-pulse \{ display:none/.test(css) && !/<form|<textarea|class="shot"/.test(hero));
   const imgs = [...body.replace(hero, '').matchAll(/<img\b[^>]*>/g)].map(m => m[0]);
-  ok('five screenshots, all from assets/img/moodle/', imgs.length === 5 && imgs.every(i => /src="assets\/img\/moodle\//.test(i)));
+  ok('five screenshots, all from assets/img/moodle/', imgs.length === 5 && imgs.every(i => /src="\/?assets\/img\/moodle\//.test(i)));
   ok('every image file exists, has dimensions, alt text and lazy loading', imgs.every(i => {
     const src = (i.match(/src="([^"]+)"/) || [])[1];
-    return fs.existsSync(path.join(SITE, src)) && /width="\d+" height="\d+"/.test(i) && /alt="[^"]{40,}"/.test(i) && /loading="lazy"/.test(i);
+    return fs.existsSync(path.join(SITE, src.replace(/^\//, ''))) && /width="\d+" height="\d+"/.test(i) && /alt="[^"]{40,}"/.test(i) && /loading="lazy"/.test(i);
   }));
   ok('every screenshot has a caption beside it', (body.match(/<figure class="shot"[\s\S]*?<figcaption>/g) || []).length === 5);
   ok('captions are neutral ("Example …" / locator), never "current interface"', !/current (Moodle )?interface/i.test(text) && (text.match(/Example (PlagiarismSearch settings|Moodle Assignment result view)/g) || []).length === 4);
@@ -347,7 +349,7 @@ console.log('\nforbidden claims');
 
 console.log('\nhygiene');
 {
-  ok('the header carries the dot field under its orbs', /id="heroDots"/.test(block('moodle-integration')));
+  ok('the header carries the dot field under its orbs', /id="heroDots"|class="dot-field/.test(block('moodle-integration')));
   ok('header and footer were injected by build/shell.js', /<header[^>]*>\s*\S/.test(html) && /<footer[^>]*>\s*\S/.test(html));
   ok('reduced motion is respected', /prefers-reduced-motion/.test(html));
 }

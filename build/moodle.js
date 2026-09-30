@@ -22,15 +22,20 @@
    Moodle it is one edit.
 
    Run:  node build/moodle.js  →  node build/shell.js  →  node build/check-moodle.js
+
+   On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
+   no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
+   classes, asset paths are root-relative. Parity: node build/parity/run.js integration-guide.html
 */
 const fs = require('fs');
 const path = require('path');
+const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'integration-guide.html';
 const banner = require('./banner');
-const { dots } = require('./dots');
+const { dotField } = require('./dots');
 
 /* ─────────────────────────────────────────────────────────────────────────────
    The facts that change with a plugin release — one place.
@@ -431,7 +436,7 @@ const figure = (key, tag = 'Moodle · plugin settings') => {
   return `          <figure class="shot" style="max-width:${w + 34}px">
             <div class="shot-frame">
               <p class="shot-tag"><span></span><span></span><span></span><b>${tag}</b></p>
-              <img src="assets/img/moodle/${file}" width="${w}" height="${h}" alt="${alt}" loading="lazy" decoding="async">
+              <img src="/assets/img/moodle/${file}" width="${w}" height="${h}" alt="${alt}" loading="lazy" decoding="async">
             </div>
             <figcaption>${cap}</figcaption>
           </figure>`;
@@ -454,10 +459,10 @@ const section1 = () => `  <!-- ================= 01 · DOCUMENTATION / PRODUCT H
        button says so) and start the setup. No checker. On the right, the link: Moodle's
        mark above, ours below, two straight tracks and the plugin between them; on a phone it sits under the
        actions at a smaller size. -->
-  <section id="moodle-integration" class="relative pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-14 lg:pb-16 bg-[#F2FCFC] overflow-hidden">
-    ${dots('heroDots')}
-    <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
-    <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
+  <section id="moodle-integration" data-component="hero-doc" class="relative pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-14 lg:pb-16 bg-[#F2FCFC] overflow-hidden">
+    ${dotField()}
+    <div class="orb absolute orb-hero-teal"></div>
+    <div class="orb absolute orb-hero-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[minmax(0,1fr)_400px] xl:grid-cols-[minmax(0,1fr)_420px] gap-x-12 xl:gap-x-16 gap-y-10 items-center">
@@ -504,25 +509,25 @@ const heroLink = () => `        <div class="hero-link rv" role="img" aria-label=
 ${pulses(TRACK_DOWN, '#0CA9C3')}
 ${pulses(TRACK_UP, '#F36F5A')}
           </svg>
-          <div class="hero-link-tile" style="left:14.7%;top:0;width:70.6%;height:29.1%">
-            <img src="assets/svg/partners/moodle.svg" alt="Moodle" width="600" height="270" decoding="async" style="width:72%">
+          <div class="hero-link-tile is-top">
+            <img src="/assets/svg/partners/moodle.svg" alt="Moodle" width="600" height="270" decoding="async">
           </div>
-          <div class="hero-link-tile" style="left:14.7%;top:70.9%;width:70.6%;height:29.1%">
-            <img src="assets/svg/logo.svg" alt="PlagiarismSearch" width="200" height="28" decoding="async" style="width:72%">
+          <div class="hero-link-tile is-bottom">
+            <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" width="200" height="28" decoding="async">
           </div>
-          <span class="hero-link-plug" style="left:50%;top:50%" aria-hidden="true">
+          <span class="hero-link-plug" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg>
             Plugin
           </span>
-          <span class="hero-link-side is-left" style="left:32.35%;top:50%" aria-hidden="true">Submission</span>
-          <span class="hero-link-side" style="left:67.65%;top:50%" aria-hidden="true">Result &amp; report</span>
+          <span class="hero-link-side is-left" aria-hidden="true">Submission</span>
+          <span class="hero-link-side" aria-hidden="true">Result &amp; report</span>
         </div>`;
 
 /* ═══════════════ 02 · AT A GLANCE ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · QUICK FACTS =================
        The evaluator's ten seconds. Nine label/value pairs as one sheet — a definition
        list, every value text — not nine cards. -->
-  <section id="at-a-glance" class="relative py-12 sm:py-16 lg:py-20 bg-white border-b border-ink-100">
+  <section id="at-a-glance" data-component="glance-sheet" class="relative py-12 sm:py-16 lg:py-20 bg-white border-b border-ink-100">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[.8fr_1.2fr] gap-8 lg:gap-14 items-start">
         <div class="rv">
@@ -662,7 +667,7 @@ ${COPY.trouble.rows.map(([k, v]) => `            <div>
           </dl>`);
 
 const docFaq = () => docSection('faq', COPY.faq.h2, `          <div class="rounded-3xl sm:rounded-[28px] bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-            <div class="rounded-[18px] sm:rounded-[20px] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+            <div data-faq class="rounded-[18px] sm:rounded-[20px] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${COPY.faq.items.map(([q, a, l], i) => `              <div class="faq-item${i === 0 ? ' open' : ''}">
                 <h3 class="m-0"><button type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" aria-controls="faq-a-${i}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
                   <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
@@ -682,11 +687,11 @@ const section3 = () => `  <!-- ================= 03 · THE GUIDE ===============
        One reading column and its rail. The rail is sticky from lg and marks the section
        being read; under lg it is a jump menu that sticks below the site header and closes
        when a link is chosen. Every section is anchorable; the offset clears both bars. -->
-  <div id="guide" class="relative bg-white">
+  <div id="guide" data-component="doc-guide" data-doc-nav class="relative bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 
-      <details class="jump lg:hidden" id="jumpMenu">
-        <summary><span class="flex items-center gap-2.5">${ico(I.list, '#374151', 16)}<span>${COPY.nav.label}</span></span><span class="jump-now" id="jumpNow"></span><svg class="jump-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+      <details class="jump lg:hidden" data-jump>
+        <summary><span class="flex items-center gap-2.5">${ico(I.list, '#374151', 16)}<span>${COPY.nav.label}</span></span><span class="jump-now" data-jump-now></span><svg class="jump-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
         <nav aria-label="${COPY.nav.label}">
           <ul>
 ${navList('jump-link')}
@@ -724,13 +729,14 @@ const section4 = () => banner({
   leadMax: '60ch',
   after: `            <p class="mt-3 ${banner.SUPPORT} max-w-[60ch]">${COPY.support.p2}</p>`,
   action: banner.btn(COPY.support.cta, CONTACT),
+  static: true,
 });
 
 const section5 = () => `  <!-- ================= 05 · WHERE TO GO INSTEAD / NEXT =================
        The resource row: two routes to the pages that own the neighbouring jobs, and the
        two official places the plugin lives — marked as leaving the site, not dressed as
        buttons. -->
-  <section id="related" class="relative pb-16 sm:pb-20 lg:pb-24 bg-white">
+  <section id="related" data-component="resource-row" class="relative pb-16 sm:pb-20 lg:pb-24 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv-kids grid md:grid-cols-2 lg:grid-cols-[1fr_1fr_.8fr] gap-4 sm:gap-5 lg:gap-6">
 ${COPY.support.routes.map(([q, label, href]) => `        <a href="${href}" class="group rounded-2xl sm:rounded-3xl bg-ink-50 hover:bg-ink-100 transition-colors duration-300 p-5 sm:p-6 lg:p-7 flex flex-col">
@@ -748,290 +754,15 @@ ${COPY.support.external.map(([l, h]) => `            <li>${link(l, h)}</li>`).jo
   </section>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Page-local styles — the documentation devices.
+   Assemble — the shared page shell (build/page.js). The components' CSS and JS live in
+   build/assets/ (site.css, site.js); the page carries none of its own.
    ───────────────────────────────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  [hidden] { display: none !important; }
-  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
-    clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-  /* anchors clear the site header, and under lg the jump menu beneath it */
-  section[id], .doc-sub[id] { scroll-margin-top: 104px; }
-  @media (max-width:1023px) { .doc-section, .doc-sub[id] { scroll-margin-top: 132px; } }
+const sections = [section1, section2, section3, section4, section5];
 
-  a:focus-visible, button:focus-visible, summary:focus-visible {
-    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-  .bg-ink-950 a:focus-visible { outline-color: #6ED7E8; }
-
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-  /* ---------- the hero link: two marks, two straight tracks, the plugin between ---------- */
-  .hero-link { position:relative; width:100%; max-width:340px; aspect-ratio:340/330; margin:0 auto; }
-  .hero-link > svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
-  .hero-link-tile { position:absolute; display:flex; align-items:center; justify-content:center; border-radius:20px;
-    background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,.05), 0 18px 40px -22px rgba(16,24,40,.28); }
-  .hero-link-tile img { display:block; width:82%; height:auto; }
-  .hero-link-plug { position:absolute; transform:translate(-50%,-50%); display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 14px 0 11px;
-    border-radius:999px; background:#111827; color:#fff; font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
-    box-shadow:0 0 0 5px rgba(242,252,252,.9), 0 10px 24px -10px rgba(16,24,40,.5); }
-  .hero-link-side { position:absolute; transform:translate(12px,-50%); max-width:92px; font-size:12px; font-weight:600; line-height:1.3; color:#374151; }
-  .hero-link-side.is-left { transform:translate(calc(-100% - 12px),-50%); text-align:right; }
-  @media (max-width:1023px) { .hero-link { max-width:300px; margin:0; } .hero-link-tile { border-radius:16px; } }
-  @media (prefers-reduced-motion: reduce) { .hero-link-pulse { display:none; } }
-
-  /* Moodle's own words */
-  .ui { font-weight:600; color:#111827; background:#F3F4F6; border-radius:6px; padding:.08em .4em;
-    box-decoration-break:clone; -webkit-box-decoration-break:clone; }
-  .bg-orange-50 .ui { background:rgba(184,68,49,.10); }
-  .bg-teal-50 .ui, .bg-ink-50 .ui, .deftable dt .ui { background:#E9EBEF; }
-
-  /* ---------- the reading column ---------- */
-  .doc-section { display:grid; gap:20px; padding-bottom:56px; margin-bottom:56px; border-bottom:1px solid #EEF0F3; }
-  .doc-section:last-child { border-bottom:0; margin-bottom:0; padding-bottom:0; }
-  .doc-section > h2 { margin-bottom:4px; }
-  .doc-sub { display:grid; gap:16px; padding-top:28px; margin-top:8px; border-top:1px dashed #E1E4E9; }
-  .group-label { margin-top:8px; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#B84431; }
-  @media (min-width:1024px) { .doc-section { gap:22px; padding-bottom:72px; margin-bottom:72px; } }
-
-  /* ---------- the definition table ---------- */
-  .deftable { border-radius:16px; box-shadow:0 0 0 1px rgba(0,0,0,.06); overflow:hidden; background:#fff; }
-  .deftable-head { display:none; }
-  .deftable-row { padding:14px 16px; border-top:1px solid #EEF0F3; }
-  .deftable-row:first-child { border-top:0; }
-  .deftable dt { font-size:14px; font-weight:700; color:#111827; letter-spacing:-.01em; margin-bottom:6px; }
-  .deftable dd { font-size:13.5px; line-height:1.6; color:#374151; }
-  @media (min-width:640px) {
-    .deftable-head, .deftable-row { display:grid; grid-template-columns:minmax(0,.38fr) minmax(0,.62fr); gap:24px; }
-    .deftable-head { padding:11px 20px; background:#F8F9FB; border-bottom:1px solid #EEF0F3;
-      font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
-    .deftable-row { padding:16px 20px; }
-    .deftable dt { margin-bottom:0; font-size:14.5px; }
-    .deftable dd { font-size:14.5px; }
-  }
-
-  /* ---------- at a glance ---------- */
-  .glance-row { display:grid; gap:2px; padding:13px 18px; border-top:1px solid #EEF0F3; }
-  .glance-row:first-child { border-top:0; }
-  .glance dt { font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
-  .glance dd { font-size:15px; font-weight:700; letter-spacing:-.01em; color:#111827; }
-  @media (min-width:640px) {
-    .glance-row { grid-template-columns:200px minmax(0,1fr); gap:20px; align-items:baseline; padding:14px 24px; }
-    .glance dd { font-size:15.5px; }
-  }
-
-  /* ---------- numbered steps on one spine ---------- */
-  .steps { position:relative; display:grid; gap:16px; counter-reset:none; }
-  .steps::before { content:""; position:absolute; left:15px; top:16px; bottom:16px; width:1px; background:#E1E4E9; }
-  .steps > li { position:relative; display:flex; align-items:flex-start; gap:16px; }
-  .steps-n { position:relative; z-index:1; flex:none; width:31px; height:31px; border-radius:999px; background:#D4F3F8; color:#06748A;
-    display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums;
-    box-shadow:0 0 0 4px #fff; }
-  .steps-tight { gap:12px; }
-
-  /* ---------- the schematic ---------- */
-  .flow { margin:4px 0 0; }
-  .flow ol { display:grid; gap:22px; }
-  .flow li { position:relative; }
-  .flow li span { display:flex; align-items:center; justify-content:center; text-align:center; min-height:56px; padding:10px 12px;
-    border-radius:14px; background:#F8F9FB; box-shadow:0 0 0 1px rgba(0,0,0,.06);
-    font-size:12.5px; font-weight:600; line-height:1.35; color:#1F2937; }
-  .flow li.is-ps span { background:#111827; color:#fff; box-shadow:none; }
-  .flow li + li::before { content:""; position:absolute; left:50%; top:-16px; width:1px; height:10px; background:#9CA3AF; }
-  .flow li + li::after { content:""; position:absolute; left:50%; top:-9px; width:6px; height:6px; margin-left:-3px;
-    border-right:1px solid #9CA3AF; border-bottom:1px solid #9CA3AF; transform:rotate(45deg); }
-  .flow figcaption, .shot figcaption { margin-top:10px; font-size:12.5px; line-height:1.5; color:#6B7280; }
-  @media (min-width:768px) {
-    .flow ol { grid-template-columns:repeat(5, minmax(0,1fr)); gap:22px; }
-    .flow li span { height:100%; min-height:76px; }
-    .flow li + li::before { left:-17px; top:50%; width:11px; height:1px; }
-    .flow li + li::after { left:-11px; top:50%; margin-left:0; margin-top:-3px; transform:rotate(-45deg); }
-  }
-
-  /* ---------- the evidence figure ---------- */
-  .shot { margin:4px 0 0; width:100%; }
-  .shot-frame { border-radius:16px; background:#F3F4F6; box-shadow:0 0 0 1px rgba(0,0,0,.06); padding:0 8px 8px; }
-  .shot-tag { display:flex; align-items:center; gap:5px; height:30px; padding:0 6px; }
-  .shot-tag span { width:7px; height:7px; border-radius:999px; background:#D1D5DB; }
-  .shot-tag b { margin-left:8px; font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#6B7280; }
-  .shot img { display:block; width:100%; height:auto; border-radius:10px; background:#fff; padding:8px 9px; box-shadow:0 0 0 1px rgba(0,0,0,.05); }
-
-  /* ---------- file vs online text ---------- */
-  .matrix { border-top:1px solid #EEF0F3; border-collapse:collapse; font-size:13.5px; }
-  .matrix th, .matrix td { padding:12px 16px; border-top:1px solid #EEF0F3; vertical-align:top; line-height:1.5; }
-  .matrix thead th { border-top:0; background:#F8F9FB; font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#6B7280; }
-  .matrix tbody th { font-weight:700; color:#111827; width:32%; }
-  .matrix td { color:#1B7A50; font-weight:600; }
-  @media (min-width:640px) { .matrix { font-size:14.5px; } .matrix th, .matrix td { padding:14px 24px; } }
-
-  /* ---------- troubleshooting ---------- */
-  .trouble { display:grid; gap:12px; }
-  .trouble > div { border-radius:16px; box-shadow:0 0 0 1px rgba(0,0,0,.06); background:#fff; padding:16px 18px; }
-  .trouble dt { display:flex; align-items:flex-start; gap:12px; font-size:15px; font-weight:700; letter-spacing:-.01em; color:#111827; }
-  .trouble-q { flex:none; width:22px; height:22px; border-radius:999px; background:#FDE6E1; color:#B84431; font-size:12.5px; font-weight:800;
-    display:flex; align-items:center; justify-content:center; margin-top:1px; }
-  .trouble dd { margin:10px 0 0 34px; font-size:14px; line-height:1.6; color:#374151; }
-  @media (min-width:768px) {
-    .trouble > div { display:grid; grid-template-columns:minmax(0,.42fr) minmax(0,.58fr); gap:28px; padding:18px 22px; }
-    .trouble dd { margin:0; font-size:14.5px; }
-  }
-
-  /* ---------- the rail and the jump menu ---------- */
-  .rail { position:sticky; top:112px; }
-  .rail ul { display:grid; border-left:1px solid #E1E4E9; }
-  .rail-link { display:block; margin-left:-1px; padding:7px 0 7px 16px; border-left:2px solid transparent;
-    font-size:13.5px; font-weight:500; color:#6B7280; transition:color .2s ease, border-color .2s ease; }
-  .rail-link:hover { color:#111827; }
-  .rail-link.on { color:#111827; font-weight:700; border-left-color:#0991A8; }
-
-  .jump { position:sticky; top:68px; z-index:30; margin:0 -16px; background:rgba(255,255,255,.94);
-    -webkit-backdrop-filter:saturate(1.4) blur(10px); backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid #EEF0F3; }
-  @media (min-width:640px) { .jump { margin:0 -24px; top:84px; } }
-  .jump summary { list-style:none; display:flex; align-items:center; gap:12px; min-height:48px; padding:0 16px; cursor:pointer;
-    font-size:13.5px; font-weight:700; color:#111827; }
-  @media (min-width:640px) { .jump summary { padding:0 24px; } }
-  .jump summary::-webkit-details-marker { display:none; }
-  .jump-now { margin-left:auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; color:#6B7280; }
-  .jump-chev { flex:none; transition:transform .25s ease; }
-  .jump[open] .jump-chev { transform:rotate(180deg); }
-  .jump nav { padding:4px 8px 12px; }
-  @media (min-width:640px) { .jump nav { padding:4px 16px 12px; } }
-  .jump-link { display:flex; align-items:center; min-height:44px; padding:0 8px; border-radius:10px; font-size:14.5px; font-weight:500; color:#374151; }
-  .jump-link.on { background:#F3F4F6; color:#111827; font-weight:700; }
-  @media (prefers-reduced-motion: reduce) { .jump-chev, .rail-link { transition:none; } }
-</style>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Behaviour — reveals, the section spy for both navigations, the accordion, the burger.
-   ───────────────────────────────────────────────────────────────────────────── */
-const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-  gsap.registerPlugin(ScrollTrigger);
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-  gsap.utils.toArray('.rv-kids').forEach(group => {
-    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
-      scrollTrigger: { trigger: group, start: 'top 80%' } });
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-  /* the section spy: the last navigated section whose top has passed the reading line */
-  const links = [...document.querySelectorAll('[data-spy]')];
-  const ids = [...new Set(links.map(a => a.dataset.spy))];
-  const targets = ids.map(id => document.getElementById(id)).filter(Boolean);
-  const now = document.getElementById('jumpNow');
-  const jump = document.getElementById('jumpMenu');
-  let current = null, ticking = false;
-  const spy = () => {
-    ticking = false;
-    const line = innerWidth < 1024 ? 150 : 140;
-    let hit = null;
-    targets.forEach(t => { if (t.getBoundingClientRect().top <= line) hit = t.id; });
-    if (hit === current) return;
-    current = hit;
-    links.forEach(a => {
-      const on = a.dataset.spy === hit;
-      a.classList.toggle('on', on);
-      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
-    });
-    if (now) { const a = links.find(x => x.dataset.spy === hit); now.textContent = a ? a.textContent : ''; }
-  };
-  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
-  addEventListener('resize', spy);
-  spy();
-  if (jump) {
-    jump.addEventListener('click', e => { if (e.target.closest('a')) jump.open = false; });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') jump.open = false; });
-  }
-
-  /* FAQ: answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      const list = item.parentElement;
-      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-      list.querySelectorAll('.faq-q').forEach(b =>
-        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
-    });
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Assemble
-   ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>');
-if (/name="description"/.test(head)) {
-  head = head.replace(/<meta name="description"[^>]*>/,
-    '<meta name="description" content="' + COPY.meta + '" />');
-} else {
-  head = head.replace('<title>',
-    '<meta name="description" content="' + COPY.meta + '" />\n<title>');
-}
-head = head.replace('<title>', '<link rel="canonical" href="' + COPY.canonical + '" />\n<title>');
-
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
-const html = head + STYLE + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${[section1, section2, section3, section4, section5].map(f => f()).join('\n\n')}
-</main>
-
-<footer></footer>
-
-${SCRIPT}
-</body>
-</html>
-`;
-
+const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
 fs.writeFileSync(path.join(SITE, OUT), html);
 
 const count = re => (html.match(re) || []).length;
 console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
-console.log('  ' + count(/<h1\b/g) + ' h1, ' + count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' +
-            count(/class="deftable"/g) + ' definition tables, ' + count(/<figure class="shot"/g) + ' screenshots, ' +
-            count(/class="faq-item/g) + ' faq items, ' + count(/<form\b/g) + ' forms');
+console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' +
+            count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/class="faq-item/g) + ' faq items');

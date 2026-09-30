@@ -146,7 +146,7 @@ console.log('\ndifferentiation');
 console.log('\nacts');
 {
   const rep = section('report-evidence');
-  ok('the approved report component, once', /cab-mark/.test(rep) && (body.match(/id="cabDoc"/g) || []).length === 1);
+  ok('the approved report component, once', /cab-mark/.test(rep) && (body.match(/id="cabDoc"|<div data-report[ >]/g) || []).length === 1);
   ok('no verdict or threshold language in the report act', !/threshold|red\/yellow|authenticity|plagiarism-free/i.test(flat(rep)));
 
   const st = flat(section('organization-storage'));
@@ -217,7 +217,7 @@ console.log('\nFAQ');
   ok('nine answers rendered in the HTML', (faq.match(/class="faq-a"/g) || []).length === 9);
   ok('the API answer links /plagiarism-api on its own phrase', /href="api\.html"[^>]*>Plagiarism API page</.test(faq));
   ok('the pricing answer links /prices on its own phrase', /href="prices\.html"[^>]*>Pricing page</.test(faq));
-  ok('accordion controls are buttons with aria-expanded', (faq.match(/<button type="button" aria-expanded=/g) || []).length === 9);
+  ok('accordion controls are buttons with aria-expanded', (faq.match(/<button type="button" (?:aria-controls="[^"]+" )?aria-expanded=/g) || []).length === 9);
 }
 
 /* ── forbidden / unconfirmed ─────────────────────────────────────────────────── */

@@ -15,16 +15,21 @@
    signature; sources are shown as the dimension the file format does not decide.
 
    Run:  node build/pdf.js  →  node build/shell.js  →  node build/check-pdf.js
+
+   On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
+   no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
+   classes, asset paths are root-relative. Parity: node build/parity/run.js pdf-plagiarism-checker.html
 */
 const fs = require('fs');
 const path = require('path');
+const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'pdf-plagiarism-checker.html';
 const cta = require('./cta');
 const checker = require('./checker');
-const { dots } = require('./dots');
+const { dotField } = require('./dots');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -185,7 +190,7 @@ const linkQuiet = (label, href, dark) => `<a href="${href}"${ext(href)} class="i
 
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.length * 18);
-  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg>`;
+  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg>`;
   return text.replace(phrase, `<span class="pen-word relative inline-block">${phrase}${svg}</span>`);
 };
 
@@ -225,7 +230,7 @@ const tick = (head, body) => `            <li class="flex items-start gap-3 py-3
    one grey plate with a picture glyph and nothing that could be read as text. The two
    are told apart by the drawing AND by the label under it — never by colour alone. */
 const textLines = (n = 6) => `<span class="block space-y-1.5" aria-hidden="true">${Array.from({ length: n }, (_, i) =>
-  `<span class="block h-1.5 rounded-full ${i % 3 === 1 ? 'bg-orange-300/80' : 'bg-ink-300'}" style="width:${[92, 78, 88, 64, 84, 72][i % 6]}%"></span>`).join('')}</span>`;
+  `<span class="block h-1.5 rounded-full ${i % 3 === 1 ? 'bg-orange-300/80' : 'bg-ink-300'} w-[${[92, 78, 88, 64, 84, 72][i % 6]}%]"></span>`).join('')}</span>`;
 const imagePlate = () => `<span class="flex items-center justify-center h-full min-h-[60px] rounded-md bg-ink-200/80" aria-hidden="true">${ico(I.image, '#6B7280', 18)}</span>`;
 const sheet = (inner, extra = '') => `<span class="block rounded-lg bg-white ring-1 ring-black/10 shadow-diffuse p-3 ${extra}">${inner}</span>`;
 
@@ -236,10 +241,10 @@ const section1 = () => `  <!-- ================= 01 · HERO / REAL PDF CHECKER =
        figures under the approved helper sentence and the scanned-PDF link straight to
        the extraction act. (The form sat on the left at first; Olex swapped the columns
        on 2026-09-17 so the page opens on its name, like the other checker heroes.) -->
-  <section id="pdf-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dots('heroDots')}
-    <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
-    <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
+  <section id="pdf-checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    ${dotField()}
+    <div class="orb absolute orb-hero-teal"></div>
+    <div class="orb absolute orb-hero-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <!-- three blocks, not two columns: DOM order is H1 → form → limits, which is what a
@@ -253,7 +258,7 @@ const section1 = () => `  <!-- ================= 01 · HERO / REAL PDF CHECKER =
         </div>
 
         <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-${checker.form(COPY.hero, ANCHOR)}
+${checker.form(COPY.hero, ANCHOR, { text: 'pdf-checker-text' }, { static: true })}
 ${checker.free(COPY.hero)}
         </div>
 
@@ -282,7 +287,7 @@ const section2 = () => `  <!-- ================= 02 · HOW TO CHECK A PDF FOR PL
        line, each with the object it is about. A connector starts at a card's right edge
        and is exactly as long as the grid gap (gap-5 / lg:gap-6), so it sits between
        the cards and never runs into one. -->
-  <section id="how-to-check-a-pdf" class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section id="how-to-check-a-pdf" data-component="steps-row" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
 ${eyebrow('teal-400', COPY.howto.eyebrow, 'ink')}
@@ -312,7 +317,7 @@ const section3 = () => `  <!-- ================= 03 · PDF TEXT EXTRACTION =====
        Words" — and a mixed PDF is the confirmed five-page test, text on 1/3/5, image
        on 2/4, with only the text pages marked as checked. Nothing suggests an image
        yields words. The state is in the drawing AND in the label. -->
-  <section id="pdf-text-extraction" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
+  <section id="pdf-text-extraction" data-component="pdf-extraction" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', COPY.extraction.eyebrow)}
@@ -371,9 +376,9 @@ ${COPY.extraction.mixedPages.map((isText, i) => `                ${sheet(isText 
 const section4 = () => `  <!-- ================= 04 · THE PLAGIARISM REPORT =================
        The dark act: the approved report (build/report.js), the three reading points as
        one strip under it, the callout. No PDF-only fields, no verdict. -->
-  <section id="pdf-report" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    <div class="orb absolute" style="width:620px;height:620px;left:-13%;top:40px;background:rgba(13,168,194,.12)"></div>
-    <div class="orb absolute" style="width:520px;height:520px;right:-10%;bottom:-120px;background:rgba(243,111,90,.10)"></div>
+  <section id="pdf-report" data-component="report-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+    <div class="orb absolute orb-dark-teal"></div>
+    <div class="orb absolute orb-dark-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
@@ -382,8 +387,8 @@ ${eyebrowDark('teal-400', COPY.report.eyebrow)}
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[72ch]">${COPY.report.intro}</p>
       </div>
 
-      <div class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
-        <div id="cabDoc" class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+      <div data-report class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
+        <div class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
           <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
             <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">${CAB.id}</span>
             <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
@@ -399,7 +404,7 @@ ${eyebrowDark('teal-400', COPY.report.eyebrow)}
           </div>
         </div>
 
-        <div id="cabSide" class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+        <div class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
           <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
             <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
             ${CAB.metrics.map(cabMetric).join(NL14)}
@@ -438,7 +443,7 @@ const section5 = () => `  <!-- ================= 05 · SOURCES & SETTINGS ======
        The point of the section drawn as its layout: the PDF is the input, on the left,
        one node; the sources are the settings, on the right, four of them. The file
        extension decides nothing about the right-hand side. -->
-  <section id="sources-and-settings" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="sources-and-settings" data-component="sources-controls" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
 ${eyebrow('teal-400', COPY.sources.eyebrow, 'ink')}
@@ -447,7 +452,7 @@ ${eyebrow('teal-400', COPY.sources.eyebrow, 'ink')}
       </div>
 
       <div class="rv grid lg:grid-cols-[.7fr_3rem_1.3fr] gap-5 lg:gap-0 items-center">
-        <div class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
+        <div data-surface="dark" class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
           <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/50 mb-4">Input format</p>
           <div class="flex items-center gap-4">
             <span class="inline-flex w-14 h-14 rounded-2xl bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0">${ico(I.file, '#fff', 26)}</span>
@@ -478,7 +483,7 @@ ${COPY.sources.items.map(([h, b]) => tick(h, b)).join('\n')}
 const section6 = () => `  <!-- ================= 06 · PDF & REPORT HANDLING =================
        Four facts, the two retention behaviours kept apart: the uploaded PDF and the
        report are two columns of one card; deletion and Storage follow. No absolutes. -->
-  <section id="pdf-handling" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
+  <section id="pdf-handling" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', COPY.handling.eyebrow)}
@@ -502,7 +507,7 @@ ${COPY.handling.items.map(([head, body], i) => `        <div class="rounded-3xl 
 const section7 = () => `  <!-- ================= 07 · START FREE — THE COMPACT PRICING PATH =================
        One band: the two confirmed limits inline, the two ways on, the one-time note. No
        matrix, no prices. -->
-  <section id="start-free" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="start-free" data-component="start-free" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
         <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1.1fr_.9fr] gap-8 lg:gap-12 items-center">
@@ -522,7 +527,7 @@ ${eyebrow('teal-400', COPY.free.eyebrow, 'ink')}
               <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mt-3">plagiarism words</p>
               <p class="text-[12.5px] sm:text-[13px] text-ink-600 mt-2">without registering</p>
             </div>
-            <div class="rounded-2xl sm:rounded-3xl bg-ink-950 text-white p-5 sm:p-6">
+            <div data-surface="dark" class="rounded-2xl sm:rounded-3xl bg-ink-950 text-white p-5 sm:p-6">
               <p class="text-[clamp(2rem,4vw,3.2rem)] font-extrabold tracking-tightest nums leading-none">300</p>
               <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mt-3">plagiarism words per day</p>
               <p class="text-[12.5px] sm:text-[13px] text-white/60 mt-2">for registered users</p>
@@ -537,7 +542,7 @@ ${eyebrow('teal-400', COPY.free.eyebrow, 'ink')}
 /* ═══════════════ 08 · FAQ ═══════════════ */
 const section8 = () => `  <!-- ================= 08 · FAQ =================
        Nine PDF-specific questions, full answers in the HTML. No timing promise. -->
-  <section id="pdf-faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
+  <section id="pdf-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
@@ -545,15 +550,15 @@ ${eyebrow('orange-500', 'Questions')}
           <h2 class="${H2}">${COPY.faq.h2}</h2>
         </div>
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${COPY.faq.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="pdf-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
+              <div class="faq-a" id="pdf-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
             </div>`).join('\n')}
           </div>
         </div>
@@ -564,11 +569,11 @@ ${COPY.faq.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ?
 /* ═══════════════ 09 · FINAL CTA ═══════════════ */
 const section9 = () => `  <!-- ================= 09 · FINAL CTA =================
        The closing band (build/cta.js). One action, back to the one real checker. -->
-  <section id="pdf-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.background('pdf-cta')}
+  <section id="pdf-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+${cta.backgroundStatic()}
 
     <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.close.h2, 'your PDF')}</h2>
+      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.close.h2, 'your PDF', { static: true })}</h2>
       <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.close.support}</p>
       <div class="rv flex flex-col items-center gap-4">
         <a href="${ANCHOR}" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
@@ -586,192 +591,15 @@ ${cta.background('pdf-cta')}
   </section>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Page-local styles.
+   Assemble — the shared page shell (build/page.js). The components' CSS and JS live in
+   build/assets/ (site.css, site.js); the page carries none of its own.
    ───────────────────────────────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  [hidden] { display: none !important; }
-  section[id] { scroll-margin-top: 100px; }
-
-  a:focus-visible, button:focus-visible, select:focus-visible,
-  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
-    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible { outline-color: #6ED7E8; }
-
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-${checker.style}
-
-  /* ---------- the shared report component ---------- */
-  .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease;
-    border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
-    box-shadow:inset 0 -2px 0 currentColor;
-    background-image:linear-gradient(var(--wash), var(--wash));
-    background-repeat:no-repeat; background-position:left center; background-size:100% 100%; }
-  .cab-plag { --wash:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
-  .cab-ai   { --wash:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
-  .cab-plag.on { --wash:rgba(243,111,90,.4); }
-  .cab-ai.on   { --wash:rgba(168,85,247,.34); }
-  .cab-mark > span { color:#111827; }
-  .cab-src.on { background:#F8F9FB; }
-  .cab-tab { padding-bottom:10px; border-bottom:2px solid transparent; color:#4B5563; }
-  .cab-tab.on { color:#06748A; border-bottom-color:#0991A8; }
-  .cab-sources, .cab-foot { border-bottom-left-radius:1rem; border-bottom-right-radius:1rem; }
-  @media (min-width:640px) {
-    .cab-sources, .cab-foot { border-bottom-left-radius:20px; border-bottom-right-radius:20px; }
-  }
-  @media (min-width:1024px) {
-    .cab-sources, .cab-foot { border-bottom-left-radius:1.5rem; border-bottom-right-radius:1.5rem; }
-  }
-  .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
-    pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
-  @media (prefers-reduced-motion: reduce) { .cab-mark { transition:none; } }
-
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-${cta.style('pdf-cta')}
-</style>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Behaviour.
-   ───────────────────────────────────────────────────────────────────────────── */
-const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-
-  gsap.utils.toArray('.rv-kids').forEach(group => {
-    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
-      scrollTrigger: { trigger: group, start: 'top 80%' } });
-  });
-
-  gsap.utils.toArray('.pen-word').forEach(word => {
-    const line = word.querySelector('.pen-underline');
-    if (!line) return;
-    const len = line.getTotalLength();
-    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-    const tl = gsap.timeline(inFirstView
-      ? { delay: 1 }
-      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-      .set(line, { opacity: 1 }, .35)
-      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-  });
-${cta.script}
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-${checker.script(ANCHOR)}
-
-  /* the report: selecting a passage highlights it and its source */
-  const marks = [...document.querySelectorAll('.cab-mark')];
-  const sources = [...document.querySelectorAll('.cab-src')];
-  const pick = i => {
-    marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
-    sources.forEach(s => s.classList.toggle('on', s.dataset.src === String(i)));
-  };
-  marks.forEach(m => {
-    m.addEventListener('click', () => pick(m.dataset.match));
-    m.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(m.dataset.match); }
-    });
-  });
-  if (marks.length) pick(marks[0].dataset.match);
-
-  /* FAQ: answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      const list = item.parentElement;
-      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-      list.querySelectorAll('.faq-q').forEach(b =>
-        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
-    });
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Assemble
-   ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>');
-if (/name="description"/.test(head)) {
-  head = head.replace(/<meta name="description"[^>]*>/,
-    '<meta name="description" content="' + COPY.meta + '" />');
-} else {
-  head = head.replace('<title>',
-    '<meta name="description" content="' + COPY.meta + '" />\n<title>');
-}
-head = head.replace('<title>', '<link rel="canonical" href="' + COPY.canonical + '" />\n<title>');
-
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
 const sections = [section1, section2, section3, section4, section5, section6, section7, section8, section9];
 
-const html = head + STYLE + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${sections.map(f => f()).join('\n\n')}
-</main>
-
-<footer></footer>
-
-${SCRIPT}
-</body>
-</html>
-`;
-
+const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
 fs.writeFileSync(path.join(SITE, OUT), html);
 
 const count = re => (html.match(re) || []).length;
 console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
 console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' +
-            count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/class="faq-item/g) + ' faq items, ' +
-            count(/<form\b/g) + ' form');
+            count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/class="faq-item/g) + ' faq items');

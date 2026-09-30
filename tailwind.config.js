@@ -18,7 +18,7 @@ module.exports = {
     './site/*.html',
     './build/*.js',
     './build/shell/*.html',
-    './build/assets/js/*.js',
+    './build/assets/js/*.js', './build/assets/ds/*.js',
   ],
   theme: {
     extend: {

@@ -1,0 +1,150 @@
+/* ═══ 21 · documentation devices (Moodle Integration guide) ═══════════════════════
+   The reading column and everything set inside it: Moodle's own words, definition
+   tables, the at-a-glance sheet, numbered steps, the schematic, evidence figures, the
+   file/online-text matrix, troubleshooting, the rail and the jump menu — and the hero's
+   link drawing. Values verbatim from the page's former <style>.
+
+   Anchors. The guide's anchors clear the site header, and under lg the jump menu beneath
+   it. As approved, a .doc-section keeps 104px at every width: the page's 132px rule for
+   it under lg lost on specificity to section[id], and the computed value is what was
+   signed off. A .doc-sub gets 132px under lg. (Flagged for review, not changed here.) */
+.doc-section[id], .doc-sub[id] { scroll-margin-top: 104px; }
+@media (max-width:1023px) { .doc-sub[id] { scroll-margin-top: 132px; } }
+
+/* ---------- the hero link: two marks, two straight tracks, the plugin between ----------
+   One 340×330 box; tiles, the pill and the side labels are placed in percentages of it,
+   so they meet the SVG tracks at every size. */
+.hero-link { position:relative; width:100%; max-width:340px; aspect-ratio:340/330; margin:0 auto; }
+.hero-link > svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.hero-link-tile { position:absolute; display:flex; align-items:center; justify-content:center; border-radius:20px;
+  background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,.05), 0 18px 40px -22px rgba(16,24,40,.28); }
+.hero-link-tile.is-top { left:14.7%; top:0; width:70.6%; height:29.1%; }
+.hero-link-tile.is-bottom { left:14.7%; top:70.9%; width:70.6%; height:29.1%; }
+.hero-link-tile img { display:block; width:72%; height:auto; }
+.hero-link-plug { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 14px 0 11px;
+  border-radius:999px; background:#111827; color:#fff; font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  box-shadow:0 0 0 5px rgba(242,252,252,.9), 0 10px 24px -10px rgba(16,24,40,.5); }
+.hero-link-side { position:absolute; left:67.65%; top:50%; transform:translate(12px,-50%); max-width:92px; font-size:12px; font-weight:600; line-height:1.3; color:#374151; }
+.hero-link-side.is-left { left:32.35%; transform:translate(calc(-100% - 12px),-50%); text-align:right; }
+@media (max-width:1023px) { .hero-link { max-width:300px; margin:0; } .hero-link-tile { border-radius:16px; } }
+@media (prefers-reduced-motion: reduce) { .hero-link-pulse { display:none; } }
+
+/* Moodle's own words */
+.ui { font-weight:600; color:#111827; background:#F3F4F6; border-radius:6px; padding:.08em .4em;
+  box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+.bg-orange-50 .ui { background:rgba(184,68,49,.10); }
+.bg-teal-50 .ui, .bg-ink-50 .ui, .deftable dt .ui { background:#E9EBEF; }
+
+/* ---------- the reading column ---------- */
+.doc-section { display:grid; gap:20px; padding-bottom:56px; margin-bottom:56px; border-bottom:1px solid #EEF0F3; }
+.doc-section:last-child { border-bottom:0; margin-bottom:0; padding-bottom:0; }
+.doc-section > h2 { margin-bottom:4px; }
+.doc-sub { display:grid; gap:16px; padding-top:28px; margin-top:8px; border-top:1px dashed #E1E4E9; }
+.group-label { margin-top:8px; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#B84431; }
+@media (min-width:1024px) { .doc-section { gap:22px; padding-bottom:72px; margin-bottom:72px; } }
+
+/* ---------- the definition table ---------- */
+.deftable { border-radius:16px; box-shadow:0 0 0 1px rgba(0,0,0,.06); overflow:hidden; background:#fff; }
+.deftable-head { display:none; }
+.deftable-row { padding:14px 16px; border-top:1px solid #EEF0F3; }
+.deftable-row:first-child { border-top:0; }
+.deftable dt { font-size:14px; font-weight:700; color:#111827; letter-spacing:-.01em; margin-bottom:6px; }
+.deftable dd { font-size:13.5px; line-height:1.6; color:#374151; }
+@media (min-width:640px) {
+  .deftable-head, .deftable-row { display:grid; grid-template-columns:minmax(0,.38fr) minmax(0,.62fr); gap:24px; }
+  .deftable-head { padding:11px 20px; background:#F8F9FB; border-bottom:1px solid #EEF0F3;
+    font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
+  .deftable-row { padding:16px 20px; }
+  .deftable dt { margin-bottom:0; font-size:14.5px; }
+  .deftable dd { font-size:14.5px; }
+}
+
+/* ---------- at a glance ---------- */
+.glance-row { display:grid; gap:2px; padding:13px 18px; border-top:1px solid #EEF0F3; }
+.glance-row:first-child { border-top:0; }
+.glance dt { font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
+.glance dd { font-size:15px; font-weight:700; letter-spacing:-.01em; color:#111827; }
+@media (min-width:640px) {
+  .glance-row { grid-template-columns:200px minmax(0,1fr); gap:20px; align-items:baseline; padding:14px 24px; }
+  .glance dd { font-size:15.5px; }
+}
+
+/* ---------- numbered steps on one spine ---------- */
+.steps { position:relative; display:grid; gap:16px; counter-reset:none; }
+.steps::before { content:""; position:absolute; left:15px; top:16px; bottom:16px; width:1px; background:#E1E4E9; }
+.steps > li { position:relative; display:flex; align-items:flex-start; gap:16px; }
+.steps-n { position:relative; z-index:1; flex:none; width:31px; height:31px; border-radius:999px; background:#D4F3F8; color:#06748A;
+  display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums;
+  box-shadow:0 0 0 4px #fff; }
+.steps-tight { gap:12px; }
+
+/* ---------- the schematic ---------- */
+.flow { margin:4px 0 0; }
+.flow ol { display:grid; gap:22px; }
+.flow li { position:relative; }
+.flow li span { display:flex; align-items:center; justify-content:center; text-align:center; min-height:56px; padding:10px 12px;
+  border-radius:14px; background:#F8F9FB; box-shadow:0 0 0 1px rgba(0,0,0,.06);
+  font-size:12.5px; font-weight:600; line-height:1.35; color:#1F2937; }
+.flow li.is-ps span { background:#111827; color:#fff; box-shadow:none; }
+.flow li + li::before { content:""; position:absolute; left:50%; top:-16px; width:1px; height:10px; background:#9CA3AF; }
+.flow li + li::after { content:""; position:absolute; left:50%; top:-9px; width:6px; height:6px; margin-left:-3px;
+  border-right:1px solid #9CA3AF; border-bottom:1px solid #9CA3AF; transform:rotate(45deg); }
+.flow figcaption, .shot figcaption { margin-top:10px; font-size:12.5px; line-height:1.5; color:#6B7280; }
+@media (min-width:768px) {
+  .flow ol { grid-template-columns:repeat(5, minmax(0,1fr)); gap:22px; }
+  .flow li span { height:100%; min-height:76px; }
+  .flow li + li::before { left:-17px; top:50%; width:11px; height:1px; }
+  .flow li + li::after { left:-11px; top:50%; margin-left:0; margin-top:-3px; transform:rotate(-45deg); }
+}
+
+/* ---------- the evidence figure (its max-width comes from the screenshot's own size) ---------- */
+.shot { margin:4px 0 0; width:100%; }
+.shot-frame { border-radius:16px; background:#F3F4F6; box-shadow:0 0 0 1px rgba(0,0,0,.06); padding:0 8px 8px; }
+.shot-tag { display:flex; align-items:center; gap:5px; height:30px; padding:0 6px; }
+.shot-tag span { width:7px; height:7px; border-radius:999px; background:#D1D5DB; }
+.shot-tag b { margin-left:8px; font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#6B7280; }
+.shot img { display:block; width:100%; height:auto; border-radius:10px; background:#fff; padding:8px 9px; box-shadow:0 0 0 1px rgba(0,0,0,.05); }
+
+/* ---------- file vs online text ---------- */
+.matrix { border-top:1px solid #EEF0F3; border-collapse:collapse; font-size:13.5px; }
+.matrix th, .matrix td { padding:12px 16px; border-top:1px solid #EEF0F3; vertical-align:top; line-height:1.5; }
+.matrix thead th { border-top:0; background:#F8F9FB; font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#6B7280; }
+.matrix tbody th { font-weight:700; color:#111827; width:32%; }
+.matrix td { color:#1B7A50; font-weight:600; }
+@media (min-width:640px) { .matrix { font-size:14.5px; } .matrix th, .matrix td { padding:14px 24px; } }
+
+/* ---------- troubleshooting ---------- */
+.trouble { display:grid; gap:12px; }
+.trouble > div { border-radius:16px; box-shadow:0 0 0 1px rgba(0,0,0,.06); background:#fff; padding:16px 18px; }
+.trouble dt { display:flex; align-items:flex-start; gap:12px; font-size:15px; font-weight:700; letter-spacing:-.01em; color:#111827; }
+.trouble-q { flex:none; width:22px; height:22px; border-radius:999px; background:#FDE6E1; color:#B84431; font-size:12.5px; font-weight:800;
+  display:flex; align-items:center; justify-content:center; margin-top:1px; }
+.trouble dd { margin:10px 0 0 34px; font-size:14px; line-height:1.6; color:#374151; }
+@media (min-width:768px) {
+  .trouble > div { display:grid; grid-template-columns:minmax(0,.42fr) minmax(0,.58fr); gap:28px; padding:18px 22px; }
+  .trouble dd { margin:0; font-size:14.5px; }
+}
+
+/* ---------- the rail and the jump menu (behaviour: site.js, module doc-nav) ---------- */
+.rail { position:sticky; top:112px; }
+.rail ul { display:grid; border-left:1px solid #E1E4E9; }
+.rail-link { display:block; margin-left:-1px; padding:7px 0 7px 16px; border-left:2px solid transparent;
+  font-size:13.5px; font-weight:500; color:#6B7280; transition:color .2s ease, border-color .2s ease; }
+.rail-link:hover { color:#111827; }
+.rail-link.on { color:#111827; font-weight:700; border-left-color:#0991A8; }
+
+.jump { position:sticky; top:68px; z-index:30; margin:0 -16px; background:rgba(255,255,255,.94);
+  -webkit-backdrop-filter:saturate(1.4) blur(10px); backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid #EEF0F3; }
+@media (min-width:640px) { .jump { margin:0 -24px; top:84px; } }
+.jump summary { list-style:none; display:flex; align-items:center; gap:12px; min-height:48px; padding:0 16px; cursor:pointer;
+  font-size:13.5px; font-weight:700; color:#111827; }
+@media (min-width:640px) { .jump summary { padding:0 24px; } }
+.jump summary::-webkit-details-marker { display:none; }
+.jump-now { margin-left:auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; color:#6B7280; }
+.jump-chev { flex:none; transition:transform .25s ease; }
+.jump[open] .jump-chev { transform:rotate(180deg); }
+.jump nav { padding:4px 8px 12px; }
+@media (min-width:640px) { .jump nav { padding:4px 16px 12px; } }
+.jump-link { display:flex; align-items:center; min-height:44px; padding:0 8px; border-radius:10px; font-size:14.5px; font-weight:500; color:#374151; }
+.jump-link.on { background:#F3F4F6; color:#111827; font-weight:700; }
+@media (prefers-reduced-motion: reduce) { .jump-chev, .rail-link { transition:none; } }

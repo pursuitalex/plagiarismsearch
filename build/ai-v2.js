@@ -21,15 +21,20 @@
    reason: nothing is retired until Olex accepts the replacement.
 
    Run:  node build/ai-v2.js  →  node build/shell.js  →  node build/check-ai.js
+
+   On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
+   no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
+   classes, asset paths are root-relative. Parity: node build/parity/run.js ai-detector-v2.html
 */
 const fs = require('fs');
 const path = require('path');
+const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'ai-detector-v2.html';
 const cta = require('./cta');
-const { dots } = require('./dots');
+const { dotField } = require('./dots');
 const banner = require('./banner');   /* the closing band — recipe and reasoning live there */
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -313,7 +318,7 @@ const arrow = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" strok
    width rather than fixed numbers — "AI Detector" is eleven characters and gets 200. */
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.length * 18);
-  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg>`;
+  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg>`;
   return text.replace(phrase, `<span class="pen-word relative inline-block">${phrase}${svg}</span>`);
 };
 
@@ -347,10 +352,10 @@ const section1 = () => `  <!-- ================= 01 · HERO + REAL AI CHECKER ==
        forms submit nowhere), but they are the states the real flow must use, and
        leaving them in the markup is what keeps a plagiarism status string from
        drifting back into the AI flow unnoticed. -->
-  <section id="ai-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
-    ${dots('heroDots')}
-    <div class="orb absolute" style="width:820px;height:760px;left:-14%;top:-380px;background:rgba(44,195,219,.22)"></div>
-    <div class="orb absolute" style="width:680px;height:660px;right:-12%;top:-180px;background:rgba(243,111,90,.14)"></div>
+  <section id="ai-checker" data-component="hero-ai-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
+    ${dotField()}
+    <div class="orb absolute orb-ai-hero-teal"></div>
+    <div class="orb absolute orb-ai-hero-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv text-center max-w-[760px] mx-auto mb-8 sm:mb-10 lg:mb-12">
@@ -360,7 +365,7 @@ ${eyebrow('teal-400', 'AI Detector')}
       </div>
 
       <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-        <form class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+        <form data-ai-check class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
           <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-3 lg:mb-4">${COPY.s1.toolHeading}</h2>
 
@@ -372,7 +377,7 @@ ${eyebrow('teal-400', 'AI Detector')}
 
           <!-- Inline validation, tied to the field it is about. role="alert" so a screen
                reader hears it when it appears rather than only on the next focus move. -->
-          <p id="stTooShort" role="alert" hidden class="flex items-start gap-2 -mt-2 mb-4 text-[12.5px] font-medium text-orange-700">
+          <p data-too-short role="alert" hidden class="flex items-start gap-2 -mt-2 mb-4 text-[12.5px] font-medium text-orange-700">
             <svg class="shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
             ${COPY.s1.states[0][1]}
           </p>
@@ -400,7 +405,7 @@ ${eyebrow('teal-400', 'AI Detector')}
           <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
 ${COPY.s1.inputs.map(i => `            <button type="button" class="qc-chip">${
   i.icon === 'brand'
-    ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">`
+    ? `<img src="/assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">`
     : `<svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`
 }${i.label}</button>`).join('\n')}
           </div>
@@ -433,7 +438,7 @@ ${COPY.s1.inputs.map(i => `            <button type="button" class="qc-chip">${
                The copy is the approved copy, unchanged; only its display condition moved.
                Both actions go to the shared account route, the same one every other page
                in this prototype uses for the auth flow. -->
-          <div id="authGate" hidden class="mt-4 pt-5 border-t border-ink-100">
+          <div data-auth-gate hidden class="mt-4 pt-5 border-t border-ink-100">
             <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
               <div class="min-w-0 flex-1">
                 <p class="text-[14.5px] sm:text-[15.5px] font-bold tracking-tight mb-1.5">${COPY.s1.reg.heading}</p>
@@ -489,9 +494,9 @@ const section2 = () => `  <!-- ================= 02 · SIGNATURE: AI-ONLY REPORT
        The Plagiarism tab label is present and that is a recorded deviation — see
        DECISIONS.md § DEC-U03. No plagiarism PERCENTAGE appears: the real panel carries
        only the two AI metrics, and the tabs switch the passage list, not the figures. -->
-  <section id="ai-report" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
-    <div class="orb absolute" style="width:900px;height:820px;left:-16%;top:-300px;background:rgba(44,195,219,.20)"></div>
-    <div class="orb absolute" style="width:720px;height:700px;right:-14%;bottom:-320px;background:rgba(154,106,222,.18)"></div>
+  <section id="ai-report" data-component="report-ai-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute orb-ai-report-teal"></div>
+    <div class="orb absolute orb-ai-report-violet"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12 lg:mb-14 text-white">
@@ -515,7 +520,7 @@ ${eyebrowDark('teal-400', 'The report')}
                   <span class="text-[11px] text-ink-500 tabular-nums">Words: ${COPY.s2.report.words}</span>
                 </div>
 ${COPY.s2.report.doc.map(para => `                <p class="text-[12.5px] sm:text-[13px] leading-[1.85] text-ink-700 mb-3.5">` +
-  para.map(run => run.hl ? `<span class="hl-ai on-ai">${run.t}</span>` : run.t).join('') + `</p>`).join('\n')}
+  para.map(run => run.hl ? `<span class="ai-hl ai-hl-on">${run.t}</span>` : run.t).join('') + `</p>`).join('\n')}
               </div>
 
               <!-- Report information -->
@@ -578,7 +583,7 @@ const section3 = () => `  <!-- ================= 03 · DOCUMENT / FILE CHECKING 
        in the hero. Four equal blocks, no keyword cards: "Do not turn this into
        repetitive AI detector for PDF / DOCX / PPT / students / teachers cards."
        No extension list either — the authoritative allow-list is not available. -->
-  <section id="document-ai-checker" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="document-ai-checker" data-component="document-grid" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <!-- Recomposed 2026-08-26 at Olex's request: the drop-zone widget that stood
            beside this text is gone and the text is centred.
@@ -625,7 +630,7 @@ const section4 = () => `  <!-- ================= 04 · RESPONSIBLE INTERPRETATIO
        The 70% sentence is the signature callout now, not a note beside paragraphs. The
        consequential-use note sits under it at lower priority, which is where the batch
        puts it. -->
-  <section id="interpret-ai-results" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
+  <section id="interpret-ai-results" data-component="interpret" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 
       <div class="rv max-w-[760px] mb-7 sm:mb-8">
@@ -678,7 +683,7 @@ ${COPY.s4.steps.map(([label, action], i) => `          <div class="flex-1 flex i
         </div>
 
         <!-- the sentence the section exists for -->
-        <div class="rv min-w-0 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-7 lg:p-8 flex flex-col">
+        <div data-surface="dark" class="rv min-w-0 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-7 lg:p-8 flex flex-col">
           <span class="shrink-0 w-11 h-11 rounded-2xl bg-white/10 flex items-center justify-center mb-5">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
           </span>
@@ -693,11 +698,11 @@ ${COPY.s4.steps.map(([label, action], i) => `          <div class="flex-1 flex i
               <div class="min-w-0 rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-3.5 sm:p-4">
                 <p class="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/60 mb-3 truncate">AI Probability</p>
                 <div class="relative rounded-xl ring-1 ring-white/15 px-3 py-3 space-y-1.5">
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:62%"></span><span class="block h-1.5 rounded-full bg-white/20" style="width:38%"></span></span>
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:100%"></span></span>
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:34%"></span><span class="block h-1.5 rounded-full bg-white/20" style="width:66%"></span></span>
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:100%"></span></span>
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:48%"></span><span class="block h-1.5 rounded-full bg-white/20" style="width:52%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[62%]"></span><span class="block h-1.5 rounded-full bg-white/20 w-[38%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[100%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[34%]"></span><span class="block h-1.5 rounded-full bg-white/20 w-[66%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[100%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[48%]"></span><span class="block h-1.5 rounded-full bg-white/20 w-[52%]"></span></span>
                   <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-ink-950 ring-1 ring-orange-400/45 px-2.5 py-0.5 text-[10.5px] font-bold tabular-nums text-orange-200">70%</span>
                 </div>
               </div>
@@ -706,11 +711,11 @@ ${COPY.s4.steps.map(([label, action], i) => `          <div class="flex-1 flex i
               <div class="min-w-0 rounded-2xl bg-white/[.05] ring-1 ring-white/10 p-3.5 sm:p-4">
                 <p class="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/60 mb-3 truncate">Total AI Rate</p>
                 <div class="rounded-xl ring-1 ring-white/15 px-3 py-3 space-y-1.5">
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:62%"></span><span class="block h-1.5 rounded-full bg-ai-mark" style="width:38%"></span></span>
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:100%"></span></span>
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-ai-mark" style="width:34%"></span><span class="block h-1.5 rounded-full bg-white/20" style="width:66%"></span></span>
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:100%"></span></span>
-                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20" style="width:48%"></span><span class="block h-1.5 rounded-full bg-ai-mark" style="width:52%"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[62%]"></span><span class="block h-1.5 rounded-full bg-ai-mark w-[38%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[100%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-ai-mark w-[34%]"></span><span class="block h-1.5 rounded-full bg-white/20 w-[66%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[100%]"></span></span>
+                  <span class="flex gap-1"><span class="block h-1.5 rounded-full bg-white/20 w-[48%]"></span><span class="block h-1.5 rounded-full bg-ai-mark w-[52%]"></span></span>
                 </div>
               </div>
             </div>
@@ -743,7 +748,7 @@ ${COPY.s4.steps.map(([label, action], i) => `          <div class="flex-1 flex i
 const section5 = () => `  <!-- ================= 05 · AI DETECTION VS PLAGIARISM =================
        Stated once, compactly, and this is the ONLY plagiarism cross-link in the body.
        "Do not spread plagiarism vocabulary through the AI page." -->
-  <section id="ai-vs-plagiarism" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="ai-vs-plagiarism" data-component="compare-split" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv text-center max-w-[720px] mx-auto mb-10 sm:mb-12">
         <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
@@ -789,7 +794,7 @@ const section6 = () => `  <!-- ================= 06 · AI DATA HANDLING / REPORT
        The section that replaces the old page's "No data storage" card. What is true is
        narrower and it is said exactly: processed on our infrastructure, not sent to an
        external provider, report kept for convenience, deletable by the user. -->
-  <section id="ai-data-handling" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
+  <section id="ai-data-handling" data-component="lifecycle" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
 ${eyebrow('teal-400', 'Data handling')}
@@ -840,6 +845,7 @@ ${banner({
             <p class="mt-3.5 ${banner.SUPPORT} max-w-[58ch]">${COPY.s7.support}</p>`,
     action: banner.btn(COPY.s7.cta, COPY.s7.ctaHref),
     actionUnder: 'aside',
+    static: true,
     aside: `          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
             <p class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
               <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COPY.s7.branch.parent[1]}</svg>
@@ -870,7 +876,7 @@ const section8 = () => `  <!-- ================= 08 · AI PRICING ==============
 
        Pricing comes AFTER the product is understood, per the approved story. It is not
        the legacy "checker → pricing → advantages" order. -->
-  <section id="ai-pricing" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
+  <section id="ai-pricing" data-component="packages" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv text-center max-w-[720px] mx-auto mb-7 sm:mb-9">
 ${eyebrow('orange-500', 'AI pricing')}
@@ -914,7 +920,7 @@ const section9 = () => `  <!-- ================= 09 · AI DETECTOR FAQ =========
        Every answer is in the rendered HTML, not fetched on click — the brief requires
        it and a crawler needs it. Ten questions, exactly the approved ten: no "what is
        AI" filler, no model-name keyword questions, no audience variations. -->
-  <section id="ai-detector-faq" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="ai-detector-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
@@ -925,15 +931,15 @@ ${eyebrow('orange-500', 'Questions')}
         </div>
 
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${COPY.s9.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="ai-detector-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
+              <div class="faq-a" id="ai-detector-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
             </div>`).join('\n')}
           </div>
         </div>
@@ -953,11 +959,11 @@ const section10 = () => `  <!-- ================= 10 · FINAL CTA ==============
        ten characters — the length the loop was drawn for. No eyebrow chip: the homepage
        band has one ("Free check") but that is approved copy there, and inventing a label
        here would be new visible text the baseline does not carry. -->
-  <section id="ai-final-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.background('ai-final-cta')}
+  <section id="ai-final-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+${cta.backgroundStatic()}
 
     <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s10.h2, 'AI-writing')}</h2>
+      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s10.h2, 'AI-writing', { static: true })}</h2>
       <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[56ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.s10.support}</p>
       <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
         <a href="#ai-checker" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
@@ -973,273 +979,16 @@ ${cta.background('ai-final-cta')}
   </section>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Page-local styles. The donor head carries the design system, .faq-a, .faq-chev
-   and the small-breakpoint overrides for .qc-area / .qc-chip; only what this page
-   adds lives here.
+   Assemble — the shared page shell (build/page.js). The components' CSS and JS live in
+   build/assets/ (site.css, site.js); the page carries none of its own.
    ───────────────────────────────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  /* [hidden] must actually hide. Tailwind's display utilities — .flex, .grid, .block —
-     have the same specificity as the [hidden] attribute selector and come later in the
-     sheet, so they win: a hidden paragraph carrying .flex still renders. Every
-     visible on the default screen because of this, which is the exact defect the
-     2026-08-25 batch exists to remove, reintroduced by the fix for it. */
-  [hidden] { display: none !important; }
-
-  /* Anchor landings clear the sticky header. Measured, not guessed: the header is
-     fixed at top:20 and its bar ends at 76px, so a section arriving at offset 0 puts
-     its own label underneath it. 100px leaves the H2 fully visible with air above.
-     The batch is explicit that this is fixed at the anchor, never by changing section
-     spacing globally. */
-  section[id] { scroll-margin-top: 100px; }
-
-  /* A visible focus ring on everything reachable by keyboard. :focus-visible rather
-     than :focus, so a mouse press does not leave a ring behind. */
-  a:focus-visible, button:focus-visible, summary:focus-visible,
-  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
-    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-  /* on ink, the teal ring is too close to the ground to read */
-  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible {
-    outline-color: #6ED7E8; }
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-  /* base rules for the checker — the shared head has only the small-breakpoint
-     overrides, so without these the field ignores width:100% and the chips lose
-     their pill (the same trap home-v2.js documents) */
-  .qc-area { width:100%; border:0; outline:none; background:transparent; resize:none;
-    font-size:15px; line-height:1.6; font-weight:500; color:#111827; }
-  .qc-area::placeholder { color:#9CA3AF; font-weight:400; }
-  .qc-chip { display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 14px;
-    border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12.5px; font-weight:600;
-    transition:background-color .2s ease, color .2s ease; }
-  .qc-chip:hover { background:#E5E7EB; color:#111827; }
-  .qc-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
-    transition:border-color .2s ease, background-color .2s ease; }
-  .qc-drop:hover { border-color:#2CC3DB; background:#F0FAFC; }
-
-  /* AI highlight — violet, the product report's own colour coding, kept distinct from
-     the orange used for plagiarism matches elsewhere on the site */
-  .bg-ai-mark { background:rgba(154,106,222,.85); }
-  .hl-ai { background:rgba(154,106,222,.22); border-radius:.35rem; padding:.05em .18em;
-    margin:-.05em -.18em; box-shadow:inset 0 -2px 0 rgba(154,106,222,.5);
-    box-decoration-break:clone; -webkit-box-decoration-break:clone; }
-  .on-ai { color:#6D3FB0; }
-
-  /* Flow Circular renders text as redacted bars — the honest stand-in for a document
-     body we are not allowed to invent */
-  .font-flow { font-family:'Flow Circular', cursive; }
-
-  /* placeholder chrome — anything wearing this waits on the approved report asset */
-  .ph { border:1px dashed rgba(16,24,40,.22); border-radius:.5rem; }
-  .ph-dark { border:1px dashed rgba(255,255,255,.24); border-radius:.5rem; }
-
-${cta.style('ai-final-cta')}
-  /* the bento hover from the homepage capabilities grid */
-  .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
-  .spotlight:hover { transform:translateY(-4px); }
-  @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
-
-  /* pricing package rows — a real selection, not decoration */
-  .pkg { transition:background-color .2s ease, box-shadow .2s ease; }
-  .pkg:hover { background:#F8F9FB; }
-  .pkg:has(input:checked) { background:#E8F8FB; box-shadow:inset 0 0 0 1.5px #0CA9C3; }
-  .pkg:has(input:checked) .pkg-dot { border-color:#0CA9C3; }
-  .pkg:has(input:checked) .pkg-dot::after { content:''; width:8px; height:8px; border-radius:9999px; background:#0CA9C3; }
-  /* the focus ring has to be on the label, since the input itself is visually hidden */
-  .pkg:has(input:focus-visible) { box-shadow:inset 0 0 0 2px #0CA9C3, 0 0 0 3px rgba(12,169,195,.25); }
-
-  /* pen mark — the reduced-motion fallback is mandatory, not optional: without it the
-     emphasis simply vanishes for anyone who asked the site to stop moving */
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-</style>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Behaviour. Written out rather than sliced from another page — home-v2.js records
-   what scraping someone else's <script> by indexOf costs.
-   ───────────────────────────────────────────────────────────────────────────── */
-const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-
-  /* a grid of cards is read in order, so it should arrive in order */
-  gsap.utils.toArray('.rv-kids').forEach(group => {
-    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
-      scrollTrigger: { trigger: group, start: 'top 80%' } });
-  });
-
-${cta.script}
-
-  /* pen marks — the word colours in, then its underline draws. Marks in the first
-     viewport wait out the reveal cascade; lower ones fire when scrolled to. */
-  gsap.utils.toArray('.pen-word').forEach(word => {
-    const line = word.querySelector('.pen-underline');
-    if (!line) return;
-    const len = line.getTotalLength();
-    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-    const tl = gsap.timeline(inFirstView
-      ? { delay: 1 }
-      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-      .set(line, { opacity: 1 }, .35)
-      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-
-  /* The corrected checker flow, as far as a prototype can honestly show it.
-
-     Under 100 characters the field objects, inline, where the text is. At or above it
-     the auth gate opens — because this prototype has no session, and the approved
-     behaviour for a visitor without one is exactly that. Nothing is submitted, so
-     check.js's inert-form rule still holds.
-
-     What is entered is preserved: the gate opens beneath the text, it does not replace
-     the card. The batch asks for that explicitly. */
-  const form = document.querySelector('#ai-checker form');
-  const field = document.getElementById('aiText');
-  const tooShort = document.getElementById('stTooShort');
-  const gate = document.getElementById('authGate');
-
-  if (form && field && tooShort && gate) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const short = field.value.trim().length < 100;
-      tooShort.hidden = !short;
-      gate.hidden = short;
-      field.setAttribute('aria-invalid', String(short));
-      (short ? field : gate.querySelector('a')).focus();
-    });
-
-    /* clear the objection as soon as the reason for it is gone */
-    field.addEventListener('input', () => {
-      if (!tooShort.hidden && field.value.trim().length >= 100) {
-        tooShort.hidden = true;
-        field.setAttribute('aria-invalid', 'false');
-      }
-    });
-  }
-
-  /* Pricing: the CTA must always name the package it buys. Radio semantics come from
-     the markup — a keyboard user changes the selection with arrow keys and nothing here
-     interferes; this only keeps the button label in step.
-
-     The two words around the number are read off the button's own data attributes
-     rather than baked into this script, so the approved copy stays in one place. */
-  document.querySelectorAll('[data-group]').forEach(group => {
-    const cta = group.querySelector('[data-cta]');
-    if (!cta) return;
-    group.addEventListener('change', () => {
-      const on = group.querySelector('input:checked');
-      if (!on) return;
-      cta.textContent = [cta.dataset.prefix, on.dataset.words, cta.dataset.suffix].join(' ');
-    });
-  });
-
-  /* FAQ: answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      const list = item.parentElement;
-      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-      /* aria-expanded has to follow the visual state or a screen-reader user is told
-         every answer is collapsed while looking at an open one */
-      list.querySelectorAll('.faq-q').forEach(b =>
-        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
-    });
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Assemble
-   ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>');
-if (/name="description"/.test(head)) {
-  head = head.replace(/<meta name="description"[^>]*>/,
-    '<meta name="description" content="' + COPY.meta + '" />');
-} else {
-  head = head.replace('<title>',
-    '<meta name="description" content="' + COPY.meta + '" />\n<title>');
-}
-/* "Self-canonical to /ai-content-detector. Do not redirect, canonicalize away or
-   rename this URL." The prototype filename differs; the canonical does not. */
-head = head.replace('<title>', '<link rel="canonical" href="' + COPY.canonical + '" />\n<title>');
-
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
 const sections = [section1, section2, section3, section4, section5,
                   section6, section7, section8, section9, section10];
 
-const html = head + STYLE + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${sections.map(f => f()).join('\n\n')}
-</main>
-
-<footer></footer>
-
-${SCRIPT}
-</body>
-</html>
-`;
-
+const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
 fs.writeFileSync(path.join(SITE, OUT), html);
 
 const count = re => (html.match(re) || []).length;
 console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
 console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' +
-            count(/<h2\b/g) + ' h2, ' + count(/class="faq-item/g) + ' faq items');
-const pending = [...new Set(html.match(/\[REAL [A-Z\- ]+\]/g) || [])];
-if (pending.length) console.log('  awaiting the approved report asset: ' + pending.join(' '));
+            count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/class="faq-item/g) + ' faq items');

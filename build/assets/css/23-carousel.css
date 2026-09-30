@@ -1,0 +1,36 @@
+/* ═══ 23 · the reviews carousel (homepage) ═══════════════════════════════════════
+   Behaviour: site.js, module carousel ([data-carousel]). Values verbatim; the rail was
+   keyed to #revTrack and is the class .rev-track now.
+
+   The rail runs the full viewport; the reading zone stays the container's. A mask
+   dissolves the cards from the screen edge to where the content column starts, so
+   resting cards sit in the 1200px zone at full strength and their neighbours peek from
+   inside the fade. --rev-edge is screen edge to content edge: the centring gap plus the
+   container gutter. Card width is pinned to the content zone, not the track, so three
+   rest inside the column exactly. scroll-padding keeps the snap points on the content
+   edge rather than the track edge. */
+.no-bar { scrollbar-width:none; -ms-overflow-style:none; }
+.no-bar::-webkit-scrollbar { display:none; }
+
+.rev-track { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 16px);
+  margin-inline:calc(50% - 50vw);
+  padding-inline:var(--rev-edge); scroll-padding-inline:var(--rev-edge);
+  -webkit-mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent);
+          mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent); }
+.rev-track > div { flex-basis:86%; }
+@media (min-width:640px)  { .rev-track { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 24px); }
+                            .rev-track > div { flex-basis:54%; } }
+@media (min-width:1024px) { .rev-track { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 40px); }
+                            .rev-track > div { flex-basis:calc((min(100vw, 1280px) - 80px - 3rem) / 3); } }
+
+/* the arrows are a hover affordance, but focus reaches them too, or the control is
+   mouse-only; hidden entirely when there is nothing to scroll */
+.rev-nav { opacity:0; pointer-events:none;
+           transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1); }
+.group:hover .rev-nav, .rev-nav:focus-visible { opacity:1; pointer-events:auto; }
+.rev-nav[hidden] { display:none; }
+.rev-nav:hover { transform:translateY(-50%) scale(1.06); }
+.rev-dot { width:7px; height:7px; border-radius:999px; background:rgba(255,255,255,.22);
+           transition:width .3s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
+.rev-dot.on { width:22px; background:#fff; }
+@media (hover: none) { .rev-nav { opacity:1; pointer-events:auto; } }

@@ -1,8 +1,7 @@
 {
   "scripts": {
     "build:assets": "node build/assets.js",
-    "build:students": "node build/assets.js && node build/students.js && node build/shell.js && node build/poc-sections.js",
-    "parity:students": "node build/parity/students.js"
+    "parity": "node build/parity/run.js"
   },
   "dependencies": {
     "sharp": "^0.35.3"

@@ -80,7 +80,16 @@ function build() {
     jsParts.map(f => '/* ── ' + f + ' ── */\n' + fs.readFileSync(path.join(SRC, 'js', f), 'utf8').trim()).join('\n\n') +
     '\n\nPS.start();\n})();\n');
 
-  /* 4 · GSAP, local and pinned */
+  /* 4 · the design-system page's own tools (build/assets/ds/) — not part of the site;
+     only site/design-system.html links them (head({ ds: true })) */
+  write(path.join(OUT, 'css', 'ds.css'),
+    '/* ds.css — built by build/assets.js from build/assets/ds/ds.css. Do not edit here. */\n' +
+    fs.readFileSync(path.join(SRC, 'ds', 'ds.css'), 'utf8'));
+  write(path.join(OUT, 'js', 'ds.js'),
+    '/* ds.js — built by build/assets.js from build/assets/ds/ds.js. Do not edit here. */\n' +
+    fs.readFileSync(path.join(SRC, 'ds', 'ds.js'), 'utf8'));
+
+  /* 5 · GSAP, local and pinned */
   for (const f of ['gsap.min.js', 'ScrollTrigger.min.js']) {
     const to = path.join(OUT, 'vendor', 'gsap', GSAP_VERSION, f);
     fs.mkdirSync(path.dirname(to), { recursive: true });
@@ -91,6 +100,7 @@ function build() {
   console.log('  site/assets/css/site.css      ' + size('css/site.css') + '  (' + cssParts.length + ' partials)');
   console.log('  site/assets/css/tailwind.css  ' + size('css/tailwind.css') + '  (tailwindcss ' + TW_VERSION + ')');
   console.log('  site/assets/js/site.js        ' + size('js/site.js') + '  (' + jsParts.length + ' modules)');
+  console.log('  site/assets/css/ds.css, js/ds.js  (the design-system page only)');
   console.log('  site/assets/vendor/gsap/' + GSAP_VERSION + '/  gsap.min.js, ScrollTrigger.min.js');
 }
 
@@ -98,15 +108,19 @@ function build() {
 const boot = () => fs.readFileSync(path.join(SRC, 'js', 'boot.js'), 'utf8')
   .replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '').replace(/\s{2,}/g, ' ').trim();
 
-/* What a page puts in <head> to use the system — the only CSS/JS it carries. */
-const head = () => [
+/* What a page puts in <head> to use the system — the only CSS/JS it carries.
+   { ds: true } adds the design-system page's tools: ds.css between site.css and
+   tailwind.css (where its former <style> sat against the CDN sheet), ds.js after site.js. */
+const head = ({ ds = false } = {}) => [
   '<link rel="stylesheet" href="/assets/css/site.css">',
+  ds && '<link rel="stylesheet" href="/assets/css/ds.css">',
   '<link rel="stylesheet" href="/assets/css/tailwind.css">',
   '<script>' + boot() + '</script>',
   '<script defer src="/assets/vendor/gsap/' + GSAP_VERSION + '/gsap.min.js"></script>',
   '<script defer src="/assets/vendor/gsap/' + GSAP_VERSION + '/ScrollTrigger.min.js"></script>',
   '<script defer src="/assets/js/site.js"></script>',
-].join('\n');
+  ds && '<script defer src="/assets/js/ds.js"></script>',
+].filter(Boolean).join('\n');
 
 module.exports = { build, head, boot, TW_VERSION, GSAP_VERSION, PREFIX_TARGETS };
 if (require.main === module) build();

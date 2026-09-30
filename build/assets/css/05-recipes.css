@@ -1,0 +1,123 @@
+/* ═══ 05 · component recipes — buttons, badge, field, checkbox / radio / chipset ═════
+   The recipes the design system specifies (site/design-system.html draws each one).
+   Values verbatim from that page's former <style>. They sit before 06-controls-phone,
+   whose phone-size overrides for .fld, .ctl and .chip-opt must come after the base rules.
+   The button press moves 1px; under reduced motion it does not. */
+/* ---------- BUTTON RECIPES ----------
+   Heights + padding are the Figma spec (xs 32 / sm 40 / md 48 / lg 56).
+   Hover + active bind to deeper palette shades so white text clears WCAG AA —
+   the default 500 shades are the brand-locked exception (see Contrast notes). */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:.5em;
+       font-weight:600; border-radius:12px; white-space:nowrap; cursor:pointer;
+       border:1px solid transparent; user-select:none;
+       transition: background-color .15s ease-out, border-color .15s ease-out, color .15s ease-out, transform .15s cubic-bezier(.32,.72,0,1); }
+.btn:focus-visible { outline:2px solid #0CA9C3; outline-offset:2px; }
+.btn:active { transform:translateY(1px); }
+.btn[disabled] { opacity:.4; pointer-events:none; }
+
+.btn-xs { height:32px; padding:0 12px; font-size:13px; }
+.btn-sm { height:40px; padding:0 16px; font-size:14px; }
+.btn-md { height:48px; padding:0 20px; font-size:15px; }
+.btn-lg { height:56px; padding:0 28px; font-size:16px; }
+
+.btn-caps { text-transform:uppercase; font-weight:700; }
+.btn-caps.btn-xs { letter-spacing:.08em; }
+.btn-caps.btn-sm { letter-spacing:.07em; }
+.btn-caps.btn-md { letter-spacing:.055em; }
+.btn-caps.btn-lg { letter-spacing:.04em; }
+
+.btn-primary   { background:#F36F5A; color:#fff; }
+.btn-primary:hover  { background:#B84431; }
+.btn-primary:active { background:#8C2E1F; }
+
+.btn-secondary { background:#fff; color:#111827; border-color:#E5E7EB; }
+.btn-secondary:hover  { background:#F8F9FB; border-color:#D1D5DB; }
+.btn-secondary:active { background:#F1F2F6; border-color:#9CA3AF; }
+
+.btn-ghost     { background:transparent; color:#374151; }
+.btn-ghost:hover  { background:#F1F2F6; color:#111827; }
+.btn-ghost:active { background:#E5E7EB; }
+
+.btn-danger    { background:#DC4444; color:#fff; }
+.btn-danger:hover  { background:#A32222; }
+.btn-danger:active { background:#7C1717; }
+
+.btn-dark      { background:#111827; color:#fff; }
+.btn-dark:hover  { background:#1F2937; }
+.btn-dark:active { background:#0A0E1A; }
+
+.btn-teal      { background:#0CA9C3; color:#fff; }
+.btn-teal:hover  { background:#06748A; }
+.btn-teal:active { background:#045566; }
+
+/* ---------- badge ---------- */
+.badge { display:inline-flex; align-items:center; gap:.35em; border-radius:999px; font-weight:700;
+         text-transform:uppercase; white-space:nowrap; }
+.badge-sm { height:20px; padding:0 8px; font-size:9.5px; letter-spacing:.09em; }
+.badge-md { height:26px; padding:0 11px; font-size:11px; letter-spacing:.07em; }
+
+/* ---------- input ---------- */
+.fld { width:100%; border-radius:8px; border:1px solid #E5E7EB; background:#fff; color:#111827;
+       font-weight:500; transition:border-color .15s ease, box-shadow .15s ease; }
+.fld::placeholder { color:#9CA3AF; font-weight:400; }
+.fld-sm { height:40px; padding:0 12px; font-size:14px; }
+.fld-md { height:48px; padding:0 14px; font-size:15px; }
+.fld-lg { height:56px; padding:0 16px; font-size:16px; }
+.fld:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
+.fld-error { border-color:#DC4444; box-shadow:0 0 0 1px #DC4444; }
+.fld[disabled] { background:#F1F2F6; color:#9CA3AF; cursor:not-allowed; }
+
+/* ================= CONTROLS · checkbox, radio, groups =================
+   The native box is replaced, not hidden: appearance:none keeps the real input
+   in the layout, so the label, keyboard focus and :checked state all still work. */
+.ck, .rd { appearance:none; -webkit-appearance:none; flex:none; margin:0;
+  width:18px; height:18px; border:1.5px solid #D1D5DB; background-color:#fff; cursor:pointer;
+  background-repeat:no-repeat; background-position:center;
+  transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }
+.ck { border-radius:5px; }
+.rd { border-radius:50%; }
+.ck:hover, .rd:hover { border-color:#9CA3AF; }
+.ck:checked { background-color:#0991A8; border-color:#0991A8;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-9'/%3E%3C/svg%3E"); background-size:12px 12px; }
+.rd:checked { background-color:#0991A8; border-color:#0991A8;
+  background-image:radial-gradient(circle at center, #fff 0 3px, transparent 3.5px); }
+.ck:focus-visible, .rd:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(12,169,195,.28); }
+.ck[disabled], .rd[disabled] { background-color:#F1F2F6; border-color:#E5E7EB; cursor:not-allowed; }
+.ck[disabled]:checked, .rd[disabled]:checked { background-color:#D1D5DB; border-color:#D1D5DB; }
+
+/* the clickable row — the whole label is the hit area, not just the 18px box */
+.ctl { display:flex; align-items:center; gap:10px; cursor:pointer;
+  font-size:14px; font-weight:500; color:#374151; }
+.ctl.ctl-top { align-items:flex-start; }
+.ctl.ctl-top .ck, .ctl.ctl-top .rd { margin-top:1px; }
+.ctl:has(input[disabled]) { cursor:not-allowed; color:#9CA3AF; }
+
+/* quiet group — a plain list of options */
+.ctl-group { display:flex; flex-direction:column; gap:2px; }
+.ctl-group > .ctl { padding:8px 10px; border-radius:10px; transition:background-color .15s ease; }
+.ctl-group > .ctl:hover { background:#F8F9FB; }
+
+/* boxed group — for a prominent either/or, where the option itself is the target */
+.ctl-group-boxed { display:flex; flex-direction:column; gap:8px; }
+.ctl-group-boxed > .ctl { padding:14px 16px; border-radius:12px; border:1px solid #E5E7EB;
+  background:#fff; transition:border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+.ctl-group-boxed > .ctl:hover { border-color:#D1D5DB; }
+.ctl-group-boxed > .ctl:has(input:checked) { border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; background:#F8FDFE; }
+
+/* chipset — compact single-choice pills; radio semantics, no visible box */
+.chipset { display:flex; flex-wrap:wrap; gap:8px; }
+.chip-opt { position:relative; display:inline-flex; cursor:pointer; }
+.chip-opt input { position:absolute; opacity:0; width:0; height:0; }
+.chip-opt span { display:inline-flex; align-items:center; height:32px; padding:0 12px;
+  border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12px; font-weight:600;
+  transition:background-color .2s ease, color .2s ease, box-shadow .15s ease; }
+.chip-opt:hover span { background:#E5E7EB; color:#111827; }
+.chip-opt input:checked + span { background:#0A0E1A; color:#fff; }
+.chip-opt input:focus-visible + span { box-shadow:0 0 0 3px rgba(12,169,195,.35); }
+.chip-opt input[disabled] + span { background:#F8F9FB; color:#D1D5DB; cursor:not-allowed; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ck, .rd, .ctl-group > .ctl, .ctl-group-boxed > .ctl, .chip-opt span { transition:none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .btn:active { transform:none; } }

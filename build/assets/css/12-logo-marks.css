@@ -1,0 +1,9 @@
+/* ═══ 12 · a row of institution marks (UA: .uni) ══════════════════════════════════
+   The approved assets are 213×90 plates that already carry their own light ground, so
+   the plate IS the tile: no second box around it, never scaled above its own size, and
+   one quiet tone until it is pointed at. */
+.uni li { display:flex; align-items:center; justify-content:center; }
+.uni img { display:block; width:100%; max-width:213px; height:auto; aspect-ratio:213/90; border-radius:14px;
+  filter:grayscale(1); opacity:.85; transition:filter .3s ease, opacity .3s ease; }
+.uni li:hover img { filter:none; opacity:1; }
+@media (prefers-reduced-motion: reduce) { .uni img { transition:none; } }

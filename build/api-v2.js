@@ -18,15 +18,20 @@
    replace that one line and nothing else.
 
    Run:  node build/api-v2.js  →  node build/shell.js  →  node build/check-api.js
+
+   On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
+   no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
+   classes, asset paths are root-relative. Parity: node build/parity/run.js api-v2.html
 */
 const fs = require('fs');
 const path = require('path');
+const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'api-v2.html';
 const cta = require('./cta');
-const { dots } = require('./dots');   /* the closing band — recipe and reasoning live there */
+const { dotField } = require('./dots');   /* the closing band — recipe and reasoning live there */
 
 const DOCS = 'https://plagiarismsearch.com/docs/';   /* live production, no page here */
 
@@ -263,7 +268,7 @@ const linkQuiet = (label, href, dark) => `<a href="${href}"${ext(href)} class="i
    render so the approved H1 stays one plain diffable string. */
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.length * 18);
-  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg>`;
+  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg>`;
   return text.replace(phrase, `<span class="pen-word relative inline-block">${phrase}${svg}</span>`);
 };
 
@@ -278,10 +283,10 @@ const section1 = () => `  <!-- ================= 01 · PRODUCT HERO / REAL API E
 
        Every character in the tabs is the brief's. The Authorization line is the
        developer-supplied example and stays until the preferred literal is given. -->
-  <section id="plagiarism-api" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dots('heroDots')}
-    <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
-    <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
+  <section id="plagiarism-api" data-component="hero-code" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    ${dotField()}
+    <div class="orb absolute orb-hero-teal"></div>
+    <div class="orb absolute orb-hero-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1fr_1.08fr] gap-10 lg:gap-14 items-center">
@@ -312,12 +317,12 @@ ${COPY.s1.rail.map(([head, sup]) => `            <div>
              lines instead of letting .code-pre scroll them, which is exactly the
              "changing code semantics" the brief rules out. -->
         <div class="rv min-w-0">
-          <div class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 shadow-diffuse-lg overflow-hidden">
+          <div data-code data-surface="dark" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 shadow-diffuse-lg overflow-hidden">
             <div class="flex items-center gap-1 px-3 sm:px-4 pt-3 sm:pt-4 pb-0">
-${COPY.s1.tabs.map((t, i) => `              <button type="button" class="code-tab${i === 0 ? ' on' : ''}" data-tab="${t.name}" aria-current="${i === 0 ? 'true' : 'false'}" aria-controls="panel-${t.name}">${t.name}</button>`).join('\n')}
+${COPY.s1.tabs.map((t, i) => `              <button type="button" class="code-tab${i === 0 ? ' on' : ''}" data-tab="${t.name}" aria-current="${i === 0 ? 'true' : 'false'}" aria-controls="plagiarism-api-panel-${t.name}">${t.name}</button>`).join('\n')}
               <button type="button" class="code-copy ml-auto" data-copy aria-label="Copy the code sample">Copy</button>
             </div>
-${COPY.s1.tabs.map((t, i) => `            <div class="code-panel${i === 0 ? ' on' : ''}" data-panel="${t.name}" id="panel-${t.name}">
+${COPY.s1.tabs.map((t, i) => `            <div class="code-panel${i === 0 ? ' on' : ''}" data-panel="${t.name}" id="plagiarism-api-panel-${t.name}">
               <pre class="code-pre"><code>${t.lines.map(esc).join('\n')}</code></pre>
 ${t.caption ? `              <p class="px-4 sm:px-5 lg:px-6 pb-4 text-[12px] leading-relaxed text-white/50">${t.caption}</p>` : ''}
             </div>`).join('\n')}
@@ -335,7 +340,7 @@ const section2 = () => `  <!-- ================= 02 · INPUTS =================
        Exactly three concepts, each with the encoding that actually applies. No file
        list: "Do not publish an exhaustive file-extension/size list until the current
        API-specific allow-list and limits are confirmed." -->
-  <section id="api-inputs" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="api-inputs" data-component="input-grid" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', 'Inputs')}
@@ -363,7 +368,7 @@ const section3 = () => `  <!-- ================= 03 · SEARCH SCOPE & SCAN CONFI
        The bento the brief encourages, carrying actual capabilities rather than generic
        advantage cards. The 500M+ academic figure is approved; no web-corpus number is,
        so none appears. AI is one card among six, not a product. -->
-  <section id="api-configuration" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
+  <section id="api-configuration" data-component="config-map" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
 ${eyebrow('teal-400', 'Configuration')}
@@ -400,7 +405,7 @@ const section4 = () => `  <!-- ================= 04 · ACTUAL API WORKFLOW =====
        requirements → Receive API → Stay in touch" is gone; these four are what the
        integration actually does. No stock developer photograph: the brief calls for
        actual product evidence, and the async callout is that evidence. -->
-  <section id="api-workflow" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="api-workflow" data-component="workflow-steps" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', 'Workflow')}
@@ -415,7 +420,7 @@ ${COPY.s4.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rou
         </div>`).join('\n')}
       </div>
 
-      <div class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
+      <div data-surface="dark" class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
 
         <div class="max-w-[54ch]">
           <p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] text-white mb-3 lg:mb-4">${
@@ -445,7 +450,7 @@ ${[
   { dir: 'wait', label: 'status_label: \"processing\"', tone: 'muted' },
   { dir: 'in',   label: 'report.checked', tone: 'orange' },
 ].map(step => {
-  const C = { teal: ['#2CC3DB', 'text-teal-300'], orange: ['#F58971', 'text-orange-300'], muted: ['', 'text-white/60'] }[step.tone];
+  const C = { teal: ['#2CC3DB', 'text-teal-300', 'bg-[#2CC3DB66]'], orange: ['#F58971', 'text-orange-300', 'bg-[#F5897166]'], muted: ['', 'text-white/60', ''] }[step.tone];
   if (step.dir === 'wait') {
     return `            <div class="flex items-center gap-3 py-1">
               <span class="flex-1 border-t border-dashed border-white/15"></span>
@@ -458,7 +463,7 @@ ${[
               <code class="block text-[12px] sm:text-[13px] font-semibold ${C[1]} mb-1.5 ${out ? '' : 'text-right'}">${step.label}</code>
               <div class="flex items-center gap-2" aria-hidden="true">
                 ${out ? '' : `<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="${C[0]}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
-                <span class="flex-1 h-px" style="background:${C[0]}66"></span>
+                <span class="flex-1 h-px ${C[2]}"></span>
                 ${out ? `<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1 4.5h7M5 1.5l3 3-3 3" stroke="${C[0]}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ''}
               </div>
             </div>`;
@@ -477,9 +482,9 @@ const section5 = () => `  <!-- ================= 05 · RESULT LIFECYCLE ========
 
        The field chips are the real names from the Response and Webhook tabs above, which
        is the "actual product evidence" the brief asks for in place of stock imagery. -->
-  <section id="api-results" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
-    <div class="orb absolute" style="width:880px;height:820px;left:-14%;top:-360px;background:rgba(44,195,219,.20)"></div>
-    <div class="orb absolute" style="width:700px;height:680px;right:-12%;bottom:-320px;background:rgba(243,111,90,.12)"></div>
+  <section id="api-results" data-component="results-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute orb-deep-teal"></div>
+    <div class="orb absolute orb-deep-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1fr_1.05fr] gap-8 lg:gap-12 items-start">
@@ -517,7 +522,7 @@ const section6 = () => `  <!-- ================= 06 · WORKFLOW USE CASES ======
        Three genuinely distinct integration shapes. Not Schools / Universities / Colleges,
        which the brief rejects as near-duplicate persona cards, and no Moodle card — that
        cross-link is a separate later decision, not an API mechanic. -->
-  <section id="api-use-cases" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
+  <section id="api-use-cases" data-component="use-cases" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-10 sm:mb-12">
 ${eyebrow('orange-500', 'Use cases')}
@@ -546,7 +551,7 @@ const section7 = () => `  <!-- ================= 07 · DEVELOPER RESOURCES =====
        Reshaped 2026-08-25: the card was 820px inside a 1,200px column under act-sized
        padding, and the surrounding air read as a missing sibling. Heading beside the
        card instead of above it, card full width, padding cut to what one row needs. -->
-  <section id="api-resources" class="relative py-12 sm:py-14 lg:py-16 bg-white overflow-hidden">
+  <section id="api-resources" data-component="resources" class="relative py-12 sm:py-14 lg:py-16 bg-white overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv grid lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-12 items-center">
 
@@ -590,9 +595,9 @@ const section8 = () => `  <!-- ================= 08 · ACCESS, TRIAL &amp; PRICI
   <!-- The dark commercial callout DEC-0041 lists under encouraged reuse, and the page's
        second dark act. Two paths, no price cards: pricing and entitlements come from the
        commercial source of truth, not from here. -->
-  <section id="api-access" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
-    <div class="orb absolute" style="width:820px;height:780px;right:-14%;top:-340px;background:rgba(243,111,90,.18)"></div>
-    <div class="orb absolute" style="width:660px;height:640px;left:-10%;bottom:-300px;background:rgba(44,195,219,.16)"></div>
+  <section id="api-access" data-component="access-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 overflow-hidden">
+    <div class="orb absolute orb-access-coral"></div>
+    <div class="orb absolute orb-access-teal"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv text-center max-w-[760px] mx-auto mb-10 sm:mb-12 text-white">
@@ -623,7 +628,7 @@ const section9 = () => `  <!-- ================= 09 · API ACCESS / CUSTOM QUOTE
        inventing a consent claim, which the same clause forbids.
 
        No response-time promise anywhere, including the success state. -->
-  <section id="api-quote" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
+  <section id="api-quote" data-component="inquiry-form" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
@@ -674,7 +679,7 @@ ${note && note !== 'Optional' ? `                <p class="mt-2 text-[12px] text
 const section10 = () => `  <!-- ================= 10 · PLAGIARISM API FAQ =================
        Exactly nine, all rendered in HTML. The tenth — the legacy Q&amp;A cross-link — is
        gated until that page is synchronized with 3.1.0, so the footer offers docs only. -->
-  <section id="api-faq" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="api-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
@@ -685,15 +690,15 @@ ${eyebrow('orange-500', 'Questions')}
         </div>
 
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${COPY.s10.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="api-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
+              <div class="faq-a" id="api-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
             </div>`).join('\n')}
           </div>
         </div>
@@ -705,11 +710,11 @@ ${COPY.s10.items.map(([q, a], i) => `            <div class="faq-item${i === 0 ?
 const section11 = () => `  <!-- ================= 11 · FINAL CTA =================
        Dual next steps, in the approved hierarchy: the technical evaluator returns to the
        docs, the buyer goes to the form. No third action, no free-trial button. -->
-  <section id="api-final-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.background('api-final-cta')}
+  <section id="api-final-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+${cta.backgroundStatic()}
 
     <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s11.h2, 'evaluate')}</h2>
+      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s11.h2, 'evaluate', { static: true })}</h2>
       <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.s11.support}</p>
       <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
         <a href="${DOCS}" rel="noopener" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
@@ -725,236 +730,16 @@ ${cta.background('api-final-cta')}
   </section>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Page-local styles.
+   Assemble — the shared page shell (build/page.js). The components' CSS and JS live in
+   build/assets/ (site.css, site.js); the page carries none of its own.
    ───────────────────────────────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  /* [hidden] must actually hide. Tailwind's display utilities share specificity with
-     the attribute selector and come later in the sheet, so .flex on a hidden element
-     wins and the element renders. The success block here survives only because its
-     happens not to be one — index-v2 and the detector page both carry this guard, and
-     leaving it off would make the next class added to that div a silent bug. */
-  [hidden] { display: none !important; }
-
-  /* Anchor landings clear the sticky header. Measured, not guessed: the header is
-     fixed at top:20 and its bar ends at 76px, so a section arriving at offset 0 puts
-     its own label underneath it. 100px leaves the H2 fully visible with air above.
-     The batch is explicit that this is fixed at the anchor, never by changing section
-     spacing globally. */
-  section[id] { scroll-margin-top: 100px; }
-
-  /* A visible focus ring on everything reachable by keyboard. :focus-visible rather
-     than :focus, so a mouse press does not leave a ring behind. */
-  a:focus-visible, button:focus-visible, summary:focus-visible,
-  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
-    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-  /* on ink, the teal ring is too close to the ground to read */
-  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible {
-    outline-color: #6ED7E8; }
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-  /* ---------- code panel ----------
-     "Code text must remain readable; horizontal scrolling inside the code container is
-     preferred to shrinking text or changing code semantics." So the pre scrolls in its
-     own box and the page never gains a horizontal scrollbar. */
-  .code-tab { padding:7px 13px; border-radius:9999px; font-size:12.5px; font-weight:600;
-    color:rgba(255,255,255,.5); transition:background-color .2s ease, color .2s ease; }
-  .code-tab:hover { color:rgba(255,255,255,.8); }
-  .code-tab.on { background:rgba(255,255,255,.1); color:#fff; }
-  .code-copy { padding:7px 13px; border-radius:9999px; font-size:12px; font-weight:600;
-    color:rgba(255,255,255,.45); transition:background-color .2s ease, color .2s ease; }
-  .code-copy:hover { background:rgba(255,255,255,.08); color:#fff; }
-  .code-panel { display:none; }
-  .code-panel.on { display:block; }
-  .code-pre { overflow-x:auto; padding:18px 16px 16px; margin:0;
-    font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size:12.5px; line-height:1.75; color:rgba(255,255,255,.82);
-    -webkit-overflow-scrolling:touch; }
-  .code-pre::-webkit-scrollbar { height:6px; }
-  .code-pre::-webkit-scrollbar-thumb { background:rgba(255,255,255,.18); border-radius:3px; }
-  @media (min-width:640px) { .code-pre { padding:22px 20px 18px; font-size:13px; } }
-
-  /* ---------- shared inquiry-form fields, same as contact-us ----------
-     The shared head carries only the small-breakpoint height override, so the base
-     rules have to live here or the fields collapse to browser defaults. */
-  .cf-label { display:block; font-size:12px; font-weight:700; letter-spacing:.01em; color:#4B5563; margin-bottom:7px; }
-  /* orange-500 measured 2.90 on white; orange-600 clears AA. Local correction to a
-     measured failure, not a palette change — the shared form keeps its own value. */
-  .cf-label i { font-style:normal; color:#B84431; }
-  .cf-field { width:100%; height:48px; padding:0 14px; border-radius:10px; border:1px solid #E5E7EB;
-    background:#fff; color:#111827; font-size:14.5px; font-weight:500; font-family:inherit;
-    transition:border-color .15s ease, box-shadow .15s ease; }
-  .cf-field::placeholder { color:#9CA3AF; font-weight:400; }
-  .cf-field:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 1px #0CA9C3; }
-  textarea.cf-field { height:auto; padding:12px 14px; line-height:1.6; resize:none; }
-
-${cta.style('api-final-cta')}
-
-  /* the bento hover from the homepage capabilities grid */
-  .spotlight { transition:transform .35s cubic-bezier(.32,.72,0,1), box-shadow .35s ease; }
-  .spotlight:hover { transform:translateY(-4px); }
-  @media (prefers-reduced-motion: reduce) { .spotlight { transition:none; } .spotlight:hover { transform:none; } }
-
-  /* pen mark — the reduced-motion fallback is mandatory */
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-</style>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Behaviour.
-   ───────────────────────────────────────────────────────────────────────────── */
-const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-
-  gsap.utils.toArray('.rv-kids').forEach(group => {
-    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
-      scrollTrigger: { trigger: group, start: 'top 80%' } });
-  });
-
-${cta.script}
-
-  gsap.utils.toArray('.pen-word').forEach(word => {
-    const line = word.querySelector('.pen-underline');
-    if (!line) return;
-    const len = line.getTotalLength();
-    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-    const tl = gsap.timeline(inFirstView
-      ? { delay: 1 }
-      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-      .set(line, { opacity: 1 }, .35)
-      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-
-  /* code tabs — all three panels are in the DOM; this only switches which is shown */
-  const tabs = [...document.querySelectorAll('.code-tab')];
-  const panels = [...document.querySelectorAll('.code-panel')];
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => {
-        t.classList.toggle('on', t === tab);
-        t.setAttribute('aria-current', String(t === tab));
-      });
-      panels.forEach(p => p.classList.toggle('on', p.dataset.panel === tab.dataset.tab));
-    });
-  });
-
-  /* the utility label exception the brief grants: exactly "Copy", success "Copied" */
-  const copy = document.querySelector('[data-copy]');
-  if (copy) {
-    copy.addEventListener('click', async () => {
-      const open = document.querySelector('.code-panel.on code');
-      if (!open) return;
-      try { await navigator.clipboard.writeText(open.textContent); } catch (e) { return; }
-      copy.textContent = 'Copied';
-      setTimeout(() => { copy.textContent = 'Copy'; }, 1600);
-    });
-  }
-
-  /* FAQ: answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      const list = item.parentElement;
-      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-      /* aria-expanded has to follow the visual state or a screen-reader user is told
-         every answer is collapsed while looking at an open one */
-      list.querySelectorAll('.faq-q').forEach(b =>
-        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
-    });
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Assemble
-   ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>');
-if (/name="description"/.test(head)) {
-  head = head.replace(/<meta name="description"[^>]*>/,
-    '<meta name="description" content="' + COPY.meta + '" />');
-} else {
-  head = head.replace('<title>',
-    '<meta name="description" content="' + COPY.meta + '" />\n<title>');
-}
-head = head.replace('<title>', '<link rel="canonical" href="' + COPY.canonical + '" />\n<title>');
-
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
 const sections = [section1, section2, section3, section4, section5, section6,
                   section7, section8, section9, section10, section11];
 
-const html = head + STYLE + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${sections.map(f => f()).join('\n\n')}
-</main>
-
-<footer></footer>
-
-${SCRIPT}
-</body>
-</html>
-`;
-
+const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
 fs.writeFileSync(path.join(SITE, OUT), html);
 
 const count = re => (html.match(re) || []).length;
 console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
 console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' +
-            count(/<h2\b/g) + ' h2, ' + count(/class="faq-item/g) + ' faq items, ' +
-            count(/class="code-panel/g) + ' code tabs');
+            count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/class="faq-item/g) + ' faq items');

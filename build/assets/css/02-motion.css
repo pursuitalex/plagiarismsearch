@@ -21,3 +21,8 @@
 .ring-mark { left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg); }
 :where(.js-motion) .ring-path { opacity:0; }
 :where(html:not(.js-motion)) .ring-word { color:#DC5A45; }
+
+/* The homepage's pen words keep their text colour when there is no motion (only the
+   underline shows); the product pages turn the word coral, as its animation ends.
+   Kept as approved on each; one static look for both is a design call, flagged. */
+:where(html:not(.js-motion)) .pen-word.pen-static-plain { color:inherit; }

@@ -1,0 +1,15 @@
+/* ═══ 25 · the modal (build/modal.js) ═════════════════════════════════════════════
+   One recipe for every popup. The overlay starts hidden and opens with .is-open (site.js,
+   module modal), not only with the hidden attribute, so the card can fade in. Values
+   verbatim. */
+.md { transition:visibility 0s linear .2s; }
+/* A closed modal stays laid out (invisible) so its card can fade out. The shared
+   [hidden] rule (07-a11y) is display:none !important, so this one must be too; at
+   .md[hidden] it outranks the shared rule for the modal only. */
+.md[hidden] { display:flex !important; visibility:hidden; pointer-events:none; }
+.md-backdrop { opacity:0; transition:opacity .2s ease; }
+.md-card { opacity:0; transform:translateY(8px) scale(.98); transition:opacity .2s ease, transform .25s cubic-bezier(.32,.72,0,1); }
+.md.is-open { transition:none; }
+.md.is-open .md-backdrop { opacity:1; }
+.md.is-open .md-card { opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce) { .md-card { transform:none; transition:opacity .15s ease; } }

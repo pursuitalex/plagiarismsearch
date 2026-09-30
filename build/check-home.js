@@ -191,10 +191,15 @@ console.log('\nforbidden');
      beside a page that visibly shows $9.95, which is worse than a failure. */
   {
     const prices = [...new Set([...html.matchAll(/\$\d+(?:\.\d\d)?/g)].map(m => m[0]))];
-    console.log('  ' + (prices.length ? 'WAIVED' : 'ok    ') + ' hardcoded prices' +
-      (prices.length ? '  ' + prices.length + ' figures, deviation recorded 2026-08-18'
-                     + '  (' + prices.slice(0, 4).join(', ') + '…)' : ''));
-    ok('no price baked into the static body markup', !/\$\s?\d/.test(text));
+    console.log('  note   ' + prices.length + ' price figures in the file, all generated from build/pricing-data.js' +
+      ' (the initial period in the cards, every period in the JSON island)  (' + prices.slice(0, 4).join(', ') + '…)');
+    /* The rule since 2026-09-25 (Olex): initial prices may be in the generated HTML, but
+       only from the single pricing data source (build/pricing-data.js), never typed in. So
+       every figure in the body must be one of the initial period's values in that source. */
+    const { PLANS } = require('./pricing-data');
+    const allowed = new Set(Object.values(PLANS.onetime).flatMap(v => v && typeof v === 'object' ? [v.price, v.rate] : []));
+    const shown = [...new Set([...text.matchAll(/\$\s?\d[\d,]*(?:\.\d\d)?/g)].map(m => m[0]))];
+    ok('every price in the body comes from the pricing data source', shown.every(p => allowed.has(p)), shown.filter(p => !allowed.has(p)).join(', '));
   }
 }
 
@@ -237,8 +242,11 @@ console.log('\nstructure');
      external.map(h => h.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]).join(', '));
 
   /* the AI checkbox must default to off, plagiarism to on */
+  /* by id on the old markup, by order on the shared form (plagiarism first, then AI) */
+  const boxes = [...body.matchAll(/<input type="checkbox"[^>]*>/g)].map(m => m[0]);
   ok('plagiarism checked by default, AI not',
-     /id="optPlag" checked/.test(body) && !/id="optAI" checked/.test(body));
+     (/id="optPlag" checked/.test(body) && !/id="optAI" checked/.test(body)) ||
+     (boxes.length === 2 && / checked\b/.test(boxes[0]) && !/ checked\b/.test(boxes[1])));
 }
 
 console.log('\n' + (failed ? failed + ' check(s) FAILED' : 'index-v2.html matches DEC-0030'));

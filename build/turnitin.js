@@ -20,17 +20,23 @@
    figures until the backend widget lands, and no competitor price anywhere.
 
    Run:  node build/turnitin.js  →  node build/shell.js  →  node build/check-turnitin.js
+
+   On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
+   no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
+   classes, asset paths are root-relative. Parity: node build/parity/run.js turnitin-checker-alternative.html
 */
 const fs = require('fs');
 const path = require('path');
+const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'turnitin-checker-alternative.html';
 const cta = require('./cta');
 const checker = require('./checker');
-const { dots } = require('./dots');
+const { dotField } = require('./dots');
 const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
+const pricing = require('./pricing');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -241,7 +247,7 @@ const srcRef = n => `<a href="${SOURCES[n - 1][1]}" target="_blank" rel="noopene
 
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.length * 18);
-  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg>`;
+  const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg>`;
   return text.replace(phrase, `<span class="pen-word relative inline-block">${phrase}${svg}</span>`);
 };
 
@@ -272,10 +278,10 @@ const section1 = () => `  <!-- ================= 01 · HERO / INDEPENDENT ALTERN
        fine print. (The second, short disclosure under the form went with the 2026-09-18
        patch: one statement in the hero is enough.)
        Three blocks, DOM order H1 → form → independence, so a phone opens on the checker. -->
-  <section id="independent-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dots('heroDots')}
-    <div class="orb absolute" style="width:860px;height:800px;left:-16%;top:-400px;background:rgba(44,195,219,.22)"></div>
-    <div class="orb absolute" style="width:700px;height:680px;right:-14%;top:-200px;background:rgba(243,111,90,.13)"></div>
+  <section id="independent-checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    ${dotField()}
+    <div class="orb absolute orb-hero-teal"></div>
+    <div class="orb absolute orb-hero-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
@@ -287,7 +293,7 @@ ${eyebrow('teal-400', COPY.hero.eyebrow)}
         </div>
 
         <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-${checker.form(COPY.hero, ANCHOR)}
+${checker.form(COPY.hero, ANCHOR, { text: 'independent-checker-text' }, { static: true })}
 ${checker.free(COPY.hero)}
         </div>
 
@@ -310,7 +316,7 @@ const section2 = () => `  <!-- ================= 02 · OBJECTIVE COMPARISON + IT
        date they were checked. Under 768px the table reflows into one card per topic; the
        explicit roles keep it a table for assistive tech once display:block has been
        applied, and each cell repeats its product name as a label. -->
-  <section id="comparison" class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section id="comparison" data-component="compare-table" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[860px] mb-8 sm:mb-10 lg:mb-12">
         <h2 class="${H2}">${COPY.compare.h2}</h2>
@@ -384,9 +390,9 @@ const section3 = () => `  <!-- ================= 03 · SIGNATURE · NOT THE SAME
        results — "Not directly interchangeable", not an inequality sign. Both lanes are set
        alike — neither is the "good" one — and nothing in the right lane imitates
        Turnitin's product. Every label is a noun from the approved paragraph. -->
-  <section id="not-the-same-score" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    <div class="orb absolute" style="width:620px;height:620px;left:-13%;top:40px;background:rgba(13,168,194,.12)"></div>
-    <div class="orb absolute" style="width:520px;height:520px;right:-10%;bottom:-120px;background:rgba(243,111,90,.10)"></div>
+  <section id="not-the-same-score" data-component="dark-lanes" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+    <div class="orb absolute orb-dark-teal"></div>
+    <div class="orb absolute orb-dark-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-16 items-center">
@@ -429,7 +435,7 @@ const section4 = () => `  <!-- ================= 04 · WHICH OPTION FITS YOUR WO
        bullet — Turnitin's column is not dimmed, crossed out or shorter by design; it has
        three reasons because the brief gives it three. The closing line sits under both
        as the sentence that joins them. -->
-  <section id="which-option-fits" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+  <section id="which-option-fits" data-component="fit-columns" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-8 sm:mb-10 lg:mb-12">
         <h2 class="${H2}">${COPY.fit.h2}</h2>
@@ -447,7 +453,7 @@ const section5 = () => `  <!-- ================= 05 · WHAT YOU GET — THE PLAG
        The approved report (build/report.js), semantics untouched, on a light ground so
        the page keeps one dark act. Under it, the three things the report lets you do and
        the one sentence it must not be mistaken for. -->
-  <section id="report" class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section id="report" data-component="report-light" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
 ${eyebrow('orange-500', COPY.report.eyebrow, 'ink')}
@@ -456,8 +462,8 @@ ${eyebrow('orange-500', COPY.report.eyebrow, 'ink')}
       </div>
 
       <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 ring-1 ring-black/5 p-3 sm:p-4 lg:p-5">
-        <div class="grid lg:grid-cols-[1fr_360px] gap-3 sm:gap-4 lg:gap-5 items-stretch">
-          <div id="cabDoc" class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden ring-1 ring-black/5 shadow-diffuse">
+        <div data-report class="grid lg:grid-cols-[1fr_360px] gap-3 sm:gap-4 lg:gap-5 items-stretch">
+          <div class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden ring-1 ring-black/5 shadow-diffuse">
             <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
               <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">${CAB.id}</span>
               <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
@@ -473,7 +479,7 @@ ${eyebrow('orange-500', COPY.report.eyebrow, 'ink')}
             </div>
           </div>
 
-          <div id="cabSide" class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden ring-1 ring-black/5 shadow-diffuse">
+          <div class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden ring-1 ring-black/5 shadow-diffuse">
             <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
               <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
             ${CAB.metrics.map(cabMetric).join(NL14)}
@@ -512,7 +518,7 @@ const section6 = () => `  <!-- ================= 06 · WHAT PLAGIARISMSEARCH CHE
        Heading left, the four collections as one list on the right — a definition list in
        a double-bezel card, not four cards — and the boundary line as the card's footer:
        these are ours, they are not Turnitin's. -->
-  <section id="sources-and-settings" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+  <section id="sources-and-settings" data-component="source-list" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[.85fr_1.15fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
@@ -547,7 +553,7 @@ const section7 = () => `  <!-- ================= 07 · AI WRITING IS A SEPARATE 
        Compact: one card, two halves of equal weight — what PlagiarismSearch does, what
        Turnitin documents — with the official guide cited on Turnitin's half and one quiet
        link to the AI owner on ours. -->
-  <section id="ai-writing" class="relative py-12 sm:py-14 lg:py-16 bg-white">
+  <section id="ai-writing" data-component="split-card" class="relative py-12 sm:py-14 lg:py-16 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-7 sm:mb-8 lg:mb-10">
         <h2 class="${H2}">${COPY.ai.h2}</h2>
@@ -574,7 +580,7 @@ const section8 = () => `  <!-- ================= 08 · WHAT HAPPENS TO YOUR DOCU
        Three stations on one rail — the document, the report, Storage — each carrying its
        approved sentences whole. About PlagiarismSearch only: the page says nothing about
        how anyone else handles a paper. -->
-  <section id="your-document" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+  <section id="your-document" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
         <h2 class="${H2}">${COPY.data.h2}</h2>
@@ -602,7 +608,7 @@ const section9 = () => `  <!-- ================= 09 · SELF-SERVICE PRICING ====
        already converts: the homepage's widget shell and its period switcher, reading
        build/pricing-data.js. PLACEHOLDER figures — production values are backend-driven —
        and only PlagiarismSearch prices: no Turnitin number, no "cheaper". -->
-  <section id="pricing" class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
+  <section id="pricing" data-component="pricing-preview" data-pricing="onetime" data-pricing-animate class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1fr_.8fr] gap-6 lg:gap-14 items-end mb-8 sm:mb-10 lg:mb-12">
         <div class="rv min-w-0">
@@ -617,9 +623,9 @@ ${eyebrow('teal-400', COPY.pricing.eyebrow)}
       </div>
 
       <div class="rv flex mb-7 sm:mb-8 lg:mb-10">
-        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs" role="group" aria-label="Billing period">
+        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" role="group" aria-label="Billing period">
           ${[['onetime', 'One-time'], ['monthly', 'Monthly'], ['quarterly', '3-Months'], ['yearly', 'Yearly']]
-            .map(([k, label]) => `<button type="button" data-period="${k}" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">${label}</button>`)
+            .map(([k, label]) => `<button type="button" data-period="${k}" aria-pressed="${k === 'onetime'}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500${k === 'onetime' ? ' active' : ''}">${label}</button>`)
             .join('\n          ')}
         </div>
       </div>
@@ -629,17 +635,19 @@ ${eyebrow('teal-400', COPY.pricing.eyebrow)}
           <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">${tier}</span>
           <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5">${TAGLINE[tier]}</div>
           <div class="flex items-end gap-1.5 mb-3">
-            <span class="text-[29px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-none nums js-price"></span>
-            <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term"></span>
+            <span class="text-[29px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-none nums js-price">${PLANS.onetime[tier].price}</span>
+            <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term">${PLANS.onetime.term}</span>
           </div>
-          <div class="self-start inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+          <div class="self-start inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6"><span class="js-rate">${PLANS.onetime[tier].rate}</span>&nbsp;/ 1,000 words</div>
           <div class="h-px bg-ink-100 mb-5 sm:mb-6"></div>
-          <ul class="space-y-3 text-[13.5px] font-medium text-ink-700 mb-6 sm:mb-7 js-feats"></ul>
+          <ul class="space-y-3 text-[13.5px] font-medium text-ink-700 mb-6 sm:mb-7 js-feats">${pricing.feats(PLANS.onetime[tier].feats, pricing.LINES.tick)}</ul>
           <a href="${COPY.pricing.ctaHref}" class="btn-press mt-auto block text-center rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[13.5px] sm:text-[14.5px] font-semibold py-3 transition-colors duration-300">Start ${LABEL[tier]}</a>
         </div>`).join('\n        ')}
       </div>
 
       <div class="rv">${btnLight(COPY.pricing.cta, COPY.pricing.ctaHref)}</div>
+      ${pricing.template(pricing.LINES.tick)}
+      ${pricing.island()}
     </div>
   </section>`;
 
@@ -647,7 +655,7 @@ ${eyebrow('teal-400', COPY.pricing.eyebrow)}
 const section10 = () => `  <!-- ================= 10 · FAQ =================
        Nine questions, the confusion ones first, every answer in the HTML. The answer about
        buying Turnitin directly is followed by the official purchase guide. -->
-  <section id="turnitin-alternative-faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section id="turnitin-alternative-faq" data-component="faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
         <div class="rv lg:sticky lg:top-28">
@@ -655,15 +663,15 @@ ${eyebrow('orange-500', 'Questions', 'ink')}
           <h2 class="${H2}">${COPY.faq.h2}</h2>
         </div>
         <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+          <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
 ${COPY.faq.items.map(([q, a, n], i) => `            <div class="faq-item${i === 0 ? ' open' : ''}">
-              <button type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+              <button type="button" aria-controls="turnitin-alternative-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
                 <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
                 <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </button>
-              <div class="faq-a"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
+              <div class="faq-a" id="turnitin-alternative-faq-a${i + 1}"><div><div class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 max-w-[72ch]">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">${a}</p>${n ? `
                 <p class="mt-3"><a href="${SOURCES[n - 1][1]}" target="_blank" rel="noopener noreferrer" class="inline-flex items-start gap-1.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-950 underline decoration-ink-300 underline-offset-4 transition-colors duration-300"><span>Official Turnitin guide: ${SOURCES[n - 1][0]}</span><span class="mt-1 text-ink-400">${extIcon}</span></a></p>` : ''}
               </div></div></div>
@@ -678,11 +686,11 @@ ${COPY.faq.items.map(([q, a, n], i) => `            <div class="faq-item${i === 
 const section11 = () => `  <!-- ================= 11 · FINAL CTA =================
        The closing band (build/cta.js). One action, back to the one real checker — and the
        support line says once more what the result is and is not. -->
-  <section id="independent-cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.background('independent-cta')}
+  <section id="independent-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+${cta.backgroundStatic()}
 
     <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.close.h2, 'independent')}</h2>
+      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.close.h2, 'independent', { static: true })}</h2>
       <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[62ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.close.support}</p>
       <div class="rv flex flex-col items-center gap-4">
         <a href="${ANCHOR}" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
@@ -703,7 +711,7 @@ ${cta.background('independent-cta')}
 const section12 = () => `  <!-- ================= 12 · TRADEMARK NOTICE =================
        In the page body, above the footer, at a size a person can read. It is the last
        word, not the only one: the hero and the comparison have already said it. -->
-  <section id="trademark-notice" class="relative py-8 sm:py-10 bg-white border-t border-ink-100" aria-label="${COPY.notice.label}">
+  <section id="trademark-notice" data-component="notice" class="relative py-8 sm:py-10 bg-white border-t border-ink-100" aria-label="${COPY.notice.label}">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid md:grid-cols-[200px_1fr] gap-3 md:gap-10">
         <p class="${LABEL_CLS} text-ink-500 md:pt-0.5">${COPY.notice.label}</p>
@@ -713,256 +721,15 @@ const section12 = () => `  <!-- ================= 12 · TRADEMARK NOTICE =======
   </section>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Page-local styles. The .cab-* rules are the report component's contract, carried
-   verbatim; the form's rules come from build/checker.js.
+   Assemble — the shared page shell (build/page.js). The components' CSS and JS live in
+   build/assets/ (site.css, site.js); the page carries none of its own.
    ───────────────────────────────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  [hidden] { display: none !important; }
-  section[id] { scroll-margin-top: 100px; }
-  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
-    clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-
-  a:focus-visible, button:focus-visible, select:focus-visible,
-  [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
-    outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible { outline-color: #6ED7E8; }
-
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-${checker.style}
-
-  /* ---------- the comparison table ----------
-     One white sheet inside the bezel; the two product columns are the same width and the
-     same ground. Under 768px every row becomes a card and each cell names its product. */
-  .cmp { border-collapse:separate; border-spacing:0; background:#fff; border-radius:18px; overflow:hidden; table-layout:fixed; }
-  .cmp th, .cmp td { vertical-align:top; padding:20px 24px; border-bottom:1px solid #EEF0F3; }
-  .cmp thead th { background:#F8F9FB; padding-top:16px; padding-bottom:16px; vertical-align:middle; }
-  .cmp tbody tr:last-child th, .cmp tbody tr:last-child td { border-bottom:0; }
-  .cmp .cmp-topic { width:22%; }
-  .cmp td + td, .cmp thead th + th + th { border-left:1px solid #EEF0F3; }
-  .cmp td, .cmp thead th + th { border-left:1px solid #EEF0F3; }
-  @media (min-width:1024px) { .cmp { border-radius:24px; } .cmp th, .cmp td { padding:24px 28px; } }
-  @media (max-width:767px) {
-    .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display:block; width:auto; }
-    .cmp { background:transparent; border-radius:0; overflow:visible; }
-    .cmp thead { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
-    .cmp tbody tr { background:#fff; border-radius:16px; overflow:hidden; }
-    .cmp tbody tr + tr { margin-top:8px; }
-    .cmp .cmp-topic { width:auto; background:#F8F9FB; padding:14px 18px; border-bottom:1px solid #EEF0F3; }
-    .cmp td { padding:16px 18px; border-left:0 !important; }
-    .cmp tbody tr td:last-child { border-bottom:0; }
-    .cmp tbody tr:last-child td { border-bottom:1px solid #EEF0F3; }
-    .cmp tbody tr:last-child td:last-child { border-bottom:0; }
-    .cmp td::before { content:attr(data-label); display:block; margin-bottom:6px;
-      font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#6B7280; }
-  }
-
-  .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
-  .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
-
-  /* ---------- the shared report component ---------- */
-  .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease;
-    border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
-    box-shadow:inset 0 -2px 0 currentColor;
-    background-image:linear-gradient(var(--wash), var(--wash));
-    background-repeat:no-repeat; background-position:left center; background-size:100% 100%; }
-  .cab-plag { --wash:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
-  .cab-ai   { --wash:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
-  .cab-plag.on { --wash:rgba(243,111,90,.4); }
-  .cab-ai.on   { --wash:rgba(168,85,247,.34); }
-  .cab-mark > span { color:#111827; }
-  .cab-src.on { background:#F8F9FB; }
-  .cab-tab { padding-bottom:10px; border-bottom:2px solid transparent; color:#4B5563; }
-  .cab-tab.on { color:#06748A; border-bottom-color:#0991A8; }
-  .cab-sources, .cab-foot { border-bottom-left-radius:1rem; border-bottom-right-radius:1rem; }
-  @media (min-width:640px) {
-    .cab-sources, .cab-foot { border-bottom-left-radius:20px; border-bottom-right-radius:20px; }
-  }
-  @media (min-width:1024px) {
-    .cab-sources, .cab-foot { border-bottom-left-radius:1.5rem; border-bottom-right-radius:1.5rem; }
-  }
-  .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
-    pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
-  @media (prefers-reduced-motion: reduce) { .cab-mark { transition:none; } }
-
-  .no-motion .pen-word { color:#DC5A45; }
-  .no-motion .pen-underline { opacity:1; }
-${cta.style('independent-cta')}
-</style>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Behaviour — the form's own, the report's own, the pricing switcher, the accordion,
-   the burger.
-   ───────────────────────────────────────────────────────────────────────────── */
-const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-
-  gsap.utils.toArray('.rv-kids').forEach(group => {
-    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
-      scrollTrigger: { trigger: group, start: 'top 80%' } });
-  });
-
-  gsap.utils.toArray('.pen-word').forEach(word => {
-    const line = word.querySelector('.pen-underline');
-    if (!line) return;
-    const len = line.getTotalLength();
-    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-    const tl = gsap.timeline(inFirstView
-      ? { delay: 1 }
-      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-      .set(line, { opacity: 1 }, .35)
-      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-  });
-${cta.script}
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-${checker.script(ANCHOR)}
-
-  /* the report: selecting a passage highlights it and its source */
-  const marks = [...document.querySelectorAll('.cab-mark')];
-  const sources = [...document.querySelectorAll('.cab-src')];
-  const pick = i => {
-    marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
-    sources.forEach(s => s.classList.toggle('on', s.dataset.src === String(i)));
-  };
-  marks.forEach(m => {
-    m.addEventListener('click', () => pick(m.dataset.match));
-    m.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(m.dataset.match); }
-    });
-  });
-  if (marks.length) pick(marks[0].dataset.match);
-
-  /* the pricing preview. PLACEHOLDER figures from build/pricing-data.js; the production
-     widget is backend-driven and replaces this object and the markup that reads it. */
-  const PLANS = ${JSON.stringify(PLANS)};
-  const tabs = [...document.querySelectorAll('#periodTabs .period-btn')];
-  const cards = [...document.querySelectorAll('[data-tier]')];
-  const tick = '<svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
-  if (tabs.length && cards.length) {
-    const render = (key, animate) => {
-      const period = PLANS[key];
-      cards.forEach(card => {
-        const tier = period[card.dataset.tier];
-        const feats = card.querySelector('.js-feats');
-        /* values first, motion second — a price must never wait on an animation frame */
-        card.querySelector('.js-price').textContent = tier.price;
-        card.querySelector('.js-term').textContent = period.term;
-        card.querySelector('.js-rate').textContent = tier.rate;
-        feats.innerHTML = tier.feats.map(f => '<li class="flex gap-3">' + tick + f + '</li>').join('');
-        if (animate && window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          gsap.fromTo([card.querySelector('.js-price'), card.querySelector('.js-rate'), feats],
-            { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .28, ease: 'power2.out', overwrite: 'auto' });
-        }
-      });
-      tabs.forEach(b => {
-        b.classList.toggle('active', b.dataset.period === key);
-        b.setAttribute('aria-pressed', String(b.dataset.period === key));
-      });
-    };
-    tabs.forEach(b => b.addEventListener('click', () => render(b.dataset.period, true)));
-    render('onetime', false);
-  }
-
-  /* FAQ: answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      const list = item.parentElement;
-      list.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-      list.querySelectorAll('.faq-q').forEach(b =>
-        b.setAttribute('aria-expanded', String(b.closest('.faq-item').classList.contains('open'))));
-    });
-  });
-})();
-</script>
-<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Assemble
-   ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>');
-if (/name="description"/.test(head)) {
-  head = head.replace(/<meta name="description"[^>]*>/,
-    '<meta name="description" content="' + COPY.meta + '" />');
-} else {
-  head = head.replace('<title>',
-    '<meta name="description" content="' + COPY.meta + '" />\n<title>');
-}
-head = head.replace('<title>', '<link rel="canonical" href="' + COPY.canonical + '" />\n<title>');
-
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
 const sections = [section1, section2, section3, section4, section5, section6, section7, section8, section9, section10, section11, section12];
 
-const html = head + STYLE + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${sections.map(f => f()).join('\n\n')}
-</main>
-
-<footer></footer>
-
-${SCRIPT}
-</body>
-</html>
-`;
-
+const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
 fs.writeFileSync(path.join(SITE, OUT), html);
 
 const count = re => (html.match(re) || []).length;
 console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
 console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' +
-            count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/class="faq-item/g) + ' faq items, ' +
-            count(/<form\b/g) + ' form, ' + count(/<table\b/g) + ' table, ' + count(/guides\.turnitin\.com\/hc/g) + ' official links');
+            count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/class="faq-item/g) + ' faq items');

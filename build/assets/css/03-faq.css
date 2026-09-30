@@ -8,3 +8,11 @@
 .faq-item.open .faq-chev { transform:rotate(180deg); }
 :where(html:not(.js)) .faq-a { grid-template-rows:1fr; }
 :where(html:not(.js)) .faq-chev { transform:rotate(180deg); }
+
+/* The tinted chevron (homepage): grey until its answer is open, then the accent — the
+   state follows .faq-item.open, so the colour follows a click. The product pages carry
+   the bare chevron; two looks, flagged for review. Its transition keeps the transform
+   in the list, or the rotation would lose its easing. */
+.faq-chev-tint { background:#F1F2F6; color:#4B5563;
+  transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
+.faq-item.open .faq-chev-tint { background:#FDE5E0; color:#B84431; }

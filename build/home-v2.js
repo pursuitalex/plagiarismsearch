@@ -10,6 +10,10 @@
    figures the old homepage carried are simply absent rather than dashed out.
 
    Run:  node build/home-v2.js  →  node build/shell.js  →  node build/check.js
+
+   On the shared production assets (build/assets.js, build/page.js) since 2026-09-25:
+   no Play CDN, no <style> or <script> of its own. Hooks are data-*, decorative styles are
+   classes, asset paths are root-relative. Parity: node build/parity/run.js index-v2.html
 */
 const fs = require('fs');
 const path = require('path');
@@ -185,248 +189,10 @@ const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ── page-specific styles ────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  /* ---------- staggered reveal ----------
-     .rv moves a block as one piece. .rv-kids holds the container still and deals its
-     children in one after another, which is what a grid of cards wants: you read them
-     in order, so they should arrive in order. Same distance and easing as .rv, so the
-     two are one system rather than two.
-
-     The hidden state is CSS and the reveal is JS, exactly as .rv does it — with the
-     same consequence, that .no-motion has to put it back. */
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-  /* ---------- the report demo, on the dark act ---------- */
-  .hl { cursor:pointer; border-radius:.35rem; padding:.05em .18em; margin:-.05em -.18em;
-        background:rgba(243,111,90,.18); box-shadow:inset 0 -2px 0 rgba(243,111,90,.5);
-        transition:background .25s ease, box-shadow .25s ease; }
-  .hl:hover { background:rgba(243,111,90,.3); }
-  .hl.on { background:rgba(243,111,90,.42); box-shadow:inset 0 -2px 0 rgba(243,111,90,1); }
-  .match-panel { display:none; }
-  .match-panel.on { display:block; animation:mIn .3s cubic-bezier(.32,.72,0,1); }
-  @keyframes mIn { from { opacity:0; transform:translateY(8px); } }
-
-  /* ---------- cabinet report mock ---------- */
-  /* The wash behind the pass. v1 drew a 64px band at 10% teal, and that is what was
-     ported here — but v1's line is scrubbed to the scroll and crawls, while this one
-     crosses the page in under two seconds. At that speed a thin band at a tenth of an
-     alpha never lands on the eye. So: wider, more alpha, and the brand blue rather
-     than teal-400, which reads green next to it. Four stops instead of two so the
-     falloff is a taper rather than a straight ramp. */
-  .cab-beam { background-image:linear-gradient(to bottom,
-    rgba(13,168,194,.22) 0%, rgba(13,168,194,.13) 38%,
-    rgba(13,168,194,.05) 70%, rgba(13,168,194,0) 100%); }
-
-  /* a selected passage darkens; the others stay at reading weight */
-  .cab-mark { cursor:pointer; transition:background-color .25s ease, box-shadow .25s ease; }
-  .cab-plag.on { --wash:rgba(243,111,90,.4); }
-  .cab-ai.on   { --wash:rgba(168,85,247,.34); }
-  .cab-src.on { background:#F8F9FB; }
-
-  /* Both panels animate in, which promotes them to their own compositing layer, and
-     a layer under transform stops honouring an ancestor rounded clip — the white fade
-     below and the tinted legend bar then paint square over the corner. Giving those
-     two the corner themselves fixes it wherever the ancestor clip is dropped. */
-  .cab-sources, .cab-foot { border-bottom-left-radius:1rem; border-bottom-right-radius:1rem; }
-  @media (min-width:640px) {
-    .cab-sources, .cab-foot { border-bottom-left-radius:20px; border-bottom-right-radius:20px; }
-  }
-  @media (min-width:1024px) {
-    .cab-sources, .cab-foot { border-bottom-left-radius:1.5rem; border-bottom-right-radius:1.5rem; }
-  }
-
-  /* the foot of the source list dissolves rather than ending on a cut edge */
-  .cab-sources::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px;
-    pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); }
-  .cab-mark { border-radius:.3rem; padding:.08em .16em; margin:-.08em -.16em;
-    box-shadow:inset 0 -2px 0 currentColor;
-    background-image:linear-gradient(var(--wash), var(--wash));
-    background-repeat:no-repeat; background-position:left center; background-size:100% 100%; }
-  .cab-plag { --wash:rgba(243,111,90,.18); color:rgba(243,111,90,.85); }
-  .cab-ai   { --wash:rgba(168,85,247,.15); color:rgba(168,85,247,.75); }
-  .cab-mark > span { color:#111827; }
-  .cab-tab { padding-bottom:10px; border-bottom:2px solid transparent; color:#6B7280; }
-  .cab-tab.on { color:#0991A8; border-bottom-color:#0991A8; }
-
-  /* ---------- hero variant B: the quick-check form from the v1 product pages ---------- */
-  /* The base .qc-chip rule, brought over from the product pages. The shared head has
-     only the small-breakpoint override for it, so without this the chips lose their
-     pill entirely and fall back to plain text. */
-  /* Same story as .qc-chip: the head carries only the small-breakpoint override for
-     .qc-area, so without the base rule the field ignores width:100% and falls back to
-     its default column count — 285px inside an 796px form, with the placeholder
-     wrapping mid-phrase and the word count stranded far to its right. */
-  .qc-area { width:100%; border:0; outline:none; background:transparent; resize:none;
-    font-size:15px; line-height:1.6; font-weight:500; color:#111827; }
-  .qc-area::placeholder { color:#9CA3AF; font-weight:400; }
-
-  .qc-chip { display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 14px;
-    border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12.5px; font-weight:600;
-    transition:background-color .2s ease, color .2s ease; }
-  .qc-chip:hover { background:#E5E7EB; color:#111827; }
-  .qc-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
-    transition:border-color .2s ease, background-color .2s ease; }
-  .qc-drop:hover { border-color:#2CC3DB; background:#F0FAFC; }
-
-  /* ================= CLOSING CTA · one place for every knob =================
-     Ported from v1's act 7, where both media queries were written and left empty. They
-     are filled here, and it mattered: the warm glow is 1138px wide, which on a 390px
-     phone is nearly three viewports of coral washing the whole screen.
-
-     Each breakpoint scales the pair and pushes them back toward the edges, so the
-     composition — warm upper left, cool lower right — survives at every width instead
-     of one glow swallowing the section. Alpha comes down on small screens as well: the
-     same opacity spread over a third of the area reads far heavier. */
-  #cta {
-    --cta-bg: #F2FCFC;
-
-    /* warm, upper left */
-    --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
-    --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
-    --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
-    --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
-
-    /* cool, lower right */
-    --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
-    --cta-o2-w: 954px;          --cta-o2-h: 950px;
-    --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
-    --cta-o2-mid: 65%;          --cta-o2-end: 100%;
-
-    background-color: var(--cta-bg);
-  }
-  #ctaGlowWarm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
-    background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
-            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
-  #ctaGlowCool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
-    background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
-    -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
-            mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
-
-  /* tablet — about three quarters of the desktop figure */
-  @media (max-width:1023px) {
-    #cta {
-      --cta-o1-w: 840px;  --cta-o1-h: 770px;
-      --cta-o1-x: -28%;   --cta-o1-y: -400px;
-      --cta-o2-w: 700px;  --cta-o2-h: 700px;
-      --cta-o2-x: 64%;    --cta-o2-y: 300px;
-    }
-  }
-  /* phone — half the size, softer, hard against the edges so the middle stays readable */
-  @media (max-width:639px) {
-    #cta {
-      --cta-o1-alpha: .20;
-      --cta-o1-w: 560px;  --cta-o1-h: 520px;
-      --cta-o1-x: -38%;   --cta-o1-y: -250px;
-      --cta-o2-alpha: .12;
-      --cta-o2-w: 470px;  --cta-o2-h: 470px;
-      --cta-o2-x: 52%;    --cta-o2-y: 210px;
-    }
-  }
-
-  /* ---------- statistics odometer ---------- */
-  /* Every character sits in a box of the same height, digits and separators alike,
-     so the comma and the plus keep their line with the reels beside them. A reel is
-     twenty cells — ten digits twice — which makes one digit exactly 5% of it and the
-     resting offset a percentage rather than a measured pixel, so it survives a font
-     swap or a change of clamp. The cell is slightly taller than an em: at leading-none
-     an extrabold digit sits tight against the box and the clip would shave it. */
-  .od-num { --od-h:1.15em; }
-  .od, .od-s { display:inline-block; height:var(--od-h); line-height:var(--od-h);
-               vertical-align:top; }
-  .od { overflow:hidden; }
-  /* The reel must be a block. A transform does not apply to a non-replaced inline
-     element at all — the browser accepts the declaration, reports it back on the
-     style attribute and computes the matrix as identity. That is what a reel that
-     never moves looks like from the outside. */
-  .od-r { display:block; }
-  .od-d { display:block; height:var(--od-h); line-height:var(--od-h); }
-
-  /* ---------- hero title ---------- */
-  .hw { display:inline-block; overflow:hidden; vertical-align:bottom;
-        padding-bottom:.22em; margin-bottom:-.22em; }
-  .hw-in { display:inline-block; }
-
-  /* ---------- closing ring ---------- */
-  .no-motion .ring-word { color:#DC5A45; }
-  .no-motion .ring-path { opacity:1; }
-  .no-motion .pen-underline { opacity:1; }
-
-  /* ---------- the hero's two checkboxes ---------- */
-  .sw { width:38px; height:22px; border-radius:999px; background:rgba(16,24,40,.14);
-        position:relative; transition:background .25s cubic-bezier(.32,.72,0,1); flex:none; }
-  .sw::after { content:''; position:absolute; top:3px; left:3px; width:16px; height:16px;
-        border-radius:999px; background:#fff; box-shadow:0 1px 3px rgba(16,24,40,.3);
-        transition:transform .25s cubic-bezier(.32,.72,0,1); }
-  .sw.on { background:#0D9488; }
-  .sw.on::after { transform:translateX(16px); }
-
-  /* ---------- reviews carousel ---------- */
-  .no-bar { scrollbar-width:none; -ms-overflow-style:none; }
-  .no-bar::-webkit-scrollbar { display:none; }
-  /* the arrows are a hover affordance, but focus must reach them too, or the control
-     is mouse-only. Hidden entirely when there is nothing to scroll. */
-  /* The rail runs the full viewport; the reading zone stays the container's. A mask
-     dissolves the cards from the screen edge to where the content column starts, so
-     resting cards sit in the 1200px zone at full strength and their neighbours peek
-     from inside the fade. A mask rather than overlay strips: the cards themselves
-     dissolve, the section ground shows through, and there is no second colour to
-     keep in sync with the backdrop.
-
-     --rev-edge is screen edge to content edge: the centring gap plus the container
-     gutter, which below 1280px collapses to just the gutter — the previous
-     edge-bleed behaviour, unchanged on small screens. Card width is pinned to the
-     content zone, not the track, so three rest inside the column exactly.
-
-     scroll-padding keeps the snap points on the content edge rather than the track
-     edge — without it, snap-mandatory parks the resting card at the screen edge,
-     inside the mask, half-dissolved. */
-  #revTrack { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 16px);
-    margin-inline:calc(50% - 50vw);
-    padding-inline:var(--rev-edge); scroll-padding-inline:var(--rev-edge);
-    -webkit-mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent);
-            mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent); }
-  #revTrack > div { flex-basis:86%; }
-  @media (min-width:640px)  { #revTrack { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 24px); }
-                              #revTrack > div { flex-basis:54%; } }
-  @media (min-width:1024px) { #revTrack { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 40px); }
-                              #revTrack > div { flex-basis:calc((min(100vw, 1280px) - 80px - 3rem) / 3); } }
-
-  .rev-nav { opacity:0; pointer-events:none;
-             transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1); }
-  .group:hover .rev-nav, .rev-nav:focus-visible { opacity:1; pointer-events:auto; }
-  .rev-nav[hidden] { display:none; }
-  .rev-nav:hover { transform:translateY(-50%) scale(1.06); }
-  .rev-dot { width:7px; height:7px; border-radius:999px; background:rgba(255,255,255,.22);
-             transition:width .3s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
-  .rev-dot.on { width:22px; background:#fff; }
-  @media (hover: none) { .rev-nav { opacity:1; pointer-events:auto; } }
-
-  /* ---------- period switcher (same control as the pricing page) ---------- */
-  .period-btn { transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
-  .period-btn.active { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
-
-  /* ---------- FAQ chevron ----------
-     Grey until its answer is open. v1 baked the two states into the markup per item,
-     which meant the colour never followed a click; driving it from .faq-item.open keeps
-     the accent on the question you are actually reading.
-     The transform stays in the transition list — the shared head sets it, and redeclaring
-     transition here would otherwise drop the chevron's rotation. */
-  .faq-chev { background:#F1F2F6; color:#4B5563;
-              transition:transform .45s cubic-bezier(.32,.72,0,1), background-color .3s ease, color .3s ease; }
-  .faq-item.open .faq-chev { background:#FDE5E0; color:#B84431; }
-
-  /* ---------- placeholder chrome — anything wearing this waits on production data ---------- */
-  .ph { border:1px dashed rgba(16,24,40,.22); border-radius:.75rem; }
-  .ph-dark { border:1px dashed rgba(255,255,255,.22); border-radius:.75rem; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .match-panel.on { animation:none; }
-    .hl, .sw, .sw::after, .cab-mark { transition:none; }
-  }
-</style>`;
+/* The page's CSS lives in build/assets/css (site.css): the odometer, hero title and pulse
+   dot in 22-home, the reviews rail in 23-carousel, the report's pass and tab colours in
+   09-report, the tinted FAQ chevron in 03-faq; the quick-check form, the period switcher
+   and the closing band are the shared components. */
 
 /* ─────────────────────────────────────────────────────────────────────────────
    The site's visual vocabulary, so the sections below read as content.
@@ -448,7 +214,7 @@ const eyebrow = (text, dark = false) => `<div class="inline-flex items-center ga
         </div>`;
 
 /* one word takes the accent colour, then its underline draws itself */
-const pen = w => `<span class="pen-word relative inline-block">${w}<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></span>`;
+const pen = w => `<span class="pen-word pen-static-plain relative inline-block">${w}<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span>`;
 
 /* One word of the hero title inside a box that clips it, so the word can rise out of
    nothing on load. The box is a plain rectangle: a transform inside a rounded clip
@@ -462,7 +228,7 @@ const hw = w => `<span class="hw"><span class="hw-in">${w}</span></span>`;
 
 /* v1 closes by ringing a word rather than underlining it. Same idea as pen(), drawn
    as a loop, and reserved for the last thing on the page. */
-const ring = w => `<span class="ring-word relative inline-block">${w}<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true" style="left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg></span>`;
+const ring = w => `<span class="ring-word relative inline-block">${w}<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
 
 const grad = w => `<span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-teal-600">${w}</span>`;
 
@@ -523,7 +289,7 @@ const placeholder = (text, dark = false) => `<span class="${dark ? 'ph-dark text
 
 /* partner mark on its own plate, the treatment already used on the current homepage */
 const partner = (file, alt) => `<span class="rounded-xl bg-ink-50 aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
-            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-full h-full object-contain">
+            <img src="/assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-full h-full object-contain">
           </span>`;
 
 /* the reviews — sources, the eight quotes, the card and its stars — live in
@@ -538,14 +304,14 @@ const { REVIEWS, SOURCES, reviewCard, stars } = require('./reviews');
    a node export, so each arrived carrying three background rects — the page plate, the
    section and the card. Those were removed; every glyph path is untouched. */
 const partnerDark = (file, alt) => `<span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center overflow-hidden">
-            <img src="assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-[60%] h-auto max-h-[57%] object-contain">
+            <img src="/assets/svg/partners/${file}" alt="${alt}" loading="lazy" decoding="async" class="w-[60%] h-auto max-h-[57%] object-contain">
           </span>`;
 
 /* the four input methods, drawn once for both hero variants */
 const NL12 = String.fromCharCode(10) + '            ';
 const chipGlyph = i => {
   const glyph = i.icon === 'brand'
-    ? `<img src="assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${ICON} shrink-0">`
+    ? `<img src="/assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${ICON} shrink-0">`
     : `<svg class="${ICON} shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
   return `<button type="button" class="qc-chip">${glyph}${i.label}</button>`;
 };
@@ -564,7 +330,10 @@ const S = COPY;
    same ground — one definition, one place to change it, a separate pattern id each so
    neither section depends on the other still being on the page. */
 /* the dot field is shared now — build/dots.js — so every hero on the tint has it */
-const { dots } = require('./dots');
+const { dotField } = require('./dots');
+const cta = require('./cta');
+const pricing = require('./pricing');
+const page = require('./page');
 /* the quick-check form is shared too — build/checker.js — so Students and PDF render
    the same component; the homepage's markup is unchanged */
 const checker = require('./checker');
@@ -577,19 +346,19 @@ const section1 = () => `
 
        It is the page's primary object, per the hero rule: no decorative report
        stands in for it. Inert — no action, submit returns false. -->
-  <section id="checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
+  <section id="checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      ${dots('heroDots')}
+      ${dotField()}
       <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
       <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
     </div>
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="max-w-[760px] mx-auto text-center mb-8 sm:mb-10 lg:mb-12">
-        <h1 id="heroTitle" class="${H2} mb-5 lg:mb-6">${hw('Plagiarism')} ${pen(hw('Checker'))}</h1>
-        <p id="heroSupport" class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">${S.s1.support}</p>
+        <h1 data-hero-title class="${H2} mb-5 lg:mb-6">${hw('Plagiarism')} ${pen(hw('Checker'))}</h1>
+        <p data-hero-support class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">${S.s1.support}</p>
       </div>
 
-${checker.form(S.s1, '#checker')}
+${checker.form(S.s1, '#checker', { text: 'checker-text' }, { static: true, arrive: false })}
 
 ${checker.free(S.s1)}
     </div>
@@ -613,7 +382,7 @@ const section2 = () => `
        NOTE: the brief lists a fourth item here, the verified review-platform rating
        and count. Olex removed its placeholder on 2026-08-18. The slot went with it,
        so restoring the item means putting a fourth column back. -->
-  <section class="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100">
+  <section data-component="trust-rail" class="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv flex flex-wrap items-start justify-center gap-x-12 sm:gap-x-16 lg:gap-x-24 gap-y-8 text-center">
 
@@ -631,7 +400,7 @@ const section2 = () => `
 
         <div class="flex flex-col items-center">
           <div class="hidden sm:block h-[17px]" aria-hidden="true"></div>
-          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><img src="assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="h-full w-auto object-contain"></div>
+          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><img src="/assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="h-full w-auto object-contain"></div>
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mt-2">BBB Accredited</div>
         </div>
       </div>
@@ -642,7 +411,7 @@ const section4 = () => `
   <!-- ================= 04 · SIGNATURE · INTERACTIVE REPORT =================
        The first dark act. This is the page's centrepiece, so it gets the break in
        rhythm and the accent colour on the matched text. -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+  <section data-component="report-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-52 top-10"></div>
       <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-160px] bottom-[-120px]"></div>
@@ -662,14 +431,14 @@ const section4 = () => `
 
            Selecting a passage opens its source under the document — the interaction the
            brief asks for, and where its four report labels live. -->
-      <div>
+      <div data-report>
         <div class="grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
 
           <!-- document -->
-          <div id="cabDoc" class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+          <div data-report-doc class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
             <!-- the pass, borrowed from v1's #scanDoc: a line sweeps the page once and
                  the highlights land behind it -->
-            <div id="cabScan" class="absolute left-0 right-0 z-10 pointer-events-none opacity-0" style="top:-80px">
+            <div data-report-scan class="absolute left-0 right-0 top-[-80px] z-10 pointer-events-none opacity-0">
               <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
               <div class="cab-beam h-28 w-full"></div>
             </div>
@@ -692,13 +461,13 @@ const section4 = () => `
           </div>
 
           <!-- sidebar -->
-          <div id="cabSide" class="flex flex-col rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
+          <div data-report-side class="flex flex-col rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
             <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
               <p class="cab-in text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
               ${CAB.metrics.map(cabMetric).join(NL14)}
             </div>
 
-            <div class="cab-in shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
+            <div class="cab-in cab-tabs-light shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
               <span class="cab-tab on pt-3">Plagiarism</span>
               <span class="cab-tab pt-3">AI</span>
             </div>
@@ -751,7 +520,7 @@ const section4 = () => `
 
 const section5 = () => `
   <!-- ================= 05 · SIGNATURE · SOURCES & SCAN CONTROLS ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+  <section data-component="sources-controls" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
         ${eyebrow('Scan controls')}
@@ -806,7 +575,7 @@ const section6 = () => `
 
        The bridge gets a chip of its own, so it stands beside the cards rather than
        reading as a leftover paragraph under them. -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section data-component="ai-compare" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
         ${eyebrow('Two analyses')}
@@ -840,7 +609,7 @@ const section6 = () => `
 
 const section7 = () => `
   <!-- ================= 07 · DOCUMENT & REPORT PRIVACY LIFECYCLE ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F2FCFC] overflow-hidden">
+  <section data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-28 bg-[#F2FCFC] overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[540px] h-[540px] bg-teal-500/10 right-[-160px] top-20"></div>
     </div>
@@ -876,7 +645,7 @@ const section8 = () => `
   <!-- ================= 08 · FULL WORKFLOW / INTEGRATIONS =================
        Bento, weighted to the brief's visual priority: Moodle wide, then API, Canvas,
        Google Docs. The marks come back here at full size. -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section data-component="integrations" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
         ${eyebrow('Workflow')}
@@ -902,7 +671,7 @@ const section8 = () => `
 
 const section9 = () => `
   <!-- ================= 09 · AUDIENCE PATHWAYS ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+  <section data-component="audiences" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
         ${eyebrow('Pathways')}
@@ -933,7 +702,7 @@ const section10 = () => `
        No quote, name or rating is filled in. The brief lists them as dynamic and
        says not to browse for them; beyond that, a mistranscribed review is an
        invented quote with a real person's name under it. -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+  <section data-component="reviews-carousel" data-carousel data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[560px] h-[560px] bg-orange-500/12 left-[-160px] bottom-[-140px]"></div>
     </div>
@@ -946,23 +715,23 @@ const section10 = () => `
       </div>
 
       <div class="rv group relative">
-        <div id="revTrack" class="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory no-bar">
-          ${REVIEWS.map(r => `<div class="snap-start shrink-0 flex">${reviewCard(r, true)}</div>`).join('\n          ')}
+        <div data-carousel-track class="rev-track flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory no-bar">
+          ${REVIEWS.map(r => `<div class="snap-start shrink-0 flex">${reviewCard(r, true, { static: true })}</div>`).join('\n          ')}
         </div>
 
         <!-- shown on hover, and always once focused, so the control is reachable
              from the keyboard rather than being a mouse-only affordance -->
-        <button type="button" id="revPrev" aria-label="Previous reviews"
+        <button type="button" data-carousel-prev aria-label="Previous reviews"
           class="rev-nav absolute left-0 sm:-left-2 lg:-left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-ink-900 shadow-diffuse-lg flex items-center justify-center">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
         </button>
-        <button type="button" id="revNext" aria-label="More reviews"
+        <button type="button" data-carousel-next aria-label="More reviews"
           class="rev-nav absolute right-0 sm:-right-2 lg:-right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-ink-900 shadow-diffuse-lg flex items-center justify-center">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
         </button>
       </div>
 
-      <div id="revDots" class="flex justify-center items-center gap-2 mt-6 sm:mt-7 lg:mt-8"></div>
+      <div data-carousel-dots data-dot-label="Reviews page" class="flex justify-center items-center gap-2 mt-6 sm:mt-7 lg:mt-8"></div>
 
       <!-- Stacked and centred below 768, the width Olex draws the line at for phone and
            tablet: above it the pool line and the button share a row, below it the row
@@ -978,7 +747,7 @@ const section11 = () => `
   <!-- ================= 11 · PRICING PREVIEW =================
        v1's card architecture with the four-period switcher from the pricing page.
        The header copy is the brief's; the numbers are not — see the note on PLANS. -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
+  <section data-component="pricing-preview" data-pricing="onetime" data-pricing-animate class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
     <div class="orb w-[520px] h-[520px] bg-teal-500/8 right-[-140px] top-10"></div>
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-12">
@@ -988,9 +757,9 @@ const section11 = () => `
       </div>
 
       <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
-        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" id="periodTabs">
+        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto">
           ${[['onetime','One-time'],['monthly','Monthly'],['quarterly','3-Months'],['yearly','Yearly']]
-            .map(([k, label]) => `<button type="button" data-period="${k}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">${label}</button>`)
+            .map(([k, label]) => `<button type="button" data-period="${k}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500${k === 'onetime' ? ' active' : ''}">${label}</button>`)
             .join('\n          ')}
         </div>
       </div>
@@ -998,7 +767,8 @@ const section11 = () => `
       <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
         ${['light','standard','premium'].map(tier => {
           const dark = tier === 'standard';
-          return `<div data-tier="${tier}" class="${dark
+          const line = dark ? pricing.LINES.tickOnDark : pricing.LINES.tick;
+          return `<div data-tier="${tier}"${dark ? ' data-surface="dark"' : ''} class="${dark
             ? 'relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden'
             : 'rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7'}">
           ${dark ? '<div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>' : ''}
@@ -1012,12 +782,13 @@ const section11 = () => `
             </div>
             <div class="text-[13.5px] ${dark ? 'text-white/50' : 'text-ink-500'} mb-4 sm:mb-5 lg:mb-6">${TAGLINE[tier]}</div>
             <div class="flex items-end gap-1.5 mb-3">
-              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price"></span>
-              <span class="text-[12.5px] font-medium ${dark ? 'text-white/40' : 'text-ink-400'} pb-1.5 js-term"></span>
+              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price">${PLANS.onetime[tier].price}</span>
+              <span class="text-[12.5px] font-medium ${dark ? 'text-white/40' : 'text-ink-400'} pb-1.5 js-term">${PLANS.onetime.term}</span>
             </div>
-            <div class="inline-flex items-center rounded-full ${dark ? 'bg-white/10 text-white/70' : 'bg-ink-50 text-ink-500'} px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate"></span>&nbsp;/ 1,000 words</div>
+            <div class="inline-flex items-center rounded-full ${dark ? 'bg-white/10 text-white/70' : 'bg-ink-50 text-ink-500'} px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">${PLANS.onetime[tier].rate}</span>&nbsp;/ 1,000 words</div>
             <div class="h-px ${dark ? 'bg-white/10' : 'bg-ink-100'} mb-5 sm:mb-6 lg:mb-7"></div>
-            <ul class="space-y-3.5 text-[13.5px] font-medium ${dark ? 'text-white/80' : 'text-ink-700'} min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"></ul>
+            ${pricing.template(line)}
+            <ul class="space-y-3.5 text-[13.5px] font-medium ${dark ? 'text-white/80' : 'text-ink-700'} min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats">${pricing.feats(PLANS.onetime[tier].feats, line)}</ul>
             <a href="${S.s11.ctaHref}" class="btn-press block text-center rounded-full ${dark
               ? 'bg-white text-ink-900 hover:bg-ink-50'
               : 'ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50'} text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start ${LABEL[tier]}</a>
@@ -1030,16 +801,17 @@ const section11 = () => `
            since each card now carries its own button. The label and destination are the
            brief's, only the weight changed. -->
       <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] sm:text-[13px] font-medium">
-        <span class="text-ink-400" id="periodNote"></span>
+        <span class="text-ink-400" data-period-note>${PLANS.onetime.note}</span>
         <span class="hidden sm:block w-1 h-1 rounded-full bg-ink-300"></span>
         <a href="${S.s11.ctaHref}" class="font-semibold text-ink-700 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 hover:decoration-ink-500 transition-colors duration-300">${S.s11.cta}</a>
       </div>
     </div>
+    ${pricing.island()}
   </section>`;
 
 const section12 = () => `
   <!-- ================= 12 · FAQ ================= -->
-  <section class="relative py-16 sm:py-24 lg:py-28 bg-white">
+  <section data-component="faq" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <!-- Heading left, questions right: a long accordion under a centred heading pushes
            the last question a screen and a half from its own title. The left column sticks,
@@ -1057,15 +829,15 @@ const section12 = () => `
 
       <!-- every answer is in the rendered HTML, not fetched on click -->
       <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse" id="faqList">
-        <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
+        <div data-faq class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100 overflow-hidden">
           ${S.s12.items.map(([q, a], i) => `<div class="faq-item${i === 0 ? ' open' : ''}">
-            <button type="button" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
+            <button type="button" aria-controls="home-faq-a${i + 1}" aria-expanded="${i === 0 ? 'true' : 'false'}" class="faq-q w-full flex items-center justify-between gap-4 sm:gap-5 lg:gap-6 text-left px-4 sm:px-5 lg:px-6 py-4 sm:py-5 lg:py-6">
               <span class="text-[15.5px] font-bold tracking-tight">${q}</span>
-              <span class="faq-chev shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+              <span class="faq-chev faq-chev-tint shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </span>
             </button>
-            <div class="faq-a"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
+            <div class="faq-a" id="home-faq-a${i + 1}"><div><p class="px-4 sm:px-5 lg:px-6 pb-5 sm:pb-6 lg:pb-7 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[72ch]">${a}</p></div></div>
           </div>`).join('\n          ')}
         </div>
       </div>
@@ -1084,12 +856,8 @@ const section13 = () => `
        brief supplies neither, and the ratings are dynamic fields besides.
 
        Sends you back to the real checker in section 1; no second form is rendered. -->
-  <section id="cta" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      ${dots('ctaDots')}
-      <div id="ctaGlowWarm" class="orb"></div>
-      <div id="ctaGlowCool" class="orb"></div>
-    </div>
+  <section id="cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+${cta.backgroundStatic()}
     <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
       <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-6 sm:mb-7 lg:mb-8">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-dot"></span>
@@ -1111,619 +879,16 @@ const section13 = () => `
   </section>`;
 
 /* ── behaviour ───────────────────────────────────────────────────────────── */
-const SCRIPT = `
-<script>
-(() => {
-  'use strict';
-
-  /* word counter — the free allowance is 150 words, so the count is the useful readout */
-  /* the free allowance is 150 words, so the count is the useful readout */
-  [['checkText', 'wordCount']].forEach(pair => {
-    const ta = document.getElementById(pair[0]), wc = document.getElementById(pair[1]);
-    if (!ta || !wc) return;
-    ta.addEventListener('input', () => {
-      const w = ta.value.trim() ? ta.value.trim().split(/\\s+/).length : 0;
-      wc.textContent = w;
-      wc.style.color = w > 150 ? '#B84431' : '';
-    });
-  });
-
-  /* switches: the visual state follows the real checkbox, so the control stays a control */
-  document.querySelectorAll('.sw[data-for]').forEach(sw => {
-    const input = document.getElementById(sw.dataset.for);
-    if (!input) return;
-    input.addEventListener('change', () => sw.classList.toggle('on', input.checked));
-  });
-
-  /* report: selecting a highlighted passage opens its source and context */
-  const hls = [...document.querySelectorAll('.hl')];
-  const panels = [...document.querySelectorAll('.match-panel')];
-  const show = i => {
-    hls.forEach(h => h.classList.toggle('on', h.dataset.match === String(i)));
-    panels.forEach(p => p.classList.toggle('on', p.dataset.panel === String(i)));
-  };
-  hls.forEach(h => {
-    h.addEventListener('click', () => show(h.dataset.match));
-    h.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(h.dataset.match); }
-    });
-  });
-  if (hls.length) show(0);
-
-  /* Pricing periods. The data object is inlined below rather than fetched: this whole
-     section becomes a widget later, and until then the numbers only have to look right. */
-  const PLANS = {
-    "onetime": {
-      "note": "One payment · packages never expire",
-      "term": "/ one-time",
-      "light": {
-        "price": "$9.95",
-        "rate": "$1.00",
-        "feats": [
-          "1 plagiarism check",
-          "1 AI check",
-          "No expiry"
-        ]
-      },
-      "standard": {
-        "price": "$17.95",
-        "rate": "$0.90",
-        "feats": [
-          "10 plagiarism checks",
-          "10 AI checks",
-          "No expiry"
-        ]
-      },
-      "premium": {
-        "price": "$41.95",
-        "rate": "$0.42",
-        "feats": [
-          "50 plagiarism checks",
-          "50 AI checks",
-          "No expiry"
-        ]
-      }
-    },
-    "monthly": {
-      "note": "Recurring billing · cancel anytime",
-      "term": "/ month",
-      "light": {
-        "price": "$22.95",
-        "rate": "$0.23",
-        "feats": [
-          "100 plagiarism checks",
-          "30-day validity"
-        ]
-      },
-      "standard": {
-        "price": "$34.95",
-        "rate": "$0.12",
-        "feats": [
-          "300 plagiarism checks",
-          "API access",
-          "Report storage",
-          "30-day validity"
-        ]
-      },
-      "premium": {
-        "price": "$54.95",
-        "rate": "$0.09",
-        "feats": [
-          "300 plagiarism checks",
-          "300 AI checks",
-          "API access",
-          "Report storage",
-          "30-day validity"
-        ]
-      }
-    },
-    "quarterly": {
-      "note": "Recurring billing every 3 months · cancel anytime",
-      "term": "/ 3 months",
-      "light": {
-        "price": "$34.95",
-        "rate": "$0.17",
-        "feats": [
-          "100 plagiarism checks",
-          "100 AI checks",
-          "90-day validity"
-        ]
-      },
-      "standard": {
-        "price": "$64.95",
-        "rate": "$0.10",
-        "feats": [
-          "300 plagiarism checks",
-          "300 AI checks",
-          "API access",
-          "Report storage",
-          "90-day validity"
-        ]
-      },
-      "premium": {
-        "price": "$89.95",
-        "rate": "$0.07",
-        "feats": [
-          "500 plagiarism checks",
-          "500 AI checks",
-          "API access",
-          "Report storage",
-          "90-day validity"
-        ]
-      }
-    },
-    "yearly": {
-      "note": "Recurring billing yearly · best per-word rate",
-      "term": "/ year",
-      "light": {
-        "price": "$114.95",
-        "rate": "$0.11",
-        "feats": [
-          "1,000 plagiarism checks",
-          "365-day validity"
-        ]
-      },
-      "standard": {
-        "price": "$174.95",
-        "rate": "$0.06",
-        "feats": [
-          "3,000 plagiarism checks",
-          "API access",
-          "Report storage",
-          "365-day validity"
-        ]
-      },
-      "premium": {
-        "price": "$259.95",
-        "rate": "$0.04",
-        "feats": [
-          "3,000 plagiarism checks",
-          "3,000 AI checks",
-          "API access",
-          "Report storage",
-          "365-day validity"
-        ]
-      }
-    }
-  };
-
-  const tabs = [...document.querySelectorAll("#periodTabs .period-btn")];
-  const cards = [...document.querySelectorAll("[data-tier]")];
-  const periodNote = document.getElementById("periodNote");
-  /* concatenated rather than interpolated: this whole script is itself a template
-     literal in build/home-v2.js, so a backtick here would end it early */
-  const tick = c => '<svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
-
-  if (tabs.length && cards.length) {
-    const render = (key, animate) => {
-      const period = PLANS[key];
-      periodNote.textContent = period.note;
-      cards.forEach(card => {
-        const tier = period[card.dataset.tier];
-        const dark = card.dataset.tier === "standard";
-        const feats = card.querySelector(".js-feats");
-        /* values first, motion second — a price must never wait on an animation frame */
-        card.querySelector(".js-price").textContent = tier.price;
-        card.querySelector(".js-term").textContent = period.term;
-        card.querySelector(".js-rate").textContent = tier.rate;
-        feats.innerHTML = tier.feats
-          .map(f => '<li class="flex gap-3">' + tick(dark ? "#6ED7E8" : "#2AA46C") + f + '</li>')
-          .join("");
-        if (animate && window.gsap && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          gsap.fromTo([card.querySelector(".js-price"), card.querySelector(".js-rate"), feats],
-            { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .28, ease: "power2.out", overwrite: "auto" });
-        }
-      });
-      tabs.forEach(b => b.classList.toggle("active", b.dataset.period === key));
-    };
-    tabs.forEach(b => b.addEventListener("click", () => render(b.dataset.period, true)));
-    /* one-time leads: it is the mode the brief puts on the homepage */
-    render("onetime", false);
-  }
-
-  /* Reviews carousel. Pages are measured, not assumed: the card count is not ours to
-     fix, and the number visible changes with the breakpoint. */
-  const track = document.getElementById("revTrack");
-  const dots = document.getElementById("revDots");
-  if (track && dots) {
-    const prev = document.getElementById("revPrev");
-    const next = document.getElementById("revNext");
-    /* Geometry, not clientWidth. The rail is full-bleed, so its box is the whole
-       viewport while a page is the content zone — measuring against the box paged
-       1440px at a time through 1224px of cards, which is why the dots stopped
-       matching what was on screen. Card positions are the truth and they hold at
-       every breakpoint, whatever the track is padded by.
-
-       Read from getBoundingClientRect rather than offsetLeft: the track's
-       offsetParent is the wrapper, and the two no longer share a left edge. */
-    const pad = () => parseFloat(getComputedStyle(track).paddingLeft) || 0;
-    const cards = () => [...track.children];
-    const maxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
-
-    const perView = () => {
-      const c = cards();
-      if (!c.length) return 1;
-      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      const w = c[0].getBoundingClientRect().width;
-      const view = track.clientWidth - pad() * 2;
-      return Math.max(1, Math.round((view + gap) / (w + gap)));
-    };
-    const pages = () => Math.max(1, Math.ceil(cards().length / perView()));
-
-    /* where the rail must sit for card i to rest on the content edge */
-    const restFor = i => {
-      const c = cards();
-      const el = c[Math.min(i, c.length - 1)];
-      const x = el.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
-      return Math.min(Math.max(0, x - pad()), maxScroll());
-    };
-    const goTo = p => track.scrollTo({ left: restFor(p * perView()), behavior: 'smooth' });
-
-    /* the page whose resting position the rail is nearest to — the last page often
-       cannot scroll all the way, so nearest beats dividing */
-    const page = () => {
-      const n = pages(), pv = perView();
-      let best = 0, bestD = Infinity;
-      for (let i = 0; i < n; i++) {
-        const d = Math.abs(track.scrollLeft - restFor(i * pv));
-        if (d < bestD) { bestD = d; best = i; }
-      }
-      return best;
-    };
-
-    const build = () => {
-      const n = pages();
-      const scrollable = track.scrollWidth > track.clientWidth + 1;
-      prev.hidden = next.hidden = !scrollable;
-      dots.innerHTML = scrollable
-        ? Array.from({ length: n }, (_, i) =>
-            '<button type="button" class="rev-dot' + (i === page() ? ' on' : '') +
-            '" data-page="' + i + '" aria-label="Reviews page ' + (i + 1) + '"></button>').join("")
-        : "";
-    };
-
-    const mark = () => {
-      const cur = page();
-      [...dots.children].forEach((d, i) => d.classList.toggle("on", i === cur));
-    };
-
-    const go = dir => goTo(Math.min(pages() - 1, Math.max(0, page() + dir)));
-    prev.addEventListener("click", () => go(-1));
-    next.addEventListener("click", () => go(1));
-    dots.addEventListener("click", e => {
-      const b = e.target.closest(".rev-dot");
-      if (b) goTo(+b.dataset.page);
-    });
-    track.addEventListener("scroll", mark, { passive: true });
-    addEventListener("resize", build);
-    build();
-  }
-
-  /* The pass. Runs once when the block arrives, not on a scrub: this report is a
-     finished document, and scrubbing it backwards would un-find the matches.
-
-     Every value is already correct in the markup — bar widths, percentages, highlight
-     colours. The timeline animates FROM zero to what is there, so a browser with
-     reduced motion, a failed CDN or JS off shows the finished report rather than an
-     empty one. */
-  {
-    const doc = document.getElementById('cabDoc');
-    const side = document.getElementById('cabSide');
-    const line = document.getElementById('cabScan');
-    const marks = [...document.querySelectorAll('.cab-mark')];
-    const ins = side ? [...side.querySelectorAll('.cab-in')] : [];
-    const bars = [...document.querySelectorAll('.cab-bar')];
-    const figures = [...document.querySelectorAll('.cab-figure')];
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (doc && side && line && window.gsap && !reduce) {
-      const SCAN = .55;                 // the pass starts once both panels are down
-      const PASS = 1.8;                 // how long the line takes to cross
-      const FILL = SCAN + .15;          // the sidebar starts filling just behind the line
-      const STEP = .115;                // paced so the last rung lands as the line leaves
-
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: doc, start: 'top 72%', once: true }
-      });
-
-      /* The panels arrive one after the other, document first. clearProps drops the
-         inline transform when each lands, so the layer is released and the corners
-         are rasterised at full quality again. */
-      tl.from(doc,  { opacity: 0, y: 24, duration: .8, ease: 'power2.out', clearProps: 'transform' }, 0)
-        .from(side, { opacity: 0, y: 24, duration: .8, ease: 'power2.out', clearProps: 'transform' }, .16);
-
-      // the line crosses the page
-      tl.set(line, { opacity: 1 }, SCAN)
-        .fromTo(line, { top: -80 }, { top: () => doc.offsetHeight + 20, duration: PASS, ease: 'none' }, SCAN)
-        .to(line, { opacity: 0, duration: .3 }, SCAN + PASS - .2);
-
-      // highlights land behind it, spread across the pass
-      marks.forEach((m, i) => {
-        tl.from(m, { backgroundSize: '0% 100%', duration: .45, ease: 'power2.out' }, SCAN + .35 + i * .28);
-      });
-
-      /* The sidebar fills top to bottom while the line is still crossing: the heading,
-         each metric, the tabs, then the sources, one rung per element in the panel's own
-         DOM order. It used to wait for the pass to finish, which is what the cabinet
-         does, but that left the panel white for over two seconds. Starting it behind the
-         line and pacing the rungs so the last lands exactly as the line leaves reads as
-         results accumulating during the check rather than two unrelated movements.
-
-         It fades without lifting, and so does the beam next door, because both panels
-         are rounded boxes that clip: while a transformed layer sits inside such a box
-         Chrome drops the rounded clip and the corners square off. A from() writes its
-         start state the moment the timeline is built, so a 12px lift here was not a
-         flicker during the cascade — it held the corners square from page load until
-         the last card landed. Nothing inside a rounded clip gets a transform. The
-         panels may still lift: an element's own radius survives its own transform. */
-      const step = el => FILL + Math.max(0, ins.indexOf(el)) * STEP;
-      tl.from(ins, { opacity: 0, duration: .5, ease: 'power2.out', stagger: STEP }, FILL);
-
-      // each bar runs out and its figure counts up as that row arrives, not before
-      const at = el => step(el) + .12;
-      bars.forEach(b => tl.from(b, { width: 0, duration: .8, ease: 'power2.out' }, at(b.closest('.cab-in'))));
-      figures.forEach(f => {
-        const target = parseFloat(f.dataset.to);
-        const suffix = f.textContent.trim().endsWith('%') ? '%' : '';
-        const dp = String(target).includes('.') ? 1 : 0;
-        const o = { v: 0 };
-        let last = null;
-        tl.to(o, { v: target, duration: .8, ease: 'power2.out',
-          onUpdate: () => {
-            const t = o.v.toFixed(dp) + suffix;
-            if (t !== last) { last = t; f.textContent = t; }
-          } }, at(f.closest('.cab-in')));
-      });
-    }
-  }
-
-  /* Report: selecting a passage opens its source under the document and lights the
-     matching row in the sidebar. Keyboard reaches it too — the passages are buttons. */
-  {
-    const marks = [...document.querySelectorAll('.cab-mark')];
-    const rows = [...document.querySelectorAll('.cab-src')];
-    const open = i => {
-      marks.forEach(m => m.classList.toggle('on', m.dataset.match === String(i)));
-      rows.forEach(r => r.classList.toggle('on', r.dataset.src === String(i)));
-    };
-    marks.forEach(m => {
-      m.addEventListener('click', () => open(m.dataset.match));
-      m.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(m.dataset.match); }
-      });
-    });
-    if (marks.length) open(0);
-  }
-
-  /* FAQ: answers are already in the DOM; this only opens and closes them */
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      item.parentElement.querySelectorAll('.faq-item').forEach(x => x.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-    });
-  });
-})();
-</script>`;
-
 /* ─────────────────────────────────────────────────────────────────────────────
-   Assemble
+   Assemble — the shared page shell (build/page.js). The behaviour lives in build/assets/js
+   (site.js): the odometer, the hero title, the report and its pass, the carousel, the
+   pricing periods, the FAQ, the reveals and marks. The page carries none of its own.
    ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head
-  .replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>')
-  .replace(/<meta name="description"[^>]*>/, '<meta name="description" content="' + COPY.meta + '" />');
-if (!/name="description"/.test(head)) {
-  head = head.replace('<title>', '<meta name="description" content="' + COPY.meta + '" />\n<title>');
-}
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
 /* twelve, not thirteen: the integrations rail folded into the report act */
 const sections = [section1, section2, section4, section5, section6, section7,
                   section8, section9, section10, section11, section12, section13];
 
-/* The reveal and burger behaviours are written out here rather than sliced out of
-   index.html. An earlier version scraped them by string search and produced a page with
-   three broken <script> tags and an invisible checker form — cutting someone else's
-   script out by indexOf is a trick that works until it silently doesn't. */
-const revealBlock = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-
-  // first viewport: top-down cascade on load
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  // the rest reveal as they reach mid-screen
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-
-  /* The statistics roll like odometers: every digit spins up from zero and they
-     land left to right into the figure.
-
-     The reels are runtime-built. The page ships plain text — approved copy that has
-     to survive as a sentence for a crawler and a screen reader — the sr-only span
-     keeps that sentence while the reels exist, and the plain text goes back the
-     moment the roll lands, so the DOM ends exactly as served.
-
-     Each reel is two cycles, the top cell being the digit itself, and it rests one
-     full cycle down, on a zero. Two reasons. Every reel travels at least a whole
-     turn — a zero spins 0 through 9 back to 0, a five spins fifteen cells — so the
-     roll cannot be blinked away. And a rail whose trigger never fires reads
-     000,000+, which points at the bug, instead of showing the finished figure and
-     letting a broken roll pass for a working one — the previous build rested on the
-     final digits, and a roll that fired while the eye was on the hero title was
-     indistinguishable from no roll at all. Resting on zeros is safe precisely
-     because the reels only exist where GSAP is alive: no script, no zeros. */
-  {
-    const CELLS = 20, STEP = 100 / CELLS;
-    const digitAt = (d, i) => ((d - i) % 10 + 10) % 10;
-    const reelFor = d => Array.from({ length: CELLS },
-      (_, i) => '<span class="od-d">' + digitAt(d, i) + '</span>').join('');
-
-    gsap.utils.toArray('.od-num').forEach(el => {
-      const text = el.textContent.trim();
-      if (!/\\d/.test(text)) return;
-
-      const chars = [...text].map(ch => /\\d/.test(ch)
-        ? '<span class="od" data-d="' + ch + '"><span class="od-r">' + reelFor(+ch) + '</span></span>'
-        : '<span class="od-s">' + ch + '</span>').join('');
-      el.innerHTML = '<span class="sr-only">' + text + '</span>' +
-                     '<span aria-hidden="true">' + chars + '</span>';
-
-      const reels = [...el.querySelectorAll('.od-r')];
-      gsap.set(reels, { yPercent: (i, t) => -(10 + +t.parentElement.dataset.d) * STEP });
-
-      const roll = () => gsap.to(reels, {
-        yPercent: 0, duration: .9, ease: 'power2.out', stagger: .08,
-        onComplete: () => { el.textContent = text; },
-      });
-
-      /* In the first view the roll waits out the hero title, so it spins after the
-         eye is released rather than during the one second everyone watches the
-         headline. Below the fold it rolls when scrolled to. A trigger cannot serve
-         the first case: with the rail already past the start line it fires during
-         setup and the roll runs before anyone looks. */
-      if (el.getBoundingClientRect().top < innerHeight * .95) gsap.delayedCall(2, roll);
-      else ScrollTrigger.create({
-        trigger: el.closest('section'), start: 'top 85%', once: true, onEnter: roll });
-    });
-  }
-
-  /* The hero title rises word by word out of its clip, the support line follows it up,
-     and the underline draws last — the mark you make after the words are written.
-
-     from(), so the markup carries the finished heading: with no GSAP, a dead CDN or
-     reduced motion the H1 is simply there. It is the page's H1; it does not get to
-     depend on a script. */
-  {
-    const title = document.getElementById('heroTitle');
-    const words = title ? [...title.querySelectorAll('.hw-in')] : [];
-    const support = document.getElementById('heroSupport');
-    const word = title && title.querySelector('.pen-word');
-    const line = title && title.querySelector('.pen-underline');
-
-    if (words.length) {
-      const tl = gsap.timeline({ delay: .15 });
-
-      /* 128, not 115: yPercent is a share of the word, and the clip box is taller than
-         the word by the descender padding — 1.30em of box against 1.08em of word. At
-         115 a three-pixel ribbon of the letters stayed above the edge. The ratio is in
-         em, so one number holds at every size. */
-      tl.from(words, { yPercent: 128, duration: 1, ease: 'power3.out', stagger: .09,
-        clearProps: 'transform' }, 0);
-
-      /* 14px, not 40. The page uses two scales and they are not interchangeable: 40px
-         is .rv moving a whole section, while anything inside a block travels 8–14 —
-         the nav panel 10, the persona panels 14, the report cascade 12. A support line
-         under a heading is the second kind. At 40 it outran the title it belongs to. */
-      if (support) tl.from(support, { opacity: 0, y: 14, duration: .7, ease: 'power2.out',
-        clearProps: 'transform' }, .4);
-      if (word && line) {
-        const len = line.getTotalLength();
-        gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-        tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' }, 1.05)
-          .set(line, { opacity: 1 }, 1.25)
-          .to(line, { strokeDashoffset: 0, duration: .75, ease: 'power2.inOut' }, 1.25);
-      }
-    }
-  }
-
-  /* the same reveal dealt across a grid's children in DOM order — left to right, then
-     down. Fires a little earlier than .rv because the last card lands a stagger later
-     and should not still be hidden once the grid is properly in view. */
-  gsap.utils.toArray('.rv-kids').forEach(box => {
-    gsap.to(box.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .08,
-      scrollTrigger: { trigger: box, start: 'top 80%' } });
-  });
-
-  /* ring marks — the closing act loops a word instead of underlining it. Same trick,
-     longer path, and it waits until the word is well inside the viewport. */
-  gsap.utils.toArray('.ring-word').forEach(word => {
-    const path = word.querySelector('.ring-path');
-    if (!path) return;
-    const len = path.getTotalLength();
-    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-    gsap.timeline({ scrollTrigger: { trigger: word, start: 'top 75%', once: true } })
-      .to(word, { color: '#DC5A45', duration: .4, ease: 'power2.out' })
-      .set(path, { opacity: 1 }, .15)
-      .to(path, { strokeDashoffset: 0, duration: .9, ease: 'power2.inOut' }, .15);
-  });
-
-  /* pen marks — the word takes the accent colour, then its underline draws itself.
-     Without this the underline stays at opacity 0 forever, since the path ships hidden. */
-  gsap.utils.toArray('.pen-word').filter(w => !w.closest('#heroTitle')).forEach(word => {
-    const line = word.querySelector('.pen-underline');
-    if (!line) return;
-    const len = line.getTotalLength();
-    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-    const inFirstView = word.getBoundingClientRect().top < innerHeight * .9;
-    const tl = gsap.timeline(inFirstView
-      ? { delay: 1 }
-      : { scrollTrigger: { trigger: word, start: 'top 80%', once: true } });
-    tl.to(word, { color: '#DC5A45', duration: .45, ease: 'power2.out' })
-      .set(line, { opacity: 1 }, .35)
-      .to(line, { strokeDashoffset: 0, duration: .7, ease: 'power2.inOut' }, .35);
-  });
-})();
-</script>`;
-
-const navScript = `<script>
-(() => {
-  'use strict';
-  const btn = document.getElementById('navBurger');
-  const panel = document.getElementById('navPanel');
-  if (!btn || !panel) return;
-
-  const setOpen = on => {
-    btn.setAttribute('aria-expanded', String(on));
-    panel.classList.toggle('open', on);
-    btn.setAttribute('aria-label', on ? 'Close menu' : 'Open menu');
-  };
-
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
-  panel.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
-  document.addEventListener('click', e => {
-    if (!panel.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-  // the desktop menu takes over at lg — never leave the panel hanging open across it
-  addEventListener('resize', () => { if (innerWidth >= 1024) setOpen(false); });
-})();
-</script>`;
-
-const html = head + STYLE + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${sections.map(f => f()).join('\n')}
-</main>
-
-<footer></footer>
-
-${revealBlock}
-${navScript}
-${SCRIPT}
-</body>
-</html>
-`;
-
+const html = page.render({ title: COPY.title, meta: COPY.meta, sections: sections.map(f => f()) });
 fs.writeFileSync(path.join(SITE, OUT), html);
 
 const h1s = (html.match(/<h1\b/g) || []).length;

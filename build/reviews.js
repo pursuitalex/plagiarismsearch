@@ -67,13 +67,14 @@ const stars = (value, dark) => {
           </span>`;
 };
 
-const reviewCard = (r, dark) => {
+/* opts.static: root-relative asset paths, for pages on the shared assets */
+const reviewCard = (r, dark, opts = {}) => {
   const src = SOURCES[r.source];
   const muted = dark ? 'text-white/45' : 'text-ink-400';
   return `<figure class="${dark ? CARD_DARK : CARD} flex flex-col h-full w-full">
             <div class="flex items-center gap-2.5 mb-5">
               ${src.mark
-                ? `<img src="${src.mark}" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">`
+                ? `<img src="${opts.static ? '/' : ''}${src.mark}" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">`
                 : ''}
               <span class="text-[11px] sm:text-[11.5px] font-semibold ${dark ? 'text-white/60' : 'text-ink-500'}">${src.name}</span>
               ${r.rating != null ? `<span class="ml-auto flex items-center gap-2">${stars(r.rating, dark)}<span class="text-[12px] font-bold nums ${dark ? 'text-white' : 'text-ink-900'}">${r.rating.toFixed(1)}</span></span>` : ''}

@@ -36,6 +36,8 @@ PS.module('checker', () => {
     const target = id && document.getElementById(id);
     if (!target) return;
     const form = target.matches('[data-checker]') ? target : target.querySelector('[data-checker]');
+    /* data-checker-arrive="off": the link only scrolls to the form (the homepage, as approved) */
+    if (form && form.dataset.checkerArrive === 'off') return;
     const ta = form && form.querySelector('[data-checker-text]');
     if (ta) setTimeout(() => ta.focus({ preventScroll: true }), 400);
   });

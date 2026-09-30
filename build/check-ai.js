@@ -278,13 +278,13 @@ console.log('\nstructure');
   /* Each state ships hidden, and [hidden] has to actually win against Tailwind's
      display utilities — it did not, and five of them rendered. */
   ok('[hidden] is guarded against the display utilities',
-     /\[hidden\]\s*\{\s*display:\s*none\s*!important/.test(html), '');
+     /\[hidden\]\s*\{\s*display:\s*none\s*!important/.test(html + fs.readFileSync(path.join(__dirname, '..', 'site', 'assets', 'css', 'site.css'), 'utf8')), '');
 
   /* AMENDED — the account block is a state of the checker, not a second standalone
      card below it. It must sit inside the one form. */
   ok('auth gate lives inside the checker card',
-     /id="authGate"[^>]*hidden/.test(hero) &&
-     hero.indexOf('id="authGate"') < hero.indexOf('</form>'), '');
+     /(id="authGate"|data-auth-gate)[^>]*hidden/.test(hero) &&
+     hero.search(/id="authGate"|data-auth-gate/) < hero.indexOf('</form>'), '');
 
   /* AMENDED — every package row is individually selectable and the CTA names it. */
   const pricing2 = section('ai-pricing');

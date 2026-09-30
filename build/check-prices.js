@@ -222,7 +222,7 @@ console.log('\nstructure');
   const checked = (ai.match(/name="aiPackage"[^>]*\bchecked\b/g) || []).length;
   ok('exactly one package selected by default', checked === 1, checked + ' checked');
   ok('the default is 10,000 AI words', /value="10000"[^>]*\bchecked\b/.test(ai));
-  const btn = (ai.match(/<button[^>]*id="aiContinue"[^>]*>[\s\S]*?<\/button>/) || [''])[0];
+  const btn = (ai.match(/<button[^>]*(?:id="aiContinue"|data-purchase-hook="ai-package")[^>]*>[\s\S]*?<\/button>/) || [''])[0];
   const btnText = btn.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
   ok('the CTA reads "Continue with 10,000 AI words"', btnText === 'Continue with 10,000 AI words', btnText || '(no button)');
   ok('the CTA carries the developer hook, not an invented route',

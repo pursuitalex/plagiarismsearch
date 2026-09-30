@@ -119,8 +119,8 @@ console.log('\nthe checker');
 {
   const hero = section('pdf-checker');
   ok('the hero is the first section', body.indexOf('id="pdf-checker"') < body.indexOf('<section', body.indexOf('<section') + 1));
-  ok('the hero carries the shared form (build/checker.js)', /<textarea id="checkText"/.test(hero) && /class="qc-drop/.test(hero) && /id="optPlag" checked/.test(hero));
-  ok('plagiarism is the checked control; AI is optional and not the story', /id="optAI" class/.test(hero) && !/id="optAI" checked/.test(hero) && !/AI (detector|detection)/i.test(flat(hero)));
+  ok('the hero carries the shared form (build/checker.js)', /<textarea id="(checkText|[a-z-]+-checker-text)"/.test(hero) && /class="qc-drop/.test(hero) && /(id="optPlag"|<input type="checkbox") checked/.test(hero));
+  ok('plagiarism is the checked control; AI is optional and not the story', (/id="optAI" class/.test(hero) || (hero.match(/<input type="checkbox"/g) || []).length === 2) && !/(id="optAI"|<input type="checkbox"(?! checked)[^>]*>[\s\S]*?<input type="checkbox") checked/.test(hero) && !/AI (detector|detection)/i.test(flat(hero)));
   ok('exactly one form on the page', (body.match(/<form\b/g) || []).length === 1);
   ok('the form takes the right column at lg (Olex swapped the columns, 2026-09-17)', /lg:col-start-2 lg:row-start-1 lg:row-span-2">[\s\S]*<textarea/.test(hero));
   ok('on a phone the order is H1 → form → limits', hero.indexOf('<h1') < hero.indexOf('<textarea') && hero.indexOf('<textarea') < hero.indexOf('File size limit'));
@@ -149,7 +149,7 @@ console.log('\nextraction');
 console.log('\nreport · sources · handling · free');
 {
   const rep = section('pdf-report');
-  ok('the approved report component, once', /cab-mark/.test(rep) && (body.match(/id="cabDoc"/g) || []).length === 1);
+  ok('the approved report component, once', /cab-mark/.test(rep) && (body.match(/id="cabDoc"|<div data-report[ >]/g) || []).length === 1);
   ok('no PDF-only report field, no verdict', !/pdf score|originality (score|report)|verdict(?! \.)/i.test(flat(rep).replace('not an automatic plagiarism verdict', '')));
   const src = section('sources-and-settings');
   ok('four source settings, PDF drawn as the input', ['Web search', 'Academic database', 'References and citations', 'Storage sources'].every(c => flat(src).includes(c)) && /Input format/.test(flat(src)));
@@ -180,7 +180,7 @@ console.log('\nFAQ');
   ok('the nine approved questions, in order', found.join('|') === QS.join('|'), found.length + ' found');
   ok('nine answers rendered in the HTML', (faq.match(/class="faq-a"/g) || []).length === 9);
   ok('no timing-promise FAQ', !/how fast/i.test(flat(faq)));
-  ok('accordion controls are buttons with aria-expanded', (faq.match(/<button type="button" aria-expanded=/g) || []).length === 9);
+  ok('accordion controls are buttons with aria-expanded', (faq.match(/<button type="button" (?:aria-controls="[^"]+" )?aria-expanded=/g) || []).length === 9);
 }
 
 /* ── the P0 legacy claims, gone ─────────────────────────────────────────────── */

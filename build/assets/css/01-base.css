@@ -32,3 +32,11 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
    twice on one page. Same tile, same origin (the element's top-left), same colour. */
 .dot-field { pointer-events:none; background-size:22px 22px;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Crect width='2' height='2' rx='0.65' fill='%23DAE7ED'/%3E%3C/svg%3E"); }
+.orb-deep-teal  { width:880px; height:820px; left:-14%;  top:-360px;    background:rgba(44,195,219,.20); }
+.orb-deep-coral { width:700px; height:680px; right:-12%; bottom:-320px; background:rgba(243,111,90,.12); }
+.orb-access-coral { width:820px; height:780px; right:-14%; top:-340px;    background:rgba(243,111,90,.18); }
+.orb-access-teal  { width:660px; height:640px; left:-10%;  bottom:-300px; background:rgba(44,195,219,.16); }
+.orb-ai-hero-teal     { width:820px; height:760px; left:-14%;  top:-380px;    background:rgba(44,195,219,.22); }
+.orb-ai-hero-coral    { width:680px; height:660px; right:-12%; top:-180px;    background:rgba(243,111,90,.14); }
+.orb-ai-report-teal   { width:900px; height:820px; left:-16%;  top:-300px;    background:rgba(44,195,219,.20); }
+.orb-ai-report-violet { width:720px; height:700px; right:-14%; bottom:-320px; background:rgba(154,106,222,.18); }
