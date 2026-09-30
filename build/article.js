@@ -121,7 +121,7 @@ const page = ({ breadcrumb = [], h1, meta = [], blocks, tocLabel = 'On this page
           <span class="text-ink-500">/</span>`
     : `          <span class="text-ink-700">${esc(c)}</span>`).join('\n');
 
-  const html = `  <section class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 ${ground}">
+  const html = `  <section data-component="article" data-rv-start="top 80%" data-rv-delay=".1" class="article relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 ${ground}">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
       <div class="orb w-[420px] h-[420px] bg-teal-500/15 -right-24 -top-40"></div>
@@ -170,19 +170,7 @@ ${blocks.map(render).join('\n')}
   return { html, headings: heads.map(h => ({ id: h.id || slug(h.text), text: h.text })), words: words(blocks) };
 };
 
-/* the one rule the template needs beyond Tailwind — the drawn list counter, copied
-   from the blog page so a numbered list carries the article's own type and colour */
-const style = `  /* numbered list: the counter is drawn rather than left to the browser so it can
-     carry the article's own type and colour */
-  .counter { counter-reset: step; }
-  .counter > li { counter-increment: step; }
-  .counter > li::before {
-    content: counter(step);
-    position: absolute; left: 0; top: .1em;
-    width: 1.65em; height: 1.65em;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 999px; background: #E6F4F7; color: #0991A8;
-    font-size: .72em; font-weight: 800; font-variant-numeric: tabular-nums;
-  }`;
-
-module.exports = { page, render, slug, style, CLS, BODY };
+/* The template's CSS (the drawn list counter, links in body copy) is site.css
+   (build/assets/css/26-article.css). Its reveals keep the beat it was approved with,
+   on the section: data-rv-start="top 80%", data-rv-delay=".1" (site.js, motion). */
+module.exports = { page, render, slug, CLS, BODY };

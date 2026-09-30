@@ -25,15 +25,22 @@ PS.module('motion', () => {
      animations to the same end-of-page rescue */
   PS.track = track;
 
+  /* A block approved with its own beat says so on an ancestor: data-rv-start (where a
+     reveal below the fold fires) and data-rv-delay (a fixed delay in the first view
+     instead of the top-down cascade). The article template (the report guide) uses both. */
+  const tune = el => el.closest('[data-rv-start], [data-rv-delay]');
   const rvs = gsap.utils.toArray('.rv');
   const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
   inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
+    const t = tune(el);
+    const delay = t && t.dataset.rvDelay !== undefined ? +t.dataset.rvDelay
+      : .1 + (el.getBoundingClientRect().top / innerHeight) * .3;
+    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', delay });
   });
   rvs.filter(el => !inView.includes(el)).forEach(el => {
+    const t = tune(el);
     track(gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } }));
+      scrollTrigger: { trigger: el, start: (t && t.dataset.rvStart) || 'top 70%' } }));
   });
 
   /* a group deals its children in one after another; data-stagger overrides the

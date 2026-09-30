@@ -79,10 +79,10 @@ const PAGES = {
   'user-manuals.html':           { active: 'resources' },
   /* the news archive — a real page now, not a stub. Reached from the footer and
      from the Help Center, so no header item lights up. */
-  'newsroom.html':               { active: null },
+  'newsroom.html':               { active: null, static: true },
   /* a User Guide article through build/article.js, the blog post's template, reached
      from user-manuals.html and from the newsroom */
-  'plagiarism-and-ai-check-report.html': { active: null },
+  'plagiarism-and-ai-check-report.html': { active: null, static: true },
   /* the DEC-0043 institutional page — a real page now, not a stub */
   'university-plagiarism-checker.html': { active: 'solutions', static: true },
   /* the Students page to the 2026-09-15 brief — the stub graduated */

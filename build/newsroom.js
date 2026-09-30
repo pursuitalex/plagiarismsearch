@@ -29,7 +29,8 @@
 */
 const fs = require('fs');
 const path = require('path');
-const { dots } = require('./dots');
+const { dotField } = require('./dots');
+const page = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
@@ -292,8 +293,8 @@ const section1 = () => {
        The year panel that used to sit on the right is gone with it. It was a second
        navigation for a page that now has pagination, and it made the hero the only
        asymmetric top on the site. -->
-  <section id="newsroom" class="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC]">
-    ${dots('heroDots')}
+  <section id="newsroom" data-component="hero-news" class="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC]">
+    ${dotField()}
     <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
     <div class="orb w-[560px] h-[560px] bg-orange-500/10 right-[-150px] top-52"></div>
 
@@ -325,15 +326,15 @@ const section2 = () => `  <!-- ================= 02 · LATEST =================
        page opens on what is new rather than on an archive. These items appear here
        and nowhere else — section 03 begins the year below, so nothing is printed
        twice. -->
-  <section id="latest" class="relative py-14 sm:py-16 lg:py-20 bg-ink-950 overflow-hidden">
-    <div class="orb absolute" style="width:760px;height:700px;right:-12%;top:-280px;background:rgba(154,106,222,.18)"></div>
+  <section id="latest" data-component="news-latest" data-surface="dark" class="relative py-14 sm:py-16 lg:py-20 bg-ink-950 overflow-hidden">
+    <div class="orb absolute orb-news-violet"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv">
 ${eyebrowDark('teal-400', 'Latest')}
       </div>
 
-      <div class="rv-kids grid ${latest.length > 1 ? 'lg:grid-cols-2' : ''} gap-4 sm:gap-5 lg:gap-6">
+      <div data-stagger=".07" class="rv-kids grid ${latest.length > 1 ? 'lg:grid-cols-2' : ''} gap-4 sm:gap-5 lg:gap-6">
 ${latest.map(it => `        <article class="on-dark min-w-0 rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7 lg:p-8">
           <div class="flex items-center gap-2.5 mb-4">
             <span class="w-1.5 h-1.5 rounded-full bg-teal-400" aria-hidden="true"></span>
@@ -365,7 +366,7 @@ const section3 = () => `  <!-- ================= 03 · ARCHIVE =================
 
        The chips are a segmented switcher, which DESIGN.md files as a control rather
        than a button — same shape as the pricing period tabs. -->
-  <section id="news-archive" class="relative py-16 sm:py-20 lg:py-24 bg-[#F7F9FA]">
+  <section id="news-archive" data-component="news-archive" data-archive class="relative py-16 sm:py-20 lg:py-24 bg-[#F7F9FA]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 
       <div class="rv ${COL} mb-6 sm:mb-7">
@@ -377,7 +378,7 @@ ${eyebrow('teal-400', 'Archive')}
         <!-- the sticky band above is full-bleed on purpose, so the blur reaches the
              page edges; the chips inside it sit on the column like everything else -->
         <div class="${COL} overflow-x-auto tp-scroll">
-          <div id="topicTabs" class="flex flex-nowrap lg:flex-wrap gap-1.5 w-max lg:w-auto" role="group" aria-label="Filter updates by topic">
+          <div class="flex flex-nowrap lg:flex-wrap gap-1.5 w-max lg:w-auto" role="group" aria-label="Filter updates by topic">
           <button type="button" data-topic="all" aria-pressed="true" class="tp-btn active inline-flex items-center gap-2 whitespace-nowrap rounded-full ring-1 ring-black/5 px-3.5 py-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">All <span class="tp-n tabular-nums text-ink-500">${archive.length}</span></button>
 ${TOPICS.map(([key, label, icon]) => {
   const n = archive.filter(it => FILED[it.h] === key).length;
@@ -392,13 +393,13 @@ ${TOPICS.map(([key, label, icon]) => {
       </div>
 
 ${archiveYears.map(y => `      <div class="yr-group ${COL}" data-year="${y}">
-        <div class="flex items-baseline gap-4 mb-4 lg:mb-5" id="y${y}">
+        <div class="yr-anchor flex items-baseline gap-4 mb-4 lg:mb-5" id="y${y}">
           <h3 class="text-[22px] sm:text-[26px] font-extrabold tracking-tightest tabular-nums">${y}</h3>
-          <span class="yr-count text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-500 tabular-nums" data-total="${byYear(y).length}">${byYear(y).length} updates</span>
+          <span data-all="{total} updates" data-of="{n} of {total} updates" class="yr-count text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-500 tabular-nums" data-total="${byYear(y).length}">${byYear(y).length} updates</span>
           <span class="flex-1 h-px bg-ink-200"></span>
         </div>
 
-        <div class="rv-kids space-y-4 sm:space-y-5 mb-10 sm:mb-12 lg:mb-14">
+        <div data-stagger=".07" class="rv-kids space-y-4 sm:space-y-5 mb-10 sm:mb-12 lg:mb-14">
 ${byYear(y).map(it => {
   const [key, label, icon] = topicMeta(FILED[it.h]);
   return `          <article class="news-item rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7" data-topic="${key}">
@@ -430,228 +431,31 @@ ${body(it, false)}
            and you page through that topic, not through the whole archive with gaps in
            it. Rendered by the script, because how many pages there are depends on
            which topic is on. -->
-      <nav id="pager" class="rv ${COL} flex flex-wrap items-center justify-between gap-4 pt-2" aria-label="Archive pages">
-        <p id="pagerCount" class="text-[13px] sm:text-[13.5px] text-ink-500"></p>
+      <nav data-pager class="rv ${COL} flex flex-wrap items-center justify-between gap-4 pt-2" aria-label="Archive pages">
+        <p data-pager-count data-format="{from}–{to} of {total} updates" class="text-[13px] sm:text-[13.5px] text-ink-500"></p>
         <div class="flex items-center gap-1.5">
-          <button type="button" id="pagePrev" class="pg-step inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-2 text-[13px] font-semibold text-ink-600">
+          <button type="button" data-pager-prev class="pg-step inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-2 text-[13px] font-semibold text-ink-600">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
             Previous
           </button>
-          <div id="pageNums" class="flex items-center gap-1.5"></div>
-          <button type="button" id="pageNext" class="pg-step inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-2 text-[13px] font-semibold text-ink-600">
+          <div data-pager-nums data-page-label="Page" class="flex items-center gap-1.5"></div>
+          <button type="button" data-pager-next class="pg-step inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-2 text-[13px] font-semibold text-ink-600">
             Next
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </button>
         </div>
       </nav>
 
-      <p id="topicEmpty" hidden class="rv ${COL} text-[13.5px] sm:text-[14.5px] text-ink-500"></p>
+      <p data-archive-empty data-empty-text="Nothing filed under that topic yet." hidden class="rv ${COL} text-[13.5px] sm:text-[14.5px] text-ink-500"></p>
     </div>
   </section>`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Style and behaviour
+   Assemble — the shared page shell (build/page.js). The archive's filter and pager are
+   site.js (module news-archive), its chips, pager and links site.css (26, 27); the page
+   carries no CSS or JS of its own.
    ───────────────────────────────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  [hidden] { display: none !important; }
-  section[id] { scroll-margin-top: 100px; }
-  [id^="y20"] { scroll-margin-top: 150px; }
-
-  a:focus-visible, button:focus-visible,
-  [tabindex]:focus-visible { outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-  .bg-ink-950 a:focus-visible, .bg-ink-950 button:focus-visible { outline-color: #6ED7E8; }
-
-  .rv-kids > * { opacity:0; transform:translateY(40px); }
-  .no-motion .rv-kids > * { opacity:1 !important; transform:none !important; }
-
-  /* the pricing switcher, in the two rules that make it work */
-  /* the scrolling chip row keeps no visible scrollbar; it is a control, not a pane */
-  .tp-scroll { scrollbar-width:none; -ms-overflow-style:none; }
-  .tp-scroll::-webkit-scrollbar { display:none; }
-
-  .pg-step, .pg-num { transition:background-color .25s ease, color .25s ease, box-shadow .25s ease; }
-  .pg-step:hover:not(:disabled), .pg-num:hover:not(.on) { background:#F1F2F6; color:#111827; }
-  .pg-step:disabled { opacity:.4; cursor:default; }
-  .pg-num { min-width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center;
-    border-radius:9999px; background:#fff; box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
-    font-size:13px; font-weight:600; color:#4B5563; font-variant-numeric:tabular-nums; }
-  .pg-num.on { background:#111827; color:#fff; box-shadow:none; }
-  .pg-gap { min-width:20px; text-align:center; color:#9CA3AF; font-size:13px; }
-
-  .tp-btn { background:#fff; transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
-  .tp-btn:hover { background:#F1F2F6; }
-  .tp-btn.active { background:#111827; color:#fff; box-shadow:0 1px 2px rgba(0,0,0,.08); }
-  .tp-btn.active .tp-n { color:rgba(255,255,255,.62); }
-
-  /* a link inside an item's body. One weight and one shape; the ground picks the
-     colour, because the same paragraphs are printed on white and on ink-950. */
-  .nl { font-weight:600; text-decoration:underline; text-underline-offset:2px;
-        transition:color .2s ease, text-decoration-color .2s ease; }
-  .nl { color:#06748A; text-decoration-color:rgba(6,116,138,.32); }
-  .nl:hover { color:#111827; text-decoration-color:rgba(17,24,39,.45); }
-  .on-dark .nl { color:#6ED7E8; text-decoration-color:rgba(110,215,232,.35); }
-  .on-dark .nl:hover { color:#fff; text-decoration-color:rgba(255,255,255,.6); }
-</style>`;
-
-const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-
-  /* ---- filter, then page. The filter hides; the pager hides further. Neither ever
-          moves an item, so what you read is always the archive in its own order. ---- */
-  const PER_PAGE = 20;
-  const tabs = [...document.querySelectorAll('#topicTabs .tp-btn')];
-  const groups = [...document.querySelectorAll('.yr-group')];
-  const all = [...document.querySelectorAll('.news-item')];
-  const empty = document.getElementById('yearEmpty') || document.getElementById('topicEmpty');
-  const pager = document.getElementById('pager');
-  const pagerCount = document.getElementById('pagerCount');
-  const pageNums = document.getElementById('pageNums');
-  const prev = document.getElementById('pagePrev');
-  const next = document.getElementById('pageNext');
-
-  let topic = 'all';
-  let page = 1;
-
-  const numbers = (current, total) => {
-    /* 1 … c-1 c c+1 … n, without ever printing a gap that hides a single page */
-    const want = new Set([1, total, current, current - 1, current + 1]);
-    if (current <= 3) [2, 3, 4].forEach(n => want.add(n));
-    if (current >= total - 2) [total - 1, total - 2, total - 3].forEach(n => want.add(n));
-    const list = [...want].filter(n => n >= 1 && n <= total).sort((x, y) => x - y);
-    const out = [];
-    list.forEach((n, i) => {
-      if (i && n - list[i - 1] > 1) out.push(n - list[i - 1] === 2 ? list[i - 1] + 1 : null);
-      out.push(n);
-    });
-    return out;
-  };
-
-  const render = (scroll) => {
-    const set = all.filter(el => topic === 'all' || el.dataset.topic === topic);
-    const total = Math.max(1, Math.ceil(set.length / PER_PAGE));
-    if (page > total) page = total;
-    const from = (page - 1) * PER_PAGE;
-    const shown = set.slice(from, from + PER_PAGE);
-    const on = new Set(shown);
-
-    all.forEach(el => { el.hidden = !on.has(el); });
-
-    groups.forEach(g => {
-      const n = [...g.querySelectorAll('.news-item')].filter(el => !el.hidden).length;
-      g.hidden = n === 0;
-      const c = g.querySelector('.yr-count');
-      if (c) {
-        const all_ = c.dataset.total;
-        c.textContent = (n === +all_ ? all_ : n + ' of ' + all_) + ' updates';
-      }
-    });
-
-    tabs.forEach(t => {
-      const active = t.dataset.topic === topic;
-      t.classList.toggle('active', active);
-      t.setAttribute('aria-pressed', active ? 'true' : 'false');
-    });
-
-    empty.hidden = set.length > 0;
-    if (!set.length) empty.textContent = 'Nothing filed under that topic yet.';
-
-    pager.hidden = set.length <= PER_PAGE;
-    pagerCount.textContent = set.length
-      ? (from + 1) + '–' + (from + shown.length) + ' of ' + set.length + ' updates'
-      : '';
-    prev.disabled = page === 1;
-    next.disabled = page === total;
-
-    pageNums.innerHTML = '';
-    numbers(page, total).forEach(n => {
-      if (n === null) {
-        const s = document.createElement('span');
-        s.className = 'pg-gap'; s.textContent = '…'; s.setAttribute('aria-hidden', 'true');
-        pageNums.appendChild(s);
-        return;
-      }
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'pg-num' + (n === page ? ' on' : '');
-      b.textContent = n;
-      b.setAttribute('aria-label', 'Page ' + n);
-      if (n === page) b.setAttribute('aria-current', 'page');
-      b.addEventListener('click', () => { page = n; render(true); });
-      pageNums.appendChild(b);
-    });
-
-    if (window.ScrollTrigger) ScrollTrigger.refresh();
-    if (scroll) {
-      const top = document.getElementById('news-archive');
-      if (top) top.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    }
-  };
-
-  tabs.forEach(t => t.addEventListener('click', () => { topic = t.dataset.topic; page = 1; render(false); }));
-  prev.addEventListener('click', () => { if (page > 1) { page--; render(true); } });
-  next.addEventListener('click', () => { page++; render(true); });
-  render(false);
-
-
-  /* ---- reveals ---- */
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const rvs = gsap.utils.toArray('.rv');
-  const inView = rvs.filter(el => el.getBoundingClientRect().top < innerHeight * .9);
-  inView.forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      delay: .1 + (el.getBoundingClientRect().top / innerHeight) * .3 });
-  });
-  rvs.filter(el => !inView.includes(el)).forEach(el => {
-    gsap.to(el, { opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 70%' } });
-  });
-
-  gsap.utils.toArray('.rv-kids').forEach(group => {
-    gsap.to(group.children, { opacity: 1, y: 0, duration: .7, ease: 'power2.out', stagger: .07,
-      scrollTrigger: { trigger: group, start: 'top 80%' } });
-  });
-})();
-<\/script>`;
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Assemble
-   ───────────────────────────────────────────────────────────────────────────── */
-const donor = fs.readFileSync(path.join(__dirname, 'shell', 'head-cdn.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + COPY.title + '</title>');
-if (/name="description"/.test(head)) {
-  head = head.replace(/<meta name="description"[^>]*>/,
-    '<meta name="description" content="' + COPY.meta + '" />');
-} else {
-  head = head.replace('<title>', '<meta name="description" content="' + COPY.meta + '" />\n<title>');
-}
-head = head.replace('<title>', '<link rel="canonical" href="' + COPY.canonical + '" />\n<title>');
-
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
-const html = head + STYLE + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${[section1, section2, section3].map(f => f()).join('\n\n')}
-</main>
-
-<footer></footer>
-
-${SCRIPT}
-</body>
-</html>
-`;
+const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: [section1, section2, section3].map(f => f()) });
 
 fs.writeFileSync(path.join(SITE, OUT), html);
 

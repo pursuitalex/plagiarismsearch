@@ -21,7 +21,8 @@
 */
 const fs = require('fs');
 const path = require('path');
-const { page, style } = require('./article');
+const { page } = require('./article');
+const shell = require('./page');
 
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
@@ -123,70 +124,10 @@ const { html: articleHtml, headings, words } = page({
 });
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Assemble — the same head handling as every other page
+   Assemble — the shared page shell (build/page.js). The template's CSS and the reveals
+   are in site.css / site.js; the page carries none of its own.
    ───────────────────────────────────────────────────────────────────────────── */
-const STYLE = `
-<style>
-  [hidden] { display: none !important; }
-  section[id] { scroll-margin-top: 100px; }
-
-  a:focus-visible, button:focus-visible,
-  [tabindex]:focus-visible { outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
-
-${style}
-
-  /* a link inside body copy */
-  .nl { font-weight:600; color:#06748A; text-decoration:underline;
-        text-decoration-color:rgba(6,116,138,.32); text-underline-offset:2px;
-        word-break:break-word; transition:color .2s ease, text-decoration-color .2s ease; }
-  .nl:hover { color:#111827; text-decoration-color:rgba(17,24,39,.45); }
-</style>`;
-
-const SCRIPT = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script>
-(() => {
-  'use strict';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.gsap) { document.documentElement.classList.add('no-motion'); return; }
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.utils.toArray('.rv').forEach(el => {
-    const inView = el.getBoundingClientRect().top < innerHeight * .9;
-    gsap.to(el, inView
-      ? { opacity: 1, y: 0, duration: .7, ease: 'power2.out', delay: .1 }
-      : { opacity: 1, y: 0, duration: .7, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 80%' } });
-  });
-})();
-<\/script>`;
-
-const donor = fs.readFileSync(path.join(__dirname, 'shell', 'head-cdn.html'), 'utf8');
-let head = donor.slice(0, donor.indexOf('<body'));
-head = head.replace(/<title>[\s\S]*?<\/title>/, '<title>' + src.meta.title + '</title>');
-if (/name="description"/.test(head)) {
-  head = head.replace(/<meta name="description"[^>]*>/,
-    '<meta name="description" content="' + src.meta.description + '" />');
-} else {
-  head = head.replace('<title>', '<meta name="description" content="' + src.meta.description + '" />\n<title>');
-}
-head = head.replace('<title>', '<link rel="canonical" href="' + src.url + '" />\n<title>');
-
-const bodyTag = donor.slice(donor.indexOf('<body'), donor.indexOf('>', donor.indexOf('<body')) + 1);
-
-const out = head + STYLE + '\n' + bodyTag + `
-<div class="grain"></div>
-
-<header></header>
-
-<main>
-${articleHtml}
-</main>
-
-<footer></footer>
-
-${SCRIPT}
-</body>
-</html>
-`;
+const out = shell.render({ title: src.meta.title, meta: src.meta.description, canonical: src.url, sections: [articleHtml] });
 
 fs.writeFileSync(path.join(SITE, OUT), out);
 

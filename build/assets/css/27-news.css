@@ -1,0 +1,29 @@
+/* ═══ 27 · the news archive (Newsroom) ═══════════════════════════════════════════
+   Topic chips, the pager and the year anchors. Behaviour: site.js, module news-archive.
+   Values verbatim from the page's former <style>. */
+
+/* the scrolling chip row keeps no visible scrollbar; it is a control, not a pane */
+.tp-scroll { scrollbar-width:none; -ms-overflow-style:none; }
+.tp-scroll::-webkit-scrollbar { display:none; }
+
+/* topic chips — the pricing switcher's shape */
+.tp-btn { background:#fff; transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+.tp-btn:hover { background:#F1F2F6; }
+.tp-btn.active { background:#111827; color:#fff; box-shadow:0 1px 2px rgba(0,0,0,.08); }
+.tp-btn.active .tp-n { color:rgba(255,255,255,.62); }
+
+/* the pager */
+.pg-step, .pg-num { transition:background-color .25s ease, color .25s ease, box-shadow .25s ease; }
+.pg-step:hover:not(:disabled), .pg-num:hover:not(.on) { background:#F1F2F6; color:#111827; }
+.pg-step:disabled { opacity:.4; cursor:default; }
+.pg-num { min-width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center;
+  border-radius:9999px; background:#fff; box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
+  font-size:13px; font-weight:600; color:#4B5563; font-variant-numeric:tabular-nums; }
+.pg-num.on { background:#111827; color:#fff; box-shadow:none; }
+.pg-gap { min-width:20px; text-align:center; color:#9CA3AF; font-size:13px; }
+
+/* a year heading clears the site header and the sticky chip band above it */
+.yr-anchor { scroll-margin-top:150px; }
+
+/* the glow behind the latest year */
+.orb-news-violet { width:760px; height:700px; right:-12%; top:-280px; background:rgba(154,106,222,.18); }

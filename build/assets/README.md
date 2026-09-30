@@ -1,12 +1,13 @@
 # Shared production assets
 
 Replaces the Tailwind Play CDN and the `<style>`/`<script>` blocks that every page
-carried. **Status: all 11 master pages are on it** (Home v2, Students, PDF, UA,
-Organization, University v2, Turnitin, Pricing v2, API v2, AI Detector v2, Moodle
-Integration). Each one was migrated and passed its parity run against the approved page
-at commit `04c8e24`. The design-system page is on it too, checked against its approved
-version at `db7d735`. Pages that are not masters (stubs, legal, manuals, v1 pages) still use
-the CDN.
+carried. **Status: all 11 master pages are on it** (Home, Students, PDF, UA, Organization,
+University, Turnitin, Pricing, API, AI Detector, Moodle Integration). Each one was migrated
+and passed its parity run against the approved page at commit `04c8e24`. The
+design-system page is on it too (checked against `db7d735`), and so are the report guide
+and the Newsroom (checked against `40f96a2`). The v1 pages were retired on 2026-09-30.
+The remaining hand-written pages (stubs, legal, manuals, the blog, account and the old
+tools) still use the CDN, with their head from `build/shell/head-cdn.html`.
 
 The design-system page adds two files of its own, `ds.css` and `ds.js` (source
 `build/assets/ds/`, linked with `head({ ds: true })`): the spec sheet around the
@@ -93,7 +94,7 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 | Module | Hook | Does |
 |---|---|---|
 | header | `[data-site-header]`, `[data-nav-burger]`, `[data-nav-panel]`, `[data-to-top]` | phone dock, burger, back to top |
-| motion | `.rv`, `.rv-kids` (`data-stagger`), `.pen-word`, `.ring-word` | reveals and marks |
+| motion | `.rv`, `.rv-kids` (`data-stagger`), `.pen-word`, `.ring-word`; on an ancestor `data-rv-start`, `data-rv-delay` | reveals and marks |
 | hero-title | `[data-hero-title]` + `[data-hero-support]` | words rise, support follows, pen draws |
 | odometer | `.od-num` | statistics roll |
 | checker | `form[data-checker]`, `[data-checker-text]`, `[data-checker-count]`, `[data-switch]` | count, switches; an in-page link to the form focuses its field |
@@ -109,6 +110,7 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 | ai-check | `form[data-ai-check]`, `[data-too-short]`, `[data-auth-gate]` | the AI checker flow |
 | doc-nav | `[data-doc-nav]`, `[data-spy]`, `details[data-jump]`, `[data-jump-now]` | section spy, jump menu |
 | modal | `[data-modal-open="id"]`, `.md`, `[data-close]` | open, close, Escape, focus trap and return |
+| news-archive | `[data-archive]`, `.tp-btn[data-topic]`, `.news-item`, `.yr-group`, `[data-pager]` (`-count`, `-nums`, `-prev`, `-next`), `[data-archive-empty]` | topic filter and pager; words in data-* |
 
 Component recipes with no behaviour live in `site.css` only: buttons (`.btn`), badge,
 field (`.fld`), checkbox, radio and chipset (`05-recipes`), and the checker's states

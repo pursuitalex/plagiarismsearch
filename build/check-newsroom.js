@@ -166,8 +166,10 @@ console.log('\n' + FILE + ' — the live archive, carried over\n');
 
   /* pagination — twenty to a page, and every item still in the document so a reader
      without JavaScript, and a crawler, still get the whole archive */
-  ok('the pager is on the page', /id="pager"/.test(body) && /id="pageNums"/.test(body));
-  ok('20 to a page', /const PER_PAGE = 20;/.test(html));
+  /* on the shared assets the pager is found by data-* and the paging lives in site.js */
+  ok('the pager is on the page', (/id="pager"/.test(body) && /id="pageNums"/.test(body)) || (/data-pager\b/.test(body) && /data-pager-nums\b/.test(body)));
+  ok('20 to a page', /const PER_PAGE = 20;/.test(html) ||
+     /const PER_PAGE = 20;/.test(fs.readFileSync(path.join(__dirname, 'assets', 'js', '47-news-archive.js'), 'utf8')));
   const hiddenItems = (body.match(/<article[^>]+class="news-item[^"]*"[^>]*hidden/g) || []).length;
   ok('nothing is hidden in the delivered HTML', hiddenItems === 0, hiddenItems + ' pre-hidden');
 }

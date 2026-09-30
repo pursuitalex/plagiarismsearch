@@ -4,6 +4,46 @@
    byRef['<commit>']: acceptances that hold only against that baseline (the decisions
    taken when the page moved off it), so --ref=<commit> reproduces that comparison. */
 module.exports = {
+  'newsroom.html': {
+    /* against 40f96a2, the newsroom before the static assets (on the CDN): */
+    byRef: { '40f96a2': {
+      accept: {
+        burgerOpen: 'the phone menu opens: the approved page never loaded the burger script, the shared header module wires it',
+      },
+      /* the hero's dot field ends mid-pixel at 1440 (SVG <pattern> then, CSS background now):
+         one row, 11/255 at most; geometry identical. Measured 2026-09-30. */
+      acceptPixels: { 1440: { maxPx: 160, maxDelta: 11, reason: 'the dot field\'s last row, cut mid-pixel at the hero edge; geometry identical' } },
+    } },
+    /* the archive: a topic filters, the pager pages the filtered set */
+    async behaviour(page, width, { sleep }) {
+      const nav = 'nav[aria-label="Archive pages"]';
+      if (!(await page.locator(nav).count())) return {};
+      const read = () => page.evaluate(n => {
+        const items = [...document.querySelectorAll('.news-item')];
+        const shown = items.filter(i => !i.hidden).length;
+        const years = [...document.querySelectorAll('.yr-group')].map(g => (g.hidden ? '-' : g.querySelector('.yr-count').textContent)).join('|');
+        const p = document.querySelector(n);
+        const tabs = [...document.querySelectorAll('.tp-btn')].map(t => +t.classList.contains('active') + (t.getAttribute('aria-pressed') || '')[0]).join('');
+        const nums = [...p.querySelectorAll('.pg-num, .pg-gap')].map(b => b.textContent + (b.classList.contains('on') ? '*' : '')).join(' ');
+        return [shown, years, tabs, p.hidden, p.querySelector('p').textContent, nums].join(' / ');
+      }, nav);
+      const r = { archiveStart: await read() };
+      await page.locator(nav + ' button', { hasText: 'Next' }).click(); await sleep(900);
+      r.archivePage2 = await read();
+      await page.locator('.tp-btn').nth(1).click(); await sleep(400);
+      r.archiveTopic = await read();
+      return r;
+    },
+  },
+  'plagiarism-and-ai-check-report.html': {
+    /* against 40f96a2, the guide before the static assets (on the CDN): */
+    byRef: { '40f96a2': {
+      accept: {
+        burgerOpen: 'the phone menu opens: the approved page never loaded the burger script, the shared header module wires it',
+        focusRings: 'links on the dark footer take the light ring (data-surface="dark"), as on every other page; the approved page had no dark-ground rule',
+      },
+    } },
+  },
   'design-system.html': {
     /* the spec sheet is not built from site sections, so there is nothing to reuse */
     reuse: false,
