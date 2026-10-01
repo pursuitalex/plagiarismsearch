@@ -26,7 +26,7 @@ const path = require('path');
 const page = require('./page');
 const cta = require('./sections/cta-band');
 const faq = require('./sections/faq');   /* the FAQ: one library template */
-const { dotField } = require('./dots');
+const hero = require('./sections/hero');   /* the hero: one library template; the sheet of facts is its sealed slot */
 
 const SITE = path.join(__dirname, '..', 'site');
 const OUT = 'affiliate-program-at-plagiarismsearch.html';
@@ -202,27 +202,16 @@ const I = {
 const section1 = () => `  <!-- ================= 01 · HERO / AFFILIATE PROGRAM =================
        The live page's four hero facts become the visual: one double-bezel sheet, four
        cells, each fact in its own words. No dashboard is drawn — the page has no
-       screenshot of it we could show honestly. -->
-  <section id="affiliate-program" data-component="hero-facts" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dotField()}
-    <div class="orb absolute orb-hero-teal"></div>
-    <div class="orb absolute orb-hero-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
-
-        <div class="rv min-w-0">
-${eyebrow('teal-400', COPY.hero.eyebrow)}
-          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">${penMark(COPY.hero.h1, 'Your Audience')}</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[60ch] mb-7 lg:mb-8">${COPY.hero.p}</p>
-          <div class="flex flex-wrap items-center gap-3 sm:gap-4">
-            ${btnDark(COPY.hero.primary, JOIN)}
-            <a href="#how-it-works" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.hero.secondary}</a>
-          </div>
-        </div>
-
-        <div class="rv min-w-0">
-          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+       screenshot of it we could show honestly.
+       The hero is the library's (build/sections/hero.js), layout "hub"; the sheet of
+       facts is its sealed slot. -->
+${hero.section({
+    id: 'affiliate-program', layout: 'hub',
+    eyebrow: COPY.hero.eyebrow,
+    title: COPY.hero.h1, pen: 'Your Audience',
+    lead: COPY.hero.p,
+    actions: { button: { label: COPY.hero.primary, href: JOIN }, link: { label: COPY.hero.secondary, href: '#how-it-works' } },
+    media: `          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
             <ul class="grid md:grid-cols-2 divide-y md:divide-y-0 divide-ink-100 rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden" role="list">
 ${COPY.hero.facts.map(([lead, rest, icon], i) => `              <li class="${i === 0 ? 'bg-ink-950 text-white ' : ''}p-5 sm:p-6 lg:p-7"${i === 0 ? ' data-surface="dark"' : ''}>
                 ${i === 0
@@ -232,11 +221,8 @@ ${COPY.hero.facts.map(([lead, rest, icon], i) => `              <li class="${i =
                 <p class="mt-1.5 ${BODY} ${i === 0 ? 'text-white/60' : 'text-ink-600'}">${rest}</p>
               </li>`).join('\n')}
             </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+          </div>`,
+  })}`;
 
 /* ═══════════════ 02 · THE THREE TOOLS ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · AFFILIATE TOOLS =================

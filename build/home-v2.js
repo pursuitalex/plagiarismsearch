@@ -216,15 +216,8 @@ const eyebrow = (text, dark = false) => `<div class="inline-flex items-center ga
 /* one word takes the accent colour, then its underline draws itself */
 const pen = w => `<span class="pen-word relative inline-block">${w}<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span>`;
 
-/* One word of the hero title inside a box that clips it, so the word can rise out of
-   nothing on load. The box is a plain rectangle: a transform inside a rounded clip
-   squares off its corners in Chrome, inside a square one it costs nothing.
-
-   Padding carries the clip below the baseline so the g in Plagiarism keeps its tail,
-   and the negative margin hands that space straight back, so the line box is the same
-   height it was. Compose it inside pen(), never around it — pen hangs its underline
-   below the word on an absolute, and a mask around the pair would cut the mark off. */
-const hw = w => `<span class="hw"><span class="hw-in">${w}</span></span>`;
+/* (The hero title's words — each in the box that clips it so it can rise on load — are
+   written by the hero template now: build/sections/hero.js.) */
 
 /* v1 closes by ringing a word rather than underlining it. Same idea as pen(), drawn
    as a loop, and reserved for the last thing on the page: the closing band's template
@@ -335,9 +328,9 @@ const cta = require('./sections/cta-band');
 const pricing = require('./pricing');
 const page = require('./page');
 const faq = require('./sections/faq');   /* the FAQ: one library template */
-/* the quick-check form is shared too — build/checker.js — so Students and PDF render
-   the same component; the homepage's markup is unchanged */
-const checker = require('./checker');
+/* the hero is the library's; it renders the shared quick-check form (build/checker.js)
+   in its sealed slot, so Students and PDF show the same component */
+const hero = require('./sections/hero');
 
 const section1 = () => `
   <!-- ================= 01 · HERO / REAL CHECKER =================
@@ -346,24 +339,15 @@ const section1 = () => `
        the two checks beside the button under a rule.
 
        It is the page's primary object, per the hero rule: no decorative report
-       stands in for it. Inert — no action, submit returns false. -->
-  <section id="checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      ${dotField()}
-      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-48 -top-40"></div>
-      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40"></div>
-    </div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="max-w-[760px] mx-auto text-center mb-8 sm:mb-10 lg:mb-12">
-        <h1 data-hero-title class="${H2} mb-5 lg:mb-6">${hw('Plagiarism')} ${pen(hw('Checker'))}</h1>
-        <p data-hero-support class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed">${S.s1.support}</p>
-      </div>
-
-${checker.form(S.s1, '#checker', { text: 'checker-text' }, { static: true })}
-
-${checker.free(S.s1)}
-    </div>
-  </section>`;
+       stands in for it. Inert — no action, submit returns false.
+       The hero is the library's (build/sections/hero.js), layout "center": the head
+       centred over the form, the title at section scale, its words rising one by one. -->
+${hero.section({
+    id: 'checker', layout: 'center',
+    title: S.s1.h1, pen: 'Checker', penWidth: 120, rise: true,
+    lead: S.s1.support,
+    checker: { copy: S.s1, textId: 'checker-text' },
+  })}`;
 
 const section2 = () => `
   <!-- ================= 02 · COMPACT TRUST RAIL =================

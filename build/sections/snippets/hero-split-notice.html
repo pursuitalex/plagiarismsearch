@@ -1,0 +1,88 @@
+<section id="example-hero-notice" data-component="hero" class="hero" data-layout="split-aside">
+  <div class="dot-field hero-dots" aria-hidden="true"></div>
+  <div class="orb orb-hero-teal"></div>
+  <div class="orb orb-hero-coral"></div>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-head rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Independent plagiarism checking</span>
+        </div>
+        <h1 class="hero-title" data-size="long">An <span class="pen-word">Independent<svg class="pen-mark" viewBox="0 0 198 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c50-7 133-7 192-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span> Alternative to Turnitin® for Plagiarism Checking</h1>
+        <p class="hero-lead">Looking for a plagiarism check you can run directly? PlagiarismSearch lets individuals upload or paste their own content, review matching passages and sources, and use self-service plagiarism checking without an institutional PlagiarismSearch setup.</p>
+      </div>
+      <div class="hero-media">
+        <div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+          <form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+
+            <label for="example-hero-notice-text" class="sr-only">Paste or type your text here</label>
+            <!-- the count belongs to the text, so it sits in the corner of the field
+                 rather than in a footer two rows away from what it counts -->
+            <div class="relative mb-4">
+              <textarea id="example-hero-notice-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
+              <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span data-checker-count>0</span> / 150 words</span>
+            </div>
+
+            <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                 formats line it carried reappears under the input chips instead. The two
+                 are exclusive — one display query, never both on screen — so the approved
+                 sentence still appears exactly once at any width. -->
+            <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+              <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+                <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
+              </span>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+            </div>
+            <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
+
+            <!-- The two checks sit beside the button they modify, not in a row of their own.
+                 The row itself never wraps: the button keeps the right edge at every width,
+                 and it is the checks that give — side by side where they fit, stacked below
+                 640 where the pair needs about 300px and the form only has 295. -->
+            <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+              <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <span class="sw on" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <span class="sw" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
+                </label>
+              </div>
+              <a href="#example-hero-notice" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                Check for plagiarism
+                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+            </div>
+          </form>
+        </div>
+        <p class="hero-free">
+          <svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          150 words free — no registration required.
+        </p>
+      </div>
+      <div class="hero-aside rv">
+        <div class="hero-notice">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+          <p class="hero-notice-text">PlagiarismSearch is an independent service. It is not affiliated with or endorsed by Turnitin, LLC and does not generate Turnitin Similarity Reports.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

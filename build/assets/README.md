@@ -64,7 +64,8 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
    of `<main>` has a stable root hook, `data-component="…"`, and the behaviour hooks it
    needs (catalogue below). A library component (the registry is `build/sections/index.js`:
    the FAQ with the Section Header since the pilot of 2026-09-30, the CTA band, the
-   Banner and the Inquiry form since 2026-10-01) is written with semantic classes instead: one template in
+   Banner and the Inquiry form since 2026-10-01, and wave 2 the same day: the Hero, with
+   the Action and Icon tile primitives) is written with semantic classes instead: one template in
    `build/sections/<name>.js` called by every generator (a hand-written page carries the
    same markup), its CSS in `build/sections/<name>.css` compiled with `@apply` in the
    Tailwind run (between components and utilities, outside `@layer`), variants as `data-*`
@@ -110,8 +111,9 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 | Module | Hook | Does |
 |---|---|---|
 | header | `[data-site-header]`, `[data-nav-burger]`, `[data-nav-panel]`, `[data-to-top]` | phone dock, burger, back to top |
+| pen-mark | `.pen-word > svg.pen-mark` (the library hero) | redraws the underline for a word of another length (an edited word); a line that fits is left as written |
 | motion | `.rv`, `.rv-kids` (`data-stagger`), `.pen-word`, `.ring-word`; on an ancestor `data-rv-start`, `data-rv-delay` | reveals and marks |
-| hero-title | `[data-hero-title]` + `[data-hero-support]` | words rise, support follows, pen draws |
+| hero-title | `[data-hero-title]` + `[data-hero-support]` | words rise, support follows, pen draws; a bare word typed into the title gets its clip box (`.hw > .hw-in`) at load |
 | odometer | `.od-num` | statistics roll |
 | checker | `form[data-checker]`, `[data-checker-text]`, `[data-checker-count]`, `[data-switch]` | count, switches; an in-page link to the form focuses its field |
 | form-arrive | `form[data-focus-first="ms"]` | a link to the form focuses its first field |

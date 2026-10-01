@@ -38,8 +38,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'ua-plagiarism-check.html';
 const cta = require('./sections/cta-band');
 const banner = require('./sections/banner');
-const checker = require('./checker');
-const { dotField } = require('./dots');
+const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const { REVIEWS, reviewCard } = require('./reviews');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
@@ -231,27 +230,15 @@ const section1 = () => `  <!-- ================= 01 · CHECKER-FIRST HERO ======
        The shared form (build/checker.js) on the right, the page's name and its one
        paragraph on the left; the approved free line sits under the form, where the limit
        applies. The form's own labels are the product's interface and stay as they are.
-       DOM order H1 → form, so a phone opens on the checker. No second CTA beside it. -->
-  <section id="checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dotField()}
-    <div class="orb absolute orb-hero-teal"></div>
-    <div class="orb absolute orb-hero-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-x-14 gap-y-8 items-center">
-        <div class="rv min-w-0">
-          <h1 class="text-[clamp(2.4rem,5.2vw,3.85rem)] font-extrabold tracking-tightest leading-[1.04] mb-5 lg:mb-6">${penMark(COPY.hero.h1, 'онлайн')}</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[52ch]">${COPY.hero.support}</p>
-        </div>
-        <div class="min-w-0">
-          <div lang="en">
-${checker.form(COPY.hero, ANCHOR, { text: 'ua-checker-text' }, { static: true })}
-          </div>
-${checker.free(COPY.hero).replace('flex items-center justify-center gap-2', 'flex items-start sm:items-center justify-center gap-2 text-center')}
-        </div>
-      </div>
-    </div>
-  </section>`;
+       DOM order H1 → form, so a phone opens on the checker. No second CTA beside it.
+       The hero is the library's (build/sections/hero.js), layout "split": two blocks,
+       centred, with this page's own proportions; the form is marked as English. -->
+${hero.section({
+    id: ANCHOR.slice(1), layout: 'split',
+    title: COPY.hero.h1, pen: 'онлайн',
+    lead: COPY.hero.support,
+    checker: { copy: COPY.hero, textId: 'ua-checker-text', lang: 'en' },
+  })}`;
 
 /* ═══════════════ 02 · THE REPORT ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · SIGNATURE · WHAT YOU GET =================

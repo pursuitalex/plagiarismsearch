@@ -19,8 +19,11 @@
                                             must be rejected, and edits that must pass
 
    The Section Header (section-head.js / .css) is a primitive hosted by components, not a
-   component of its own: each host's check validates the head it holds. */
+   component of its own: each host's check validates the head it holds. So are the Action
+   (action.js / .css — the in-section button and quiet link) and the Icon tile
+   (icon-tile.js / .css); check-tools.js holds their rules for every host. */
 module.exports = [
+  { name: 'hero', title: 'Hero', contract: require('./hero.contract'), check: require('./hero.check') },
   { name: 'faq', title: 'FAQ', contract: require('./faq.contract'), check: require('./faq.check') },
   { name: 'cta-band', title: 'CTA band', contract: require('./cta-band.contract'), check: require('./cta-band.check') },
   { name: 'banner', title: 'Banner', contract: require('./banner.contract'), check: require('./banner.check') },

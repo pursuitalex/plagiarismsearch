@@ -33,7 +33,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'university-plagiarism-checker.html';
 const cta = require('./sections/cta-band');
-const { dotField } = require('./dots');
+const hero = require('./sections/hero');   /* the hero: one library template; the diagram is its sealed slot */
 const banner = require('./sections/banner');
 const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
@@ -304,31 +304,18 @@ const section1 = () => `  <!-- ================= 01 · INSTITUTIONAL HERO ======
        Positioning. The visual is the three outcomes the brief names — Review, Manage,
        Integrate — as one system: three lanes joined by one bracket. Not the v1
        stack of deployment cards, which now lives in section 05 where the decision
-       belongs. No checker form, no dashboard, no stock photograph. -->
-  <section id="university-plagiarism-checker" data-component="hero-hub" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dotField()}
-    <div class="orb absolute orb-hero-teal"></div>
-    <div class="orb absolute orb-hero-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
-
-      <div class="rv min-w-0">
-${eyebrow('teal-400', COPY.s1.eyebrow)}
-        <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">${penMark(COPY.s1.h1, 'University')}</h1>
-        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[62ch] mb-7 lg:mb-8">${COPY.s1.support}</p>
-
-        <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 lg:mb-7">
-          ${btnDark(COPY.s1.primary, COPY.s1.primaryHref)}
-          <a href="${COPY.s1.secondaryHref}" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s1.secondary}</a>
-        </div>
-
-        <p class="text-[13px] sm:text-[13.5px] text-ink-500">${COPY.s1.line}</p>
-      </div>
-
-      <!-- the hub: three outcomes joined by one bracket. Every word is the brief's. -->
-      <div class="rv min-w-0">
-${panel(`            <!-- one bracket on the left joins the three lanes: rounded corners, its arms
+       belongs. No checker form, no dashboard, no stock photograph.
+       The hero is the library's (build/sections/hero.js), layout "hub"; the diagram is
+       its sealed slot. -->
+${hero.section({
+    id: 'university-plagiarism-checker', layout: 'hub',
+    eyebrow: COPY.s1.eyebrow,
+    title: COPY.s1.h1, pen: 'University',
+    lead: COPY.s1.support, measure: '62',
+    actions: { button: { label: COPY.s1.primary, href: COPY.s1.primaryHref }, link: { label: COPY.s1.secondary, href: COPY.s1.secondaryHref } },
+    note: COPY.s1.line,
+    /* the hub: three outcomes joined by one bracket. Every word is the brief's. */
+    media: panel(`            <!-- one bracket on the left joins the three lanes: rounded corners, its arms
                  meeting the first and last tile, a stub to the middle one. No node — the
                  bracket is the "one system". -->
             <div class="relative pl-5 sm:pl-6">
@@ -345,11 +332,8 @@ ${COPY.s1.outcomes.map(([name, body]) => `                <div class="rounded-2x
                   </div>
                 </div>`).join('\n')}
               </div>
-            </div>`)}
-      </div>
-      </div>
-    </div>
-  </section>`;
+            </div>`),
+  })}`;
 
 /* ═══════════════ 02 · REPORT EVIDENCE ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · REPORT EVIDENCE =================

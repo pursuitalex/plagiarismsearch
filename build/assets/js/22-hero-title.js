@@ -11,6 +11,22 @@ PS.module('hero-title', () => {
   document.querySelectorAll('[data-hero-title]').forEach(title => {
     if (title.dataset.heroTitleReady) return;
     title.dataset.heroTitleReady = '1';
+    /* A word typed into the title in the CMS has no clip box (.hw > .hw-in): give it one,
+       so an editor writes plain words and never the spans. A title written by the
+       template has none bare, and is left as it is. */
+    const box = node => [...node.childNodes].forEach(n => {
+      if (n.nodeType === 1 && n.classList.contains('pen-word')) return box(n);
+      if (n.nodeType !== 3 || !n.nodeValue.trim()) return;
+      const frag = document.createDocumentFragment();
+      n.nodeValue.split(/(\s+)/).forEach(part => {
+        if (!part.trim()) { if (part) frag.append(' '); return; }
+        const hw = document.createElement('span'), inner = document.createElement('span');
+        hw.className = 'hw'; inner.className = 'hw-in'; inner.textContent = part;
+        hw.append(inner); frag.append(hw);
+      });
+      n.replaceWith(frag);
+    });
+    box(title);
     const words = [...title.querySelectorAll('.hw-in')];
     if (!words.length) return;
     const support = (title.closest('section') || document).querySelector('[data-hero-support]');

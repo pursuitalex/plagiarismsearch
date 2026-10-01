@@ -126,7 +126,9 @@ console.log('\nthe checker');
   const ctas = [...body.matchAll(/href="#student-checker"/g)].length;
   ok('the workflow, free-entry and closing CTAs all return to the one checker', ctas >= 3, ctas + ' links');
   ok('the free line appears in the hero and the close', (text.match(/150 words free — no registration required\./g) || []).length === 2);
-  ok('the hero is not the homepage composition', /grid lg:grid-cols-\[\.95fr_1\.05fr\]/.test(hero) && !/max-w-\[760px\] mx-auto text-center/.test(hero));
+  /* the library hero (build/sections/hero.js): two columns with the path under the text,
+     not the homepage's centred head over the form */
+  ok('the hero is not the homepage composition', /data-layout="split-aside"/.test(hero) && !/data-layout="center"/.test(hero));
 }
 
 /* ── the report and the principle ───────────────────────────────────────────── */

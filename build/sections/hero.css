@@ -1,0 +1,232 @@
+/* ═══ Hero — library component ══════════════════════════════════════════════════════
+   Template: build/sections/hero.js · contract: build/sections/hero.contract.js
+   Behaviour: build/assets/js/20-motion.js (.rv reveals, the .pen-word mark),
+   22-hero-title.js (the rising words of [data-hero-title]), 18-pen-mark.js (redraws the
+   underline for an edited word), 30-checker.js (the quick-check form in the slot)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The page's first section, on the tint: a dot field under two glows, the page's H1 with
+   one word underlined by the pen mark, and ONE object beside or under it — the real
+   checker, or a diagram. Four approved layouts (data-layout on the section):
+
+   section.hero[data-layout="split-aside"]     text + aside left, the checker right (Students, PDF, Turnitin)
+     .dot-field.hero-dots  .orb.orb-hero-teal  .orb.orb-hero-coral     the ground, in the section
+     .hero-inner
+       .hero-grid                              .95fr / 1.05fr, three blocks: on a phone head → checker → aside
+         .hero-head.rv                         (.section-eyebrow)  h1.hero-title  p.hero-lead
+         .hero-media                           [data-slot="checker"]  p.hero-free
+         .hero-aside.rv                        one of: ol.hero-path · .hero-facts (+ p.hero-aside-more) · .hero-notice
+
+   section.hero[data-layout="split"]           the same without an aside, the two columns centred;
+                                               .9fr / 1.1fr and a slightly smaller title (the Ukrainian page)
+
+   section.hero[data-layout="hub"]             text left (1.1fr / 1fr), a diagram right (Business, University, Affiliate)
+         .hero-head.rv                         (.section-eyebrow)  h1.hero-title  p.hero-lead (1–2)
+                                               (.hero-actions > a.action-button, a.action-link)  (p.hero-note)
+         .hero-media.rv                        [data-slot="media"] — a diagram or a card, sealed
+
+   section.hero[data-layout="center"]          the homepage: the head centred over the checker
+     .hero-bg > .dot-field.hero-dots  .orb.hero-orb-cool  .orb.hero-orb-warm
+     .hero-inner
+       .hero-head                              h1.hero-title[data-hero-title]  p.hero-lead[data-hero-support]
+       [data-slot="checker"]  p.hero-free
+
+   The checker ([data-slot="checker"], build/checker.js) and the diagram
+   ([data-slot="media"]) are sealed: rendered by the template, copied as they are, not
+   part of what an editor edits. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.hero {
+  @apply relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden;
+}
+.hero:where([data-layout="center"]) {
+  @apply pb-14 sm:pb-16 lg:pb-20;
+}
+
+/* ── the ground ──────────────────────────────────────────────────────────────────
+   The dot field first, the glows over it: dots over glow read as dirt on glass. The two
+   glows of the split and hub layouts are the site's presets (.orb-hero-teal,
+   .orb-hero-coral — 01-base.css). The homepage keeps its own pair, in a clipping layer;
+   its cool glow has no fill: the page wrote it with a class Tailwind 3 does not have (an
+   opacity of 12), so it was never drawn, and the approved look is the warm glow alone. */
+.hero-dots {
+  @apply absolute inset-0;
+}
+.hero-bg {
+  @apply absolute inset-0 overflow-hidden pointer-events-none;
+}
+.hero-orb-cool {
+  @apply w-[620px] h-[620px] -left-48 -top-40;
+}
+.hero-orb-warm {
+  @apply w-[520px] h-[520px] bg-orange-500/10 right-[-140px] top-40;
+}
+
+/* ── the column and the grid ─────────────────────────────────────────────────── */
+.hero-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+.hero-grid {
+  @apply grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start;
+}
+:where(.hero[data-layout="split"]) .hero-grid {
+  @apply lg:grid-cols-[.9fr_1.1fr] lg:gap-y-8 items-center;
+}
+:where(.hero[data-layout="hub"]) .hero-grid {
+  @apply lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center;
+}
+
+/* three blocks, not two columns: the DOM order is head → checker → aside, which is what a
+   phone shows; from lg the checker takes the right column across both rows */
+.hero-head {
+  @apply min-w-0;
+}
+:where(.hero[data-layout="split-aside"]) .hero-head {
+  @apply lg:col-start-1 lg:row-start-1 lg:pt-4;
+}
+/* with a pill over the title the head starts 8px higher. :has() — a browser without it
+   keeps the 16px, which is the same column 8px lower */
+:where(.hero[data-layout="split-aside"]) .hero-head:where(:has(> .section-eyebrow)) {
+  @apply lg:pt-2;
+}
+:where(.hero[data-layout="center"]) .hero-head {
+  @apply max-w-[760px] mx-auto text-center mb-8 sm:mb-10 lg:mb-12;
+}
+
+.hero-media {
+  @apply min-w-0;
+}
+:where(.hero[data-layout="split-aside"]) .hero-media {
+  @apply lg:col-start-2 lg:row-start-1 lg:row-span-2;
+}
+.hero-aside {
+  @apply min-w-0 lg:col-start-1 lg:row-start-2;
+}
+
+/* ── the head ────────────────────────────────────────────────────────────────────
+   The pill is the Section Header's (section-head.css): white on the tint, as it is by
+   default. In a hero its dot is teal — derived from the host, never set per pill. */
+:where(.hero) .section-eyebrow-dot {
+  @apply bg-teal-400;
+}
+
+.hero-title {
+  @apply text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6;
+}
+/* the Ukrainian page's own proportions */
+:where(.hero[data-layout="split"]) .hero-title {
+  @apply text-[clamp(2.4rem,5.2vw,3.85rem)] leading-[1.04] mb-5 sm:mb-5 lg:mb-6;
+}
+/* the homepage: the checker is the object, so the title stays at section scale */
+:where(.hero[data-layout="center"]) .hero-title {
+  @apply text-[clamp(1.9rem,3.4vw,2.9rem)] leading-[1.08] mb-5 sm:mb-5 lg:mb-6;
+}
+/* a long title (a sentence, not a name) steps down; after the layouts, so it wins */
+.hero-title:where([data-size="long"]) {
+  @apply text-[clamp(2.1rem,4.2vw,3rem)] leading-[1.05];
+}
+
+/* the pen mark: the word it underlines, and the line's box */
+:where(.hero-title) .pen-word {
+  @apply relative inline-block;
+}
+.pen-mark {
+  @apply absolute -bottom-2 left-0 w-full;
+}
+
+.hero-lead {
+  @apply text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch];
+}
+:where(.hero-lead) + .hero-lead {
+  @apply mt-3;
+}
+:where(.hero[data-layout="split"]) .hero-lead { @apply max-w-[52ch]; }
+:where(.hero[data-layout="hub"]) .hero-lead { @apply max-w-[60ch]; }
+:where(.hero[data-layout="center"]) .hero-lead { @apply max-w-none; }
+
+/* the actions and the line under them: each carries the gap above itself */
+.hero-actions {
+  @apply flex flex-wrap items-center gap-3 sm:gap-4 mt-7 lg:mt-8;
+}
+.hero-note {
+  @apply mt-6 lg:mt-7 text-[13px] sm:text-[13.5px] text-ink-500;
+}
+
+/* ── under the checker: the free line ────────────────────────────────────────── */
+.hero-free {
+  @apply mt-5 sm:mt-6 flex items-center justify-center gap-2 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700;
+}
+/* the Ukrainian line is long: on a phone it wraps, centred, the spark on its first line */
+:where(.hero[data-layout="split"]) .hero-free {
+  @apply items-start sm:items-center text-center;
+}
+.hero-free-icon {
+  @apply shrink-0;
+}
+
+/* ── the aside: three approved blocks ───────────────────────────────────────────
+   ol.hero-path     a path in pills, one of them the current step (Students)
+   .hero-facts      three figures over the sentence they come from (PDF), and under the
+                    card a quiet link (p.hero-aside-more > a.hero-aside-link)
+   .hero-notice     one statement beside an icon tile (Turnitin) */
+.hero-path {
+  @apply flex flex-wrap items-center gap-y-2;
+}
+.hero-path-step {
+  @apply flex items-center;
+}
+.hero-path-pill {
+  @apply inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold;
+}
+.hero-path-pill:where([data-state="current"]) { box-shadow:none;
+  @apply bg-ink-900 text-white;
+}
+.hero-path-dot {
+  @apply w-1.5 h-1.5 rounded-full bg-teal-400;
+}
+.hero-path-arrow {
+  @apply mx-1.5 text-ink-300;
+}
+
+.hero-facts {
+  @apply rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-4 sm:p-5;
+}
+.hero-facts-grid {
+  @apply grid grid-cols-3 gap-3 sm:gap-4 mb-3.5;
+}
+.hero-fact {
+  @apply min-w-0;
+}
+.hero-fact-value { font-variant-numeric:tabular-nums;
+  @apply text-[20px] sm:text-[22px] lg:text-[24px] font-extrabold tracking-tightest leading-none;
+}
+.hero-fact-label {
+  @apply text-[11px] sm:text-[11.5px] font-medium text-ink-500 mt-1.5;
+}
+.hero-facts-note {
+  @apply text-[12.5px] sm:text-[13px] leading-relaxed text-ink-600 border-t border-ink-100 pt-3.5;
+}
+.hero-aside-more {
+  @apply mt-4;
+}
+.hero-aside-link {
+  @apply inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300;
+}
+
+.hero-notice {
+  @apply flex items-start gap-4 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse px-5 py-4 sm:px-6 sm:py-5 max-w-[560px];
+}
+.hero-notice-text {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800 font-semibold;
+}
+
+/* ── the measures ───────────────────────────────────────────────────────────────
+   The longest line of the lead, in characters. Without the attribute: 54 beside the
+   checker (52 on the Ukrainian page), 60 in the hub, none on the homepage. After the
+   layouts, so a named measure wins over the layout's default. */
+.hero-lead:where([data-measure="52"]) { @apply max-w-[52ch]; }
+.hero-lead:where([data-measure="54"]) { @apply max-w-[54ch]; }
+.hero-lead:where([data-measure="60"]) { @apply max-w-[60ch]; }
+.hero-lead:where([data-measure="62"]) { @apply max-w-[62ch]; }
+.hero-note:where([data-measure="58"]) { @apply max-w-[58ch]; }

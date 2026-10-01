@@ -9,11 +9,16 @@
        eyebrow: 'Questions',                       // optional; its background follows the section's
        title: 'Pricing FAQ',                       // required, the h2 (inline HTML allowed)
        intro: 'Need help with an existing plan?',  // optional
+       introMeasure: '72',                         // optional: the intro's longest line, in characters
        more: { label, href, rel, icon, bare },     // optional quiet link under the intro
      }, indent)
 
    more.bare: the link itself carries the spacing (the FAQ's fixed layout) instead of a
-   <div class="section-more"> around it. more.icon: raw <svg> markup, copied as is. */
+   <div class="section-more"> around it. more.icon: raw <svg> markup, copied as is.
+
+     sh.block({ eyebrow, title, intro, measure })  // the head as a block of its own, above a
+                                                   // section's content: <div class="section-head rv">
+   measure: the block's width in px ('720' | '760' | '860'; none: 820). */
 
 const attr = (name, value) => (value ? ` ${name}="${value}"` : '');
 
@@ -25,7 +30,7 @@ const eyebrow = label =>
 
 const title = (text, { tag = 'h2', id } = {}) => `<${tag}${attr('id', id)} class="section-title">${text}</${tag}>`;
 
-const intro = text => `<p class="section-intro">${text}</p>`;
+const intro = (text, measure) => `<p class="section-intro"${attr('data-measure', measure)}>${text}</p>`;
 
 const more = ({ label, href, rel, icon, bare }) => {
   const a = (cls, inner) => `<a href="${href}"${attr('rel', rel)} class="${cls}">${inner}</a>`;
@@ -39,9 +44,20 @@ function render(h, pad = '') {
   const parts = [];
   if (h.eyebrow) parts.push(eyebrow(h.eyebrow));
   parts.push(title(h.title, { tag: h.tag, id: h.titleId }));
-  if (h.intro) parts.push(intro(h.intro));
+  if (h.intro) parts.push(intro(h.intro, h.introMeasure));
   if (h.more) parts.push(more(h.more));
   return parts.join('\n').split('\n').map(l => (l ? pad + l : l)).join('\n');
 }
 
-module.exports = { render, eyebrow, title, intro, more };
+/* the head as a block of its own: the parts in one column, with the gap to the content
+   under it (.section-head, section-head.css) */
+const MEASURES = ['720', '760', '860'];
+function block(h) {
+  if (h.measure !== undefined && !MEASURES.includes(String(h.measure))) throw new Error('section-head: measure must be one of ' + MEASURES.join(', ') + ' (or none: 820)');
+  if (h.more) throw new Error('section-head: a head block has no more link (the host places its own foot)');
+  return `<div class="section-head rv"${attr('data-measure', h.measure)}>
+${render(h, '  ')}
+</div>`;
+}
+
+module.exports = { render, block, eyebrow, title, intro, more, MEASURES };

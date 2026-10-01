@@ -28,7 +28,11 @@
    [data-switch] instead of by id, so two forms on one page cannot collide. The one id
    left is the label/textarea pair, which accessibility needs and the template writes —
    pass ids.text to namespace it per instance. Asset paths are root-relative. The
-   default (no opts) is byte-for-byte what every other page renders today. */
+   default (no opts) is byte-for-byte what every other page renders today.
+
+   SLOT — { slot: true } marks the card data-slot="checker": inside a Section Library
+   component (the hero, build/sections/hero.js) the form is a sealed slot, copied as it is
+   and not inspected by the library validator. Nothing else changes. */
 
 const ICON = 'w-[14px] h-[14px] sm:w-4 sm:h-4';
 const UPLOAD = '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>';
@@ -54,7 +58,7 @@ const INPUTS = [
 const form = (S, anchor = '#checker', ids = {}, opts = {}) => {
   const ta = ids.text || 'checkText', wc = ids.count || 'wordCount', plag = ids.plag || 'optPlag', ai = ids.ai || 'optAI';
   const st = !!opts.static;
-  return `      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+  return `      <div${opts.slot ? ' data-slot="checker"' : ''} class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
         <form${st ? ' data-checker' : ''} class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
           <label for="${ta}" class="sr-only">${S.placeholder}</label>

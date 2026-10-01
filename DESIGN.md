@@ -612,6 +612,40 @@ an optional "prefer email?" line) beside a card with the form. Variants on the s
 and where it submits are each page's brief and the backend binding — the library fixes
 the layout and the look, never the form's logic.
 
+#### The hero — `build/sections/hero.js`
+
+The tinted first section of a page is a Section Library component since 2026-10-01 (wave
+2): the dot field under two glows, the H1 with one pen-marked word, and ONE object — the
+real checker or a diagram — in a sealed slot (`[data-slot="checker"]` is `build/checker.js`,
+`[data-slot="media"]` a page's diagram; both are copied as they are). Four layouts on the
+section, `data-layout`:
+
+| layout | what | pages |
+|---|---|---|
+| `split-aside` | text + aside left, checker right (.95fr / 1.05fr); phone order head → checker → aside | Students, PDF, Turnitin |
+| `split` | the same without an aside, columns centred; the Ukrainian page's own proportions (.9fr / 1.1fr, title ceiling 3.85rem) | UA |
+| `hub` | wider text column with actions and a note (1.1fr / 1fr), a diagram right | Business & Teams, University, Affiliate |
+| `center` | the head centred over the checker, title at section scale, words rising (`data-hero-title`) | Home |
+
+The aside of `split-aside` is one of three blocks: a path in pills (`ol.hero-path`), three
+figures over their sentence (`.hero-facts`), or one statement beside an icon tile
+(`.hero-notice`). Other switches: `data-size="long"` on a sentence-long title,
+`data-measure` on the lead (52 | 54 | 60 | 62) and on the hub's note (58). The pill is the
+Section Header's; in a hero its dot is teal, by itself. Two things an editor would have to
+keep in step are repaired at load instead: the pen line is redrawn for an edited word
+(`18-pen-mark.js`), and a bare word typed into a rising title gets its clip box
+(`22-hero-title.js`).
+
+The heroes whose head carries page-specific parts are not on the template yet and stay
+page-specific: API (a figure strip), AI Detector (its own checker flow and trust cards),
+Moodle (callout, two buttons, the link diagram), Scholarship (winners), the illustrated
+v2 pages (photo collages), the tool pages, About us, Newsroom, Reviews.
+
+The in-section button and quiet link are a library primitive, the **Action**
+(`build/sections/action.js`, `.action-button` / `.action-link`, `data-tone="light|ghost"`),
+and so is the **Icon tile** (`build/sections/icon-tile.js`, `.icon-tile[data-tone]`): one
+attribute sets the tile's wash and the icon's ink.
+
 - Counters: tween object + `onUpdate` with cached writes, `.nums` on the element
 - **`prefers-reduced-motion`**: add `.no-motion` to `<html>`, all `.rv` forced visible, final states set statically — every scripted animation needs its static fallback
 - Perf floor: animate only `transform`/`opacity`; no `backdrop-blur` on elements that repaint per frame; `will-change` only on continuously-moving nodes

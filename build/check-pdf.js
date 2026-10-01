@@ -122,7 +122,9 @@ console.log('\nthe checker');
   ok('the hero carries the shared form (build/checker.js)', /<textarea id="(checkText|[a-z-]+-checker-text)"/.test(hero) && /class="qc-drop/.test(hero) && /(id="optPlag"|<input type="checkbox") checked/.test(hero));
   ok('plagiarism is the checked control; AI is optional and not the story', (/id="optAI" class/.test(hero) || (hero.match(/<input type="checkbox"/g) || []).length === 2) && !/(id="optAI"|<input type="checkbox"(?! checked)[^>]*>[\s\S]*?<input type="checkbox") checked/.test(hero) && !/AI (detector|detection)/i.test(flat(hero)));
   ok('exactly one form on the page', (body.match(/<form\b/g) || []).length === 1);
-  ok('the form takes the right column at lg (Olex swapped the columns, 2026-09-17)', /lg:col-start-2 lg:row-start-1 lg:row-span-2">[\s\S]*<textarea/.test(hero));
+  /* the library hero (build/sections/hero.js): in layout "split-aside" the second block,
+     .hero-media, is the right column across both rows from lg (hero.css) */
+  ok('the form takes the right column at lg (Olex swapped the columns, 2026-09-17)', /data-layout="split-aside"/.test(hero) && /<div class="hero-media">[\s\S]*<textarea/.test(hero));
   ok('on a phone the order is H1 → form → limits', hero.indexOf('<h1') < hero.indexOf('<textarea') && hero.indexOf('<textarea') < hero.indexOf('File size limit'));
   ok('the three limits are the production ones', /2 MB/.test(flat(hero)) && /24 MB/.test(flat(hero)) && /10 files/.test(flat(hero)));
   ok('"Using a scanned PDF?" lands on the extraction act', /href="#pdf-text-extraction"[^>]*>[^<]*Using a scanned PDF\?/.test(hero.replace(/<svg[\s\S]*?<\/svg>/g, '')));

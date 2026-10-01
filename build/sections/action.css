@@ -1,0 +1,47 @@
+/* ═══ Action — the library primitive ════════════════════════════════════════════════
+   Template: build/sections/action.js · hosted by components (the hero, the steps, the
+   feature cards, start free …), not a component of its own: each host's check validates
+   the actions it holds (check-tools.js: actionButton, actionLink).
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The in-section actions — smaller than the closing band's (cta-band.css), which is the
+   last and largest action of a page:
+
+     a.action-button.btn-press.group     the pill button with the arrow orb; dark
+       text                              data-tone="light": white with a hairline ring
+       span.action-button-orb.icon-orb   data-tone="ghost": the 48 / 56px ring-only button of
+         svg                             the homepage cards
+     a.action-link                       the quiet link beside a button
+
+   The smaller quiet link that stands alone (under a card, at the foot of a section) is
+   the Section Header's a.section-link.
+
+   The host spaces its actions from its own side: nothing here carries a margin. */
+
+.action-button {
+  @apply inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2;
+}
+/* the arrow orb is hidden on a phone: the button is its label alone there */
+.action-button-orb {
+  @apply hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center;
+}
+
+.action-button:where([data-tone="light"]) {
+  @apply bg-white hover:bg-ink-100 ring-1 ring-black/10 text-ink-900;
+}
+:where(.action-button[data-tone="light"]) .action-button-orb {
+  @apply bg-ink-900/10;
+}
+
+/* the homepage cards' button: a bare ring at the 48 / 56px size, its orb always shown */
+.action-button:where([data-tone="ghost"]) {
+  @apply gap-2 h-12 sm:h-14 bg-transparent hover:bg-ink-900/5 ring-1 ring-black/10 text-ink-900 text-[14px] sm:text-[15px] pl-5 sm:pl-7 pr-2.5 sm:pr-2.5 py-0;
+}
+:where(.action-button[data-tone="ghost"]) .action-button-orb {
+  @apply flex w-9 h-9 bg-ink-900/5;
+}
+
+.action-link {
+  @apply text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300;
+}

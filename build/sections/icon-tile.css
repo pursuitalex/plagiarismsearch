@@ -1,0 +1,36 @@
+/* ═══ Icon tile — the library primitive ═════════════════════════════════════════════
+   Template: build/sections/icon-tile.js · hosted by components (a step, a feature card,
+   a source row, the hero's notice): each host's check validates the tile it holds
+   (check-tools.js: iconTile).
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+     span.icon-tile              data-tone="teal|ink|orange|mint"
+       svg                       a 20px Lucide icon, stroke="currentColor", copied as it is
+
+   One attribute sets both colours: the tile's wash and the icon's ink. The icon's stroke
+   is set HERE, over the <svg>'s own attribute, so an editor never has to keep a hex in
+   the icon in step with the tile. */
+
+.icon-tile {
+  @apply inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0;
+}
+:where(.icon-tile) > svg { stroke: #374151; }
+
+.icon-tile:where([data-tone="teal"]) { @apply bg-teal-100; }
+:where(.icon-tile[data-tone="teal"]) > svg { stroke: #06748A; }
+
+.icon-tile:where([data-tone="orange"]) { @apply bg-orange-100; }
+:where(.icon-tile[data-tone="orange"]) > svg { stroke: #B84431; }
+
+.icon-tile:where([data-tone="mint"]) { @apply bg-mint-100; }
+:where(.icon-tile[data-tone="mint"]) > svg { stroke: #1B7A50; }
+
+/* variant "ring" — the homepage's tile: a hairline in the tone, teal on its lighter wash,
+   the tone as the tile's own colour, the same radius at every width */
+.icon-tile:where([data-variant="ring"]) {
+  @apply flex lg:rounded-[14px] ring-1 ring-black/5;
+}
+.icon-tile:where([data-variant="ring"][data-tone="teal"]) { @apply bg-teal-50 ring-teal-500/15 text-teal-700; }
+.icon-tile:where([data-variant="ring"][data-tone="orange"]) { @apply ring-orange-500/15 text-orange-700; }
+.icon-tile:where([data-variant="ring"][data-tone="mint"]) { @apply ring-mint-500/20 text-mint-700; }

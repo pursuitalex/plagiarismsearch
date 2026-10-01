@@ -144,60 +144,59 @@
   <!-- ================= 01 · HERO / AFFILIATE PROGRAM =================
        The live page's four hero facts become the visual: one double-bezel sheet, four
        cells, each fact in its own words. No dashboard is drawn — the page has no
-       screenshot of it we could show honestly. -->
-  <section id="affiliate-program" data-component="hero-facts" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    <div class="dot-field absolute inset-0" aria-hidden="true"></div>
-    <div class="orb absolute orb-hero-teal"></div>
-    <div class="orb absolute orb-hero-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
-
-        <div class="rv min-w-0">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Earn with PlagiarismSearch</span>
+       screenshot of it we could show honestly.
+       The hero is the library's (build/sections/hero.js), layout "hub"; the sheet of
+       facts is its sealed slot. -->
+<section id="affiliate-program" data-component="hero" class="hero" data-layout="hub">
+  <div class="dot-field hero-dots" aria-hidden="true"></div>
+  <div class="orb orb-hero-teal"></div>
+  <div class="orb orb-hero-coral"></div>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-head rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Earn with PlagiarismSearch</span>
         </div>
-          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">Monetize <span class="pen-word relative inline-block">Your Audience<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 234 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c59-7 157-7 228-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span> with a Trusted Academic Tool</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[60ch] mb-7 lg:mb-8">Earn recurring commissions by recommending a high-demand academic tool trusted across universities, research, and online publishing</p>
-          <div class="flex flex-wrap items-center gap-3 sm:gap-4">
-            <a href="https://app.plagiarismsearch.com/affiliate" rel="noopener" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+        <h1 class="hero-title">Monetize <span class="pen-word">Your Audience<svg class="pen-mark" viewBox="0 0 234 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c59-7 157-7 228-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span> with a Trusted Academic Tool</h1>
+        <p class="hero-lead">Earn recurring commissions by recommending a high-demand academic tool trusted across universities, research, and online publishing</p>
+        <div class="hero-actions">
+          <a href="https://app.plagiarismsearch.com/affiliate" rel="noopener" class="action-button btn-press group">
             Become an Affiliate
-            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
-            <a href="#how-it-works" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">Learn more</a>
-          </div>
-        </div>
-
-        <div class="rv min-w-0">
-          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-            <ul class="grid md:grid-cols-2 divide-y md:divide-y-0 divide-ink-100 rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden" role="list">
-              <li class="bg-ink-950 text-white p-5 sm:p-6 lg:p-7" data-surface="dark">
-                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white/10 ring-1 ring-white/15 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></span>
-                <p class="mt-5 sm:mt-6 text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold tracking-tightest leading-[1.1] nums">30% commission</p>
-                <p class="mt-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/60">on every new client</p>
-              </li>
-              <li class="p-5 sm:p-6 lg:p-7">
-                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg></span>
-                <p class="mt-5 sm:mt-6 text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold tracking-tightest leading-[1.1] nums">Promote a <span class="whitespace-nowrap">high-trust</span></p>
-                <p class="mt-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">academic tool</p>
-              </li>
-              <li class="p-5 sm:p-6 lg:p-7">
-                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span>
-                <p class="mt-5 sm:mt-6 text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold tracking-tightest leading-[1.1] nums"><span class="whitespace-nowrap">Real-time</span></p>
-                <p class="mt-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Performance tracking</p>
-              </li>
-              <li class="p-5 sm:p-6 lg:p-7">
-                <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg></span>
-                <p class="mt-5 sm:mt-6 text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold tracking-tightest leading-[1.1] nums">90 days</p>
-                <p class="mt-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">90-Day Cookie Window</p>
-              </li>
-            </ul>
-          </div>
+          <a href="#how-it-works" class="action-link">Learn more</a>
         </div>
       </div>
+      <div class="hero-media rv">
+        <div data-slot="media" class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+                    <ul class="grid md:grid-cols-2 divide-y md:divide-y-0 divide-ink-100 rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden" role="list">
+                      <li class="bg-ink-950 text-white p-5 sm:p-6 lg:p-7" data-surface="dark">
+                        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white/10 ring-1 ring-white/15 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></span>
+                        <p class="mt-5 sm:mt-6 text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold tracking-tightest leading-[1.1] nums">30% commission</p>
+                        <p class="mt-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/60">on every new client</p>
+                      </li>
+                      <li class="p-5 sm:p-6 lg:p-7">
+                        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg></span>
+                        <p class="mt-5 sm:mt-6 text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold tracking-tightest leading-[1.1] nums">Promote a <span class="whitespace-nowrap">high-trust</span></p>
+                        <p class="mt-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">academic tool</p>
+                      </li>
+                      <li class="p-5 sm:p-6 lg:p-7">
+                        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span>
+                        <p class="mt-5 sm:mt-6 text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold tracking-tightest leading-[1.1] nums"><span class="whitespace-nowrap">Real-time</span></p>
+                        <p class="mt-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Performance tracking</p>
+                      </li>
+                      <li class="p-5 sm:p-6 lg:p-7">
+                        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg></span>
+                        <p class="mt-5 sm:mt-6 text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold tracking-tightest leading-[1.1] nums">90 days</p>
+                        <p class="mt-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">90-Day Cookie Window</p>
+                      </li>
+                    </ul>
+                  </div>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 02 · AFFILIATE TOOLS =================
        The live page's three tools, one sheet with rules between them — they are three

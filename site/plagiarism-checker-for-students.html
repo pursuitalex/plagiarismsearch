@@ -145,115 +145,111 @@
        The same form the homepage renders (build/checker.js), in a different hero: two
        columns, the student's job on the left and the form on the right, so the page
        opens on "before you submit" rather than on the generic category. The path under
-       the support line is the brief's own student story, drawn — labels, not copy. -->
-  <section id="student-checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    <div class="dot-field absolute inset-0" aria-hidden="true"></div>
-    <div class="orb absolute orb-hero-teal"></div>
-    <div class="orb absolute orb-hero-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <!-- three blocks: DOM order H1 → form → path, so a phone has the checker on its first
-           screen; at lg the form takes the right column across both rows -->
-      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
-
-        <div class="rv min-w-0 lg:col-start-1 lg:row-start-1 lg:pt-4">
-          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">Plagiarism Checker for <span class="pen-word relative inline-block">Students<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 144 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c36-7 96-7 138-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch]">Check your essay, paper, assignment, thesis, or other coursework for matching text and sources before you submit. Review each match in context and decide what needs attention before you turn in your work.</p>
-        </div>
-
-        <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-        <form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
-
-          <label for="student-checker-text" class="sr-only">Paste or type your text here</label>
-          <!-- the count belongs to the text, so it sits in the corner of the field
-               rather than in a footer two rows away from what it counts -->
-          <div class="relative mb-4">
-            <textarea id="student-checker-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
-            <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span data-checker-count>0</span> / 150 words</span>
-          </div>
-
-          <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
-               formats line it carried reappears under the input chips instead. The two
-               are exclusive — one display query, never both on screen — so the approved
-               sentence still appears exactly once at any width. -->
-          <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
-            <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-            </span>
-            <span class="min-w-0 flex-1">
-              <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
-              <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
-            </span>
-          </div>
-
-          <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
-            <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
-            <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
-            <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
-            <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
-          </div>
-          <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
-
-          <!-- The two checks sit beside the button they modify, not in a row of their own.
-               The row itself never wraps: the button keeps the right edge at every width,
-               and it is the checks that give — side by side where they fit, stacked below
-               640 where the pair needs about 300px and the form only has 295. -->
-          <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
-            <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
-              <label class="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" checked class="sr-only peer">
-                <span class="sw on" data-switch></span>
-                <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
-              </label>
-              <label class="flex items-center gap-2.5 cursor-pointer">
-                <input type="checkbox" class="sr-only peer">
-                <span class="sw" data-switch></span>
-                <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
-              </label>
-            </div>
-            <a href="#student-checker" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
-              Check for plagiarism
-              <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </span>
-            </a>
-          </div>
-        </form>
+       the support line is the brief's own student story, drawn — labels, not copy.
+       The hero is the library's (build/sections/hero.js), layout "split-aside": three
+       blocks, DOM order H1 → form → path, so a phone has the checker on its first screen;
+       at lg the form takes the right column across both rows. -->
+<section id="student-checker" data-component="hero" class="hero" data-layout="split-aside">
+  <div class="dot-field hero-dots" aria-hidden="true"></div>
+  <div class="orb orb-hero-teal"></div>
+  <div class="orb orb-hero-coral"></div>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-head rv">
+        <h1 class="hero-title">Plagiarism Checker for <span class="pen-word">Students<svg class="pen-mark" viewBox="0 0 144 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c36-7 96-7 138-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
+        <p class="hero-lead">Check your essay, paper, assignment, thesis, or other coursework for matching text and sources before you submit. Review each match in context and decide what needs attention before you turn in your work.</p>
       </div>
-      <p class="mt-5 sm:mt-6 flex items-center justify-center gap-2 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">
-        <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
-        150 words free — no registration required.
-      </p>
-        </div>
+      <div class="hero-media">
+        <div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+          <form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
-        <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
-          <!-- the pre-submission path: the brief's student story, as a strip -->
-          <ol class="flex flex-wrap items-center gap-y-2" aria-label="Before you submit">
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Draft</span>
-              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </li>
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-ink-900 text-white px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>Check</span>
-              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </li>
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Inspect the match and its source</span>
-              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </li>
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Revise deliberately</span>
-              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </li>
-            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-800 px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">Submit</span>
-            </li>
-          </ol>
+            <label for="student-checker-text" class="sr-only">Paste or type your text here</label>
+            <!-- the count belongs to the text, so it sits in the corner of the field
+                 rather than in a footer two rows away from what it counts -->
+            <div class="relative mb-4">
+              <textarea id="student-checker-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
+              <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span data-checker-count>0</span> / 150 words</span>
+            </div>
+
+            <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                 formats line it carried reappears under the input chips instead. The two
+                 are exclusive — one display query, never both on screen — so the approved
+                 sentence still appears exactly once at any width. -->
+            <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+              <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+                <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
+              </span>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+            </div>
+            <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
+
+            <!-- The two checks sit beside the button they modify, not in a row of their own.
+                 The row itself never wraps: the button keeps the right edge at every width,
+                 and it is the checks that give — side by side where they fit, stacked below
+                 640 where the pair needs about 300px and the form only has 295. -->
+            <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+              <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <span class="sw on" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <span class="sw" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
+                </label>
+              </div>
+              <a href="#student-checker" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                Check for plagiarism
+                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+            </div>
+          </form>
         </div>
+        <p class="hero-free">
+          <svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          150 words free — no registration required.
+        </p>
+      </div>
+      <div class="hero-aside rv">
+        <ol class="hero-path" aria-label="Before you submit">
+          <li class="hero-path-step">
+            <span class="hero-path-pill">Draft</span>
+            <svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </li>
+          <li class="hero-path-step">
+            <span class="hero-path-pill" data-state="current"><span class="hero-path-dot"></span>Check</span>
+            <svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </li>
+          <li class="hero-path-step">
+            <span class="hero-path-pill">Inspect the match and its source</span>
+            <svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </li>
+          <li class="hero-path-step">
+            <span class="hero-path-pill">Revise deliberately</span>
+            <svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </li>
+          <li class="hero-path-step">
+            <span class="hero-path-pill">Submit</span>
+          </li>
+        </ol>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 02 · COMPACT TRUST PROOF =================
        The homepage rail, still: three verified facts in reading order, each column one

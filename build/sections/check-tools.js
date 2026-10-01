@@ -61,6 +61,10 @@ const ID = /^[A-Za-z][\w-]*$/;
 /* the utility grammar, to name a stray class for what it is */
 const UTILITY = /^(?:[a-z]+:)*-?(?:p[trblxy]?|m[trblxy]?|w|h|min-w|max-w|min-h|max-h|gap(?:-[xy])?|space-[xy]|text|font|leading|tracking|bg|from|to|via|ring|shadow|rounded(?:-[trbl]{1,2})?|border(?:-[trblxy])?|divide(?:-[xy])?|decoration|underline-offset|grid-cols|grid-rows|col-span|col-start|row-span|row-start|top|right|bottom|left|inset(?:-[xy])?|z|opacity|order|basis|grow|shrink|translate-[xy]|scale|rotate|duration|ease|delay|transition|items|justify|self|place|content|overflow(?:-[xy])?|object|aspect|line-clamp|fill|stroke)(?:-.+)?$|^(?:[a-z]+:)*(?:flex|grid|block|inline|inline-flex|inline-block|hidden|relative|absolute|sticky|static|fixed|underline|uppercase|italic|truncate|sr-only|w-full|shrink-0|grow|container)$/;
 
+/* the primitives components host (action.css, icon-tile.css): their classes and values */
+const ACTION = { button: ['action-button', 'btn-press', 'group'], buttonHooks: ['btn-press', 'group'], orb: ['action-button-orb', 'icon-orb'], orbHooks: ['icon-orb'], link: ['action-link'] };
+const TILE_TONES = ['teal', 'ink', 'orange', 'mint'];
+
 /* the rules, bound to one component (its name goes into every message) and one result */
 function rules(name, ctx) {
   const E = (n, msg) => ctx.errors.push({ line: n.line, msg });
@@ -161,7 +165,45 @@ function rules(name, ctx) {
     rest.forEach(r => E(r, `${label(r)}: nothing else goes in the eyebrow`));
   };
 
-  const api = { E, W, sealed, seal, exempt, at: null, onlyClasses, need, mustHave, variantsOf, onlyAttrs, requireAttrs, noText, filled, link, inlineOnly, svgIcon, eyebrow };
+  /* The Action primitive (action.css), as a component hosts it: the pill button with its
+     arrow orb. `tones`: the data-tone values this host uses (none: the dark button only). */
+  const actionButton = (a, { tones = [] } = {}) => {
+    if (!need(a, 'the button', ACTION.button, 'a')) return false;
+    mustHave(a, ACTION.buttonHooks);
+    link(a, { href: true, rel: true, target: true, class: true, 'data-tone': true });
+    const tone = a.attrs['data-tone'];
+    if (tone !== undefined && !tones.includes(tone)) E(a, `${label(a)}: data-tone="${tone}" is not a button of the ${name} (${tones.length ? tones.join(' | ') + ', or none: the dark button' : 'the dark button, without data-tone'})`);
+    const ak = kids(a);
+    const orb = ak[0];
+    if (ak.length !== 1 || !has(orb, 'action-button-orb')) E(a, `${label(a)}: the button holds its text and then span.action-button-orb (the arrow), copied as it is`);
+    else {
+      need(orb, 'the arrow orb', ACTION.orb, 'span'); mustHave(orb, ACTION.orbHooks); onlyAttrs(orb, { class: true }); noText(orb);
+      const s = kids(orb); if (s.length !== 1) E(orb, `${label(orb)}: holds only the arrow <svg>`); svgIcon(s[0], label(orb), []);
+    }
+    if (!texts(a).some(t => t.text.trim())) E(a, `${label(a)}: the button needs its text`);
+    return true;
+  };
+  /* …and the quiet link beside it */
+  const actionLink = a => {
+    if (!need(a, 'the quiet link', ACTION.link, 'a')) return false;
+    link(a, { href: true, rel: true, target: true, class: true }); inlineOnly(a, [], 'the quiet link');
+    return true;
+  };
+
+  /* The Icon tile primitive (icon-tile.css): span.icon-tile[data-tone] > one <svg>, taken as
+     it is. `extra`: classes a host may add to the tile (none so far). */
+  const iconTile = (t, extra = []) => {
+    if (!need(t, 'the icon tile', ['icon-tile', ...extra], 'span')) return false;
+    onlyAttrs(t, { class: true, 'data-tone': true });
+    variantsOf(t, { 'data-tone': { values: TILE_TONES, required: true } });
+    noText(t);
+    const s = kids(t);
+    if (s.length !== 1) E(t, `${label(t)}: the tile holds only its <svg> icon`);
+    svgIcon(s[0], label(t), []);
+    return true;
+  };
+
+  const api = { E, W, sealed, seal, exempt, at: null, onlyClasses, need, mustHave, variantsOf, onlyAttrs, requireAttrs, noText, filled, link, inlineOnly, svgIcon, eyebrow, actionButton, actionLink, iconTile };
   return api;
 }
 

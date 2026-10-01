@@ -361,3 +361,21 @@ acceptAgainst('f15c5ba', {
 acceptAgainst('41a2530', {
   'api.html': [['font-size', 'line-height'], 'the head column\'s intro at the Section Header\'s one size (15px → 15.5px at lg)'],
 }, 'Inquiry form: ');
+
+/* SECTION LIBRARY, WAVE 2 · THE HERO (2026-10-01), against 511028d — the last commit before
+   the tinted hero moved onto its library template (build/sections/hero.js). Eight heroes,
+   0 px on every page. The five checker heroes (Home, Students, PDF, Turnitin, the
+   Ukrainian page) are identical in every measured property. The three hub heroes differ
+   in exactly the properties named here:
+
+     the head's gaps. The lead carried the space above the actions as its bottom margin
+       (mb-7 lg:mb-8), and the actions the space above the note (mb-6 lg:mb-7). In the
+       library each part carries the gap ABOVE itself — .hero-actions mt-7 lg:mt-8,
+       .hero-note mt-6 lg:mt-7 — so a part can be removed without leaving its neighbour's
+       margin behind. The same elements in the same places; only which of the two
+       neighbours holds the margin changed. */
+acceptAgainst('511028d', {
+  'plagiarism-checker-for-organization.html': [['margin-top', 'margin-bottom'], 'the actions and the note carry the gap above themselves (the lead and the actions carried it below)'],
+  'university-plagiarism-checker.html': [['margin-top', 'margin-bottom'], 'the actions and the note carry the gap above themselves (the lead and the actions carried it below)'],
+  'affiliate-program-at-plagiarismsearch.html': [['margin-top', 'margin-bottom'], 'the actions carry the gap above themselves (the lead carried it below)'],
+}, 'Hero: ');

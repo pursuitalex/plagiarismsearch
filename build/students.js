@@ -31,8 +31,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'plagiarism-checker-for-students.html';
 const cta = require('./sections/cta-band');
-const checker = require('./checker');
-const { dotField } = require('./dots');
+const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -233,39 +232,18 @@ const section1 = () => `  <!-- ================= 01 · HERO / REAL STUDENT CHECK
        The same form the homepage renders (build/checker.js), in a different hero: two
        columns, the student's job on the left and the form on the right, so the page
        opens on "before you submit" rather than on the generic category. The path under
-       the support line is the brief's own student story, drawn — labels, not copy. -->
-  <section id="student-checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dotField()}
-    ${orb('hero-teal')}
-    ${orb('hero-coral')}
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <!-- three blocks: DOM order H1 → form → path, so a phone has the checker on its first
-           screen; at lg the form takes the right column across both rows -->
-      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
-
-        <div class="rv min-w-0 lg:col-start-1 lg:row-start-1 lg:pt-4">
-          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">${penMark(COPY.hero.h1, 'Students')}</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch]">${COPY.hero.support}</p>
-        </div>
-
-        <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-${checker.form(COPY.hero, ANCHOR, { text: 'student-checker-text' }, { static: true })}
-${checker.free(COPY.hero)}
-        </div>
-
-        <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
-          <!-- the pre-submission path: the brief's student story, as a strip -->
-          <ol class="flex flex-wrap items-center gap-y-2" aria-label="Before you submit">
-${COPY.hero.path.map((step, i) => `            <li class="flex items-center">
-              <span class="inline-flex items-center gap-2 rounded-full ${i === 1 ? 'bg-ink-900 text-white' : 'bg-white ring-1 ring-black/5 text-ink-800'} px-3.5 py-1.5 text-[12.5px] sm:text-[13px] font-semibold">${i === 1 ? '<span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>' : ''}${step}</span>${i < COPY.hero.path.length - 1 ? `
-              <svg class="mx-1.5 text-ink-300" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>` : ''}
-            </li>`).join('\n')}
-          </ol>
-        </div>
-      </div>
-    </div>
-  </section>`;
+       the support line is the brief's own student story, drawn — labels, not copy.
+       The hero is the library's (build/sections/hero.js), layout "split-aside": three
+       blocks, DOM order H1 → form → path, so a phone has the checker on its first screen;
+       at lg the form takes the right column across both rows. -->
+${hero.section({
+    id: ANCHOR.slice(1), layout: 'split-aside',
+    title: COPY.hero.h1, pen: 'Students',
+    lead: COPY.hero.support,
+    checker: { copy: COPY.hero, textId: 'student-checker-text' },
+    /* the pre-submission path: the brief's student story, as a strip */
+    aside: { path: { label: 'Before you submit', steps: COPY.hero.path, current: 1 } },
+  })}`;
 
 /* ═══════════════ 02 · COMPACT TRUST PROOF ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · COMPACT TRUST PROOF =================

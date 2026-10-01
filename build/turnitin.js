@@ -34,8 +34,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'turnitin-checker-alternative.html';
 const cta = require('./sections/cta-band');
-const checker = require('./checker');
-const { dotField } = require('./dots');
+const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
 const pricing = require('./pricing');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
@@ -278,35 +277,17 @@ const section1 = () => `  <!-- ================= 01 · HERO / INDEPENDENT ALTERN
        this is, and what it is not. The independence sentence is a card of its own, not
        fine print. (The second, short disclosure under the form went with the 2026-09-18
        patch: one statement in the hero is enough.)
-       Three blocks, DOM order H1 → form → independence, so a phone opens on the checker. -->
-  <section id="independent-checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dotField()}
-    <div class="orb absolute orb-hero-teal"></div>
-    <div class="orb absolute orb-hero-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
-
-        <div class="rv min-w-0 lg:col-start-1 lg:row-start-1 lg:pt-2">
-${eyebrow('teal-400', COPY.hero.eyebrow)}
-          <h1 class="text-[clamp(2.1rem,4.2vw,3rem)] font-extrabold tracking-tightest leading-[1.05] mb-4 sm:mb-5 lg:mb-6">${penMark(COPY.hero.h1, 'Independent')}</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch]">${COPY.hero.support}</p>
-        </div>
-
-        <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-${checker.form(COPY.hero, ANCHOR, { text: 'independent-checker-text' }, { static: true })}
-${checker.free(COPY.hero)}
-        </div>
-
-        <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
-          <div class="flex items-start gap-4 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse px-5 py-4 sm:px-6 sm:py-5 max-w-[560px]">
-            ${chip('ink', I.shield)}
-            <p class="${BODY} text-ink-800 font-semibold">${COPY.hero.independence}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+       Three blocks, DOM order H1 → form → independence, so a phone opens on the checker.
+       The hero is the library's (build/sections/hero.js), layout "split-aside"; the
+       title is a sentence, so it takes the long size. -->
+${hero.section({
+    id: ANCHOR.slice(1), layout: 'split-aside',
+    eyebrow: COPY.hero.eyebrow,
+    title: COPY.hero.h1, pen: 'Independent', size: 'long',
+    lead: COPY.hero.support,
+    checker: { copy: COPY.hero, textId: 'independent-checker-text' },
+    aside: { notice: { tone: 'ink', icon: I.shield, text: COPY.hero.independence } },
+  })}`;
 
 /* ═══════════════ 02 · THE COMPARISON ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · OBJECTIVE COMPARISON + ITS SOURCES =================

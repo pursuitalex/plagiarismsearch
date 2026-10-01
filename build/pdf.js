@@ -29,8 +29,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'pdf-plagiarism-checker.html';
 const cta = require('./sections/cta-band');
-const checker = require('./checker');
-const { dotField } = require('./dots');
+const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -241,46 +240,20 @@ const section1 = () => `  <!-- ================= 01 · HERO / REAL PDF CHECKER =
        The H1 and its support take the left column, with the three production limits as
        figures under the approved helper sentence and the scanned-PDF link straight to
        the extraction act. (The form sat on the left at first; Olex swapped the columns
-       on 2026-09-17 so the page opens on its name, like the other checker heroes.) -->
-  <section id="pdf-checker" data-component="hero-checker" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dotField()}
-    <div class="orb absolute orb-hero-teal"></div>
-    <div class="orb absolute orb-hero-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <!-- three blocks, not two columns: DOM order is H1 → form → limits, which is what a
-           phone shows, so the checker is on the first screen there too; at lg the form
-           takes the right column across both rows and the other two stack on the left -->
-      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-x-14 gap-y-8 lg:gap-y-7 items-start">
-
-        <div class="rv min-w-0 lg:col-start-1 lg:row-start-1 lg:pt-4">
-          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">${penMark(COPY.hero.h1, 'PDF')}</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch]">${COPY.hero.support}</p>
-        </div>
-
-        <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-${checker.form(COPY.hero, ANCHOR, { text: 'pdf-checker-text' }, { static: true })}
-${checker.free(COPY.hero)}
-        </div>
-
-        <div class="rv min-w-0 lg:col-start-1 lg:row-start-2">
-          <!-- the upload limits: the approved sentence, and its three figures -->
-          <div class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-4 sm:p-5">
-            <div class="grid grid-cols-3 gap-3 sm:gap-4 mb-3.5">
-${COPY.hero.limits.map(([n, l]) => `              <div class="min-w-0">
-                <p class="text-[20px] sm:text-[22px] lg:text-[24px] font-extrabold tracking-tightest nums leading-none">${n}</p>
-                <p class="text-[11px] sm:text-[11.5px] font-medium text-ink-500 mt-1.5">${l}</p>
-              </div>`).join('\n')}
-            </div>
-            <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-ink-600 border-t border-ink-100 pt-3.5">${COPY.hero.helper}</p>
-          </div>
-          <p class="mt-4">
-            <a href="${COPY.hero.scannedHref}" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${ico(I.image, 'currentColor', 15)}${COPY.hero.scanned}</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>`;
+       on 2026-09-17 so the page opens on its name, like the other checker heroes.)
+       The hero is the library's (build/sections/hero.js), layout "split-aside": three
+       blocks, not two columns — DOM order is H1 → form → limits, which is what a phone
+       shows, so the checker is on the first screen there too; at lg the form takes the
+       right column across both rows and the other two stack on the left. -->
+${hero.section({
+    id: ANCHOR.slice(1), layout: 'split-aside',
+    title: COPY.hero.h1, pen: 'PDF',
+    lead: COPY.hero.support,
+    checker: { copy: COPY.hero, textId: 'pdf-checker-text' },
+    /* the upload limits: the approved sentence, and its three figures */
+    aside: { facts: { items: COPY.hero.limits, note: COPY.hero.helper,
+      link: { label: COPY.hero.scanned, href: COPY.hero.scannedHref, icon: I.image } } },
+  })}`;
 
 /* ═══════════════ 02 · HOW TO CHECK A PDF ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · HOW TO CHECK A PDF FOR PLAGIARISM =================

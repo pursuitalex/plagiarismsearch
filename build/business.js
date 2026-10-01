@@ -36,7 +36,7 @@ const OUT = 'plagiarism-checker-for-organization.html';
 const cta = require('./sections/cta-band');
 const banner = require('./sections/banner');
 const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
-const { dotField } = require('./dots');
+const hero = require('./sections/hero');   /* the hero: one library template; the diagram is its sealed slot */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* /organization-management has no page in this prototype and is a live production URL */
@@ -274,35 +274,8 @@ const twoBalances = (compact) => `<span class="flex flex-col gap-1.5">
                   </span>`;
 
 /* ═══════════════ 01 · HERO — THE MANAGED TEAM WORKFLOW ═══════════════ */
-const section1 = () => `  <!-- ================= 01 · HERO / BUSINESS & TEAMS =================
-       No checker, no free-check line: the homepage owns that. The first product idea on
-       this page is the managed organization, so the visual is that and nothing else —
-       an administrator, the organization's resources, and members who each carry TWO
-       balances. A diagram, not a dashboard: every label is the supporting copy's. -->
-  <section id="business-and-teams" data-component="hero-hub" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
-    ${dotField()}
-    <div class="orb absolute orb-hero-teal"></div>
-    <div class="orb absolute orb-hero-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
-
-        <div class="rv min-w-0">
-${eyebrow('teal-400', COPY.hero.eyebrow)}
-          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 sm:mb-5 lg:mb-6">${penMark(COPY.hero.h1, 'Business &amp; Teams')}</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[60ch]">${COPY.hero.p1}</p>
-          <p class="mt-3 text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[60ch] mb-7 lg:mb-8">${COPY.hero.p2}</p>
-
-          <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 lg:mb-7">
-            ${btnDark(COPY.hero.primary, COPY.hero.primaryHref)}
-            <a href="${COPY.hero.secondaryHref}" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.hero.secondary}</a>
-          </div>
-          <p class="text-[13px] sm:text-[13.5px] text-ink-500 max-w-[58ch]">${COPY.hero.line}</p>
-        </div>
-
-        <!-- the managed organization, drawn -->
-        <div class="rv min-w-0">
-          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+/* the managed organization, drawn — the hero's sealed diagram */
+const heroDiagram = () => `          <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
             <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-7">
 
               <div data-surface="dark" class="flex items-center gap-3.5 rounded-2xl bg-ink-950 text-white px-4 py-3.5">
@@ -341,11 +314,24 @@ ${[0, 1].map(() => `                <div class="rounded-2xl bg-ink-50 ring-1 rin
                 </div>`).join('\n')}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+          </div>`;
+
+const section1 = () => `  <!-- ================= 01 · HERO / BUSINESS & TEAMS =================
+       No checker, no free-check line: the homepage owns that. The first product idea on
+       this page is the managed organization, so the visual is that and nothing else —
+       an administrator, the organization's resources, and members who each carry TWO
+       balances. A diagram, not a dashboard: every label is the supporting copy's.
+       The hero is the library's (build/sections/hero.js), layout "hub"; the diagram is
+       its sealed slot. -->
+${hero.section({
+    id: 'business-and-teams', layout: 'hub',
+    eyebrow: COPY.hero.eyebrow,
+    title: COPY.hero.h1, pen: 'Business &amp; Teams',
+    lead: [COPY.hero.p1, COPY.hero.p2],
+    actions: { button: { label: COPY.hero.primary, href: COPY.hero.primaryHref }, link: { label: COPY.hero.secondary, href: COPY.hero.secondaryHref } },
+    note: COPY.hero.line, noteMeasure: '58',
+    media: heroDiagram(),
+  })}`;
 
 /* ═══════════════ 02 · ORGANIZATION MANAGEMENT — THE SIGNATURE ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · ORGANIZATION MANAGEMENT =================

@@ -26,12 +26,1411 @@
       <p>Перед публікацією перевірте вставку: збережіть HTML у файл і запустіть <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">node build/check-library.js файл.html</code> (або <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">… --stdin</code>). Валідатор назве рядок і причину, якщо щось зламано.</p>
     </div>
     <ul class="mt-6 flex flex-wrap gap-2.5">
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-hero">Hero <span class="text-ink-400 font-medium">7</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-faq">FAQ <span class="text-ink-400 font-medium">8</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-cta-band">CTA band <span class="text-ink-400 font-medium">9</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-banner">Banner <span class="text-ink-400 font-medium">5</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-inquiry-form">Inquiry form <span class="text-ink-400 font-medium">3</span></a></li>
     </ul>
   </section>
+
+  <section id="lib-hero" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">Hero</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>Перша секція сторінки на світлому тлі з крапковим полем: H1 з одним підкресленим словом і один об’єкт поруч — справжній чекер або схема. Чекер і схема — запечатані блоки: копіюються як є.</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/hero.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/hero.css</code> · JS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/assets/js/18-pen-mark.js (перемальовує підкреслення), 22-hero-title.js (слова, що виринають), 20-motion.js, 30-checker.js</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/hero.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/hero-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці. У hero з чекером кнопка форми веде на цей самий якір (href="#…" усередині чекера): міняйте обидва разом — валідатор попередить, якщо вони розійшлися</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіанти</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-size на h1.hero-title, data-measure на p.hero-lead і p.hero-note, data-state на пігулці шляху, data-tone на .icon-tile</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише значення зі списку варіантів; необов’язковий атрибут можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Надпис-пігулка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-eyebrow-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; блок .section-eyebrow можна прибрати цілком. Колір крапки не задається — у hero вона бірюзова</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Заголовок H1</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">h1.hero-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст (обов’язковий, єдиний H1 сторінки); допускаються &lt;br&gt;, &lt;wbr&gt;</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Підкреслене слово</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.pen-word усередині заголовка</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">не більше одного; міняйте лише текст перед &lt;svg class="pen-mark"&gt;. Лінію під нове слово перемалює скрипт під час завантаження — у &lt;svg&gt; нічого міняти не треба</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Слова, що виринають (головна)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">h1.hero-title[data-hero-title]</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">кожне слово в &lt;span class="hw"&gt;&lt;span class="hw-in"&gt;…&lt;/span&gt;&lt;/span&gt;; слово, вписане без обгортки, скрипт обгорне сам (валідатор попередить). data-hero-support на вступі лишається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Вступ</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.hero-lead</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; допускаються strong, em, br. У hub — один або два абзаци</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Кнопка і тихе посилання (hub)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.hero-actions &gt; a.action-button, a.action-link</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href (rel="noopener" для зовнішніх адрес); посилання можна прибрати; кружок зі стрілкою лишається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Примітка під кнопками (hub)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.hero-note</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Рядок під чекером</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.hero-free</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст після іконки-іскри; іконка лишається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Шлях у пігулках (split-aside)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ol.hero-path &gt; li.hero-path-step &gt; span.hero-path-pill</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст кожної пігулки; кроків 2–6; aria-label списку — назва шляху. Стрілка &lt;svg&gt; стоїть після кожної пігулки, крім останньої</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Три цифри (split-aside)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.hero-facts: p.hero-fact-value, p.hero-fact-label, p.hero-facts-note</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; рівно три пари «значення — підпис» і речення під ними. Під карткою — необов’язкове посилання p.hero-aside-more &gt; a.hero-aside-link (текст і href)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Примітка з іконкою (split-aside)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.hero-notice &gt; p.hero-notice-text</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; допускаються strong, em, br. Тон плитки — data-tone</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>чекер — блок [data-slot="checker"] (форма швидкої перевірки, build/checker.js): копіюється як є, без жодних змін усередині; це компонент продукту, його поля й поведінку підключає розробник</li>
+          <li>схема — блок [data-slot="media"] у hub: копіюється як є; валідатор не заглядає всередину</li>
+          <li>тло: крапкове поле .dot-field.hero-dots і два світіння .orb (у center — усередині .hero-bg) — копіюються як є, у цьому порядку</li>
+          <li>усі класи й обгортки: .hero-inner, .hero-grid, .hero-head, .hero-media, .hero-aside</li>
+          <li>data-component="hero" на секції — гачок для перевірок; data-layout — обов’язковий</li>
+          <li>класи-гачки: rv (анімація появи), pen-word і pen-mark (підкреслення), btn-press і group на кнопці, icon-orb на кружку зі стрілкою, dot-field і orb на шарах тла</li>
+          <li>іконки &lt;svg&gt; (іскра, стрілки, підкреслення, іконка в плитці) — копіюються як є</li>
+          <li>порядок частин: пігулка → заголовок → вступ → кнопки → примітка; у сітці: текст → чекер або схема → блок під текстом</li>
+          <li>у блоці під текстом — рівно один із трьох: шлях, три цифри або примітка з іконкою</li>
+          <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) поза запечатаними блоками</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">split-aside</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">split</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">hub</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">center</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. розкладка. split-aside — текст і блок під ним ліворуч, чекер праворуч (Students, PDF, Turnitin). split — те саме без блока під текстом, колонки по центру, пропорції української сторінки. hub — ширша текстова колонка з кнопками, праворуч схема (Business, University, Affiliate). center — головна: заголовок по центру над чекером. Це різні фрагменти — беріть відповідний зразок, а не міняйте атрибут.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">title</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-size</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">long</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. long — менший кегль для довгого заголовка-речення (Turnitin). Без атрибута — розмір hero.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">lead</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">52</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">54</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">60</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">62</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. найдовший рядок вступу, у символах. Без атрибута: 54 біля чекера (52 на українській сторінці), 60 у hub, без обмеження на головній. Змінюйте, лише якщо текст негарно переноситься.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">note</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">58</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. найдовший рядок примітки під кнопками (hub), у символах. Без атрибута — на всю колонку.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">pathPill</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-state</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">current</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. current — темна пігулка поточного кроку (з крапкою span.hero-path-dot усередині). Одна на шлях.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">tile</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ink</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">orange</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">mint</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. колір плитки з іконкою (.icon-tile) у блоці-примітці: один атрибут задає і тло плитки, і колір іконки.</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="index.html">index.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">center</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">заголовок, що виринає; чекер; рядок під чекером</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-students.html">plagiarism-checker-for-students.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">split-aside</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">чекер; шлях у п’яти пігулках</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="pdf-plagiarism-checker.html">pdf-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">split-aside</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">чекер; три цифри + посилання під карткою</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="turnitin-checker-alternative.html">turnitin-checker-alternative.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">split-aside · title long</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; чекер; примітка з іконкою</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ua-plagiarism-check.html">ua-plagiarism-check.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">split</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">чекер (форма lang="en")</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-organization.html">plagiarism-checker-for-organization.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">hub · note 58</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; два абзаци; кнопка + посилання; примітка; схема</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="university-plagiarism-checker.html">university-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">hub · lead 62</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; кнопка + посилання; примітка; схема</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="affiliate-program-at-plagiarismsearch.html">affiliate-program-at-plagiarismsearch.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">hub</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; кнопка + посилання; картка з фактами в блоці media</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── hero · 1 · hero-split-path.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Hero · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Hero · чекер праворуч, під текстом шлях (split-aside)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Текст ліворуч, справжній чекер праворуч, під текстом — шлях у пігулках (ol.hero-path), одна з них поточна. На телефоні порядок: заголовок → чекер → шлях. Копія — Students.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-students · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/hero-split-path.html</code></p>
+    </div>
+  </div>
+
+<section id="example-hero-path" data-component="hero" class="hero" data-layout="split-aside">
+  <div class="dot-field hero-dots" aria-hidden="true"></div>
+  <div class="orb orb-hero-teal"></div>
+  <div class="orb orb-hero-coral"></div>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-head rv">
+        <h1 class="hero-title">Plagiarism Checker for <span class="pen-word">Students<svg class="pen-mark" viewBox="0 0 144 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c36-7 96-7 138-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
+        <p class="hero-lead">Check your essay, paper, assignment, thesis, or other coursework for matching text and sources before you submit. Review each match in context and decide what needs attention before you turn in your work.</p>
+      </div>
+      <div class="hero-media">
+        <div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+          <form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+
+            <label for="example-hero-path-text" class="sr-only">Paste or type your text here</label>
+            <!-- the count belongs to the text, so it sits in the corner of the field
+                 rather than in a footer two rows away from what it counts -->
+            <div class="relative mb-4">
+              <textarea id="example-hero-path-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
+              <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span data-checker-count>0</span> / 150 words</span>
+            </div>
+
+            <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                 formats line it carried reappears under the input chips instead. The two
+                 are exclusive — one display query, never both on screen — so the approved
+                 sentence still appears exactly once at any width. -->
+            <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+              <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+                <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
+              </span>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+            </div>
+            <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
+
+            <!-- The two checks sit beside the button they modify, not in a row of their own.
+                 The row itself never wraps: the button keeps the right edge at every width,
+                 and it is the checks that give — side by side where they fit, stacked below
+                 640 where the pair needs about 300px and the form only has 295. -->
+            <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+              <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <span class="sw on" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <span class="sw" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
+                </label>
+              </div>
+              <a href="#example-hero-path" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                Check for plagiarism
+                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+            </div>
+          </form>
+        </div>
+        <p class="hero-free">
+          <svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          150 words free — no registration required.
+        </p>
+      </div>
+      <div class="hero-aside rv">
+        <ol class="hero-path" aria-label="Before you submit">
+          <li class="hero-path-step">
+            <span class="hero-path-pill">Draft</span>
+            <svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </li>
+          <li class="hero-path-step">
+            <span class="hero-path-pill" data-state="current"><span class="hero-path-dot"></span>Check</span>
+            <svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </li>
+          <li class="hero-path-step">
+            <span class="hero-path-pill">Inspect the match and its source</span>
+            <svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </li>
+          <li class="hero-path-step">
+            <span class="hero-path-pill">Revise deliberately</span>
+            <svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </li>
+          <li class="hero-path-step">
+            <span class="hero-path-pill">Submit</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-1">HTML для копіювання</label>
+    <textarea id="snippet-1" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-hero-path" data-component="hero" class="hero" data-layout="split-aside"&gt;
+  &lt;div class="dot-field hero-dots" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-teal"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-coral"&gt;&lt;/div&gt;
+  &lt;div class="hero-inner"&gt;
+    &lt;div class="hero-grid"&gt;
+      &lt;div class="hero-head rv"&gt;
+        &lt;h1 class="hero-title"&gt;Plagiarism Checker for &lt;span class="pen-word"&gt;Students&lt;svg class="pen-mark" viewBox="0 0 144 12" fill="none" aria-hidden="true"&gt;&lt;path class="pen-underline" d="M3 9c36-7 96-7 138-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/h1&gt;
+        &lt;p class="hero-lead"&gt;Check your essay, paper, assignment, thesis, or other coursework for matching text and sources before you submit. Review each match in context and decide what needs attention before you turn in your work.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="hero-media"&gt;
+        &lt;div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse"&gt;
+          &lt;form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false"&gt;
+
+            &lt;label for="example-hero-path-text" class="sr-only"&gt;Paste or type your text here&lt;/label&gt;
+            &lt;!-- the count belongs to the text, so it sits in the corner of the field
+                 rather than in a footer two rows away from what it counts --&gt;
+            &lt;div class="relative mb-4"&gt;
+              &lt;textarea id="example-hero-path-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"&gt;&lt;/textarea&gt;
+              &lt;span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"&gt;&lt;span data-checker-count&gt;0&lt;/span&gt; / 150 words&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                 formats line it carried reappears under the input chips instead. The two
+                 are exclusive — one display query, never both on screen — so the approved
+                 sentence still appears exactly once at any width. --&gt;
+            &lt;div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3"&gt;
+              &lt;span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5"&gt;
+                &lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;&lt;polyline points="17 8 12 3 7 8"/&gt;&lt;line x1="12" x2="12" y1="3" y2="15"/&gt;&lt;/svg&gt;
+              &lt;/span&gt;
+              &lt;span class="min-w-0 flex-1"&gt;
+                &lt;span class="block text-[13.5px] font-bold tracking-tight"&gt;Drag and drop a file here&lt;/span&gt;
+                &lt;span class="block text-[12px] text-ink-500"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5"&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M13.234 20.252 21 12.3"/&gt;&lt;path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/&gt;&lt;/svg&gt;Attach file&lt;/button&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;Dropbox&lt;/button&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;OneDrive&lt;/button&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9 17H7A5 5 0 0 1 7 7h2"/&gt;&lt;path d="M15 7h2a5 5 0 1 1 0 10h-2"/&gt;&lt;line x1="8" x2="16" y1="12" y2="12"/&gt;&lt;/svg&gt;By URL&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/p&gt;
+
+            &lt;!-- The two checks sit beside the button they modify, not in a row of their own.
+                 The row itself never wraps: the button keeps the right edge at every width,
+                 and it is the checks that give — side by side where they fit, stacked below
+                 640 where the pair needs about 300px and the form only has 295. --&gt;
+            &lt;div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100"&gt;
+              &lt;div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3"&gt;
+                &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+                  &lt;input type="checkbox" checked class="sr-only peer"&gt;
+                  &lt;span class="sw on" data-switch&gt;&lt;/span&gt;
+                  &lt;span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900"&gt;Check for plagiarism&lt;/span&gt;
+                &lt;/label&gt;
+                &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+                  &lt;input type="checkbox" class="sr-only peer"&gt;
+                  &lt;span class="sw" data-switch&gt;&lt;/span&gt;
+                  &lt;span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600"&gt;Check for AI writing&lt;/span&gt;
+                &lt;/label&gt;
+              &lt;/div&gt;
+              &lt;a href="#example-hero-path" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2"&gt;
+                Check for plagiarism
+                &lt;span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"&gt;
+                  &lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;
+                &lt;/span&gt;
+              &lt;/a&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;p class="hero-free"&gt;
+          &lt;svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;
+          150 words free — no registration required.
+        &lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="hero-aside rv"&gt;
+        &lt;ol class="hero-path" aria-label="Before you submit"&gt;
+          &lt;li class="hero-path-step"&gt;
+            &lt;span class="hero-path-pill"&gt;Draft&lt;/span&gt;
+            &lt;svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;
+          &lt;/li&gt;
+          &lt;li class="hero-path-step"&gt;
+            &lt;span class="hero-path-pill" data-state="current"&gt;&lt;span class="hero-path-dot"&gt;&lt;/span&gt;Check&lt;/span&gt;
+            &lt;svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;
+          &lt;/li&gt;
+          &lt;li class="hero-path-step"&gt;
+            &lt;span class="hero-path-pill"&gt;Inspect the match and its source&lt;/span&gt;
+            &lt;svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;
+          &lt;/li&gt;
+          &lt;li class="hero-path-step"&gt;
+            &lt;span class="hero-path-pill"&gt;Revise deliberately&lt;/span&gt;
+            &lt;svg class="hero-path-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;
+          &lt;/li&gt;
+          &lt;li class="hero-path-step"&gt;
+            &lt;span class="hero-path-pill"&gt;Submit&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── hero · 2 · hero-split-facts.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Hero · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Hero · чекер праворуч, під текстом три цифри (split-aside)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Те саме, а під текстом — картка з трьома цифрами й реченням (.hero-facts) і тихе посилання під нею. Копія — PDF.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: pdf-plagiarism-checker · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/hero-split-facts.html</code></p>
+    </div>
+  </div>
+
+<section id="example-hero-facts" data-component="hero" class="hero" data-layout="split-aside">
+  <div class="dot-field hero-dots" aria-hidden="true"></div>
+  <div class="orb orb-hero-teal"></div>
+  <div class="orb orb-hero-coral"></div>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-head rv">
+        <h1 class="hero-title"><span class="pen-word">PDF<svg class="pen-mark" viewBox="0 0 54 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c14-7 36-7 48-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span> Plagiarism Checker</h1>
+        <p class="hero-lead">Upload a PDF directly — no copying or file conversion required. PlagiarismSearch checks the extractable text in your PDF against the sources enabled for the check and shows matching passages and sources in a clear report.</p>
+      </div>
+      <div class="hero-media">
+        <div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+          <form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+
+            <label for="example-hero-facts-text" class="sr-only">Paste or type your text here</label>
+            <!-- the count belongs to the text, so it sits in the corner of the field
+                 rather than in a footer two rows away from what it counts -->
+            <div class="relative mb-4">
+              <textarea id="example-hero-facts-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
+              <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span data-checker-count>0</span> / 150 words</span>
+            </div>
+
+            <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                 formats line it carried reappears under the input chips instead. The two
+                 are exclusive — one display query, never both on screen — so the approved
+                 sentence still appears exactly once at any width. -->
+            <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+              <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+                <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
+              </span>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+            </div>
+            <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
+
+            <!-- The two checks sit beside the button they modify, not in a row of their own.
+                 The row itself never wraps: the button keeps the right edge at every width,
+                 and it is the checks that give — side by side where they fit, stacked below
+                 640 where the pair needs about 300px and the form only has 295. -->
+            <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+              <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <span class="sw on" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <span class="sw" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
+                </label>
+              </div>
+              <a href="#example-hero-facts" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                Check for plagiarism
+                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+            </div>
+          </form>
+        </div>
+        <p class="hero-free">
+          <svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          150 words free — no registration required.
+        </p>
+      </div>
+      <div class="hero-aside rv">
+        <div class="hero-facts">
+          <div class="hero-facts-grid">
+            <div class="hero-fact">
+              <p class="hero-fact-value">2 MB</p>
+              <p class="hero-fact-label">for guests</p>
+            </div>
+            <div class="hero-fact">
+              <p class="hero-fact-value">24 MB</p>
+              <p class="hero-fact-label">when signed in</p>
+            </div>
+            <div class="hero-fact">
+              <p class="hero-fact-value">10 files</p>
+              <p class="hero-fact-label">at once</p>
+            </div>
+          </div>
+          <p class="hero-facts-note">File size limit: 2 MB for guests and 24 MB when signed in. Upload up to 10 files at once.</p>
+        </div>
+        <p class="hero-aside-more">
+          <a href="#pdf-text-extraction" class="hero-aside-link"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>Using a scanned PDF?</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-2">HTML для копіювання</label>
+    <textarea id="snippet-2" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-hero-facts" data-component="hero" class="hero" data-layout="split-aside"&gt;
+  &lt;div class="dot-field hero-dots" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-teal"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-coral"&gt;&lt;/div&gt;
+  &lt;div class="hero-inner"&gt;
+    &lt;div class="hero-grid"&gt;
+      &lt;div class="hero-head rv"&gt;
+        &lt;h1 class="hero-title"&gt;&lt;span class="pen-word"&gt;PDF&lt;svg class="pen-mark" viewBox="0 0 54 12" fill="none" aria-hidden="true"&gt;&lt;path class="pen-underline" d="M3 9c14-7 36-7 48-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/&gt;&lt;/svg&gt;&lt;/span&gt; Plagiarism Checker&lt;/h1&gt;
+        &lt;p class="hero-lead"&gt;Upload a PDF directly — no copying or file conversion required. PlagiarismSearch checks the extractable text in your PDF against the sources enabled for the check and shows matching passages and sources in a clear report.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="hero-media"&gt;
+        &lt;div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse"&gt;
+          &lt;form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false"&gt;
+
+            &lt;label for="example-hero-facts-text" class="sr-only"&gt;Paste or type your text here&lt;/label&gt;
+            &lt;!-- the count belongs to the text, so it sits in the corner of the field
+                 rather than in a footer two rows away from what it counts --&gt;
+            &lt;div class="relative mb-4"&gt;
+              &lt;textarea id="example-hero-facts-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"&gt;&lt;/textarea&gt;
+              &lt;span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"&gt;&lt;span data-checker-count&gt;0&lt;/span&gt; / 150 words&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                 formats line it carried reappears under the input chips instead. The two
+                 are exclusive — one display query, never both on screen — so the approved
+                 sentence still appears exactly once at any width. --&gt;
+            &lt;div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3"&gt;
+              &lt;span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5"&gt;
+                &lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;&lt;polyline points="17 8 12 3 7 8"/&gt;&lt;line x1="12" x2="12" y1="3" y2="15"/&gt;&lt;/svg&gt;
+              &lt;/span&gt;
+              &lt;span class="min-w-0 flex-1"&gt;
+                &lt;span class="block text-[13.5px] font-bold tracking-tight"&gt;Drag and drop a file here&lt;/span&gt;
+                &lt;span class="block text-[12px] text-ink-500"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5"&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M13.234 20.252 21 12.3"/&gt;&lt;path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/&gt;&lt;/svg&gt;Attach file&lt;/button&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;Dropbox&lt;/button&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;OneDrive&lt;/button&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9 17H7A5 5 0 0 1 7 7h2"/&gt;&lt;path d="M15 7h2a5 5 0 1 1 0 10h-2"/&gt;&lt;line x1="8" x2="16" y1="12" y2="12"/&gt;&lt;/svg&gt;By URL&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/p&gt;
+
+            &lt;!-- The two checks sit beside the button they modify, not in a row of their own.
+                 The row itself never wraps: the button keeps the right edge at every width,
+                 and it is the checks that give — side by side where they fit, stacked below
+                 640 where the pair needs about 300px and the form only has 295. --&gt;
+            &lt;div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100"&gt;
+              &lt;div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3"&gt;
+                &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+                  &lt;input type="checkbox" checked class="sr-only peer"&gt;
+                  &lt;span class="sw on" data-switch&gt;&lt;/span&gt;
+                  &lt;span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900"&gt;Check for plagiarism&lt;/span&gt;
+                &lt;/label&gt;
+                &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+                  &lt;input type="checkbox" class="sr-only peer"&gt;
+                  &lt;span class="sw" data-switch&gt;&lt;/span&gt;
+                  &lt;span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600"&gt;Check for AI writing&lt;/span&gt;
+                &lt;/label&gt;
+              &lt;/div&gt;
+              &lt;a href="#example-hero-facts" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2"&gt;
+                Check for plagiarism
+                &lt;span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"&gt;
+                  &lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;
+                &lt;/span&gt;
+              &lt;/a&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;p class="hero-free"&gt;
+          &lt;svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;
+          150 words free — no registration required.
+        &lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="hero-aside rv"&gt;
+        &lt;div class="hero-facts"&gt;
+          &lt;div class="hero-facts-grid"&gt;
+            &lt;div class="hero-fact"&gt;
+              &lt;p class="hero-fact-value"&gt;2 MB&lt;/p&gt;
+              &lt;p class="hero-fact-label"&gt;for guests&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="hero-fact"&gt;
+              &lt;p class="hero-fact-value"&gt;24 MB&lt;/p&gt;
+              &lt;p class="hero-fact-label"&gt;when signed in&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="hero-fact"&gt;
+              &lt;p class="hero-fact-value"&gt;10 files&lt;/p&gt;
+              &lt;p class="hero-fact-label"&gt;at once&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;p class="hero-facts-note"&gt;File size limit: 2 MB for guests and 24 MB when signed in. Upload up to 10 files at once.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;p class="hero-aside-more"&gt;
+          &lt;a href="#pdf-text-extraction" class="hero-aside-link"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="18" height="18" x="3" y="3" rx="2" ry="2"/&gt;&lt;circle cx="9" cy="9" r="2"/&gt;&lt;path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/&gt;&lt;/svg&gt;Using a scanned PDF?&lt;/a&gt;
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── hero · 3 · hero-split-notice.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Hero · варіант 3</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Hero · чекер праворуч, під текстом примітка з іконкою (split-aside)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">З пігулкою над заголовком і меншим кеглем довгого заголовка (data-size="long"); під текстом — одне твердження поруч із плиткою-іконкою (.hero-notice). Копія — Turnitin Alternative.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: turnitin-checker-alternative · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/hero-split-notice.html</code></p>
+    </div>
+  </div>
+
+<section id="example-hero-notice" data-component="hero" class="hero" data-layout="split-aside">
+  <div class="dot-field hero-dots" aria-hidden="true"></div>
+  <div class="orb orb-hero-teal"></div>
+  <div class="orb orb-hero-coral"></div>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-head rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Independent plagiarism checking</span>
+        </div>
+        <h1 class="hero-title" data-size="long">An <span class="pen-word">Independent<svg class="pen-mark" viewBox="0 0 198 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c50-7 133-7 192-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span> Alternative to Turnitin® for Plagiarism Checking</h1>
+        <p class="hero-lead">Looking for a plagiarism check you can run directly? PlagiarismSearch lets individuals upload or paste their own content, review matching passages and sources, and use self-service plagiarism checking without an institutional PlagiarismSearch setup.</p>
+      </div>
+      <div class="hero-media">
+        <div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+          <form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+
+            <label for="example-hero-notice-text" class="sr-only">Paste or type your text here</label>
+            <!-- the count belongs to the text, so it sits in the corner of the field
+                 rather than in a footer two rows away from what it counts -->
+            <div class="relative mb-4">
+              <textarea id="example-hero-notice-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
+              <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span data-checker-count>0</span> / 150 words</span>
+            </div>
+
+            <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                 formats line it carried reappears under the input chips instead. The two
+                 are exclusive — one display query, never both on screen — so the approved
+                 sentence still appears exactly once at any width. -->
+            <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+              <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+                <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
+              </span>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+              <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+              <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+            </div>
+            <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
+
+            <!-- The two checks sit beside the button they modify, not in a row of their own.
+                 The row itself never wraps: the button keeps the right edge at every width,
+                 and it is the checks that give — side by side where they fit, stacked below
+                 640 where the pair needs about 300px and the form only has 295. -->
+            <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+              <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <span class="sw on" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <span class="sw" data-switch></span>
+                  <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
+                </label>
+              </div>
+              <a href="#example-hero-notice" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                Check for plagiarism
+                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+            </div>
+          </form>
+        </div>
+        <p class="hero-free">
+          <svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          150 words free — no registration required.
+        </p>
+      </div>
+      <div class="hero-aside rv">
+        <div class="hero-notice">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+          <p class="hero-notice-text">PlagiarismSearch is an independent service. It is not affiliated with or endorsed by Turnitin, LLC and does not generate Turnitin Similarity Reports.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-3">HTML для копіювання</label>
+    <textarea id="snippet-3" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-hero-notice" data-component="hero" class="hero" data-layout="split-aside"&gt;
+  &lt;div class="dot-field hero-dots" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-teal"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-coral"&gt;&lt;/div&gt;
+  &lt;div class="hero-inner"&gt;
+    &lt;div class="hero-grid"&gt;
+      &lt;div class="hero-head rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Independent plagiarism checking&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h1 class="hero-title" data-size="long"&gt;An &lt;span class="pen-word"&gt;Independent&lt;svg class="pen-mark" viewBox="0 0 198 12" fill="none" aria-hidden="true"&gt;&lt;path class="pen-underline" d="M3 9c50-7 133-7 192-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/&gt;&lt;/svg&gt;&lt;/span&gt; Alternative to Turnitin® for Plagiarism Checking&lt;/h1&gt;
+        &lt;p class="hero-lead"&gt;Looking for a plagiarism check you can run directly? PlagiarismSearch lets individuals upload or paste their own content, review matching passages and sources, and use self-service plagiarism checking without an institutional PlagiarismSearch setup.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="hero-media"&gt;
+        &lt;div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse"&gt;
+          &lt;form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false"&gt;
+
+            &lt;label for="example-hero-notice-text" class="sr-only"&gt;Paste or type your text here&lt;/label&gt;
+            &lt;!-- the count belongs to the text, so it sits in the corner of the field
+                 rather than in a footer two rows away from what it counts --&gt;
+            &lt;div class="relative mb-4"&gt;
+              &lt;textarea id="example-hero-notice-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"&gt;&lt;/textarea&gt;
+              &lt;span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"&gt;&lt;span data-checker-count&gt;0&lt;/span&gt; / 150 words&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                 formats line it carried reappears under the input chips instead. The two
+                 are exclusive — one display query, never both on screen — so the approved
+                 sentence still appears exactly once at any width. --&gt;
+            &lt;div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3"&gt;
+              &lt;span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5"&gt;
+                &lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;&lt;polyline points="17 8 12 3 7 8"/&gt;&lt;line x1="12" x2="12" y1="3" y2="15"/&gt;&lt;/svg&gt;
+              &lt;/span&gt;
+              &lt;span class="min-w-0 flex-1"&gt;
+                &lt;span class="block text-[13.5px] font-bold tracking-tight"&gt;Drag and drop a file here&lt;/span&gt;
+                &lt;span class="block text-[12px] text-ink-500"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5"&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M13.234 20.252 21 12.3"/&gt;&lt;path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/&gt;&lt;/svg&gt;Attach file&lt;/button&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;Dropbox&lt;/button&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;OneDrive&lt;/button&gt;
+              &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9 17H7A5 5 0 0 1 7 7h2"/&gt;&lt;path d="M15 7h2a5 5 0 1 1 0 10h-2"/&gt;&lt;line x1="8" x2="16" y1="12" y2="12"/&gt;&lt;/svg&gt;By URL&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/p&gt;
+
+            &lt;!-- The two checks sit beside the button they modify, not in a row of their own.
+                 The row itself never wraps: the button keeps the right edge at every width,
+                 and it is the checks that give — side by side where they fit, stacked below
+                 640 where the pair needs about 300px and the form only has 295. --&gt;
+            &lt;div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100"&gt;
+              &lt;div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3"&gt;
+                &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+                  &lt;input type="checkbox" checked class="sr-only peer"&gt;
+                  &lt;span class="sw on" data-switch&gt;&lt;/span&gt;
+                  &lt;span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900"&gt;Check for plagiarism&lt;/span&gt;
+                &lt;/label&gt;
+                &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+                  &lt;input type="checkbox" class="sr-only peer"&gt;
+                  &lt;span class="sw" data-switch&gt;&lt;/span&gt;
+                  &lt;span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600"&gt;Check for AI writing&lt;/span&gt;
+                &lt;/label&gt;
+              &lt;/div&gt;
+              &lt;a href="#example-hero-notice" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2"&gt;
+                Check for plagiarism
+                &lt;span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"&gt;
+                  &lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;
+                &lt;/span&gt;
+              &lt;/a&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;p class="hero-free"&gt;
+          &lt;svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;
+          150 words free — no registration required.
+        &lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="hero-aside rv"&gt;
+        &lt;div class="hero-notice"&gt;
+          &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;p class="hero-notice-text"&gt;PlagiarismSearch is an independent service. It is not affiliated with or endorsed by Turnitin, LLC and does not generate Turnitin Similarity Reports.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── hero · 4 · hero-split.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Hero · варіант 4</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Hero · чекер праворуч, без блока під текстом (split)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Дві колонки по центру: текст і чекер; пропорції й кегль заголовка — української сторінки. Форма чекера лишається англійською (обгортка &lt;div lang="en"&gt;). Копія — українська сторінка.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ua-plagiarism-check · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/hero-split.html</code></p>
+    </div>
+  </div>
+
+<section id="example-hero-split" data-component="hero" class="hero" data-layout="split">
+  <div class="dot-field hero-dots" aria-hidden="true"></div>
+  <div class="orb orb-hero-teal"></div>
+  <div class="orb orb-hero-coral"></div>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-head rv">
+        <h1 class="hero-title">Перевірка на плагіат <span class="pen-word">онлайн<svg class="pen-mark" viewBox="0 0 108 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c27-7 72-7 102-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
+        <p class="hero-lead">Вставте текст або завантажте документ. PlagiarismSearch знаходить текстові збіги з доступними джерелами та показує їх у звіті, щоб ви могли перевірити контекст і за потреби доопрацювати текст.</p>
+      </div>
+      <div class="hero-media">
+        <div lang="en">
+          <div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+            <form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+
+              <label for="example-hero-split-text" class="sr-only">Paste or type your text here</label>
+              <!-- the count belongs to the text, so it sits in the corner of the field
+                   rather than in a footer two rows away from what it counts -->
+              <div class="relative mb-4">
+                <textarea id="example-hero-split-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
+                <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span data-checker-count>0</span> / 150 words</span>
+              </div>
+
+              <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                   formats line it carried reappears under the input chips instead. The two
+                   are exclusive — one display query, never both on screen — so the approved
+                   sentence still appears exactly once at any width. -->
+              <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+                <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+                  <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
+                </span>
+              </div>
+
+              <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+                <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+                <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+                <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+                <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+              </div>
+              <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
+
+              <!-- The two checks sit beside the button they modify, not in a row of their own.
+                   The row itself never wraps: the button keeps the right edge at every width,
+                   and it is the checks that give — side by side where they fit, stacked below
+                   640 where the pair needs about 300px and the form only has 295. -->
+              <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+                <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
+                  <label class="flex items-center gap-2.5 cursor-pointer">
+                    <input type="checkbox" checked class="sr-only peer">
+                    <span class="sw on" data-switch></span>
+                    <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 cursor-pointer">
+                    <input type="checkbox" class="sr-only peer">
+                    <span class="sw" data-switch></span>
+                    <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
+                  </label>
+                </div>
+                <a href="#example-hero-split" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                  Check for plagiarism
+                  <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </span>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <p class="hero-free">
+          <svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+          До 150 слів без реєстрації · 300 слів щодня для зареєстрованих користувачів
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-4">HTML для копіювання</label>
+    <textarea id="snippet-4" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-hero-split" data-component="hero" class="hero" data-layout="split"&gt;
+  &lt;div class="dot-field hero-dots" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-teal"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-coral"&gt;&lt;/div&gt;
+  &lt;div class="hero-inner"&gt;
+    &lt;div class="hero-grid"&gt;
+      &lt;div class="hero-head rv"&gt;
+        &lt;h1 class="hero-title"&gt;Перевірка на плагіат &lt;span class="pen-word"&gt;онлайн&lt;svg class="pen-mark" viewBox="0 0 108 12" fill="none" aria-hidden="true"&gt;&lt;path class="pen-underline" d="M3 9c27-7 72-7 102-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/h1&gt;
+        &lt;p class="hero-lead"&gt;Вставте текст або завантажте документ. PlagiarismSearch знаходить текстові збіги з доступними джерелами та показує їх у звіті, щоб ви могли перевірити контекст і за потреби доопрацювати текст.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="hero-media"&gt;
+        &lt;div lang="en"&gt;
+          &lt;div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse"&gt;
+            &lt;form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false"&gt;
+
+              &lt;label for="example-hero-split-text" class="sr-only"&gt;Paste or type your text here&lt;/label&gt;
+              &lt;!-- the count belongs to the text, so it sits in the corner of the field
+                   rather than in a footer two rows away from what it counts --&gt;
+              &lt;div class="relative mb-4"&gt;
+                &lt;textarea id="example-hero-split-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"&gt;&lt;/textarea&gt;
+                &lt;span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"&gt;&lt;span data-checker-count&gt;0&lt;/span&gt; / 150 words&lt;/span&gt;
+              &lt;/div&gt;
+
+              &lt;!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+                   formats line it carried reappears under the input chips instead. The two
+                   are exclusive — one display query, never both on screen — so the approved
+                   sentence still appears exactly once at any width. --&gt;
+              &lt;div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3"&gt;
+                &lt;span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5"&gt;
+                  &lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;&lt;polyline points="17 8 12 3 7 8"/&gt;&lt;line x1="12" x2="12" y1="3" y2="15"/&gt;&lt;/svg&gt;
+                &lt;/span&gt;
+                &lt;span class="min-w-0 flex-1"&gt;
+                  &lt;span class="block text-[13.5px] font-bold tracking-tight"&gt;Drag and drop a file here&lt;/span&gt;
+                  &lt;span class="block text-[12px] text-ink-500"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/span&gt;
+                &lt;/span&gt;
+              &lt;/div&gt;
+
+              &lt;div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5"&gt;
+                &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M13.234 20.252 21 12.3"/&gt;&lt;path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/&gt;&lt;/svg&gt;Attach file&lt;/button&gt;
+                &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;Dropbox&lt;/button&gt;
+                &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;OneDrive&lt;/button&gt;
+                &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9 17H7A5 5 0 0 1 7 7h2"/&gt;&lt;path d="M15 7h2a5 5 0 1 1 0 10h-2"/&gt;&lt;line x1="8" x2="16" y1="12" y2="12"/&gt;&lt;/svg&gt;By URL&lt;/button&gt;
+              &lt;/div&gt;
+              &lt;p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/p&gt;
+
+              &lt;!-- The two checks sit beside the button they modify, not in a row of their own.
+                   The row itself never wraps: the button keeps the right edge at every width,
+                   and it is the checks that give — side by side where they fit, stacked below
+                   640 where the pair needs about 300px and the form only has 295. --&gt;
+              &lt;div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100"&gt;
+                &lt;div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3"&gt;
+                  &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+                    &lt;input type="checkbox" checked class="sr-only peer"&gt;
+                    &lt;span class="sw on" data-switch&gt;&lt;/span&gt;
+                    &lt;span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900"&gt;Check for plagiarism&lt;/span&gt;
+                  &lt;/label&gt;
+                  &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+                    &lt;input type="checkbox" class="sr-only peer"&gt;
+                    &lt;span class="sw" data-switch&gt;&lt;/span&gt;
+                    &lt;span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600"&gt;Check for AI writing&lt;/span&gt;
+                  &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;a href="#example-hero-split" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2"&gt;
+                  Check for plagiarism
+                  &lt;span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"&gt;
+                    &lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;
+                  &lt;/span&gt;
+                &lt;/a&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p class="hero-free"&gt;
+          &lt;svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;
+          До 150 слів без реєстрації · 300 слів щодня для зареєстрованих користувачів
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── hero · 5 · hero-hub.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Hero · варіант 5</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Hero · текст із кнопками і схема (hub)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Без чекера: пігулка, заголовок, вступ, кнопка з тихим посиланням і примітка; праворуч — схема в запечатаному блоці [data-slot="media"]. Вступ ширший: data-measure="62". Копія — University.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: university-plagiarism-checker; affiliate-program-at-plagiarismsearch (без примітки, у блоці — картка з фактами) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/hero-hub.html</code></p>
+    </div>
+  </div>
+
+<section id="example-hero-hub" data-component="hero" class="hero" data-layout="hub">
+  <div class="dot-field hero-dots" aria-hidden="true"></div>
+  <div class="orb orb-hero-teal"></div>
+  <div class="orb orb-hero-coral"></div>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-head rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">FOR UNIVERSITIES &amp; HIGHER EDUCATION</span>
+        </div>
+        <h1 class="hero-title"><span class="pen-word">University<svg class="pen-mark" viewBox="0 0 180 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c45-7 121-7 174-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span> Plagiarism Checker</h1>
+        <p class="hero-lead" data-measure="62">Give educators source evidence they can review and administrators the controls to manage institutional access, checking resources, and Storage. Use PlagiarismSearch directly, through your LMS, or through the API.</p>
+        <div class="hero-actions">
+          <a href="#institutional-inquiry" class="action-button btn-press group">
+            Request institutional pricing
+            <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+          <a href="#institutional-report" class="action-link">See how it works</a>
+        </div>
+        <p class="hero-note">For universities, colleges, academic departments, and other higher-education institutions.</p>
+      </div>
+      <div class="hero-media rv">
+        <div data-slot="media" class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+                  <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-8">
+                    <!-- one bracket on the left joins the three lanes: rounded corners, its arms
+                         meeting the first and last tile, a stub to the middle one. No node — the
+                         bracket is the "one system". -->
+                    <div class="relative pl-5 sm:pl-6">
+                      <span class="absolute left-0 top-9 bottom-9 w-5 sm:w-6 border-l border-t border-b border-ink-200 rounded-l-2xl" aria-hidden="true"></span>
+                      <span class="absolute left-0 top-1/2 w-5 sm:w-6 h-px bg-ink-200" aria-hidden="true"></span>
+                      <div class="space-y-3 sm:space-y-3.5">
+                        <div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-4 py-3.5 sm:px-5 sm:py-4">
+                          <div class="flex items-start justify-between gap-4">
+                            <div class="min-w-0">
+                              <p class="text-[15px] sm:text-[16px] font-bold tracking-tight">Review</p>
+                              <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-ink-600 mt-0.5">Source evidence for educators.</p>
+                            </div>
+                            <div class="w-[88px] shrink-0 pt-1"><span class="block space-y-1.5" aria-hidden="true">
+                          <span class="block h-1.5 w-[86%] rounded-full bg-ink-200"></span>
+                          <span class="block h-1.5 w-[70%] rounded-full bg-orange-400/70"></span>
+                          <span class="block h-1.5 w-[92%] rounded-full bg-ink-200"></span>
+                        </span></div>
+                          </div>
+                        </div>
+                        <div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-4 py-3.5 sm:px-5 sm:py-4">
+                          <div class="flex items-start justify-between gap-4">
+                            <div class="min-w-0">
+                              <p class="text-[15px] sm:text-[16px] font-bold tracking-tight">Manage</p>
+                              <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-ink-600 mt-0.5">People, permissions, and institutional resources.</p>
+                            </div>
+                            <div class="w-[88px] shrink-0 pt-1"><span class="flex items-center gap-2" aria-hidden="true">
+                          <span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-teal-200 ring-2 ring-white"></span><span class="w-5 h-5 rounded-full bg-teal-400 ring-2 ring-white"></span><span class="w-5 h-5 rounded-full bg-teal-600 ring-2 ring-white"></span></span>
+                          <span class="ml-auto inline-flex w-8 h-[18px] rounded-full bg-teal-600 p-[2px]"><span class="ml-auto block w-3.5 h-3.5 rounded-full bg-white"></span></span>
+                        </span></div>
+                          </div>
+                        </div>
+                        <div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-4 py-3.5 sm:px-5 sm:py-4">
+                          <div class="flex items-start justify-between gap-4">
+                            <div class="min-w-0">
+                              <p class="text-[15px] sm:text-[16px] font-bold tracking-tight">Integrate</p>
+                              <p class="text-[12.5px] sm:text-[13px] leading-relaxed text-ink-600 mt-0.5">Direct workspace, LMS, or API.</p>
+                            </div>
+                            <div class="w-[88px] shrink-0 pt-1"><span class="flex flex-wrap gap-1.5" aria-hidden="true">
+                          <span class="rounded-full bg-ink-100 px-2 py-0.5 text-[10.5px] font-semibold text-ink-700">Workspace</span>
+                          <span class="rounded-full bg-ink-100 px-2 py-0.5 text-[10.5px] font-semibold text-ink-700">LMS</span>
+                          <span class="rounded-full bg-ink-100 px-2 py-0.5 text-[10.5px] font-semibold text-ink-700">API</span>
+                        </span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-5">HTML для копіювання</label>
+    <textarea id="snippet-5" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-hero-hub" data-component="hero" class="hero" data-layout="hub"&gt;
+  &lt;div class="dot-field hero-dots" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-teal"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-coral"&gt;&lt;/div&gt;
+  &lt;div class="hero-inner"&gt;
+    &lt;div class="hero-grid"&gt;
+      &lt;div class="hero-head rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;FOR UNIVERSITIES &amp;amp; HIGHER EDUCATION&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h1 class="hero-title"&gt;&lt;span class="pen-word"&gt;University&lt;svg class="pen-mark" viewBox="0 0 180 12" fill="none" aria-hidden="true"&gt;&lt;path class="pen-underline" d="M3 9c45-7 121-7 174-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/&gt;&lt;/svg&gt;&lt;/span&gt; Plagiarism Checker&lt;/h1&gt;
+        &lt;p class="hero-lead" data-measure="62"&gt;Give educators source evidence they can review and administrators the controls to manage institutional access, checking resources, and Storage. Use PlagiarismSearch directly, through your LMS, or through the API.&lt;/p&gt;
+        &lt;div class="hero-actions"&gt;
+          &lt;a href="#institutional-inquiry" class="action-button btn-press group"&gt;
+            Request institutional pricing
+            &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;/a&gt;
+          &lt;a href="#institutional-report" class="action-link"&gt;See how it works&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;p class="hero-note"&gt;For universities, colleges, academic departments, and other higher-education institutions.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="hero-media rv"&gt;
+        &lt;div data-slot="media" class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse"&gt;
+                  &lt;div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-8"&gt;
+                    &lt;!-- one bracket on the left joins the three lanes: rounded corners, its arms
+                         meeting the first and last tile, a stub to the middle one. No node — the
+                         bracket is the "one system". --&gt;
+                    &lt;div class="relative pl-5 sm:pl-6"&gt;
+                      &lt;span class="absolute left-0 top-9 bottom-9 w-5 sm:w-6 border-l border-t border-b border-ink-200 rounded-l-2xl" aria-hidden="true"&gt;&lt;/span&gt;
+                      &lt;span class="absolute left-0 top-1/2 w-5 sm:w-6 h-px bg-ink-200" aria-hidden="true"&gt;&lt;/span&gt;
+                      &lt;div class="space-y-3 sm:space-y-3.5"&gt;
+                        &lt;div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-4 py-3.5 sm:px-5 sm:py-4"&gt;
+                          &lt;div class="flex items-start justify-between gap-4"&gt;
+                            &lt;div class="min-w-0"&gt;
+                              &lt;p class="text-[15px] sm:text-[16px] font-bold tracking-tight"&gt;Review&lt;/p&gt;
+                              &lt;p class="text-[12.5px] sm:text-[13px] leading-relaxed text-ink-600 mt-0.5"&gt;Source evidence for educators.&lt;/p&gt;
+                            &lt;/div&gt;
+                            &lt;div class="w-[88px] shrink-0 pt-1"&gt;&lt;span class="block space-y-1.5" aria-hidden="true"&gt;
+                          &lt;span class="block h-1.5 w-[86%] rounded-full bg-ink-200"&gt;&lt;/span&gt;
+                          &lt;span class="block h-1.5 w-[70%] rounded-full bg-orange-400/70"&gt;&lt;/span&gt;
+                          &lt;span class="block h-1.5 w-[92%] rounded-full bg-ink-200"&gt;&lt;/span&gt;
+                        &lt;/span&gt;&lt;/div&gt;
+                          &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-4 py-3.5 sm:px-5 sm:py-4"&gt;
+                          &lt;div class="flex items-start justify-between gap-4"&gt;
+                            &lt;div class="min-w-0"&gt;
+                              &lt;p class="text-[15px] sm:text-[16px] font-bold tracking-tight"&gt;Manage&lt;/p&gt;
+                              &lt;p class="text-[12.5px] sm:text-[13px] leading-relaxed text-ink-600 mt-0.5"&gt;People, permissions, and institutional resources.&lt;/p&gt;
+                            &lt;/div&gt;
+                            &lt;div class="w-[88px] shrink-0 pt-1"&gt;&lt;span class="flex items-center gap-2" aria-hidden="true"&gt;
+                          &lt;span class="flex -space-x-1.5"&gt;&lt;span class="w-5 h-5 rounded-full bg-teal-200 ring-2 ring-white"&gt;&lt;/span&gt;&lt;span class="w-5 h-5 rounded-full bg-teal-400 ring-2 ring-white"&gt;&lt;/span&gt;&lt;span class="w-5 h-5 rounded-full bg-teal-600 ring-2 ring-white"&gt;&lt;/span&gt;&lt;/span&gt;
+                          &lt;span class="ml-auto inline-flex w-8 h-[18px] rounded-full bg-teal-600 p-[2px]"&gt;&lt;span class="ml-auto block w-3.5 h-3.5 rounded-full bg-white"&gt;&lt;/span&gt;&lt;/span&gt;
+                        &lt;/span&gt;&lt;/div&gt;
+                          &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-4 py-3.5 sm:px-5 sm:py-4"&gt;
+                          &lt;div class="flex items-start justify-between gap-4"&gt;
+                            &lt;div class="min-w-0"&gt;
+                              &lt;p class="text-[15px] sm:text-[16px] font-bold tracking-tight"&gt;Integrate&lt;/p&gt;
+                              &lt;p class="text-[12.5px] sm:text-[13px] leading-relaxed text-ink-600 mt-0.5"&gt;Direct workspace, LMS, or API.&lt;/p&gt;
+                            &lt;/div&gt;
+                            &lt;div class="w-[88px] shrink-0 pt-1"&gt;&lt;span class="flex flex-wrap gap-1.5" aria-hidden="true"&gt;
+                          &lt;span class="rounded-full bg-ink-100 px-2 py-0.5 text-[10.5px] font-semibold text-ink-700"&gt;Workspace&lt;/span&gt;
+                          &lt;span class="rounded-full bg-ink-100 px-2 py-0.5 text-[10.5px] font-semibold text-ink-700"&gt;LMS&lt;/span&gt;
+                          &lt;span class="rounded-full bg-ink-100 px-2 py-0.5 text-[10.5px] font-semibold text-ink-700"&gt;API&lt;/span&gt;
+                        &lt;/span&gt;&lt;/div&gt;
+                          &lt;/div&gt;
+                        &lt;/div&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── hero · 6 · hero-hub-two-leads.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Hero · варіант 6</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Hero · hub, два абзаци вступу</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Те саме з двома абзацами вступу й обмеженою приміткою (data-measure="58"). Копія — Business &amp; Teams.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-organization · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/hero-hub-two-leads.html</code></p>
+    </div>
+  </div>
+
+<section id="example-hero-hub-leads" data-component="hero" class="hero" data-layout="hub">
+  <div class="dot-field hero-dots" aria-hidden="true"></div>
+  <div class="orb orb-hero-teal"></div>
+  <div class="orb orb-hero-coral"></div>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-head rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Business &amp; Teams</span>
+        </div>
+        <h1 class="hero-title">Plagiarism Checking for <span class="pen-word">Business &amp; Teams<svg class="pen-mark" viewBox="0 0 288 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c72-7 193-7 282-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
+        <p class="hero-lead">Bring recurring plagiarism checks into a managed team workflow. Administrators can manage members, permissions, and organization resources, while team members can keep their personal balances separate.</p>
+        <p class="hero-lead">Use Organization Storage when your own content should be part of comparison, or connect the PlagiarismSearch API when checks need to run inside another workflow.</p>
+        <div class="hero-actions">
+          <a href="#business-inquiry" class="action-button btn-press group">
+            Request a business quote
+            <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+          <a href="#organization-management" class="action-link">See how team access works</a>
+        </div>
+        <p class="hero-note" data-measure="58">For agencies, content teams, companies, publishers, and other organizations with recurring content-review needs.</p>
+      </div>
+      <div class="hero-media rv">
+        <div data-slot="media" class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
+                    <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-7">
+
+                      <div data-surface="dark" class="flex items-center gap-3.5 rounded-2xl bg-ink-950 text-white px-4 py-3.5">
+                        <span class="shrink-0 w-10 h-10 rounded-xl bg-white/10 ring-1 ring-white/15 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                        <div class="min-w-0">
+                          <p class="text-[14.5px] sm:text-[15px] font-bold tracking-tight">Administrator</p>
+                          <p class="text-[12px] sm:text-[12.5px] text-white/60">Members, permissions, organization resources</p>
+                        </div>
+                      </div>
+
+                      <span class="block mx-auto w-px h-4 bg-ink-200" aria-hidden="true"></span>
+
+                      <div class="rounded-2xl bg-teal-50 ring-1 ring-teal-200 px-4 py-3.5">
+                        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mb-2.5">Organization resources</p>
+                        <div class="flex flex-wrap gap-1.5">
+                          <span class="rounded-full bg-white ring-1 ring-teal-200 px-3 py-1 text-[12px] font-semibold text-ink-800">Plagiarism words</span>
+                          <span class="rounded-full bg-white ring-1 ring-teal-200 px-3 py-1 text-[12px] font-semibold text-ink-800">AI words</span>
+                          <span class="rounded-full bg-white ring-1 ring-teal-200 px-3 py-1 text-[12px] font-semibold text-ink-800">Organization Storage</span>
+                        </div>
+                      </div>
+
+                      <!-- one stem, a bar, two rounded drops: the allocation reaches each member -->
+                      <div class="relative h-8" aria-hidden="true">
+                        <span class="absolute left-1/2 top-0 h-4 w-px bg-ink-200"></span>
+                        <span class="absolute left-1/4 right-1/2 top-4 h-4 border-t border-l border-ink-200 rounded-tl-2xl"></span>
+                        <span class="absolute left-1/2 right-1/4 top-4 h-4 border-t border-r border-ink-200 rounded-tr-2xl"></span>
+                      </div>
+
+                      <div class="grid grid-cols-2 gap-3">
+                        <div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-3.5 py-3.5">
+                          <div class="flex items-center gap-2.5 mb-3">
+                            <span class="w-8 h-8 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                            <p class="text-[13.5px] font-bold tracking-tight">Team member</p>
+                          </div>
+                          <span class="flex flex-col gap-1.5">
+                            <span class="inline-flex items-center gap-1.5 rounded-full bg-teal-50 ring-1 ring-teal-600/15 px-2.5 py-1 text-[10.5px] font-semibold text-teal-800"><span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>Organization resources</span>
+                            <span class="inline-flex items-center gap-1.5 rounded-full bg-ink-100 px-2.5 py-1 text-[10.5px] font-semibold text-ink-700"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Personal balance</span>
+                          </span>
+                        </div>
+                        <div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-3.5 py-3.5">
+                          <div class="flex items-center gap-2.5 mb-3">
+                            <span class="w-8 h-8 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                            <p class="text-[13.5px] font-bold tracking-tight">Team member</p>
+                          </div>
+                          <span class="flex flex-col gap-1.5">
+                            <span class="inline-flex items-center gap-1.5 rounded-full bg-teal-50 ring-1 ring-teal-600/15 px-2.5 py-1 text-[10.5px] font-semibold text-teal-800"><span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>Organization resources</span>
+                            <span class="inline-flex items-center gap-1.5 rounded-full bg-ink-100 px-2.5 py-1 text-[10.5px] font-semibold text-ink-700"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Personal balance</span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-6">HTML для копіювання</label>
+    <textarea id="snippet-6" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-hero-hub-leads" data-component="hero" class="hero" data-layout="hub"&gt;
+  &lt;div class="dot-field hero-dots" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-teal"&gt;&lt;/div&gt;
+  &lt;div class="orb orb-hero-coral"&gt;&lt;/div&gt;
+  &lt;div class="hero-inner"&gt;
+    &lt;div class="hero-grid"&gt;
+      &lt;div class="hero-head rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Business &amp;amp; Teams&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h1 class="hero-title"&gt;Plagiarism Checking for &lt;span class="pen-word"&gt;Business &amp;amp; Teams&lt;svg class="pen-mark" viewBox="0 0 288 12" fill="none" aria-hidden="true"&gt;&lt;path class="pen-underline" d="M3 9c72-7 193-7 282-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/h1&gt;
+        &lt;p class="hero-lead"&gt;Bring recurring plagiarism checks into a managed team workflow. Administrators can manage members, permissions, and organization resources, while team members can keep their personal balances separate.&lt;/p&gt;
+        &lt;p class="hero-lead"&gt;Use Organization Storage when your own content should be part of comparison, or connect the PlagiarismSearch API when checks need to run inside another workflow.&lt;/p&gt;
+        &lt;div class="hero-actions"&gt;
+          &lt;a href="#business-inquiry" class="action-button btn-press group"&gt;
+            Request a business quote
+            &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;/a&gt;
+          &lt;a href="#organization-management" class="action-link"&gt;See how team access works&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;p class="hero-note" data-measure="58"&gt;For agencies, content teams, companies, publishers, and other organizations with recurring content-review needs.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="hero-media rv"&gt;
+        &lt;div data-slot="media" class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse"&gt;
+                    &lt;div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-5 sm:p-6 lg:p-7"&gt;
+
+                      &lt;div data-surface="dark" class="flex items-center gap-3.5 rounded-2xl bg-ink-950 text-white px-4 py-3.5"&gt;
+                        &lt;span class="shrink-0 w-10 h-10 rounded-xl bg-white/10 ring-1 ring-white/15 flex items-center justify-center"&gt;&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="12" cy="7" r="4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                        &lt;div class="min-w-0"&gt;
+                          &lt;p class="text-[14.5px] sm:text-[15px] font-bold tracking-tight"&gt;Administrator&lt;/p&gt;
+                          &lt;p class="text-[12px] sm:text-[12.5px] text-white/60"&gt;Members, permissions, organization resources&lt;/p&gt;
+                        &lt;/div&gt;
+                      &lt;/div&gt;
+
+                      &lt;span class="block mx-auto w-px h-4 bg-ink-200" aria-hidden="true"&gt;&lt;/span&gt;
+
+                      &lt;div class="rounded-2xl bg-teal-50 ring-1 ring-teal-200 px-4 py-3.5"&gt;
+                        &lt;p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mb-2.5"&gt;Organization resources&lt;/p&gt;
+                        &lt;div class="flex flex-wrap gap-1.5"&gt;
+                          &lt;span class="rounded-full bg-white ring-1 ring-teal-200 px-3 py-1 text-[12px] font-semibold text-ink-800"&gt;Plagiarism words&lt;/span&gt;
+                          &lt;span class="rounded-full bg-white ring-1 ring-teal-200 px-3 py-1 text-[12px] font-semibold text-ink-800"&gt;AI words&lt;/span&gt;
+                          &lt;span class="rounded-full bg-white ring-1 ring-teal-200 px-3 py-1 text-[12px] font-semibold text-ink-800"&gt;Organization Storage&lt;/span&gt;
+                        &lt;/div&gt;
+                      &lt;/div&gt;
+
+                      &lt;!-- one stem, a bar, two rounded drops: the allocation reaches each member --&gt;
+                      &lt;div class="relative h-8" aria-hidden="true"&gt;
+                        &lt;span class="absolute left-1/2 top-0 h-4 w-px bg-ink-200"&gt;&lt;/span&gt;
+                        &lt;span class="absolute left-1/4 right-1/2 top-4 h-4 border-t border-l border-ink-200 rounded-tl-2xl"&gt;&lt;/span&gt;
+                        &lt;span class="absolute left-1/2 right-1/4 top-4 h-4 border-t border-r border-ink-200 rounded-tr-2xl"&gt;&lt;/span&gt;
+                      &lt;/div&gt;
+
+                      &lt;div class="grid grid-cols-2 gap-3"&gt;
+                        &lt;div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-3.5 py-3.5"&gt;
+                          &lt;div class="flex items-center gap-2.5 mb-3"&gt;
+                            &lt;span class="w-8 h-8 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="12" cy="7" r="4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                            &lt;p class="text-[13.5px] font-bold tracking-tight"&gt;Team member&lt;/p&gt;
+                          &lt;/div&gt;
+                          &lt;span class="flex flex-col gap-1.5"&gt;
+                            &lt;span class="inline-flex items-center gap-1.5 rounded-full bg-teal-50 ring-1 ring-teal-600/15 px-2.5 py-1 text-[10.5px] font-semibold text-teal-800"&gt;&lt;span class="w-1.5 h-1.5 rounded-full bg-teal-500"&gt;&lt;/span&gt;Organization resources&lt;/span&gt;
+                            &lt;span class="inline-flex items-center gap-1.5 rounded-full bg-ink-100 px-2.5 py-1 text-[10.5px] font-semibold text-ink-700"&gt;&lt;svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="18" height="11" x="3" y="11" rx="2" ry="2"/&gt;&lt;path d="M7 11V7a5 5 0 0 1 10 0v4"/&gt;&lt;/svg&gt;Personal balance&lt;/span&gt;
+                          &lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;div class="rounded-2xl bg-ink-50 ring-1 ring-black/[.04] px-3.5 py-3.5"&gt;
+                          &lt;div class="flex items-center gap-2.5 mb-3"&gt;
+                            &lt;span class="w-8 h-8 rounded-full bg-white ring-1 ring-black/5 flex items-center justify-center"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="12" cy="7" r="4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                            &lt;p class="text-[13.5px] font-bold tracking-tight"&gt;Team member&lt;/p&gt;
+                          &lt;/div&gt;
+                          &lt;span class="flex flex-col gap-1.5"&gt;
+                            &lt;span class="inline-flex items-center gap-1.5 rounded-full bg-teal-50 ring-1 ring-teal-600/15 px-2.5 py-1 text-[10.5px] font-semibold text-teal-800"&gt;&lt;span class="w-1.5 h-1.5 rounded-full bg-teal-500"&gt;&lt;/span&gt;Organization resources&lt;/span&gt;
+                            &lt;span class="inline-flex items-center gap-1.5 rounded-full bg-ink-100 px-2.5 py-1 text-[10.5px] font-semibold text-ink-700"&gt;&lt;svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="18" height="11" x="3" y="11" rx="2" ry="2"/&gt;&lt;path d="M7 11V7a5 5 0 0 1 10 0v4"/&gt;&lt;/svg&gt;Personal balance&lt;/span&gt;
+                          &lt;/span&gt;
+                        &lt;/div&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── hero · 7 · hero-center.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Hero · варіант 7</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Hero · заголовок над чекером (center)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Головна: заголовок розміру секції по центру, слова виринають одне за одним (data-hero-title), під ним — чекер на всю ширину колонки. Копія — головна.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: index (головна) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/hero-center.html</code></p>
+    </div>
+  </div>
+
+<section id="example-hero-center" data-component="hero" class="hero" data-layout="center">
+  <div class="hero-bg">
+    <div class="dot-field hero-dots" aria-hidden="true"></div>
+    <div class="orb hero-orb-cool"></div>
+    <div class="orb hero-orb-warm"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-head">
+      <h1 class="hero-title" data-hero-title><span class="hw"><span class="hw-in">Plagiarism</span></span> <span class="pen-word"><span class="hw"><span class="hw-in">Checker</span></span><svg class="pen-mark" viewBox="0 0 120 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
+      <p class="hero-lead" data-hero-support>Find matching passages and sources, review similarity in context, and see citations and references in a clear report.</p>
+    </div>
+    <div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+      <form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
+
+        <label for="example-hero-center-text" class="sr-only">Paste or type your text here</label>
+        <!-- the count belongs to the text, so it sits in the corner of the field
+             rather than in a footer two rows away from what it counts -->
+        <div class="relative mb-4">
+          <textarea id="example-hero-center-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"></textarea>
+          <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span data-checker-count>0</span> / 150 words</span>
+        </div>
+
+        <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+             formats line it carried reappears under the input chips instead. The two
+             are exclusive — one display query, never both on screen — so the approved
+             sentence still appears exactly once at any width. -->
+        <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
+          <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+            <span class="block text-[12px] text-ink-500">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</span>
+          </span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+          <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</button>
+          <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+          <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+          <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
+        </div>
+        <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.</p>
+
+        <!-- The two checks sit beside the button they modify, not in a row of their own.
+             The row itself never wraps: the button keeps the right edge at every width,
+             and it is the checks that give — side by side where they fit, stacked below
+             640 where the pair needs about 300px and the form only has 295. -->
+        <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+          <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" checked class="sr-only peer">
+              <span class="sw on" data-switch></span>
+              <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">Check for plagiarism</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" class="sr-only peer">
+              <span class="sw" data-switch></span>
+              <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">Check for AI writing</span>
+            </label>
+          </div>
+          <a href="#example-hero-center" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Check for plagiarism
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </form>
+    </div>
+    <p class="hero-free">
+      <svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+      150 words free — no registration required.
+    </p>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-7">HTML для копіювання</label>
+    <textarea id="snippet-7" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-hero-center" data-component="hero" class="hero" data-layout="center"&gt;
+  &lt;div class="hero-bg"&gt;
+    &lt;div class="dot-field hero-dots" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="orb hero-orb-cool"&gt;&lt;/div&gt;
+    &lt;div class="orb hero-orb-warm"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="hero-inner"&gt;
+    &lt;div class="hero-head"&gt;
+      &lt;h1 class="hero-title" data-hero-title&gt;&lt;span class="hw"&gt;&lt;span class="hw-in"&gt;Plagiarism&lt;/span&gt;&lt;/span&gt; &lt;span class="pen-word"&gt;&lt;span class="hw"&gt;&lt;span class="hw-in"&gt;Checker&lt;/span&gt;&lt;/span&gt;&lt;svg class="pen-mark" viewBox="0 0 120 12" fill="none" aria-hidden="true"&gt;&lt;path class="pen-underline" d="M3 9c30-7 80-7 114-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/h1&gt;
+      &lt;p class="hero-lead" data-hero-support&gt;Find matching passages and sources, review similarity in context, and see citations and references in a clear report.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div data-slot="checker" class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse"&gt;
+      &lt;form data-checker class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false"&gt;
+
+        &lt;label for="example-hero-center-text" class="sr-only"&gt;Paste or type your text here&lt;/label&gt;
+        &lt;!-- the count belongs to the text, so it sits in the corner of the field
+             rather than in a footer two rows away from what it counts --&gt;
+        &lt;div class="relative mb-4"&gt;
+          &lt;textarea id="example-hero-center-text" data-checker-text rows="4" class="qc-area block pr-24" placeholder="Paste or type your text here"&gt;&lt;/textarea&gt;
+          &lt;span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"&gt;&lt;span data-checker-count&gt;0&lt;/span&gt; / 150 words&lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
+             formats line it carried reappears under the input chips instead. The two
+             are exclusive — one display query, never both on screen — so the approved
+             sentence still appears exactly once at any width. --&gt;
+        &lt;div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3"&gt;
+          &lt;span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5"&gt;
+            &lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;&lt;polyline points="17 8 12 3 7 8"/&gt;&lt;line x1="12" x2="12" y1="3" y2="15"/&gt;&lt;/svg&gt;
+          &lt;/span&gt;
+          &lt;span class="min-w-0 flex-1"&gt;
+            &lt;span class="block text-[13.5px] font-bold tracking-tight"&gt;Drag and drop a file here&lt;/span&gt;
+            &lt;span class="block text-[12px] text-ink-500"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/span&gt;
+          &lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5"&gt;
+          &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M13.234 20.252 21 12.3"/&gt;&lt;path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/&gt;&lt;/svg&gt;Attach file&lt;/button&gt;
+          &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;Dropbox&lt;/button&gt;
+          &lt;button type="button" class="qc-chip"&gt;&lt;img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0"&gt;OneDrive&lt;/button&gt;
+          &lt;button type="button" class="qc-chip"&gt;&lt;svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9 17H7A5 5 0 0 1 7 7h2"/&gt;&lt;path d="M15 7h2a5 5 0 1 1 0 10h-2"/&gt;&lt;line x1="8" x2="16" y1="12" y2="12"/&gt;&lt;/svg&gt;By URL&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4"&gt;Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.&lt;/p&gt;
+
+        &lt;!-- The two checks sit beside the button they modify, not in a row of their own.
+             The row itself never wraps: the button keeps the right edge at every width,
+             and it is the checks that give — side by side where they fit, stacked below
+             640 where the pair needs about 300px and the form only has 295. --&gt;
+        &lt;div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100"&gt;
+          &lt;div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3"&gt;
+            &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+              &lt;input type="checkbox" checked class="sr-only peer"&gt;
+              &lt;span class="sw on" data-switch&gt;&lt;/span&gt;
+              &lt;span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900"&gt;Check for plagiarism&lt;/span&gt;
+            &lt;/label&gt;
+            &lt;label class="flex items-center gap-2.5 cursor-pointer"&gt;
+              &lt;input type="checkbox" class="sr-only peer"&gt;
+              &lt;span class="sw" data-switch&gt;&lt;/span&gt;
+              &lt;span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600"&gt;Check for AI writing&lt;/span&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;a href="#example-hero-center" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2"&gt;
+            Check for plagiarism
+            &lt;span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"&gt;
+              &lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;
+            &lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+    &lt;p class="hero-free"&gt;
+      &lt;svg class="hero-free-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;
+      150 words free — no registration required.
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
 
   <section id="lib-faq" class="bg-white border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
@@ -169,8 +1568,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-1">HTML для копіювання</label>
-    <textarea id="snippet-1" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-8">HTML для копіювання</label>
+    <textarea id="snippet-8" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -262,8 +1661,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-2">HTML для копіювання</label>
-    <textarea id="snippet-2" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-9">HTML для копіювання</label>
+    <textarea id="snippet-9" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -355,8 +1754,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-3">HTML для копіювання</label>
-    <textarea id="snippet-3" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-10">HTML для копіювання</label>
+    <textarea id="snippet-10" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -455,8 +1854,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-4">HTML для копіювання</label>
-    <textarea id="snippet-4" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-11">HTML для копіювання</label>
+    <textarea id="snippet-11" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -549,8 +1948,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-5">HTML для копіювання</label>
-    <textarea id="snippet-5" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-12">HTML для копіювання</label>
+    <textarea id="snippet-12" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -641,8 +2040,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-6">HTML для копіювання</label>
-    <textarea id="snippet-6" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-13">HTML для копіювання</label>
+    <textarea id="snippet-13" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -740,8 +2139,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-7">HTML для копіювання</label>
-    <textarea id="snippet-7" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-14">HTML для копіювання</label>
+    <textarea id="snippet-14" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
   &lt;div class="faq-aside"&gt;
     &lt;div class="section-eyebrow"&gt;
       &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
@@ -828,8 +2227,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-8">HTML для копіювання</label>
-    <textarea id="snippet-8" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-15">HTML для копіювання</label>
+    <textarea id="snippet-15" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
   &lt;div class="faq-list" data-faq&gt;
     &lt;div class="faq-item open"&gt;
       &lt;h3 class="faq-heading"&gt;&lt;button type="button" aria-controls="example-faq-doc-a1" aria-expanded="true" class="faq-q"&gt;
@@ -982,8 +2381,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-9">HTML для копіювання</label>
-    <textarea id="snippet-9" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-16">HTML для копіювання</label>
+    <textarea id="snippet-16" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -1034,8 +2433,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-10">HTML для копіювання</label>
-    <textarea id="snippet-10" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-17">HTML для копіювання</label>
+    <textarea id="snippet-17" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -1088,8 +2487,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-11">HTML для копіювання</label>
-    <textarea id="snippet-11" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-18">HTML для копіювання</label>
+    <textarea id="snippet-18" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -1147,8 +2546,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-12">HTML для копіювання</label>
-    <textarea id="snippet-12" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-19">HTML для копіювання</label>
+    <textarea id="snippet-19" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -1202,8 +2601,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-13">HTML для копіювання</label>
-    <textarea id="snippet-13" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-20">HTML для копіювання</label>
+    <textarea id="snippet-20" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -1253,8 +2652,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-14">HTML для копіювання</label>
-    <textarea id="snippet-14" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-21">HTML для копіювання</label>
+    <textarea id="snippet-21" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -1304,8 +2703,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-15">HTML для копіювання</label>
-    <textarea id="snippet-15" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-22">HTML для копіювання</label>
+    <textarea id="snippet-22" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -1348,8 +2747,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-16">HTML для копіювання</label>
-    <textarea id="snippet-16" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-23">HTML для копіювання</label>
+    <textarea id="snippet-23" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -1387,8 +2786,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-17">HTML для копіювання</label>
-    <textarea id="snippet-17" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
+    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -1511,8 +2910,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-18">HTML для копіювання</label>
-    <textarea id="snippet-18" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
+    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -1569,8 +2968,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-19">HTML для копіювання</label>
-    <textarea id="snippet-19" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-26">HTML для копіювання</label>
+    <textarea id="snippet-26" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -1628,8 +3027,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-20">HTML для копіювання</label>
-    <textarea id="snippet-20" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-27">HTML для копіювання</label>
+    <textarea id="snippet-27" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -1710,8 +3109,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-21">HTML для копіювання</label>
-    <textarea id="snippet-21" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-28">HTML для копіювання</label>
+    <textarea id="snippet-28" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -1815,8 +3214,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-22">HTML для копіювання</label>
-    <textarea id="snippet-22" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-29">HTML для копіювання</label>
+    <textarea id="snippet-29" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -2041,8 +3440,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-23">HTML для копіювання</label>
-    <textarea id="snippet-23" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-30">HTML для копіювання</label>
+    <textarea id="snippet-30" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -2248,8 +3647,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
-    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-31">HTML для копіювання</label>
+    <textarea id="snippet-31" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -2426,8 +3825,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
-    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-32">HTML для копіювання</label>
+    <textarea id="snippet-32" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
