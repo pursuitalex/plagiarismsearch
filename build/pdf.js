@@ -33,6 +33,7 @@ const hero = require('./sections/hero');   /* the hero: one library template; it
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const cards = require('./sections/feature-cards');   /* the feature cards: one library template */
 const sources = require('./sections/sources');   /* sources & scan settings: one library template */
+const startFree = require('./sections/start-free');   /* the free entry: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -438,38 +439,19 @@ ${cards.section({
 /* ═══════════════ 07 · START FREE ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · START FREE — THE COMPACT PRICING PATH =================
        One band: the two confirmed limits inline, the two ways on, the one-time note. No
-       matrix, no prices. -->
-  <section id="start-free" data-component="start-free" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1.1fr_.9fr] gap-8 lg:gap-12 items-center">
-          <div class="min-w-0">
-${eyebrow('teal-400', COPY.free.eyebrow, 'ink')}
-            <h2 class="${H2}">${COPY.free.h2}</h2>
-            <p class="${INTRO} max-w-[56ch]">${COPY.free.p1}</p>
-            <p class="mt-3 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[56ch]">${COPY.free.p2}</p>
-            <div class="flex flex-wrap items-center gap-3 sm:gap-4 mt-7 lg:mt-8">
-              ${btnDark(COPY.free.primary, ANCHOR)}
-              ${linkQuiet(COPY.free.secondary, COPY.free.secondaryHref)}
-            </div>
-          </div>
-          <div class="min-w-0 grid grid-cols-2 gap-3 sm:gap-4">
-            <div class="rounded-2xl sm:rounded-3xl bg-teal-50 ring-1 ring-teal-600/10 p-5 sm:p-6">
-              <p class="text-[clamp(2rem,4vw,3.2rem)] font-extrabold tracking-tightest nums leading-none text-teal-800">150</p>
-              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mt-3">plagiarism words</p>
-              <p class="text-[12.5px] sm:text-[13px] text-ink-600 mt-2">without registering</p>
-            </div>
-            <div data-surface="dark" class="rounded-2xl sm:rounded-3xl bg-ink-950 text-white p-5 sm:p-6">
-              <p class="text-[clamp(2rem,4vw,3.2rem)] font-extrabold tracking-tightest nums leading-none">300</p>
-              <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mt-3">plagiarism words per day</p>
-              <p class="text-[12.5px] sm:text-[13px] text-white/60 mt-2">for registered users</p>
-            </div>
-            <p class="col-span-2 flex items-center gap-2 text-[12.5px] sm:text-[13px] text-ink-600">${ico(I.info, '#6B7280', 14)}${COPY.free.micro}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+       matrix, no prices.
+       The library's Start free (build/sections/start-free.js), layout "framed". -->
+${startFree.section({
+    id: 'start-free', layout: 'framed', space: 'lg',
+    head: { eyebrow: COPY.free.eyebrow, title: COPY.free.h2, intro: [COPY.free.p1, COPY.free.p2] },
+    button: { label: COPY.free.primary, href: ANCHOR },
+    link: { label: COPY.free.secondary, href: COPY.free.secondaryHref },
+    figures: [
+      { value: '150', label: 'plagiarism words', sub: 'without registering' },
+      { value: '300', label: 'plagiarism words per day', sub: 'for registered users' },
+    ],
+    note: { icon: I.info, text: COPY.free.micro },
+  })}`;
 
 /* ═══════════════ 08 · FAQ ═══════════════ */
 const section8 = () => `  <!-- ================= 08 · FAQ =================

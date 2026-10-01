@@ -34,6 +34,7 @@ const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const sources = require('./sections/sources');   /* sources & scan settings: one library template */
+const startFree = require('./sections/start-free');   /* the free entry: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -464,36 +465,18 @@ const section7 = () => `  <!-- ================= 07 · PLAGIARISM VS AI ========
 const section8 = () => `  <!-- ================= 08 · START FREE — THE COMPACT PRICING PATH =================
        The two confirmed limits as two figures, the approved sentences beside them, and
        the two ways on: back to the checker, or to the pricing owner. No matrix, no
-       prices, no plan names. -->
-  <section id="start-free" data-component="start-free" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-14 items-center">
-        <div class="rv min-w-0">
-${eyebrow('teal-400', COPY.free.eyebrow, 'ink')}
-          <h2 class="${H2}">${COPY.free.h2}</h2>
-          <p class="${INTRO}">${COPY.free.p1}</p>
-          <p class="mt-3 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.free.p2}</p>
-          <div class="flex flex-wrap items-center gap-3 sm:gap-4 mt-7 lg:mt-8">
-            ${btnDark(COPY.free.primary, ANCHOR)}
-            ${linkQuiet(COPY.free.secondary, COPY.free.secondaryHref)}
-          </div>
-        </div>
-
-        <div class="rv-kids grid sm:grid-cols-2 gap-4 sm:gap-5">
-          <div class="rounded-3xl sm:rounded-4xl bg-teal-50 ring-1 ring-teal-600/10 p-6 sm:p-7 lg:p-8">
-            <p class="text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-tightest nums leading-none text-teal-800">150</p>
-            <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mt-3">words</p>
-            <p class="${BODY} text-ink-600 mt-3">without registering</p>
-          </div>
-          <div class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
-            <p class="text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-tightest nums leading-none">300</p>
-            <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mt-3">plagiarism words per day</p>
-            <p class="${BODY} text-white/60 mt-3">for registered users</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+       prices, no plan names.
+       The library's Start free (build/sections/start-free.js), layout "open". -->
+${startFree.section({
+    id: 'start-free', layout: 'open', space: 'lg',
+    head: { eyebrow: COPY.free.eyebrow, title: COPY.free.h2, intro: [COPY.free.p1, COPY.free.p2] },
+    button: { label: COPY.free.primary, href: ANCHOR },
+    link: { label: COPY.free.secondary, href: COPY.free.secondaryHref },
+    figures: [
+      { value: '150', label: 'words', sub: 'without registering' },
+      { value: '300', label: 'plagiarism words per day', sub: 'for registered users' },
+    ],
+  })}`;
 
 /* ═══════════════ 09 · FAQ ═══════════════ */
 const section9 = () => `  <!-- ================= 09 · FAQ =================

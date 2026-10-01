@@ -710,6 +710,17 @@ layouts (`data-layout`):
 
 Section switches: `data-bg="white|cool"`, `data-space="md|lg"`, `data-accent="teal"`.
 
+#### The free entry — `build/sections/start-free.js`
+
+"Start free" is one Section Library component (wave 2): `section.start-free`,
+`data-component="start-free"`. The two free limits as two figures — the light one, then
+the dark one — beside the sentence that states them, a button back to the page's checker
+and a quiet link to the prices; never a price or a matrix (the validator warns on a price).
+Two layouts (`data-layout`): `open` — text and two large figures side by side, 1fr / 1fr
+(Students, UA) — and `framed` — the same inside one double-bezel sheet, 1.1fr / .9fr,
+with smaller figures and a line under them (PDF). `data-bg="white"` is the only ground;
+`data-space="md|lg"` follows the page. The pill's dot is teal here, by itself.
+
 The in-section button and quiet link are a library primitive, the **Action**
 (`build/sections/action.js`, `.action-button` / `.action-link`, `data-tone="light|ghost"`),
 and so is the **Icon tile** (`build/sections/icon-tile.js`, `.icon-tile[data-tone]`): one

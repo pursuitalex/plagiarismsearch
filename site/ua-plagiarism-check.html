@@ -574,40 +574,41 @@
 
   <!-- ================= 07 · START FREE =================
        The two confirmed limits as two figures, the approved paragraph beside them and the
-       two ways on: back to the checker, or to the pricing owner. No matrix, no prices. -->
-  <section id="start-free" data-component="start-free" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-14 items-center">
-        <div class="rv min-w-0">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Почніть безкоштовно</span>
+       two ways on: back to the checker, or to the pricing owner. No matrix, no prices.
+       The library's Start free (build/sections/start-free.js), layout "open". -->
+<section id="start-free" data-component="start-free" class="start-free" data-layout="open" data-bg="white" data-space="md">
+  <div class="start-free-inner">
+    <div class="start-free-grid">
+      <div class="start-free-text rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Почніть безкоштовно</span>
         </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Перевірте невеликий фрагмент без оплати</h2>
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Без реєстрації можна перевірити до 150 слів. Зареєстрованим користувачам доступно 300 слів для перевірки на плагіат щодня. Якщо потрібно перевіряти більші тексти або більше документів, перегляньте актуальні тарифні плани.</p>
-          <div class="flex flex-wrap items-center gap-3 sm:gap-5 mt-7 lg:mt-8">
-            <a href="#checker" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+        <h2 class="section-title">Перевірте невеликий фрагмент без оплати</h2>
+        <p class="section-intro">Без реєстрації можна перевірити до 150 слів. Зареєстрованим користувачам доступно 300 слів для перевірки на плагіат щодня. Якщо потрібно перевіряти більші тексти або більше документів, перегляньте актуальні тарифні плани.</p>
+        <div class="start-free-actions">
+          <a href="#checker" class="action-button btn-press group">
             Перевірити текст
-            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
-            <a href="prices.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Переглянути тарифи</a>
-          </div>
+          <a href="prices.html" class="section-link">Переглянути тарифи</a>
         </div>
-        <div data-stagger=".06" class="rv-kids grid sm:grid-cols-2 gap-4 sm:gap-5">
-          <div class="rounded-3xl sm:rounded-4xl bg-teal-50 ring-1 ring-teal-600/10 p-6 sm:p-7 lg:p-8">
-            <p class="text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-tightest nums leading-none text-teal-800">150</p>
-            <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mt-3">слів</p>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-3">без реєстрації</p>
-          </div>
-          <div data-surface="dark" class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
-            <p class="text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-tightest nums leading-none">300</p>
-            <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/60 mt-3">слів щодня</p>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/60 mt-3">зареєстрованим користувачам</p>
-          </div>
+      </div>
+      <div data-stagger=".06" class="start-free-figures rv-kids">
+        <div class="start-free-figure" data-tone="teal">
+          <p class="start-free-value">150</p>
+          <p class="start-free-label">слів</p>
+          <p class="start-free-sub">без реєстрації</p>
+        </div>
+        <div class="start-free-figure" data-tone="dark" data-surface="dark">
+          <p class="start-free-value">300</p>
+          <p class="start-free-label">слів щодня</p>
+          <p class="start-free-sub">зареєстрованим користувачам</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 08 · REVIEWS =================
        Three of the homepage's verified reviews (build/reviews.js), one per platform, as

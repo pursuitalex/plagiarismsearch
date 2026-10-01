@@ -424,3 +424,6 @@ acceptAgainst('d361aa7', {
 acceptAgainst('330c9c9', {
   'index.html': [['margin-top', 'margin-bottom'], 'the intro carries the gap above itself (the h2 carried it below)'],
 }, 'Sources: ');
+
+/* SECTION LIBRARY, WAVE 2 · START FREE (2026-10-01), against fe290a5: three pages (Students,
+   PDF, the Ukrainian page), 0 px, identical in every measured property. Nothing accepted. */

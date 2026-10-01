@@ -1,0 +1,112 @@
+/* ═══ Start free — library component ════════════════════════════════════════════════
+   Template: build/sections/start-free.js · contract: build/sections/start-free.contract.js
+   Behaviour: build/assets/js/20-motion.js (.rv, .rv-kids); 30-checker.js puts the caret
+   in the checker when the button's anchor holds one — nothing of its own
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The free entry: what can be checked without paying, as two figures — one light, one
+   dark — beside the sentence that states them, a button back to the checker and a quiet
+   link to the prices. Never a price or a matrix. Two approved layouts:
+
+   section.start-free       data-layout="open|framed"   data-bg="white"   data-space="md|lg"
+     .start-free-inner
+       data-layout="open"   (Students, the Ukrainian page) text and figures side by side, 1fr / 1fr
+         div.start-free-grid
+           div.start-free-text.rv
+           div.start-free-figures.rv-kids
+       data-layout="framed" (PDF) the same in one double-bezel sheet, 1.1fr / .9fr, smaller figures
+         div.start-free-frame.rv > div.start-free-grid
+           div.start-free-text
+           div.start-free-figures              + p.start-free-note (a line under the two figures)
+
+       div.start-free-text                     (.section-eyebrow)  h2.section-title  p.section-intro (1–2)
+                                               div.start-free-actions > a.action-button, a.section-link
+       div.start-free-figure                   data-tone="teal|dark"
+         p.start-free-value   p.start-free-label   p.start-free-sub */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.start-free {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-white;
+}
+.start-free:where([data-space="md"]) { @apply lg:py-28; }
+
+.start-free-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+.start-free-grid {
+  @apply grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-14 items-center;
+}
+
+/* ── the text ────────────────────────────────────────────────────────────────────
+   The Section Header's parts (section-head.css); in this section the pill's dot is teal —
+   derived from the host, never set per pill. A second paragraph stands closer. */
+.start-free-text {
+  @apply min-w-0;
+}
+:where(.start-free) .section-eyebrow-dot {
+  @apply bg-teal-400;
+}
+:where(.start-free-text .section-intro) + .section-intro {
+  @apply mt-3 lg:mt-3;
+}
+.start-free-actions {
+  @apply flex flex-wrap items-center gap-3 sm:gap-4 mt-7 lg:mt-8;
+}
+/* the Ukrainian page (the md rhythm): its action row is a step wider */
+:where(.start-free[data-space="md"]) .start-free-actions {
+  @apply sm:gap-5;
+}
+
+/* ── the figures ─────────────────────────────────────────────────────────────── */
+.start-free-figures {
+  @apply grid sm:grid-cols-2 gap-4 sm:gap-5;
+}
+.start-free-figure {
+  @apply rounded-3xl sm:rounded-4xl bg-teal-50 ring-1 ring-teal-600/10 p-6 sm:p-7 lg:p-8;
+}
+.start-free-figure:where([data-tone="dark"]) { box-shadow:none;
+  @apply bg-ink-950 text-white;
+}
+.start-free-value { font-variant-numeric:tabular-nums;
+  @apply text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-tightest leading-none text-teal-800;
+}
+.start-free-label {
+  @apply text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-teal-700 mt-3;
+}
+.start-free-sub {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-3;
+}
+:where(.start-free-figure[data-tone="dark"]) .start-free-value {
+  @apply text-inherit;
+}
+:where(.start-free-figure[data-tone="dark"]) .start-free-label,
+:where(.start-free-figure[data-tone="dark"]) .start-free-sub {
+  @apply text-white/60;
+}
+
+/* ── layout: framed ──────────────────────────────────────────────────────────── */
+.start-free-frame {
+  @apply rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse;
+}
+:where(.start-free[data-layout="framed"]) .start-free-grid {
+  @apply rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl p-6 sm:p-8 lg:p-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-12;
+}
+:where(.start-free[data-layout="framed"]) .section-intro {
+  @apply max-w-[56ch];
+}
+:where(.start-free[data-layout="framed"]) .start-free-figures {
+  @apply min-w-0 grid-cols-2 gap-3 sm:gap-4;
+}
+:where(.start-free[data-layout="framed"]) .start-free-figure {
+  @apply rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-6;
+}
+:where(.start-free[data-layout="framed"]) .start-free-value {
+  @apply text-[clamp(2rem,4vw,3.2rem)];
+}
+:where(.start-free[data-layout="framed"]) .start-free-sub {
+  @apply text-[12.5px] sm:text-[13px] leading-normal mt-2;
+}
+.start-free-note {
+  @apply col-span-2 flex items-center gap-2 text-[12.5px] sm:text-[13px] text-ink-600;
+}

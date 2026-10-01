@@ -41,6 +41,7 @@ const banner = require('./sections/banner');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const sources = require('./sections/sources');   /* sources & scan settings: one library template */
+const startFree = require('./sections/start-free');   /* the free entry: one library template */
 const { REVIEWS, reviewCard } = require('./reviews');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
@@ -375,34 +376,18 @@ ${steps.section({
 /* ═══════════════ 07 · FREE → PAID ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · START FREE =================
        The two confirmed limits as two figures, the approved paragraph beside them and the
-       two ways on: back to the checker, or to the pricing owner. No matrix, no prices. -->
-  <section id="start-free" data-component="start-free" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-14 items-center">
-        <div class="rv min-w-0">
-${eyebrow('teal-400', COPY.free.eyebrow, 'ink')}
-          <h2 class="${H2}">${COPY.free.h2}</h2>
-          <p class="${INTRO}">${COPY.free.p}</p>
-          <div class="flex flex-wrap items-center gap-3 sm:gap-5 mt-7 lg:mt-8">
-            ${btnDark(COPY.free.primary, ANCHOR)}
-            ${linkQuiet(COPY.free.secondary, PRICING)}
-          </div>
-        </div>
-        <div data-stagger=".06" class="rv-kids grid sm:grid-cols-2 gap-4 sm:gap-5">
-          <div class="rounded-3xl sm:rounded-4xl bg-teal-50 ring-1 ring-teal-600/10 p-6 sm:p-7 lg:p-8">
-            <p class="text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-tightest nums leading-none text-teal-800">150</p>
-            <p class="${LABEL} text-teal-700 mt-3">${COPY.free.caps[0][0]}</p>
-            <p class="${BODY} text-ink-600 mt-3">${COPY.free.caps[0][1]}</p>
-          </div>
-          <div data-surface="dark" class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
-            <p class="text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-tightest nums leading-none">300</p>
-            <p class="${LABEL} text-white/60 mt-3">${COPY.free.caps[1][0]}</p>
-            <p class="${BODY} text-white/60 mt-3">${COPY.free.caps[1][1]}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+       two ways on: back to the checker, or to the pricing owner. No matrix, no prices.
+       The library's Start free (build/sections/start-free.js), layout "open". -->
+${startFree.section({
+    id: 'start-free', layout: 'open', space: 'md', stagger: '.06',
+    head: { eyebrow: COPY.free.eyebrow, title: COPY.free.h2, intro: COPY.free.p },
+    button: { label: COPY.free.primary, href: ANCHOR },
+    link: { label: COPY.free.secondary, href: PRICING },
+    figures: [
+      { value: '150', label: COPY.free.caps[0][0], sub: COPY.free.caps[0][1] },
+      { value: '300', label: COPY.free.caps[1][0], sub: COPY.free.caps[1][1] },
+    ],
+  })}`;
 
 /* ═══════════════ 08 · REVIEWS ═══════════════ */
 const PICK = [0, 2, 3];   /* one each from Trustpilot, SmartCustomer, Google Workspace Marketplace */
