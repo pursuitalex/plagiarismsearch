@@ -22,6 +22,7 @@ driven by this table.
 | `user-manuals.html` | `/user-manuals` | built | Category names and all twenty guide titles carried over unchanged; the arrangement is new. Built by build/manuals.js. Most guides still live on the production site and keep absolute addresses. |
 | `newsroom.html` | `/newsroom` | built | The news archive. All 68 items carried over from the seven live pages with their dates, wording and destinations intact; the arrangement is new. Built by build/newsroom.js from build/newsroom-data.json, which build/newsroom-fetch.js refreshes. |
 | `plagiarism-and-ai-check-report.html` | `/plagiarism-and-ai-check-report` | built | A User Guide article, rendered through build/article.js — the template lifted from the blog post: one centred 700px column, a contents box, and semantic blocks styled once. Built by build/report-guide-v2.js from build/report-guide-data.json (refreshed by build/report-guide-fetch.js), checked by build/check-report-guide-v2.js. |
+| `about-us.html` | `/about-us` | built | About us, to the 2026-09-30 brief: a company / trust page — a fact-sheet hero, the story, the six approved milestones as a timeline, nine team profiles of one size (initials and inactive LinkedIn marks until the real photos and addresses arrive), five areas of work, and a closing band to Mission & Values and Contact. English copy is a draft awaiting approval. Built by build/about.js with the page-specific components in build/about/, checked by build/check-about.js. |
 | `why-us.html` | `/why-us` | built |  |
 | `mission.html` | `/plagiarismsearch-mission-and-core-values` | built |  |
 | `contact-us.html` | `/contact-us` | built |  |
@@ -61,7 +62,7 @@ driven by this table.
 
 ## Counts
 
-- 28 × built
+- 29 × built
 - 10 × no approved path
 - 5 × stub
 - 4 × built · out of global nav

@@ -1,0 +1,120 @@
+/* ═══ Team — the About page's profile grid ══════════════════════════════════════════
+   PAGE-SPECIFIC (build/about/), not a Section Library member; a library candidate after
+   the pilot review.
+   Template: build/about/team.js · contract: build/about/team.contract.js
+   Written the way build/sections/section-head.css explains (@apply, outside @layer,
+   (0,1,0) selectors, variants as data-* in :where()) and compiled in the same Tailwind
+   run (build/assets/css/tailwind.src.css).
+
+   section.team                data-bg="white|tint"
+     .team-inner               the 1280px container
+       .team-head              the Section Header (eyebrow, h2, intro), capped at 760px
+       ul.team-grid            the profiles
+         li.team-card
+           .team-photo         the 4:5 portrait plate
+             span.team-initials   the placeholder, until there is a photo
+             img.team-photo-img   the photo, when there is one
+           h3.team-name
+           p.team-role
+           p.team-bio
+           .team-linkedin      span: inactive (no address yet) · a: the link
+
+   One other root: the grid alone (ul.team-grid), inside another component.
+
+   A profile is not a boxed card: the portrait plate is its only surface and the text
+   stands on the section, so nine of them read as people, not as feature tiles. The plate
+   alternates with the ground (IMAGES.md §8.5): grey on a white section, white on a tint.
+
+   Three layouts, placed by the fixed order of the parts (no wrapper elements):
+     phone    < 640    photo 112px beside name, role and the icon; the bio under both
+     tablet   640–767  photo 168px beside everything
+     grid     ≥ 768    three columns, the photo above the text, the icon at the bottom
+   Three columns from 768 rather than two, so nine profiles never leave an orphan.
+
+   In the grid the parts of a row of profiles line up — names, roles, bios, icons — by
+   subgrid: each card borrows five rows of the grid, so a role that wraps to two lines
+   moves the bios of its whole row, and of no other row. Without subgrid support the
+   card keeps its own rows and only the icons line up. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.team {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-white;
+}
+.team:where([data-bg="tint"]) { @apply bg-ink-50; }
+
+.team-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+.team-head {
+  @apply max-w-[760px] mb-10 sm:mb-12 lg:mb-16;
+}
+
+/* ── the grid ────────────────────────────────────────────────────────────────── */
+.team-grid {
+  @apply grid gap-y-10 sm:gap-y-12 md:grid-cols-3 md:gap-x-6 lg:gap-x-8 lg:gap-y-16;
+}
+
+/* ── the profile ─────────────────────────────────────────────────────────────────
+   Rows — phone: name / role / icon (takes what is left of the photo's height) / bio;
+   tablet: name / role / bio / icon; grid: photo / name / role / bio (takes what is left
+   of the row, so the icons of a row line up) / icon. */
+.team-card {
+  @apply grid grid-cols-[112px_1fr] grid-rows-[auto_auto_1fr_auto] gap-x-4
+         sm:grid-cols-[168px_1fr] sm:grid-rows-[auto_auto_auto_1fr] sm:gap-x-6
+         md:grid-cols-1 md:grid-rows-[auto_auto_auto_1fr_auto] md:gap-x-0;
+}
+
+.team-photo {
+  @apply col-start-1 row-start-1 row-span-3 sm:row-span-4 md:row-span-1 self-start
+         relative overflow-hidden aspect-[4/5] flex items-center justify-center
+         rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-100 ring-1 ring-inset ring-black/[.04];
+}
+/* on a tint section the plate is white */
+:where(.team[data-bg="tint"]) .team-photo { @apply bg-white; }
+
+/* the placeholder: a quiet monogram, set wide so it reads as a mark and not as a word */
+.team-initials {
+  @apply text-[22px] sm:text-[28px] md:text-[32px] lg:text-[40px] font-bold tracking-[0.08em] leading-none text-ink-400 select-none;
+}
+.team-photo-img {
+  @apply absolute inset-0 w-full h-full object-cover;
+}
+
+.team-name {
+  @apply col-start-2 row-start-1 md:col-start-1 md:row-start-2 md:mt-5 lg:mt-6
+         text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight leading-snug text-ink-900;
+}
+.team-role {
+  @apply col-start-2 row-start-2 md:col-start-1 md:row-start-3 mt-1
+         text-[13px] sm:text-[13.5px] font-semibold leading-snug text-teal-700;
+}
+.team-bio {
+  @apply col-start-1 col-span-2 row-start-4 mt-4
+         sm:col-start-2 sm:col-span-1 sm:row-start-3 sm:mt-3
+         md:col-start-1 md:row-start-4
+         text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600;
+}
+
+/* ── the grid's rows, shared by the cards of a row (subgrid) ───────────────────────
+   The grid's own row gap would open between the five parts of a card, so it is dropped
+   and each card carries the gap as padding under it; the grid takes the last row's back. */
+@supports (grid-template-rows: subgrid) {
+  .team-grid { @apply md:gap-y-0 md:-mb-12 lg:-mb-16; }
+  .team-card { @apply md:row-span-5 md:grid-rows-subgrid md:pb-12 lg:pb-16; }
+}
+
+/* ── LinkedIn ────────────────────────────────────────────────────────────────────
+   44px, the touch-target floor. As a <span> it is the inactive mark: dashed, pale, no
+   pointer — it must not pass for a link. As an <a> it is the link. */
+.team-linkedin {
+  @apply col-start-2 row-start-3 self-end justify-self-start
+         sm:row-start-4 sm:self-start sm:mt-4
+         md:col-start-1 md:row-start-5 md:self-end
+         inline-flex items-center justify-center w-11 h-11 rounded-full
+         border border-dashed border-ink-300 text-ink-300;
+}
+.team-linkedin:where(a) {
+  @apply border-solid border-ink-200 bg-white text-ink-700 hover:border-teal-300 hover:bg-teal-50 hover:text-teal-700 transition-colors duration-300;
+}
+/* the site's focus ring squares an element's corners (07-a11y.css); the icon stays round */
+a.team-linkedin:focus-visible { border-radius: 9999px; }
