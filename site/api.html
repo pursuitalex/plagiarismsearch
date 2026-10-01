@@ -694,74 +694,62 @@
        inventing a consent claim, which the same clause forbids.
 
        No response-time promise anywhere, including the success state. -->
-  <section id="api-quote" data-component="inquiry-form" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Get access</span>
+<section id="api-quote" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off">
+  <div class="inquiry-inner">
+    <div class="inquiry-grid">
+      <div class="inquiry-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Get access</span>
         </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Request API access or a custom quote</h2>
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-ink-600 max-w-[56ch]">Share your integration requirements and expected volume. We’ll use the details to discuss the most appropriate API access, trial, or pricing option for your workflow.</p>
-          <p class="mt-6 lg:mt-7 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">
-            Prefer email? Contact us at <a href="mailto:services@plagiarismsearch.com" class="font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">services@plagiarismsearch.com</a>.
-          </p>
-        </div>
-
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8">
-          <form onsubmit="return false" novalidate>
-            <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
-              <div class="min-w-0">
-                <label class="cf-label" for="aq-0">Name <i>*</i></label>
-                <input class="cf-field" id="aq-0" type="text" placeholder="Jordan Reeves">
-
-              </div>
-              <div class="min-w-0">
-                <label class="cf-label" for="aq-1">Work email <i>*</i></label>
-                <input class="cf-field" id="aq-1" type="email" placeholder="name@company.com">
-
-              </div>
-              <div class="min-w-0">
-                <label class="cf-label" for="aq-2">Organization</label>
-                <input class="cf-field" id="aq-2" type="text" placeholder="Company, university, or platform">
-
-              </div>
-              <div class="min-w-0">
-                <label class="cf-label" for="aq-3">Phone <span class="font-medium text-ink-500">Optional</span></label>
-                <input class="cf-field" id="aq-3" type="tel" placeholder="+1 555 000 0000">
-
-              </div>
-              <div class="sm:col-span-2 sm:col-span-2">
-                <label class="cf-label" for="aq-4">Estimated monthly volume</label>
-                <input class="cf-field" id="aq-4" type="text" placeholder="e.g. 1,000,000 words">
-                <p class="mt-2 text-[12px] text-ink-500">An approximate figure is enough.</p>
-              </div>
-              <div class="sm:col-span-2 sm:col-span-2">
-                <label class="cf-label" for="aq-5">What are you integrating? <i>*</i></label>
-                <textarea class="cf-field" id="aq-5" rows="4" placeholder="Describe your product, platform, or workflow and any requirements that matter to the integration."></textarea>
-
-              </div>
+        <h2 class="section-title">Request API access or a custom quote</h2>
+        <p class="section-intro">Share your integration requirements and expected volume. We’ll use the details to discuss the most appropriate API access, trial, or pricing option for your workflow.</p>
+        <p class="inquiry-alt">Prefer email? Contact us at <a href="mailto:services@plagiarismsearch.com" class="inquiry-alt-link">services@plagiarismsearch.com</a>.</p>
+      </div>
+      <div class="inquiry-card rv">
+        <form data-inquiry-form onsubmit="return false" novalidate>
+          <div class="inquiry-fields">
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-0">Name <i>*</i></label>
+              <input class="cf-field" id="aq-0" type="text" placeholder="Jordan Reeves">
             </div>
-
-            <div class="mt-6 lg:mt-7">
-              <button type="submit" class="btn-press group flex items-center justify-center sm:justify-start gap-2.5 w-full sm:w-auto rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
-                Request API access
-                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-              </button>
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-1">Work email <i>*</i></label>
+              <input class="cf-field" id="aq-1" type="email" placeholder="name@company.com">
             </div>
-          </form>
-
-          <!-- the approved success state, rendered so its copy is checkable and carries
-               no response-time promise; the prototype form never submits -->
-          <div class="mt-6 pt-6 border-t border-ink-100" hidden id="aq-success">
-            <h3 class="text-[15.5px] font-bold tracking-tight mb-1.5">Your API request has been sent</h3>
-            <p class="text-[13px] leading-relaxed text-ink-600">Thank you. We’ve received your integration details.</p>
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-2">Organization</label>
+              <input class="cf-field" id="aq-2" type="text" placeholder="Company, university, or platform">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-3">Phone <span class="inquiry-optional">Optional</span></label>
+              <input class="cf-field" id="aq-3" type="tel" placeholder="+1 555 000 0000">
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="aq-4">Estimated monthly volume</label>
+              <input class="cf-field" id="aq-4" type="text" placeholder="e.g. 1,000,000 words">
+              <p class="inquiry-help">An approximate figure is enough.</p>
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="aq-5">What are you integrating? <i>*</i></label>
+              <textarea class="cf-field" id="aq-5" rows="4" placeholder="Describe your product, platform, or workflow and any requirements that matter to the integration."></textarea>
+            </div>
           </div>
+          <div class="inquiry-submit">
+            <button type="submit" class="inquiry-button btn-press group">
+              Request API access
+              <span class="inquiry-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </button>
+          </div>
+        </form>
+        <div class="inquiry-success" hidden id="aq-success" role="status">
+          <h3 class="inquiry-success-title">Your API request has been sent</h3>
+          <p class="inquiry-success-text">Thank you. We’ve received your integration details.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 10 · PLAGIARISM API FAQ =================
        Exactly nine, all rendered in HTML. The tenth — the legacy Q&amp;A cross-link — is

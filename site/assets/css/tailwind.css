@@ -2554,6 +2554,487 @@ p.faq-a-body,
   max-width: 60ch;
 }
 
+/* ═══ Inquiry form — library component ══════════════════════════════════════════════
+   Template: build/sections/inquiry-form.js · contract: build/sections/inquiry-form.contract.js
+   Behaviour: build/assets/js/36-inquiry-form.js ([data-inquiry-form]: the label / field id
+   pairs repaired at load, the prototype's inert submit) and 35-form-arrive.js
+   (data-focus-first: a link to the form puts the caret in its first field)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The qualified inquiry: a head column that says what to send, and a card with the form.
+   The fields themselves (.cf-label, .cf-field) are the site's form recipe — site.css,
+   build/assets/css/14-forms.css — shared with the forms that are not library sections
+   (Contact, Account, the Scholarship application).
+
+   section.inquiry              data-bg="white|cool"  data-layout="fluid-wide"  data-accent="teal"  data-sticky="off"
+     .inquiry-inner             the 1280px container
+       .inquiry-grid            head column + card
+         .inquiry-aside.rv      the sticky head column: Section Header (eyebrow, h2, intro)
+           (p.inquiry-alt > a.inquiry-alt-link)      another way to reach us, under the intro
+         .inquiry-card.rv
+           form[data-inquiry-form]
+             .inquiry-fields    the two-column field grid
+               .inquiry-field   data-span="full"
+                 label.cf-label (> i: the required mark · > span.inquiry-optional)
+                 input.cf-field | textarea.cf-field | select.cf-field
+                 (p.inquiry-help)
+               fieldset.inquiry-choice > legend.cf-label + .inquiry-chips >
+                 label.inquiry-option > input.inquiry-option-input + span.inquiry-chip > svg.inquiry-chip-tick
+             (label.inquiry-consent > input.inquiry-consent-box + span.inquiry-consent-text
+                                      (a.inquiry-link, i.inquiry-required))
+             .inquiry-submit > button.inquiry-button > span.inquiry-button-orb.icon-orb
+           (.inquiry-success[hidden] > .inquiry-success-title (+ p.inquiry-success-text)) */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+
+.inquiry {
+  position: relative;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 640px) {
+  .inquiry {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inquiry {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* the cool tint the brief-built pages alternate with white */
+
+.inquiry:where([data-bg="cool"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(247 250 252 / var(--tw-bg-opacity, 1));
+}
+
+/* The API page's section clips its overflow, and a clipped section is its own scroll
+   container: the head column does not follow the scroll there. Kept as approved, and
+   named for what the reader sees. */
+
+.inquiry:where([data-sticky="off"]) {
+  overflow: hidden;
+}
+
+.inquiry-inner {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .inquiry-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inquiry-inner {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* ── the grid: two approved proportions ─────────────────────────────────────────
+   (none)       0.85fr / 1.15fr — Business & Teams, University (the FAQ's fluid grid)
+   fluid-wide   0.9fr / 1.1fr   — the API page */
+
+.inquiry-grid {
+  display: grid;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .inquiry-grid {
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 3.5rem;
+  }
+
+  :where(.inquiry[data-layout="fluid-wide"]) .inquiry-grid {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}
+
+/* ── the head column ─────────────────────────────────────────────────────────────
+   The Section Header (section-head.css) with its common spacing. The pill takes its
+   background from the section's data-bg; its dot is the accent. */
+
+@media (min-width: 1024px) {
+  .inquiry-aside {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 7rem;
+  }
+}
+
+:where(.inquiry-aside) .section-intro {
+  max-width: 56ch;
+}
+
+:where(.inquiry[data-accent="teal"]) .section-eyebrow-dot {
+  --tw-bg-opacity: 1;
+  background-color: rgb(44 195 219 / var(--tw-bg-opacity, 1));
+}
+
+.inquiry-alt {
+  margin-top: 1.5rem;
+  font-size: 13px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .inquiry-alt {
+    font-size: 13.5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inquiry-alt {
+    margin-top: 1.75rem;
+  }
+}
+
+.inquiry-alt-link {
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  -webkit-text-decoration-color: #D1D5DB;
+          text-decoration-color: #D1D5DB;
+  text-underline-offset: 4px;
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.inquiry-alt-link:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+/* ── the card and the field grid ─────────────────────────────────────────────── */
+
+.inquiry-card {
+  border-radius: 1.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding: 1.25rem;
+  --tw-shadow: 0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08);
+  --tw-shadow-colored: 0 1px 2px var(--tw-shadow-color), 0 20px 40px -15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .inquiry-card {
+    border-radius: 28px;
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inquiry-card {
+    border-radius: 2rem;
+    padding: 2rem;
+  }
+}
+
+.inquiry-fields {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .inquiry-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+.inquiry-field {
+  min-width: 0px;
+}
+
+@media (min-width: 640px) {
+  .inquiry-field:where([data-span="full"]) {
+    grid-column: span 2 / span 2;
+  }
+}
+
+.inquiry-optional {
+  font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+.inquiry-help {
+  margin-top: 0.5rem;
+  font-size: 12px;
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+/* ── the multi-select: chips ─────────────────────────────────────────────────────
+   A chip fills when its checkbox is checked, and says so with a tick, not only with
+   colour; focus lands on the hidden input, so the ring is drawn on the chip. (Moved from
+   build/assets/css/14-forms.css, where the classes were .need-opt / .need-chip.) */
+
+.inquiry-choice {
+  margin: 0px;
+  min-width: 0px;
+  border-width: 0px;
+  padding: 0px;
+}
+
+@media (min-width: 640px) {
+  .inquiry-choice {
+    grid-column: span 2 / span 2;
+  }
+}
+
+.inquiry-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.inquiry-option {
+  cursor: pointer;
+}
+
+.inquiry-option-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.inquiry-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 13px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(229 231 235 / var(--tw-ring-opacity, 1));
+  transition:background-color .15s ease, color .15s ease, box-shadow .15s ease;
+}
+
+.inquiry-chip .inquiry-chip-tick {
+  display:none;
+}
+
+.inquiry-option input:checked + .inquiry-chip {
+  background:#111827;
+  color:#fff;
+  box-shadow:inset 0 0 0 1px #111827;
+}
+
+.inquiry-option input:checked + .inquiry-chip .inquiry-chip-tick {
+  display:block;
+}
+
+.inquiry-option input:focus-visible + .inquiry-chip {
+  outline:2px solid #0CA9C3;
+  outline-offset:3px;
+}
+
+.inquiry-option:hover .inquiry-chip {
+  background:#F3F4F6;
+}
+
+.inquiry-option:hover input:checked + .inquiry-chip {
+  background:#1F2937;
+}
+
+/* ── consent, submit, success ────────────────────────────────────────────────── */
+
+.inquiry-consent {
+  margin-top: 1.5rem;
+  display: flex;
+  cursor: pointer;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .inquiry-consent {
+    margin-top: 1.75rem;
+  }
+}
+
+.inquiry-consent-box {
+  margin-top: 0.125rem;
+  height: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+  accent-color: #0991A8;
+}
+
+.inquiry-consent-text {
+  font-size: 13px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+.inquiry-link {
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity, 1));
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  -webkit-text-decoration-color: #D1D5DB;
+          text-decoration-color: #D1D5DB;
+  text-underline-offset: 4px;
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.inquiry-link:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+.inquiry-required {
+  font-style: normal;
+  --tw-text-opacity: 1;
+  color: rgb(184 68 49 / var(--tw-text-opacity, 1));
+}
+
+.inquiry-submit {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .inquiry-submit {
+    margin-top: 1.75rem;
+  }
+}
+
+.inquiry-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 0.5rem;
+  font-size: 13.5px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.inquiry-button:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .inquiry-button {
+    width: auto;
+    justify-content: flex-start;
+    padding-left: 1.5rem;
+    font-size: 14.5px;
+  }
+}
+
+.inquiry-button-orb {
+  display: none;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+@media (min-width: 640px) {
+  .inquiry-button-orb {
+    display: flex;
+  }
+}
+
+/* the success state: in the HTML, hidden, for the form's binding to show */
+
+.inquiry-success {
+  margin-top: 1.5rem;
+  border-top-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(241 242 246 / var(--tw-border-opacity, 1));
+  padding-top: 1.5rem;
+}
+
+.inquiry-success-title {
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.inquiry-success-title:where(:not(:last-child)) {
+  margin-bottom: 0.375rem;
+}
+
+.inquiry-success-text {
+  font-size: 13px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
 /* page-specific components written in the library's manner, compiled the same way; not
    Section Library members (build/about/ — the About page's team grid and timeline) */
 

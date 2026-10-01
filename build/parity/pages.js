@@ -343,3 +343,21 @@ acceptAgainst('f15c5ba', {
   'prices.html': [['align-items', 'column-gap', 'row-gap'], 'the actions row is the band\'s one row (one button: nothing moves)'],
   'paper-analysis-v2.html': [['align-items', 'column-gap', 'row-gap'], 'the actions row is the band\'s one row (one button: nothing moves)'],
 }, 'CTA band: ');
+
+/* SECTION LIBRARY, WAVE 1 · THE BANNER (2026-10-01), against 58987c7: six pages, 0 px,
+   identical in every measured property. Nothing accepted.
+
+   SECTION LIBRARY, WAVE 1 · THE INQUIRY FORM (2026-10-01), against 41a2530 — the last commit
+   before the form section moved onto its library template (build/sections/inquiry-form.js).
+   Business & Teams and University: 0 px, identical in every measured property. The API
+   page differs in exactly the properties named here:
+
+     the head column's intro. Its head is the Section Header now, whose intro has one size
+       (Olex's decision closing the pilot: "the FAQ intro has one size", taken there for
+       the FAQ on this same page). The API form's intro was the one left at the small
+       size: 15px → 15.5px from lg up, its lines 0.8px taller, the head column 2.4px
+       taller, the line under the intro 2.4px lower. The card beside it is the taller
+       column, so nothing else on the page moves. */
+acceptAgainst('41a2530', {
+  'api.html': [['font-size', 'line-height'], 'the head column\'s intro at the Section Header\'s one size (15px → 15.5px at lg)'],
+}, 'Inquiry form: ');

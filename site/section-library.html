@@ -29,6 +29,7 @@
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-faq">FAQ <span class="text-ink-400 font-medium">8</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-cta-band">CTA band <span class="text-ink-400 font-medium">9</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-banner">Banner <span class="text-ink-400 font-medium">5</span></a></li>
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-inquiry-form">Inquiry form <span class="text-ink-400 font-medium">3</span></a></li>
     </ul>
   </section>
 
@@ -1855,6 +1856,628 @@
             Learn about AI detection
             &lt;span class="banner-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
           &lt;/a&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <section id="lib-inquiry-form" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">Inquiry form</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>Секція кваліфікованого запиту: ліва колонка каже, що надіслати, права — картка з формою. Поля — спільний рецепт форм сайту (cf-label / cf-field). Форма в прототипі нічого не відправляє: підключення до бекенду робить розробник, і склад полів змінюється лише разом із ним.</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/inquiry-form.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/inquiry-form.css (поля — build/assets/css/14-forms.css)</code> · JS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/assets/js/36-inquiry-form.js, 35-form-arrive.js</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/inquiry-form.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/inquiry-form-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці. На нього ведуть кнопки «Request a quote» сторінки — змінюйте разом із їхніми href</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіанти секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg, data-layout, data-accent, data-sticky на &lt;section&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише значення зі списку варіантів</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Надпис-пігулка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-eyebrow-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; блок .section-eyebrow можна прибрати цілком. Фон пігулки не задається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Заголовок H2</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">h2.section-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст (обов’язковий); допускаються &lt;br&gt;, &lt;em&gt;, &lt;strong&gt;</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Вступ</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.section-intro</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Рядок під вступом</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.inquiry-alt &gt; a.inquiry-alt-link</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і одне посилання (mailto: або адреса); можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Підпис поля</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">label.cf-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; зірочка обов’язкового поля — &lt;i&gt;*&lt;/i&gt; наприкінці; слово Optional — &lt;span class="inquiry-optional"&gt;</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Підказка в полі</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">placeholder на input / textarea</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Підказка під полем</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.inquiry-help</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Ширина поля</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-span на .inquiry-field</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">full — на всю ширину; без атрибута — половина</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіанти списку</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;option&gt; у select.cf-field</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст варіантів; перший порожній «Select an option» лишається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Чипи множинного вибору</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">label.inquiry-option</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст чипа і value його &lt;input&gt; — однакові; чип копіюється чи видаляється цілим; legend — текст</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Згода</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.inquiry-consent-text</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href двох посилань a.inquiry-link; зірочка &lt;i class="inquiry-required"&gt;*&lt;/i&gt; лишається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Кнопка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">button.inquiry-button</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише текст; кружок зі стрілкою лишається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Стан успіху</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.inquiry-success-title, p.inquiry-success-text</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; блок лишається прихованим (hidden) — його показує форма після відправлення</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Id полів</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">id на полі і for на його label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">чіпати не треба: скрипт сторінки сам лагодить пари під час завантаження (скопійоване поле можна лишити з тим самим id)</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>склад форми: які поля є, які з них обов’язкові (атрибут required), їхні type, name і value, куди форма відправляється — це узгоджується з розробником, який підключає форму до бекенду; поле додається чи прибирається лише разом із цим підключенням</li>
+          <li>&lt;form data-inquiry-form … novalidate&gt; з його атрибутами (data-focus-first, onsubmit="return false" — заглушка прототипу, яку замінює підключення до бекенду)</li>
+          <li>усі класи й обгортки: .inquiry-grid, .inquiry-aside, .inquiry-card, .inquiry-fields, .inquiry-field, .inquiry-submit</li>
+          <li>класи полів cf-label і cf-field — спільний рецепт форм сайту</li>
+          <li>data-component="inquiry-form" на секції; data-inquiry-form на &lt;form&gt; — гачок скрипта</li>
+          <li>класи-гачки: rv на .inquiry-aside і .inquiry-card (поява), btn-press і group на кнопці, icon-orb на кружку зі стрілкою</li>
+          <li>іконки &lt;svg&gt; (стрілка, галочка чипа) — копіюються як є</li>
+          <li>блок .inquiry-success: hidden і role="status"</li>
+          <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind усередині секції; жодних on*-обробників, крім заглушки onsubmit="return false" на &lt;form&gt;</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">white</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">cool</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. фон секції: white — білий, cool — холодний світлий (#F7FAFC). Пігулка сама бере протилежний фон (на білій секції — сіра, на cool — біла).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">fluid-wide</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. сітка. Без атрибута — 0.85fr / 1.15fr (Business, University). fluid-wide — 0.9fr / 1.1fr: ширша ліва колонка (API).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-accent</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. колір крапки в пігулці. Без атрибута — помаранчева; teal — бірюзова (API).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-sticky</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">off</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. off — ліва колонка не їде за прокруткою на десктопі (так затверджено на API). Без атрибута — ліва колонка «липне» під шапкою, поки гортається форма.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">field</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-span</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">full</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. full — поле на всю ширину форми (обидві колонки). Без атрибута — одна колонка з двох.</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-organization.html">plagiarism-checker-for-organization.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">white</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">8 полів + чипи (6); згода; data-focus-first; успіх одним рядком</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="university-plagiarism-checker.html">university-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">white</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">8 полів, серед них select; рядок з e-mail; згода; успіх із заголовком</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="api.html">api.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">cool · fluid-wide · teal · sticky off</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">6 полів; рядок з e-mail; без згоди; успіх із заголовком</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── inquiry-form · 1 · inquiry-form-select.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Inquiry form · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Inquiry form · поля, список вибору, згода</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Біла секція: ліва колонка (пігулка, заголовок, вступ, рядок з e-mail), картка з формою — текстові поля, список &lt;select&gt;, textarea, згода з двома посиланнями, кнопка; прихований стан успіху під формою. Копія — University.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: university-plagiarism-checker · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/inquiry-form-select.html</code></p>
+    </div>
+  </div>
+
+<section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white">
+  <div class="inquiry-inner">
+    <div class="inquiry-grid">
+      <div class="inquiry-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">INSTITUTIONAL INQUIRY</span>
+        </div>
+        <h2 class="section-title">Discuss plagiarism checking for your institution</h2>
+        <p class="section-intro">Tell us how your institution plans to manage users, checking volume, Storage, and integrations. We’ll use those details to discuss an appropriate setup and pricing path.</p>
+        <p class="inquiry-alt">Prefer email? Contact us at <a href="mailto:services@plagiarismsearch.com" class="inquiry-alt-link">services@plagiarismsearch.com</a>.</p>
+      </div>
+      <div class="inquiry-card rv">
+        <form data-inquiry-form onsubmit="return false" novalidate>
+          <div class="inquiry-fields">
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-0">Name <i>*</i></label>
+              <input class="cf-field" id="uq-0" type="text" placeholder="Jordan Reeves">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-1">Work email <i>*</i></label>
+              <input class="cf-field" id="uq-1" type="email" placeholder="name@university.edu">
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="uq-2">Institution <i>*</i></label>
+              <input class="cf-field" id="uq-2" type="text" placeholder="University or college name">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-3">Your role</label>
+              <select class="cf-field" id="uq-3">
+                <option value="">Select an option</option>
+                <option>Academic or faculty</option>
+                <option>Administration</option>
+                <option>Academic integrity</option>
+                <option>IT or LMS</option>
+                <option>Procurement</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-4">How do you plan to use PlagiarismSearch?</label>
+              <select class="cf-field" id="uq-4">
+                <option value="">Select an option</option>
+                <option>Organization workspace</option>
+                <option>Moodle</option>
+                <option>Canvas</option>
+                <option>API</option>
+                <option>Not sure yet</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-5">Approximate institution size</label>
+              <input class="cf-field" id="uq-5" type="text" placeholder="e.g. 5,000 students or users">
+              <p class="inquiry-help">An estimate is enough.</p>
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-6">Approximate monthly checking volume</label>
+              <input class="cf-field" id="uq-6" type="text" placeholder="e.g. 2,000 documents or 1,000,000 words">
+              <p class="inquiry-help">Use whichever estimate is easier for your institution.</p>
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="uq-7">Institutional requirements <i>*</i></label>
+              <textarea class="cf-field" id="uq-7" rows="4" placeholder="Tell us about your plagiarism-checking workflow, source or Storage requirements, integration needs, or any questions we should consider."></textarea>
+            </div>
+          </div>
+          <label class="inquiry-consent">
+            <input type="checkbox" id="uq-consent" class="inquiry-consent-box">
+            <span class="inquiry-consent-text">I agree to the <a href="terms-of-use.html" class="inquiry-link">Terms of Use</a> and <a href="policy.html" class="inquiry-link">Privacy Policy</a>. <i class="inquiry-required">*</i></span>
+          </label>
+          <div class="inquiry-submit">
+            <button type="submit" class="inquiry-button btn-press group">
+              Request institutional pricing
+              <span class="inquiry-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </button>
+          </div>
+        </form>
+        <div class="inquiry-success" hidden id="uq-success" role="status">
+          <h3 class="inquiry-success-title">Your institutional request has been sent</h3>
+          <p class="inquiry-success-text">Thank you. We’ve received the information about your institution and plagiarism-checking requirements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-23">HTML для копіювання</label>
+    <textarea id="snippet-23" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+  &lt;div class="inquiry-inner"&gt;
+    &lt;div class="inquiry-grid"&gt;
+      &lt;div class="inquiry-aside rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;INSTITUTIONAL INQUIRY&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;Discuss plagiarism checking for your institution&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Tell us how your institution plans to manage users, checking volume, Storage, and integrations. We’ll use those details to discuss an appropriate setup and pricing path.&lt;/p&gt;
+        &lt;p class="inquiry-alt"&gt;Prefer email? Contact us at &lt;a href="mailto:services@plagiarismsearch.com" class="inquiry-alt-link"&gt;services@plagiarismsearch.com&lt;/a&gt;.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="inquiry-card rv"&gt;
+        &lt;form data-inquiry-form onsubmit="return false" novalidate&gt;
+          &lt;div class="inquiry-fields"&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="uq-0"&gt;Name &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;input class="cf-field" id="uq-0" type="text" placeholder="Jordan Reeves"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="uq-1"&gt;Work email &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;input class="cf-field" id="uq-1" type="email" placeholder="name@university.edu"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field" data-span="full"&gt;
+              &lt;label class="cf-label" for="uq-2"&gt;Institution &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;input class="cf-field" id="uq-2" type="text" placeholder="University or college name"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="uq-3"&gt;Your role&lt;/label&gt;
+              &lt;select class="cf-field" id="uq-3"&gt;
+                &lt;option value=""&gt;Select an option&lt;/option&gt;
+                &lt;option&gt;Academic or faculty&lt;/option&gt;
+                &lt;option&gt;Administration&lt;/option&gt;
+                &lt;option&gt;Academic integrity&lt;/option&gt;
+                &lt;option&gt;IT or LMS&lt;/option&gt;
+                &lt;option&gt;Procurement&lt;/option&gt;
+                &lt;option&gt;Other&lt;/option&gt;
+              &lt;/select&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="uq-4"&gt;How do you plan to use PlagiarismSearch?&lt;/label&gt;
+              &lt;select class="cf-field" id="uq-4"&gt;
+                &lt;option value=""&gt;Select an option&lt;/option&gt;
+                &lt;option&gt;Organization workspace&lt;/option&gt;
+                &lt;option&gt;Moodle&lt;/option&gt;
+                &lt;option&gt;Canvas&lt;/option&gt;
+                &lt;option&gt;API&lt;/option&gt;
+                &lt;option&gt;Not sure yet&lt;/option&gt;
+                &lt;option&gt;Other&lt;/option&gt;
+              &lt;/select&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="uq-5"&gt;Approximate institution size&lt;/label&gt;
+              &lt;input class="cf-field" id="uq-5" type="text" placeholder="e.g. 5,000 students or users"&gt;
+              &lt;p class="inquiry-help"&gt;An estimate is enough.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="uq-6"&gt;Approximate monthly checking volume&lt;/label&gt;
+              &lt;input class="cf-field" id="uq-6" type="text" placeholder="e.g. 2,000 documents or 1,000,000 words"&gt;
+              &lt;p class="inquiry-help"&gt;Use whichever estimate is easier for your institution.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field" data-span="full"&gt;
+              &lt;label class="cf-label" for="uq-7"&gt;Institutional requirements &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;textarea class="cf-field" id="uq-7" rows="4" placeholder="Tell us about your plagiarism-checking workflow, source or Storage requirements, integration needs, or any questions we should consider."&gt;&lt;/textarea&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;label class="inquiry-consent"&gt;
+            &lt;input type="checkbox" id="uq-consent" class="inquiry-consent-box"&gt;
+            &lt;span class="inquiry-consent-text"&gt;I agree to the &lt;a href="terms-of-use.html" class="inquiry-link"&gt;Terms of Use&lt;/a&gt; and &lt;a href="policy.html" class="inquiry-link"&gt;Privacy Policy&lt;/a&gt;. &lt;i class="inquiry-required"&gt;*&lt;/i&gt;&lt;/span&gt;
+          &lt;/label&gt;
+          &lt;div class="inquiry-submit"&gt;
+            &lt;button type="submit" class="inquiry-button btn-press group"&gt;
+              Request institutional pricing
+              &lt;span class="inquiry-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+        &lt;div class="inquiry-success" hidden id="uq-success" role="status"&gt;
+          &lt;h3 class="inquiry-success-title"&gt;Your institutional request has been sent&lt;/h3&gt;
+          &lt;p class="inquiry-success-text"&gt;Thank you. We’ve received the information about your institution and plagiarism-checking requirements.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── inquiry-form · 2 · inquiry-form-chips.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Inquiry form · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Inquiry form · з чипами множинного вибору</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Те саме з групою чипів (fieldset.inquiry-choice) — «What do you need?»; поля з атрибутом required; форма з data-focus-first: посилання на секцію ставить курсор у перше поле. Копія — Business &amp; Teams.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-organization · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/inquiry-form-chips.html</code></p>
+    </div>
+  </div>
+
+<section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white">
+  <div class="inquiry-inner">
+    <div class="inquiry-grid">
+      <div class="inquiry-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Business Inquiry</span>
+        </div>
+        <h2 class="section-title">Tell us how your team plans to use PlagiarismSearch</h2>
+        <p class="section-intro">Share your team size, expected usage, and the workflow you want to support. These details help us understand whether you need an organization workspace, Organization Storage, API access, AI checking, standard pricing, or a custom commercial setup.</p>
+      </div>
+      <div class="inquiry-card rv">
+        <form data-inquiry-form data-focus-first="500" onsubmit="return false" novalidate>
+          <div class="inquiry-fields">
+            <div class="inquiry-field">
+              <label class="cf-label" for="bq-0">Name <i>*</i></label>
+              <input class="cf-field" id="bq-0" type="text" required>
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="bq-1">Work email <i>*</i></label>
+              <input class="cf-field" id="bq-1" type="email" required>
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="bq-2">Organization or company <i>*</i></label>
+              <input class="cf-field" id="bq-2" type="text" required>
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="bq-3">Role or job title</label>
+              <input class="cf-field" id="bq-3" type="text">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="bq-4">Approximate team size</label>
+              <input class="cf-field" id="bq-4" type="text">
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="bq-5">Approximate monthly checking volume</label>
+              <input class="cf-field" id="bq-5" type="text">
+              <p class="inquiry-help">Words, documents, or another estimate is fine.</p>
+            </div>
+            <fieldset class="inquiry-choice">
+              <legend class="cf-label">What do you need?</legend>
+              <div class="inquiry-chips">
+                <label class="inquiry-option">
+                  <input type="checkbox" name="needs" value="Organization workspace" class="inquiry-option-input">
+                  <span class="inquiry-chip">
+                    <svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Organization workspace
+                  </span>
+                </label>
+                <label class="inquiry-option">
+                  <input type="checkbox" name="needs" value="Organization Storage" class="inquiry-option-input">
+                  <span class="inquiry-chip">
+                    <svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Organization Storage
+                  </span>
+                </label>
+                <label class="inquiry-option">
+                  <input type="checkbox" name="needs" value="API access" class="inquiry-option-input">
+                  <span class="inquiry-chip">
+                    <svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>API access
+                  </span>
+                </label>
+                <label class="inquiry-option">
+                  <input type="checkbox" name="needs" value="AI checking" class="inquiry-option-input">
+                  <span class="inquiry-chip">
+                    <svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>AI checking
+                  </span>
+                </label>
+                <label class="inquiry-option">
+                  <input type="checkbox" name="needs" value="Custom volume or pricing" class="inquiry-option-input">
+                  <span class="inquiry-chip">
+                    <svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Custom volume or pricing
+                  </span>
+                </label>
+                <label class="inquiry-option">
+                  <input type="checkbox" name="needs" value="Not sure yet" class="inquiry-option-input">
+                  <span class="inquiry-chip">
+                    <svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Not sure yet
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+            <div class="inquiry-field">
+              <label class="cf-label" for="bq-phone">Phone number</label>
+              <input class="cf-field" id="bq-phone" type="tel">
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="bq-message">Tell us about your workflow or requirements <i>*</i></label>
+              <textarea class="cf-field" id="bq-message" rows="4" required></textarea>
+            </div>
+          </div>
+          <label class="inquiry-consent">
+            <input type="checkbox" id="bq-consent" class="inquiry-consent-box">
+            <span class="inquiry-consent-text">I agree to the <a href="terms-of-use.html" class="inquiry-link">Terms of Use</a> and <a href="policy.html" class="inquiry-link">Privacy Policy</a>. <i class="inquiry-required">*</i></span>
+          </label>
+          <div class="inquiry-submit">
+            <button type="submit" class="inquiry-button btn-press group">
+              Request a business quote
+              <span class="inquiry-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </button>
+          </div>
+        </form>
+        <div class="inquiry-success" hidden id="bq-success" role="status">
+          <p class="inquiry-success-title">Thanks — your business inquiry has been submitted.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
+    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+  &lt;div class="inquiry-inner"&gt;
+    &lt;div class="inquiry-grid"&gt;
+      &lt;div class="inquiry-aside rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Business Inquiry&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;Tell us how your team plans to use PlagiarismSearch&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Share your team size, expected usage, and the workflow you want to support. These details help us understand whether you need an organization workspace, Organization Storage, API access, AI checking, standard pricing, or a custom commercial setup.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="inquiry-card rv"&gt;
+        &lt;form data-inquiry-form data-focus-first="500" onsubmit="return false" novalidate&gt;
+          &lt;div class="inquiry-fields"&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="bq-0"&gt;Name &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;input class="cf-field" id="bq-0" type="text" required&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="bq-1"&gt;Work email &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;input class="cf-field" id="bq-1" type="email" required&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field" data-span="full"&gt;
+              &lt;label class="cf-label" for="bq-2"&gt;Organization or company &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;input class="cf-field" id="bq-2" type="text" required&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="bq-3"&gt;Role or job title&lt;/label&gt;
+              &lt;input class="cf-field" id="bq-3" type="text"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="bq-4"&gt;Approximate team size&lt;/label&gt;
+              &lt;input class="cf-field" id="bq-4" type="text"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field" data-span="full"&gt;
+              &lt;label class="cf-label" for="bq-5"&gt;Approximate monthly checking volume&lt;/label&gt;
+              &lt;input class="cf-field" id="bq-5" type="text"&gt;
+              &lt;p class="inquiry-help"&gt;Words, documents, or another estimate is fine.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;fieldset class="inquiry-choice"&gt;
+              &lt;legend class="cf-label"&gt;What do you need?&lt;/legend&gt;
+              &lt;div class="inquiry-chips"&gt;
+                &lt;label class="inquiry-option"&gt;
+                  &lt;input type="checkbox" name="needs" value="Organization workspace" class="inquiry-option-input"&gt;
+                  &lt;span class="inquiry-chip"&gt;
+                    &lt;svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;Organization workspace
+                  &lt;/span&gt;
+                &lt;/label&gt;
+                &lt;label class="inquiry-option"&gt;
+                  &lt;input type="checkbox" name="needs" value="Organization Storage" class="inquiry-option-input"&gt;
+                  &lt;span class="inquiry-chip"&gt;
+                    &lt;svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;Organization Storage
+                  &lt;/span&gt;
+                &lt;/label&gt;
+                &lt;label class="inquiry-option"&gt;
+                  &lt;input type="checkbox" name="needs" value="API access" class="inquiry-option-input"&gt;
+                  &lt;span class="inquiry-chip"&gt;
+                    &lt;svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;API access
+                  &lt;/span&gt;
+                &lt;/label&gt;
+                &lt;label class="inquiry-option"&gt;
+                  &lt;input type="checkbox" name="needs" value="AI checking" class="inquiry-option-input"&gt;
+                  &lt;span class="inquiry-chip"&gt;
+                    &lt;svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;AI checking
+                  &lt;/span&gt;
+                &lt;/label&gt;
+                &lt;label class="inquiry-option"&gt;
+                  &lt;input type="checkbox" name="needs" value="Custom volume or pricing" class="inquiry-option-input"&gt;
+                  &lt;span class="inquiry-chip"&gt;
+                    &lt;svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;Custom volume or pricing
+                  &lt;/span&gt;
+                &lt;/label&gt;
+                &lt;label class="inquiry-option"&gt;
+                  &lt;input type="checkbox" name="needs" value="Not sure yet" class="inquiry-option-input"&gt;
+                  &lt;span class="inquiry-chip"&gt;
+                    &lt;svg class="inquiry-chip-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;Not sure yet
+                  &lt;/span&gt;
+                &lt;/label&gt;
+              &lt;/div&gt;
+            &lt;/fieldset&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="bq-phone"&gt;Phone number&lt;/label&gt;
+              &lt;input class="cf-field" id="bq-phone" type="tel"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field" data-span="full"&gt;
+              &lt;label class="cf-label" for="bq-message"&gt;Tell us about your workflow or requirements &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;textarea class="cf-field" id="bq-message" rows="4" required&gt;&lt;/textarea&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;label class="inquiry-consent"&gt;
+            &lt;input type="checkbox" id="bq-consent" class="inquiry-consent-box"&gt;
+            &lt;span class="inquiry-consent-text"&gt;I agree to the &lt;a href="terms-of-use.html" class="inquiry-link"&gt;Terms of Use&lt;/a&gt; and &lt;a href="policy.html" class="inquiry-link"&gt;Privacy Policy&lt;/a&gt;. &lt;i class="inquiry-required"&gt;*&lt;/i&gt;&lt;/span&gt;
+          &lt;/label&gt;
+          &lt;div class="inquiry-submit"&gt;
+            &lt;button type="submit" class="inquiry-button btn-press group"&gt;
+              Request a business quote
+              &lt;span class="inquiry-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+        &lt;div class="inquiry-success" hidden id="bq-success" role="status"&gt;
+          &lt;p class="inquiry-success-title"&gt;Thanks — your business inquiry has been submitted.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── inquiry-form · 3 · inquiry-form-cool.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Inquiry form · варіант 3</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Inquiry form · холодний фон, без згоди</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-bg="cool": пігулка сама стає білою; data-layout="fluid-wide" — ширша ліва колонка; data-accent="teal" — бірюзова крапка; data-sticky="off" — ліва колонка не їде за прокруткою. Без рядка згоди; слово Optional біля підпису. Копія — API.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: api · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/inquiry-form-cool.html</code></p>
+    </div>
+  </div>
+
+<section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off">
+  <div class="inquiry-inner">
+    <div class="inquiry-grid">
+      <div class="inquiry-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Get access</span>
+        </div>
+        <h2 class="section-title">Request API access or a custom quote</h2>
+        <p class="section-intro">Share your integration requirements and expected volume. We’ll use the details to discuss the most appropriate API access, trial, or pricing option for your workflow.</p>
+        <p class="inquiry-alt">Prefer email? Contact us at <a href="mailto:services@plagiarismsearch.com" class="inquiry-alt-link">services@plagiarismsearch.com</a>.</p>
+      </div>
+      <div class="inquiry-card rv">
+        <form data-inquiry-form onsubmit="return false" novalidate>
+          <div class="inquiry-fields">
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-0">Name <i>*</i></label>
+              <input class="cf-field" id="aq-0" type="text" placeholder="Jordan Reeves">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-1">Work email <i>*</i></label>
+              <input class="cf-field" id="aq-1" type="email" placeholder="name@company.com">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-2">Organization</label>
+              <input class="cf-field" id="aq-2" type="text" placeholder="Company, university, or platform">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-3">Phone <span class="inquiry-optional">Optional</span></label>
+              <input class="cf-field" id="aq-3" type="tel" placeholder="+1 555 000 0000">
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="aq-4">Estimated monthly volume</label>
+              <input class="cf-field" id="aq-4" type="text" placeholder="e.g. 1,000,000 words">
+              <p class="inquiry-help">An approximate figure is enough.</p>
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="aq-5">What are you integrating? <i>*</i></label>
+              <textarea class="cf-field" id="aq-5" rows="4" placeholder="Describe your product, platform, or workflow and any requirements that matter to the integration."></textarea>
+            </div>
+          </div>
+          <div class="inquiry-submit">
+            <button type="submit" class="inquiry-button btn-press group">
+              Request API access
+              <span class="inquiry-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </button>
+          </div>
+        </form>
+        <div class="inquiry-success" hidden id="aq-success" role="status">
+          <h3 class="inquiry-success-title">Your API request has been sent</h3>
+          <p class="inquiry-success-text">Thank you. We’ve received your integration details.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
+    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
+  &lt;div class="inquiry-inner"&gt;
+    &lt;div class="inquiry-grid"&gt;
+      &lt;div class="inquiry-aside rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Get access&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;Request API access or a custom quote&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Share your integration requirements and expected volume. We’ll use the details to discuss the most appropriate API access, trial, or pricing option for your workflow.&lt;/p&gt;
+        &lt;p class="inquiry-alt"&gt;Prefer email? Contact us at &lt;a href="mailto:services@plagiarismsearch.com" class="inquiry-alt-link"&gt;services@plagiarismsearch.com&lt;/a&gt;.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="inquiry-card rv"&gt;
+        &lt;form data-inquiry-form onsubmit="return false" novalidate&gt;
+          &lt;div class="inquiry-fields"&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="aq-0"&gt;Name &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;input class="cf-field" id="aq-0" type="text" placeholder="Jordan Reeves"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="aq-1"&gt;Work email &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;input class="cf-field" id="aq-1" type="email" placeholder="name@company.com"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="aq-2"&gt;Organization&lt;/label&gt;
+              &lt;input class="cf-field" id="aq-2" type="text" placeholder="Company, university, or platform"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field"&gt;
+              &lt;label class="cf-label" for="aq-3"&gt;Phone &lt;span class="inquiry-optional"&gt;Optional&lt;/span&gt;&lt;/label&gt;
+              &lt;input class="cf-field" id="aq-3" type="tel" placeholder="+1 555 000 0000"&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field" data-span="full"&gt;
+              &lt;label class="cf-label" for="aq-4"&gt;Estimated monthly volume&lt;/label&gt;
+              &lt;input class="cf-field" id="aq-4" type="text" placeholder="e.g. 1,000,000 words"&gt;
+              &lt;p class="inquiry-help"&gt;An approximate figure is enough.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="inquiry-field" data-span="full"&gt;
+              &lt;label class="cf-label" for="aq-5"&gt;What are you integrating? &lt;i&gt;*&lt;/i&gt;&lt;/label&gt;
+              &lt;textarea class="cf-field" id="aq-5" rows="4" placeholder="Describe your product, platform, or workflow and any requirements that matter to the integration."&gt;&lt;/textarea&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="inquiry-submit"&gt;
+            &lt;button type="submit" class="inquiry-button btn-press group"&gt;
+              Request API access
+              &lt;span class="inquiry-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+        &lt;div class="inquiry-success" hidden id="aq-success" role="status"&gt;
+          &lt;h3 class="inquiry-success-title"&gt;Your API request has been sent&lt;/h3&gt;
+          &lt;p class="inquiry-success-text"&gt;Thank you. We’ve received your integration details.&lt;/p&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;

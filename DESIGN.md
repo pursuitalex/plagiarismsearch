@@ -600,6 +600,18 @@ against a tall double-bezel card — never the type size.
 > § Support lines forbids — because each builder carried its own copy of the shell.
 > `build/check.js` now holds every `bg-ink-950` box of this shape to the h2 above.
 
+#### The inquiry form — `build/sections/inquiry-form.js`
+
+The qualified-inquiry section of the API, Business & Teams and University pages is a
+Section Library component since 2026-10-01: a sticky head column (the Section Header, plus
+an optional "prefer email?" line) beside a card with the form. Variants on the section:
+`data-bg="white|cool"` (the pill takes the other ground by itself), `data-layout="fluid-wide"`
+(0.9fr / 1.1fr instead of 0.85fr / 1.15fr), `data-accent="teal"` (the pill's dot),
+`data-sticky="off"`; on a field, `data-span="full"`. The fields are the site's form recipe
+(`.cf-label`, `.cf-field`, `14-forms.css`). Which fields a form has, which are required
+and where it submits are each page's brief and the backend binding — the library fixes
+the layout and the look, never the form's logic.
+
 - Counters: tween object + `onUpdate` with cached writes, `.nums` on the element
 - **`prefers-reduced-motion`**: add `.no-motion` to `<html>`, all `.rv` forced visible, final states set statically — every scripted animation needs its static fallback
 - Perf floor: animate only `transform`/`opacity`; no `backdrop-blur` on elements that repaint per frame; `will-change` only on continuously-moving nodes

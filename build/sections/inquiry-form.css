@@ -1,0 +1,164 @@
+/* ═══ Inquiry form — library component ══════════════════════════════════════════════
+   Template: build/sections/inquiry-form.js · contract: build/sections/inquiry-form.contract.js
+   Behaviour: build/assets/js/36-inquiry-form.js ([data-inquiry-form]: the label / field id
+   pairs repaired at load, the prototype's inert submit) and 35-form-arrive.js
+   (data-focus-first: a link to the form puts the caret in its first field)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The qualified inquiry: a head column that says what to send, and a card with the form.
+   The fields themselves (.cf-label, .cf-field) are the site's form recipe — site.css,
+   build/assets/css/14-forms.css — shared with the forms that are not library sections
+   (Contact, Account, the Scholarship application).
+
+   section.inquiry              data-bg="white|cool"  data-layout="fluid-wide"  data-accent="teal"  data-sticky="off"
+     .inquiry-inner             the 1280px container
+       .inquiry-grid            head column + card
+         .inquiry-aside.rv      the sticky head column: Section Header (eyebrow, h2, intro)
+           (p.inquiry-alt > a.inquiry-alt-link)      another way to reach us, under the intro
+         .inquiry-card.rv
+           form[data-inquiry-form]
+             .inquiry-fields    the two-column field grid
+               .inquiry-field   data-span="full"
+                 label.cf-label (> i: the required mark · > span.inquiry-optional)
+                 input.cf-field | textarea.cf-field | select.cf-field
+                 (p.inquiry-help)
+               fieldset.inquiry-choice > legend.cf-label + .inquiry-chips >
+                 label.inquiry-option > input.inquiry-option-input + span.inquiry-chip > svg.inquiry-chip-tick
+             (label.inquiry-consent > input.inquiry-consent-box + span.inquiry-consent-text
+                                      (a.inquiry-link, i.inquiry-required))
+             .inquiry-submit > button.inquiry-button > span.inquiry-button-orb.icon-orb
+           (.inquiry-success[hidden] > .inquiry-success-title (+ p.inquiry-success-text)) */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.inquiry {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-white;
+}
+/* the cool tint the brief-built pages alternate with white */
+.inquiry:where([data-bg="cool"]) {
+  @apply bg-[#F7FAFC];
+}
+/* The API page's section clips its overflow, and a clipped section is its own scroll
+   container: the head column does not follow the scroll there. Kept as approved, and
+   named for what the reader sees. */
+.inquiry:where([data-sticky="off"]) {
+  @apply overflow-hidden;
+}
+.inquiry-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+
+/* ── the grid: two approved proportions ─────────────────────────────────────────
+   (none)       0.85fr / 1.15fr — Business & Teams, University (the FAQ's fluid grid)
+   fluid-wide   0.9fr / 1.1fr   — the API page */
+.inquiry-grid {
+  @apply grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start;
+}
+:where(.inquiry[data-layout="fluid-wide"]) .inquiry-grid {
+  @apply lg:grid-cols-[0.9fr_1.1fr];
+}
+
+/* ── the head column ─────────────────────────────────────────────────────────────
+   The Section Header (section-head.css) with its common spacing. The pill takes its
+   background from the section's data-bg; its dot is the accent. */
+.inquiry-aside {
+  @apply lg:sticky lg:top-28;
+}
+:where(.inquiry-aside) .section-intro {
+  @apply max-w-[56ch];
+}
+:where(.inquiry[data-accent="teal"]) .section-eyebrow-dot {
+  @apply bg-teal-400;
+}
+.inquiry-alt {
+  @apply mt-6 lg:mt-7 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500;
+}
+.inquiry-alt-link {
+  @apply font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300;
+}
+
+/* ── the card and the field grid ─────────────────────────────────────────────── */
+.inquiry-card {
+  @apply rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8;
+}
+.inquiry-fields {
+  @apply grid sm:grid-cols-2 gap-4 sm:gap-5;
+}
+.inquiry-field {
+  @apply min-w-0;
+}
+.inquiry-field:where([data-span="full"]) {
+  @apply sm:col-span-2;
+}
+.inquiry-optional {
+  @apply font-medium text-ink-500;
+}
+.inquiry-help {
+  @apply mt-2 text-[12px] text-ink-500;
+}
+
+/* ── the multi-select: chips ─────────────────────────────────────────────────────
+   A chip fills when its checkbox is checked, and says so with a tick, not only with
+   colour; focus lands on the hidden input, so the ring is drawn on the chip. (Moved from
+   build/assets/css/14-forms.css, where the classes were .need-opt / .need-chip.) */
+.inquiry-choice {
+  @apply sm:col-span-2 m-0 p-0 border-0 min-w-0;
+}
+.inquiry-chips {
+  @apply flex flex-wrap gap-2;
+}
+.inquiry-option {
+  @apply cursor-pointer;
+}
+.inquiry-option-input {
+  @apply sr-only;
+}
+.inquiry-chip {
+  @apply inline-flex items-center gap-2 rounded-full ring-1 ring-ink-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-ink-700;
+  transition:background-color .15s ease, color .15s ease, box-shadow .15s ease;
+}
+.inquiry-chip .inquiry-chip-tick { display:none; }
+.inquiry-option input:checked + .inquiry-chip { background:#111827; color:#fff; box-shadow:inset 0 0 0 1px #111827; }
+.inquiry-option input:checked + .inquiry-chip .inquiry-chip-tick { display:block; }
+.inquiry-option input:focus-visible + .inquiry-chip { outline:2px solid #0CA9C3; outline-offset:3px; }
+.inquiry-option:hover .inquiry-chip { background:#F3F4F6; }
+.inquiry-option:hover input:checked + .inquiry-chip { background:#1F2937; }
+
+/* ── consent, submit, success ────────────────────────────────────────────────── */
+.inquiry-consent {
+  @apply flex items-start gap-3 mt-6 lg:mt-7 cursor-pointer;
+}
+.inquiry-consent-box {
+  @apply mt-0.5 w-4 h-4 shrink-0 accent-teal-600;
+}
+.inquiry-consent-text {
+  @apply text-[13px] leading-relaxed text-ink-600;
+}
+.inquiry-link {
+  @apply font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300;
+}
+.inquiry-required {
+  @apply not-italic text-orange-700;
+}
+.inquiry-submit {
+  @apply mt-6 lg:mt-7;
+}
+.inquiry-button {
+  @apply flex items-center justify-center sm:justify-start gap-2.5 w-full sm:w-auto rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2;
+}
+.inquiry-button-orb {
+  @apply hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center;
+}
+/* the success state: in the HTML, hidden, for the form's binding to show */
+.inquiry-success {
+  @apply mt-6 pt-6 border-t border-ink-100;
+}
+.inquiry-success-title {
+  @apply text-[15.5px] font-bold tracking-tight;
+}
+.inquiry-success-title:where(:not(:last-child)) {
+  @apply mb-1.5;
+}
+.inquiry-success-text {
+  @apply text-[13px] leading-relaxed text-ink-600;
+}

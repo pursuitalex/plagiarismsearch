@@ -35,6 +35,7 @@ const OUT = 'university-plagiarism-checker.html';
 const cta = require('./sections/cta-band');
 const { dotField } = require('./dots');
 const banner = require('./sections/banner');
+const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* /organization-management has no page in this prototype and is a live production URL */
@@ -677,56 +678,21 @@ const section7 = () => `  <!-- ================= 07 · INSTITUTIONAL INQUIRY ===
        The approved form, exactly: eight fields, no phone, no Moodle URL, the consent
        control with both legal destinations, the success state. Inert — submission is
        the shared backend's. -->
-  <section id="institutional-inquiry" data-component="inquiry-form" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('orange-500', COPY.s7.eyebrow, 'ink')}
-          ${h2(COPY.s7.h2)}
-          <p class="${INTRO} max-w-[56ch]">${COPY.s7.intro}</p>
-          <p class="mt-6 lg:mt-7 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">${COPY.s7.alt} <a href="mailto:${COPY.s7.altMail}" class="font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s7.altMail}</a>.</p>
-        </div>
-
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8">
-          <form onsubmit="return false" novalidate>
-            <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
-${COPY.s7.fields.map(([label, spec, required, helper, kind, wide], i) => {
-  const id = 'uq-' + i;
-  const control = kind === 'textarea'
-    ? `<textarea class="cf-field" id="${id}" rows="4" placeholder="${spec}"></textarea>`
-    : kind === 'select'
-      ? `<select class="cf-field" id="${id}">\n                  <option value="">Select an option</option>\n` +
-        spec.map(o => `                  <option>${o}</option>`).join('\n') + '\n                </select>'
-      : `<input class="cf-field" id="${id}" type="${kind === 'email' ? 'email' : 'text'}" placeholder="${spec}">`;
-  return `              <div class="${wide ? 'sm:col-span-2' : 'min-w-0'}">
-                <label class="cf-label" for="${id}">${label}${required ? ' <i>*</i>' : ''}</label>
-                ${control}${helper ? `
-                <p class="mt-2 text-[12px] text-ink-500">${helper}</p>` : ''}
-              </div>`;
-}).join('\n')}
-            </div>
-
-            <label class="flex items-start gap-3 mt-6 lg:mt-7 cursor-pointer">
-              <input type="checkbox" id="uq-consent" class="mt-0.5 w-4 h-4 shrink-0 accent-teal-600">
-              <span class="text-[13px] leading-relaxed text-ink-600">I agree to the ${inline('Terms of Use', COPY.s7.terms)} and ${inline('Privacy Policy', COPY.s7.policy)}. <i class="not-italic text-orange-700">*</i></span>
-            </label>
-
-            <div class="mt-6 lg:mt-7">
-              <button type="submit" class="btn-press group flex items-center justify-center sm:justify-start gap-2.5 w-full sm:w-auto rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
-                ${COPY.s7.cta}
-                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">${arrow}</span>
-              </button>
-            </div>
-          </form>
-
-          <div class="mt-6 pt-6 border-t border-ink-100" hidden id="uq-success" role="status">
-            <h3 class="text-[15.5px] font-bold tracking-tight mb-1.5">${COPY.s7.successHeading}</h3>
-            <p class="text-[13px] leading-relaxed text-ink-600">${COPY.s7.successCopy}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${inquiry.section({
+  id: 'institutional-inquiry',
+  bg: 'white',
+  head: { eyebrow: COPY.s7.eyebrow, title: COPY.s7.h2, intro: COPY.s7.intro },
+  alt: { text: COPY.s7.alt, label: COPY.s7.altMail, href: 'mailto:' + COPY.s7.altMail },
+  ns: 'uq',
+  fields: COPY.s7.fields.map(([label, spec, required, helper, kind, wide]) => ({
+    label, required, help: helper, wide,
+    type: ['textarea', 'select', 'email'].includes(kind) ? kind : 'text',
+    ...(kind === 'select' ? { options: spec } : { placeholder: spec }),
+  })),
+  consent: { id: 'uq-consent', terms: COPY.s7.terms, policy: COPY.s7.policy },
+  submit: COPY.s7.cta,
+  success: { id: 'uq-success', title: COPY.s7.successHeading, text: COPY.s7.successCopy },
+})}`;
 
 /* ═══════════════ 08 · UNIVERSITY FAQ ═══════════════ */
 const section8 = () => `  <!-- ================= 08 · UNIVERSITY FAQ =================

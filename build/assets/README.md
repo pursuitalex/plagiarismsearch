@@ -63,8 +63,8 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 4. **Markup keeps its utilities — except in the Section Library.** Every top-level element
    of `<main>` has a stable root hook, `data-component="…"`, and the behaviour hooks it
    needs (catalogue below). A library component (the registry is `build/sections/index.js`:
-   the FAQ with the Section Header since the pilot of 2026-09-30, the CTA band and the
-   Banner since 2026-10-01) is written with semantic classes instead: one template in
+   the FAQ with the Section Header since the pilot of 2026-09-30, the CTA band, the
+   Banner and the Inquiry form since 2026-10-01) is written with semantic classes instead: one template in
    `build/sections/<name>.js` called by every generator (a hand-written page carries the
    same markup), its CSS in `build/sections/<name>.css` compiled with `@apply` in the
    Tailwind run (between components and utilities, outside `@layer`), variants as `data-*`
@@ -73,13 +73,16 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
    catalogue entry is `<name>.catalogue.js`. Copy-paste catalogue:
    `site/section-library.html`. A component's CSS lives with it: the FAQ's accordion moved
    there from `03-faq.css`, the closing band's knobs and glows from `10-cta-band.css`, the banner's glow from
-   `11-banner.css`.
+   `11-banner.css`, the inquiry form's chips from `14-forms.css` (which keeps the field
+   recipe every form shares, `.cf-label` / `.cf-field`).
 5. **No id is a CSS or JS hook.** Ids exist for in-page anchors and for accessibility
    pairs only.
 6. **Accessibility ids are rendered, not scripted.** `label for`/`id` on the checker field
    and `aria-controls`/`id` on the FAQ are written by the template, namespaced per instance
-   (`student-checker-text`, `student-faq-a3`). The HTML is correct before JS runs, and JS
-   never creates or rewrites them.
+   (`student-checker-text`, `student-faq-a3`). The HTML is correct before JS runs. A
+   library component's script only repairs a pair an editor broke by copying a part in
+   the CMS — a copied FAQ answer (`50-faq.js`), a copied form field
+   (`36-inquiry-form.js`) — so nothing has to be kept in step by hand.
 7. **JS is modular in source, one file in production.** Each module registers an init.
    Every init wires each instance it finds by its `data-*` hook, once (`data-*-ready`),
    inside its own try/catch. Two of the same component on one page do not share state.
@@ -112,6 +115,7 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 | odometer | `.od-num` | statistics roll |
 | checker | `form[data-checker]`, `[data-checker-text]`, `[data-checker-count]`, `[data-switch]` | count, switches; an in-page link to the form focuses its field |
 | form-arrive | `form[data-focus-first="ms"]` | a link to the form focuses its first field |
+| inquiry-form | `form[data-inquiry-form]`, `.inquiry-field` | repairs the label `for` / field `id` pairs at load (a copied field gets a fresh id); nothing else — the form's submission is its binding's |
 | report | `[data-report]` (`.cab-mark`, `.cab-src`) | select a passage |
 | report-pass | `[data-report-doc]`, `[data-report-side]`, `[data-report-scan]` | the scan plays once |
 | carousel | `[data-carousel]`, `-track`, `-prev`, `-next`, `-dots` (`data-dot-label`) | reviews rail |

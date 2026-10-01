@@ -35,6 +35,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'plagiarism-checker-for-organization.html';
 const cta = require('./sections/cta-band');
 const banner = require('./sections/banner');
+const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
 const { dotField } = require('./dots');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
@@ -681,69 +682,22 @@ const section9 = () => `  <!-- ================= 09 · BUSINESS INQUIRY ========
        The approved field variant: no Facebook, no LinkedIn, no callback promise, phone
        optional, "What do you need?" as a clear multi-select. Inert — validation, routing
        and consent handling are the backend's. -->
-  <section id="business-inquiry" data-component="inquiry-form" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('orange-500', COPY.inquiry.eyebrow, 'ink')}
-          <h2 class="${H2}">${COPY.inquiry.h2}</h2>
-          <p class="${INTRO} max-w-[56ch]">${COPY.inquiry.support}</p>
-        </div>
-
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8">
-          <form data-focus-first="500" onsubmit="return false" novalidate>
-            <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
-${COPY.inquiry.fields.map(([label, ph, required, helper, kind, wide], i) => {
-  const id = 'bq-' + i;
-  return `              <div class="${wide ? 'sm:col-span-2' : 'min-w-0'}">
-                <label class="cf-label" for="${id}">${label}${required ? ' <i>*</i>' : ''}</label>
-                <input class="cf-field" id="${id}" type="${kind === 'email' ? 'email' : 'text'}"${required ? ' required' : ''}>${helper ? `
-                <p class="mt-2 text-[12px] text-ink-500">${helper}</p>` : ''}
-              </div>`;
-}).join('\n')}
-
-              <fieldset class="sm:col-span-2 m-0 p-0 border-0 min-w-0">
-                <legend class="cf-label">${COPY.inquiry.needsLabel}</legend>
-                <div class="flex flex-wrap gap-2">
-${COPY.inquiry.needs.map((n, i) => `                  <label class="need-opt cursor-pointer">
-                    <input type="checkbox" name="needs" value="${n}" class="sr-only">
-                    <span class="need-chip inline-flex items-center gap-2 rounded-full ring-1 ring-ink-200 bg-white px-3.5 py-2 text-[13px] font-semibold text-ink-700">
-                      <svg class="need-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>${n}
-                    </span>
-                  </label>`).join('\n')}
-                </div>
-              </fieldset>
-
-              <div class="min-w-0">
-                <label class="cf-label" for="bq-phone">${COPY.inquiry.phone}</label>
-                <input class="cf-field" id="bq-phone" type="tel">
-              </div>
-              <div class="sm:col-span-2">
-                <label class="cf-label" for="bq-message">${COPY.inquiry.message} <i>*</i></label>
-                <textarea class="cf-field" id="bq-message" rows="4" required></textarea>
-              </div>
-            </div>
-
-            <label class="flex items-start gap-3 mt-6 lg:mt-7 cursor-pointer">
-              <input type="checkbox" id="bq-consent" class="mt-0.5 w-4 h-4 shrink-0 accent-teal-600">
-              <span class="text-[13px] leading-relaxed text-ink-600">I agree to the ${inline('Terms of Use', COPY.inquiry.terms)} and ${inline('Privacy Policy', COPY.inquiry.policy)}. <i class="not-italic text-orange-700">*</i></span>
-            </label>
-
-            <div class="mt-6 lg:mt-7">
-              <button type="submit" class="btn-press group flex items-center justify-center sm:justify-start gap-2.5 w-full sm:w-auto rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
-                ${COPY.inquiry.cta}
-                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">${arrow}</span>
-              </button>
-            </div>
-          </form>
-
-          <div class="mt-6 pt-6 border-t border-ink-100" hidden id="bq-success" role="status">
-            <p class="text-[15.5px] font-bold tracking-tight">${COPY.inquiry.success}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${inquiry.section({
+  id: 'business-inquiry',
+  bg: 'white',
+  head: { eyebrow: COPY.inquiry.eyebrow, title: COPY.inquiry.h2, intro: COPY.inquiry.support },
+  ns: 'bq',
+  focusFirst: 500,
+  fields: [
+    ...COPY.inquiry.fields.map(([label, , required, helper, kind, wide]) => ({ label, type: kind === 'email' ? 'email' : 'text', required, native: required, help: helper, wide })),
+    { choice: { legend: COPY.inquiry.needsLabel, name: 'needs', options: COPY.inquiry.needs } },
+    { label: COPY.inquiry.phone, type: 'tel', id: 'bq-phone' },
+    { label: COPY.inquiry.message, type: 'textarea', id: 'bq-message', required: true, native: true, wide: true },
+  ],
+  consent: { id: 'bq-consent', terms: COPY.inquiry.terms, policy: COPY.inquiry.policy },
+  submit: COPY.inquiry.cta,
+  success: { id: 'bq-success', title: COPY.inquiry.success, tag: 'p' },
+})}`;
 
 /* ═══════════════ 10 · BUSINESS FAQ ═══════════════ */
 const section10 = () => `  <!-- ================= 10 · BUSINESS FAQ =================

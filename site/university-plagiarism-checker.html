@@ -839,95 +839,91 @@
        The approved form, exactly: eight fields, no phone, no Moodle URL, the consent
        control with both legal destinations, the success state. Inert — submission is
        the shared backend's. -->
-  <section id="institutional-inquiry" data-component="inquiry-form" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">INSTITUTIONAL INQUIRY</span>
+<section id="institutional-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white">
+  <div class="inquiry-inner">
+    <div class="inquiry-grid">
+      <div class="inquiry-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">INSTITUTIONAL INQUIRY</span>
         </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Discuss plagiarism checking for your institution</h2>
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[56ch]">Tell us how your institution plans to manage users, checking volume, Storage, and integrations. We’ll use those details to discuss an appropriate setup and pricing path.</p>
-          <p class="mt-6 lg:mt-7 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">Prefer email? Contact us at <a href="mailto:services@plagiarismsearch.com" class="font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">services@plagiarismsearch.com</a>.</p>
-        </div>
-
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8">
-          <form onsubmit="return false" novalidate>
-            <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
-              <div class="min-w-0">
-                <label class="cf-label" for="uq-0">Name <i>*</i></label>
-                <input class="cf-field" id="uq-0" type="text" placeholder="Jordan Reeves">
-              </div>
-              <div class="min-w-0">
-                <label class="cf-label" for="uq-1">Work email <i>*</i></label>
-                <input class="cf-field" id="uq-1" type="email" placeholder="name@university.edu">
-              </div>
-              <div class="sm:col-span-2">
-                <label class="cf-label" for="uq-2">Institution <i>*</i></label>
-                <input class="cf-field" id="uq-2" type="text" placeholder="University or college name">
-              </div>
-              <div class="min-w-0">
-                <label class="cf-label" for="uq-3">Your role</label>
-                <select class="cf-field" id="uq-3">
-                  <option value="">Select an option</option>
-                  <option>Academic or faculty</option>
-                  <option>Administration</option>
-                  <option>Academic integrity</option>
-                  <option>IT or LMS</option>
-                  <option>Procurement</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div class="min-w-0">
-                <label class="cf-label" for="uq-4">How do you plan to use PlagiarismSearch?</label>
-                <select class="cf-field" id="uq-4">
-                  <option value="">Select an option</option>
-                  <option>Organization workspace</option>
-                  <option>Moodle</option>
-                  <option>Canvas</option>
-                  <option>API</option>
-                  <option>Not sure yet</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div class="min-w-0">
-                <label class="cf-label" for="uq-5">Approximate institution size</label>
-                <input class="cf-field" id="uq-5" type="text" placeholder="e.g. 5,000 students or users">
-                <p class="mt-2 text-[12px] text-ink-500">An estimate is enough.</p>
-              </div>
-              <div class="min-w-0">
-                <label class="cf-label" for="uq-6">Approximate monthly checking volume</label>
-                <input class="cf-field" id="uq-6" type="text" placeholder="e.g. 2,000 documents or 1,000,000 words">
-                <p class="mt-2 text-[12px] text-ink-500">Use whichever estimate is easier for your institution.</p>
-              </div>
-              <div class="sm:col-span-2">
-                <label class="cf-label" for="uq-7">Institutional requirements <i>*</i></label>
-                <textarea class="cf-field" id="uq-7" rows="4" placeholder="Tell us about your plagiarism-checking workflow, source or Storage requirements, integration needs, or any questions we should consider."></textarea>
-              </div>
+        <h2 class="section-title">Discuss plagiarism checking for your institution</h2>
+        <p class="section-intro">Tell us how your institution plans to manage users, checking volume, Storage, and integrations. We’ll use those details to discuss an appropriate setup and pricing path.</p>
+        <p class="inquiry-alt">Prefer email? Contact us at <a href="mailto:services@plagiarismsearch.com" class="inquiry-alt-link">services@plagiarismsearch.com</a>.</p>
+      </div>
+      <div class="inquiry-card rv">
+        <form data-inquiry-form onsubmit="return false" novalidate>
+          <div class="inquiry-fields">
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-0">Name <i>*</i></label>
+              <input class="cf-field" id="uq-0" type="text" placeholder="Jordan Reeves">
             </div>
-
-            <label class="flex items-start gap-3 mt-6 lg:mt-7 cursor-pointer">
-              <input type="checkbox" id="uq-consent" class="mt-0.5 w-4 h-4 shrink-0 accent-teal-600">
-              <span class="text-[13px] leading-relaxed text-ink-600">I agree to the <a href="terms-of-use.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Terms of Use</a> and <a href="policy.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Privacy Policy</a>. <i class="not-italic text-orange-700">*</i></span>
-            </label>
-
-            <div class="mt-6 lg:mt-7">
-              <button type="submit" class="btn-press group flex items-center justify-center sm:justify-start gap-2.5 w-full sm:w-auto rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
-                Request institutional pricing
-                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-              </button>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-1">Work email <i>*</i></label>
+              <input class="cf-field" id="uq-1" type="email" placeholder="name@university.edu">
             </div>
-          </form>
-
-          <div class="mt-6 pt-6 border-t border-ink-100" hidden id="uq-success" role="status">
-            <h3 class="text-[15.5px] font-bold tracking-tight mb-1.5">Your institutional request has been sent</h3>
-            <p class="text-[13px] leading-relaxed text-ink-600">Thank you. We’ve received the information about your institution and plagiarism-checking requirements.</p>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="uq-2">Institution <i>*</i></label>
+              <input class="cf-field" id="uq-2" type="text" placeholder="University or college name">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-3">Your role</label>
+              <select class="cf-field" id="uq-3">
+                <option value="">Select an option</option>
+                <option>Academic or faculty</option>
+                <option>Administration</option>
+                <option>Academic integrity</option>
+                <option>IT or LMS</option>
+                <option>Procurement</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-4">How do you plan to use PlagiarismSearch?</label>
+              <select class="cf-field" id="uq-4">
+                <option value="">Select an option</option>
+                <option>Organization workspace</option>
+                <option>Moodle</option>
+                <option>Canvas</option>
+                <option>API</option>
+                <option>Not sure yet</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-5">Approximate institution size</label>
+              <input class="cf-field" id="uq-5" type="text" placeholder="e.g. 5,000 students or users">
+              <p class="inquiry-help">An estimate is enough.</p>
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="uq-6">Approximate monthly checking volume</label>
+              <input class="cf-field" id="uq-6" type="text" placeholder="e.g. 2,000 documents or 1,000,000 words">
+              <p class="inquiry-help">Use whichever estimate is easier for your institution.</p>
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="uq-7">Institutional requirements <i>*</i></label>
+              <textarea class="cf-field" id="uq-7" rows="4" placeholder="Tell us about your plagiarism-checking workflow, source or Storage requirements, integration needs, or any questions we should consider."></textarea>
+            </div>
           </div>
+          <label class="inquiry-consent">
+            <input type="checkbox" id="uq-consent" class="inquiry-consent-box">
+            <span class="inquiry-consent-text">I agree to the <a href="terms-of-use.html" class="inquiry-link">Terms of Use</a> and <a href="policy.html" class="inquiry-link">Privacy Policy</a>. <i class="inquiry-required">*</i></span>
+          </label>
+          <div class="inquiry-submit">
+            <button type="submit" class="inquiry-button btn-press group">
+              Request institutional pricing
+              <span class="inquiry-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </button>
+          </div>
+        </form>
+        <div class="inquiry-success" hidden id="uq-success" role="status">
+          <h3 class="inquiry-success-title">Your institutional request has been sent</h3>
+          <p class="inquiry-success-text">Thank you. We’ve received the information about your institution and plagiarism-checking requirements.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 08 · UNIVERSITY FAQ =================
        Nine questions, full answers in the HTML, the four answer links the brief attaches. -->

@@ -1,0 +1,56 @@
+<section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off">
+  <div class="inquiry-inner">
+    <div class="inquiry-grid">
+      <div class="inquiry-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Get access</span>
+        </div>
+        <h2 class="section-title">Request API access or a custom quote</h2>
+        <p class="section-intro">Share your integration requirements and expected volume. We’ll use the details to discuss the most appropriate API access, trial, or pricing option for your workflow.</p>
+        <p class="inquiry-alt">Prefer email? Contact us at <a href="mailto:services@plagiarismsearch.com" class="inquiry-alt-link">services@plagiarismsearch.com</a>.</p>
+      </div>
+      <div class="inquiry-card rv">
+        <form data-inquiry-form onsubmit="return false" novalidate>
+          <div class="inquiry-fields">
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-0">Name <i>*</i></label>
+              <input class="cf-field" id="aq-0" type="text" placeholder="Jordan Reeves">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-1">Work email <i>*</i></label>
+              <input class="cf-field" id="aq-1" type="email" placeholder="name@company.com">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-2">Organization</label>
+              <input class="cf-field" id="aq-2" type="text" placeholder="Company, university, or platform">
+            </div>
+            <div class="inquiry-field">
+              <label class="cf-label" for="aq-3">Phone <span class="inquiry-optional">Optional</span></label>
+              <input class="cf-field" id="aq-3" type="tel" placeholder="+1 555 000 0000">
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="aq-4">Estimated monthly volume</label>
+              <input class="cf-field" id="aq-4" type="text" placeholder="e.g. 1,000,000 words">
+              <p class="inquiry-help">An approximate figure is enough.</p>
+            </div>
+            <div class="inquiry-field" data-span="full">
+              <label class="cf-label" for="aq-5">What are you integrating? <i>*</i></label>
+              <textarea class="cf-field" id="aq-5" rows="4" placeholder="Describe your product, platform, or workflow and any requirements that matter to the integration."></textarea>
+            </div>
+          </div>
+          <div class="inquiry-submit">
+            <button type="submit" class="inquiry-button btn-press group">
+              Request API access
+              <span class="inquiry-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </button>
+          </div>
+        </form>
+        <div class="inquiry-success" hidden id="aq-success" role="status">
+          <h3 class="inquiry-success-title">Your API request has been sent</h3>
+          <p class="inquiry-success-text">Thank you. We’ve received your integration details.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

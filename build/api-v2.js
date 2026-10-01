@@ -32,6 +32,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'api.html';
 const cta = require('./sections/cta-band');
+const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
 const { dotField } = require('./dots');   /* the closing band — recipe and reasoning live there */
 
 const DOCS = 'https://plagiarismsearch.com/docs/';   /* live production, no page here */
@@ -629,52 +630,22 @@ const section9 = () => `  <!-- ================= 09 · API ACCESS / CUSTOM QUOTE
        inventing a consent claim, which the same clause forbids.
 
        No response-time promise anywhere, including the success state. -->
-  <section id="api-quote" data-component="inquiry-form" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC] overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('teal-400', 'Get access')}
-          ${h2(COPY.s9.h2)}
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] leading-relaxed text-ink-600 max-w-[56ch]">${COPY.s9.intro}</p>
-          <p class="mt-6 lg:mt-7 text-[13px] sm:text-[13.5px] leading-relaxed text-ink-500">
-            Prefer email? Contact us at <a href="${COPY.s9.altHref}" class="font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">services@plagiarismsearch.com</a>.
-          </p>
-        </div>
-
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-8">
-          <form onsubmit="return false" novalidate>
-            <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
-${COPY.s9.fields.map(([label, placeholder, required, note, isArea], i) => {
-  const id = 'aq-' + i;
-  const wide = isArea || i === 4 ? ' sm:col-span-2' : '';
-  return `              <div class="${wide.trim() || 'min-w-0'}${wide}">
-                <label class="cf-label" for="${id}">${label}${required ? ' <i>*</i>' : ''}${note && note === 'Optional' ? ' <span class="font-medium text-ink-500">Optional</span>' : ''}</label>
-                ${isArea
-                  ? `<textarea class="cf-field" id="${id}" rows="4" placeholder="${placeholder}"></textarea>`
-                  : `<input class="cf-field" id="${id}" type="${label === 'Work email' ? 'email' : label === 'Phone' ? 'tel' : 'text'}" placeholder="${placeholder}">`}
-${note && note !== 'Optional' ? `                <p class="mt-2 text-[12px] text-ink-500">${note}</p>` : ''}
-              </div>`;
-}).join('\n')}
-            </div>
-
-            <div class="mt-6 lg:mt-7">
-              <button type="submit" class="btn-press group flex items-center justify-center sm:justify-start gap-2.5 w-full sm:w-auto rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold pl-5 sm:pl-6 pr-2 py-2">
-                ${COPY.s9.cta}
-                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">${arrow}</span>
-              </button>
-            </div>
-          </form>
-
-          <!-- the approved success state, rendered so its copy is checkable and carries
-               no response-time promise; the prototype form never submits -->
-          <div class="mt-6 pt-6 border-t border-ink-100" hidden id="aq-success">
-            <h3 class="text-[15.5px] font-bold tracking-tight mb-1.5">${COPY.s9.successHeading}</h3>
-            <p class="text-[13px] leading-relaxed text-ink-600">${COPY.s9.successCopy}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${inquiry.section({
+  id: 'api-quote',
+  bg: 'cool', layout: 'fluid-wide', accent: 'teal', sticky: false,
+  head: { eyebrow: 'Get access', title: COPY.s9.h2, intro: COPY.s9.intro },
+  alt: { text: 'Prefer email? Contact us at', label: 'services@plagiarismsearch.com', href: COPY.s9.altHref },
+  ns: 'aq',
+  fields: COPY.s9.fields.map(([label, placeholder, required, note, isArea], i) => ({
+    label, placeholder, required,
+    optional: note === 'Optional',
+    help: note && note !== 'Optional' ? note : '',
+    wide: isArea || i === 4,
+    type: isArea ? 'textarea' : label === 'Work email' ? 'email' : label === 'Phone' ? 'tel' : 'text',
+  })),
+  submit: COPY.s9.cta,
+  success: { id: 'aq-success', title: COPY.s9.successHeading, text: COPY.s9.successCopy },
+})}`;
 
 /* ═══════════════ 10 · FAQ ═══════════════ */
 const section10 = () => `  <!-- ================= 10 · PLAGIARISM API FAQ =================
