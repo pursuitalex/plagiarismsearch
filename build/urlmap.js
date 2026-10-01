@@ -28,6 +28,7 @@ const BUILT = [
   { file: 'user-manuals.html',            path: '/user-manuals',                             note: 'Category names and all twenty guide titles carried over unchanged; the arrangement is new. Built by build/manuals.js. Most guides still live on the production site and keep absolute addresses.' },
   { file: 'newsroom.html',                path: '/newsroom',                                 note: 'The news archive. All 68 items carried over from the seven live pages with their dates, wording and destinations intact; the arrangement is new. Built by build/newsroom.js from build/newsroom-data.json, which build/newsroom-fetch.js refreshes.' },
   { file: 'plagiarism-and-ai-check-report.html', path: '/plagiarism-and-ai-check-report', note: 'A User Guide article, rendered through build/article.js — the template lifted from the blog post: one centred 700px column, a contents box, and semantic blocks styled once. Built by build/report-guide-v2.js from build/report-guide-data.json (refreshed by build/report-guide-fetch.js), checked by build/check-report-guide-v2.js.' },
+  { file: 'about-us.html', path: '/about-us', note: 'About us, to the 2026-09-30 brief: a company / trust page — a fact-sheet hero, the story, the six approved milestones as a timeline, nine team profiles of one size (initials and inactive LinkedIn marks until the real photos and addresses arrive), five areas of work, and a closing band to Mission & Values and Contact. English copy is a draft awaiting approval. Built by build/about.js with the page-specific components in build/about/, checked by build/check-about.js.' },
   { file: 'why-us.html',                 path: '/why-us' },
   { file: 'mission.html',                path: '/plagiarismsearch-mission-and-core-values' },
   { file: 'contact-us.html',             path: '/contact-us' },
@@ -53,7 +54,7 @@ const BUILT = [
 
   /* built, kept, but outside the global navigation per DEC-0027 §5 */
   { file: 'paper-analysis.html',         path: '/rate-my-paper',            delisted: true },
-  { file: 'paper-analysis-v2.html', path: null, note: 'Rate my paper (Paper analysis), illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Every word the live page's (build/paper-data.json); the order form rebuilt to be read at a glance — the document, one level × deadline price table, the services, and a summary that shows the sum. Built by build/paper-v2.js.' },
+  { file: 'paper-analysis-v2.html', path: null, note: 'Rate my paper (Paper analysis), illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Every word the live page\'s (build/paper-data.json); the order form rebuilt to be read at a glance — the document, one level × deadline price table, the services, and a summary that shows the sum. Built by build/paper-v2.js.' },
   { file: 'spell-check.html',            path: '/spell-checker',            delisted: true },
   { file: 'readability-check.html',      path: '/readability-checker',      delisted: true },
   { file: 'chat-bot.html',               path: '/plagiarism-checker-app',   delisted: true },

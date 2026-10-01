@@ -55,7 +55,7 @@ const GROUPS = [
                      'spell-check.html', 'readability-check.html', 'chat-bot.html'].includes(p.file)],
   ['Integrations', p => /integration|google-add-on|canvas|moodle/.test(p.file)],
   ['Audience', p => /students|teachers|university|organization|educators/.test(p.file)],
-  ['Plans, company and content', p => ['prices.html', 'vip.html', 'why-us.html', 'mission.html',
+  ['Plans, company and content', p => ['prices.html', 'vip.html', 'about-us.html', 'why-us.html', 'mission.html',
                      'contact-us.html', 'help-center.html', 'blog.html', 'testimonials.html'].includes(p.file)
                      || /^blog-/.test(p.file)],
   ['Account and legal', p => /account|policy|terms|privacy|refund|cookie/.test(p.file)],

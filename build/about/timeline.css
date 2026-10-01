@@ -1,0 +1,63 @@
+/* ═══ Timeline — the About page's milestones ════════════════════════════════════════
+   PAGE-SPECIFIC (build/about/), not a Section Library member; a library candidate after
+   the pilot review.
+   Template: build/about/timeline.js · contract: build/about/timeline.contract.js
+   Written the way build/sections/section-head.css explains (@apply, outside @layer,
+   (0,1,0) selectors, variants as data-* in :where()) and compiled in the same Tailwind
+   run (build/assets/css/tailwind.src.css).
+
+   section.timeline            data-bg="white|tint"
+     .timeline-inner           the 1280px container
+       .timeline-head          the Section Header (eyebrow, h2, intro), capped at 760px
+       ol.timeline-list        the milestones, in order
+         li.timeline-item      its ::before is the dot on the rail
+           p.timeline-year
+           h3.timeline-title
+           p.timeline-text
+
+   The rail is each item's own border, so it is as long as the list and needs no element
+   of its own: down the left on a phone, along the top from 640. Items sit flush (no
+   column gap) so the top rail runs unbroken; their right padding is the gap. Three
+   layouts and no sideways scroll in any of them:
+     phone    < 640     one column, the rail on the left
+     tablet   640–1279  three across, two rows for six milestones
+     desktop  ≥ 1280    one row, drawn for about six milestones */
+
+.timeline {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-white;
+}
+.timeline:where([data-bg="tint"]) { @apply bg-ink-50; }
+
+.timeline-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+.timeline-head {
+  @apply max-w-[760px] mb-10 sm:mb-12 lg:mb-16;
+}
+
+.timeline-list {
+  @apply grid sm:grid-cols-3 sm:gap-y-12 xl:grid-cols-6;
+}
+
+/* the rail (a border) and the dot (::before), ringed in the section's own colour so the
+   rail breaks around it */
+.timeline-item {
+  @apply relative pl-7 pb-8 border-l border-ink-300
+         sm:pl-0 sm:pb-0 sm:pr-6 lg:pr-8 sm:pt-7 sm:border-l-0 sm:border-t
+         before:content-[''] before:absolute before:top-1.5 before:left-[-5.5px] before:w-2.5 before:h-2.5
+         before:rounded-full before:bg-teal-500 before:ring-4 before:ring-white
+         sm:before:top-[-5.5px] sm:before:left-0;
+}
+:where(.timeline[data-bg="tint"]) .timeline-item { @apply before:ring-ink-50; }
+/* on a phone the rail stops at the last dot instead of running past the last text */
+.timeline-item:where(:last-child) { @apply pb-0 border-l-transparent; }
+
+.timeline-year {
+  @apply text-[22px] sm:text-[24px] lg:text-[28px] font-extrabold tracking-tightest leading-none tabular-nums text-ink-900;
+}
+.timeline-title {
+  @apply mt-3 lg:mt-4 text-[15px] sm:text-[16px] font-bold tracking-tight text-ink-900;
+}
+.timeline-text {
+  @apply mt-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600;
+}

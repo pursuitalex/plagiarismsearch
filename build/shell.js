@@ -64,6 +64,8 @@ const PAGES = {
   'help-center.html':            { active: 'resources', static: true },
   'blog.html':                   { active: 'resources', static: true },
   'blog-best-checker-2026.html': { active: 'resources', static: true },
+  /* About us, to the 2026-09-30 brief (build/about.js) — first in the Company group */
+  'about-us.html':               { active: 'company', static: true },
   'why-us.html':                 { active: 'company', static: true },
   'mission.html':                { active: 'company', static: true },
   'contact-us.html':             { active: 'company', static: true },

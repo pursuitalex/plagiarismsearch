@@ -22,6 +22,7 @@ driven by this table.
 | `user-manuals.html` | `/user-manuals` | built | Category names and all twenty guide titles carried over unchanged; the arrangement is new. Built by build/manuals.js. Most guides still live on the production site and keep absolute addresses. |
 | `newsroom.html` | `/newsroom` | built | The news archive. All 68 items carried over from the seven live pages with their dates, wording and destinations intact; the arrangement is new. Built by build/newsroom.js from build/newsroom-data.json, which build/newsroom-fetch.js refreshes. |
 | `plagiarism-and-ai-check-report.html` | `/plagiarism-and-ai-check-report` | built | A User Guide article, rendered through build/article.js — the template lifted from the blog post: one centred 700px column, a contents box, and semantic blocks styled once. Built by build/report-guide-v2.js from build/report-guide-data.json (refreshed by build/report-guide-fetch.js), checked by build/check-report-guide-v2.js. |
+| `about-us.html` | `/about-us` | built | About us, to the 2026-09-30 brief: a company / trust page — a fact-sheet hero, the story, the six approved milestones as a timeline, nine team profiles of one size (initials and inactive LinkedIn marks until the real photos and addresses arrive), five areas of work, and a closing band to Mission & Values and Contact. English copy is a draft awaiting approval. Built by build/about.js with the page-specific components in build/about/, checked by build/check-about.js. |
 | `why-us.html` | `/why-us` | built |  |
 | `mission.html` | `/plagiarismsearch-mission-and-core-values` | built |  |
 | `contact-us.html` | `/contact-us` | built |  |
@@ -45,6 +46,7 @@ driven by this table.
 | `plagiarism-checker-for-organization.html` | `/plagiarism-checker-for-organization` | built | Business & Teams to the 2026-09-15 brief: no checker; the managed organization in the hero, Organization Management as a bento led by the personal-vs-organization separation, Storage as two tracks, workspace-vs-API as one split card, the business inquiry as the conversion. Replaced the stub. Built by build/business.js, checked by build/check-business.js. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
 | `paper-analysis.html` | `/rate-my-paper` | built · out of global nav |  |
+| `paper-analysis-v2.html` | — | no approved path | Rate my paper (Paper analysis), illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Every word the live page's (build/paper-data.json); the order form rebuilt to be read at a glance — the document, one level × deadline price table, the services, and a summary that shows the sum. Built by build/paper-v2.js. |
 | `spell-check.html` | `/spell-checker` | built · out of global nav |  |
 | `readability-check.html` | `/readability-checker` | built · out of global nav |  |
 | `chat-bot.html` | `/plagiarism-checker-app` | built · out of global nav |  |
@@ -60,8 +62,8 @@ driven by this table.
 
 ## Counts
 
-- 28 × built
-- 9 × no approved path
+- 29 × built
+- 10 × no approved path
 - 5 × stub
 - 4 × built · out of global nav
 
