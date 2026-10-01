@@ -16,8 +16,7 @@
 :where(.js-motion) .pen-underline { opacity:0; }
 :where(html:not(.js-motion)) .pen-word { color:#DC5A45; }
 
-/* ring mark — the loop round one word of the closing band's heading. Its box was an
-   inline style on every page; it is the same box everywhere, so it is a class. */
-.ring-mark { left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg); }
+/* ring mark — the loop round one word of the closing band's heading. Its box (.ring-mark)
+   belongs to the band: build/sections/cta-band.css. */
 :where(.js-motion) .ring-path { opacity:0; }
 :where(html:not(.js-motion)) .ring-word { color:#DC5A45; }

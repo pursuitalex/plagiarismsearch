@@ -538,10 +538,19 @@ a phone — a set that looks uniform on the machine you designed it on and ragge
   *(The loop reads as a loose scribble across the word, not a tight enclosure — measured,
   the path is ~0.6–0.75 of the span width. That is the intended look, not a defect.)*
 
-#### The closing CTA band — `build/cta.js`
+#### The closing CTA band — `build/sections/cta-band.js`
 
-The section before the footer is a shared component. Its recipe has four parts and all
-four carry weight:
+The section before the footer is a Section Library component (2026-10-01): one template,
+semantic classes (`build/sections/cta-band.css`), a content contract and its validator
+(`node build/check-library.js`), copy-paste snippets in `site/section-library.html`. An
+editor changes text, links and the listed variants — `data-width="wide"` (the Ukrainian
+page's 920px column), `data-measure` on the lead, `data-layout="stack|pair"` on the actions
+(default: a row), `data-tone="quiet"` on the note — and nothing else. The older
+hand-written pages (Help Center, Mission, Contact, Chat bot, Plagiarism check, the three
+free tools) keep their lighter band as `data-variant="plain"`: soft glow, section-scale
+heading, no ring mark, one coloured button.
+
+Its recipe has four parts and all four carry weight:
 
 1. **Dot field.** An SVG `<pattern>`, 22px cell, a 2×2 rounded square (`rx=.65`) in
    `#DAE7ED`. It is what stops the band reading as an empty coloured rectangle — the

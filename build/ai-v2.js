@@ -34,7 +34,7 @@ const faq = require('./sections/faq');   /* the FAQ: one library template */
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'ai-detector.html';
-const cta = require('./cta');
+const cta = require('./sections/cta-band');
 const { dotField } = require('./dots');
 const banner = require('./banner');   /* the closing band — recipe and reasoning live there */
 
@@ -934,30 +934,18 @@ const section10 = () => `  <!-- ================= 10 · FINAL CTA ==============
        So both actions are anchors back up the page, not a new input.
 
        The band is the shared closing CTA — dot field, two masked glows, hero-scale
-       heading, one ring mark. Recipe and reasoning in build/cta.js.
+       heading, one ring mark. Recipe and reasoning in build/sections/cta-band.js.
 
        The ring goes round "AI-writing" because that is what this page is for, and it is
        ten characters — the length the loop was drawn for. No eyebrow chip: the homepage
        band has one ("Free check") but that is approved copy there, and inventing a label
        here would be new visible text the baseline does not carry. -->
-  <section id="ai-final-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.backgroundStatic()}
-
-    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s10.h2, 'AI-writing', { static: true })}</h2>
-      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[56ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.s10.support}</p>
-      <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
-        <a href="#ai-checker" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
-          ${COPY.s10.cta}
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a>
-        <a href="#ai-pricing" class="text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${COPY.s10.secondary}</a>
-      </div>
-    </div>
-  </section>`;
+${cta.section({
+  id: 'ai-final-cta',
+  title: COPY.s10.h2, ring: 'AI-writing',
+  lead: COPY.s10.support, measure: '56',
+  actions: { button: { label: COPY.s10.cta, href: '#ai-checker', icon: 'spark' }, link: { label: COPY.s10.secondary, href: '#ai-pricing' } },
+})}`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Assemble — the shared page shell (build/page.js). The components' CSS and JS live in

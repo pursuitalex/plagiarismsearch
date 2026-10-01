@@ -18,7 +18,7 @@
      03  timeline    build/about/timeline.js   the six approved milestones
      04  team        build/about/team.js       nine profiles, all the same size
      05  bridge      bespoke     five areas of work — not departments, no headcount
-     06  closing     build/cta.js, the shared band — Mission & Values, then Contact
+     06  closing     build/sections/cta-band.js, the shared band — Mission & Values, then Contact
 
    The team grid and the timeline are PAGE-SPECIFIC components (build/about/): written in
    the Section Library's manner — semantic classes, a content contract, a validator — but
@@ -34,7 +34,7 @@ const fs = require('fs');
 const path = require('path');
 const page = require('./page');
 const { dotField } = require('./dots');
-const cta = require('./cta');
+const cta = require('./sections/cta-band');
 const sh = require('./sections/section-head');
 const team = require('./about/team');
 const timeline = require('./about/timeline');
@@ -265,22 +265,16 @@ ${B.areas.map(([t, d], i) => `          <li class="grid grid-cols-[2rem_1fr] sm:
 /* ═══════════════ 06 · MISSION / CONTACT — THE CLOSING BAND ═══════════════ */
 const CL = COPY.close;
 const section6 = () => `  <!-- ================= 06 · MISSION & CONTACT =================
-       The shared closing band (build/cta.js), ending the page on the company rather than
+       The shared closing band (build/sections/cta-band.js), ending the page on the company rather than
        on a sale (brief §12): Mission & Values first, Contact second, Business & Teams as
        a quiet line. No checker, no pricing. -->
-  <section id="about-next" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.backgroundStatic()}
-
-    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(esc(CL.h2), CL.ring, { static: true })}</h2>
-      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-11">${esc(CL.support)}</p>
-      <div class="rv flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          ${btnDark(CL.primary, CL.primaryHref)}
-          ${btnLight(CL.secondary, CL.secondaryHref)}
-      </div>
-      <p class="rv mt-6 sm:mt-7 lg:mt-8 text-[13px] sm:text-[13.5px] text-ink-500">${esc(CL.note)} <a href="${CL.noteHref}" class="font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${esc(CL.noteLink)}</a></p>
-    </div>
-  </section>`;
+${cta.section({
+  id: 'about-next',
+  title: esc(CL.h2), ring: CL.ring,
+  lead: esc(CL.support), measure: '560px',
+  actions: { layout: 'pair', button: { label: esc(CL.primary), href: CL.primaryHref }, secondary: { label: esc(CL.secondary), href: CL.secondaryHref } },
+  note: { text: esc(CL.note), link: { label: esc(CL.noteLink), href: CL.noteHref } },
+})}`;
 
 module.exports = { COPY, OUT };
 if (require.main !== module) return;

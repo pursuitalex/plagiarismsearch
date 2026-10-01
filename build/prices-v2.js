@@ -37,7 +37,7 @@ const faq = require('./sections/faq');   /* the FAQ: one library template */
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'prices.html';
-const cta = require('./cta');
+const cta = require('./sections/cta-band');
 const { dotField } = require('./dots');
 const banner = require('./banner');
 const { PLANS, LABEL } = require('./pricing-data');
@@ -492,23 +492,12 @@ ${faq.section({
 const section7 = () => `  <!-- ================= 07 · FINAL FREE-CHECK CTA =================
        "Do not render a second checker inside this section." One action, to the primary
        Plagiarism Checker owner at /. Plagiarism only: no AI, and no "full engine". -->
-  <section id="free-check" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.backgroundStatic()}
-
-    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.s7.h2, 'before you choose', { static: true })}</h2>
-      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.s7.support}</p>
-      <div class="rv flex justify-center">
-        <a href="${COPY.s7.ctaHref}" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
-          ${COPY.s7.cta}
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>`;
+${cta.section({
+  id: 'free-check',
+  title: COPY.s7.h2, ring: 'before you choose',
+  lead: COPY.s7.support,
+  actions: { button: { label: COPY.s7.cta, href: COPY.s7.ctaHref, icon: 'spark' } },
+})}`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Assemble — the shared page shell (build/page.js). The components' CSS and JS live in

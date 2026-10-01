@@ -2,7 +2,7 @@
 
    design-system.html is hand-written, and that is fine for swatches and type ramps. It
    is not fine for the dark banners: each of them is rendered by code that lives in
-   build/ (banner.js, cta.js) and a hand-copied example would be a fourth version of the
+   build/ (banner.js, sections/cta-band.js) and a hand-copied example would be a fourth version of the
    block, drifting like the other three did. So this script renders the examples with
    the same modules the pages use and splices the section in between two markers. Run
    it again and it replaces itself.
@@ -13,12 +13,12 @@
 
      1. the compact dark banner   build/banner.js   between sections, one link onward
      2. the dark accent card      card recipe       a tall dark card with a double bezel
-     3. the closing CTA band      build/cta.js      last thing before the footer
+     3. the closing CTA band      build/sections/cta-band.js   last thing before the footer
 */
 const fs = require('fs');
 const path = require('path');
 const banner = require('./banner');
-const cta = require('./cta');
+const cta = require('./sections/cta-band');
 
 const FILE = path.join(__dirname, '..', 'site', 'design-system.html');
 let html = fs.readFileSync(FILE, 'utf8');
@@ -66,18 +66,16 @@ const accent = `        <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg
           </div>
         </div>`;
 
-/* ── 3 · the closing CTA band, rendered by build/cta.js ────────────────────── */
-const band = `        <div class="cta-band relative overflow-hidden rounded-3xl sm:rounded-4xl ring-1 ring-black/5 py-16 sm:py-20 lg:py-24">
-${cta.backgroundStatic()}
-          <div class="relative max-w-[880px] mx-auto px-6 text-center">
-            <h2 class="${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark('Try plagiarism checking before you choose a plan', 'before you choose', { static: true })}</h2>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Check up to 150 words without creating an account. See how the plagiarism checker works first, then return when you are ready to choose a plan.</p>
-            <a href="prices.html#free-check" class="btn-press group inline-flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
-              Try a free plagiarism check
-              <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </span>
-            </a>
+/* ── 3 · the closing CTA band, drawn with the library template's own parts ─────
+   (build/sections/cta-band.js). A showcase rendition: the band's classes, with the spec
+   sheet's own frame, rhythm and gutter as utilities on top (a spec page may; a library
+   section in a page may not). The button stands alone here, so it is inline. */
+const band = `        <div class="cta-band rounded-3xl sm:rounded-4xl ring-1 ring-black/5 py-16 sm:py-20 lg:py-24">
+${cta.background().split('\n').map(l => '          ' + l).join('\n')}
+          <div class="cta-band-inner px-6">
+            <h2 class="cta-title">${cta.ring('Try plagiarism checking before you choose a plan', 'before you choose')}</h2>
+            <p class="cta-lead">Check up to 150 words without creating an account. See how the plagiarism checker works first, then return when you are ready to choose a plan.</p>
+${cta.button({ label: 'Try a free plagiarism check', href: 'prices.html#free-check' }, ' inline-flex').split('\n').map(l => '            ' + l).join('\n')}
           </div>
         </div>`;
 
@@ -110,7 +108,7 @@ ${spec([
 ${accent}
 
         <h3 class="text-[22px] font-extrabold tracking-tightest mt-12 sm:mt-14 mb-2">3 · Closing CTA band</h3>
-        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-4">The last thing before the footer, on every page that has one. Light, not dark: a dot field under two masked glows, one ring mark in the heading, and the one place a non-hero heading takes the hero scale. Four parts and all four carry weight. <code class="text-[12.5px]">build/cta.js</code></p>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-4">The last thing before the footer, on every page that has one. Light, not dark: a dot field under two masked glows, one ring mark in the heading, and the one place a non-hero heading takes the hero scale. Four parts and all four carry weight. <code class="text-[12.5px]">build/sections/cta-band.js</code></p>
 ${spec([
   ['ground', '#F2FCFC · SVG dot pattern 22px / 2px · warm glow upper-left, cool glow lower-right'],
   ['h2', 'text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] · one ring mark'],

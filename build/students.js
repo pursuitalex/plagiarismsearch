@@ -30,7 +30,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'plagiarism-checker-for-students.html';
-const cta = require('./cta');
+const cta = require('./sections/cta-band');
 const checker = require('./checker');
 const { dotField } = require('./dots');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
@@ -578,27 +578,13 @@ ${faq.section({
 
 /* ═══════════════ 10 · FINAL CTA ═══════════════ */
 const section10 = () => `  <!-- ================= 10 · FINAL CTA =================
-       The closing band (build/cta.js). One action, back to the one real checker. -->
-  <section id="student-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.backgroundStatic()}
-
-    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(COPY.close.h2, 'before you', { static: true })}</h2>
-      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${COPY.close.support}</p>
-      <div class="rv flex flex-col items-center gap-4">
-        <a href="${ANCHOR}" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
-          ${COPY.close.primary}
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a>
-        <p class="flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700">
-          <svg class="shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.sparkles}</svg>
-          ${COPY.close.micro}
-        </p>
-      </div>
-    </div>
-  </section>`;
+       The closing band (build/sections/cta-band.js). One action, back to the one real checker. -->
+${cta.section({
+  id: 'student-cta',
+  title: COPY.close.h2, ring: 'before you',
+  lead: COPY.close.support,
+  actions: { layout: 'stack', button: { label: COPY.close.primary, href: ANCHOR }, hint: COPY.close.micro },
+})}`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Assemble — the shared page shell (build/page.js)

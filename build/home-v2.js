@@ -227,8 +227,8 @@ const pen = w => `<span class="pen-word relative inline-block">${w}<svg class="a
 const hw = w => `<span class="hw"><span class="hw-in">${w}</span></span>`;
 
 /* v1 closes by ringing a word rather than underlining it. Same idea as pen(), drawn
-   as a loop, and reserved for the last thing on the page. */
-const ring = w => `<span class="ring-word relative inline-block">${w}<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+   as a loop, and reserved for the last thing on the page: the closing band's template
+   (build/sections/cta-band.js) draws it. */
 
 const grad = w => `<span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-teal-600">${w}</span>`;
 
@@ -331,7 +331,7 @@ const S = COPY;
    neither section depends on the other still being on the page. */
 /* the dot field is shared now — build/dots.js — so every hero on the tint has it */
 const { dotField } = require('./dots');
-const cta = require('./cta');
+const cta = require('./sections/cta-band');
 const pricing = require('./pricing');
 const page = require('./page');
 const faq = require('./sections/faq');   /* the FAQ: one library template */
@@ -831,27 +831,14 @@ const section13 = () => `
        brief supplies neither, and the ratings are dynamic fields besides.
 
        Sends you back to the real checker in section 1; no second form is rendered. -->
-  <section id="cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.backgroundStatic()}
-    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <div class="rv inline-flex items-center gap-2 rounded-full bg-white/70 ring-1 ring-black/5 backdrop-blur px-3.5 py-1.5 mb-6 sm:mb-7 lg:mb-8">
-        <span class="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-dot"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Free check</span>
-      </div>
-      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Check your text for ${ring('plagiarism')}</h2>
-      <p class="rv ${LEAD} text-ink-600 max-w-[52ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${S.s13.support}</p>
-      <div class="rv flex justify-center mb-6 sm:mb-7">
-        <a href="#checker" class="btn-press group flex items-center gap-3 rounded-full h-13 sm:h-15 bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.sparkles}</svg>
-          ${S.s13.cta}
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a>
-      </div>
-      <p class="rv text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700">${S.s13.free}</p>
-    </div>
-  </section>`;
+${cta.section({
+  id: 'cta',
+  eyebrow: 'Free check',
+  title: 'Check your text for plagiarism', ring: 'plagiarism',
+  lead: S.s13.support, measure: '52',
+  actions: { button: { label: S.s13.cta, href: '#checker', icon: 'spark' } },
+  note: S.s13.free,
+})}`;
 
 /* ── behaviour ───────────────────────────────────────────────────────────── */
 /* ─────────────────────────────────────────────────────────────────────────────

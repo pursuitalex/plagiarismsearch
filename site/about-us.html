@@ -402,29 +402,28 @@
   </section>
 
   <!-- ================= 06 · MISSION & CONTACT =================
-       The shared closing band (build/cta.js), ending the page on the company rather than
+       The shared closing band (build/sections/cta-band.js), ending the page on the company rather than
        on a sale (brief §12): Mission & Values first, Contact second, Business & Teams as
        a quiet line. No checker, no pricing. -->
-  <section id="about-next" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-      <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="dot-field absolute inset-0" aria-hidden="true"></div>
-        <div class="orb cta-glow-warm"></div>
-        <div class="orb cta-glow-cool"></div>
-      </div>
-
-    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">The <span class="ring-word relative inline-block">principles<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> behind the product</h2>
-      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-11">Our mission and core values describe why we work the way we do. And if you have a question for the team, we are glad to hear from you.</p>
-      <div class="rv flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <a href="mission.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full h-12 sm:h-14 bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[14px] sm:text-[15px] font-semibold pl-5 sm:pl-7 pr-2.5">
-            Our Mission &amp; Values
-            <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-          </a>
-          <a href="contact-us.html" class="btn-press inline-flex items-center rounded-full h-12 sm:h-14 bg-white ring-1 ring-ink-200 hover:ring-ink-300 transition-shadow duration-300 text-ink-900 text-[14px] sm:text-[15px] font-semibold px-5 sm:px-6 lg:px-7">Contact our team</a>
-      </div>
-      <p class="rv mt-6 sm:mt-7 lg:mt-8 text-[13px] sm:text-[13.5px] text-ink-500">Working with an organization? <a href="plagiarism-checker-for-organization.html" class="font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">See Business &amp; Teams</a></p>
+<section id="about-next" data-component="cta-band" class="cta-band">
+  <div class="cta-band-bg">
+    <div class="dot-field cta-band-dots" aria-hidden="true"></div>
+    <div class="orb cta-glow-warm"></div>
+    <div class="orb cta-glow-cool"></div>
+  </div>
+  <div class="cta-band-inner">
+    <h2 class="cta-title rv">The <span class="ring-word">principles<svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> behind the product</h2>
+    <p class="cta-lead rv" data-measure="560px">Our mission and core values describe why we work the way we do. And if you have a question for the team, we are glad to hear from you.</p>
+    <div class="cta-actions rv" data-layout="pair">
+      <a href="mission.html" class="cta-button btn-press group">
+        Our Mission &amp; Values
+        <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+      <a href="contact-us.html" class="cta-button-secondary btn-press">Contact our team</a>
     </div>
-  </section>
+    <p class="cta-note rv" data-tone="quiet">Working with an organization? <a href="plagiarism-checker-for-organization.html" class="cta-note-link">See Business &amp; Teams</a></p>
+  </div>
+</section>
 </main>
 
 <footer data-surface="dark" class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">

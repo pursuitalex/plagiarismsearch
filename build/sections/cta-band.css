@@ -1,0 +1,226 @@
+/* ═══ CTA band — library component ══════════════════════════════════════════════════
+   Template: build/sections/cta-band.js · contract: build/sections/cta-band.contract.js
+   Behaviour: build/assets/js/20-motion.js (.rv reveals, the .ring-word mark)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The closing band — the last section before the footer. Two approved looks:
+
+   section.cta-band                         the signature band (every brief-built page)
+     .cta-band-bg                           the ground: dot field under two masked glows
+       .dot-field.cta-band-dots  .orb.cta-glow-warm  .orb.cta-glow-cool
+     .cta-band-inner                        the centred column      data-width="wide" on the section: 920px
+       (.section-eyebrow.rv)                the pill, with a pulsing dot
+       (p.cta-kicker.rv)                    a line ABOVE the title (instead of a lead under it)
+       h2.cta-title.rv                      hero scale, one .ring-word in it
+       (p.cta-lead.rv)                      data-measure="52|56|58|62|560px"
+       .cta-actions.rv                      data-layout="stack|pair" (none: a row)
+         a.cta-button > (svg) text span.cta-button-orb.icon-orb
+         (a.cta-link)                       a quiet link beside the button          (row)
+         (p.cta-hint > svg.cta-hint-icon)   a line with the spark under the button  (stack)
+         (a.cta-button-secondary)           the second, light button               (pair)
+       (p.cta-note.rv)                      a line under the actions   data-tone="quiet": small, grey, may hold a.cta-note-link
+
+   section.cta-band[data-variant="plain"]   the older pages' band (Help Center, Mission, the free tools …)
+     .orb.cta-orb-warm  .orb.cta-orb-cool   two soft glows straight in the section, no dot field
+     .cta-band-inner
+       h2.cta-title.rv                      section scale, no ring mark
+       p.cta-lead.rv                        data-measure="46|52|54"
+       a.cta-button.rv                      data-tone="orange" (none: teal); 48 / 56px
+
+   THE SIGNATURE BAND HAS FOUR PARTS, and all four are load-bearing (DESIGN.md § The
+   closing CTA band):
+   1. DOT FIELD, 22px cell, under the glows — dots over glow read as dirt on glass.
+   2. TWO GLOWS, warm upper-left and cool lower-right: masked gradients on a solid fill,
+      never blur(). Every knob is a custom property on .cta-band, and the two media
+      queries are not optional: the warm glow is 1138px wide, three viewports of coral on
+      a 390px phone.
+   3. ONE RING MARK in the heading: the closing act loops a word instead of underlining it.
+      The loop is drawn for a fragment of about ten characters.
+   4. The heading at HERO scale — the one place a non-hero heading is allowed to. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.cta-band {
+  --cta-bg: #F2FCFC;
+  /* warm, upper left */
+  --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
+  --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
+  --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
+  --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
+  /* cool, lower right */
+  --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
+  --cta-o2-w: 954px;          --cta-o2-h: 950px;
+  --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
+  --cta-o2-mid: 65%;          --cta-o2-end: 100%;
+  background-color: var(--cta-bg);
+  @apply relative py-20 sm:py-28 lg:py-36 overflow-hidden;
+}
+/* tablet — about three quarters of the desktop figure */
+@media (max-width:1023px) {
+  .cta-band {
+    --cta-o1-w: 840px;  --cta-o1-h: 770px;
+    --cta-o1-x: -28%;   --cta-o1-y: -400px;
+    --cta-o2-w: 700px;  --cta-o2-h: 700px;
+    --cta-o2-x: 64%;    --cta-o2-y: 300px;
+  }
+}
+/* phone — half the size, softer, hard against the edges so the middle stays readable */
+@media (max-width:639px) {
+  .cta-band {
+    --cta-o1-alpha: .20;
+    --cta-o1-w: 560px;  --cta-o1-h: 520px;
+    --cta-o1-x: -38%;   --cta-o1-y: -250px;
+    --cta-o2-alpha: .12;
+    --cta-o2-w: 470px;  --cta-o2-h: 470px;
+    --cta-o2-x: 52%;    --cta-o2-y: 210px;
+  }
+}
+
+/* ── the ground ──────────────────────────────────────────────────────────────────
+   The glows follow .orb (site.css, linked before this sheet), so their mask wins over
+   the orb default. */
+.cta-band-bg {
+  @apply absolute inset-0 overflow-hidden pointer-events-none;
+}
+.cta-band-dots {
+  @apply absolute inset-0;
+}
+.cta-glow-warm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
+  background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
+  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
+          mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
+.cta-glow-cool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
+  background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
+  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
+          mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
+
+/* ── the column ──────────────────────────────────────────────────────────────── */
+.cta-band-inner {
+  @apply relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center;
+}
+/* the Ukrainian page's wider column (its heading is longer) */
+:where(.cta-band[data-width="wide"]) .cta-band-inner {
+  @apply max-w-[920px];
+}
+
+/* The pill is the Section Header's (section-head.css); on the band's tinted ground it is
+   translucent and stands further from the heading. Derived from the host, never set per
+   pill. Its dot pulses (.pulse-dot, site.css). */
+:where(.cta-band) .section-eyebrow {
+  @apply bg-white/70 backdrop-blur mb-6 sm:mb-7 lg:mb-8;
+}
+
+.cta-title {
+  @apply text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7;
+}
+/* the ring mark: the word it loops, and the loop's box (the same box on every page) */
+.ring-word {
+  @apply relative inline-block;
+}
+.ring-mark { left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg);
+  @apply absolute pointer-events-none;
+}
+
+.cta-lead {
+  @apply text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11;
+}
+/* a line above the title: the title then carries the gap to the actions */
+.cta-kicker {
+  @apply text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[62ch] mx-auto mb-5 sm:mb-6;
+}
+:where(.cta-kicker) + .cta-title {
+  @apply mb-8 sm:mb-10 lg:mb-11;
+}
+
+/* ── the actions: three approved layouts ────────────────────────────────────────
+   (none)   a row: the button, and beside it a quiet link
+   stack    a column: the button, and under it the line with the spark
+   pair     two buttons of equal rank, at the 48 / 56px size */
+.cta-actions {
+  @apply flex flex-wrap items-center justify-center gap-4 sm:gap-5;
+}
+.cta-actions:where([data-layout="stack"]) {
+  @apply flex-col flex-nowrap justify-normal gap-4 sm:gap-4;
+}
+.cta-actions:where([data-layout="pair"]) {
+  @apply gap-3 sm:gap-4;
+}
+
+.cta-button {
+  @apply flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300;
+}
+.cta-button-orb {
+  @apply w-9 h-9 rounded-full bg-white/10 flex items-center justify-center;
+}
+:where(.cta-actions[data-layout="pair"]) .cta-button {
+  @apply inline-flex gap-2.5 h-12 sm:h-14 text-[14px] sm:text-[15px] pl-5 sm:pl-7 lg:pl-7 py-0;
+}
+.cta-button-secondary {
+  @apply inline-flex items-center rounded-full h-12 sm:h-14 bg-white ring-1 ring-ink-200 hover:ring-ink-300 transition-shadow duration-300 text-ink-900 text-[14px] sm:text-[15px] font-semibold px-5 sm:px-6 lg:px-7;
+}
+
+.cta-link {
+  @apply text-[13.5px] sm:text-[14.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300;
+}
+.cta-hint {
+  @apply flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700;
+}
+.cta-hint-icon {
+  @apply shrink-0;
+}
+
+/* the line under the actions; it carries the gap above itself */
+.cta-note {
+  @apply mt-6 sm:mt-7 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-700;
+}
+.cta-note:where([data-tone="quiet"]) {
+  @apply lg:mt-8 text-[13px] sm:text-[13.5px] font-normal text-ink-500;
+}
+.cta-note-link {
+  @apply font-semibold text-ink-700 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300;
+}
+
+/* ── variant: plain — the older pages' band ─────────────────────────────────────
+   Soft glows instead of the dot field and the masked pair, the heading at section scale
+   without a ring mark, one coloured button at the 48 / 56px size. The warm glow has no
+   fill: those pages wrote it with a class Tailwind 3 does not have (an opacity of 12), so
+   it was never drawn, and the approved look is the cool glow alone. */
+.cta-band:where([data-variant="plain"]) {
+  @apply py-16 sm:py-24 lg:py-28;
+}
+.cta-orb-warm {
+  @apply w-[700px] h-[640px] left-[-180px] -top-64;
+}
+.cta-orb-cool {
+  @apply w-[600px] h-[600px] bg-teal-500/10 right-[-140px] -bottom-72;
+}
+:where(.cta-band[data-variant="plain"]) .cta-band-inner {
+  @apply max-w-[1280px];
+}
+:where(.cta-band[data-variant="plain"]) .cta-title {
+  @apply text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.06] mb-4 sm:mb-4 lg:mb-4;
+}
+:where(.cta-band[data-variant="plain"]) .cta-lead {
+  @apply leading-normal max-w-[46ch] mb-6 sm:mb-7 lg:mb-8;
+}
+:where(.cta-band[data-variant="plain"]) .cta-button {
+  @apply inline-flex h-12 sm:h-14 text-[14px] sm:text-[15px] py-0 bg-teal-600 hover:bg-teal-700;
+}
+.cta-button:where([data-tone="orange"]) {
+  @apply bg-orange-500 hover:bg-orange-600;
+}
+:where(.cta-button[data-tone="orange"]) .cta-button-orb {
+  @apply bg-white/15;
+}
+
+/* ── the lead's measure ─────────────────────────────────────────────────────────
+   The longest line the lead may run to, in characters (560px on About us). Without the
+   attribute: 58 in the signature band, 46 in the plain one. After the variants, so a
+   named measure wins over the variant's default. */
+.cta-lead:where([data-measure="46"]) { @apply max-w-[46ch]; }
+.cta-lead:where([data-measure="52"]) { @apply max-w-[52ch]; }
+.cta-lead:where([data-measure="54"]) { @apply max-w-[54ch]; }
+.cta-lead:where([data-measure="56"]) { @apply max-w-[56ch]; }
+.cta-lead:where([data-measure="58"]) { @apply max-w-[58ch]; }
+.cta-lead:where([data-measure="62"]) { @apply max-w-[62ch]; }
+.cta-lead:where([data-measure="560px"]) { @apply max-w-[560px]; }

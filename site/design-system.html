@@ -3416,27 +3416,25 @@
         </div>
 
         <h3 class="text-[22px] font-extrabold tracking-tightest mt-12 sm:mt-14 mb-2">3 · Closing CTA band</h3>
-        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-4">The last thing before the footer, on every page that has one. Light, not dark: a dot field under two masked glows, one ring mark in the heading, and the one place a non-hero heading takes the hero scale. Four parts and all four carry weight. <code class="text-[12.5px]">build/cta.js</code></p>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-4">The last thing before the footer, on every page that has one. Light, not dark: a dot field under two masked glows, one ring mark in the heading, and the one place a non-hero heading takes the hero scale. Four parts and all four carry weight. <code class="text-[12.5px]">build/sections/cta-band.js</code></p>
         <dl class="grid sm:grid-cols-[9rem_1fr] gap-x-6 gap-y-2 text-[13.5px] leading-relaxed mb-5 sm:mb-6">
           <dt class="font-semibold text-ink-700">ground</dt><dd class="text-ink-500 m-0"><code class="text-[12.5px] text-ink-700">#F2FCFC · SVG dot pattern 22px / 2px · warm glow upper-left, cool glow lower-right</code></dd>
           <dt class="font-semibold text-ink-700">h2</dt><dd class="text-ink-500 m-0"><code class="text-[12.5px] text-ink-700">text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] · one ring mark</code></dd>
           <dt class="font-semibold text-ink-700">lead</dt><dd class="text-ink-500 m-0"><code class="text-[12.5px] text-ink-700">14.5 / 15 / 15.5 · text-ink-600 · max-w-[58ch] centred</code></dd>
           <dt class="font-semibold text-ink-700">action</dt><dd class="text-ink-500 m-0"><code class="text-[12.5px] text-ink-700">bg-ink-900, 15 / 16, with the icon orb</code></dd>
         </dl>
-        <div class="cta-band relative overflow-hidden rounded-3xl sm:rounded-4xl ring-1 ring-black/5 py-16 sm:py-20 lg:py-24">
-      <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="dot-field absolute inset-0" aria-hidden="true"></div>
-        <div class="orb cta-glow-warm"></div>
-        <div class="orb cta-glow-cool"></div>
-      </div>
-          <div class="relative max-w-[880px] mx-auto px-6 text-center">
-            <h2 class="text-[clamp(2.4rem,5.5vw,4.35rem)] font-extrabold tracking-tightest leading-[1.02] mb-5 sm:mb-6 lg:mb-7">Try plagiarism checking <span class="ring-word relative inline-block">before you choose<svg class="ring-mark absolute pointer-events-none" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> a plan</h2>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[58ch] mx-auto mb-8 sm:mb-10 lg:mb-11">Check up to 150 words without creating an account. See how the plagiarism checker works first, then return when you are ready to choose a plan.</p>
-            <a href="prices.html#free-check" class="btn-press group inline-flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
+        <div class="cta-band rounded-3xl sm:rounded-4xl ring-1 ring-black/5 py-16 sm:py-20 lg:py-24">
+          <div class="cta-band-bg">
+            <div class="dot-field cta-band-dots" aria-hidden="true"></div>
+            <div class="orb cta-glow-warm"></div>
+            <div class="orb cta-glow-cool"></div>
+          </div>
+          <div class="cta-band-inner px-6">
+            <h2 class="cta-title">Try plagiarism checking <span class="ring-word">before you choose<svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> a plan</h2>
+            <p class="cta-lead">Check up to 150 words without creating an account. See how the plagiarism checker works first, then return when you are ready to choose a plan.</p>
+            <a href="prices.html#free-check" class="cta-button btn-press group inline-flex">
               Try a free plagiarism check
-              <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </span>
+              <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
             </a>
           </div>
         </div>

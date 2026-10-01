@@ -30,7 +30,7 @@ const path = require('path');
 const page = require('./page');
 const { dotField } = require('./dots');
 const TV2 = require('./testimonials-v2');
-const cta = require('./cta');
+const cta = require('./sections/cta-band');
 const C = require('./paper-data.json');
 
 const SITE = path.join(__dirname, '..', 'site');
@@ -371,7 +371,7 @@ const P = TV2.D.trustpilot;
 const section8 = () => `  <!-- ================= 08 · FEEDBACK OF OUR CUSTOMERS =================
        The Trustpilot feedback the live page loads — the Reviews data, word for word, in
        Trustpilot's manner. Live, it follows the CTA; here the CTA band closes the page,
-       as the system has it (build/cta.js). -->
+       as the system has it (build/sections/cta-band.js). -->
   <section id="feedback" data-component="review-masonry" class="relative py-16 sm:py-24 lg:py-32 bg-[#FCFBF3]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv flex flex-wrap items-end justify-between gap-4 mb-8">
@@ -387,21 +387,13 @@ ${P.reviews.slice(0, 6).map(TV2.tpCard).join('\n')}
 /* ═══════════════ 09 · CHECKING YOUR WORK IS EASY — THE CLOSING BAND ═══════════════ */
 const CT = C.cta;
 const section9 = () => `  <!-- ================= 09 · CHECKING YOUR WORK IS EASY =================
-       The shared closing CTA band (build/cta.js); the button goes back up to the form. -->
-  <section id="paper-final-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.backgroundStatic()}
-
-    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <h2 class="rv ${cta.HEADING} mb-5 sm:mb-6 lg:mb-7">${cta.ringMark(esc(CT.h), 'easy', { static: true })}</h2>
-      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[56ch] mx-auto mb-8 sm:mb-10 lg:mb-11">${esc(CT.lead)}</p>
-      <div class="rv flex justify-center">
-        <a href="${TOP}" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
-          ${esc(CT.button)}
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">${ico(I.arrow, 'currentColor', 15, 1.75)}</span>
-        </a>
-      </div>
-    </div>
-  </section>`;
+       The shared closing CTA band (build/sections/cta-band.js); the button goes back up to the form. -->
+${cta.section({
+  id: 'paper-final-cta',
+  title: esc(CT.h), ring: 'easy',
+  lead: esc(CT.lead), measure: '56',
+  actions: { button: { label: esc(CT.button), href: TOP } },
+})}`;
 
 module.exports = { C };
 if (require.main !== module) return;

@@ -24,7 +24,7 @@
 const fs = require('fs');
 const path = require('path');
 const page = require('./page');
-const cta = require('./cta');
+const cta = require('./sections/cta-band');
 const faq = require('./sections/faq');   /* the FAQ: one library template */
 const { dotField } = require('./dots');
 
@@ -381,24 +381,14 @@ ${faq.section({
 
 /* ═══════════════ 07 · CLOSING BAND ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · CLOSING CTA =================
-       The closing band (build/cta.js) with the live page's own closing lines: the lead
+       The closing band (build/sections/cta-band.js) with the live page's own closing lines: the lead
        above, the heading with its ring on "community", "Start saving now" to sign-up. -->
-  <section id="affiliate-cta" data-component="cta-band" class="cta-band relative py-20 sm:py-28 lg:py-36 overflow-hidden">
-${cta.backgroundStatic()}
-
-    <div class="relative max-w-[880px] mx-auto px-4 sm:px-6 lg:px-10 text-center">
-      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[62ch] mx-auto mb-5 sm:mb-6">${COPY.close.lead}</p>
-      <h2 class="rv ${cta.HEADING} mb-8 sm:mb-10 lg:mb-11">${cta.ringMark(COPY.close.h2, 'community', { static: true })}</h2>
-      <div class="rv flex flex-wrap items-center justify-center gap-4 sm:gap-5">
-        <a href="${JOIN}" rel="noopener" class="btn-press group flex items-center gap-3 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[15px] sm:text-[16px] font-semibold pl-6 sm:pl-7 lg:pl-8 pr-2.5 py-3.5 transition-colors duration-300">
-          ${COPY.close.cta}
-          <span class="icon-orb w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>`;
+${cta.section({
+  id: 'affiliate-cta',
+  kicker: COPY.close.lead,
+  title: COPY.close.h2, ring: 'community',
+  actions: { button: { label: COPY.close.cta, href: JOIN } },
+})}`;
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Assemble — the shared page shell (build/page.js).

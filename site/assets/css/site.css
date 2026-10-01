@@ -61,9 +61,8 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 :where(.js-motion) .pen-underline { opacity:0; }
 :where(html:not(.js-motion)) .pen-word { color:#DC5A45; }
 
-/* ring mark — the loop round one word of the closing band's heading. Its box was an
-   inline style on every page; it is the same box everywhere, so it is a class. */
-.ring-mark { left:-9%; top:-26%; width:118%; height:152%; transform:rotate(-2deg); }
+/* ring mark — the loop round one word of the closing band's heading. Its box (.ring-mark)
+   belongs to the band: build/sections/cta-band.css. */
 :where(.js-motion) .ring-path { opacity:0; }
 :where(html:not(.js-motion)) .ring-word { color:#DC5A45; }
 
@@ -622,57 +621,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .cab-beam { background-image:linear-gradient(to bottom,
   rgba(13,168,194,.22) 0%, rgba(13,168,194,.13) 38%,
   rgba(13,168,194,.05) 70%, rgba(13,168,194,0) 100%); }
-
-/* ═══ 10 · the closing CTA band (build/cta.js) ════════════════════════════════════
-   Every knob is a custom property on .cta-band, so a page tunes numbers, not selectors,
-   and the band renders the same whatever the section's id is. (It used to be keyed to
-   the id — #student-cta, #student-ctaGlowWarm — so a band moved to another page, or
-   given another anchor, lost its glows.) Numbers carried over unchanged, with both
-   breakpoint steps. The glows follow .orb in this sheet, so their mask wins over the
-   orb default exactly as the id rule did. */
-.cta-band {
-  --cta-bg: #F2FCFC;
-  /* warm, upper left */
-  --cta-o1-rgb: 243,111,90;   --cta-o1-alpha: .25;
-  --cta-o1-w: 1138px;         --cta-o1-h: 1040px;
-  --cta-o1-x: -22.2%;         --cta-o1-y: -546px;
-  --cta-o1-mid: 54.1%;        --cta-o1-end: 83.2%;
-  /* cool, lower right */
-  --cta-o2-rgb: 13,168,194;   --cta-o2-alpha: .15;
-  --cta-o2-w: 954px;          --cta-o2-h: 950px;
-  --cta-o2-x: 74.2%;          --cta-o2-y: 374px;
-  --cta-o2-mid: 65%;          --cta-o2-end: 100%;
-  background-color: var(--cta-bg);
-}
-.cta-glow-warm { width:var(--cta-o1-w); height:var(--cta-o1-h); left:var(--cta-o1-x); top:var(--cta-o1-y);
-  background:rgba(var(--cta-o1-rgb), var(--cta-o1-alpha));
-  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end));
-          mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o1-mid), transparent var(--cta-o1-end)); }
-.cta-glow-cool { width:var(--cta-o2-w); height:var(--cta-o2-h); left:var(--cta-o2-x); top:var(--cta-o2-y);
-  background:rgba(var(--cta-o2-rgb), var(--cta-o2-alpha));
-  -webkit-mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end));
-          mask-image:radial-gradient(circle closest-side, rgba(0,0,0,1) 0%, rgba(0,0,0,.5) var(--cta-o2-mid), transparent var(--cta-o2-end)); }
-
-/* tablet — about three quarters of the desktop figure */
-@media (max-width:1023px) {
-  .cta-band {
-    --cta-o1-w: 840px;  --cta-o1-h: 770px;
-    --cta-o1-x: -28%;   --cta-o1-y: -400px;
-    --cta-o2-w: 700px;  --cta-o2-h: 700px;
-    --cta-o2-x: 64%;    --cta-o2-y: 300px;
-  }
-}
-/* phone — half the size, softer, hard against the edges so the middle stays readable */
-@media (max-width:639px) {
-  .cta-band {
-    --cta-o1-alpha: .20;
-    --cta-o1-w: 560px;  --cta-o1-h: 520px;
-    --cta-o1-x: -38%;   --cta-o1-y: -250px;
-    --cta-o2-alpha: .12;
-    --cta-o2-w: 470px;  --cta-o2-h: 470px;
-    --cta-o2-x: 52%;    --cta-o2-y: 210px;
-  }
-}
 
 /* ═══ 11 · the compact dark banner (build/banner.js) ══════════════════════════════
    Its glow used to be an inline style with the colour passed per page; the colours form

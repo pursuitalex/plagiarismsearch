@@ -142,7 +142,10 @@ console.log('\nstructure');
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]);
   ok(ids.length + ' ids, none twice', new Set(ids).size === ids.length, ids.filter((x, i) => ids.indexOf(x) !== i).join(' '));
   ok('standard section padding on the two bespoke content sections (the components carry theirs in CSS), the hero\'s own',(body.match(/<section[^>]*class="[^"]*py-16 sm:py-24 lg:py-32/g) || []).length === 2 && /pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28/.test(secs[0]));
-  ok('standalone buttons are h-12 sm:h-14', (body.match(/class="btn-press[^"]*"/g) || []).length === 3 && (body.match(/class="btn-press[^"]*"/g) || []).every(c => /\bh-12 sm:h-14\b/.test(c)));
+  /* the hero's button carries the size itself; the closing band's two are the library's
+     pair (build/sections/cta-band.css gives data-layout="pair" the same 48 / 56px) */
+  ok('standalone buttons are h-12 sm:h-14: the hero\'s, and the closing band\'s pair', (body.match(/class="btn-press[^"]*"/g) || []).length === 1 && (body.match(/class="btn-press[^"]*"/g) || []).every(c => /\bh-12 sm:h-14\b/.test(c)) &&
+    /<div class="cta-actions rv" data-layout="pair">\s*<a [^>]*class="cta-button btn-press group">[\s\S]*?<\/a>\s*<a [^>]*class="cta-button-secondary btn-press">/.test(body));
   ok('root-relative assets, no Play CDN', html.includes('href="/assets/css/site.css"') && html.includes('href="/assets/css/tailwind.css"') && !html.includes('cdn.tailwindcss.com'));
 }
 

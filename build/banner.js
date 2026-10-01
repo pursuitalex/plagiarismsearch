@@ -5,7 +5,7 @@
    there. The AI Detector page's API block, the University page's AI block and the
    Pricing page's high-volume block are all this. The larger one — the closing CTA band
    before the footer, with its own eyebrow, hero-scale heading and double bezel — is
-   build/cta.js, and the two must not be confused: a banner between sections is a
+   build/sections/cta-band.js, and the two must not be confused: a banner between sections is a
    heading block (DESIGN.md § Support lines), not a smaller act. It shares the accent
    card's heading and support colour; only the composition differs.
 

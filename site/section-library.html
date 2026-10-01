@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>Section Library — FAQ | PlagiarismSearch (internal)</title>
+<title>Section Library | PlagiarismSearch (internal)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
@@ -19,19 +19,31 @@
 <body class="font-sans text-ink-900 bg-white">
 <main class="min-h-screen bg-[#F7F9FA]">
   <section class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-14 lg:pt-16 pb-8">
-    <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Section Library · пілот</p>
-    <h1 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-4">FAQ</h1>
+    <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Section Library</p>
+    <h1 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-4">Бібліотека секцій</h1>
     <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
-      <p>Готовий HTML секції FAQ для вставки в body сторінки CMS. Стилі й поведінка — у спільних <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">site.css</code> / <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">tailwind.css</code> / <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">site.js</code>; сторінка не несе власного CSS чи JS. Копіюйте фрагмент із поля під прикладом цілком, потім змінюйте лише те, що дозволено в таблиці нижче.</p>
+      <p>Готовий HTML секцій для вставки в body сторінки CMS. Стилі й поведінка — у спільних <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">site.css</code> / <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">tailwind.css</code> / <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">site.js</code>; сторінка не несе власного CSS чи JS. Копіюйте фрагмент із поля під прикладом цілком, потім змінюйте лише те, що дозволено в таблиці компонента.</p>
       <p>Перед публікацією перевірте вставку: збережіть HTML у файл і запустіть <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">node build/check-library.js файл.html</code> (або <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">… --stdin</code>). Валідатор назве рядок і причину, якщо щось зламано.</p>
-      <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/faq.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/faq.css</code>, <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/section-head.css</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/faq.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/</code></p>
     </div>
+    <ul class="mt-6 flex flex-wrap gap-2.5">
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-faq">FAQ <span class="text-ink-400 font-medium">8</span></a></li>
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-cta-band">CTA band <span class="text-ink-400 font-medium">9</span></a></li>
+    </ul>
   </section>
 
-  <section class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pb-10 space-y-8">
-    <div>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h2>
-      <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+  <section id="lib-faq" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">FAQ</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>Секція запитань і відповідей: ліва колонка із заголовком (Section Header), права — акордеон. Перша відповідь відкрита; без JS видно всі.</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/faq.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/faq.css, build/sections/section-head.css</code> · JS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/assets/js/50-faq.js</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/faq.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
       <table class="w-full text-left text-[13px] sm:text-[13.5px]">
         <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
         <tbody class="divide-y divide-ink-100">
@@ -51,21 +63,21 @@
         </tbody>
       </table>
     </div>
-    </div>
-    <div>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h2>
-      <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
-        <li>усі класи й обгортки &lt;div&gt; (зокрема порожній &lt;div&gt; усередині .faq-a) — від них залежать вигляд, анімація і JS</li>
-        <li>data-component="faq" на секції і data-faq на .faq-list — гачки для JS і перевірок</li>
-        <li>кнопка: type="button", class="faq-q", aria-controls + aria-expanded</li>
-        <li>іконки &lt;svg&gt; (шеврон, іконка посилання) — копіюються як є</li>
-        <li>клас rv на .faq-aside і .faq-frame — анімація появи (можна прибрати лише обидва разом і лише за рішенням дизайну)</li>
-        <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) усередині FAQ</li>
-      </ul>
-    </div>
-    <div>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h2>
-      <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>усі класи й обгортки &lt;div&gt; (зокрема порожній &lt;div&gt; усередині .faq-a) — від них залежать вигляд, анімація і JS</li>
+          <li>data-component="faq" на секції і data-faq на .faq-list — гачки для JS і перевірок</li>
+          <li>кнопка: type="button", class="faq-q", aria-controls + aria-expanded</li>
+          <li>іконки &lt;svg&gt; (шеврон, іконка посилання) — копіюються як є</li>
+          <li>клас rv на .faq-aside і .faq-frame — анімація появи (можна прибрати лише обидва разом і лише за рішенням дизайну)</li>
+          <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) усередині FAQ</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
       <table class="w-full text-left text-[13px] sm:text-[13.5px]">
         <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
         <tbody class="divide-y divide-ink-100">
@@ -77,10 +89,10 @@
         </tbody>
       </table>
     </div>
-    </div>
-    <div>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h2>
-      <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
       <table class="w-full text-left text-[13px] sm:text-[13.5px]">
         <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
         <tbody class="divide-y divide-ink-100">
@@ -99,14 +111,15 @@
         </tbody>
       </table>
     </div>
+      </div>
     </div>
   </section>
 
-  <!-- ── 1 · faq-fluid.html ── -->
+  <!-- ── faq · 1 · faq-fluid.html ── -->
   <div class="border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
-      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 1</p>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid (базовий)</h2>
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">FAQ · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid (базовий)</h3>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Продуктова сторінка: сіра секція, пігулка, заголовок, вступ і тихе посилання під ним; відповіді одним абзацом, у відповіді може бути посилання a.faq-link. Копія — Pricing FAQ.</p>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: prices (так само, але без вступу/посилання: pdf, students, organization, university) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid.html</code></p>
     </div>
@@ -197,11 +210,11 @@
 &lt;/section&gt;</textarea>
   </div>
 
-  <!-- ── 2 · faq-fluid-title-only.html ── -->
+  <!-- ── faq · 2 · faq-fluid-title-only.html ── -->
   <div class="border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
-      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 2</p>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid, лише заголовок</h2>
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">FAQ · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid, лише заголовок</h3>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Той самий блок без вступу й посилання — найчастіша конфігурація. Копія — Students FAQ.</p>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: students, pdf, organization, university · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid-title-only.html</code></p>
     </div>
@@ -288,11 +301,11 @@
 &lt;/section&gt;</textarea>
   </div>
 
-  <!-- ── 3 · faq-fluid-white.html ── -->
+  <!-- ── faq · 3 · faq-fluid-white.html ── -->
   <div class="border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
-      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 3</p>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid, білий фон</h2>
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">FAQ · варіант 3</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid, білий фон</h3>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Біла секція: пігулка сама стає сірою — її фон ніде не задається, він протилежний фону секції. Вступ і посилання під ним. Копія — AI Detector FAQ.</p>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ai-detector, api · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid-white.html</code></p>
     </div>
@@ -383,11 +396,11 @@
 &lt;/section&gt;</textarea>
   </div>
 
-  <!-- ── 4 · faq-fluid-rich.html ── -->
+  <!-- ── faq · 4 · faq-fluid-rich.html ── -->
   <div class="border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
-      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 4</p>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid, розгорнуті відповіді з посиланням на джерело</h2>
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">FAQ · варіант 4</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid, розгорнуті відповіді з посиланням на джерело</h3>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Біла секція з меншими відступами (data-space="md"); кожна відповідь — div.faq-a-body з абзацами, під відповіддю може стояти p.faq-a-more з посиланням. Копія — Turnitin Alternative FAQ.</p>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: turnitin-checker-alternative; так само — багатоабзацні відповіді (scholarship після злиття) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid-rich.html</code></p>
     </div>
@@ -488,11 +501,11 @@
 &lt;/section&gt;</textarea>
   </div>
 
-  <!-- ── 5 · faq-fluid-narrow.html ── -->
+  <!-- ── faq · 5 · faq-fluid-narrow.html ── -->
   <div class="border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
-      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 5</p>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid-narrow, без пігулки</h2>
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">FAQ · варіант 5</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fluid-narrow, без пігулки</h3>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Сітка 0.8fr/1.2fr, лише заголовок, менші відступи. Копія — UA FAQ.</p>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ua-plagiarism-check · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fluid-narrow.html</code></p>
     </div>
@@ -571,11 +584,11 @@
 &lt;/section&gt;</textarea>
   </div>
 
-  <!-- ── 6 · faq-fixed.html ── -->
+  <!-- ── faq · 6 · faq-fixed.html ── -->
   <div class="border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
-      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 6</p>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fixed (головна)</h2>
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">FAQ · варіант 6</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ · fixed (головна)</h3>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Ліва колонка фіксована 380px, свій ритм заголовка; посилання з іконкою стоїть без обгортки (a.section-more.section-link). Копія — Home FAQ.</p>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: index (головна); user-manuals — як вбудований блок · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-fixed.html</code></p>
     </div>
@@ -672,11 +685,11 @@
 &lt;/section&gt;</textarea>
   </div>
 
-  <!-- ── 7 · faq-grid-embedded.html ── -->
+  <!-- ── faq · 7 · faq-grid-embedded.html ── -->
   <div class="border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
-      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 7</p>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ усередині іншого компонента (без секції)</h2>
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">FAQ · варіант 7</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">FAQ усередині іншого компонента (без секції)</h3>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Лише сітка .faq-grid з data-layout — коли FAQ є частиною іншої секції. Сам блок не має жодних утиліт: відступ над ним дає компонент-хост (своєю обгорткою). Без .rv, як затверджено на User Guide.</p>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: user-manuals (всередині user-guide) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-grid-embedded.html</code></p>
     </div>
@@ -767,11 +780,11 @@
 &lt;/div&gt;</textarea>
   </div>
 
-  <!-- ── 8 · faq-frame-doc.html ── -->
+  <!-- ── faq · 8 · faq-frame-doc.html ── -->
   <div class="border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
-      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Варіант 8</p>
-      <h2 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Лише список у колонці документації (doc)</h2>
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">FAQ · варіант 8</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Лише список у колонці документації (doc)</h3>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Тільки .faq-frame з data-variant="doc": компактні розміри на десктопі, текст ink-700, посилання в стилі гайду; кожне питання в &lt;h3 class="faq-heading"&gt; для структури документа. Заголовок дає сама секція гайду.</p>
       <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: integration-guide (Moodle) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/faq-frame-doc.html</code></p>
     </div>
@@ -846,6 +859,545 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</textarea>
+  </div>
+
+  <section id="lib-cta-band" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">CTA band</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>Завершальна смуга перед футером — останнє, що каже сторінка: заголовок, один рядок і одна дія. Два затверджені вигляди: фірмова смуга (крапкове поле, два світіння, обведене слово) і спрощена plain на старих сторінках.</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/cta-band.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/cta-band.css</code> · JS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/assets/js/20-motion.js (поява .rv, обведення .ring-word)</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/cta-band.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці; можна прибрати, якщо на смугу ніхто не посилається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіанти</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-width на &lt;section&gt;, data-measure на p.cta-lead, data-layout на .cta-actions, data-tone на кнопці чи примітці</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише значення зі списку варіантів; атрибут можна прибрати (значення за замовчуванням)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Надпис-пігулка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-eyebrow-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; блок .section-eyebrow можна прибрати цілком. Фон пігулки не задається — його дає смуга</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Рядок над заголовком</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.cta-kicker</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; ставиться замість вступу (у смузі або kicker, або lead)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Заголовок H2</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">h2.cta-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст (обов’язковий); допускаються &lt;br&gt;, &lt;em&gt;, &lt;strong&gt;</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Обведене слово</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.ring-word усередині заголовка</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">рівно одне на заголовок; міняйте лише текст перед &lt;svg&gt;. Петля розрахована на фрагмент близько 10 символів (4–18): надто короткий чи довгий розтягне її</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Вступ</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.cta-lead</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; допускаються strong, em, br; у фірмовій смузі можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Кнопка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">a.cta-button</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href (rel="noopener" для зовнішніх адрес); іконку &lt;svg&gt; на початку можна прибрати, але не змінювати; кружок зі стрілкою лишається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Тихе посилання поруч</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">a.cta-link (ряд)</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Рядок з іскрою</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.cta-hint (stack)</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Друга кнопка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">a.cta-button-secondary (pair)</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Рядок під діями</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.cta-note</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; допускаються strong, em, br і одне посилання a.cta-note-link; можна прибрати</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>усі класи й обгортки: .cta-band-bg з трьома шарами (крапки, два світіння) у фірмовій смузі, дві плями .orb у plain — копіюються як є</li>
+          <li>data-component="cta-band" на секції — гачок для перевірок</li>
+          <li>класи-гачки: rv (анімація появи), btn-press і group на кнопці, icon-orb на кружку зі стрілкою, pulse-dot на крапці пігулки, dot-field і orb на шарах фону</li>
+          <li>іконки &lt;svg&gt; (стрілка, іскра, петля обведення) — копіюються як є</li>
+          <li>порядок частин: пігулка → (рядок над заголовком) → заголовок → вступ → дії → рядок під діями</li>
+          <li>склад дій відповідає розкладці: ряд — кнопка (+ тихе посилання); stack — кнопка (+ рядок з іскрою); pair — темна і світла кнопки</li>
+          <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) усередині смуги</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-variant</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">plain</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. вигляд смуги. Без атрибута — фірмова смуга (крапкове поле, два світіння, обведене слово, заголовок розміру hero). plain — спрощена смуга старих сторінок (Help Center, Mission, безкоштовні інструменти): м’які плями, заголовок розміру секції, одна кольорова кнопка. Це різні фрагменти — беріть відповідний зразок, а не міняйте атрибут.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-width</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">wide</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. wide — ширша колонка 920px (українська сторінка, довший заголовок). Без атрибута — 880px. Лише для фірмової смуги.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">lead</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">46</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">52</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">54</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">56</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">58</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">62</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">560px</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. найдовший рядок вступу, у символах (560px — About us). Без атрибута: 58 у фірмовій смузі, 46 у plain. Змінюйте, лише якщо текст негарно переноситься.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">actions</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">stack</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">pair</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. розкладка дій. Без атрибута — ряд: кнопка і, за потреби, тихе посилання поруч. stack — стовпчик: кнопка, під нею рядок з іскрою (.cta-hint). pair — дві рівноправні кнопки розміру 48/56px: темна і світла (.cta-button-secondary).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">button</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">orange</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. лише в plain: колір кнопки. Без атрибута — бірюзова; orange — помаранчева (сторінки безкоштовних інструментів).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">note</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">quiet</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. рядок під діями. Без атрибута — виразний (напівжирний, ink-700). quiet — малий сірий, наприкінці може мати посилання a.cta-note-link.</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="index.html">index.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ 52; кнопка з іскрою; рядок під діями</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ai-detector.html">ai-detector.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">вступ 56; кнопка з іскрою + тихе посилання</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="api.html">api.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">кнопка з іконкою «код» + тихе посилання</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="prices.html">prices.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">кнопка з іскрою</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-organization.html">plagiarism-checker-for-organization.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">вступ 62; кнопка + тихе посилання</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="university-plagiarism-checker.html">university-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">вступ 62; кнопка + тихе посилання</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="paper-analysis-v2.html">paper-analysis-v2.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">вступ 56; кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">affiliate-program-at-plagiarismsearch.html (і -v2)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">рядок над заголовком; кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-students.html">plagiarism-checker-for-students.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">stack</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">кнопка + рядок з іскрою</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="pdf-plagiarism-checker.html">pdf-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">stack</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">кнопка + рядок з іскрою</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="turnitin-checker-alternative.html">turnitin-checker-alternative.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">stack</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">вступ 62; кнопка + рядок з іскрою</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ua-plagiarism-check.html">ua-plagiarism-check.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">wide · stack</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="about-us.html">about-us.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">pair</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">вступ 560px; дві кнопки; тиха примітка з посиланням</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">help-center.html, mission.html, contact-us.html, chat-bot.html, plagiarism-check.html</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">plain</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">бірюзова кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">readability-check.html, spell-check.html, paper-analysis.html</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">plain · orange</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">помаранчева кнопка; вступ 52 / 54 / 46</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── cta-band · 1 · cta-band-link.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">CTA band · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">CTA band · кнопка і тихе посилання</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Фірмова смуга: заголовок з обведеним словом, вступ, темна кнопка (з іконкою-іскрою на початку — її можна прибрати) і тихе посилання поруч. Копія — AI Detector.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ai-detector, api (іконка «код»), plagiarism-checker-for-organization, university-plagiarism-checker (без іконки) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-link.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cta" data-component="cta-band" class="cta-band">
+  <div class="cta-band-bg">
+    <div class="dot-field cta-band-dots" aria-hidden="true"></div>
+    <div class="orb cta-glow-warm"></div>
+    <div class="orb cta-glow-cool"></div>
+  </div>
+  <div class="cta-band-inner">
+    <h2 class="cta-title rv">Check your text for <span class="ring-word">AI-writing<svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> signals</h2>
+    <p class="cta-lead rv" data-measure="56">Paste text or upload a document to review AI Probability, Total AI Rate, and highlighted passages in one report.</p>
+    <div class="cta-actions rv">
+      <a href="#ai-checker" class="cta-button btn-press group">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+        Start AI check
+        <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+      <a href="#ai-pricing" class="cta-link">View AI pricing</a>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-9">HTML для копіювання</label>
+    <textarea id="snippet-9" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
+  &lt;div class="cta-band-bg"&gt;
+    &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-cool"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="cta-band-inner"&gt;
+    &lt;h2 class="cta-title rv"&gt;Check your text for &lt;span class="ring-word"&gt;AI-writing&lt;svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"&gt;&lt;path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;&lt;/span&gt; signals&lt;/h2&gt;
+    &lt;p class="cta-lead rv" data-measure="56"&gt;Paste text or upload a document to review AI Probability, Total AI Rate, and highlighted passages in one report.&lt;/p&gt;
+    &lt;div class="cta-actions rv"&gt;
+      &lt;a href="#ai-checker" class="cta-button btn-press group"&gt;
+        &lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;
+        Start AI check
+        &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a href="#ai-pricing" class="cta-link"&gt;View AI pricing&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── cta-band · 2 · cta-band-button.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">CTA band · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">CTA band · одна кнопка</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Те саме без посилання: одна дія. Копія — Pricing.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: prices; paper-analysis-v2 (без іконки) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-button.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cta-button" data-component="cta-band" class="cta-band">
+  <div class="cta-band-bg">
+    <div class="dot-field cta-band-dots" aria-hidden="true"></div>
+    <div class="orb cta-glow-warm"></div>
+    <div class="orb cta-glow-cool"></div>
+  </div>
+  <div class="cta-band-inner">
+    <h2 class="cta-title rv">Try plagiarism checking <span class="ring-word">before you choose<svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> a plan</h2>
+    <p class="cta-lead rv">Check up to 150 words without creating an account. See how the plagiarism checker works first, then return when you are ready to choose a plan.</p>
+    <div class="cta-actions rv">
+      <a href="index.html" class="cta-button btn-press group">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+        Try a free plagiarism check
+        <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-10">HTML для копіювання</label>
+    <textarea id="snippet-10" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
+  &lt;div class="cta-band-bg"&gt;
+    &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-cool"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="cta-band-inner"&gt;
+    &lt;h2 class="cta-title rv"&gt;Try plagiarism checking &lt;span class="ring-word"&gt;before you choose&lt;svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"&gt;&lt;path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;&lt;/span&gt; a plan&lt;/h2&gt;
+    &lt;p class="cta-lead rv"&gt;Check up to 150 words without creating an account. See how the plagiarism checker works first, then return when you are ready to choose a plan.&lt;/p&gt;
+    &lt;div class="cta-actions rv"&gt;
+      &lt;a href="index.html" class="cta-button btn-press group"&gt;
+        &lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;
+        Try a free plagiarism check
+        &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── cta-band · 3 · cta-band-stack.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">CTA band · варіант 3</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">CTA band · кнопка і рядок з іскрою (stack)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-layout="stack": під кнопкою — рядок-запевнення з іскрою (p.cta-hint). Копія — Students.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-students, pdf-plagiarism-checker, turnitin-checker-alternative · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-stack.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cta-stack" data-component="cta-band" class="cta-band">
+  <div class="cta-band-bg">
+    <div class="dot-field cta-band-dots" aria-hidden="true"></div>
+    <div class="orb cta-glow-warm"></div>
+    <div class="orb cta-glow-cool"></div>
+  </div>
+  <div class="cta-band-inner">
+    <h2 class="cta-title rv">Check your paper <span class="ring-word">before you<svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> submit</h2>
+    <p class="cta-lead rv">Paste your text or upload a document to review matching passages and sources in a clear report.</p>
+    <div class="cta-actions rv" data-layout="stack">
+      <a href="#student-checker" class="cta-button btn-press group">
+        Check for plagiarism
+        <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+      <p class="cta-hint">
+        <svg class="cta-hint-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+        150 words free — no registration required.
+      </p>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-11">HTML для копіювання</label>
+    <textarea id="snippet-11" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
+  &lt;div class="cta-band-bg"&gt;
+    &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-cool"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="cta-band-inner"&gt;
+    &lt;h2 class="cta-title rv"&gt;Check your paper &lt;span class="ring-word"&gt;before you&lt;svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"&gt;&lt;path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;&lt;/span&gt; submit&lt;/h2&gt;
+    &lt;p class="cta-lead rv"&gt;Paste your text or upload a document to review matching passages and sources in a clear report.&lt;/p&gt;
+    &lt;div class="cta-actions rv" data-layout="stack"&gt;
+      &lt;a href="#student-checker" class="cta-button btn-press group"&gt;
+        Check for plagiarism
+        &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;p class="cta-hint"&gt;
+        &lt;svg class="cta-hint-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;
+        150 words free — no registration required.
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── cta-band · 4 · cta-band-eyebrow.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">CTA band · варіант 4</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">CTA band · з пігулкою і рядком під кнопкою</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Над заголовком — пігулка з крапкою, що пульсує; під діями — виразний рядок (p.cta-note). Вступ вужчий: data-measure="52". Копія — головна.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: index (головна) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-eyebrow.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cta-eyebrow" data-component="cta-band" class="cta-band">
+  <div class="cta-band-bg">
+    <div class="dot-field cta-band-dots" aria-hidden="true"></div>
+    <div class="orb cta-glow-warm"></div>
+    <div class="orb cta-glow-cool"></div>
+  </div>
+  <div class="cta-band-inner">
+    <div class="section-eyebrow rv">
+      <span class="section-eyebrow-dot pulse-dot"></span>
+      <span class="section-eyebrow-label">Free check</span>
+    </div>
+    <h2 class="cta-title rv">Check your text for <span class="ring-word">plagiarism<svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h2>
+    <p class="cta-lead rv" data-measure="52">Paste your text or upload a document to review matching passages and sources in a clear report.</p>
+    <div class="cta-actions rv">
+      <a href="#checker" class="cta-button btn-press group">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+        Check for plagiarism
+        <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+    <p class="cta-note rv">150 words free — no registration required.</p>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-12">HTML для копіювання</label>
+    <textarea id="snippet-12" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
+  &lt;div class="cta-band-bg"&gt;
+    &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-cool"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="cta-band-inner"&gt;
+    &lt;div class="section-eyebrow rv"&gt;
+      &lt;span class="section-eyebrow-dot pulse-dot"&gt;&lt;/span&gt;
+      &lt;span class="section-eyebrow-label"&gt;Free check&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;h2 class="cta-title rv"&gt;Check your text for &lt;span class="ring-word"&gt;plagiarism&lt;svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"&gt;&lt;path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/h2&gt;
+    &lt;p class="cta-lead rv" data-measure="52"&gt;Paste your text or upload a document to review matching passages and sources in a clear report.&lt;/p&gt;
+    &lt;div class="cta-actions rv"&gt;
+      &lt;a href="#checker" class="cta-button btn-press group"&gt;
+        &lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;
+        Check for plagiarism
+        &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;p class="cta-note rv"&gt;150 words free — no registration required.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── cta-band · 5 · cta-band-kicker.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">CTA band · варіант 5</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">CTA band · рядок над заголовком</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Замість вступу під заголовком — рядок над ним (p.cta-kicker); заголовок одразу перед кнопкою. Копія — Affiliate Program.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: affiliate-program-at-plagiarismsearch, affiliate-program-at-plagiarismsearch-v2 · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-kicker.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cta-kicker" data-component="cta-band" class="cta-band">
+  <div class="cta-band-bg">
+    <div class="dot-field cta-band-dots" aria-hidden="true"></div>
+    <div class="orb cta-glow-warm"></div>
+    <div class="orb cta-glow-cool"></div>
+  </div>
+  <div class="cta-band-inner">
+    <p class="cta-kicker rv">And dive into the distinct advantages of the professional software.</p>
+    <h2 class="cta-title rv">Join our authentic <span class="ring-word">community<svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> now.</h2>
+    <div class="cta-actions rv">
+      <a href="https://app.plagiarismsearch.com/affiliate" rel="noopener" class="cta-button btn-press group">
+        Start saving now
+        <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-13">HTML для копіювання</label>
+    <textarea id="snippet-13" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
+  &lt;div class="cta-band-bg"&gt;
+    &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-cool"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="cta-band-inner"&gt;
+    &lt;p class="cta-kicker rv"&gt;And dive into the distinct advantages of the professional software.&lt;/p&gt;
+    &lt;h2 class="cta-title rv"&gt;Join our authentic &lt;span class="ring-word"&gt;community&lt;svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"&gt;&lt;path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;&lt;/span&gt; now.&lt;/h2&gt;
+    &lt;div class="cta-actions rv"&gt;
+      &lt;a href="https://app.plagiarismsearch.com/affiliate" rel="noopener" class="cta-button btn-press group"&gt;
+        Start saving now
+        &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── cta-band · 6 · cta-band-pair.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">CTA band · варіант 6</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">CTA band · дві кнопки і тиха примітка (pair)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-layout="pair": дві рівноправні дії розміру 48/56px — темна і світла; під ними тиха примітка з посиланням (p.cta-note data-tone="quiet"). Копія — About us.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: about-us · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-pair.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cta-pair" data-component="cta-band" class="cta-band">
+  <div class="cta-band-bg">
+    <div class="dot-field cta-band-dots" aria-hidden="true"></div>
+    <div class="orb cta-glow-warm"></div>
+    <div class="orb cta-glow-cool"></div>
+  </div>
+  <div class="cta-band-inner">
+    <h2 class="cta-title rv">The <span class="ring-word">principles<svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> behind the product</h2>
+    <p class="cta-lead rv" data-measure="560px">Our mission and core values describe why we work the way we do. And if you have a question for the team, we are glad to hear from you.</p>
+    <div class="cta-actions rv" data-layout="pair">
+      <a href="mission.html" class="cta-button btn-press group">
+        Our Mission &amp; Values
+        <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+      <a href="contact-us.html" class="cta-button-secondary btn-press">Contact our team</a>
+    </div>
+    <p class="cta-note rv" data-tone="quiet">Working with an organization? <a href="plagiarism-checker-for-organization.html" class="cta-note-link">See Business &amp; Teams</a></p>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-14">HTML для копіювання</label>
+    <textarea id="snippet-14" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
+  &lt;div class="cta-band-bg"&gt;
+    &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-cool"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="cta-band-inner"&gt;
+    &lt;h2 class="cta-title rv"&gt;The &lt;span class="ring-word"&gt;principles&lt;svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"&gt;&lt;path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;&lt;/span&gt; behind the product&lt;/h2&gt;
+    &lt;p class="cta-lead rv" data-measure="560px"&gt;Our mission and core values describe why we work the way we do. And if you have a question for the team, we are glad to hear from you.&lt;/p&gt;
+    &lt;div class="cta-actions rv" data-layout="pair"&gt;
+      &lt;a href="mission.html" class="cta-button btn-press group"&gt;
+        Our Mission &amp;amp; Values
+        &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a href="contact-us.html" class="cta-button-secondary btn-press"&gt;Contact our team&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;p class="cta-note rv" data-tone="quiet"&gt;Working with an organization? &lt;a href="plagiarism-checker-for-organization.html" class="cta-note-link"&gt;See Business &amp;amp; Teams&lt;/a&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── cta-band · 7 · cta-band-wide.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">CTA band · варіант 7</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">CTA band · ширша колонка (wide)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-width="wide": колонка 920px для довшого заголовка; дії стовпчиком без рядка з іскрою. Копія — українська сторінка.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ua-plagiarism-check · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-wide.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide">
+  <div class="cta-band-bg">
+    <div class="dot-field cta-band-dots" aria-hidden="true"></div>
+    <div class="orb cta-glow-warm"></div>
+    <div class="orb cta-glow-cool"></div>
+  </div>
+  <div class="cta-band-inner">
+    <h2 class="cta-title rv">Перевірте текст і перегляньте знайдені <span class="ring-word">джерела<svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"><path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h2>
+    <p class="cta-lead rv">Почніть із безкоштовного ліміту або увійдіть в акаунт, щоб скористатися доступним вам обсягом перевірки.</p>
+    <div class="cta-actions rv" data-layout="stack">
+      <a href="#checker" class="cta-button btn-press group">
+        Перевірити на плагіат
+        <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-15">HTML для копіювання</label>
+    <textarea id="snippet-15" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
+  &lt;div class="cta-band-bg"&gt;
+    &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
+    &lt;div class="orb cta-glow-cool"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="cta-band-inner"&gt;
+    &lt;h2 class="cta-title rv"&gt;Перевірте текст і перегляньте знайдені &lt;span class="ring-word"&gt;джерела&lt;svg class="ring-mark" viewBox="0 0 230 100" fill="none" aria-hidden="true"&gt;&lt;path class="ring-path" d="M30,62 C22,30 78,8 128,10 C182,12 216,32 212,58 C207,86 142,96 88,92 C44,88 18,76 26,50 C30,36 48,24 66,20" stroke="#F36F5A" stroke-opacity=".5" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/h2&gt;
+    &lt;p class="cta-lead rv"&gt;Почніть із безкоштовного ліміту або увійдіть в акаунт, щоб скористатися доступним вам обсягом перевірки.&lt;/p&gt;
+    &lt;div class="cta-actions rv" data-layout="stack"&gt;
+      &lt;a href="#checker" class="cta-button btn-press group"&gt;
+        Перевірити на плагіат
+        &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── cta-band · 8 · cta-band-plain.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">CTA band · варіант 8</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">CTA band · plain (старі сторінки)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-variant="plain": спрощена смуга — м’яка пляма замість крапкового поля, заголовок розміру секції без обведення, одна бірюзова кнопка 48/56px. Копія — Help Center.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: help-center, mission, contact-us, chat-bot, plagiarism-check · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-plain.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain">
+  <div class="orb cta-orb-warm"></div>
+  <div class="orb cta-orb-cool"></div>
+  <div class="cta-band-inner">
+    <h2 class="cta-title rv">Nothing to read? Just run a check.</h2>
+    <p class="cta-lead rv">150 words through the full engine — the fastest way to see how it works.</p>
+    <a href="index.html#top" class="cta-button btn-press group rv">
+      Check your text
+      <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+    </a>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-16">HTML для копіювання</label>
+    <textarea id="snippet-16" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+  &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
+  &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
+  &lt;div class="cta-band-inner"&gt;
+    &lt;h2 class="cta-title rv"&gt;Nothing to read? Just run a check.&lt;/h2&gt;
+    &lt;p class="cta-lead rv"&gt;150 words through the full engine — the fastest way to see how it works.&lt;/p&gt;
+    &lt;a href="index.html#top" class="cta-button btn-press group rv"&gt;
+      Check your text
+      &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── cta-band · 9 · cta-band-plain-orange.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">CTA band · варіант 9</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">CTA band · plain, помаранчева кнопка</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Те саме з data-tone="orange" на кнопці й ширшим вступом (data-measure="54"). Копія — Spell Check.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: spell-check, readability-check (data-measure="52"), paper-analysis · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/cta-band-plain-orange.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain">
+  <div class="orb cta-orb-warm"></div>
+  <div class="orb cta-orb-cool"></div>
+  <div class="cta-band-inner">
+    <h2 class="cta-title rv">How to improve writing skills before submitting your paper</h2>
+    <p class="cta-lead rv" data-measure="54">Do not waste your time before the paper submission. Just upload your paper now and wait for excellent results.</p>
+    <a href="#top" class="cta-button btn-press group rv" data-tone="orange">
+      Check my text
+      <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+    </a>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-17">HTML для копіювання</label>
+    <textarea id="snippet-17" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+  &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
+  &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
+  &lt;div class="cta-band-inner"&gt;
+    &lt;h2 class="cta-title rv"&gt;How to improve writing skills before submitting your paper&lt;/h2&gt;
+    &lt;p class="cta-lead rv" data-measure="54"&gt;Do not waste your time before the paper submission. Just upload your paper now and wait for excellent results.&lt;/p&gt;
+    &lt;a href="#top" class="cta-button btn-press group rv" data-tone="orange"&gt;
+      Check my text
+      &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
   </div>
 </main>
 </body>

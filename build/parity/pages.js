@@ -317,7 +317,29 @@ const CLOSED = {
   'ai-detector.html': [['background-color', 'font-size', 'line-height'], 'the FAQ intro at the one size; the FAQ pill takes the tint on its white section'],
   'api.html': [['background-color', 'font-size', 'line-height'], 'the FAQ intro at the one size; the FAQ pill takes the tint on its white section'],
 };
-for (const [file, [props, reason]] of Object.entries(CLOSED)) {
-  const e = module.exports[file] = module.exports[file] || {};
-  e.byRef = { ...(e.byRef || {}), '5330452': { ...((e.byRef || {})['5330452'] || {}), acceptGeometry: { props, reason: 'pilot review: ' + reason } } };
-}
+/* record `table` ({ file: [props, reason] }) as the accepted geometry against baseline `ref` */
+const acceptAgainst = (ref, table, prefix) => {
+  for (const [file, [props, reason]] of Object.entries(table)) {
+    const e = module.exports[file] = module.exports[file] || {};
+    e.byRef = { ...(e.byRef || {}), [ref]: { ...((e.byRef || {})[ref] || {}), acceptGeometry: { props, reason: prefix + reason } } };
+  }
+};
+acceptAgainst('5330452', CLOSED, 'pilot review: ');
+
+/* SECTION LIBRARY, WAVE 1 · THE CTA BAND (2026-10-01), against f15c5ba — the last commit
+   before the closing band moved onto its library template (build/sections/cta-band.js).
+   Twenty-two bands, 0 px on every page. Nineteen are identical in every measured property;
+   three lost a drift that painted nothing, in exactly the properties named here:
+
+     the actions row. Home, Pricing and Rate my paper v2 wrote the row of one button as
+       "flex justify-center"; the band's row is "flex flex-wrap items-center justify-center
+       gap-4 sm:gap-5" (the form the AI Detector, API, Business, University and Affiliate
+       bands already had). One child: the alignment and the gaps move nothing.
+     the note under the actions (Home). The row carried the space as its bottom margin
+       (mb-6 sm:mb-7); the note carries it now as its top margin — the same elements in
+       the same places, only which of the two neighbours holds the margin changed. */
+acceptAgainst('f15c5ba', {
+  'index.html': [['align-items', 'column-gap', 'row-gap', 'margin-top', 'margin-bottom'], 'the actions row is the band\'s one row; the space above the note is the note\'s own margin'],
+  'prices.html': [['align-items', 'column-gap', 'row-gap'], 'the actions row is the band\'s one row (one button: nothing moves)'],
+  'paper-analysis-v2.html': [['align-items', 'column-gap', 'row-gap'], 'the actions row is the band\'s one row (one button: nothing moves)'],
+}, 'CTA band: ');
