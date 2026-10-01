@@ -757,61 +757,56 @@
   </section>
 
 
-  <!-- ================= 09 · AUDIENCE PATHWAYS ================= -->
-  <section data-component="audiences" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Pathways</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">For individual checks, education, and teams</h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Start with a single document, or use PlagiarismSearch across organization and LMS workflows when more people need shared access, storage, or administration.</p>
+  <!-- ================= 09 · AUDIENCE PATHWAYS =================
+       The library's Feature cards (build/sections/feature-cards.js), size "lead": the
+       ringed tile, a name at lead scale, the card's own button at its foot. -->
+<section data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="md" data-size="lead">
+  <div class="cards-inner">
+    <div class="section-head rv" data-measure="720">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Pathways</span>
       </div>
-
-      <div class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-teal-50 ring-1 ring-teal-500/15 text-teal-700 flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
-          </span>
-          <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mt-5 mb-3">Students &amp; individual users</p>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-6">Check essays, papers, assignments, presentations, and other documents before submission. Review matched passages, sources, citations, and references in one report.</p>
-          <div class="mt-auto"><a href="plagiarism-checker-for-students.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full ring-1 ring-black/10 text-ink-900 hover:bg-ink-900/5 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
-          For students
-          <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/5 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a></div>
+      <h2 class="section-title">For individual checks, education, and teams</h2>
+      <p class="section-intro">Start with a single document, or use PlagiarismSearch across organization and LMS workflows when more people need shared access, storage, or administration.</p>
+    </div>
+    <div class="cards-grid rv-kids" data-cols="3">
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="teal" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
+        <p class="cards-title">Students &amp; individual users</p>
+        <p class="cards-text">Check essays, papers, assignments, presentations, and other documents before submission. Review matched passages, sources, citations, and references in one report.</p>
+        <div class="cards-item-action">
+          <a href="plagiarism-checker-for-students.html" class="action-button btn-press group" data-tone="ghost">
+            For students
+            <span class="action-button-orb icon-orb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
         </div>
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-orange-100 ring-1 ring-orange-500/15 text-orange-700 flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/></svg>
-          </span>
-          <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mt-5 mb-3">Education &amp; Institutions</p>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-6">Bring plagiarism checking into institutional workflows with Moodle and Canvas, organization management, shared storage, and member permissions.</p>
-          <div class="mt-auto"><a href="university-plagiarism-checker.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full ring-1 ring-black/10 text-ink-900 hover:bg-ink-900/5 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
-          Education &amp; Institutions
-          <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/5 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a></div>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="orange" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/></svg></span>
+        <p class="cards-title">Education &amp; Institutions</p>
+        <p class="cards-text">Bring plagiarism checking into institutional workflows with Moodle and Canvas, organization management, shared storage, and member permissions.</p>
+        <div class="cards-item-action">
+          <a href="university-plagiarism-checker.html" class="action-button btn-press group" data-tone="ghost">
+            Education &amp; Institutions
+            <span class="action-button-orb icon-orb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
         </div>
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="w-11 h-11 rounded-xl sm:rounded-[14px] bg-mint-100 ring-1 ring-mint-500/20 text-mint-700 flex items-center justify-center shrink-0">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </span>
-          <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mt-5 mb-3">Business &amp; Teams</p>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mb-6">Invite team members, manage permissions, share organization storage, and connect plagiarism checking through the API when needed.</p>
-          <div class="mt-auto"><a href="plagiarism-checker-for-organization.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full ring-1 ring-black/10 text-ink-900 hover:bg-ink-900/5 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
-          Business &amp; Teams
-          <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/5 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a></div>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="mint" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <p class="cards-title">Business &amp; Teams</p>
+        <p class="cards-text">Invite team members, manage permissions, share organization storage, and connect plagiarism checking through the API when needed.</p>
+        <div class="cards-item-action">
+          <a href="plagiarism-checker-for-organization.html" class="action-button btn-press group" data-tone="ghost">
+            Business &amp; Teams
+            <span class="action-button-orb icon-orb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
   <!-- ================= 10 · REVIEWS =================

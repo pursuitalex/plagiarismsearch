@@ -38,6 +38,7 @@ const banner = require('./sections/banner');
 const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
 const hero = require('./sections/hero');   /* the hero: one library template; the diagram is its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
+const cards = require('./sections/feature-cards');   /* the feature cards: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* /organization-management has no page in this prototype and is a live production URL */
@@ -607,29 +608,12 @@ const section7 = () => `  <!-- ================= 07 · DATA HANDLING ===========
        Three different things, so three columns of one card with rules between them —
        distinct, side by side, not blended. The closing line and the privacy link are the
        card's foot. No absolutes, no timings. -->
-  <section id="data-handling" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-${eyebrow('orange-500', COPY.data.eyebrow, 'ink')}
-        <h2 class="${H2}">${COPY.data.h2}</h2>
-        <p class="${INTRO}">${COPY.data.intro}</p>
-      </div>
-
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 overflow-hidden">
-        <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-200/70">
-${COPY.data.items.map(([head, body, icon], i) => `          <div class="p-6 sm:p-7 lg:p-8">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center">${ico(icon, ['#374151', '#B84431', '#06748A'][i])}</span>
-            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">${head}</h3>
-            <p class="${BODY} text-ink-600">${body}</p>
-          </div>`).join('\n')}
-        </div>
-        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 border-t border-ink-200/70 bg-white/60 px-6 py-5 sm:px-7 lg:px-8">
-          <p class="min-w-0 flex-1 ${BODY} text-ink-900 font-semibold">${COPY.data.closing}</p>
-          <span class="shrink-0">${btnLight(COPY.data.cta, COPY.data.ctaHref)}</span>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${cards.section({
+    id: 'data-handling', layout: 'panel', bg: 'white', space: 'lg',
+    head: { eyebrow: COPY.data.eyebrow, title: COPY.data.h2, intro: COPY.data.intro },
+    items: COPY.data.items.map(([title, text, icon], i) => ({ title, text, icon, tone: ['ink', 'orange', 'teal'][i] })),
+    foot: { note: COPY.data.closing, action: { label: COPY.data.cta, href: COPY.data.ctaHref, tone: 'light' } },
+  })}`;
 
 /* ═══════════════ 08 · PLANS & CUSTOM ═══════════════ */
 const section8 = () => `  <!-- ================= 08 · PLANS & CUSTOM REQUIREMENTS =================

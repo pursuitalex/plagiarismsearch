@@ -34,6 +34,7 @@ const OUT = 'api.html';
 const cta = require('./sections/cta-band');
 const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
+const cards = require('./sections/feature-cards');   /* the feature cards: one library template */
 const { dotField } = require('./dots');   /* the closing band — recipe and reasoning live there */
 
 const DOCS = 'https://plagiarismsearch.com/docs/';   /* live production, no page here */
@@ -519,25 +520,12 @@ const section6 = () => `  <!-- ================= 06 · WORKFLOW USE CASES ======
        Three genuinely distinct integration shapes. Not Schools / Universities / Colleges,
        which the brief rejects as near-duplicate persona cards, and no Moodle card — that
        cross-link is a separate later decision, not an API mechanic. -->
-  <section id="api-use-cases" data-component="use-cases" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-10 sm:mb-12">
-${eyebrow('orange-500', 'Use cases')}
-        ${h2(COPY.s6.h2)}
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s6.intro}</p>
-      </div>
-
-      <div class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-${COPY.s6.items.map(([head, body, icon]) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#DC5A45" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
-          </span>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-2.5">${head}</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${body}</p>
-        </div>`).join('\n')}
-      </div>
-    </div>
-  </section>`;
+${cards.section({
+    id: 'api-use-cases', layout: 'grid', bg: 'aqua', space: 'lg', size: 'compact',
+    head: { eyebrow: 'Use cases', title: COPY.s6.h2, intro: COPY.s6.intro, measure: '760' },
+    cols: 3,
+    items: COPY.s6.items.map(([title, text, icon]) => ({ title, text, icon, tone: 'orange' })),
+  })}`;
 
 /* ═══════════════ 07 · DEVELOPER RESOURCES ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · DEVELOPER RESOURCES =================

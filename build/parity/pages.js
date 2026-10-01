@@ -398,3 +398,16 @@ acceptAgainst('6c16c1a', {
   'index.html': [['margin-top', 'margin-bottom'], 'the intro and the note panel carry the gap above themselves (the h2 and the list carried it below)'],
   'api.html': [['background-color'], 'the workflow pill takes the tint on its white section (derived from data-bg, as the FAQ pill)'],
 }, 'Steps: ');
+
+/* SECTION LIBRARY, WAVE 2 · THE FEATURE CARDS (2026-10-01), against d361aa7 — the last commit
+   before the icon-card sections moved onto their library template
+   (build/sections/feature-cards.js). Six sections on five pages, 0 px on every page. Five
+   are identical in every measured property (PDF, API, Business & Teams, both sections of
+   Affiliate). One differs in exactly the properties named here:
+
+     Home, the audience cards. The head is the Section Header block, whose intro carries
+       the gap above itself (the homepage's h2 carried it below). The same elements in
+       the same places; only which of the two neighbours holds the margin changed. */
+acceptAgainst('d361aa7', {
+  'index.html': [['margin-top', 'margin-bottom'], 'the intro carries the gap above itself (the h2 carried it below)'],
+}, 'Feature cards: ');

@@ -200,30 +200,31 @@
 
   <!-- ================= 02 · AFFILIATE TOOLS =================
        The live page's three tools, one sheet with rules between them — they are three
-       views of the same panel, so they share a surface rather than float as cards. -->
-  <section id="affiliate-tools" data-component="tool-cells" aria-label="Affiliate Dashboard, Performance Statistics, Conversion Tracking" class="relative py-12 sm:py-16 lg:py-20 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 overflow-hidden">
-        <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-200/70">
-          <div class="p-6 sm:p-7 lg:p-8">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
-            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Affiliate Dashboard</h3>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Access your personal affiliate link, marketing materials, and performance overview in one place.</p>
-          </div>
-          <div class="p-6 sm:p-7 lg:p-8">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
-            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Performance Statistics</h3>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Track clicks, registrations, and earnings with clear, real-time reporting.</p>
-          </div>
-          <div class="p-6 sm:p-7 lg:p-8">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
-            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Conversion Tracking</h3>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">See every approved sale and commission directly inside your affiliate panel.</p>
-          </div>
+       views of the same panel, so they share a surface rather than float as cards.
+       The library's Feature cards (build/sections/feature-cards.js), layout "panel". -->
+<section id="affiliate-tools" data-component="feature-cards" aria-label="Affiliate Dashboard, Performance Statistics, Conversion Tracking" class="cards-section" data-layout="panel" data-bg="white" data-space="sm">
+  <div class="cards-inner">
+    <div class="cards-panel rv">
+      <div class="cards-cells">
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
+          <h3 class="cards-title">Affiliate Dashboard</h3>
+          <p class="cards-text">Access your personal affiliate link, marketing materials, and performance overview in one place.</p>
+        </div>
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
+          <h3 class="cards-title">Performance Statistics</h3>
+          <p class="cards-text">Track clicks, registrations, and earnings with clear, real-time reporting.</p>
+        </div>
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+          <h3 class="cards-title">Conversion Tracking</h3>
+          <p class="cards-text">See every approved sale and commission directly inside your affiliate panel.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 03 · HOW IT WORKS =================
        Three steps as the system's editorial list: number, name, what happens. The hero's
@@ -364,42 +365,44 @@
   <!-- ================= 05 · WHY JOIN US =================
        Five reasons on one tinted sheet: heading block in the first cell, the five
        reasons in the rest, so the grid is a clean three by two. The two live links stay
-       on the phrases that carry them. -->
-  <section id="why-join-us" data-component="reason-grid" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-        <div class="sm:col-span-2 lg:col-span-1 flex flex-col justify-center p-1 sm:p-2 lg:pr-6">
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Why Join Us?</h2>
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Dive into the authentic advantages</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg></span>
-          <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">User-friendly interface</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Get the best experience with our easy to use and interactive design</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
-          <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Guaranteed confidentiality</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Your data is safe here! It is guaranteed by our terms of use and privacy policy</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></span>
-          <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Effective algorithms</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Plagiarism detection has gone far! We offer a great <a href="turnitin-checker-alternative.html" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">alternative to turnitin</a></p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span>
-          <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Reasonable pricing</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">No one wants to pay more, so check out our seasonal discounts and great affiliate program</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-          <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Plenty of happy customers</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">The database of satisfied customers is growing every day. Check our <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="noopener" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300">Trustpilot.</a></p>
-        </div>
+       on the phrases that carry them.
+       The library's Feature cards (build/sections/feature-cards.js): a grid whose first
+       cell is the head. -->
+<section id="why-join-us" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg">
+  <div class="cards-inner">
+    <div class="cards-grid rv" data-head="inline">
+      <div class="cards-head-cell">
+        <h2 class="section-title">Why Join Us?</h2>
+        <p class="section-intro">Dive into the authentic advantages</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg></span>
+        <h3 class="cards-title">User-friendly interface</h3>
+        <p class="cards-text">Get the best experience with our easy to use and interactive design</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <h3 class="cards-title">Guaranteed confidentiality</h3>
+        <p class="cards-text">Your data is safe here! It is guaranteed by our terms of use and privacy policy</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></span>
+        <h3 class="cards-title">Effective algorithms</h3>
+        <p class="cards-text">Plagiarism detection has gone far! We offer a great <a href="turnitin-checker-alternative.html" class="cards-link">alternative to turnitin</a></p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span>
+        <h3 class="cards-title">Reasonable pricing</h3>
+        <p class="cards-text">No one wants to pay more, so check out our seasonal discounts and great affiliate program</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="mint"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <h3 class="cards-title">Plenty of happy customers</h3>
+        <p class="cards-text">The database of satisfied customers is growing every day. Check our <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="noopener" class="cards-link">Trustpilot.</a></p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 06 · FAQ =================
        The library FAQ (build/sections/faq.js): six questions, full answers in the HTML.

@@ -670,6 +670,29 @@ Not on the template: the Students page's "what to do when you find a match" (a t
 beside a sticky decision card), the AI Detector's interpretation act, the photo
 compositions of the tool and v2 pages, and the Scholarship's numbered terms.
 
+#### The feature cards — `build/sections/feature-cards.js`
+
+An unnumbered set of things of equal rank — an icon, a name, a few lines each — is one
+Section Library component (wave 2): `section.cards-section`,
+`data-component="feature-cards"`. Two layouts (`data-layout`): `grid` — separate cards
+(`data-cols="3|4"`; `data-head="inline"` puts the head in the grid's first cell; one card
+may be the teal accent, `data-tone="teal"`; one button may follow the grid) — and
+`panel` — the cells of one grey sheet with hairlines between them, white tiles, an
+optional last row with a note and a button; for a white section. `data-size` on a grid:
+`compact` is the API page's card (a flat tile on the tone's lightest wash, the smaller
+text), `lead` the homepage's (the ringed tile, a larger name, the card's own button at
+its foot). Pages: PDF (document handling), API (use cases), Home (audiences), Business &
+Teams (data handling), Affiliate (the tools sheet, "Why join us").
+
+"lifecycle-rail" was one name for three designs: the numbered ones are Steps, these two
+(PDF, Business & Teams) are feature cards.
+
+Not on the template — each a question for one decision, not a variant: the illustrated
+spot cards of the v2 pages and Mission (one card in three title sizes — 15/16, 15.5/16.5,
+16/17 — under five different heads), the bento grids (AI Detector documents, Pricing
+values, Home integrations with partner marks), the API input cards (a format tag and the
+page's own tile), Pricing services (prices), the Scholarship's rule tiles.
+
 The in-section button and quiet link are a library primitive, the **Action**
 (`build/sections/action.js`, `.action-button` / `.action-link`, `data-tone="light|ghost"`),
 and so is the **Icon tile** (`build/sections/icon-tile.js`, `.icon-tile[data-tone]`): one

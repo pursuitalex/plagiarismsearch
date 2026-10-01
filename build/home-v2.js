@@ -332,6 +332,7 @@ const faq = require('./sections/faq');   /* the FAQ: one library template */
    in its sealed slot, so Students and PDF show the same component */
 const hero = require('./sections/hero');
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
+const cards = require('./sections/feature-cards');   /* the feature cards: one library template */
 
 const section1 = () => `
   <!-- ================= 01 · HERO / REAL CHECKER =================
@@ -634,25 +635,15 @@ const section8 = () => `
   </section>`;
 
 const section9 = () => `
-  <!-- ================= 09 · AUDIENCE PATHWAYS ================= -->
-  <section data-component="audiences" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        ${eyebrow('Pathways')}
-        <h2 class="${H2} mb-4 lg:mb-5">${S.s9.h2}</h2>
-        <p class="${LEAD} text-ink-600">${S.s9.intro}</p>
-      </div>
-
-      <div class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-        ${S.s9.cards.map(([t, d, cta, href], i) => `<div class="${CARD} flex flex-col">
-          ${chip([I.cap, I.building, I.users][i], i)}
-          <p class="text-[17.5px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight text-ink-900 mt-5 mb-3">${t}</p>
-          <p class="${TILE_SUB} text-ink-600 mb-6">${d}</p>
-          <div class="mt-auto">${btn(cta, href, 'light')}</div>
-        </div>`).join('\n        ')}
-      </div>
-    </div>
-  </section>`;
+  <!-- ================= 09 · AUDIENCE PATHWAYS =================
+       The library's Feature cards (build/sections/feature-cards.js), size "lead": the
+       ringed tile, a name at lead scale, the card's own button at its foot. -->
+${cards.section({
+    layout: 'grid', bg: 'cool', space: 'md', size: 'lead',
+    head: { eyebrow: 'Pathways', title: S.s9.h2, intro: S.s9.intro, measure: '720' },
+    cols: 3,
+    items: S.s9.cards.map(([title, text, cta, href], i) => ({ title, text, icon: [I.cap, I.building, I.users][i], tone: ['teal', 'orange', 'mint'][i % 3], action: { label: cta, href, tone: 'ghost' } })),
+  })}`;
 
 const section10 = () => `
   <!-- ================= 10 · REVIEWS =================

@@ -1,0 +1,157 @@
+/* ═══ Feature cards — library component ═════════════════════════════════════════════
+   Template: build/sections/feature-cards.js · contract: build/sections/feature-cards.contract.js
+   Behaviour: build/assets/js/20-motion.js (.rv, .rv-kids) — nothing of its own
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   An unnumbered set of things of equal rank — what the product keeps, offers or is for —
+   each an icon, a name and a few lines. Two layouts (data-layout on the section):
+
+   section.cards-section    data-layout="grid|panel"   data-bg="white|cool|aqua"   data-space="sm|md|lg"
+                            data-accent="teal"   data-size="compact|lead"
+     .cards-inner
+       (.section-head.rv)                      the Section Header (section-head.css)
+
+   data-layout="grid"       separate cards (PDF, API, the homepage, Affiliate)
+       div.cards-grid.rv-kids                  data-cols="3|4"
+         div.cards-item                        data-tone="teal": the accent card
+           span.icon-tile   h3.cards-title   p.cards-text (may hold a.cards-link)
+           (div.cards-item-action > a.action-button)        with data-size="lead"
+       div.cards-grid.rv[data-head="inline"]   the head is the grid's first cell (Affiliate):
+         div.cards-head-cell > h2.section-title, p.section-intro      then the cards
+       (div.cards-actions.rv > a.action-button)             one button under the grid
+
+   data-layout="panel"      cells of one sheet, hairlines between them (Business & Teams, Affiliate)
+       div.cards-panel.rv
+         div.cards-cells > div.cards-cell      span.icon-tile   h3.cards-title   p.cards-text
+         (div.cards-panel-foot > p.cards-panel-note, span.cards-panel-action > a.action-button)
+
+   data-size="compact"      the API page's card: a flat tile on the tone's lightest wash, the smaller text
+   data-size="lead"         the homepage's card: the ringed tile, a larger name, a button at its foot
+
+   SURFACES follow the ground (IMAGES.md § 8.5): a card is white with the hairline and the
+   soft shadow; the panel is the grey sheet with white tiles, for a white section. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.cards-section {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-white;
+}
+.cards-section:where([data-space="md"]) { @apply lg:py-28; }
+.cards-section:where([data-space="sm"]) { @apply py-12 sm:py-16 lg:py-20; }
+.cards-section:where([data-bg="cool"]) { @apply bg-[#F7FAFC]; }
+.cards-section:where([data-bg="aqua"]) { @apply bg-[#F2FCFC] overflow-hidden; }
+
+.cards-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+
+/* ── layout: grid ────────────────────────────────────────────────────────────── */
+.cards-grid {
+  @apply grid gap-4 sm:gap-5 lg:gap-6;
+}
+.cards-grid:where([data-cols="4"]) { @apply sm:grid-cols-2 lg:grid-cols-4; }
+.cards-grid:where([data-cols="3"]) { @apply md:grid-cols-3; }
+
+.cards-item {
+  @apply rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7;
+}
+/* the accent card: the one of the set that is a different kind of thing */
+.cards-item:where([data-tone="teal"]) {
+  @apply bg-teal-50 ring-teal-600/10 shadow-none;
+}
+.cards-title {
+  @apply text-[16px] sm:text-[17px] font-bold tracking-tight mt-5 mb-1.5;
+}
+.cards-text {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600;
+}
+/* a link inside a card's text */
+.cards-link {
+  @apply font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 transition-colors duration-300;
+}
+
+/* the head as the grid's first cell: two cards a row from 640px, three from 1024px, the
+   head taking the first place; the roomier card and the larger name of three across */
+.cards-grid:where([data-head="inline"]) {
+  @apply sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:gap-5;
+}
+.cards-head-cell {
+  @apply sm:col-span-2 lg:col-span-1 flex flex-col justify-center p-1 sm:p-2 lg:pr-6;
+}
+:where(.cards-grid[data-head="inline"]) > .cards-item {
+  @apply p-6 sm:p-7 lg:p-7;
+}
+:where(.cards-grid[data-head="inline"]) .cards-title {
+  @apply lg:text-[18px];
+}
+
+/* one button under the grid */
+.cards-actions {
+  @apply mt-6 lg:mt-8;
+}
+
+/* ── layout: panel ───────────────────────────────────────────────────────────── */
+.cards-panel {
+  @apply rounded-3xl sm:rounded-4xl bg-ink-50 overflow-hidden;
+}
+.cards-cells {
+  @apply grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-200/70;
+}
+.cards-cell {
+  @apply p-6 sm:p-7 lg:p-8;
+}
+/* on the grey sheet a tile is white with a hairline; its icon keeps the tone's ink */
+:where(.cards-panel) .icon-tile {
+  @apply bg-white ring-1 ring-black/5;
+}
+:where(.cards-cell) > .cards-title {
+  @apply lg:text-[18px];
+}
+.cards-panel-foot {
+  @apply flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 border-t border-ink-200/70 bg-white/60 px-6 py-5 sm:px-7 lg:px-8;
+}
+.cards-panel-note {
+  @apply min-w-0 flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-semibold;
+}
+.cards-panel-action {
+  @apply shrink-0;
+}
+
+/* ── size: compact — the API page's card ─────────────────────────────────────────
+   A flat tile on the tone's lightest wash with the icon one shade lighter, the name
+   directly under it, the text at the page's smaller size. */
+:where(.cards-section[data-size="compact"]) .icon-tile {
+  @apply flex rounded-xl sm:rounded-xl lg:rounded-xl bg-ink-50 mb-4;
+}
+:where(.cards-section[data-size="compact"]) .icon-tile > svg { stroke: #4B5563; }
+:where(.cards-section[data-size="compact"]) .icon-tile:where([data-tone="teal"]) { @apply bg-teal-50; }
+:where(.cards-section[data-size="compact"]) .icon-tile:where([data-tone="teal"]) > svg { stroke: #0991A8; }
+:where(.cards-section[data-size="compact"]) .icon-tile:where([data-tone="orange"]) { @apply bg-orange-50; }
+:where(.cards-section[data-size="compact"]) .icon-tile:where([data-tone="orange"]) > svg { stroke: #DC5A45; }
+:where(.cards-section[data-size="compact"]) .icon-tile:where([data-tone="mint"]) { @apply bg-mint-50; }
+:where(.cards-section[data-size="compact"]) .icon-tile:where([data-tone="mint"]) > svg { stroke: #2AA46C; }
+:where(.cards-section[data-size="compact"]) .cards-title {
+  @apply mt-0 mb-2.5;
+}
+:where(.cards-section[data-size="compact"]) .cards-text {
+  @apply text-[13px] sm:text-[13.5px];
+}
+
+/* ── size: lead — the homepage's card ────────────────────────────────────────────
+   The homepage's card radius, the ringed tile (icon-tile.css, data-variant="ring"), a
+   name at lead scale, and the card's own action pinned to its foot. */
+:where(.cards-section[data-size="lead"]) > .cards-inner {
+  @apply static;
+}
+:where(.cards-section[data-size="lead"]) .cards-item {
+  @apply rounded-2xl sm:rounded-[20px] lg:rounded-3xl flex flex-col;
+}
+:where(.cards-section[data-size="lead"]) .cards-title {
+  @apply text-[17.5px] sm:text-[19px] lg:text-[20px] text-ink-900 mb-3;
+}
+:where(.cards-section[data-size="lead"]) .cards-text {
+  @apply mb-6;
+}
+.cards-item-action {
+  @apply mt-auto;
+}

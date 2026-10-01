@@ -28,6 +28,7 @@ const cta = require('./sections/cta-band');
 const faq = require('./sections/faq');   /* the FAQ: one library template */
 const hero = require('./sections/hero');   /* the hero: one library template; the sheet of facts is its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
+const cards = require('./sections/feature-cards');   /* the feature cards: one library template */
 
 const SITE = path.join(__dirname, '..', 'site');
 const OUT = 'affiliate-program-at-plagiarismsearch.html';
@@ -228,20 +229,13 @@ ${COPY.hero.facts.map(([lead, rest, icon], i) => `              <li class="${i =
 /* ═══════════════ 02 · THE THREE TOOLS ═══════════════ */
 const section2 = () => `  <!-- ================= 02 · AFFILIATE TOOLS =================
        The live page's three tools, one sheet with rules between them — they are three
-       views of the same panel, so they share a surface rather than float as cards. -->
-  <section id="affiliate-tools" data-component="tool-cells" aria-label="${COPY.tools.map(t => t[0]).join(', ')}" class="relative py-12 sm:py-16 lg:py-20 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 overflow-hidden">
-        <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-200/70">
-${COPY.tools.map(([head, body, icon], i) => `          <div class="p-6 sm:p-7 lg:p-8">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center">${ico(I[icon], ['#06748A', '#374151', '#B84431'][i])}</span>
-            <h3 class="${H3} mt-5 mb-1.5">${head}</h3>
-            <p class="${BODY} text-ink-600">${body}</p>
-          </div>`).join('\n')}
-        </div>
-      </div>
-    </div>
-  </section>`;
+       views of the same panel, so they share a surface rather than float as cards.
+       The library's Feature cards (build/sections/feature-cards.js), layout "panel". -->
+${cards.section({
+    id: 'affiliate-tools', layout: 'panel', bg: 'white', space: 'sm',
+    label: COPY.tools.map(t => t[0]).join(', '),
+    items: COPY.tools.map(([title, text, icon], i) => ({ title, text, icon: I[icon], tone: ['teal', 'ink', 'orange'][i] })),
+  })}`;
 
 /* ═══════════════ 03 · HOW IT WORKS ═══════════════ */
 const section3 = () => `  <!-- ================= 03 · HOW IT WORKS =================
@@ -309,26 +303,18 @@ ${offer(COPY.programs.credits, false)}
 const section5 = () => `  <!-- ================= 05 · WHY JOIN US =================
        Five reasons on one tinted sheet: heading block in the first cell, the five
        reasons in the rest, so the grid is a clean three by two. The two live links stay
-       on the phrases that carry them. -->
-  <section id="why-join-us" data-component="reason-grid" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-        <div class="sm:col-span-2 lg:col-span-1 flex flex-col justify-center p-1 sm:p-2 lg:pr-6">
-          <h2 class="${H2}">${COPY.why.h2}</h2>
-          <p class="${INTRO}">${COPY.why.intro}</p>
-        </div>
-${COPY.why.items.map(([head, body, icon, link], i) => {
-  const text = link ? body.replace(link[0], inline(link[0], link[1])) : body;
-  if (link && text === body) throw new Error('why: link phrase not found: ' + link[0]);
-  return `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-6 sm:p-7">
-          ${chip(['teal', 'ink', 'teal', 'orange', 'mint'][i], I[icon])}
-          <h3 class="${H3} mt-5 mb-1.5">${head}</h3>
-          <p class="${BODY} text-ink-600">${text}</p>
-        </div>`;
-}).join('\n')}
-      </div>
-    </div>
-  </section>`;
+       on the phrases that carry them.
+       The library's Feature cards (build/sections/feature-cards.js): a grid whose first
+       cell is the head. -->
+${cards.section({
+    id: 'why-join-us', layout: 'grid', bg: 'cool', space: 'lg', inlineHead: true,
+    head: { title: COPY.why.h2, intro: COPY.why.intro },
+    items: COPY.why.items.map(([title, body, icon, link], i) => {
+      const text = link ? body.replace(link[0], `<a href="${link[1]}"${ext(link[1])} class="cards-link">${link[0]}</a>`) : body;
+      if (link && text === body) throw new Error('why: link phrase not found: ' + link[0]);
+      return { title, text, icon: I[icon], tone: ['teal', 'ink', 'teal', 'orange', 'mint'][i] };
+    }),
+  })}`;
 
 /* ═══════════════ 06 · FAQ ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · FAQ =================

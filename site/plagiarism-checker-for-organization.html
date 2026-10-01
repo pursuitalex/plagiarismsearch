@@ -714,45 +714,46 @@
        Three different things, so three columns of one card with rules between them —
        distinct, side by side, not blended. The closing line and the privacy link are the
        card's foot. No absolutes, no timings. -->
-  <section id="data-handling" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Data Handling</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Keep checked documents, reports, and Organization Storage distinct</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">A checked document, a generated report, and content intentionally added to Organization Storage are different parts of the workflow.</p>
+<section id="data-handling" data-component="feature-cards" class="cards-section" data-layout="panel" data-bg="white" data-space="lg">
+  <div class="cards-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Data Handling</span>
       </div>
-
-      <div class="rv rounded-3xl sm:rounded-4xl bg-ink-50 overflow-hidden">
-        <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-200/70">
-          <div class="p-6 sm:p-7 lg:p-8">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
-            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Checked document</h3>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Uploaded source documents are not retained as stored documents after the check.</p>
-          </div>
-          <div class="p-6 sm:p-7 lg:p-8">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
-            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Generated report</h3>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Generated reports can remain available in the account for convenience. Users can permanently delete their reports.</p>
-          </div>
-          <div class="p-6 sm:p-7 lg:p-8">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></span>
-            <h3 class="text-[16px] sm:text-[17px] lg:text-[18px] font-bold tracking-tight mt-5 mb-1.5">Organization Storage</h3>
-            <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Organization Storage is a separate repository workflow. Content is added to it separately and access is governed by organization permissions.</p>
-          </div>
+      <h2 class="section-title">Keep checked documents, reports, and Organization Storage distinct</h2>
+      <p class="section-intro">A checked document, a generated report, and content intentionally added to Organization Storage are different parts of the workflow.</p>
+    </div>
+    <div class="cards-panel rv">
+      <div class="cards-cells">
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+          <h3 class="cards-title">Checked document</h3>
+          <p class="cards-text">Uploaded source documents are not retained as stored documents after the check.</p>
         </div>
-        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 border-t border-ink-200/70 bg-white/60 px-6 py-5 sm:px-7 lg:px-8">
-          <p class="min-w-0 flex-1 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-semibold">A normal plagiarism check should not be confused with intentionally adding content to Organization Storage.</p>
-          <span class="shrink-0"><a href="policy.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+          <h3 class="cards-title">Generated report</h3>
+          <p class="cards-text">Generated reports can remain available in the account for convenience. Users can permanently delete their reports.</p>
+        </div>
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></span>
+          <h3 class="cards-title">Organization Storage</h3>
+          <p class="cards-text">Organization Storage is a separate repository workflow. Content is added to it separately and access is governed by organization permissions.</p>
+        </div>
+      </div>
+      <div class="cards-panel-foot">
+        <p class="cards-panel-note">A normal plagiarism check should not be confused with intentionally adding content to Organization Storage.</p>
+        <span class="cards-panel-action">
+          <a href="policy.html" class="action-button btn-press group" data-tone="light">
             Read the Privacy Policy
-            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-          </a></span>
-        </div>
+            <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+        </span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 08 · PLANS & CUSTOM REQUIREMENTS =================
        The shared compact banner (build/sections/banner.js): between sections, two ways on. No

@@ -28,6 +28,7 @@
     <ul class="mt-6 flex flex-wrap gap-2.5">
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-hero">Hero <span class="text-ink-400 font-medium">7</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-steps">Steps <span class="text-ink-400 font-medium">10</span></a></li>
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-feature-cards">Feature cards <span class="text-ink-400 font-medium">6</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-faq">FAQ <span class="text-ink-400 font-medium">8</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-cta-band">CTA band <span class="text-ink-400 font-medium">9</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-banner">Banner <span class="text-ink-400 font-medium">5</span></a></li>
@@ -2686,6 +2687,610 @@
 &lt;/section&gt;</textarea>
   </div>
 
+  <section id="lib-feature-cards" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">Feature cards</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>Набір рівноправних речей без нумерації — що продукт зберігає, пропонує чи для кого він: іконка, назва і кілька рядків. Дві розкладки: окремі картки або комірки одного аркуша.</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/feature-cards.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/feature-cards.css</code> · JS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/assets/js/20-motion.js (поява .rv і .rv-kids)</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/feature-cards.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/feature-cards-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Назва для читача екрана</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">aria-label на &lt;section&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише для секції без заголовка (panel без .section-head): коротко перелічіть, що в комірках</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіанти</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg, data-space, data-accent на &lt;section&gt;; data-measure на .section-head; data-cols на сітці; data-tone на картці, плитці, кнопці</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише значення зі списку варіантів. data-layout, data-size і data-head не міняйте на готовому фрагменті: у кожного своя розмітка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Надпис-пігулка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-eyebrow-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; блок .section-eyebrow можна прибрати цілком. Фон пігулки не задається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Заголовок H2</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">h2.section-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; допускаються &lt;br&gt;, &lt;em&gt;, &lt;strong&gt;. У grid — обов’язковий (у блоці .section-head або в першій комірці)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Вступ</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.section-intro</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Картка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.cards-item / .cards-cell</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">додати чи прибрати — цілим блоком, скопіювавши сусідній; карток 2–8 (комірок аркуша — 2–4). Після зміни кількості перевірте data-cols</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Назва картки</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.cards-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст без розмітки</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Текст картки</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.cards-text</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; допускаються strong, em, br і посилання a.cards-link (href; rel="noopener" для зовнішніх)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Іконка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.icon-tile &gt; svg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">іконку &lt;svg&gt; можна замінити іншою з Lucide (24×24, stroke="currentColor"); колір — data-tone на плитці</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Кнопка в картці (lead)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.cards-item-action &gt; a.action-button</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href; блок можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Кнопка під сіткою</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.cards-actions &gt; a.action-button</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href; блок можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Підвал аркуша (panel)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.cards-panel-foot: p.cards-panel-note, a.action-button</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст примітки, текст і href кнопки; кнопку або весь підвал можна прибрати</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>усі класи й обгортки: .cards-inner, .section-head, .cards-grid, .cards-item, .cards-panel, .cards-cells, .cards-cell</li>
+          <li>data-component="feature-cards" на секції — гачок для перевірок; data-layout, data-bg, data-space — обов’язкові</li>
+          <li>класи-гачки: rv на блоці заголовка, аркуші та кнопці під сіткою; rv-kids на сітці (картки з’являються по черзі; у сітки з data-head="inline" — rv); btn-press, group, icon-orb на кнопці</li>
+          <li>склад картки: плитка з іконкою → назва → текст (→ кнопка в lead); порядок не міняється</li>
+          <li>акцентна картка (data-tone="teal") — не більше однієї на сітку</li>
+          <li>іконки &lt;svg&gt; стрілок — копіюються як є</li>
+          <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) усередині секції</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">grid</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">panel</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. розкладка. grid — окремі картки (PDF, API, головна, Affiliate). panel — комірки одного сірого аркуша з рисками між ними (Business &amp; Teams, Affiliate); для білої секції. Це різні фрагменти — беріть відповідний зразок.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">white</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">cool</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">aqua</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. фон секції: white — білий, cool — холодний світлий (#F7FAFC), aqua — світло-бірюзовий (#F2FCFC). Пігулка сама бере протилежний фон.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-space</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">sm</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">md</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">lg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. вертикальний ритм на десктопі: lg — 128px, md — 112px (беріть той, що в сусідніх секцій сторінки); sm — 80px: коротка смуга без заголовка (Affiliate).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-accent</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. колір крапки в пігулці. Без атрибута — помаранчева; teal — бірюзова.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-size</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">compact</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">lead</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. вигляд картки (лише grid). Без атрибута — звичайна. compact — картка сторінки API: пласка плитка на найсвітлішому тоні, менший текст. lead — картка головної: плитка з обідком, більша назва, внизу картки кнопка.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">head</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">720</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">760</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">860</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. ширина блока заголовка, px. Без атрибута — 820. 720 — головна (і менший відступ до карток).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">grid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-cols</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">3</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">4</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. скільки карток у ряд на десктопі: 3 — три з 768px; 4 — дві з 640px, чотири з 1024px. Обов’язковий, крім сітки з data-head="inline".</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">grid</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-head</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">inline</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. inline — заголовок секції стоїть першою коміркою сітки (div.cards-head-cell), блока .section-head над сіткою немає; дві картки в ряд із 640px, три з 1024px (Affiliate).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">item</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. teal — акцентна картка: бірюзове тло без тіні (одна з набору, яка означає щось інше — у PDF це Storage).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">tile</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ink</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">orange</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">mint</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. колір плитки з іконкою (.icon-tile): один атрибут задає і тло плитки, і колір іконки. На сірому аркуші (panel) плитка біла, тон задає лише колір іконки.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">tile</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-variant</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ring</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. ring — плитка головної з тонким кольоровим обідком (лише з data-size="lead").</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">button</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">light</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ghost</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. кнопка: light — біла з обідком (під сіткою, у підвалі аркуша); ghost — велика прозора з обідком (у картці головної).</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="pdf-plagiarism-checker.html">pdf-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">grid · cool · lg</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">4 картки, остання акцентна; світла кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">affiliate-program-at-plagiarismsearch.html (#why-join-us)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">grid · cool · lg · head inline</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">заголовок у сітці + 5 карток; посилання в тексті</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">api.html (#api-use-cases)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">grid · aqua · lg · compact</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 картки; блок заголовка 760</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="index.html">index.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">grid · cool · md · lead</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 картки з кнопкою ghost; блок заголовка 720</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">plagiarism-checker-for-organization.html (#data-handling)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">panel · white · lg</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 комірки; примітка і світла кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">affiliate-program-at-plagiarismsearch.html (#affiliate-tools)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">panel · white · sm</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 комірки; без заголовка (aria-label)</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── feature-cards · 1 · feature-cards-grid.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Feature cards · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Feature cards · сітка карток</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Чотири картки: плитка з іконкою, назва, текст; остання — акцентна (data-tone="teal"). Під сіткою — одна світла кнопка. Копія — PDF.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: pdf-plagiarism-checker · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/feature-cards-grid.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cards-grid" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg">
+  <div class="cards-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">PDF &amp; Report Handling</span>
+      </div>
+      <h2 class="section-title">Know what happens to your uploaded PDF</h2>
+      <p class="section-intro">Your PDF is processed to perform the checks you select. The uploaded source document and the generated report have different retention behavior.</p>
+    </div>
+    <div class="cards-grid rv-kids" data-cols="4">
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+        <h3 class="cards-title">Uploaded PDF</h3>
+        <p class="cards-text">The uploaded source document is not retained as a stored source document.</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+        <h3 class="cards-title">Report</h3>
+        <p class="cards-text">A generated report may remain available in your account for convenient access.</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+        <h3 class="cards-title">Your control</h3>
+        <p class="cards-text">You can permanently delete reports from your account.</p>
+      </div>
+      <div class="cards-item" data-tone="teal">
+        <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></span>
+        <h3 class="cards-title">Storage</h3>
+        <p class="cards-text">Adding content to Storage is a separate action you control. Running a plagiarism check does not automatically add the PDF to Storage.</p>
+      </div>
+    </div>
+    <div class="cards-actions rv">
+      <a href="policy.html" class="action-button btn-press group" data-tone="light">
+        Read the Privacy Policy
+        <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-18">HTML для копіювання</label>
+    <textarea id="snippet-18" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-grid" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg"&gt;
+  &lt;div class="cards-inner"&gt;
+    &lt;div class="section-head rv"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;PDF &amp;amp; Report Handling&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Know what happens to your uploaded PDF&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;Your PDF is processed to perform the checks you select. The uploaded source document and the generated report have different retention behavior.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="cards-grid rv-kids" data-cols="4"&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M16 13H8"/&gt;&lt;path d="M16 17H8"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Uploaded PDF&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;The uploaded source document is not retained as a stored source document.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M8 17v-3"/&gt;&lt;path d="M12 17v-6"/&gt;&lt;path d="M16 17v-4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Report&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;A generated report may remain available in your account for convenient access.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M3 6h18"/&gt;&lt;path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/&gt;&lt;path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Your control&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;You can permanently delete reports from your account.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item" data-tone="teal"&gt;
+        &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 8v13H3V8"/&gt;&lt;path d="M1 3h22v5H1z"/&gt;&lt;path d="M10 12h4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Storage&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;Adding content to Storage is a separate action you control. Running a plagiarism check does not automatically add the PDF to Storage.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="cards-actions rv"&gt;
+      &lt;a href="policy.html" class="action-button btn-press group" data-tone="light"&gt;
+        Read the Privacy Policy
+        &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── feature-cards · 2 · feature-cards-inline-head.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Feature cards · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Feature cards · заголовок у першій комірці</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-head="inline": заголовок і вступ стоять першою коміркою сітки, далі картки (тут п’ять); у тексті картки може бути посилання a.cards-link. Копія — Affiliate Program.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: affiliate-program-at-plagiarismsearch (#why-join-us) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/feature-cards-inline-head.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cards-inline" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg">
+  <div class="cards-inner">
+    <div class="cards-grid rv" data-head="inline">
+      <div class="cards-head-cell">
+        <h2 class="section-title">Why Join Us?</h2>
+        <p class="section-intro">Dive into the authentic advantages</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg></span>
+        <h3 class="cards-title">User-friendly interface</h3>
+        <p class="cards-text">Get the best experience with our easy to use and interactive design</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <h3 class="cards-title">Guaranteed confidentiality</h3>
+        <p class="cards-text">Your data is safe here! It is guaranteed by our terms of use and privacy policy</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></span>
+        <h3 class="cards-title">Effective algorithms</h3>
+        <p class="cards-text">Plagiarism detection has gone far! We offer a great <a href="turnitin-checker-alternative.html" class="cards-link">alternative to turnitin</a></p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span>
+        <h3 class="cards-title">Reasonable pricing</h3>
+        <p class="cards-text">No one wants to pay more, so check out our seasonal discounts and great affiliate program</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="mint"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <h3 class="cards-title">Plenty of happy customers</h3>
+        <p class="cards-text">The database of satisfied customers is growing every day. Check our <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="noopener" class="cards-link">Trustpilot.</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-19">HTML для копіювання</label>
+    <textarea id="snippet-19" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-inline" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg"&gt;
+  &lt;div class="cards-inner"&gt;
+    &lt;div class="cards-grid rv" data-head="inline"&gt;
+      &lt;div class="cards-head-cell"&gt;
+        &lt;h2 class="section-title"&gt;Why Join Us?&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Dive into the authentic advantages&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;path d="M8 14s1.5 2 4 2 4-2 4-2"/&gt;&lt;line x1="9" x2="9.01" y1="9" y2="9"/&gt;&lt;line x1="15" x2="15.01" y1="9" y2="9"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;User-friendly interface&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;Get the best experience with our easy to use and interactive design&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/&gt;&lt;path d="m9 12 2 2 4-4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Guaranteed confidentiality&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;Your data is safe here! It is guaranteed by our terms of use and privacy policy&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="16" height="16" x="4" y="4" rx="2"/&gt;&lt;rect width="6" height="6" x="9" y="9" rx="1"/&gt;&lt;path d="M15 2v2"/&gt;&lt;path d="M15 20v2"/&gt;&lt;path d="M2 15h2"/&gt;&lt;path d="M2 9h2"/&gt;&lt;path d="M20 15h2"/&gt;&lt;path d="M20 9h2"/&gt;&lt;path d="M9 2v2"/&gt;&lt;path d="M9 20v2"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Effective algorithms&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;Plagiarism detection has gone far! We offer a great &lt;a href="turnitin-checker-alternative.html" class="cards-link"&gt;alternative to turnitin&lt;/a&gt;&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/&gt;&lt;circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Reasonable pricing&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;No one wants to pay more, so check out our seasonal discounts and great affiliate program&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="mint"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="9" cy="7" r="4"/&gt;&lt;path d="M22 21v-2a4 4 0 0 0-3-3.87"/&gt;&lt;path d="M16 3.13a4 4 0 0 1 0 7.75"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Plenty of happy customers&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;The database of satisfied customers is growing every day. Check our &lt;a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="noopener" class="cards-link"&gt;Trustpilot.&lt;/a&gt;&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── feature-cards · 3 · feature-cards-compact.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Feature cards · варіант 3</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Feature cards · картки сторінки API (compact)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-size="compact": пласка плитка на найсвітлішому тоні, менший текст; на бірюзовому тлі. Копія — API.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: api (#api-use-cases) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/feature-cards-compact.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cards-compact" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="aqua" data-space="lg" data-size="compact">
+  <div class="cards-inner">
+    <div class="section-head rv" data-measure="760">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Use cases</span>
+      </div>
+      <h2 class="section-title">Build plagiarism checking into the workflow you already use</h2>
+      <p class="section-intro">The API is designed for systems that need plagiarism checking inside an existing product or document process rather than as a separate manual step.</p>
+    </div>
+    <div class="cards-grid rv-kids" data-cols="3">
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="orange"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+        <h3 class="cards-title">Education and LMS platforms</h3>
+        <p class="cards-text">Add plagiarism checks to workflows that process academic documents or student submissions. Configure web, academic, and permitted storage sources according to the needs of the integration.</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="orange"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg></span>
+        <h3 class="cards-title">Publishing and content operations</h3>
+        <p class="cards-text">Run plagiarism checks as part of an editorial or pre-publication workflow without requiring every user to move into a separate checking interface.</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="orange"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
+        <h3 class="cards-title">Products that process submitted documents</h3>
+        <p class="cards-text">Trigger plagiarism checks when users submit text, files, or URLs to your product, then use the webhook and report data to continue the process inside your own application.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-20">HTML для копіювання</label>
+    <textarea id="snippet-20" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-compact" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="aqua" data-space="lg" data-size="compact"&gt;
+  &lt;div class="cards-inner"&gt;
+    &lt;div class="section-head rv" data-measure="760"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Use cases&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Build plagiarism checking into the workflow you already use&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;The API is designed for systems that need plagiarism checking inside an existing product or document process rather than as a separate manual step.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="cards-grid rv-kids" data-cols="3"&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M22 10v6M2 10l10-5 10 5-10 5z"/&gt;&lt;path d="M6 12v5c3 3 9 3 12 0v-5"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Education and LMS platforms&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;Add plagiarism checks to workflows that process academic documents or student submissions. Configure web, academic, and permitted storage sources according to the needs of the integration.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/&gt;&lt;path d="M18 14h-8"/&gt;&lt;path d="M15 18h-5"/&gt;&lt;path d="M10 6h8v4h-8V6Z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Publishing and content operations&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;Run plagiarism checks as part of an editorial or pre-publication workflow without requiring every user to move into a separate checking interface.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m7.5 4.27 9 5.15"/&gt;&lt;path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/&gt;&lt;path d="m3.3 7 8.7 5 8.7-5"/&gt;&lt;path d="M12 22V12"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;h3 class="cards-title"&gt;Products that process submitted documents&lt;/h3&gt;
+        &lt;p class="cards-text"&gt;Trigger plagiarism checks when users submit text, files, or URLs to your product, then use the webhook and report data to continue the process inside your own application.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── feature-cards · 4 · feature-cards-lead.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Feature cards · варіант 4</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Feature cards · картки з кнопкою (lead)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-size="lead": картка головної — плитка з обідком, більша назва, унизу картки кнопка (data-tone="ghost"). Копія — головна.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: index (головна) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/feature-cards-lead.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cards-lead" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="md" data-size="lead">
+  <div class="cards-inner">
+    <div class="section-head rv" data-measure="720">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Pathways</span>
+      </div>
+      <h2 class="section-title">For individual checks, education, and teams</h2>
+      <p class="section-intro">Start with a single document, or use PlagiarismSearch across organization and LMS workflows when more people need shared access, storage, or administration.</p>
+    </div>
+    <div class="cards-grid rv-kids" data-cols="3">
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="teal" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
+        <p class="cards-title">Students &amp; individual users</p>
+        <p class="cards-text">Check essays, papers, assignments, presentations, and other documents before submission. Review matched passages, sources, citations, and references in one report.</p>
+        <div class="cards-item-action">
+          <a href="plagiarism-checker-for-students.html" class="action-button btn-press group" data-tone="ghost">
+            For students
+            <span class="action-button-orb icon-orb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+        </div>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="orange" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/></svg></span>
+        <p class="cards-title">Education &amp; Institutions</p>
+        <p class="cards-text">Bring plagiarism checking into institutional workflows with Moodle and Canvas, organization management, shared storage, and member permissions.</p>
+        <div class="cards-item-action">
+          <a href="university-plagiarism-checker.html" class="action-button btn-press group" data-tone="ghost">
+            Education &amp; Institutions
+            <span class="action-button-orb icon-orb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+        </div>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="mint" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <p class="cards-title">Business &amp; Teams</p>
+        <p class="cards-text">Invite team members, manage permissions, share organization storage, and connect plagiarism checking through the API when needed.</p>
+        <div class="cards-item-action">
+          <a href="plagiarism-checker-for-organization.html" class="action-button btn-press group" data-tone="ghost">
+            Business &amp; Teams
+            <span class="action-button-orb icon-orb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-21">HTML для копіювання</label>
+    <textarea id="snippet-21" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-lead" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="md" data-size="lead"&gt;
+  &lt;div class="cards-inner"&gt;
+    &lt;div class="section-head rv" data-measure="720"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Pathways&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;For individual checks, education, and teams&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;Start with a single document, or use PlagiarismSearch across organization and LMS workflows when more people need shared access, storage, or administration.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="cards-grid rv-kids" data-cols="3"&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="teal" data-variant="ring"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/&gt;&lt;path d="M22 10v6"/&gt;&lt;path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;p class="cards-title"&gt;Students &amp;amp; individual users&lt;/p&gt;
+        &lt;p class="cards-text"&gt;Check essays, papers, assignments, presentations, and other documents before submission. Review matched passages, sources, citations, and references in one report.&lt;/p&gt;
+        &lt;div class="cards-item-action"&gt;
+          &lt;a href="plagiarism-checker-for-students.html" class="action-button btn-press group" data-tone="ghost"&gt;
+            For students
+            &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="orange" data-variant="ring"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/&gt;&lt;path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/&gt;&lt;path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/&gt;&lt;path d="M10 6h4"/&gt;&lt;path d="M10 10h4"/&gt;&lt;path d="M10 14h4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;p class="cards-title"&gt;Education &amp;amp; Institutions&lt;/p&gt;
+        &lt;p class="cards-text"&gt;Bring plagiarism checking into institutional workflows with Moodle and Canvas, organization management, shared storage, and member permissions.&lt;/p&gt;
+        &lt;div class="cards-item-action"&gt;
+          &lt;a href="university-plagiarism-checker.html" class="action-button btn-press group" data-tone="ghost"&gt;
+            Education &amp;amp; Institutions
+            &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-item"&gt;
+        &lt;span class="icon-tile" data-tone="mint" data-variant="ring"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="9" cy="7" r="4"/&gt;&lt;path d="M22 21v-2a4 4 0 0 0-3-3.87"/&gt;&lt;path d="M16 3.13a4 4 0 0 1 0 7.75"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;p class="cards-title"&gt;Business &amp;amp; Teams&lt;/p&gt;
+        &lt;p class="cards-text"&gt;Invite team members, manage permissions, share organization storage, and connect plagiarism checking through the API when needed.&lt;/p&gt;
+        &lt;div class="cards-item-action"&gt;
+          &lt;a href="plagiarism-checker-for-organization.html" class="action-button btn-press group" data-tone="ghost"&gt;
+            Business &amp;amp; Teams
+            &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── feature-cards · 5 · feature-cards-panel.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Feature cards · варіант 5</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Feature cards · комірки одного аркуша (panel)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Три комірки на сірому аркуші з рисками між ними; плитки білі. Останній рядок аркуша — примітка і кнопка. Для білої секції. Копія — Business &amp; Teams.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-organization (#data-handling) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/feature-cards-panel.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cards-panel" data-component="feature-cards" class="cards-section" data-layout="panel" data-bg="white" data-space="lg">
+  <div class="cards-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Data Handling</span>
+      </div>
+      <h2 class="section-title">Keep checked documents, reports, and Organization Storage distinct</h2>
+      <p class="section-intro">A checked document, a generated report, and content intentionally added to Organization Storage are different parts of the workflow.</p>
+    </div>
+    <div class="cards-panel rv">
+      <div class="cards-cells">
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+          <h3 class="cards-title">Checked document</h3>
+          <p class="cards-text">Uploaded source documents are not retained as stored documents after the check.</p>
+        </div>
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+          <h3 class="cards-title">Generated report</h3>
+          <p class="cards-text">Generated reports can remain available in the account for convenience. Users can permanently delete their reports.</p>
+        </div>
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></span>
+          <h3 class="cards-title">Organization Storage</h3>
+          <p class="cards-text">Organization Storage is a separate repository workflow. Content is added to it separately and access is governed by organization permissions.</p>
+        </div>
+      </div>
+      <div class="cards-panel-foot">
+        <p class="cards-panel-note">A normal plagiarism check should not be confused with intentionally adding content to Organization Storage.</p>
+        <span class="cards-panel-action">
+          <a href="policy.html" class="action-button btn-press group" data-tone="light">
+            Read the Privacy Policy
+            <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-22">HTML для копіювання</label>
+    <textarea id="snippet-22" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-panel" data-component="feature-cards" class="cards-section" data-layout="panel" data-bg="white" data-space="lg"&gt;
+  &lt;div class="cards-inner"&gt;
+    &lt;div class="section-head rv"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Data Handling&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Keep checked documents, reports, and Organization Storage distinct&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;A checked document, a generated report, and content intentionally added to Organization Storage are different parts of the workflow.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="cards-panel rv"&gt;
+      &lt;div class="cards-cells"&gt;
+        &lt;div class="cards-cell"&gt;
+          &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M16 13H8"/&gt;&lt;path d="M16 17H8"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;h3 class="cards-title"&gt;Checked document&lt;/h3&gt;
+          &lt;p class="cards-text"&gt;Uploaded source documents are not retained as stored documents after the check.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="cards-cell"&gt;
+          &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M8 17v-3"/&gt;&lt;path d="M12 17v-6"/&gt;&lt;path d="M16 17v-4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;h3 class="cards-title"&gt;Generated report&lt;/h3&gt;
+          &lt;p class="cards-text"&gt;Generated reports can remain available in the account for convenience. Users can permanently delete their reports.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="cards-cell"&gt;
+          &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 8v13H3V8"/&gt;&lt;path d="M1 3h22v5H1z"/&gt;&lt;path d="M10 12h4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;h3 class="cards-title"&gt;Organization Storage&lt;/h3&gt;
+          &lt;p class="cards-text"&gt;Organization Storage is a separate repository workflow. Content is added to it separately and access is governed by organization permissions.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="cards-panel-foot"&gt;
+        &lt;p class="cards-panel-note"&gt;A normal plagiarism check should not be confused with intentionally adding content to Organization Storage.&lt;/p&gt;
+        &lt;span class="cards-panel-action"&gt;
+          &lt;a href="policy.html" class="action-button btn-press group" data-tone="light"&gt;
+            Read the Privacy Policy
+            &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── feature-cards · 6 · feature-cards-panel-bare.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Feature cards · варіант 6</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Feature cards · аркуш без заголовка</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Той самий аркуш як коротка смуга (data-space="sm") без блока заголовка: секцію називає aria-label. Копія — Affiliate Program.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: affiliate-program-at-plagiarismsearch (#affiliate-tools) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/feature-cards-panel-bare.html</code></p>
+    </div>
+  </div>
+
+<section id="example-cards-panel-bare" data-component="feature-cards" aria-label="Affiliate Dashboard, Performance Statistics, Conversion Tracking" class="cards-section" data-layout="panel" data-bg="white" data-space="sm">
+  <div class="cards-inner">
+    <div class="cards-panel rv">
+      <div class="cards-cells">
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
+          <h3 class="cards-title">Affiliate Dashboard</h3>
+          <p class="cards-text">Access your personal affiliate link, marketing materials, and performance overview in one place.</p>
+        </div>
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
+          <h3 class="cards-title">Performance Statistics</h3>
+          <p class="cards-text">Track clicks, registrations, and earnings with clear, real-time reporting.</p>
+        </div>
+        <div class="cards-cell">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+          <h3 class="cards-title">Conversion Tracking</h3>
+          <p class="cards-text">See every approved sale and commission directly inside your affiliate panel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-23">HTML для копіювання</label>
+    <textarea id="snippet-23" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-panel-bare" data-component="feature-cards" aria-label="Affiliate Dashboard, Performance Statistics, Conversion Tracking" class="cards-section" data-layout="panel" data-bg="white" data-space="sm"&gt;
+  &lt;div class="cards-inner"&gt;
+    &lt;div class="cards-panel rv"&gt;
+      &lt;div class="cards-cells"&gt;
+        &lt;div class="cards-cell"&gt;
+          &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="7" height="9" x="3" y="3" rx="1"/&gt;&lt;rect width="7" height="5" x="14" y="3" rx="1"/&gt;&lt;rect width="7" height="9" x="14" y="12" rx="1"/&gt;&lt;rect width="7" height="5" x="3" y="16" rx="1"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;h3 class="cards-title"&gt;Affiliate Dashboard&lt;/h3&gt;
+          &lt;p class="cards-text"&gt;Access your personal affiliate link, marketing materials, and performance overview in one place.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="cards-cell"&gt;
+          &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M3 3v16a2 2 0 0 0 2 2h16"/&gt;&lt;path d="M18 17V9"/&gt;&lt;path d="M13 17V5"/&gt;&lt;path d="M8 17v-3"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;h3 class="cards-title"&gt;Performance Statistics&lt;/h3&gt;
+          &lt;p class="cards-text"&gt;Track clicks, registrations, and earnings with clear, real-time reporting.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="cards-cell"&gt;
+          &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;circle cx="12" cy="12" r="6"/&gt;&lt;circle cx="12" cy="12" r="2"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;h3 class="cards-title"&gt;Conversion Tracking&lt;/h3&gt;
+          &lt;p class="cards-text"&gt;See every approved sale and commission directly inside your affiliate panel.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
   <section id="lib-faq" class="bg-white border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
       <div>
@@ -2822,8 +3427,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-18">HTML для копіювання</label>
-    <textarea id="snippet-18" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
+    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -2915,8 +3520,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-19">HTML для копіювання</label>
-    <textarea id="snippet-19" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
+    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3008,8 +3613,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-20">HTML для копіювання</label>
-    <textarea id="snippet-20" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-26">HTML для копіювання</label>
+    <textarea id="snippet-26" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3108,8 +3713,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-21">HTML для копіювання</label>
-    <textarea id="snippet-21" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-27">HTML для копіювання</label>
+    <textarea id="snippet-27" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3202,8 +3807,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-22">HTML для копіювання</label>
-    <textarea id="snippet-22" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-28">HTML для копіювання</label>
+    <textarea id="snippet-28" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3294,8 +3899,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-23">HTML для копіювання</label>
-    <textarea id="snippet-23" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-29">HTML для копіювання</label>
+    <textarea id="snippet-29" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3393,8 +3998,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
-    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-30">HTML для копіювання</label>
+    <textarea id="snippet-30" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
   &lt;div class="faq-aside"&gt;
     &lt;div class="section-eyebrow"&gt;
       &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
@@ -3481,8 +4086,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
-    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-31">HTML для копіювання</label>
+    <textarea id="snippet-31" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
   &lt;div class="faq-list" data-faq&gt;
     &lt;div class="faq-item open"&gt;
       &lt;h3 class="faq-heading"&gt;&lt;button type="button" aria-controls="example-faq-doc-a1" aria-expanded="true" class="faq-q"&gt;
@@ -3635,8 +4240,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-26">HTML для копіювання</label>
-    <textarea id="snippet-26" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-32">HTML для копіювання</label>
+    <textarea id="snippet-32" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -3687,8 +4292,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-27">HTML для копіювання</label>
-    <textarea id="snippet-27" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-33">HTML для копіювання</label>
+    <textarea id="snippet-33" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -3741,8 +4346,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-28">HTML для копіювання</label>
-    <textarea id="snippet-28" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-34">HTML для копіювання</label>
+    <textarea id="snippet-34" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -3800,8 +4405,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-29">HTML для копіювання</label>
-    <textarea id="snippet-29" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-35">HTML для копіювання</label>
+    <textarea id="snippet-35" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -3855,8 +4460,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-30">HTML для копіювання</label>
-    <textarea id="snippet-30" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-36">HTML для копіювання</label>
+    <textarea id="snippet-36" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -3906,8 +4511,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-31">HTML для копіювання</label>
-    <textarea id="snippet-31" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-37">HTML для копіювання</label>
+    <textarea id="snippet-37" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -3957,8 +4562,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-32">HTML для копіювання</label>
-    <textarea id="snippet-32" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-38">HTML для копіювання</label>
+    <textarea id="snippet-38" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -4001,8 +4606,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-33">HTML для копіювання</label>
-    <textarea id="snippet-33" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-39">HTML для копіювання</label>
+    <textarea id="snippet-39" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -4040,8 +4645,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-34">HTML для копіювання</label>
-    <textarea id="snippet-34" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-40">HTML для копіювання</label>
+    <textarea id="snippet-40" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -4164,8 +4769,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-35">HTML для копіювання</label>
-    <textarea id="snippet-35" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-41">HTML для копіювання</label>
+    <textarea id="snippet-41" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -4222,8 +4827,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-36">HTML для копіювання</label>
-    <textarea id="snippet-36" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-42">HTML для копіювання</label>
+    <textarea id="snippet-42" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -4281,8 +4886,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-37">HTML для копіювання</label>
-    <textarea id="snippet-37" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-43">HTML для копіювання</label>
+    <textarea id="snippet-43" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -4363,8 +4968,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-38">HTML для копіювання</label>
-    <textarea id="snippet-38" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-44">HTML для копіювання</label>
+    <textarea id="snippet-44" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -4468,8 +5073,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-39">HTML для копіювання</label>
-    <textarea id="snippet-39" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-45">HTML для копіювання</label>
+    <textarea id="snippet-45" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -4694,8 +5299,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-40">HTML для копіювання</label>
-    <textarea id="snippet-40" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-46">HTML для копіювання</label>
+    <textarea id="snippet-46" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -4901,8 +5506,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-41">HTML для копіювання</label>
-    <textarea id="snippet-41" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-47">HTML для копіювання</label>
+    <textarea id="snippet-47" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -5079,8 +5684,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-42">HTML для копіювання</label>
-    <textarea id="snippet-42" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-48">HTML для копіювання</label>
+    <textarea id="snippet-48" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;

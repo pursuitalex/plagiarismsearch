@@ -610,46 +610,46 @@
   <!-- ================= 06 · PDF & REPORT HANDLING =================
        Four facts, the two retention behaviours kept apart: the uploaded PDF and the
        report are two columns of one card; deletion and Storage follow. No absolutes. -->
-  <section id="pdf-handling" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">PDF &amp; Report Handling</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Know what happens to your uploaded PDF</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Your PDF is processed to perform the checks you select. The uploaded source document and the generated report have different retention behavior.</p>
+<section id="pdf-handling" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg">
+  <div class="cards-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">PDF &amp; Report Handling</span>
       </div>
-
-      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mt-5 mb-1.5">Uploaded PDF</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">The uploaded source document is not retained as a stored source document.</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mt-5 mb-1.5">Report</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">A generated report may remain available in your account for convenient access.</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mt-5 mb-1.5">Your control</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">You can permanently delete reports from your account.</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-teal-50 ring-1 ring-teal-600/10 p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></span>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mt-5 mb-1.5">Storage</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Adding content to Storage is a separate action you control. Running a plagiarism check does not automatically add the PDF to Storage.</p>
-        </div>
-      </div>
-
-      <div class="rv mt-6 lg:mt-8"><a href="policy.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
-            Read the Privacy Policy
-            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-          </a></div>
+      <h2 class="section-title">Know what happens to your uploaded PDF</h2>
+      <p class="section-intro">Your PDF is processed to perform the checks you select. The uploaded source document and the generated report have different retention behavior.</p>
     </div>
-  </section>
+    <div class="cards-grid rv-kids" data-cols="4">
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+        <h3 class="cards-title">Uploaded PDF</h3>
+        <p class="cards-text">The uploaded source document is not retained as a stored source document.</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+        <h3 class="cards-title">Report</h3>
+        <p class="cards-text">A generated report may remain available in your account for convenient access.</p>
+      </div>
+      <div class="cards-item">
+        <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+        <h3 class="cards-title">Your control</h3>
+        <p class="cards-text">You can permanently delete reports from your account.</p>
+      </div>
+      <div class="cards-item" data-tone="teal">
+        <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></span>
+        <h3 class="cards-title">Storage</h3>
+        <p class="cards-text">Adding content to Storage is a separate action you control. Running a plagiarism check does not automatically add the PDF to Storage.</p>
+      </div>
+    </div>
+    <div class="cards-actions rv">
+      <a href="policy.html" class="action-button btn-press group" data-tone="light">
+        Read the Privacy Policy
+        <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
 
   <!-- ================= 07 · START FREE — THE COMPACT PRICING PATH =================
        One band: the two confirmed limits inline, the two ways on, the one-time note. No

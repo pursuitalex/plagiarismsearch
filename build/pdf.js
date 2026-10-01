@@ -31,6 +31,7 @@ const OUT = 'pdf-plagiarism-checker.html';
 const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
+const cards = require('./sections/feature-cards');   /* the feature cards: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -443,25 +444,13 @@ ${COPY.sources.items.map(([h, b]) => tick(h, b)).join('\n')}
 const section6 = () => `  <!-- ================= 06 · PDF & REPORT HANDLING =================
        Four facts, the two retention behaviours kept apart: the uploaded PDF and the
        report are two columns of one card; deletion and Storage follow. No absolutes. -->
-  <section id="pdf-handling" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-${eyebrow('orange-500', COPY.handling.eyebrow)}
-        <h2 class="${H2}">${COPY.handling.h2}</h2>
-        <p class="${INTRO}">${COPY.handling.intro}</p>
-      </div>
-
-      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-${COPY.handling.items.map(([head, body], i) => `        <div class="rounded-3xl sm:rounded-[28px] ${i === 3 ? 'bg-teal-50 ring-1 ring-teal-600/10' : 'bg-white ring-1 ring-black/5 shadow-diffuse'} p-5 sm:p-6 lg:p-7">
-          ${chip(['ink', 'teal', 'orange', 'teal'][i], [I.file, I.report, I.trash, I.archive][i])}
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mt-5 mb-1.5">${head}</h3>
-          <p class="${BODY} text-ink-600">${body}</p>
-        </div>`).join('\n')}
-      </div>
-
-      <div class="rv mt-6 lg:mt-8">${btnLight(COPY.handling.cta, COPY.handling.ctaHref)}</div>
-    </div>
-  </section>`;
+${cards.section({
+    id: 'pdf-handling', layout: 'grid', bg: 'cool', space: 'lg',
+    head: { eyebrow: COPY.handling.eyebrow, title: COPY.handling.h2, intro: COPY.handling.intro },
+    cols: 4,
+    items: COPY.handling.items.map(([title, text], i) => ({ title, text, tone: ['ink', 'teal', 'orange', 'teal'][i], icon: [I.file, I.report, I.trash, I.archive][i], accent: i === 3 })),
+    action: { label: COPY.handling.cta, href: COPY.handling.ctaHref, tone: 'light' },
+  })}`;
 
 /* ═══════════════ 07 · START FREE ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · START FREE — THE COMPACT PRICING PATH =================
