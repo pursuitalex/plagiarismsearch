@@ -28,6 +28,7 @@
     <ul class="mt-6 flex flex-wrap gap-2.5">
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-faq">FAQ <span class="text-ink-400 font-medium">8</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-cta-band">CTA band <span class="text-ink-400 font-medium">9</span></a></li>
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-banner">Banner <span class="text-ink-400 font-medium">5</span></a></li>
     </ul>
   </section>
 
@@ -1396,6 +1397,467 @@
       Check my text
       &lt;span class="cta-button-orb icon-orb"&gt;&lt;svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
     &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <section id="lib-banner" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">Banner</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>Компактний темний банер між секціями: каже одну річ про можливість, що живе на іншій сторінці, і веде туди. Це заголовковий блок, а не менший фінал: розміри заголовка й абзацу — як у темної акцентної картки. Не плутати із завершальною смугою (CTA band).</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/banner.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/banner.css</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/banner.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/banner-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Колір світіння</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-glow на &lt;section&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">teal | coral | coral-soft | violet (обов’язковий); крапка пігулки змінюється разом із ним</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Надпис-пігулка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-eyebrow-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; блок .section-eyebrow можна прибрати цілком. Фон і колір крапки не задаються — їх дає банер</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Заголовок H2</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">h2.banner-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст (обов’язковий); допускаються &lt;br&gt;, &lt;em&gt;, &lt;strong&gt;</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Вступ</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.banner-lead</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст (обов’язковий); strong, em, br; data-measure — зі списку</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Теза-пігулка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.banner-pill</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">короткий текст без тегів після крапки span.banner-pill-dot; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Застереження</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.banner-callout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст після іконки; strong, em, br; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Другий абзац</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.banner-detail</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; strong, em, br; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Кнопка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">a.banner-button</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href (rel="noopener" для зовнішніх адрес); кружок зі стрілкою лишається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Тихе посилання під кнопкою</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.banner-actions &gt; a.banner-link (лише ряд)</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href; щоб прибрати — візьміть зразок з однією кнопкою (без обгортки .banner-actions)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Схема (split)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.banner-branch</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише тексти: назва в p.banner-branch-parent і підписи двох гілок у span.banner-branch-label; гілок рівно дві</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>усі класи й обгортки: .banner-inner, .banner-box, .banner-grid, .banner-text, .banner-action — копіюються як є</li>
+          <li>data-component="banner" на секції; data-surface="dark" на .banner-box — перемикає кільце фокусу на темному тлі</li>
+          <li>класи-гачки: rv на .banner-box (поява), btn-press і group на кнопці, icon-orb на кружку зі стрілкою, orb на світінні</li>
+          <li>іконки &lt;svg&gt; (стрілка, іконка застереження, іконки схеми) — копіюються як є</li>
+          <li>порядок у тексті: пігулка → заголовок → вступ → теза-пігулка → застереження → другий абзац</li>
+          <li>схема .banner-branch лишається з aria-hidden="true": вона малює те, що вже сказано текстом</li>
+          <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind усередині банера</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-glow</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">coral</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">coral-soft</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">violet</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. колір світіння у правому верхньому куті коробки; крапка пігулки бере відповідний колір сама: teal і violet — бірюзова, coral — помаранчева (orange-500), coral-soft — світліша помаранчева (orange-400).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">split</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. розкладка. Без атрибута — ряд: текст ліворуч, кнопка праворуч. split — текст ліворуч, схема-панель праворуч (1.4fr / 1fr), кнопка під панеллю. Це різні фрагменти — беріть відповідний зразок.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">lead</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">54</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">60</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">62</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">66</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. найдовший рядок вступу, у символах. Без атрибута — 62.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">detail</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">58</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">60</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. найдовший рядок другого, тихішого абзацу. Без атрибута — 60.</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="prices.html">prices.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">coral · ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ; кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ua-plagiarism-check.html">ua-plagiarism-check.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">coral-soft · ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ; кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="integration-guide.html">integration-guide.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">teal · ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ 60; другий абзац; кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-organization.html">plagiarism-checker-for-organization.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">coral · ряд</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ 66; другий абзац; кнопка + тихе посилання</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ai-detector.html">ai-detector.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">teal · split</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ 54; теза-пігулка; другий абзац 58; схема; кнопка під схемою</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="university-plagiarism-checker.html">university-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">violet · split</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">пігулка; вступ 60; застереження; схема; кнопка під схемою</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── banner · 1 · banner-row.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Banner · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Banner · ряд: текст і кнопка</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Базовий банер між секціями: пігулка, заголовок, один абзац, біла кнопка праворуч. Світіння coral. Копія — Pricing (high volume).</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: prices; ua-plagiarism-check (coral-soft, український текст) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/banner-row.html</code></p>
+    </div>
+  </div>
+
+<section id="example-banner" data-component="banner" class="banner" data-glow="coral">
+  <div class="banner-inner">
+    <div class="banner-box rv" data-surface="dark">
+      <div class="orb banner-glow"></div>
+      <div class="banner-grid">
+        <div class="banner-text">
+          <div class="section-eyebrow">
+            <span class="section-eyebrow-dot"></span>
+            <span class="section-eyebrow-label">CUSTOM &amp; HIGH VOLUME</span>
+          </div>
+          <h2 class="banner-title">Need a custom or high-volume option?</h2>
+          <p class="banner-lead">If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.</p>
+        </div>
+        <div class="banner-action"><a href="vip.html" class="banner-button btn-press group">
+          Explore high-volume options
+          <span class="banner-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-18">HTML для копіювання</label>
+    <textarea id="snippet-18" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
+  &lt;div class="banner-inner"&gt;
+    &lt;div class="banner-box rv" data-surface="dark"&gt;
+      &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
+      &lt;div class="banner-grid"&gt;
+        &lt;div class="banner-text"&gt;
+          &lt;div class="section-eyebrow"&gt;
+            &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+            &lt;span class="section-eyebrow-label"&gt;CUSTOM &amp;amp; HIGH VOLUME&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;h2 class="banner-title"&gt;Need a custom or high-volume option?&lt;/h2&gt;
+          &lt;p class="banner-lead"&gt;If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="banner-action"&gt;&lt;a href="vip.html" class="banner-button btn-press group"&gt;
+          Explore high-volume options
+          &lt;span class="banner-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;/a&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── banner · 2 · banner-row-detail.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Banner · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Banner · ряд із другим абзацом</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Під вступом — тихіший другий абзац (p.banner-detail). Світіння teal, вступ data-measure="60". Копія — Moodle Integration (support).</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: integration-guide · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/banner-row-detail.html</code></p>
+    </div>
+  </div>
+
+<section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal">
+  <div class="banner-inner">
+    <div class="banner-box rv" data-surface="dark">
+      <div class="orb banner-glow"></div>
+      <div class="banner-grid">
+        <div class="banner-text">
+          <div class="section-eyebrow">
+            <span class="section-eyebrow-dot"></span>
+            <span class="section-eyebrow-label">Support</span>
+          </div>
+          <h2 class="banner-title">Need Help with Your Moodle Setup?</h2>
+          <p class="banner-lead" data-measure="60">This guide covers the standard PlagiarismSearch Moodle installation and configuration workflow.</p>
+          <p class="banner-detail">If you need help with API access, institutional deployment, account configuration, or a Moodle setup that requires additional technical review, contact the PlagiarismSearch team.</p>
+        </div>
+        <div class="banner-action"><a href="contact-us.html" class="banner-button btn-press group">
+          Contact Support
+          <span class="banner-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-19">HTML для копіювання</label>
+    <textarea id="snippet-19" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
+  &lt;div class="banner-inner"&gt;
+    &lt;div class="banner-box rv" data-surface="dark"&gt;
+      &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
+      &lt;div class="banner-grid"&gt;
+        &lt;div class="banner-text"&gt;
+          &lt;div class="section-eyebrow"&gt;
+            &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+            &lt;span class="section-eyebrow-label"&gt;Support&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;h2 class="banner-title"&gt;Need Help with Your Moodle Setup?&lt;/h2&gt;
+          &lt;p class="banner-lead" data-measure="60"&gt;This guide covers the standard PlagiarismSearch Moodle installation and configuration workflow.&lt;/p&gt;
+          &lt;p class="banner-detail"&gt;If you need help with API access, institutional deployment, account configuration, or a Moodle setup that requires additional technical review, contact the PlagiarismSearch team.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="banner-action"&gt;&lt;a href="contact-us.html" class="banner-button btn-press group"&gt;
+          Contact Support
+          &lt;span class="banner-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;/a&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── banner · 3 · banner-row-link.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Banner · варіант 3</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Banner · ряд: кнопка і тихе посилання</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Дві дороги далі: кнопка і під нею тихе посилання (.banner-actions). Вступ ширший — data-measure="66". Копія — Business &amp; Teams (plans &amp; custom).</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-organization · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/banner-row-link.html</code></p>
+    </div>
+  </div>
+
+<section id="example-banner-link" data-component="banner" class="banner" data-glow="coral">
+  <div class="banner-inner">
+    <div class="banner-box rv" data-surface="dark">
+      <div class="orb banner-glow"></div>
+      <div class="banner-grid">
+        <div class="banner-text">
+          <div class="section-eyebrow">
+            <span class="section-eyebrow-dot"></span>
+            <span class="section-eyebrow-label">Plans &amp; Custom Requirements</span>
+          </div>
+          <h2 class="banner-title">Choose a standard plan or discuss a custom setup</h2>
+          <p class="banner-lead" data-measure="66">Standard PlagiarismSearch plans are available on the Pricing page. If your organization needs larger volumes, API access, or a custom commercial arrangement, tell us what your workflow requires.</p>
+          <p class="banner-detail">Custom contracts and pricing are available for larger customers.</p>
+        </div>
+        <div class="banner-action"><div class="banner-actions"><a href="#business-inquiry" class="banner-button btn-press group">
+          Request a business quote
+          <span class="banner-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </a><a href="prices.html" class="banner-link">View standard pricing</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-20">HTML для копіювання</label>
+    <textarea id="snippet-20" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
+  &lt;div class="banner-inner"&gt;
+    &lt;div class="banner-box rv" data-surface="dark"&gt;
+      &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
+      &lt;div class="banner-grid"&gt;
+        &lt;div class="banner-text"&gt;
+          &lt;div class="section-eyebrow"&gt;
+            &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+            &lt;span class="section-eyebrow-label"&gt;Plans &amp;amp; Custom Requirements&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;h2 class="banner-title"&gt;Choose a standard plan or discuss a custom setup&lt;/h2&gt;
+          &lt;p class="banner-lead" data-measure="66"&gt;Standard PlagiarismSearch plans are available on the Pricing page. If your organization needs larger volumes, API access, or a custom commercial arrangement, tell us what your workflow requires.&lt;/p&gt;
+          &lt;p class="banner-detail"&gt;Custom contracts and pricing are available for larger customers.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="banner-action"&gt;&lt;div class="banner-actions"&gt;&lt;a href="#business-inquiry" class="banner-button btn-press group"&gt;
+          Request a business quote
+          &lt;span class="banner-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;/a&gt;&lt;a href="prices.html" class="banner-link"&gt;View standard pricing&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── banner · 4 · banner-split.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Banner · варіант 4</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Banner · split: зі схемою, тезою-пігулкою і другим абзацом</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-layout="split": праворуч схема «одне → два» (.banner-branch), кнопка під нею; головна думка винесена в пігулку (p.banner-pill), під нею тихіший абзац. Світіння teal. Копія — AI Detector (API).</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ai-detector · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/banner-split.html</code></p>
+    </div>
+  </div>
+
+<section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split">
+  <div class="banner-inner">
+    <div class="banner-box rv" data-surface="dark">
+      <div class="orb banner-glow"></div>
+      <div class="banner-grid">
+        <div class="banner-text">
+          <div class="section-eyebrow">
+            <span class="section-eyebrow-dot"></span>
+            <span class="section-eyebrow-label">API</span>
+          </div>
+          <h2 class="banner-title">Add AI detection to your own workflow</h2>
+          <p class="banner-lead" data-measure="54">AI checking is available through the same PlagiarismSearch API infrastructure used for the main service.</p>
+          <p class="banner-pill">
+            <span class="banner-pill-dot"></span>It is not a separate AI API product.
+          </p>
+          <p class="banner-detail" data-measure="58">AI checks use AI-specific checking limits or credits within the API workflow. Use the main PlagiarismSearch API page to review current access options and implementation details.</p>
+        </div>
+        <div class="banner-aside">
+          <div class="banner-branch" aria-hidden="true">
+            <p class="banner-branch-parent">
+              <svg class="banner-branch-parent-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
+              PlagiarismSearch API
+            </p>
+            <div class="banner-branch-children">
+              <div class="banner-branch-child">
+                <span class="banner-branch-line"></span>
+                <span class="banner-branch-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5AD3E4" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m8 11 2 2 4-4"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+                <span class="banner-branch-label">Plagiarism</span>
+              </div>
+              <div class="banner-branch-child">
+                <span class="banner-branch-line"></span>
+                <span class="banner-branch-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg></span>
+                <span class="banner-branch-label">AI</span>
+              </div>
+            </div>
+          </div>
+          <div class="banner-action"><a href="api.html" class="banner-button btn-press group">
+            Explore the PlagiarismSearch API
+            <span class="banner-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-21">HTML для копіювання</label>
+    <textarea id="snippet-21" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
+  &lt;div class="banner-inner"&gt;
+    &lt;div class="banner-box rv" data-surface="dark"&gt;
+      &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
+      &lt;div class="banner-grid"&gt;
+        &lt;div class="banner-text"&gt;
+          &lt;div class="section-eyebrow"&gt;
+            &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+            &lt;span class="section-eyebrow-label"&gt;API&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;h2 class="banner-title"&gt;Add AI detection to your own workflow&lt;/h2&gt;
+          &lt;p class="banner-lead" data-measure="54"&gt;AI checking is available through the same PlagiarismSearch API infrastructure used for the main service.&lt;/p&gt;
+          &lt;p class="banner-pill"&gt;
+            &lt;span class="banner-pill-dot"&gt;&lt;/span&gt;It is not a separate AI API product.
+          &lt;/p&gt;
+          &lt;p class="banner-detail" data-measure="58"&gt;AI checks use AI-specific checking limits or credits within the API workflow. Use the main PlagiarismSearch API page to review current access options and implementation details.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="banner-aside"&gt;
+          &lt;div class="banner-branch" aria-hidden="true"&gt;
+            &lt;p class="banner-branch-parent"&gt;
+              &lt;svg class="banner-branch-parent-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m16 18 6-6-6-6"/&gt;&lt;path d="m8 6-6 6 6 6"/&gt;&lt;/svg&gt;
+              PlagiarismSearch API
+            &lt;/p&gt;
+            &lt;div class="banner-branch-children"&gt;
+              &lt;div class="banner-branch-child"&gt;
+                &lt;span class="banner-branch-line"&gt;&lt;/span&gt;
+                &lt;span class="banner-branch-icon"&gt;&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5AD3E4" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m8 11 2 2 4-4"/&gt;&lt;circle cx="11" cy="11" r="8"/&gt;&lt;path d="m21 21-4.3-4.3"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                &lt;span class="banner-branch-label"&gt;Plagiarism&lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div class="banner-branch-child"&gt;
+                &lt;span class="banner-branch-line"&gt;&lt;/span&gt;
+                &lt;span class="banner-branch-icon"&gt;&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                &lt;span class="banner-branch-label"&gt;AI&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="banner-action"&gt;&lt;a href="api.html" class="banner-button btn-press group"&gt;
+            Explore the PlagiarismSearch API
+            &lt;span class="banner-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;/a&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── banner · 5 · banner-split-callout.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Banner · варіант 5</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Banner · split: зі схемою і застереженням</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Те саме зі світінням violet і застереженням у рамці (p.banner-callout) замість пігулки. Копія — University (optional AI checking).</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: university-plagiarism-checker · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/banner-split-callout.html</code></p>
+    </div>
+  </div>
+
+<section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split">
+  <div class="banner-inner">
+    <div class="banner-box rv" data-surface="dark">
+      <div class="orb banner-glow"></div>
+      <div class="banner-grid">
+        <div class="banner-text">
+          <div class="section-eyebrow">
+            <span class="section-eyebrow-dot"></span>
+            <span class="section-eyebrow-label">OPTIONAL AI CHECKING</span>
+          </div>
+          <h2 class="banner-title">Need AI checking as part of the same institutional setup?</h2>
+          <p class="banner-lead" data-measure="60">AI detection is available as a separate analysis within the PlagiarismSearch ecosystem. When an organization uses AI checking, administrators can allocate AI word balance separately from plagiarism-checking balance.</p>
+          <p class="banner-callout">
+            <svg class="banner-callout-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            AI-generated text is not automatically plagiarism. Plagiarism checking and AI detection answer different questions and should be interpreted separately.
+          </p>
+        </div>
+        <div class="banner-aside">
+          <div class="banner-branch" aria-hidden="true">
+            <p class="banner-branch-parent">
+              <svg class="banner-branch-parent-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14h.01"/><path d="M7 7h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10"/></svg>
+              Organization balance
+            </p>
+            <div class="banner-branch-children">
+              <div class="banner-branch-child">
+                <span class="banner-branch-line"></span>
+                <span class="banner-branch-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5AD3E4" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></span>
+                <span class="banner-branch-label">Plagiarism-checking balance</span>
+              </div>
+              <div class="banner-branch-child">
+                <span class="banner-branch-line"></span>
+                <span class="banner-branch-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></span>
+                <span class="banner-branch-label">AI word balance</span>
+              </div>
+            </div>
+          </div>
+          <div class="banner-action"><a href="ai-detector.html" class="banner-button btn-press group">
+            Learn about AI detection
+            <span class="banner-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-22">HTML для копіювання</label>
+    <textarea id="snippet-22" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
+  &lt;div class="banner-inner"&gt;
+    &lt;div class="banner-box rv" data-surface="dark"&gt;
+      &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
+      &lt;div class="banner-grid"&gt;
+        &lt;div class="banner-text"&gt;
+          &lt;div class="section-eyebrow"&gt;
+            &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+            &lt;span class="section-eyebrow-label"&gt;OPTIONAL AI CHECKING&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;h2 class="banner-title"&gt;Need AI checking as part of the same institutional setup?&lt;/h2&gt;
+          &lt;p class="banner-lead" data-measure="60"&gt;AI detection is available as a separate analysis within the PlagiarismSearch ecosystem. When an organization uses AI checking, administrators can allocate AI word balance separately from plagiarism-checking balance.&lt;/p&gt;
+          &lt;p class="banner-callout"&gt;
+            &lt;svg class="banner-callout-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;path d="M12 16v-4"/&gt;&lt;path d="M12 8h.01"/&gt;&lt;/svg&gt;
+            AI-generated text is not automatically plagiarism. Plagiarism checking and AI detection answer different questions and should be interpreted separately.
+          &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="banner-aside"&gt;
+          &lt;div class="banner-branch" aria-hidden="true"&gt;
+            &lt;p class="banner-branch-parent"&gt;
+              &lt;svg class="banner-branch-parent-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M17 14h.01"/&gt;&lt;path d="M7 7h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10"/&gt;&lt;/svg&gt;
+              Organization balance
+            &lt;/p&gt;
+            &lt;div class="banner-branch-children"&gt;
+              &lt;div class="banner-branch-child"&gt;
+                &lt;span class="banner-branch-line"&gt;&lt;/span&gt;
+                &lt;span class="banner-branch-icon"&gt;&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5AD3E4" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="8" cy="8" r="6"/&gt;&lt;path d="M18.09 10.37A6 6 0 1 1 10.34 18"/&gt;&lt;path d="M7 6h1v4"/&gt;&lt;path d="m16.71 13.88.7.71-2.82 2.82"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                &lt;span class="banner-branch-label"&gt;Plagiarism-checking balance&lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div class="banner-branch-child"&gt;
+                &lt;span class="banner-branch-line"&gt;&lt;/span&gt;
+                &lt;span class="banner-branch-icon"&gt;&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="8" cy="8" r="6"/&gt;&lt;path d="M18.09 10.37A6 6 0 1 1 10.34 18"/&gt;&lt;path d="M7 6h1v4"/&gt;&lt;path d="m16.71 13.88.7.71-2.82 2.82"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                &lt;span class="banner-branch-label"&gt;AI word balance&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="banner-action"&gt;&lt;a href="ai-detector.html" class="banner-button btn-press group"&gt;
+            Learn about AI detection
+            &lt;span class="banner-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;/a&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/section&gt;</textarea>
   </div>

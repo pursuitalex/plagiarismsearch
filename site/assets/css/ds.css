@@ -89,3 +89,10 @@
 .pg-tag-stub { background:#FDE5E0; color:#B84431; }
 .pg-tag-quiet { background:#F1F2F6; color:#6B7280; }
 @media (min-width:640px) { .pg-card { border-radius:1rem; } }
+
+/* A library section shown inside the spec sheet's own frame (the Banners chapter,
+   build/design-system-banners.js): the showcase supplies the rhythm and the gutter, so
+   the section's own are taken off. Two classes, so it wins over the library sheet that
+   is linked after this one. */
+.ds-inset.banner { padding:0; background-color:transparent; }
+.ds-inset .banner-inner { max-width:none; padding:0; }

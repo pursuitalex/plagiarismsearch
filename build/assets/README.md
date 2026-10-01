@@ -63,8 +63,8 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 4. **Markup keeps its utilities — except in the Section Library.** Every top-level element
    of `<main>` has a stable root hook, `data-component="…"`, and the behaviour hooks it
    needs (catalogue below). A library component (the registry is `build/sections/index.js`:
-   the FAQ with the Section Header since the pilot of 2026-09-30, the CTA band since
-   2026-10-01) is written with semantic classes instead: one template in
+   the FAQ with the Section Header since the pilot of 2026-09-30, the CTA band and the
+   Banner since 2026-10-01) is written with semantic classes instead: one template in
    `build/sections/<name>.js` called by every generator (a hand-written page carries the
    same markup), its CSS in `build/sections/<name>.css` compiled with `@apply` in the
    Tailwind run (between components and utilities, outside `@layer`), variants as `data-*`
@@ -72,7 +72,8 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
    written from it in `<name>.check.js`, run by `node build/check-library.js`; its
    catalogue entry is `<name>.catalogue.js`. Copy-paste catalogue:
    `site/section-library.html`. A component's CSS lives with it: the FAQ's accordion moved
-   there from `03-faq.css`, the closing band's knobs and glows from `10-cta-band.css`.
+   there from `03-faq.css`, the closing band's knobs and glows from `10-cta-band.css`, the banner's glow from
+   `11-banner.css`.
 5. **No id is a CSS or JS hook.** Ids exist for in-page anchors and for accessibility
    pairs only.
 6. **Accessibility ids are rendered, not scripted.** `label for`/`id` on the checker field

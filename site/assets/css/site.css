@@ -622,15 +622,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   rgba(13,168,194,.22) 0%, rgba(13,168,194,.13) 38%,
   rgba(13,168,194,.05) 70%, rgba(13,168,194,0) 100%); }
 
-/* ═══ 11 · the compact dark banner (build/banner.js) ══════════════════════════════
-   Its glow used to be an inline style with the colour passed per page; the colours form
-   a finite set, so the glow is a class and the colour a preset. Values verbatim. */
-.orb-banner { width:520px; height:500px; right:-6%; top:-220px; }
-.orb-banner-teal       { background:rgba(44,195,219,.18); }
-.orb-banner-coral      { background:rgba(243,111,90,.18); }
-.orb-banner-coral-soft { background:rgba(243,111,90,.16); }
-.orb-banner-violet     { background:rgba(154,106,222,.18); }
-
 /* ═══ 12 · a row of institution marks (UA: .uni) ══════════════════════════════════
    The approved assets are 213×90 plates that already carry their own light ground, so
    the plate IS the tile: no second box around it, never scaled above its own size, and

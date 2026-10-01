@@ -565,7 +565,13 @@ Its recipe has four parts and all four carry weight:
 4. **Hero-scale heading**, `clamp(2.4rem,5.5vw,4.35rem)` — the one place a non-hero
    heading takes the hero size, because a closing CTA is deliberately roomier.
 
-#### The compact dark banner — `build/banner.js`
+#### The compact dark banner — `build/sections/banner.js`
+
+A Section Library component since 2026-10-01 (template, `banner.css`, contract, validator,
+snippets in `site/section-library.html`). Its variants: `data-glow="teal|coral|coral-soft|violet"`
+on the section (the pill's dot takes the matching colour by itself), `data-layout="split"`
+when a schematic panel sits on the right (the action then goes under it), `data-measure`
+on the lead and the detail.
 
 The other dark block, and the one that is **not** a CTA band: a rounded `bg-ink-950` box
 that sits between sections, says one thing about a capability that lives on another page,

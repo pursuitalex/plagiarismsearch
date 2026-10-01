@@ -332,7 +332,8 @@ console.log('\nnot a landing');
   ok('no pricing', !/\$\d|prices\.html|per month|pricing/i.test(body));
   ok('no reviews or ratings', !/testimonial|review carousel|★|stars?\b|rating/i.test(text.replace(/teacher review|review-report|review reports|reviewed in context|technical review/gi, '')));
   ok('no Google Docs / add-on content', !/google docs|add-on|addon/i.test(text));
-  ok('at most one dark block — the support handoff', (body.match(/bg-ink-950/g) || []).length === 1);
+  /* a dark block: one drawn with the utility, or the library banner's box (build/sections/banner.js) */
+  ok('at most one dark block — the support handoff', (body.match(/bg-ink-950|class="banner-box\b/g) || []).length === 1 && /id="moodle-support"[^>]*class="banner"/.test(body));
 }
 
 /* ── legacy claims that must not come back ──────────────────────────────────── */

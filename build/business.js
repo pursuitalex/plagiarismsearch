@@ -34,7 +34,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'plagiarism-checker-for-organization.html';
 const cta = require('./sections/cta-band');
-const banner = require('./banner');
+const banner = require('./sections/banner');
 const { dotField } = require('./dots');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
@@ -663,17 +663,17 @@ ${COPY.data.items.map(([head, body, icon], i) => `          <div class="p-6 sm:p
 
 /* ═══════════════ 08 · PLANS & CUSTOM ═══════════════ */
 const section8 = () => `  <!-- ================= 08 · PLANS & CUSTOM REQUIREMENTS =================
-       The shared compact banner (build/banner.js): between sections, two ways on. No
+       The shared compact banner (build/sections/banner.js): between sections, two ways on. No
        pricing widget, no discounts, seats, managers or SLAs. -->
-${banner({
+${banner.section({
     id: 'plans-and-custom',
-    orb: 'rgba(243,111,90,.18)',
-    eyebrow: ['orange-500', COPY.plans.eyebrow],
-    h2: COPY.plans.h2,
-    lead: COPY.plans.p1, leadMax: '66ch',
-    after: `            <p class="mt-3 ${banner.SUPPORT} max-w-[60ch]">${COPY.plans.p2}</p>`,
-    action: `<div class="flex flex-col items-start lg:items-end gap-3.5">${banner.btn(COPY.plans.primary, INQUIRY)}${linkQuiet(COPY.plans.secondary, COPY.plans.secondaryHref, true)}</div>`,
-    static: true,
+    glow: 'coral',
+    eyebrow: COPY.plans.eyebrow,
+    title: COPY.plans.h2,
+    lead: COPY.plans.p1, measure: '66',
+    detail: COPY.plans.p2,
+    action: { label: COPY.plans.primary, href: INQUIRY },
+    link: { label: COPY.plans.secondary, href: COPY.plans.secondaryHref },
   })}`;
 
 /* ═══════════════ 09 · QUALIFIED BUSINESS INQUIRY ═══════════════ */

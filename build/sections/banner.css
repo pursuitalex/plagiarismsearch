@@ -1,0 +1,181 @@
+/* ═══ Banner — library component ════════════════════════════════════════════════════
+   Template: build/sections/banner.js · contract: build/sections/banner.contract.js
+   Behaviour: none of its own (.rv reveals; the button is the site's .btn-press)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The compact dark banner — the in-page secondary block. It sits BETWEEN sections, says
+   one thing about a capability that lives on another page, and links there (DESIGN.md §
+   The compact dark banner). It is a heading block, not a smaller act: its heading and
+   support colour are the dark accent card's; what tells the dark blocks apart is the
+   composition, never the type size.
+
+   section.banner                 data-glow="teal|coral|coral-soft|violet"  data-layout="split" (none: a row)
+     .banner-inner                the 1280px container
+       .banner-box.rv[data-surface="dark"]   the dark rounded box
+         .orb.banner-glow         the one glow, top right; its colour is the section's data-glow
+         .banner-grid             row: text, then the action on the right · split: text | aside
+           .banner-text
+             (.section-eyebrow)   the pill; on the dark box it is translucent, its dot takes the glow's colour
+             h2.banner-title
+             p.banner-lead        data-measure="54|60|62|66"
+             (p.banner-pill > span.banner-pill-dot)        the point of the block, raised into a pill
+             (p.banner-callout > svg.banner-callout-icon)  a caution, boxed
+             (p.banner-detail)    the quieter second paragraph      data-measure="58"
+           row:   .banner-action > a.banner-button  |  .banner-action > .banner-actions > a.banner-button + a.banner-link
+           split: .banner-aside > .banner-branch[aria-hidden] + .banner-action > a.banner-button
+                  .banner-branch  the schematic: one parent (p.banner-branch-parent), two children
+                                  (.banner-branch-child > .banner-branch-line + .banner-branch-icon + .banner-branch-label) */
+
+/* ── the section and the box ─────────────────────────────────────────────────── */
+.banner {
+  @apply relative py-10 sm:py-12 lg:py-14 bg-white overflow-hidden;
+}
+.banner-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+.banner-box {
+  @apply rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10;
+}
+
+/* ── the glow: one place, a finite set of colours ───────────────────────────────
+   The glow follows .orb (site.css, linked before this sheet). Its colour used to be an
+   inline style passed per page; the colours form a finite set, so it is the section's
+   data-glow. Values verbatim. */
+.banner-glow { width:520px; height:500px; right:-6%; top:-220px; }
+:where(.banner[data-glow="teal"]) .banner-glow       { background:rgba(44,195,219,.18); }
+:where(.banner[data-glow="coral"]) .banner-glow      { background:rgba(243,111,90,.18); }
+:where(.banner[data-glow="coral-soft"]) .banner-glow { background:rgba(243,111,90,.16); }
+:where(.banner[data-glow="violet"]) .banner-glow     { background:rgba(154,106,222,.18); }
+
+/* ── the grid: two approved layouts ─────────────────────────────────────────────
+   (none)  a row: the text, and the action in the right-hand slot, so the block still
+           reads as two halves
+   split   text left, a schematic panel right (1.4fr / 1fr), the action under the panel */
+.banner-grid {
+  @apply relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12;
+}
+:where(.banner[data-layout="split"]) .banner-grid {
+  @apply grid flex-row lg:flex-row lg:grid-cols-[1.4fr_1fr] gap-7 lg:gap-12 items-center lg:items-center;
+}
+
+.banner-text {
+  @apply min-w-0 flex-1 text-white;
+}
+:where(.banner[data-layout="split"]) .banner-text {
+  @apply flex-initial;
+}
+
+/* The pill is the Section Header's (section-head.css); on the dark box it is translucent
+   and closer to the heading, and its dot takes the colour of the banner's glow. Derived
+   from the host, never set per pill. */
+:where(.banner) .section-eyebrow {
+  @apply bg-white/10 ring-white/15 mb-3.5 sm:mb-3.5 lg:mb-3.5;
+}
+:where(.banner) .section-eyebrow-label {
+  @apply text-white/80;
+}
+:where(.banner[data-glow="teal"]) .section-eyebrow-dot,
+:where(.banner[data-glow="violet"]) .section-eyebrow-dot {
+  @apply bg-teal-400;
+}
+:where(.banner[data-glow="coral"]) .section-eyebrow-dot {
+  @apply bg-orange-500;
+}
+:where(.banner[data-glow="coral-soft"]) .section-eyebrow-dot {
+  @apply bg-orange-400;
+}
+
+/* the dark accent card's heading, exactly */
+.banner-title {
+  @apply text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-3;
+}
+/* the lead is text-white/60 — the dark accent card's support colour; the detail steps
+   down to /50, which still clears 4.5:1 on ink-950 */
+.banner-lead {
+  @apply text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60 max-w-[62ch];
+}
+.banner-pill {
+  @apply inline-flex items-center gap-2 rounded-full bg-teal-400/10 ring-1 ring-teal-400/30 px-3.5 py-1.5 mt-3 text-[12.5px] sm:text-[13px] font-semibold text-teal-200;
+}
+.banner-pill-dot {
+  @apply w-1.5 h-1.5 rounded-full bg-teal-400;
+}
+.banner-callout {
+  @apply flex items-start gap-2.5 rounded-2xl bg-orange-400/10 ring-1 ring-orange-400/30 px-4 py-3 mt-4 text-[12.5px] sm:text-[13px] leading-relaxed text-orange-100;
+}
+.banner-callout-icon {
+  @apply shrink-0 mt-0.5;
+}
+.banner-detail {
+  @apply mt-3 text-[13px] sm:text-[13.5px] leading-relaxed text-white/50 max-w-[60ch];
+}
+:where(.banner-pill) + .banner-detail {
+  @apply mt-3.5;
+}
+
+/* ── the action ──────────────────────────────────────────────────────────────── */
+.banner-action {
+  @apply shrink-0;
+}
+.banner-actions {
+  @apply flex flex-col items-start lg:items-end gap-3.5;
+}
+/* the action on a dark ground: the white button */
+.banner-button {
+  @apply inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2;
+}
+.banner-button-orb {
+  @apply hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center;
+}
+.banner-link {
+  @apply inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-white/70 hover:text-white decoration-white/30 underline underline-offset-4 transition-colors duration-300;
+}
+
+/* ── split: the aside and its schematic ─────────────────────────────────────────
+   One parent, two children joined to it by a drawn bracket: the relationship the copy
+   states (one API, two checks; one balance, two allocations). */
+.banner-aside {
+  @apply min-w-0;
+}
+:where(.banner-aside) > .banner-action {
+  @apply mt-5;
+}
+.banner-branch {
+  @apply min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6;
+}
+.banner-branch-parent {
+  @apply flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4;
+}
+.banner-branch-parent-icon {
+  @apply shrink-0;
+}
+.banner-branch-children {
+  @apply space-y-3 pl-6;
+}
+.banner-branch-child {
+  @apply relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3;
+}
+/* the bracket: the first child's line runs down from its middle, the second's up to it */
+.banner-branch-line {
+  @apply absolute right-full top-1/2 -bottom-3 w-6 border-t border-l border-white/15 rounded-tl-2xl;
+}
+:where(.banner-branch-child + .banner-branch-child) > .banner-branch-line {
+  @apply -top-3 bottom-1/2 border-t-0 border-b rounded-tl-none rounded-bl-2xl;
+}
+.banner-branch-icon {
+  @apply shrink-0 w-10 h-10 rounded-xl bg-white/[.07] ring-1 ring-white/10 flex items-center justify-center;
+}
+.banner-branch-label {
+  @apply text-[12.5px] sm:text-[13px] font-semibold text-white/85 leading-snug;
+}
+
+/* ── measures ───────────────────────────────────────────────────────────────────
+   The longest line, in characters. Without the attribute: 62 for the lead, 60 for the
+   detail. After the defaults, so a named measure wins. */
+.banner-lead:where([data-measure="54"]) { @apply max-w-[54ch]; }
+.banner-lead:where([data-measure="60"]) { @apply max-w-[60ch]; }
+.banner-lead:where([data-measure="62"]) { @apply max-w-[62ch]; }
+.banner-lead:where([data-measure="66"]) { @apply max-w-[66ch]; }
+.banner-detail:where([data-measure="58"]) { @apply max-w-[58ch]; }
+.banner-detail:where([data-measure="60"]) { @apply max-w-[60ch]; }

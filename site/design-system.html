@@ -3355,7 +3355,7 @@
         <p class="text-[16px] text-ink-500 max-w-[62ch] mb-8 sm:mb-10 lg:mb-12">Three blocks, three jobs, three ranks. The two dark ones share a heading scale and a support colour and differ in composition — a short band against a tall double-bezel card; the closing band is light and takes the hero scale. The rules in DESIGN.md say which one a block is before it is drawn. The examples below are rendered by the same modules the pages use.</p>
 
         <h3 class="text-[22px] font-extrabold tracking-tightest mb-2">1 · Compact dark banner</h3>
-        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-4">Between sections. Says one thing about a capability that lives on another page and links there — API on the AI Detector page, AI checking on University, high volume on Pricing. A heading block, not a smaller act. With an aside panel the action sits under the text; without one, as here, the action takes the right-hand slot. <code class="text-[12.5px]">build/banner.js</code></p>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-4">Between sections. Says one thing about a capability that lives on another page and links there — API on the AI Detector page, AI checking on University, high volume on Pricing. A heading block, not a smaller act. With an aside panel the action sits under the text; without one, as here, the action takes the right-hand slot. <code class="text-[12.5px]">build/sections/banner.js</code></p>
         <dl class="grid sm:grid-cols-[9rem_1fr] gap-x-6 gap-y-2 text-[13.5px] leading-relaxed mb-5 sm:mb-6">
           <dt class="font-semibold text-ink-700">box</dt><dd class="text-ink-500 m-0"><code class="text-[12.5px] text-ink-700">rounded-3xl sm:rounded-4xl · px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10 · one orb top-right</code></dd>
           <dt class="font-semibold text-ink-700">h2</dt><dd class="text-ink-500 m-0"><code class="text-[12.5px] text-ink-700">text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] — shared with the dark accent card</code></dd>
@@ -3363,27 +3363,27 @@
           <dt class="font-semibold text-ink-700">detail</dt><dd class="text-ink-500 m-0"><code class="text-[12.5px] text-ink-700">13 / 13.5 · text-white/50</code></dd>
           <dt class="font-semibold text-ink-700">action</dt><dd class="text-ink-500 m-0"><code class="text-[12.5px] text-ink-700">the white button, 13.5 / 14.5</code></dd>
         </dl>
-  <section id="ds-compact" data-component="banner" class="relative py-0 overflow-hidden">
-    <div class="relative max-w-none">
-      <div data-surface="dark" class="rv rounded-3xl sm:rounded-4xl bg-ink-950 overflow-hidden relative px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
-        <div class="orb absolute orb-banner orb-banner-coral"></div>
-        <div class="relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
-          <div class="min-w-0 flex-1 text-white">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-1.5 mb-3.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/80">Custom &amp; high volume</span>
-        </div>
-            <h2 class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-3">Need a custom or high-volume option?</h2>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60 max-w-[62ch]">If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.</p>
+<section id="ds-compact" data-component="banner" class="banner ds-inset" data-glow="coral">
+  <div class="banner-inner">
+    <div class="banner-box rv" data-surface="dark">
+      <div class="orb banner-glow"></div>
+      <div class="banner-grid">
+        <div class="banner-text">
+          <div class="section-eyebrow">
+            <span class="section-eyebrow-dot"></span>
+            <span class="section-eyebrow-label">Custom &amp; high volume</span>
           </div>
-          <div class="shrink-0"><a href="prices.html#high-volume" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
-            Explore high-volume options
-            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-          </a></div>
+          <h2 class="banner-title">Need a custom or high-volume option?</h2>
+          <p class="banner-lead">If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.</p>
         </div>
+        <div class="banner-action"><a href="prices.html#high-volume" class="banner-button btn-press group">
+          Explore high-volume options
+          <span class="banner-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </a></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
         <h3 class="text-[22px] font-extrabold tracking-tightest mt-12 sm:mt-14 mb-2">2 · Dark accent card</h3>
         <p class="text-[15px] text-ink-500 max-w-[62ch] mb-4">A tall dark card inside a section: the recommended pricing tier, the Google Docs tile on the homepage, the contact block on Help Center. Double bezel, one orb, a two-cell body. Same heading and support colour as the compact banner; what makes it the accent card is the composition — the double bezel, the second cell, and the tall 48 / 56px buttons.</p>

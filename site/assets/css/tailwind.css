@@ -1958,6 +1958,602 @@ p.faq-a-body,
   max-width: 560px;
 }
 
+/* ═══ Banner — library component ════════════════════════════════════════════════════
+   Template: build/sections/banner.js · contract: build/sections/banner.contract.js
+   Behaviour: none of its own (.rv reveals; the button is the site's .btn-press)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The compact dark banner — the in-page secondary block. It sits BETWEEN sections, says
+   one thing about a capability that lives on another page, and links there (DESIGN.md §
+   The compact dark banner). It is a heading block, not a smaller act: its heading and
+   support colour are the dark accent card's; what tells the dark blocks apart is the
+   composition, never the type size.
+
+   section.banner                 data-glow="teal|coral|coral-soft|violet"  data-layout="split" (none: a row)
+     .banner-inner                the 1280px container
+       .banner-box.rv[data-surface="dark"]   the dark rounded box
+         .orb.banner-glow         the one glow, top right; its colour is the section's data-glow
+         .banner-grid             row: text, then the action on the right · split: text | aside
+           .banner-text
+             (.section-eyebrow)   the pill; on the dark box it is translucent, its dot takes the glow's colour
+             h2.banner-title
+             p.banner-lead        data-measure="54|60|62|66"
+             (p.banner-pill > span.banner-pill-dot)        the point of the block, raised into a pill
+             (p.banner-callout > svg.banner-callout-icon)  a caution, boxed
+             (p.banner-detail)    the quieter second paragraph      data-measure="58"
+           row:   .banner-action > a.banner-button  |  .banner-action > .banner-actions > a.banner-button + a.banner-link
+           split: .banner-aside > .banner-branch[aria-hidden] + .banner-action > a.banner-button
+                  .banner-branch  the schematic: one parent (p.banner-branch-parent), two children
+                                  (.banner-branch-child > .banner-branch-line + .banner-branch-icon + .banner-branch-label) */
+
+/* ── the section and the box ─────────────────────────────────────────────────── */
+
+.banner {
+  position: relative;
+  overflow: hidden;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .banner {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .banner {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+.banner-inner {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .banner-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .banner-inner {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+.banner-box {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(10 14 26 / var(--tw-bg-opacity, 1));
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .banner-box {
+    border-radius: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .banner-box {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+/* ── the glow: one place, a finite set of colours ───────────────────────────────
+   The glow follows .orb (site.css, linked before this sheet). Its colour used to be an
+   inline style passed per page; the colours form a finite set, so it is the section's
+   data-glow. Values verbatim. */
+
+.banner-glow {
+  width:520px;
+  height:500px;
+  right:-6%;
+  top:-220px;
+}
+
+:where(.banner[data-glow="teal"]) .banner-glow       {
+  background:rgba(44,195,219,.18);
+}
+
+:where(.banner[data-glow="coral"]) .banner-glow      {
+  background:rgba(243,111,90,.18);
+}
+
+:where(.banner[data-glow="coral-soft"]) .banner-glow {
+  background:rgba(243,111,90,.16);
+}
+
+:where(.banner[data-glow="violet"]) .banner-glow     {
+  background:rgba(154,106,222,.18);
+}
+
+/* ── the grid: two approved layouts ─────────────────────────────────────────────
+   (none)  a row: the text, and the action in the right-hand slot, so the block still
+           reads as two halves
+   split   text left, a schematic panel right (1.4fr / 1fr), the action under the panel */
+
+.banner-grid {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .banner-grid {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+}
+
+:where(.banner[data-layout="split"]) .banner-grid {
+  display: grid;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+@media (min-width: 1024px) {
+  :where(.banner[data-layout="split"]) .banner-grid {
+    grid-template-columns: 1.4fr 1fr;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+}
+
+.banner-text {
+  min-width: 0px;
+  flex: 1 1 0%;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+:where(.banner[data-layout="split"]) .banner-text {
+  flex: 0 1 auto;
+}
+
+/* The pill is the Section Header's (section-head.css); on the dark box it is translucent
+   and closer to the heading, and its dot takes the colour of the banner's glow. Derived
+   from the host, never set per pill. */
+
+:where(.banner) .section-eyebrow {
+  margin-bottom: 0.875rem;
+  background-color: rgb(255 255 255 / 0.1);
+  --tw-ring-color: rgb(255 255 255 / 0.15);
+}
+
+@media (min-width: 640px) {
+  :where(.banner) .section-eyebrow {
+    margin-bottom: 0.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.banner) .section-eyebrow {
+    margin-bottom: 0.875rem;
+  }
+}
+
+:where(.banner) .section-eyebrow-label {
+  color: rgb(255 255 255 / 0.8);
+}
+
+:where(.banner[data-glow="teal"]) .section-eyebrow-dot,
+:where(.banner[data-glow="violet"]) .section-eyebrow-dot {
+  --tw-bg-opacity: 1;
+  background-color: rgb(44 195 219 / var(--tw-bg-opacity, 1));
+}
+
+:where(.banner[data-glow="coral"]) .section-eyebrow-dot {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 111 90 / var(--tw-bg-opacity, 1));
+}
+
+:where(.banner[data-glow="coral-soft"]) .section-eyebrow-dot {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 137 113 / var(--tw-bg-opacity, 1));
+}
+
+/* the dark accent card's heading, exactly */
+
+.banner-title {
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.6rem,2.8vw,2.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+/* the lead is text-white/60 — the dark accent card's support colour; the detail steps
+   down to /50, which still clears 4.5:1 on ink-950 */
+
+.banner-lead {
+  max-width: 62ch;
+  font-size: 14.5px;
+  line-height: 1.625;
+  color: rgb(255 255 255 / 0.6);
+}
+
+@media (min-width: 640px) {
+  .banner-lead {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .banner-lead {
+    font-size: 15.5px;
+  }
+}
+
+.banner-pill {
+  margin-top: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: rgb(44 195 219 / 0.1);
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 12.5px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(167 227 237 / var(--tw-text-opacity, 1));
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(44 195 219 / 0.3);
+}
+
+@media (min-width: 640px) {
+  .banner-pill {
+    font-size: 13px;
+  }
+}
+
+.banner-pill-dot {
+  height: 0.375rem;
+  width: 0.375rem;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(44 195 219 / var(--tw-bg-opacity, 1));
+}
+
+.banner-callout {
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  border-radius: 1rem;
+  background-color: rgb(245 137 113 / 0.1);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 12.5px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(253 229 224 / var(--tw-text-opacity, 1));
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(245 137 113 / 0.3);
+}
+
+@media (min-width: 640px) {
+  .banner-callout {
+    font-size: 13px;
+  }
+}
+
+.banner-callout-icon {
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+.banner-detail {
+  margin-top: 0.75rem;
+  max-width: 60ch;
+  font-size: 13px;
+  line-height: 1.625;
+  color: rgb(255 255 255 / 0.5);
+}
+
+@media (min-width: 640px) {
+  .banner-detail {
+    font-size: 13.5px;
+  }
+}
+
+:where(.banner-pill) + .banner-detail {
+  margin-top: 0.875rem;
+}
+
+/* ── the action ──────────────────────────────────────────────────────────────── */
+
+.banner-action {
+  flex-shrink: 0;
+}
+
+.banner-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.875rem;
+}
+
+@media (min-width: 1024px) {
+  .banner-actions {
+    align-items: flex-end;
+  }
+}
+
+/* the action on a dark ground: the white button */
+
+.banner-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 13.5px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.banner-button:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 242 246 / var(--tw-bg-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .banner-button {
+    padding-left: 1.5rem;
+    padding-right: 0.5rem;
+    font-size: 14.5px;
+  }
+}
+
+.banner-button-orb {
+  display: none;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: rgb(17 24 39 / 0.1);
+}
+
+@media (min-width: 640px) {
+  .banner-button-orb {
+    display: flex;
+  }
+}
+
+.banner-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(255 255 255 / 0.7);
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  -webkit-text-decoration-color: rgb(255 255 255 / 0.3);
+          text-decoration-color: rgb(255 255 255 / 0.3);
+  text-underline-offset: 4px;
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.banner-link:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .banner-link {
+    font-size: 13.5px;
+  }
+}
+
+/* ── split: the aside and its schematic ─────────────────────────────────────────
+   One parent, two children joined to it by a drawn bracket: the relationship the copy
+   states (one API, two checks; one balance, two allocations). */
+
+.banner-aside {
+  min-width: 0px;
+}
+
+:where(.banner-aside) > .banner-action {
+  margin-top: 1.25rem;
+}
+
+.banner-branch {
+  min-width: 0px;
+  border-radius: 1rem;
+  background-color: rgb(255 255 255 / .05);
+  padding: 1.25rem;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(255 255 255 / 0.1);
+}
+
+@media (min-width: 640px) {
+  .banner-branch {
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+
+.banner-branch-parent {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgb(255 255 255 / 0.6);
+}
+
+.banner-branch-parent-icon {
+  flex-shrink: 0;
+}
+
+.banner-branch-children > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+
+.banner-branch-children {
+  padding-left: 1.5rem;
+}
+
+.banner-branch-child {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  border-radius: 1rem;
+  background-color: rgb(255 255 255 / .06);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(255 255 255 / 0.1);
+}
+
+/* the bracket: the first child's line runs down from its middle, the second's up to it */
+
+.banner-branch-line {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  bottom: -0.75rem;
+  width: 1.5rem;
+  border-top-left-radius: 1rem;
+  border-top-width: 1px;
+  border-left-width: 1px;
+  border-color: rgb(255 255 255 / 0.15);
+}
+
+:where(.banner-branch-child + .banner-branch-child) > .banner-branch-line {
+  top: -0.75rem;
+  bottom: 50%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 1rem;
+  border-top-width: 0px;
+  border-bottom-width: 1px;
+}
+
+.banner-branch-icon {
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background-color: rgb(255 255 255 / .07);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(255 255 255 / 0.1);
+}
+
+.banner-branch-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.375;
+  color: rgb(255 255 255 / 0.85);
+}
+
+@media (min-width: 640px) {
+  .banner-branch-label {
+    font-size: 13px;
+  }
+}
+
+/* ── measures ───────────────────────────────────────────────────────────────────
+   The longest line, in characters. Without the attribute: 62 for the lead, 60 for the
+   detail. After the defaults, so a named measure wins. */
+
+.banner-lead:where([data-measure="54"]) {
+  max-width: 54ch;
+}
+
+.banner-lead:where([data-measure="60"]) {
+  max-width: 60ch;
+}
+
+.banner-lead:where([data-measure="62"]) {
+  max-width: 62ch;
+}
+
+.banner-lead:where([data-measure="66"]) {
+  max-width: 66ch;
+}
+
+.banner-detail:where([data-measure="58"]) {
+  max-width: 58ch;
+}
+
+.banner-detail:where([data-measure="60"]) {
+  max-width: 60ch;
+}
+
 /* page-specific components written in the library's manner, compiled the same way; not
    Section Library members (build/about/ — the About page's team grid and timeline) */
 
@@ -3325,10 +3921,6 @@ a.team-linkedin:focus-visible {
 
 .mt-3 {
   margin-top: 0.75rem;
-}
-
-.mt-3\.5 {
-  margin-top: 0.875rem;
 }
 
 .mt-4 {
@@ -5158,10 +5750,6 @@ a.team-linkedin:focus-visible {
   background-color: rgb(245 137 113 / var(--tw-bg-opacity, 1));
 }
 
-.bg-orange-400\/10 {
-  background-color: rgb(245 137 113 / 0.1);
-}
-
 .bg-orange-400\/70 {
   background-color: rgb(245 137 113 / 0.7);
 }
@@ -5206,10 +5794,6 @@ a.team-linkedin:focus-visible {
 .bg-teal-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(44 195 219 / var(--tw-bg-opacity, 1));
-}
-
-.bg-teal-400\/10 {
-  background-color: rgb(44 195 219 / 0.1);
 }
 
 .bg-teal-400\/15 {
@@ -5493,11 +6077,6 @@ a.team-linkedin:focus-visible {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-}
-
-.py-0 {
-  padding-top: 0px;
-  padding-bottom: 0px;
 }
 
 .py-0\.5 {
@@ -6425,11 +7004,6 @@ a.team-linkedin:focus-visible {
   color: rgb(27 122 80 / var(--tw-text-opacity, 1));
 }
 
-.text-orange-100 {
-  --tw-text-opacity: 1;
-  color: rgb(253 229 224 / var(--tw-text-opacity, 1));
-}
-
 .text-orange-200 {
   --tw-text-opacity: 1;
   color: rgb(251 201 191 / var(--tw-text-opacity, 1));
@@ -6458,11 +7032,6 @@ a.team-linkedin:focus-visible {
 .text-orange-800 {
   --tw-text-opacity: 1;
   color: rgb(140 46 31 / var(--tw-text-opacity, 1));
-}
-
-.text-teal-200 {
-  --tw-text-opacity: 1;
-  color: rgb(167 227 237 / var(--tw-text-opacity, 1));
 }
 
 .text-teal-300 {
@@ -6777,10 +7346,6 @@ a.team-linkedin:focus-visible {
 
 .ring-orange-200\/60 {
   --tw-ring-color: rgb(251 201 191 / 0.6);
-}
-
-.ring-orange-400\/30 {
-  --tw-ring-color: rgb(245 137 113 / 0.3);
 }
 
 .ring-orange-400\/40 {
@@ -8861,10 +9426,6 @@ a.team-linkedin:focus-visible {
 
   .lg\:items-end {
     align-items: flex-end;
-  }
-
-  .lg\:items-center {
-    align-items: center;
   }
 
   .lg\:justify-end {

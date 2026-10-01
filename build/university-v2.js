@@ -34,7 +34,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'university-plagiarism-checker.html';
 const cta = require('./sections/cta-band');
 const { dotField } = require('./dots');
-const banner = require('./banner');
+const banner = require('./sections/banner');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* /organization-management has no page in this prototype and is a live production URL */
@@ -655,39 +655,21 @@ ${ctas.map(([l, h]) => `              ${linkQuiet(l, h)}`).join('\n')}
 
 /* ═══════════════ 06 · OPTIONAL AI CHECKING ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · OPTIONAL AI CHECKING =================
-       The compact banner (build/banner.js): secondary, no AI report, no model names, no
+       The compact banner (build/sections/banner.js): secondary, no AI report, no model names, no
        accuracy, no pricing. The aside draws the one relationship the copy states — one
        organization balance, two allocations. -->
-${banner({
+${banner.section({
     id: 'institutional-ai',
-    orb: 'rgba(154,106,222,.18)',
-    eyebrow: ['teal-400', COPY.s6.eyebrow],
-    h2: COPY.s6.h2,
-    lead: COPY.s6.lead, leadMax: '60ch',
-    after: `            <p class="flex items-start gap-2.5 rounded-2xl bg-orange-400/10 ring-1 ring-orange-400/30 px-4 py-3 mt-4 text-[12.5px] sm:text-[13px] leading-relaxed text-orange-100">
-              <svg class="shrink-0 mt-0.5" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F58971" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-              ${COPY.s6.clarification}
-            </p>`,
-    action: banner.btn(COPY.s6.cta, COPY.s6.ctaHref),
-    actionUnder: 'aside',
-    static: true,
-    aside: `          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
-            <p class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
-              <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COPY.s6.branch.parent[1]}</svg>
-              ${COPY.s6.branch.parent[0]}
-            </p>
-            <div class="space-y-3 pl-6">
-${COPY.s6.branch.children.map(([label, icon], i) => `              <div class="relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3">
-                ${i === 0
-                  ? '<span class="absolute right-full top-1/2 -bottom-3 w-6 border-t border-l border-white/15 rounded-tl-2xl" aria-hidden="true"></span>'
-                  : '<span class="absolute right-full -top-3 bottom-1/2 w-6 border-b border-l border-white/15 rounded-bl-2xl" aria-hidden="true"></span>'}
-                <span class="shrink-0 w-10 h-10 rounded-xl bg-white/[.07] ring-1 ring-white/10 flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${/^AI/.test(label) ? '#F58971' : '#5AD3E4'}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
-                </span>
-                <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/85 leading-snug">${label}</span>
-              </div>`).join('\n')}
-            </div>
-          </div>`,
+    glow: 'violet',
+    eyebrow: COPY.s6.eyebrow,
+    title: COPY.s6.h2,
+    lead: COPY.s6.lead, measure: '60',
+    callout: COPY.s6.clarification,
+    action: { label: COPY.s6.cta, href: COPY.s6.ctaHref },
+    branch: {
+      parent: { label: COPY.s6.branch.parent[0], icon: COPY.s6.branch.parent[1] },
+      children: COPY.s6.branch.children.map(([label, icon]) => ({ label, icon, tone: /^AI/.test(label) ? 'coral' : 'teal' })),
+    },
   })}`;
 
 /* ═══════════════ 07 · INSTITUTIONAL INQUIRY ═══════════════ */

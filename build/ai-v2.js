@@ -36,7 +36,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'ai-detector.html';
 const cta = require('./sections/cta-band');
 const { dotField } = require('./dots');
-const banner = require('./banner');   /* the closing band — recipe and reasoning live there */
+const banner = require('./sections/banner');   /* the compact dark banner — recipe and reasoning live there */
 
 /* ─────────────────────────────────────────────────────────────────────────────
    APPROVED COPY — DEC-0038, 2026-08-22. Verbatim.
@@ -834,39 +834,20 @@ const section7 = () => `  <!-- ================= 07 · AI DETECTION THROUGH THE 
 
        Not one word is rewritten. The approved sentences are split at their own full
        stops and given the weight each one's job deserves. -->
-${banner({
+${banner.section({
     id: 'ai-api',
-    orb: 'rgba(44,195,219,.18)',
-    eyebrow: ['teal-400', 'API'],
-    h2: COPY.s7.h2,
-    lead: COPY.s7.lead, leadMax: '54ch',
-    after: `            <p class="inline-flex items-center gap-2 rounded-full bg-teal-400/10 ring-1 ring-teal-400/30 px-3.5 py-1.5 mt-3 text-[12.5px] sm:text-[13px] font-semibold text-teal-200">
-              <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>${COPY.s7.note}
-            </p>
-            <p class="mt-3.5 ${banner.SUPPORT} max-w-[58ch]">${COPY.s7.support}</p>`,
-    action: banner.btn(COPY.s7.cta, COPY.s7.ctaHref),
-    actionUnder: 'aside',
-    static: true,
-    aside: `          <div class="min-w-0 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6" aria-hidden="true">
-            <p class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">
-              <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COPY.s7.branch.parent[1]}</svg>
-              ${COPY.s7.branch.parent[0]}
-            </p>
-            <div class="space-y-3 pl-6">
-${COPY.s7.branch.children.map(([label, icon], i) => {
-  const ai = /^AI/.test(label);
-  return `              <div class="relative flex items-center gap-3.5 rounded-2xl bg-white/[.06] ring-1 ring-white/10 px-4 py-3">
-                ${i === 0
-                  ? '<span class="absolute right-full top-1/2 -bottom-3 w-6 border-t border-l border-white/15 rounded-tl-2xl" aria-hidden="true"></span>'
-                  : '<span class="absolute right-full -top-3 bottom-1/2 w-6 border-b border-l border-white/15 rounded-bl-2xl" aria-hidden="true"></span>'}
-                <span class="shrink-0 w-10 h-10 rounded-xl bg-white/[.07] ring-1 ring-white/10 flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${ai ? '#F58971' : '#5AD3E4'}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
-                </span>
-                <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/85 leading-snug">${label}</span>
-              </div>`;
-}).join('\n')}
-            </div>
-          </div>`,
+    glow: 'teal',
+    eyebrow: 'API',
+    title: COPY.s7.h2,
+    lead: COPY.s7.lead, measure: '54',
+    pill: COPY.s7.note,
+    detail: COPY.s7.support, detailMeasure: '58',
+    action: { label: COPY.s7.cta, href: COPY.s7.ctaHref },
+    /* a small schematic that draws the sentence rather than repeating it */
+    branch: {
+      parent: { label: COPY.s7.branch.parent[0], icon: COPY.s7.branch.parent[1] },
+      children: COPY.s7.branch.children.map(([label, icon]) => ({ label, icon, tone: /^AI/.test(label) ? 'coral' : 'teal' })),
+    },
   })}`;
 
 /* ═══════════════ 08 · AI PRICING ═══════════════ */

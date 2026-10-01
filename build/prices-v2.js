@@ -39,7 +39,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'prices.html';
 const cta = require('./sections/cta-band');
 const { dotField } = require('./dots');
-const banner = require('./banner');
+const banner = require('./sections/banner');
 const { PLANS, LABEL } = require('./pricing-data');
 const pricing = require('./pricing');   /* TAGLINE is the homepage's; DEC-0042 grants no plan subtitle */
 
@@ -464,17 +464,16 @@ const section5 = () => `  <!-- ================= 05 · CUSTOM & HIGH VOLUME ====
        instruction: no VIP benefits, pricing, discounts, submission quantities, dedicated
        manager, invoicing or Storage promises — only the approved sentence and the link.
 
-       The shell is build/banner.js — the same block the AI Detector page gives its API
+       The shell is build/sections/banner.js — the same block the AI Detector page gives its API
        and the University page gives AI checking. It used to carry its own heading size
        and padding here; that was drift, not a decision. -->
-${banner({
+${banner.section({
     id: 'high-volume',
-    orb: 'rgba(243,111,90,.18)',
-    eyebrow: ['orange-500', COPY.s5.eyebrow],
-    h2: COPY.s5.h2,
-    lead: COPY.s5.body, leadMax: '62ch',
-    action: banner.btn(COPY.s5.cta, COPY.s5.ctaHref),
-    static: true,
+    glow: 'coral',
+    eyebrow: COPY.s5.eyebrow,
+    title: COPY.s5.h2,
+    lead: COPY.s5.body,
+    action: { label: COPY.s5.cta, href: COPY.s5.ctaHref },
   })}`;
 
 /* ═══════════════ 06 · PRICING FAQ ═══════════════ */

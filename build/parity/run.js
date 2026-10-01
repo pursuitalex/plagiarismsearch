@@ -357,9 +357,13 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
       r.toTopY = await page.evaluate(() => Math.round(scrollY));
     }
     /* focus rings: every link/button on a dark ground, a few on light, the footer */
+    /* A dark ground is found by its declared surface as well as by the utility: a library
+       component (the banner's .banner-box) carries data-surface="dark" and no bg-ink-950
+       class, and must stay in the sample on both pages. */
     r.focusRings = await page.evaluate(() => {
-      const dark = [...document.querySelectorAll('main .bg-ink-950 a, main .bg-ink-950 button')].slice(0, 20);
-      const light = [...document.querySelectorAll('main a')].filter(a => !a.closest('.bg-ink-950')).slice(0, 4);
+      const DARK = '.bg-ink-950, [data-surface="dark"]';
+      const dark = [...document.querySelectorAll('main a, main button')].filter(el => el.closest(DARK)).slice(0, 20);
+      const light = [...document.querySelectorAll('main a')].filter(a => !a.closest(DARK)).slice(0, 4);
       const foot = [...document.querySelectorAll('footer a')].slice(0, 3);
       return [...dark, ...light, ...foot].map(el => { el.focus({ focusVisible: true }); return getComputedStyle(el).outlineColor; }).join(' ');
     });

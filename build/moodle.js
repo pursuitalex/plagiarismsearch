@@ -35,7 +35,7 @@ const faq = require('./sections/faq');   /* the FAQ: one library template */
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'integration-guide.html';
-const banner = require('./banner');
+const banner = require('./sections/banner');
 const { dotField } = require('./dots');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -716,15 +716,14 @@ ${[docRequirements, docHow, docInstall, docConnect, docSettings, docSources, doc
   </div>`;
 
 /* ═══════════════ 04 · SUPPORT / HANDOFF ═══════════════ */
-const section4 = () => banner({
+const section4 = () => banner.section({
   id: 'moodle-support',
-  eyebrow: ['teal-400', 'Support'],
-  h2: COPY.support.h2,
-  lead: COPY.support.p1,
-  leadMax: '60ch',
-  after: `            <p class="mt-3 ${banner.SUPPORT} max-w-[60ch]">${COPY.support.p2}</p>`,
-  action: banner.btn(COPY.support.cta, CONTACT),
-  static: true,
+  glow: 'teal',
+  eyebrow: 'Support',
+  title: COPY.support.h2,
+  lead: COPY.support.p1, measure: '60',
+  detail: COPY.support.p2,
+  action: { label: COPY.support.cta, href: CONTACT },
 });
 
 const section5 = () => `  <!-- ================= 05 · WHERE TO GO INSTEAD / NEXT =================

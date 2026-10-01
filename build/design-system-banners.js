@@ -2,8 +2,8 @@
 
    design-system.html is hand-written, and that is fine for swatches and type ramps. It
    is not fine for the dark banners: each of them is rendered by code that lives in
-   build/ (banner.js, sections/cta-band.js) and a hand-copied example would be a fourth version of the
-   block, drifting like the other three did. So this script renders the examples with
+   build/sections/ (banner.js, cta-band.js) and a hand-copied example would be a fourth
+   version of the block, drifting like the other three did. So this script renders the examples with
    the same modules the pages use and splices the section in between two markers. Run
    it again and it replaces itself.
 
@@ -11,13 +11,13 @@
 
    Three banners, in the order the system ranks them:
 
-     1. the compact dark banner   build/banner.js   between sections, one link onward
+     1. the compact dark banner   build/sections/banner.js     between sections, one link onward
      2. the dark accent card      card recipe       a tall dark card with a double bezel
      3. the closing CTA band      build/sections/cta-band.js   last thing before the footer
 */
 const fs = require('fs');
 const path = require('path');
-const banner = require('./banner');
+const banner = require('./sections/banner');
 const cta = require('./sections/cta-band');
 
 const FILE = path.join(__dirname, '..', 'site', 'design-system.html');
@@ -31,18 +31,17 @@ const spec = rows => `        <dl class="grid sm:grid-cols-[9rem_1fr] gap-x-6 ga
 ${rows.map(([k, v]) => `          <dt class="font-semibold text-ink-700">${k}</dt><dd class="text-ink-500 m-0"><code class="text-[12.5px] text-ink-700">${v}</code></dd>`).join('\n')}
         </dl>`;
 
-/* ── 1 · the compact dark banner, rendered by build/banner.js ──────────────── */
-const compact = banner({
+/* ── 1 · the compact dark banner, rendered by build/sections/banner.js ─────────
+   The showcase supplies its own rhythm and gutter: .ds-inset (build/assets/ds/ds.css)
+   takes the section's own off. */
+const compact = banner.section({
   id: 'ds-compact',
-  orb: 'rgba(243,111,90,.18)',
-  eyebrow: ['orange-500', 'Custom &amp; high volume'],
-  h2: 'Need a custom or high-volume option?',
+  glow: 'coral',
+  eyebrow: 'Custom &amp; high volume',
+  title: 'Need a custom or high-volume option?',
   lead: 'If the standard pricing options do not fit your checking volume or requirements, explore the available custom and high-volume options.',
-  leadMax: '62ch',
-  action: banner.btn('Explore high-volume options', 'prices.html#high-volume'),
-  static: true,
-}).replace('py-10 sm:py-12 lg:py-14 bg-white', 'py-0')       /* the showcase supplies its own rhythm */
-  .replace('max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10', 'max-w-none');
+  action: { label: 'Explore high-volume options', href: 'prices.html#high-volume' },
+}).replace('class="banner"', 'class="banner ds-inset"');
 
 /* ── 2 · the dark accent card, as Help Center sets it ──────────────────────── */
 const accent = `        <div class="rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-ink-950 text-white p-1.5 sm:p-2 ring-1 ring-white/10 shadow-diffuse-lg overflow-hidden">
@@ -86,7 +85,7 @@ const section = `${START}
         <p class="text-[16px] text-ink-500 max-w-[62ch] mb-8 sm:mb-10 lg:mb-12">Three blocks, three jobs, three ranks. The two dark ones share a heading scale and a support colour and differ in composition — a short band against a tall double-bezel card; the closing band is light and takes the hero scale. The rules in DESIGN.md say which one a block is before it is drawn. The examples below are rendered by the same modules the pages use.</p>
 
         <h3 class="text-[22px] font-extrabold tracking-tightest mb-2">1 · Compact dark banner</h3>
-        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-4">Between sections. Says one thing about a capability that lives on another page and links there — API on the AI Detector page, AI checking on University, high volume on Pricing. A heading block, not a smaller act. With an aside panel the action sits under the text; without one, as here, the action takes the right-hand slot. <code class="text-[12.5px]">build/banner.js</code></p>
+        <p class="text-[15px] text-ink-500 max-w-[62ch] mb-4">Between sections. Says one thing about a capability that lives on another page and links there — API on the AI Detector page, AI checking on University, high volume on Pricing. A heading block, not a smaller act. With an aside panel the action sits under the text; without one, as here, the action takes the right-hand slot. <code class="text-[12.5px]">build/sections/banner.js</code></p>
 ${spec([
   ['box', 'rounded-3xl sm:rounded-4xl · px-6 py-8 sm:px-8 sm:py-9 lg:px-10 lg:py-10 · one orb top-right'],
   ['h2', 'text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] — shared with the dark accent card'],

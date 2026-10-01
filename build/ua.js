@@ -37,7 +37,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'ua-plagiarism-check.html';
 const cta = require('./sections/cta-band');
-const banner = require('./banner');
+const banner = require('./sections/banner');
 const checker = require('./checker');
 const { dotField } = require('./dots');
 const { REVIEWS, reviewCard } = require('./reviews');
@@ -479,15 +479,13 @@ ${PICK.map(i => `        <div class="flex">${reviewCard(REVIEWS[i], false, { sta
   </section>`;
 
 /* ═══════════════ 09 · AI IS A DIFFERENT CHECK ═══════════════ */
-const section9 = () => banner({
+const section9 = () => banner.section({
   id: 'ai-detector',
-  orb: 'rgba(243,111,90,.16)',
-  eyebrow: ['orange-400', COPY.ai.eyebrow],
-  h2: COPY.ai.h2,
+  glow: 'coral-soft',
+  eyebrow: COPY.ai.eyebrow,
+  title: COPY.ai.h2,
   lead: COPY.ai.p,
-  leadMax: '62ch',
-  action: banner.btn(COPY.ai.cta, AI_PAGE),
-  static: true,
+  action: { label: COPY.ai.cta, href: AI_PAGE },
 });
 
 /* ═══════════════ 10 · FAQ ═══════════════ */

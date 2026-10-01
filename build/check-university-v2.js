@@ -261,7 +261,7 @@ console.log('\nstructure');
   ok('every in-page anchor resolves', !dead.length, dead.join(', '));
 
   /* the compact banner is the shared one, and it is compact */
-  ok('AI is the shared compact banner', /id="institutional-ai" (?:data-component="banner" )?class="relative py-10 sm:py-12 lg:py-14/.test(body));
+  ok('AI is the shared compact banner', /id="institutional-ai" data-component="banner" class="banner"/.test(body));
   ok('no AI report demo in the AI block', !/cab-mark/.test(section('institutional-ai')));
 
   /* h3s: only where a genuine subsection exists — the four control items, the three

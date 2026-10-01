@@ -169,7 +169,7 @@ console.log('\nacts');
   ok('the privacy link goes to /policy', /href="policy\.html"/.test(dh));
 
   const pl = section('plans-and-custom');
-  ok('plans is the shared compact banner with both ways on', /py-10 sm:py-12 lg:py-14/.test(pl) && /href="#business-inquiry"/.test(pl) && /href="prices\.html"/.test(pl));
+  ok('plans is the shared compact banner with both ways on', /data-component="banner" class="banner"/.test(pl) && /href="#business-inquiry"/.test(pl) && /href="prices\.html"/.test(pl));
   ok('no pricing widget or price on the page', !/\$\d|One-time|Monthly|Yearly|js-price/.test(text));
 }
 

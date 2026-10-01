@@ -23,4 +23,5 @@
 module.exports = [
   { name: 'faq', title: 'FAQ', contract: require('./faq.contract'), check: require('./faq.check') },
   { name: 'cta-band', title: 'CTA band', contract: require('./cta-band.contract'), check: require('./cta-band.check') },
+  { name: 'banner', title: 'Banner', contract: require('./banner.contract'), check: require('./banner.check') },
 ];
