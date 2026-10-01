@@ -665,47 +665,45 @@
        The section that replaces the old page's "No data storage" card. What is true is
        narrower and it is said exactly: processed on our infrastructure, not sent to an
        external provider, report kept for convenience, deletable by the user. -->
-  <section id="ai-data-handling" data-component="lifecycle" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-10 sm:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Data handling</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Your AI check is processed on PlagiarismSearch infrastructure</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">AI checks are processed on PlagiarismSearch infrastructure. Checked content is not sent to an external AI detector provider.</p>
+<section id="ai-data-handling" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge-sm" data-bg="aqua" data-space="lg" data-accent="teal">
+  <div class="steps-inner">
+    <div class="section-head rv" data-measure="760">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Data handling</span>
       </div>
-
-      <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex items-center gap-2 mb-3">
-            <span class="w-7 h-7 rounded-full bg-ink-900 text-white text-[12px] font-bold flex items-center justify-center tabular-nums">1</span>
-          </span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Submit</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Paste text or upload a document for AI analysis.</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex items-center gap-2 mb-3">
-            <span class="w-7 h-7 rounded-full bg-ink-900 text-white text-[12px] font-bold flex items-center justify-center tabular-nums">2</span>
-          </span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Process</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">The AI check runs on PlagiarismSearch infrastructure without sending the checked content to an external AI detector provider.</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex items-center gap-2 mb-3">
-            <span class="w-7 h-7 rounded-full bg-ink-900 text-white text-[12px] font-bold flex items-center justify-center tabular-nums">3</span>
-          </span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Review or delete</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">The generated AI report may remain available in your account for convenience. You can permanently delete the report when you no longer need it.</p>
-        </div>
+      <h2 class="section-title">Your AI check is processed on PlagiarismSearch infrastructure</h2>
+      <p class="section-intro">AI checks are processed on PlagiarismSearch infrastructure. Checked content is not sent to an external AI detector provider.</p>
+    </div>
+    <div class="steps-list rv-kids" data-cols="3">
+      <div class="steps-item">
+        <span class="steps-marker">
+          <span class="steps-badge">1</span>
+        </span>
+        <h3 class="steps-title">Submit</h3>
+        <p class="steps-text">Paste text or upload a document for AI analysis.</p>
       </div>
-
-      <div class="rv mt-6 lg:mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">For broader information about account data and privacy practices, read the PlagiarismSearch Privacy Policy.</p>
-        <span class="shrink-0"><a href="policy.html" class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">Read the Privacy Policy</a></span>
+      <div class="steps-item">
+        <span class="steps-marker">
+          <span class="steps-badge">2</span>
+        </span>
+        <h3 class="steps-title">Process</h3>
+        <p class="steps-text">The AI check runs on PlagiarismSearch infrastructure without sending the checked content to an external AI detector provider.</p>
+      </div>
+      <div class="steps-item">
+        <span class="steps-marker">
+          <span class="steps-badge">3</span>
+        </span>
+        <h3 class="steps-title">Review or delete</h3>
+        <p class="steps-text">The generated AI report may remain available in your account for convenience. You can permanently delete the report when you no longer need it.</p>
       </div>
     </div>
-  </section>
+    <div class="steps-more rv">
+      <p class="steps-more-text">For broader information about account data and privacy practices, read the PlagiarismSearch Privacy Policy.</p>
+      <span class="steps-more-link"><a href="policy.html" class="section-link">Read the Privacy Policy</a></span>
+    </div>
+  </div>
+</section>
 
   <!-- ================= 07 · AI DETECTION THROUGH THE API =================
        A compact banner, not an act. This was a full dark section until the 2026-08-25

@@ -331,6 +331,7 @@ const faq = require('./sections/faq');   /* the FAQ: one library template */
 /* the hero is the library's; it renders the shared quick-check form (build/checker.js)
    in its sealed slot, so Students and PDF show the same component */
 const hero = require('./sections/hero');
+const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 
 const section1 = () => `
   <!-- ================= 01 · HERO / REAL CHECKER =================
@@ -593,38 +594,16 @@ const section6 = () => `
   </section>`;
 
 const section7 = () => `
-  <!-- ================= 07 · DOCUMENT & REPORT PRIVACY LIFECYCLE ================= -->
-  <section data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-28 bg-[#F2FCFC] overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[540px] h-[540px] bg-teal-500/10 right-[-160px] top-20"></div>
-    </div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        ${eyebrow('Document handling')}
-        <h2 class="${H2} mb-4 lg:mb-5">${S.s7.h2}</h2>
-        <p class="${LEAD} text-ink-600">${S.s7.intro}</p>
-      </div>
-
-      <ol class="rv-kids grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-7 lg:mb-8">
-        ${S.s7.steps.map(([t, d], i) => `<li class="${CARD}">
-          ${chip([I.upload, I.file, I.report, I.trash][i], i)}
-          <div class="flex items-baseline gap-2 mt-5 mb-2">
-            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-300 nums">0${i + 1}</span>
-            <p class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-900">${t}</p>
-          </div>
-          <p class="${TILE_SUB} text-ink-600">${d}</p>
-        </li>`).join('\n        ')}
-      </ol>
-
-      <div class="rv flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-        <div class="min-w-0">
-          <p class="${BODY} text-ink-600 mb-1.5">${S.s7.storage}</p>
-          <p class="${BODY} text-ink-600">${S.s7.infra}</p>
-        </div>
-        <div class="shrink-0 sm:ml-auto">${btn(S.s7.cta, S.s7.ctaHref, 'light')}</div>
-      </div>
-    </div>
-  </section>`;
+  <!-- ================= 07 · DOCUMENT & REPORT PRIVACY LIFECYCLE =================
+       The library's Steps (build/sections/steps.js): four cards with the homepage's
+       ringed tile on top and the number before the name; the note panel under them. -->
+${steps.section({
+    layout: 'cards', marker: 'icon-stack', bg: 'aqua', space: 'md', glow: true,
+    head: { eyebrow: 'Document handling', title: S.s7.h2, intro: S.s7.intro, measure: '720' },
+    cols: 4,
+    items: S.s7.steps.map(([title, text], i) => ({ title, text, icon: [I.upload, I.file, I.report, I.trash][i], tone: ['teal', 'orange', 'mint'][i % 3] })),
+    foot: { note: { lines: [S.s7.storage, S.s7.infra], action: { label: S.s7.cta, href: S.s7.ctaHref, tone: 'ghost' } } },
+  })}`;
 
 const section8 = () => `
   <!-- ================= 08 · FULL WORKFLOW / INTEGRATIONS =================

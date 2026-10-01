@@ -641,6 +641,35 @@ page-specific: API (a figure strip), AI Detector (its own checker flow and trust
 Moodle (callout, two buttons, the link diagram), Scholarship (winners), the illustrated
 v2 pages (photo collages), the tool pages, About us, Newsroom, Reviews.
 
+#### The steps — `build/sections/steps.js`
+
+A numbered sequence — what happens, in order — is one Section Library component (wave 2):
+`section.steps-section`, `data-component="steps"` (the root class is not `.steps`, which is
+the Moodle guide's list). Three layouts on the section (`data-layout`), and for each the
+ways a step is marked (`data-marker`):
+
+| layout | marker | pages |
+|---|---|---|
+| `rail` — stations on one line, no cards | `icon` (tile + number) | Students, Turnitin, UA (document lifecycle) |
+| | `disc` (a large numbered disc, the last one dark) | UA (how to read a result) |
+| `cards` — a card a step | `icon` (tile and number on one row; `data-link="line"` joins the cards) | PDF |
+| | `icon-stack` (the homepage's ringed tile on top, number before the name) | Home |
+| | `badge` (a round number) / `badge-sm` (the compact card) | API / AI Detector |
+| `rows` — one sheet, a row a step | none (the ghost numeral; tags under the name) / `icon` (a tile and a "Step 1" label) | Business & Teams / Affiliate |
+
+Section switches shared with the other library sections: `data-bg="white|cool|aqua"`,
+`data-space="md|lg"`, `data-accent="teal"` (the pill's dot). The head is the Section
+Header block (`.section-head`, `data-measure`). On the list: `data-cols="3|4"`,
+`data-last="apart"` (the Ukrainian page: the last station dashed, the rail stops before
+it). Surfaces follow the ground: a badge card and the note panel are grey on a white
+section, white with the hairline and shadow on a tint. Under the list goes at most one
+foot: a note panel, one button, a line with a quiet link, a callout, or a page's own
+diagram in a sealed `[data-slot="media"]`.
+
+Not on the template: the Students page's "what to do when you find a match" (a timeline
+beside a sticky decision card), the AI Detector's interpretation act, the photo
+compositions of the tool and v2 pages, and the Scholarship's numbered terms.
+
 The in-section button and quiet link are a library primitive, the **Action**
 (`build/sections/action.js`, `.action-button` / `.action-link`, `data-tone="light|ghost"`),
 and so is the **Icon tile** (`build/sections/icon-tile.js`, `.icon-tile[data-tone]`): one

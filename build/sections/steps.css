@@ -1,0 +1,322 @@
+/* ═══ Steps — library component ═════════════════════════════════════════════════════
+   Template: build/sections/steps.js · contract: build/sections/steps.contract.js
+   Behaviour: build/assets/js/20-motion.js (.rv, .rv-kids) — nothing of its own
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   A numbered sequence: what happens, in order. Three approved layouts, each with its own
+   item; the switches sit on the section, the list carries what depends on its content.
+
+   section.steps-section            data-layout="rail|cards|rows"   data-marker (by layout, below)
+                            data-bg="white|cool|aqua"   data-space="md|lg"   data-accent="teal"
+     (.steps-bg > .orb.steps-glow)             one soft glow, on the aqua ground (the homepage)
+     .steps-inner
+       .section-head.rv                        the Section Header (section-head.css)
+       THE LIST — by layout
+       (THE FOOT — one of five, below)
+
+   data-layout="rail"       stations on one line (Students, Turnitin, the Ukrainian page)
+     ol.steps-list.rv-kids                     data-cols="3|4"   data-last="apart"
+       span.steps-line                         the rail
+       li.steps-item
+         div.steps-marker > span.icon-tile, span.steps-num          data-marker="icon"
+         span.steps-disc                                            data-marker="disc": a large numbered disc
+         h3.steps-title   p.steps-text
+
+   data-layout="cards"      one card a step (PDF, the homepage, AI Detector, API)
+     ol|div.steps-list.rv-kids                 data-cols="3|4"   data-link="line"
+       li|div.steps-item
+         (span.steps-link)                                          the connector to the next card
+         div.steps-marker > span.icon-tile, span.steps-num          data-marker="icon"
+         span.icon-tile  div.steps-heading > span.steps-num, p.steps-title     data-marker="icon-stack"
+         span.steps-badge                                           data-marker="badge"
+         span.steps-marker > span.steps-badge                       data-marker="badge-sm"
+         h3.steps-title   p.steps-text
+
+   data-layout="rows"       one sheet, a row a step (Business & Teams, Affiliate)
+     div.steps-frame.rv > ol|div.steps-sheet
+       li|div.steps-row
+         span.steps-num                        the large ghost numeral
+         div.steps-row-head                    h3.steps-title (+ div.steps-tags > span.steps-tag); with
+                                               data-marker="icon": span.icon-tile + div.steps-row-title > (p.steps-kicker) h3.steps-title
+         p.steps-text
+
+   The foot, under the list:
+     div.steps-note.rv                         a note panel: .steps-note-text > p.steps-note-line (data-tone="strong"),
+                                               .steps-note-action > a.action-button
+     div.steps-actions.rv                      one button alone
+     div.steps-more.rv                         a line of text and a quiet link: p.steps-more-text, span.steps-more-link > a.section-link
+     div.steps-callout.rv                      one statement beside an icon tile: span.icon-tile, p.steps-callout-text
+     [data-slot="media"]                       a diagram or panel drawn for the page — sealed
+
+   SURFACES follow the ground (IMAGES.md § 8.5): on a tint a card is white with the
+   hairline and the soft shadow; on white a badge card and the note panel take the grey. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.steps-section {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-white;
+}
+.steps-section:where([data-space="md"]) { @apply lg:py-28; }
+.steps-section:where([data-bg="cool"]) { @apply bg-[#F7FAFC]; }
+.steps-section:where([data-bg="aqua"]) { @apply bg-[#F2FCFC] overflow-hidden; }
+
+.steps-bg {
+  @apply absolute inset-0 overflow-hidden pointer-events-none;
+}
+.steps-glow {
+  @apply w-[540px] h-[540px] bg-teal-500/10 right-[-160px] top-20;
+}
+.steps-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+
+/* ── the parts every layout shares ───────────────────────────────────────────── */
+.steps-list {
+  @apply grid gap-4 sm:gap-5 lg:gap-6;
+}
+.steps-list:where([data-cols="4"]) { @apply sm:grid-cols-2 lg:grid-cols-4; }
+.steps-list:where([data-cols="3"]) { @apply md:grid-cols-3; }
+
+/* the marker row: the icon tile and the step's number */
+.steps-marker {
+  @apply flex items-center gap-3 mb-4;
+}
+.steps-num { font-variant-numeric:tabular-nums;
+  @apply text-[11px] font-bold tracking-[0.2em] text-ink-400;
+}
+.steps-title {
+  @apply text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2;
+}
+.steps-text {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600;
+}
+
+/* ── layout: cards ───────────────────────────────────────────────────────────── */
+:where(.steps-section[data-layout="cards"]) .steps-item {
+  @apply rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7;
+}
+
+/* linked cards (PDF): a connector starts at a card's right edge and is exactly as long as
+   the grid gap, so it sits between the cards and never runs into one */
+.steps-list:where([data-link="line"]) {
+  @apply relative gap-5 sm:gap-5 lg:gap-6;
+}
+:where(.steps-list[data-link="line"]) > .steps-item {
+  @apply relative flex flex-col;
+}
+.steps-link {
+  @apply hidden md:block absolute top-1/2 left-full w-5 lg:w-6 h-px bg-ink-200;
+}
+:where(.steps-list[data-link="line"]) .steps-marker {
+  @apply justify-between mb-5;
+}
+
+/* marker "icon-stack" — the homepage's card: the tile on top, the number before the title */
+.steps-heading {
+  @apply flex items-baseline gap-2 mt-5 mb-2;
+}
+:where(.steps-heading) > .steps-num {
+  @apply text-ink-300;
+}
+:where(.steps-heading) > .steps-title {
+  @apply text-[15.5px] sm:text-[16.5px] lg:text-[16.5px] text-ink-900 mb-0;
+}
+
+/* markers "badge" and "badge-sm" — a round number instead of an icon. The card is
+   rounder; on white it takes the grey and drops the hairline and the shadow. */
+.steps-badge {
+  @apply inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4;
+}
+:where(.steps-section[data-marker^="badge"]) .steps-item {
+  @apply rounded-3xl sm:rounded-[28px] lg:rounded-[28px];
+}
+:where(.steps-section[data-marker^="badge"][data-bg="white"]) .steps-item { box-shadow:none;
+  @apply bg-ink-50;
+}
+:where(.steps-section[data-marker^="badge"]) .steps-title {
+  @apply text-[15.5px] sm:text-[16.5px] lg:text-[16.5px];
+}
+:where(.steps-section[data-marker^="badge"]) .steps-text {
+  @apply text-[13px] sm:text-[13.5px];
+}
+/* badge-sm (AI Detector): the compact card — a 28px badge, three across from 640px */
+:where(.steps-section[data-marker="badge-sm"]) .steps-list:where([data-cols="3"]) {
+  @apply sm:grid-cols-3;
+}
+:where(.steps-section[data-marker="badge-sm"]) .steps-marker {
+  @apply inline-flex gap-2 mb-3;
+}
+:where(.steps-section[data-marker="badge-sm"]) .steps-badge {
+  @apply flex w-7 h-7 text-[12px] mb-0;
+}
+
+/* ── layout: rail ────────────────────────────────────────────────────────────────
+   No cards: the stations sit on one line, each tile ringed in the ground's colour so the
+   line stops at it. The line runs from the first station's column to the last one's. */
+:where(.steps-section[data-layout="rail"]) .steps-list {
+  @apply relative gap-6 sm:gap-6 lg:gap-8;
+}
+:where(.steps-section[data-layout="rail"]) .steps-list:where([data-cols="3"]) {
+  @apply gap-7 sm:gap-7 lg:gap-10;
+}
+.steps-line {
+  @apply hidden lg:block absolute left-[10%] right-[10%] top-[22px] h-px bg-ink-200;
+}
+:where(.steps-list[data-cols="3"]) > .steps-line {
+  @apply md:block left-[8%] right-[8%];
+}
+:where(.steps-section[data-layout="rail"]) .steps-item {
+  @apply relative;
+}
+:where(.steps-section[data-layout="rail"] .steps-item) .icon-tile {
+  @apply relative z-[1] ring-4 ring-white;
+}
+:where(.steps-section[data-layout="rail"][data-bg="cool"] .steps-item) .icon-tile {
+  @apply ring-[#F7FAFC];
+}
+/* on the cool ground the number covers the line behind it */
+:where(.steps-section[data-layout="rail"][data-bg="cool"]) .steps-num {
+  @apply relative z-[1] bg-[#F7FAFC] pr-3;
+}
+:where(.steps-section[data-layout="rail"]) .steps-title {
+  @apply text-[16px] sm:text-[17px] lg:text-[17px] mb-1.5;
+}
+:where(.steps-section[data-layout="rail"]) .steps-text {
+  @apply max-w-[36ch];
+}
+:where(.steps-section[data-layout="rail"] .steps-list[data-cols="3"]) .steps-text {
+  @apply max-w-[44ch];
+}
+
+/* the last station apart (the Ukrainian page): a separate act, so it is drawn dashed and
+   the rail stops before it; this page's own gap, and no cap on the text */
+:where(.steps-section[data-layout="rail"]) .steps-list:where([data-last="apart"]) {
+  @apply lg:gap-7;
+}
+:where(.steps-list[data-last="apart"]) > .steps-line {
+  @apply left-[6%] right-[31%];
+}
+:where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"]) .steps-text {
+  @apply max-w-none;
+}
+:where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"]) > .steps-item:where(:last-child) {
+  @apply rounded-2xl sm:rounded-3xl border border-dashed border-ink-300 bg-white/70 p-5 lg:-m-5 lg:p-5;
+}
+:where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"] > .steps-item:last-child) .icon-tile { box-shadow:none; }
+:where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"] > .steps-item:last-child) .steps-num {
+  @apply bg-transparent pr-0;
+}
+
+/* marker "disc" — a large numbered disc on the rail; the last one is the dark one */
+:where(.steps-section[data-marker="disc"]) .steps-list {
+  @apply gap-8 sm:gap-8 lg:gap-12;
+}
+:where(.steps-section[data-marker="disc"]) .steps-line {
+  @apply left-0 right-0 top-[27px];
+}
+.steps-disc { font-variant-numeric:tabular-nums;
+  @apply relative z-[1] inline-flex items-center justify-center w-[54px] h-[54px] rounded-full bg-teal-100 text-teal-800 ring-[6px] ring-white text-[19px] font-extrabold tracking-tight;
+}
+:where(.steps-item:last-child) > .steps-disc {
+  @apply bg-ink-900 text-white;
+}
+:where(.steps-section[data-marker="disc"]) .steps-title {
+  @apply text-[17px] sm:text-[18px] lg:text-[19px] mt-5 mb-2;
+}
+/* the rail of discs stands a little further from its head */
+:where(.steps-section[data-marker="disc"]) .section-head {
+  @apply lg:mb-14;
+}
+
+/* ── layout: rows ────────────────────────────────────────────────────────────────
+   One sheet in the double bezel, a hairline between the rows; each row: the ghost
+   numeral, the step's name, its text. */
+.steps-frame {
+  @apply rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse;
+}
+.steps-sheet {
+  @apply rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100;
+}
+.steps-row {
+  @apply grid lg:grid-cols-[5rem_1fr_1.35fr] gap-3 lg:gap-8 items-start px-5 py-6 sm:px-7 sm:py-7 lg:px-9 lg:py-8;
+}
+:where(.steps-row) > .steps-num {
+  @apply text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-none text-ink-200;
+}
+.steps-row-head {
+  @apply min-w-0;
+}
+/* with an icon tile the head is a row: the tile, then the step's label and name */
+:where(.steps-section[data-layout="rows"][data-marker="icon"]) .steps-row-head {
+  @apply flex items-center gap-3.5;
+}
+.steps-row-title {
+  @apply min-w-0;
+}
+.steps-kicker {
+  @apply text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-1;
+}
+:where(.steps-row) .steps-title {
+  @apply text-[19px] sm:text-[21px] lg:text-[22px] mb-0;
+}
+/* the name carries the gap to the tags under it */
+:where(.steps-row) .steps-title:where(:not(:last-child)) {
+  @apply mb-3;
+}
+.steps-tags {
+  @apply flex flex-wrap gap-1.5;
+}
+.steps-tag {
+  @apply rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700;
+}
+:where(.steps-row) > .steps-text {
+  @apply text-[14.5px] sm:text-[15px] lg:text-[15.5px];
+}
+
+/* ── the foot ────────────────────────────────────────────────────────────────────
+   Each foot carries the gap above itself. */
+.steps-note {
+  @apply mt-6 sm:mt-7 lg:mt-8 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7;
+}
+:where(.steps-section[data-bg="white"]) .steps-note { box-shadow:none;
+  @apply bg-ink-50;
+}
+:where(.steps-section[data-layout="rail"]) .steps-note {
+  @apply mt-8 sm:mt-10 lg:mt-12;
+}
+.steps-note-text {
+  @apply min-w-0;
+}
+.steps-note-line {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600;
+}
+.steps-note-line:where(:not(:last-child)) {
+  @apply mb-1.5;
+}
+.steps-note-line:where([data-tone="strong"]) {
+  @apply text-ink-900 font-semibold;
+}
+.steps-note-action {
+  @apply shrink-0 sm:ml-auto;
+}
+
+.steps-actions {
+  @apply mt-8 sm:mt-10;
+}
+
+.steps-more {
+  @apply mt-6 lg:mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5;
+}
+.steps-more-text {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch];
+}
+.steps-more-link {
+  @apply shrink-0;
+}
+
+.steps-callout {
+  @apply mt-10 sm:mt-12 flex items-start gap-4 rounded-2xl sm:rounded-3xl bg-orange-50 ring-1 ring-orange-200 p-5 sm:p-6 lg:p-7;
+}
+.steps-callout-text {
+  @apply text-[14.5px] sm:text-[15.5px] lg:text-[16px] leading-relaxed text-ink-900 font-semibold max-w-[88ch];
+}

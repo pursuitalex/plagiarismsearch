@@ -484,95 +484,92 @@
   <!-- ================= 05 · INTERPRETATION =================
        Three steps on one line — open, compare, decide — numbered large because the order
        is the content. The callout under them says who decides: a person. -->
-  <section id="how-to-read" data-component="read-steps" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[860px] mb-10 sm:mb-12 lg:mb-14">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Як читати результат</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Як правильно оцінити знайдений збіг</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[72ch]">Один загальний показник не пояснює, чому система позначила конкретний фрагмент. Переглядайте результат на рівні тексту й джерела.</p>
+<section id="how-to-read" data-component="steps" class="steps-section" data-layout="rail" data-marker="disc" data-bg="white" data-space="md">
+  <div class="steps-inner">
+    <div class="section-head rv" data-measure="860">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Як читати результат</span>
       </div>
-
-      <ol data-stagger=".06" class="rv-kids relative grid md:grid-cols-3 gap-8 md:gap-8 lg:gap-12">
-        <span class="hidden md:block absolute left-0 right-0 top-[27px] h-px bg-ink-200" aria-hidden="true"></span>
-        <li class="relative">
-          <span class="relative z-[1] inline-flex items-center justify-center w-[54px] h-[54px] rounded-full bg-teal-100 text-teal-800 ring-[6px] ring-white text-[19px] font-extrabold tracking-tight nums">1</span>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mt-5 mb-2">Відкрийте збіг</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[44ch]">Подивіться, який саме фрагмент вашого тексту має відповідність у знайденому джерелі.</p>
-        </li>
-        <li class="relative">
-          <span class="relative z-[1] inline-flex items-center justify-center w-[54px] h-[54px] rounded-full bg-teal-100 text-teal-800 ring-[6px] ring-white text-[19px] font-extrabold tracking-tight nums">2</span>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mt-5 mb-2">Перевірте джерело й контекст</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[44ch]">Порівняйте формулювання та переконайтеся, чи є це цитатою, коректно оформленим запозиченням, загальним формулюванням або фрагментом, що потребує уваги.</p>
-        </li>
-        <li class="relative">
-          <span class="relative z-[1] inline-flex items-center justify-center w-[54px] h-[54px] rounded-full bg-ink-900 text-white ring-[6px] ring-white text-[19px] font-extrabold tracking-tight nums">3</span>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mt-5 mb-2">Вирішіть, чи потрібна зміна</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[44ch]">За потреби додайте посилання, уточніть цитату або перепишіть фрагмент власними словами, зберігаючи коректну атрибуцію джерела.</p>
-        </li>
-      </ol>
-
-      <div class="rv mt-10 sm:mt-12 flex items-start gap-4 rounded-2xl sm:rounded-3xl bg-orange-50 ring-1 ring-orange-200 p-5 sm:p-6 lg:p-7">
-        <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
-        <p class="text-[14.5px] sm:text-[15.5px] lg:text-[16px] leading-relaxed text-ink-900 font-semibold max-w-[88ch]">PlagiarismSearch не виносить автоматичний академічний чи юридичний висновок про плагіат. Звіт надає дані для перевірки й рішення людиною.</p>
-      </div>
+      <h2 class="section-title">Як правильно оцінити знайдений збіг</h2>
+      <p class="section-intro" data-measure="72">Один загальний показник не пояснює, чому система позначила конкретний фрагмент. Переглядайте результат на рівні тексту й джерела.</p>
     </div>
-  </section>
+    <ol data-stagger=".06" class="steps-list rv-kids" data-cols="3">
+      <span class="steps-line" aria-hidden="true"></span>
+      <li class="steps-item">
+        <span class="steps-disc">1</span>
+        <h3 class="steps-title">Відкрийте збіг</h3>
+        <p class="steps-text">Подивіться, який саме фрагмент вашого тексту має відповідність у знайденому джерелі.</p>
+      </li>
+      <li class="steps-item">
+        <span class="steps-disc">2</span>
+        <h3 class="steps-title">Перевірте джерело й контекст</h3>
+        <p class="steps-text">Порівняйте формулювання та переконайтеся, чи є це цитатою, коректно оформленим запозиченням, загальним формулюванням або фрагментом, що потребує уваги.</p>
+      </li>
+      <li class="steps-item">
+        <span class="steps-disc">3</span>
+        <h3 class="steps-title">Вирішіть, чи потрібна зміна</h3>
+        <p class="steps-text">За потреби додайте посилання, уточніть цитату або перепишіть фрагмент власними словами, зберігаючи коректну атрибуцію джерела.</p>
+      </li>
+    </ol>
+    <div class="steps-callout rv">
+      <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+      <p class="steps-callout-text">PlagiarismSearch не виносить автоматичний академічний чи юридичний висновок про плагіат. Звіт надає дані для перевірки й рішення людиною.</p>
+    </div>
+  </div>
+</section>
 
   <!-- ================= 06 · WHAT HAPPENS TO THE DOCUMENT =================
        Three stations on a rail and a fourth that is off it: processing, the source
        document and the report are what a check does; Storage is a separate act, so its
        station is drawn dashed and the rail stops before it. No absolutes either way. -->
-  <section id="your-document" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[860px] mb-10 sm:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Ваш документ і звіт</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Що відбувається з документом після перевірки</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[72ch]">Перевірка, звіт і функція Storage — це різні етапи. Важливо не змішувати їх в одну дію.</p>
+<section id="your-document" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="cool" data-space="md" data-accent="teal">
+  <div class="steps-inner">
+    <div class="section-head rv" data-measure="860">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Ваш документ і звіт</span>
       </div>
-
-      <ol data-stagger=".06" class="rv-kids relative grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
-        <span class="hidden lg:block absolute left-[6%] right-[31%] top-[22px] h-px bg-ink-200" aria-hidden="true"></span>
-        <li class="relative ">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="relative z-[1] inline-flex ring-4 ring-[#F7FAFC] w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
-            <span class="relative z-[1] bg-[#F7FAFC] pr-3 text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">01</span>
-          </div>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Обробка</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Завантажений текст використовується для виконання запущеної вами перевірки.</p>
-        </li>
-        <li class="relative ">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="relative z-[1] inline-flex ring-4 ring-[#F7FAFC] w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
-            <span class="relative z-[1] bg-[#F7FAFC] pr-3 text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">02</span>
-          </div>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Вихідний документ</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Вихідний документ не зберігається як окремий документ після звичайної перевірки. Зберігання результату не означає автоматичне додавання документа до бази для майбутніх порівнянь.</p>
-        </li>
-        <li class="relative ">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="relative z-[1] inline-flex ring-4 ring-[#F7FAFC] w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
-            <span class="relative z-[1] bg-[#F7FAFC] pr-3 text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">03</span>
-          </div>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Звіт</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Згенеровані звіти можуть зберігатися у вашому акаунті для повторного перегляду. Користувач може видалити звіт зі свого акаунта.</p>
-        </li>
-        <li class="relative rounded-2xl sm:rounded-3xl border border-dashed border-ink-300 bg-white/70 p-5 lg:-m-5 lg:p-5">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="relative z-[1] inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-mint-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
-            <span class="relative z-[1] text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">04</span>
-          </div>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">Storage</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Додавання документа до персонального або організаційного сховища відбувається окремо, коли користувач сам використовує відповідну функцію.</p>
-        </li>
-      </ol>
+      <h2 class="section-title">Що відбувається з документом після перевірки</h2>
+      <p class="section-intro" data-measure="72">Перевірка, звіт і функція Storage — це різні етапи. Важливо не змішувати їх в одну дію.</p>
     </div>
-  </section>
+    <ol data-stagger=".06" class="steps-list rv-kids" data-cols="4" data-last="apart">
+      <span class="steps-line" aria-hidden="true"></span>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
+          <span class="steps-num">01</span>
+        </div>
+        <h3 class="steps-title">Обробка</h3>
+        <p class="steps-text">Завантажений текст використовується для виконання запущеної вами перевірки.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+          <span class="steps-num">02</span>
+        </div>
+        <h3 class="steps-title">Вихідний документ</h3>
+        <p class="steps-text">Вихідний документ не зберігається як окремий документ після звичайної перевірки. Зберігання результату не означає автоматичне додавання документа до бази для майбутніх порівнянь.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+          <span class="steps-num">03</span>
+        </div>
+        <h3 class="steps-title">Звіт</h3>
+        <p class="steps-text">Згенеровані звіти можуть зберігатися у вашому акаунті для повторного перегляду. Користувач може видалити звіт зі свого акаунта.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="mint"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
+          <span class="steps-num">04</span>
+        </div>
+        <h3 class="steps-title">Storage</h3>
+        <p class="steps-text">Додавання документа до персонального або організаційного сховища відбувається окремо, коли користувач сам використовує відповідну функцію.</p>
+      </li>
+    </ol>
+  </div>
+</section>
 
   <!-- ================= 07 · START FREE =================
        The two confirmed limits as two figures, the approved paragraph beside them and the

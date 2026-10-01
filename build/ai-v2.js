@@ -37,6 +37,7 @@ const OUT = 'ai-detector.html';
 const cta = require('./sections/cta-band');
 const { dotField } = require('./dots');
 const banner = require('./sections/banner');   /* the compact dark banner — recipe and reasoning live there */
+const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 
 /* ─────────────────────────────────────────────────────────────────────────────
    APPROVED COPY — DEC-0038, 2026-08-22. Verbatim.
@@ -795,30 +796,13 @@ const section6 = () => `  <!-- ================= 06 · AI DATA HANDLING / REPORT
        The section that replaces the old page's "No data storage" card. What is true is
        narrower and it is said exactly: processed on our infrastructure, not sent to an
        external provider, report kept for convenience, deletable by the user. -->
-  <section id="ai-data-handling" data-component="lifecycle" class="relative py-16 sm:py-24 lg:py-32 bg-[#F2FCFC] overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-10 sm:mb-12">
-${eyebrow('teal-400', 'Data handling')}
-        ${h2(COPY.s6.h2)}
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${COPY.s6.intro}</p>
-      </div>
-
-      <div class="rv-kids grid sm:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-${COPY.s6.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex items-center gap-2 mb-3">
-            <span class="w-7 h-7 rounded-full bg-ink-900 text-white text-[12px] font-bold flex items-center justify-center tabular-nums">${i + 1}</span>
-          </span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">${head}</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${body}</p>
-        </div>`).join('\n')}
-      </div>
-
-      <div class="rv mt-6 lg:mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[62ch]">${COPY.s6.support}</p>
-        <span class="shrink-0">${linkQuiet(COPY.s6.cta, COPY.s6.ctaHref)}</span>
-      </div>
-    </div>
-  </section>`;
+${steps.section({
+    id: 'ai-data-handling', layout: 'cards', marker: 'badge-sm', bg: 'aqua', space: 'lg', accent: 'teal', tag: 'div',
+    head: { eyebrow: 'Data handling', title: COPY.s6.h2, intro: COPY.s6.intro, measure: '760' },
+    cols: 3,
+    items: COPY.s6.steps.map(([title, text]) => ({ title, text })),
+    foot: { more: { text: COPY.s6.support, link: { label: COPY.s6.cta, href: COPY.s6.ctaHref } } },
+  })}`;
 
 /* ═══════════════ 07 · AI THROUGH THE API ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · AI DETECTION THROUGH THE API =================

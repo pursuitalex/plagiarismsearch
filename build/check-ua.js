@@ -154,7 +154,9 @@ console.log('\nfacts');
   ok('upload limits: 2 МБ, 24 МБ, 10 файлів', has('2 МБ') && has('24 МБ') && has('до 10 файлів'));
   ok('PDF: text layer, no OCR', has('Сервіс не виконує OCR'));
   ok('sources are shown as available, not as switches that are on', !/<input|class="sw\b|role="switch"/.test(section('sources')));
-  ok('Storage is drawn as a separate act (dashed station)', /border-dashed[\s\S]{0,900}Storage/.test(section('your-document')));
+  /* the library's Steps (build/sections/steps.js): data-last="apart" draws the last station
+     dashed and stops the rail before it (steps.css) — and the last station is Storage */
+  ok('Storage is drawn as a separate act (dashed station)', /data-last="apart"/.test(section('your-document')) && /<li class="steps-item">(?:(?!<li class="steps-item">)[\s\S])*Storage(?:(?!<li class="steps-item">)[\s\S])*<\/ol>/.test(section('your-document')));
   ok('pricing handoff is a link, not a matrix', /href="prices\.html"[^>]*>Переглянути тарифи/.test(section('start-free')) && !/\$\d|₴|грн/.test(text));
   ok('free-act primary returns to the checker', /href="#checker"[^>]*>\s*Перевірити текст/.test(section('start-free')));
   ok('AI is one compact banner with one link to the AI owner', (body.match(/href="ai-detector\.html"/g) || []).length === 1 && /Перевірити текст на ШІ/.test(section('ai-detector')));

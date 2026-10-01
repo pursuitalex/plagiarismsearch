@@ -119,7 +119,18 @@ if (EXTRA.reuse !== false) {
   if (depth !== 0) throw new Error('<main> does not balance: depth ' + depth);
   for (const t of topLevel) {
     const n = t.open.match(/\bdata-component="([^"]+)"/);
-    if (n) sections.push({ name: n[1], html: t.html });
+    if (n) sections.push({ name: n[1], id: (t.open.match(/\bid="([^"]+)"/) || [])[1], html: t.html });
+  }
+  /* A library component may stand twice on a page (two step lists on the Ukrainian page):
+     the two share one data-component name, so they are told apart by their own ids —
+     key "steps.how-to-read". A name used once keeps its plain key; two of a name without
+     ids cannot be told apart, and the reuse test says so. */
+  const uses = {};
+  for (const s of sections) uses[s.name] = (uses[s.name] || 0) + 1;
+  for (const s of sections) {
+    const own = uses[s.name] > 1 && s.id;
+    s.key = own ? s.name + '.' + s.id : s.name;
+    s.mark = `[data-component="${s.name}"]` + (own ? `[id="${s.id}"]` : '');
   }
 }
 const pageHead = current.slice(0, current.indexOf('</head>') + '</head>'.length);
@@ -127,7 +138,7 @@ const bodyTag = current.slice(current.indexOf('<body'), current.indexOf('>', cur
 const virtual = p => {
   const m = p.match(/^\/__reuse\/(.+)$/);
   if (!m) return;
-  const s = sections.find(x => x.name === m[1]);
+  const s = sections.find(x => x.key === decodeURIComponent(m[1]));
   return s && `${pageHead}\n${bodyTag}\n<main>\n${s.html}\n</main>\n</body>\n</html>\n`;
 };
 
@@ -566,9 +577,10 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
 
   /* 6 · reuse */
   if (!QUICK && EXTRA.reuse !== false) {
-    if (ONLY) sections.splice(0, sections.length, ...sections.filter(s => s.name === ONLY));
+    const all = sections.length, told = new Set(sections.map(s => s.key)).size === sections.length;
+    if (ONLY) sections.splice(0, sections.length, ...sections.filter(s => s.name === ONLY || s.key === ONLY));
     console.log(`\n6 · reuse — each of ${sections.length} sections alone in an empty page with only the shared assets`);
-    ok('reuse', `every top-level element of <main> carries data-component (${topLevel.length})`, topLevel.length === sections.length && new Set(sections.map(s => s.name)).size === sections.length);
+    ok('reuse', `every top-level element of <main> carries data-component (${topLevel.length}), and two of one name are told apart by their ids`, topLevel.length === all && told);
     /* Sticky elements are set static in both pages. At scroll 0 an unstuck sticky element
        sits exactly where a static one would, but Chrome may paint it on its own layer,
        with different text anti-aliasing, in one context and not the other: the Pricing AI
@@ -578,39 +590,40 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
        scaled photo or icon, tile by tile, differently in two contexts (Help Center's hero
        photo, the tools' icons: up to 43/255 at identical geometry). The element snapshot
        still holds each image to its box and to the file it shows. */
-    const hide = name => `.site-header,[data-to-top],.grain,footer,body > div[class*="z-[100]"],main > :not([data-component="${name}"]){display:none!important} .sticky,.sm\\:sticky,.md\\:sticky,.lg\\:sticky,.xl\\:sticky{position:static!important} main img{visibility:hidden!important}`;
+    const hide = s => `.site-header,[data-to-top],.grain,footer,body > div[class*="z-[100]"],main > :not(${s.mark}){display:none!important} .sticky,.sm\\:sticky,.md\\:sticky,.lg\\:sticky,.xl\\:sticky{position:static!important} main img{visibility:hidden!important}`;
+    const alone = s => '__reuse/' + encodeURIComponent(s.key);
     for (const w of WIDTHS) {
       for (const s of sections) {
         const b = await open(browser, B, { width: w, reduced: true });
-        const t = await open(browser, '__reuse/' + s.name, { width: w, reduced: true });
-        for (const x of [b, t]) { await x.page.addStyleTag({ content: hide(s.name) }); await x.page.evaluate(() => scrollTo(0, 0)); await sleep(200); }
-        const sel = `main > [data-component="${s.name}"]`;
-        let d = diffPng(await b.page.locator(sel).screenshot(), await t.page.locator(sel).screenshot(), `reuse-${s.name}-${w}`);
+        const t = await open(browser, alone(s), { width: w, reduced: true });
+        for (const x of [b, t]) { await x.page.addStyleTag({ content: hide(s) }); await x.page.evaluate(() => scrollTo(0, 0)); await sleep(200); }
+        const sel = `main > ${s.mark}`;
+        let d = diffPng(await b.page.locator(sel).screenshot(), await t.page.locator(sel).screenshot(), `reuse-${s.key}-${w}`);
         if (d.px) {   /* measured twice, as the full page is (see there) */
-          const b2 = await open(browser, B, { width: w, reduced: true }), t2 = await open(browser, '__reuse/' + s.name, { width: w, reduced: true });
-          for (const x of [b2, t2]) { await x.page.addStyleTag({ content: hide(s.name) }); await x.page.evaluate(() => scrollTo(0, 0)); await sleep(200); }
-          const d2 = diffPng(await b2.page.locator(sel).screenshot(), await t2.page.locator(sel).screenshot(), `reuse-${s.name}-${w}-retry`);
+          const b2 = await open(browser, B, { width: w, reduced: true }), t2 = await open(browser, alone(s), { width: w, reduced: true });
+          for (const x of [b2, t2]) { await x.page.addStyleTag({ content: hide(s) }); await x.page.evaluate(() => scrollTo(0, 0)); await sleep(200); }
+          const d2 = diffPng(await b2.page.locator(sel).screenshot(), await t2.page.locator(sel).screenshot(), `reuse-${s.key}-${w}-retry`);
           await b2.ctx.close(); await t2.ctx.close();
-          if (!d2.px) { console.log(`  note   ${w}px ${s.name}: ${d.px} px on the first load, 0 on a fresh one (noise)`); d = d2; }
+          if (!d2.px) { console.log(`  note   ${w}px ${s.key}: ${d.px} px on the first load, 0 on a fresh one (noise)`); d = d2; }
         }
         const diffs = compareSnaps(await b.page.evaluate(snapshot, [PROPS, sel]), await t.page.evaluate(snapshot, [PROPS, sel]));
         /* EXTRA.acceptReuse['<section>@<width>'] = { maxPx, maxDelta, reason }: resampling measured
            and bounded for one section at one width, with every element identical */
-        const rt = (EXTRA.acceptReuse || {})[s.name + '@' + w];
+        const rt = (EXTRA.acceptReuse || {})[s.key + '@' + w];
         if (d.px && !diffs.length && rt && d.px <= rt.maxPx && d.maxDelta <= rt.maxDelta) {
-          console.log(`  ACCEPT ${w}px ${s.name}: ${d.px} px, max channel delta ${d.maxDelta}/255 — ${rt.reason}`);
-          results.push({ group: 'reuse', label: `${w}px ${s.name} ${d.px} px (accepted)`, pass: true });
-        } else ok('reuse', `${w}px ${s.name} ${d.size}: ${d.px} px` + (d.px ? ` (max channel delta ${d.maxDelta}/255)` : '') + `, ${diffs.length} element differences`, d.px === 0 && !diffs.length, diffs.slice(0, 3).join(' | '));
-        if (t.errors.length) ok('reuse', `${w}px ${s.name}: script errors alone`, false, t.errors.join(' | '));
+          console.log(`  ACCEPT ${w}px ${s.key}: ${d.px} px, max channel delta ${d.maxDelta}/255 — ${rt.reason}`);
+          results.push({ group: 'reuse', label: `${w}px ${s.key} ${d.px} px (accepted)`, pass: true });
+        } else ok('reuse', `${w}px ${s.key} ${d.size}: ${d.px} px` + (d.px ? ` (max channel delta ${d.maxDelta}/255)` : '') + `, ${diffs.length} element differences`, d.px === 0 && !diffs.length, diffs.slice(0, 3).join(' | '));
+        if (t.errors.length) ok('reuse', `${w}px ${s.key}: script errors alone`, false, t.errors.join(' | '));
         await b.ctx.close(); await t.ctx.close();
       }
     }
     for (const s of sections) {
-      const t = await open(browser, '__reuse/' + s.name, { width: 1440 });
+      const t = await open(browser, alone(s), { width: 1440 });
       const r = await behaviour(t.page, 1440, { chrome: false });
       await t.ctx.close();
       const interactive = Object.keys(r).filter(k => !['hiddenReveals', 'pen', 'ring'].includes(k));
-      ok('reuse', `${s.name} alone: ${r.hiddenReveals} hidden reveals` + (interactive.length ? ', ' + interactive.map(k => k + '=' + JSON.stringify(r[k]).slice(0, 40)).join(' ') : ''), r.hiddenReveals === 0 && !t.errors.length, t.errors.join(' | '));
+      ok('reuse', `${s.key} alone: ${r.hiddenReveals} hidden reveals` + (interactive.length ? ', ' + interactive.map(k => k + '=' + JSON.stringify(r[k]).slice(0, 40)).join(' ') : ''), r.hiddenReveals === 0 && !t.errors.length, t.errors.join(' | '));
     }
   }
 

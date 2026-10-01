@@ -396,96 +396,96 @@
        A product workflow, not a sales workflow. The legacy "Contact us → Describe
        requirements → Receive API → Stay in touch" is gone; these four are what the
        integration actually does. No stock developer photograph: the brief calls for
-       actual product evidence, and the async callout is that evidence. -->
-  <section id="api-workflow" data-component="workflow-steps" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-10 sm:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Workflow</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">How the PlagiarismSearch API workflow works</h2>
+       actual product evidence, and the async callout is that evidence.
+       The library's Steps (build/sections/steps.js): four badge cards, and the async
+       panel as the section's sealed block. -->
+<section id="api-workflow" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge" data-bg="white" data-space="lg">
+  <div class="steps-inner">
+    <div class="section-head rv" data-measure="760">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Workflow</span>
       </div>
-
-      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">1</span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Submit</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Send text or a public URL as JSON, or upload a document with multipart form data.</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">2</span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Configure</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">Select the search sources and options required for the check and provide the callback_url where completion events should be sent.</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">3</span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Process</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">The API creates the report and returns a 202 response with the report ID while plagiarism checking continues asynchronously.</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">4</span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">Receive</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">When processing is complete, PlagiarismSearch sends a report.checked webhook to your callback URL. Use the report ID and returned report link to continue the workflow inside your own system.</p>
-        </div>
+      <h2 class="section-title">How the PlagiarismSearch API workflow works</h2>
+    </div>
+    <div class="steps-list rv-kids" data-cols="4">
+      <div class="steps-item">
+        <span class="steps-badge">1</span>
+        <h3 class="steps-title">Submit</h3>
+        <p class="steps-text">Send text or a public URL as JSON, or upload a document with multipart form data.</p>
       </div>
-
-      <div data-surface="dark" class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
-
-        <div class="max-w-[54ch]">
-          <p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] text-white mb-3 lg:mb-4">Your integration <span class="text-orange-300">does not need to wait</span> for the plagiarism check to finish before continuing other work.</p>
-          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/65">The initial response identifies the report, and the completion webhook tells your system when the check is ready.</p>
-        </div>
-
-        <!-- The sequence, read top to bottom as time. Two hosts, three messages, and a
-             gap in the middle that is the whole point: the app is free between the 202
-             and the webhook.
-
-             Every label is a literal from the hero code samples — your.app and
-             plagiarismsearch.com are the two hosts in the curl commands, and the rest are
-             the endpoint, the status code, the processing label and the event name. A
-             diagram that quotes the contract needs no invented copy. -->
-        <div class="w-full lg:w-[400px] rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6">
-          <div class="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-white/10">
-            <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">your.app</code>
-            <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">plagiarismsearch.com</code>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 ">POST /api/v3/reports/create</code>
-              <div class="flex items-center gap-2" aria-hidden="true">
-                
-                <span class="flex-1 h-px bg-[#2CC3DB66]"></span>
-                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1 4.5h7M5 1.5l3 3-3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-            <div>
-              <code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 text-right">202</code>
-              <div class="flex items-center gap-2" aria-hidden="true">
-                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span class="flex-1 h-px bg-[#2CC3DB66]"></span>
-                
-              </div>
-            </div>
-            <div class="flex items-center gap-3 py-1">
-              <span class="flex-1 border-t border-dashed border-white/15"></span>
-              <code class="shrink-0 text-[11.5px] sm:text-[12px] text-white/60">status_label: "processing"</code>
-              <span class="flex-1 border-t border-dashed border-white/15"></span>
-            </div>
-            <div>
-              <code class="block text-[12px] sm:text-[13px] font-semibold text-orange-300 mb-1.5 text-right">report.checked</code>
-              <div class="flex items-center gap-2" aria-hidden="true">
-                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#F58971" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span class="flex-1 h-px bg-[#F5897166]"></span>
-                
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="steps-item">
+        <span class="steps-badge">2</span>
+        <h3 class="steps-title">Configure</h3>
+        <p class="steps-text">Select the search sources and options required for the check and provide the callback_url where completion events should be sent.</p>
+      </div>
+      <div class="steps-item">
+        <span class="steps-badge">3</span>
+        <h3 class="steps-title">Process</h3>
+        <p class="steps-text">The API creates the report and returns a 202 response with the report ID while plagiarism checking continues asynchronously.</p>
+      </div>
+      <div class="steps-item">
+        <span class="steps-badge">4</span>
+        <h3 class="steps-title">Receive</h3>
+        <p class="steps-text">When processing is complete, PlagiarismSearch sends a report.checked webhook to your callback URL. Use the report ID and returned report link to continue the workflow inside your own system.</p>
       </div>
     </div>
-  </section>
+    <div data-slot="media" data-surface="dark" class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
+
+            <div class="max-w-[54ch]">
+              <p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] text-white mb-3 lg:mb-4">Your integration <span class="text-orange-300">does not need to wait</span> for the plagiarism check to finish before continuing other work.</p>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/65">The initial response identifies the report, and the completion webhook tells your system when the check is ready.</p>
+            </div>
+
+            <!-- The sequence, read top to bottom as time. Two hosts, three messages, and a
+                 gap in the middle that is the whole point: the app is free between the 202
+                 and the webhook.
+
+                 Every label is a literal from the hero code samples — your.app and
+                 plagiarismsearch.com are the two hosts in the curl commands, and the rest are
+                 the endpoint, the status code, the processing label and the event name. A
+                 diagram that quotes the contract needs no invented copy. -->
+            <div class="w-full lg:w-[400px] rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6">
+              <div class="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-white/10">
+                <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">your.app</code>
+                <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">plagiarismsearch.com</code>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 ">POST /api/v3/reports/create</code>
+                  <div class="flex items-center gap-2" aria-hidden="true">
+                    
+                    <span class="flex-1 h-px bg-[#2CC3DB66]"></span>
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1 4.5h7M5 1.5l3 3-3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+                <div>
+                  <code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 text-right">202</code>
+                  <div class="flex items-center gap-2" aria-hidden="true">
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="flex-1 h-px bg-[#2CC3DB66]"></span>
+                    
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 py-1">
+                  <span class="flex-1 border-t border-dashed border-white/15"></span>
+                  <code class="shrink-0 text-[11.5px] sm:text-[12px] text-white/60">status_label: "processing"</code>
+                  <span class="flex-1 border-t border-dashed border-white/15"></span>
+                </div>
+                <div>
+                  <code class="block text-[12px] sm:text-[13px] font-semibold text-orange-300 mb-1.5 text-right">report.checked</code>
+                  <div class="flex items-center gap-2" aria-hidden="true">
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#F58971" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="flex-1 h-px bg-[#F5897166]"></span>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  </div>
+</section>
 
   <!-- ================= 05 · RESULT LIFECYCLE =================
        Confirmed field concepts only — id, progress, status, status_label, the completion

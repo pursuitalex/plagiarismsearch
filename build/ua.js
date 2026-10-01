@@ -39,6 +39,7 @@ const OUT = 'ua-plagiarism-check.html';
 const cta = require('./sections/cta-band');
 const banner = require('./sections/banner');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
+const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const { REVIEWS, reviewCard } = require('./reviews');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
@@ -365,56 +366,25 @@ ${COPY.controls.cells.map(([head, body], i) => `          <div class="p-5 sm:p-6
 const section5 = () => `  <!-- ================= 05 · INTERPRETATION =================
        Three steps on one line — open, compare, decide — numbered large because the order
        is the content. The callout under them says who decides: a person. -->
-  <section id="how-to-read" data-component="read-steps" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[860px] mb-10 sm:mb-12 lg:mb-14">
-${eyebrow('orange-500', COPY.read.eyebrow, 'ink')}
-        <h2 class="${H2}">${COPY.read.h2}</h2>
-        <p class="${INTRO} max-w-[72ch]">${COPY.read.intro}</p>
-      </div>
-
-      <ol data-stagger=".06" class="rv-kids relative grid md:grid-cols-3 gap-8 md:gap-8 lg:gap-12">
-        <span class="hidden md:block absolute left-0 right-0 top-[27px] h-px bg-ink-200" aria-hidden="true"></span>
-${COPY.read.steps.map(([head, body], i) => `        <li class="relative">
-          <span class="relative z-[1] inline-flex items-center justify-center w-[54px] h-[54px] rounded-full ${i === 2 ? 'bg-ink-900 text-white' : 'bg-teal-100 text-teal-800'} ring-[6px] ring-white text-[19px] font-extrabold tracking-tight nums">${i + 1}</span>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mt-5 mb-2">${head}</h3>
-          <p class="${BODY} text-ink-600 max-w-[44ch]">${body}</p>
-        </li>`).join('\n')}
-      </ol>
-
-      <div class="rv mt-10 sm:mt-12 flex items-start gap-4 rounded-2xl sm:rounded-3xl bg-orange-50 ring-1 ring-orange-200 p-5 sm:p-6 lg:p-7">
-        ${chip('orange', I.info)}
-        <p class="text-[14.5px] sm:text-[15.5px] lg:text-[16px] leading-relaxed text-ink-900 font-semibold max-w-[88ch]">${COPY.read.callout}</p>
-      </div>
-    </div>
-  </section>`;
+${steps.section({
+    id: 'how-to-read', layout: 'rail', marker: 'disc', bg: 'white', space: 'md',
+    head: { eyebrow: COPY.read.eyebrow, title: COPY.read.h2, intro: COPY.read.intro, measure: '860', introMeasure: '72' },
+    cols: 3, stagger: '.06',
+    items: COPY.read.steps.map(([title, text]) => ({ title, text })),
+    foot: { callout: { tone: 'orange', icon: I.info, text: COPY.read.callout } },
+  })}`;
 
 /* ═══════════════ 06 · DOCUMENT AND REPORT LIFECYCLE ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · WHAT HAPPENS TO THE DOCUMENT =================
        Three stations on a rail and a fourth that is off it: processing, the source
        document and the report are what a check does; Storage is a separate act, so its
        station is drawn dashed and the rail stops before it. No absolutes either way. -->
-  <section id="your-document" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[860px] mb-10 sm:mb-12">
-${eyebrow('teal-400', COPY.life.eyebrow)}
-        <h2 class="${H2}">${COPY.life.h2}</h2>
-        <p class="${INTRO} max-w-[72ch]">${COPY.life.intro}</p>
-      </div>
-
-      <ol data-stagger=".06" class="rv-kids relative grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
-        <span class="hidden lg:block absolute left-[6%] right-[31%] top-[22px] h-px bg-ink-200" aria-hidden="true"></span>
-${COPY.life.stages.map(([head, body], i) => `        <li class="relative ${i === 3 ? 'rounded-2xl sm:rounded-3xl border border-dashed border-ink-300 bg-white/70 p-5 lg:-m-5 lg:p-5' : ''}">
-          <div class="flex items-center gap-3 mb-4">
-            ${chip(['teal', 'ink', 'orange', 'mint'][i], [I.upload, I.file, I.report, I.archive][i]).replace('inline-flex', 'relative z-[1] inline-flex' + (i === 3 ? '' : ' ring-4 ring-[#F7FAFC]'))}
-            <span class="relative z-[1] ${i === 3 ? '' : 'bg-[#F7FAFC] pr-3 '}text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">0${i + 1}</span>
-          </div>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">${head}</h3>
-          <p class="${BODY} text-ink-600">${body}</p>
-        </li>`).join('\n')}
-      </ol>
-    </div>
-  </section>`;
+${steps.section({
+    id: 'your-document', layout: 'rail', marker: 'icon', bg: 'cool', space: 'md', accent: 'teal',
+    head: { eyebrow: COPY.life.eyebrow, title: COPY.life.h2, intro: COPY.life.intro, measure: '860', introMeasure: '72' },
+    cols: 4, stagger: '.06', last: 'apart',
+    items: COPY.life.stages.map(([title, text], i) => ({ title, text, tone: ['teal', 'ink', 'orange', 'mint'][i], icon: [I.upload, I.file, I.report, I.archive][i] })),
+  })}`;
 
 /* ═══════════════ 07 · FREE → PAID ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · START FREE =================

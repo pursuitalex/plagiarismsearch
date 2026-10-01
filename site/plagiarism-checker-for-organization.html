@@ -604,59 +604,59 @@
   <!-- ================= 05 · REAL BUSINESS WORKFLOWS =================
        Three operational scenarios as an editorial list on one surface — number, name,
        what it uses, how it runs — not three persona cards. The "uses" chips are phrases
-       lifted from each scenario's own sentence. No verticals added, no audience links. -->
-  <section id="business-workflows" data-component="workflow-list" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Business Workflows</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Fit plagiarism checking into the way your team already reviews content</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">The same organization controls can support different recurring review workflows without requiring a separate plagiarism product for each type of business.</p>
+       lifted from each scenario's own sentence. No verticals added, no audience links.
+       The library's Steps (build/sections/steps.js), layout "rows". -->
+<section id="business-workflows" data-component="steps" class="steps-section" data-layout="rows" data-bg="white" data-space="lg">
+  <div class="steps-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Business Workflows</span>
       </div>
-
-      <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100">
-          <div class="grid lg:grid-cols-[5rem_1fr_1.35fr] gap-3 lg:gap-8 items-start px-5 py-6 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
-            <span class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-none text-ink-200 nums">01</span>
-            <div class="min-w-0">
-              <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-3">Agencies and content teams</h3>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Organization resources</span>
-                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Permissions and balances</span>
-                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Source matches</span>
-              </div>
+      <h2 class="section-title">Fit plagiarism checking into the way your team already reviews content</h2>
+      <p class="section-intro">The same organization controls can support different recurring review workflows without requiring a separate plagiarism product for each type of business.</p>
+    </div>
+    <div class="steps-frame rv">
+      <div class="steps-sheet">
+        <div class="steps-row">
+          <span class="steps-num">01</span>
+          <div class="steps-row-head">
+            <h3 class="steps-title">Agencies and content teams</h3>
+            <div class="steps-tags">
+              <span class="steps-tag">Organization resources</span>
+              <span class="steps-tag">Permissions and balances</span>
+              <span class="steps-tag">Source matches</span>
             </div>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Give writers, editors, and reviewers access to organization resources while the administrator manages permissions and balances. Review source matches before work is delivered or published.</p>
           </div>
-          <div class="grid lg:grid-cols-[5rem_1fr_1.35fr] gap-3 lg:gap-8 items-start px-5 py-6 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
-            <span class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-none text-ink-200 nums">02</span>
-            <div class="min-w-0">
-              <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-3">In-house teams</h3>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Recurring checks</span>
-                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Personal resources separate</span>
-                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Organization balances</span>
-              </div>
+          <p class="steps-text">Give writers, editors, and reviewers access to organization resources while the administrator manages permissions and balances. Review source matches before work is delivered or published.</p>
+        </div>
+        <div class="steps-row">
+          <span class="steps-num">02</span>
+          <div class="steps-row-head">
+            <h3 class="steps-title">In-house teams</h3>
+            <div class="steps-tags">
+              <span class="steps-tag">Recurring checks</span>
+              <span class="steps-tag">Personal resources separate</span>
+              <span class="steps-tag">Organization balances</span>
             </div>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Coordinate recurring plagiarism checks across a team while each member can keep personal resources separate from the organization balances assigned to them.</p>
           </div>
-          <div class="grid lg:grid-cols-[5rem_1fr_1.35fr] gap-3 lg:gap-8 items-start px-5 py-6 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
-            <span class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-none text-ink-200 nums">03</span>
-            <div class="min-w-0">
-              <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-3">Publishers and recurring document review</h3>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">Organization Storage</span>
-                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">API</span>
-              </div>
+          <p class="steps-text">Coordinate recurring plagiarism checks across a team while each member can keep personal resources separate from the organization balances assigned to them.</p>
+        </div>
+        <div class="steps-row">
+          <span class="steps-num">03</span>
+          <div class="steps-row-head">
+            <h3 class="steps-title">Publishers and recurring document review</h3>
+            <div class="steps-tags">
+              <span class="steps-tag">Organization Storage</span>
+              <span class="steps-tag">API</span>
             </div>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Use Organization Storage when your own repository should be part of comparison, and use the API for workflows that need plagiarism checks to run from another system.</p>
           </div>
+          <p class="steps-text">Use Organization Storage when your own repository should be part of comparison, and use the API for workflows that need plagiarism checks to run from another system.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ================= 06 · ORGANIZATION WORKSPACE VS API =================
        One card, split in two: the two real ways to deploy, with an "or" on the seam. The

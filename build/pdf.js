@@ -30,6 +30,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'pdf-plagiarism-checker.html';
 const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
+const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -261,27 +262,12 @@ const section2 = () => `  <!-- ================= 02 · HOW TO CHECK A PDF FOR PL
        line, each with the object it is about. A connector starts at a card's right edge
        and is exactly as long as the grid gap (gap-5 / lg:gap-6), so it sits between
        the cards and never runs into one. -->
-  <section id="how-to-check-a-pdf" data-component="steps-row" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-${eyebrow('teal-400', COPY.howto.eyebrow, 'ink')}
-        <h2 class="${H2}">${COPY.howto.h2}</h2>
-        <p class="${INTRO}">${COPY.howto.intro}</p>
-      </div>
-
-      <ol class="rv-kids relative grid md:grid-cols-3 gap-5 lg:gap-6">
-${COPY.howto.steps.map(([head, body], i) => `        <li class="relative ${CARD} flex flex-col">
-          ${i < 2 ? '<span class="hidden md:block absolute top-1/2 left-full w-5 lg:w-6 h-px bg-ink-200" aria-hidden="true"></span>' : ''}
-          <div class="flex items-center justify-between gap-3 mb-5">
-            ${chip(['teal', 'orange', 'ink'][i], [I.upload, I.sliders, I.report][i])}
-            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">0${i + 1}</span>
-          </div>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2">${head}</h3>
-          <p class="${BODY} text-ink-600">${body}</p>
-        </li>`).join('\n')}
-      </ol>
-    </div>
-  </section>`;
+${steps.section({
+    id: 'how-to-check-a-pdf', layout: 'cards', marker: 'icon', bg: 'white', space: 'md', accent: 'teal',
+    head: { eyebrow: COPY.howto.eyebrow, title: COPY.howto.h2, intro: COPY.howto.intro },
+    cols: 3, link: 'line',
+    items: COPY.howto.steps.map(([title, text], i) => ({ title, text, tone: ['teal', 'orange', 'ink'][i], icon: [I.upload, I.sliders, I.report][i] })),
+  })}`;
 
 /* ═══════════════ 03 · PDF TEXT EXTRACTION — THE SIGNATURE ═══════════════ */
 const section3 = () => `  <!-- ================= 03 · PDF TEXT EXTRACTION =================

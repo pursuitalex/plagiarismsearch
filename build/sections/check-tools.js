@@ -191,11 +191,13 @@ function rules(name, ctx) {
   };
 
   /* The Icon tile primitive (icon-tile.css): span.icon-tile[data-tone] > one <svg>, taken as
-     it is. `extra`: classes a host may add to the tile (none so far). */
-  const iconTile = (t, extra = []) => {
-    if (!need(t, 'the icon tile', ['icon-tile', ...extra], 'span')) return false;
-    onlyAttrs(t, { class: true, 'data-tone': true });
+     it is. `variants`: the data-variant values this host uses (none: the plain tile). */
+  const iconTile = (t, { variants = [] } = {}) => {
+    if (!need(t, 'the icon tile', ['icon-tile'], 'span')) return false;
+    onlyAttrs(t, { class: true, 'data-tone': true, 'data-variant': true });
     variantsOf(t, { 'data-tone': { values: TILE_TONES, required: true } });
+    const v = t.attrs['data-variant'];
+    if (v !== undefined && !variants.includes(v)) E(t, `${label(t)}: data-variant="${v}" is not a tile of this ${name} (${variants.length ? variants.join(' | ') + ', or none' : 'the plain tile, without data-variant'})`);
     noText(t);
     const s = kids(t);
     if (s.length !== 1) E(t, `${label(t)}: the tile holds only its <svg> icon`);
@@ -203,7 +205,47 @@ function rules(name, ctx) {
     return true;
   };
 
-  const api = { E, W, sealed, seal, exempt, at: null, onlyClasses, need, mustHave, variantsOf, onlyAttrs, requireAttrs, noText, filled, link, inlineOnly, svgIcon, eyebrow, actionButton, actionLink, iconTile };
+  /* The root of a section-level component: <section class="…" data-component="…"> with an
+     optional id and the component's own switches, and no stray text. */
+  const sectionRoot = (el, component, classes, variants) => {
+    if (el.tag !== 'section') E(el, `${label(el)}: the ${name} root is a <section>`);
+    onlyClasses(el, classes);
+    onlyAttrs(el, { id: ID, class: true, 'data-component': true, 'aria-label': true, ...Object.fromEntries(Object.keys(variants).map(a => [a, true])) });
+    requireAttrs(el, { 'data-component': component });
+    variantsOf(el, variants);
+    noText(el);
+  };
+
+  /* The Section Header as a block of its own (section-head.css): div.section-head.rv holding
+     [the eyebrow pill?, h2.section-title, p.section-intro?]. `measures`, `introMeasures`:
+     the data-measure values the host allows on the block and on the intro. */
+  const HEAD = { eyebrow: ['section-eyebrow'], eyebrowDot: ['section-eyebrow-dot'], eyebrowLabel: ['section-eyebrow-label'] };
+  const headBlock = (h, { measures = [], introMeasures = [], title = ['br', 'em', 'strong'], intro = ['strong', 'em', 'br'], reveal = true } = {}) => {
+    if (!need(h, 'the head', reveal ? ['section-head', 'rv'] : ['section-head'], 'div')) return false;
+    if (reveal) mustHave(h, ['rv']);
+    onlyAttrs(h, { class: true, 'data-measure': true }); variantsOf(h, { 'data-measure': { values: measures } }); noText(h);
+    const k = kids(h);
+    k.slice(headParts(k, h, { introMeasures, title, intro })).forEach(x => E(x, `${label(x)}: not part of the section head (order: eyebrow?, title, intro?)`));
+    return true;
+  };
+  /* …and its parts, wherever a host holds them (a block, a column of its own). `intros`:
+     how many intro paragraphs the host allows. Returns how many nodes the head took, so
+     the host checks what follows. */
+  const headParts = (k, host, { introMeasures = [], title = ['br', 'em', 'strong'], intro = ['strong', 'em', 'br'], intros = 1 } = {}) => {
+    let i = 0, seen = 0;
+    if (k[i] && has(k[i], 'section-eyebrow')) eyebrow(k[i++], HEAD);
+    const t = k[i];
+    if (!t || !has(t, 'section-title')) E(t || host, `${label(host)}: the h2.section-title is required (after the optional eyebrow)`);
+    else { i++; need(t, 'the title', ['section-title'], 'h2'); onlyAttrs(t, { class: true, id: ID }); inlineOnly(t, title, 'the title'); filled(t, 'the title'); }
+    while (k[i] && has(k[i], 'section-intro') && seen < intros) {
+      const p = k[i++]; seen++;
+      need(p, 'the intro', ['section-intro'], 'p'); onlyAttrs(p, { class: true, 'data-measure': true }); variantsOf(p, { 'data-measure': { values: introMeasures } });
+      inlineOnly(p, intro, 'the intro'); filled(p, 'the intro (remove it instead)');
+    }
+    return i;
+  };
+
+  const api = { E, W, sealed, seal, exempt, at: null, onlyClasses, need, mustHave, variantsOf, onlyAttrs, requireAttrs, noText, filled, link, inlineOnly, svgIcon, eyebrow, actionButton, actionLink, iconTile, sectionRoot, headBlock, headParts };
   return api;
 }
 

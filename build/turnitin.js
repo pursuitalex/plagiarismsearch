@@ -35,6 +35,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'turnitin-checker-alternative.html';
 const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
+const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
 const pricing = require('./pricing');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
@@ -562,27 +563,13 @@ const section8 = () => `  <!-- ================= 08 · WHAT HAPPENS TO YOUR DOCU
        Three stations on one rail — the document, the report, Storage — each carrying its
        approved sentences whole. About PlagiarismSearch only: the page says nothing about
        how anyone else handles a paper. -->
-  <section id="your-document" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-        <h2 class="${H2}">${COPY.data.h2}</h2>
-      </div>
-
-      <ol class="rv-kids relative grid md:grid-cols-3 gap-7 lg:gap-10">
-        <span class="hidden md:block absolute left-[8%] right-[8%] top-[22px] h-px bg-ink-200" aria-hidden="true"></span>
-${COPY.data.steps.map(([head, body], i) => `        <li class="relative">
-          <div class="flex items-center gap-3 mb-4">
-            ${chip(['teal', 'orange', 'ink'][i], [I.file, I.report, I.archive][i]).replace('inline-flex', 'relative z-[1] inline-flex ring-4 ring-[#F7FAFC]')}
-            <span class="relative z-[1] bg-[#F7FAFC] pr-3 text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">0${i + 1}</span>
-          </div>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">${head}</h3>
-          <p class="${BODY} text-ink-600 max-w-[44ch]">${body}</p>
-        </li>`).join('\n')}
-      </ol>
-
-      <div class="rv mt-8 sm:mt-10">${btnLight(COPY.data.cta, COPY.data.ctaHref)}</div>
-    </div>
-  </section>`;
+${steps.section({
+    id: 'your-document', layout: 'rail', marker: 'icon', bg: 'cool', space: 'md',
+    head: { title: COPY.data.h2 },
+    cols: 3,
+    items: COPY.data.steps.map(([title, text], i) => ({ title, text, tone: ['teal', 'orange', 'ink'][i], icon: [I.file, I.report, I.archive][i] })),
+    foot: { action: { label: COPY.data.cta, href: COPY.data.ctaHref, tone: 'light' } },
+  })}`;
 
 /* ═══════════════ 09 · SELF-SERVICE PRICING ═══════════════ */
 const section9 = () => `  <!-- ================= 09 · SELF-SERVICE PRICING =================

@@ -257,48 +257,46 @@
        line, each with the object it is about. A connector starts at a card's right edge
        and is exactly as long as the grid gap (gap-5 / lg:gap-6), so it sits between
        the cards and never runs into one. -->
-  <section id="how-to-check-a-pdf" data-component="steps-row" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">How It Works</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">How to check a PDF for plagiarism</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">You can upload a PDF directly without converting it to another format. The checker extracts the machine-readable text in the file, runs the plagiarism search using your selected settings, and returns the matches and sources found for review.</p>
+<section id="how-to-check-a-pdf" data-component="steps" class="steps-section" data-layout="cards" data-marker="icon" data-bg="white" data-space="md" data-accent="teal">
+  <div class="steps-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">How It Works</span>
       </div>
-
-      <ol class="rv-kids relative grid md:grid-cols-3 gap-5 lg:gap-6">
-        <li class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="hidden md:block absolute top-1/2 left-full w-5 lg:w-6 h-px bg-ink-200" aria-hidden="true"></span>
-          <div class="flex items-center justify-between gap-3 mb-5">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
-            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">01</span>
-          </div>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2">Upload your PDF</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Drag and drop the PDF or select it from your device. You can upload up to 10 files at once. The upload size limit is 2 MB for guests and 24 MB when signed in.</p>
-        </li>
-        <li class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="hidden md:block absolute top-1/2 left-full w-5 lg:w-6 h-px bg-ink-200" aria-hidden="true"></span>
-          <div class="flex items-center justify-between gap-3 mb-5">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
-            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">02</span>
-          </div>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2">Choose your plagiarism settings</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Select the source collections and exclusions that fit your check. Available options can include web search, academic database search, storage sources, reference exclusion, and in-text citation exclusion.</p>
-        </li>
-        <li class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          
-          <div class="flex items-center justify-between gap-3 mb-5">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
-            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">03</span>
-          </div>
-          <h3 class="text-[17px] sm:text-[18px] lg:text-[19px] font-bold tracking-tight mb-2">Review the matches and sources</h3>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Open the completed report to inspect matching or similar passages and the sources found for them. Review each result in context before deciding whether the text needs attention.</p>
-        </li>
-      </ol>
+      <h2 class="section-title">How to check a PDF for plagiarism</h2>
+      <p class="section-intro">You can upload a PDF directly without converting it to another format. The checker extracts the machine-readable text in the file, runs the plagiarism search using your selected settings, and returns the matches and sources found for review.</p>
     </div>
-  </section>
+    <ol class="steps-list rv-kids" data-cols="3" data-link="line">
+      <li class="steps-item">
+        <span class="steps-link" aria-hidden="true"></span>
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
+          <span class="steps-num">01</span>
+        </div>
+        <h3 class="steps-title">Upload your PDF</h3>
+        <p class="steps-text">Drag and drop the PDF or select it from your device. You can upload up to 10 files at once. The upload size limit is 2 MB for guests and 24 MB when signed in.</p>
+      </li>
+      <li class="steps-item">
+        <span class="steps-link" aria-hidden="true"></span>
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+          <span class="steps-num">02</span>
+        </div>
+        <h3 class="steps-title">Choose your plagiarism settings</h3>
+        <p class="steps-text">Select the source collections and exclusions that fit your check. Available options can include web search, academic database search, storage sources, reference exclusion, and in-text citation exclusion.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+          <span class="steps-num">03</span>
+        </div>
+        <h3 class="steps-title">Review the matches and sources</h3>
+        <p class="steps-text">Open the completed report to inspect matching or similar passages and the sources found for them. Review each result in context before deciding whether the text needs attention.</p>
+      </li>
+    </ol>
+  </div>
+</section>
 
   <!-- ================= 03 · PDF TEXT EXTRACTION =================
        The one thing only this page can teach. Three document states, each drawn: a

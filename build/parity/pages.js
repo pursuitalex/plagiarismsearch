@@ -379,3 +379,22 @@ acceptAgainst('511028d', {
   'university-plagiarism-checker.html': [['margin-top', 'margin-bottom'], 'the actions and the note carry the gap above themselves (the lead and the actions carried it below)'],
   'affiliate-program-at-plagiarismsearch.html': [['margin-top', 'margin-bottom'], 'the actions carry the gap above themselves (the lead carried it below)'],
 }, 'Hero: ');
+
+/* SECTION LIBRARY, WAVE 2 · THE STEPS (2026-10-01), against 6c16c1a — the last commit before
+   the numbered sequences moved onto their library template (build/sections/steps.js). Ten
+   sections on nine pages. Eight are identical in every measured property (Students,
+   Turnitin, both sections of the Ukrainian page, PDF, AI Detector, Business & Teams,
+   Affiliate). Two differ in exactly the properties named here:
+
+     Home, the lifecycle cards — 0 px. The head is the Section Header block, whose intro
+       carries the gap above itself (the homepage's h2 carried it below), and the note
+       panel under the cards carries its own top margin (the list carried it below). The
+       same elements in the same places; only which neighbour holds the margin changed.
+     API, the workflow — the pill over the heading. The section is white and its pill was
+       white too; the pill's background is derived from the section's data-bg now, never
+       set per pill (Olex's decision closing the pilot, taken for the FAQ pill on this
+       same page): white → the grey tint, in the pill's own box and nowhere else. */
+acceptAgainst('6c16c1a', {
+  'index.html': [['margin-top', 'margin-bottom'], 'the intro and the note panel carry the gap above themselves (the h2 and the list carried it below)'],
+  'api.html': [['background-color'], 'the workflow pill takes the tint on its white section (derived from data-bg, as the FAQ pill)'],
+}, 'Steps: ');

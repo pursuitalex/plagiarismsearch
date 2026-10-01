@@ -37,6 +37,7 @@ const cta = require('./sections/cta-band');
 const banner = require('./sections/banner');
 const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
 const hero = require('./sections/hero');   /* the hero: one library template; the diagram is its sealed slot */
+const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* /organization-management has no page in this prototype and is a live production URL */
@@ -543,31 +544,13 @@ ${COPY.storage.trackStore.map((t, i) => `                <li class="flex items-c
 const section5 = () => `  <!-- ================= 05 · REAL BUSINESS WORKFLOWS =================
        Three operational scenarios as an editorial list on one surface — number, name,
        what it uses, how it runs — not three persona cards. The "uses" chips are phrases
-       lifted from each scenario's own sentence. No verticals added, no audience links. -->
-  <section id="business-workflows" data-component="workflow-list" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-${eyebrow('orange-500', COPY.workflows.eyebrow, 'ink')}
-        <h2 class="${H2}">${COPY.workflows.h2}</h2>
-        <p class="${INTRO}">${COPY.workflows.intro}</p>
-      </div>
-
-      <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-        <div class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100">
-${COPY.workflows.items.map(([head, body, uses], i) => `          <div class="grid lg:grid-cols-[5rem_1fr_1.35fr] gap-3 lg:gap-8 items-start px-5 py-6 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
-            <span class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-none text-ink-200 nums">0${i + 1}</span>
-            <div class="min-w-0">
-              <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight mb-3">${head}</h3>
-              <div class="flex flex-wrap gap-1.5">
-${uses.map(u => `                <span class="rounded-full bg-ink-50 ring-1 ring-black/5 px-3 py-1 text-[12px] font-semibold text-ink-700">${u}</span>`).join('\n')}
-              </div>
-            </div>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${body}</p>
-          </div>`).join('\n')}
-        </div>
-      </div>
-    </div>
-  </section>`;
+       lifted from each scenario's own sentence. No verticals added, no audience links.
+       The library's Steps (build/sections/steps.js), layout "rows". -->
+${steps.section({
+    id: 'business-workflows', layout: 'rows', bg: 'white', space: 'lg',
+    head: { eyebrow: COPY.workflows.eyebrow, title: COPY.workflows.h2, intro: COPY.workflows.intro },
+    items: COPY.workflows.items.map(([title, text, tags]) => ({ title, text, tags })),
+  })}`;
 
 /* ═══════════════ 06 · WORKSPACE VS API — AND AI, COMPACT ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · ORGANIZATION WORKSPACE VS API =================

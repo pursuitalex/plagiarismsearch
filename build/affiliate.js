@@ -27,6 +27,7 @@ const page = require('./page');
 const cta = require('./sections/cta-band');
 const faq = require('./sections/faq');   /* the FAQ: one library template */
 const hero = require('./sections/hero');   /* the hero: one library template; the sheet of facts is its sealed slot */
+const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 
 const SITE = path.join(__dirname, '..', 'site');
 const OUT = 'affiliate-program-at-plagiarismsearch.html';
@@ -245,31 +246,13 @@ ${COPY.tools.map(([head, body, icon], i) => `          <div class="p-6 sm:p-7 lg
 /* ═══════════════ 03 · HOW IT WORKS ═══════════════ */
 const section3 = () => `  <!-- ================= 03 · HOW IT WORKS =================
        Three steps as the system's editorial list: number, name, what happens. The hero's
-       "Learn more" lands here, so the id is the live page's fragment. -->
-  <section id="how-it-works" data-component="workflow-list" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-        <h2 class="${H2}">${COPY.how.h2}</h2>
-        <p class="${INTRO}">${COPY.how.intro}</p>
-      </div>
-
-      <div class="rv rounded-3xl sm:rounded-4xl lg:rounded-5xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-        <ol class="rounded-[18px] sm:rounded-3xl lg:rounded-[calc(2.5rem-0.5rem)] bg-white shadow-inner-hl divide-y divide-ink-100" role="list">
-${COPY.how.steps.map(([step, head, body, icon], i) => `          <li class="grid lg:grid-cols-[5rem_1fr_1.35fr] gap-3 lg:gap-8 items-start px-5 py-6 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
-            <span class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-none text-ink-200 nums" aria-hidden="true">0${i + 1}</span>
-            <div class="min-w-0 flex items-center gap-3.5">
-              ${chip(['teal', 'orange', 'mint'][i], I[icon])}
-              <div class="min-w-0">
-                <p class="${CAP} text-ink-500 mb-1">${step}</p>
-                <h3 class="text-[19px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight">${head}</h3>
-              </div>
-            </div>
-            <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">${body}</p>
-          </li>`).join('\n')}
-        </ol>
-      </div>
-    </div>
-  </section>`;
+       "Learn more" lands here, so the id is the live page's fragment.
+       The library's Steps (build/sections/steps.js), layout "rows" with the icon marker. -->
+${steps.section({
+    id: 'how-it-works', layout: 'rows', marker: 'icon', bg: 'cool', space: 'lg', tag: 'ol',
+    head: { title: COPY.how.h2, intro: COPY.how.intro },
+    items: COPY.how.steps.map(([kicker, title, text, icon], i) => ({ kicker, title, text, icon: I[icon], tone: ['teal', 'orange', 'mint'][i] })),
+  })}`;
 
 /* ═══════════════ 04 · THE TWO PROGRAMS ═══════════════ */
 const offer = (o, dark) => {

@@ -1791,6 +1791,1076 @@ video {
   max-width: 58ch;
 }
 
+/* ═══ Steps — library component ═════════════════════════════════════════════════════
+   Template: build/sections/steps.js · contract: build/sections/steps.contract.js
+   Behaviour: build/assets/js/20-motion.js (.rv, .rv-kids) — nothing of its own
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   A numbered sequence: what happens, in order. Three approved layouts, each with its own
+   item; the switches sit on the section, the list carries what depends on its content.
+
+   section.steps-section            data-layout="rail|cards|rows"   data-marker (by layout, below)
+                            data-bg="white|cool|aqua"   data-space="md|lg"   data-accent="teal"
+     (.steps-bg > .orb.steps-glow)             one soft glow, on the aqua ground (the homepage)
+     .steps-inner
+       .section-head.rv                        the Section Header (section-head.css)
+       THE LIST — by layout
+       (THE FOOT — one of five, below)
+
+   data-layout="rail"       stations on one line (Students, Turnitin, the Ukrainian page)
+     ol.steps-list.rv-kids                     data-cols="3|4"   data-last="apart"
+       span.steps-line                         the rail
+       li.steps-item
+         div.steps-marker > span.icon-tile, span.steps-num          data-marker="icon"
+         span.steps-disc                                            data-marker="disc": a large numbered disc
+         h3.steps-title   p.steps-text
+
+   data-layout="cards"      one card a step (PDF, the homepage, AI Detector, API)
+     ol|div.steps-list.rv-kids                 data-cols="3|4"   data-link="line"
+       li|div.steps-item
+         (span.steps-link)                                          the connector to the next card
+         div.steps-marker > span.icon-tile, span.steps-num          data-marker="icon"
+         span.icon-tile  div.steps-heading > span.steps-num, p.steps-title     data-marker="icon-stack"
+         span.steps-badge                                           data-marker="badge"
+         span.steps-marker > span.steps-badge                       data-marker="badge-sm"
+         h3.steps-title   p.steps-text
+
+   data-layout="rows"       one sheet, a row a step (Business & Teams, Affiliate)
+     div.steps-frame.rv > ol|div.steps-sheet
+       li|div.steps-row
+         span.steps-num                        the large ghost numeral
+         div.steps-row-head                    h3.steps-title (+ div.steps-tags > span.steps-tag); with
+                                               data-marker="icon": span.icon-tile + div.steps-row-title > (p.steps-kicker) h3.steps-title
+         p.steps-text
+
+   The foot, under the list:
+     div.steps-note.rv                         a note panel: .steps-note-text > p.steps-note-line (data-tone="strong"),
+                                               .steps-note-action > a.action-button
+     div.steps-actions.rv                      one button alone
+     div.steps-more.rv                         a line of text and a quiet link: p.steps-more-text, span.steps-more-link > a.section-link
+     div.steps-callout.rv                      one statement beside an icon tile: span.icon-tile, p.steps-callout-text
+     [data-slot="media"]                       a diagram or panel drawn for the page — sealed
+
+   SURFACES follow the ground (IMAGES.md § 8.5): on a tint a card is white with the
+   hairline and the soft shadow; on white a badge card and the note panel take the grey. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+
+.steps-section {
+  position: relative;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 640px) {
+  .steps-section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-section {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+
+  .steps-section:where([data-space="md"]) {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+.steps-section:where([data-bg="cool"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(247 250 252 / var(--tw-bg-opacity, 1));
+}
+
+.steps-section:where([data-bg="aqua"]) {
+  overflow: hidden;
+  --tw-bg-opacity: 1;
+  background-color: rgb(242 252 252 / var(--tw-bg-opacity, 1));
+}
+
+.steps-bg {
+  pointer-events: none;
+  position: absolute;
+  inset: 0px;
+  overflow: hidden;
+}
+
+.steps-glow {
+  right: -160px;
+  top: 5rem;
+  height: 540px;
+  width: 540px;
+  background-color: rgb(12 169 195 / 0.1);
+}
+
+.steps-inner {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .steps-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-inner {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* ── the parts every layout shares ───────────────────────────────────────────── */
+
+.steps-list {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .steps-list {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-list {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .steps-list:where([data-cols="4"]) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-list:where([data-cols="4"]) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .steps-list:where([data-cols="3"]) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* the marker row: the icon tile and the step's number */
+
+.steps-marker {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.steps-num {
+  font-variant-numeric:tabular-nums;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
+
+.steps-title {
+  margin-bottom: 0.5rem;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+@media (min-width: 640px) {
+  .steps-title {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-title {
+    font-size: 19px;
+  }
+}
+
+.steps-text {
+  font-size: 13.5px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .steps-text {
+    font-size: 14.5px;
+  }
+}
+
+/* ── layout: cards ───────────────────────────────────────────────────────────── */
+
+:where(.steps-section[data-layout="cards"]) .steps-item {
+  border-radius: 1rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding: 1.25rem;
+  --tw-shadow: 0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08);
+  --tw-shadow-colored: 0 1px 2px var(--tw-shadow-color), 0 20px 40px -15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-layout="cards"]) .steps-item {
+    border-radius: 20px;
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-layout="cards"]) .steps-item {
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+  }
+}
+
+/* linked cards (PDF): a connector starts at a card's right edge and is exactly as long as
+   the grid gap, so it sits between the cards and never runs into one */
+
+.steps-list:where([data-link="line"]) {
+  position: relative;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .steps-list:where([data-link="line"]) {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-list:where([data-link="line"]) {
+    gap: 1.5rem;
+  }
+}
+
+:where(.steps-list[data-link="line"]) > .steps-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.steps-link {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  display: none;
+  height: 1px;
+  width: 1.25rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+}
+
+@media (min-width: 768px) {
+  .steps-link {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-link {
+    width: 1.5rem;
+  }
+}
+
+:where(.steps-list[data-link="line"]) .steps-marker {
+  margin-bottom: 1.25rem;
+  justify-content: space-between;
+}
+
+/* marker "icon-stack" — the homepage's card: the tile on top, the number before the title */
+
+.steps-heading {
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+:where(.steps-heading) > .steps-num {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity, 1));
+}
+
+:where(.steps-heading) > .steps-title {
+  margin-bottom: 0px;
+  font-size: 15.5px;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  :where(.steps-heading) > .steps-title {
+    font-size: 16.5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-heading) > .steps-title {
+    font-size: 16.5px;
+  }
+}
+
+/* markers "badge" and "badge-sm" — a round number instead of an icon. The card is
+   rounder; on white it takes the grey and drops the hairline and the shadow. */
+
+.steps-badge {
+  margin-bottom: 1rem;
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+  font-size: 12.5px;
+  font-weight: 700;
+  --tw-numeric-spacing: tabular-nums;
+  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+:where(.steps-section[data-marker^="badge"]) .steps-item {
+  border-radius: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-marker^="badge"]) .steps-item {
+    border-radius: 28px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-marker^="badge"]) .steps-item {
+    border-radius: 28px;
+  }
+}
+
+:where(.steps-section[data-marker^="badge"][data-bg="white"]) .steps-item {
+  box-shadow:none;
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 249 251 / var(--tw-bg-opacity, 1));
+}
+
+:where(.steps-section[data-marker^="badge"]) .steps-title {
+  font-size: 15.5px;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-marker^="badge"]) .steps-title {
+    font-size: 16.5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-marker^="badge"]) .steps-title {
+    font-size: 16.5px;
+  }
+}
+
+:where(.steps-section[data-marker^="badge"]) .steps-text {
+  font-size: 13px;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-marker^="badge"]) .steps-text {
+    font-size: 13.5px;
+  }
+}
+
+/* badge-sm (AI Detector): the compact card — a 28px badge, three across from 640px */
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-marker="badge-sm"]) .steps-list:where([data-cols="3"]) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+:where(.steps-section[data-marker="badge-sm"]) .steps-marker {
+  margin-bottom: 0.75rem;
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+:where(.steps-section[data-marker="badge-sm"]) .steps-badge {
+  margin-bottom: 0px;
+  display: flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  font-size: 12px;
+}
+
+/* ── layout: rail ────────────────────────────────────────────────────────────────
+   No cards: the stations sit on one line, each tile ringed in the ground's colour so the
+   line stops at it. The line runs from the first station's column to the last one's. */
+
+:where(.steps-section[data-layout="rail"]) .steps-list {
+  position: relative;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-layout="rail"]) .steps-list {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-layout="rail"]) .steps-list {
+    gap: 2rem;
+  }
+}
+
+:where(.steps-section[data-layout="rail"]) .steps-list:where([data-cols="3"]) {
+  gap: 1.75rem;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-layout="rail"]) .steps-list:where([data-cols="3"]) {
+    gap: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-layout="rail"]) .steps-list:where([data-cols="3"]) {
+    gap: 2.5rem;
+  }
+}
+
+.steps-line {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 22px;
+  display: none;
+  height: 1px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+}
+
+@media (min-width: 1024px) {
+  .steps-line {
+    display: block;
+  }
+}
+
+:where(.steps-list[data-cols="3"]) > .steps-line {
+  left: 8%;
+  right: 8%;
+}
+
+@media (min-width: 768px) {
+  :where(.steps-list[data-cols="3"]) > .steps-line {
+    display: block;
+  }
+}
+
+:where(.steps-section[data-layout="rail"]) .steps-item {
+  position: relative;
+}
+
+:where(.steps-section[data-layout="rail"] .steps-item) .icon-tile {
+  position: relative;
+  z-index: 1;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity, 1));
+}
+
+:where(.steps-section[data-layout="rail"][data-bg="cool"] .steps-item) .icon-tile {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(247 250 252 / var(--tw-ring-opacity, 1));
+}
+
+/* on the cool ground the number covers the line behind it */
+
+:where(.steps-section[data-layout="rail"][data-bg="cool"]) .steps-num {
+  position: relative;
+  z-index: 1;
+  --tw-bg-opacity: 1;
+  background-color: rgb(247 250 252 / var(--tw-bg-opacity, 1));
+  padding-right: 0.75rem;
+}
+
+:where(.steps-section[data-layout="rail"]) .steps-title {
+  margin-bottom: 0.375rem;
+  font-size: 16px;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-layout="rail"]) .steps-title {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-layout="rail"]) .steps-title {
+    font-size: 17px;
+  }
+}
+
+:where(.steps-section[data-layout="rail"]) .steps-text {
+  max-width: 36ch;
+}
+
+:where(.steps-section[data-layout="rail"] .steps-list[data-cols="3"]) .steps-text {
+  max-width: 44ch;
+}
+
+/* the last station apart (the Ukrainian page): a separate act, so it is drawn dashed and
+   the rail stops before it; this page's own gap, and no cap on the text */
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-layout="rail"]) .steps-list:where([data-last="apart"]) {
+    gap: 1.75rem;
+  }
+}
+
+:where(.steps-list[data-last="apart"]) > .steps-line {
+  left: 6%;
+  right: 31%;
+}
+
+:where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"]) .steps-text {
+  max-width: none;
+}
+
+:where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"]) > .steps-item:where(:last-child) {
+  border-radius: 1rem;
+  border-width: 1px;
+  border-style: dashed;
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+  background-color: rgb(255 255 255 / 0.7);
+  padding: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"]) > .steps-item:where(:last-child) {
+    border-radius: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"]) > .steps-item:where(:last-child) {
+    margin: -1.25rem;
+    padding: 1.25rem;
+  }
+}
+
+:where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"] > .steps-item:last-child) .icon-tile {
+  box-shadow:none;
+}
+
+:where(.steps-section[data-layout="rail"] .steps-list[data-last="apart"] > .steps-item:last-child) .steps-num {
+  background-color: transparent;
+  padding-right: 0px;
+}
+
+/* marker "disc" — a large numbered disc on the rail; the last one is the dark one */
+
+:where(.steps-section[data-marker="disc"]) .steps-list {
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-marker="disc"]) .steps-list {
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-marker="disc"]) .steps-list {
+    gap: 3rem;
+  }
+}
+
+:where(.steps-section[data-marker="disc"]) .steps-line {
+  left: 0px;
+  right: 0px;
+  top: 27px;
+}
+
+.steps-disc {
+  font-variant-numeric:tabular-nums;
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  height: 54px;
+  width: 54px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(211 241 246 / var(--tw-bg-opacity, 1));
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  --tw-text-opacity: 1;
+  color: rgb(4 85 102 / var(--tw-text-opacity, 1));
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(6px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity, 1));
+}
+
+:where(.steps-item:last-child) > .steps-disc {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+:where(.steps-section[data-marker="disc"]) .steps-title {
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 17px;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-marker="disc"]) .steps-title {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-marker="disc"]) .steps-title {
+    font-size: 19px;
+  }
+}
+
+/* the rail of discs stands a little further from its head */
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-marker="disc"]) .section-head {
+    margin-bottom: 3.5rem;
+  }
+}
+
+/* ── layout: rows ────────────────────────────────────────────────────────────────
+   One sheet in the double bezel, a hairline between the rows; each row: the ghost
+   numeral, the step's name, its text. */
+
+.steps-frame {
+  border-radius: 1.5rem;
+  background-color: rgb(0 0 0 / .02);
+  padding: 0.375rem;
+  --tw-shadow: 0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08);
+  --tw-shadow-colored: 0 1px 2px var(--tw-shadow-color), 0 20px 40px -15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .steps-frame {
+    border-radius: 2rem;
+    padding: 0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-frame {
+    border-radius: 2.5rem;
+  }
+}
+
+.steps-sheet > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+  --tw-divide-opacity: 1;
+  border-color: rgb(241 242 246 / var(--tw-divide-opacity, 1));
+}
+
+.steps-sheet {
+  border-radius: 18px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  --tw-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+  --tw-shadow-colored: inset 0 1px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+@media (min-width: 640px) {
+  .steps-sheet {
+    border-radius: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-sheet {
+    border-radius: calc(2.5rem - 0.5rem);
+  }
+}
+
+.steps-row {
+  display: grid;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .steps-row {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-row {
+    grid-template-columns: 5rem 1fr 1.35fr;
+    gap: 2rem;
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+:where(.steps-row) > .steps-num {
+  font-size: clamp(1.6rem,2.8vw,2.4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity, 1));
+}
+
+.steps-row-head {
+  min-width: 0px;
+}
+
+/* with an icon tile the head is a row: the tile, then the step's label and name */
+
+:where(.steps-section[data-layout="rows"][data-marker="icon"]) .steps-row-head {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.steps-row-title {
+  min-width: 0px;
+}
+
+.steps-kicker {
+  margin-bottom: 0.25rem;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .steps-kicker {
+    font-size: 10.5px;
+  }
+}
+
+:where(.steps-row) .steps-title {
+  margin-bottom: 0px;
+  font-size: 19px;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-row) .steps-title {
+    font-size: 21px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-row) .steps-title {
+    font-size: 22px;
+  }
+}
+
+/* the name carries the gap to the tags under it */
+
+:where(.steps-row) .steps-title:where(:not(:last-child)) {
+  margin-bottom: 0.75rem;
+}
+
+.steps-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.steps-tag {
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 249 251 / var(--tw-bg-opacity, 1));
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 12px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+:where(.steps-row) > .steps-text {
+  font-size: 14.5px;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-row) > .steps-text {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-row) > .steps-text {
+    font-size: 15.5px;
+  }
+}
+
+/* ── the foot ────────────────────────────────────────────────────────────────────
+   Each foot carries the gap above itself. */
+
+.steps-note {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  border-radius: 1rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding: 1.25rem;
+  --tw-shadow: 0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08);
+  --tw-shadow-colored: 0 1px 2px var(--tw-shadow-color), 0 20px 40px -15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .steps-note {
+    margin-top: 1.75rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+    border-radius: 20px;
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-note {
+    margin-top: 2rem;
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+  }
+}
+
+:where(.steps-section[data-bg="white"]) .steps-note {
+  box-shadow:none;
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 249 251 / var(--tw-bg-opacity, 1));
+}
+
+:where(.steps-section[data-layout="rail"]) .steps-note {
+  margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  :where(.steps-section[data-layout="rail"]) .steps-note {
+    margin-top: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.steps-section[data-layout="rail"]) .steps-note {
+    margin-top: 3rem;
+  }
+}
+
+.steps-note-text {
+  min-width: 0px;
+}
+
+.steps-note-line {
+  font-size: 13.5px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .steps-note-line {
+    font-size: 14.5px;
+  }
+}
+
+.steps-note-line:where(:not(:last-child)) {
+  margin-bottom: 0.375rem;
+}
+
+.steps-note-line:where([data-tone="strong"]) {
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+.steps-note-action {
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .steps-note-action {
+    margin-left: auto;
+  }
+}
+
+.steps-actions {
+  margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  .steps-actions {
+    margin-top: 2.5rem;
+  }
+}
+
+.steps-more {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .steps-more {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-more {
+    margin-top: 2rem;
+  }
+}
+
+.steps-more-text {
+  max-width: 62ch;
+  font-size: 13.5px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .steps-more-text {
+    font-size: 14.5px;
+  }
+}
+
+.steps-more-link {
+  flex-shrink: 0;
+}
+
+.steps-callout {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  border-radius: 1rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 244 241 / var(--tw-bg-opacity, 1));
+  padding: 1.25rem;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(251 201 191 / var(--tw-ring-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .steps-callout {
+    margin-top: 3rem;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-callout {
+    padding: 1.75rem;
+  }
+}
+
+.steps-callout-text {
+  max-width: 88ch;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .steps-callout-text {
+    font-size: 15.5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-callout-text {
+    font-size: 16px;
+  }
+}
+
 /* ═══ FAQ — library component ═══════════════════════════════════════════════════════
    Template: build/sections/faq.js · contract: build/sections/faq.contract.js
    Behaviour: build/assets/js/50-faq.js ([data-faq], .faq-item, .faq-q, .open)
@@ -4999,20 +6069,8 @@ a.team-linkedin:focus-visible {
   left: -160px;
 }
 
-.left-\[10\%\] {
-  left: 10%;
-}
-
 .left-\[21px\] {
   left: 21px;
-}
-
-.left-\[6\%\] {
-  left: 6%;
-}
-
-.left-\[8\%\] {
-  left: 8%;
 }
 
 .left-full {
@@ -5061,18 +6119,6 @@ a.team-linkedin:focus-visible {
 
 .right-\[-160px\] {
   right: -160px;
-}
-
-.right-\[10\%\] {
-  right: 10%;
-}
-
-.right-\[31\%\] {
-  right: 31%;
-}
-
-.right-\[8\%\] {
-  right: 8%;
 }
 
 .right-full {
@@ -5145,10 +6191,6 @@ a.team-linkedin:focus-visible {
 
 .top-\[22px\] {
   top: 22px;
-}
-
-.top-\[27px\] {
-  top: 27px;
 }
 
 .top-\[74px\] {
@@ -5655,14 +6697,6 @@ a.team-linkedin:focus-visible {
   height: 520px;
 }
 
-.h-\[540px\] {
-  height: 540px;
-}
-
-.h-\[54px\] {
-  height: 54px;
-}
-
 .h-\[560px\] {
   height: 560px;
 }
@@ -5949,14 +6983,6 @@ a.team-linkedin:focus-visible {
 
 .w-\[520px\] {
   width: 520px;
-}
-
-.w-\[540px\] {
-  width: 540px;
-}
-
-.w-\[54px\] {
-  width: 54px;
 }
 
 .w-\[560px\] {
@@ -6570,10 +7596,6 @@ a.team-linkedin:focus-visible {
 
 .gap-6 {
   gap: 1.5rem;
-}
-
-.gap-7 {
-  gap: 1.75rem;
 }
 
 .gap-8 {
@@ -7374,10 +8396,6 @@ a.team-linkedin:focus-visible {
 
 .bg-white\/60 {
   background-color: rgb(255 255 255 / 0.6);
-}
-
-.bg-white\/70 {
-  background-color: rgb(255 255 255 / 0.7);
 }
 
 .bg-white\/75 {
@@ -8747,21 +9765,9 @@ a.team-linkedin:focus-visible {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
-.ring-4 {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
 .ring-\[1\.5px\] {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1.5px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
-.ring-\[6px\] {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(6px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
@@ -8777,11 +9783,6 @@ a.team-linkedin:focus-visible {
 .ring-\[\#E5E5DD\] {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(229 229 221 / var(--tw-ring-opacity, 1));
-}
-
-.ring-\[\#F7FAFC\] {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(247 250 252 / var(--tw-ring-opacity, 1));
 }
 
 .ring-black {
@@ -10511,10 +11512,6 @@ a.team-linkedin:focus-visible {
     grid-row: span 2 / span 2;
   }
 
-  .lg\:-m-5 {
-    margin: -1.25rem;
-  }
-
   .lg\:-mx-10 {
     margin-left: -2.5rem;
     margin-right: -2.5rem;
@@ -10665,10 +11662,6 @@ a.team-linkedin:focus-visible {
 
   .lg\:w-36 {
     width: 9rem;
-  }
-
-  .lg\:w-6 {
-    width: 1.5rem;
   }
 
   .lg\:w-\[400px\] {
@@ -10880,10 +11873,6 @@ a.team-linkedin:focus-visible {
     grid-template-columns: 420px 1fr;
   }
 
-  .lg\:grid-cols-\[5rem_1fr_1\.35fr\] {
-    grid-template-columns: 5rem 1fr 1.35fr;
-  }
-
   .lg\:grid-cols-\[auto_1fr\] {
     grid-template-columns: auto 1fr;
   }
@@ -10942,10 +11931,6 @@ a.team-linkedin:focus-visible {
 
   .lg\:gap-6 {
     gap: 1.5rem;
-  }
-
-  .lg\:gap-7 {
-    gap: 1.75rem;
   }
 
   .lg\:gap-8 {
@@ -11103,11 +12088,6 @@ a.team-linkedin:focus-visible {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .lg\:px-9 {
-    padding-left: 2.25rem;
-    padding-right: 2.25rem;
   }
 
   .lg\:py-10 {

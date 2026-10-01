@@ -233,7 +233,7 @@ console.log('\nproduct acts');
   ok('the page has one dark act only — the non-equivalence one', (body.match(/<section[^>]*bg-ink-950/g) || []).length === 1 && /bg-ink-950/.test(section('not-the-same-score').slice(0, 200)));
   ok('four source items as a definition list', (section('sources-and-settings').match(/<dt\b/g) || []).length === 4);
   ok('AI act links to the AI owner once', (section('ai-writing').match(/href="ai-detector\.html"/g) || []).length === 1);
-  ok('data handling links to the privacy policy', /href="policy\.html"/.test(section('your-document')) && (section('your-document').match(/<li class="relative">/g) || []).length === 3);
+  ok('data handling links to the privacy policy', /href="policy\.html"/.test(section('your-document')) && (section('your-document').match(/<li class="steps-item">/g) || []).length === 3);   /* the library's Steps (build/sections/steps.js) */
   ok('data handling says nothing about Turnitin', !/Turnitin/.test(flat(section('your-document'))));
   const pr = section('pricing');
   ok('pricing preview: three plan cards, a period switcher, "View all pricing" → prices.html', (pr.match(/data-tier="/g) || []).length === 3 && /id="periodTabs"|class="period-btn/.test(pr) && /href="prices\.html"[^>]*>\s*View all pricing/.test(pr));

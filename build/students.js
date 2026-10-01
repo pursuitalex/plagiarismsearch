@@ -32,6 +32,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'plagiarism-checker-for-students.html';
 const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
+const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -442,36 +443,15 @@ ${COPY.sources.exclusions.map(([h, b]) => tick(h, b)).join('\n')}
 const section6 = () => `  <!-- ================= 06 · YOUR PAPER & REPORT =================
        The lifecycle as one rail of four stations rather than four cards: the document
        goes in, the file is not kept, the report is, and you can delete it. Storage is
-       the separate action it is, in its own card with the privacy link. No absolutes. -->
-  <section id="your-paper" data-component="lifecycle-rail" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-${eyebrow('orange-500', COPY.paper.eyebrow, 'ink')}
-        <h2 class="${H2}">${COPY.paper.h2}</h2>
-        <p class="${INTRO}">${COPY.paper.intro}</p>
-      </div>
-
-      <ol class="rv-kids relative grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-        <span class="hidden lg:block absolute left-[10%] right-[10%] top-[22px] h-px bg-ink-200" aria-hidden="true"></span>
-${COPY.paper.steps.map(([head, body], i) => `        <li class="relative">
-          <div class="flex items-center gap-3 mb-4">
-            ${chip(['teal', 'ink', 'orange', 'ink'][i], [I.upload, I.file, I.report, I.trash][i]).replace('inline-flex', 'relative z-[1] inline-flex ring-4 ring-white')}
-            <span class="text-[11px] font-bold tracking-[0.2em] text-ink-400 nums">0${i + 1}</span>
-          </div>
-          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-1.5">${head}</h3>
-          <p class="${BODY} text-ink-600 max-w-[36ch]">${body}</p>
-        </li>`).join('\n')}
-      </ol>
-
-      <div class="rv mt-8 sm:mt-10 lg:mt-12 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7">
-        <div class="min-w-0">
-          <p class="${BODY} text-ink-600 mb-1.5">${COPY.paper.storage}</p>
-          <p class="${BODY} text-ink-900 font-semibold">${COPY.paper.clarification}</p>
-        </div>
-        <div class="shrink-0 sm:ml-auto">${btnLight(COPY.paper.cta, COPY.paper.ctaHref)}</div>
-      </div>
-    </div>
-  </section>`;
+       the separate action it is, in its own card with the privacy link. No absolutes.
+       The library's Steps (build/sections/steps.js), layout "rail". -->
+${steps.section({
+    id: 'your-paper', layout: 'rail', marker: 'icon', bg: 'white', space: 'lg',
+    head: { eyebrow: COPY.paper.eyebrow, title: COPY.paper.h2, intro: COPY.paper.intro },
+    cols: 4,
+    items: COPY.paper.steps.map(([title, text], i) => ({ title, text, tone: ['teal', 'ink', 'orange', 'ink'][i], icon: [I.upload, I.file, I.report, I.trash][i] })),
+    foot: { note: { lines: [COPY.paper.storage, { text: COPY.paper.clarification, tone: 'strong' }], action: { label: COPY.paper.cta, href: COPY.paper.ctaHref, tone: 'light' } } },
+  })}`;
 
 /* ═══════════════ 07 · PLAGIARISM VS AI, COMPACT ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · PLAGIARISM VS AI =================

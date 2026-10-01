@@ -27,6 +27,7 @@
     </div>
     <ul class="mt-6 flex flex-wrap gap-2.5">
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-hero">Hero <span class="text-ink-400 font-medium">7</span></a></li>
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-steps">Steps <span class="text-ink-400 font-medium">10</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-faq">FAQ <span class="text-ink-400 font-medium">8</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-cta-band">CTA band <span class="text-ink-400 font-medium">9</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-banner">Banner <span class="text-ink-400 font-medium">5</span></a></li>
@@ -1432,6 +1433,1259 @@
 &lt;/section&gt;</textarea>
   </div>
 
+  <section id="lib-steps" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">Steps</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>Пронумерована послідовність: що відбувається і в якому порядку. Три розкладки — лінія зі станціями, картки, рядки на одному аркуші — і свій спосіб позначити крок у кожній.</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/steps.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/steps.css</code> · JS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/assets/js/20-motion.js (поява .rv і .rv-kids)</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/steps.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці; можна прибрати, якщо на секцію ніхто не посилається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіанти</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg, data-space, data-accent на &lt;section&gt;; data-measure на .section-head і p.section-intro; data-cols на списку; data-tone на плитці, рядку примітки, кнопці</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише значення зі списку варіантів. data-layout і data-marker не міняйте на готовому фрагменті: у кожного своя розмітка кроку</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Надпис-пігулка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-eyebrow-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; блок .section-eyebrow можна прибрати цілком. Фон пігулки не задається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Заголовок H2</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">h2.section-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст (обов’язковий); допускаються &lt;br&gt;, &lt;em&gt;, &lt;strong&gt;</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Вступ</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.section-intro</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Крок</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.steps-item / .steps-row</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">додати чи прибрати — цілим блоком, скопіювавши сусідній; кроків 2–6 (rows — до 8). Після зміни кількості перепишіть номери й data-cols</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Номер кроку</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.steps-num, span.steps-badge, span.steps-disc</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише цифри, по порядку: 01, 02 … (у badge і disc — 1, 2 …)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Назва кроку</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.steps-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст без розмітки</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Текст кроку</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.steps-text</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; допускаються strong, em, br</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Іконка кроку</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.icon-tile &gt; svg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">іконку &lt;svg&gt; можна замінити іншою з Lucide (24×24, stroke="currentColor"); колір — data-tone на плитці</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Мітки кроку (rows)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.steps-tags &gt; span.steps-tag</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; мітку чи весь блок можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Підпис над назвою (rows, icon)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.steps-kicker</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст («Step 1»); можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Панель-примітка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.steps-note: p.steps-note-line, a.action-button</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст рядків (1–3), текст і href кнопки; кнопку (.steps-note-action) можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Кнопка під списком</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.steps-actions &gt; a.action-button</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href; блок можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Рядок із посиланням</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.steps-more: p.steps-more-text, a.section-link</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href; блок можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Виноска</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.steps-callout &gt; p.steps-callout-text</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; тон плитки — data-tone; блок можна прибрати</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>усі класи й обгортки: .steps-inner, .section-head, .steps-list, .steps-item, .steps-marker, .steps-frame, .steps-sheet …</li>
+          <li>data-component="steps" на секції — гачок для перевірок; data-layout, data-bg, data-space — обов’язкові</li>
+          <li>класи-гачки: rv на блоці заголовка, рамці rows і нижньому блоці; rv-kids на списку (поява елементів по черзі); btn-press, group, icon-orb на кнопці; orb на світінні</li>
+          <li>лінія rail (span.steps-line — перший елемент списку) і риски між картками (span.steps-link) — копіюються як є</li>
+          <li>розмітка кроку відповідає маркеру (див. варіант data-marker): її частини та їхній порядок не міняються</li>
+          <li>у нижній частині секції — не більше одного блока: панель-примітка, кнопка, рядок із посиланням, виноска або запечатаний блок [data-slot="media"] (схема сторінки — копіюється як є)</li>
+          <li>іконки &lt;svg&gt; стрілок — копіюються як є</li>
+          <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) поза запечатаним блоком</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">rail</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">cards</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">rows</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. розкладка. rail — станції на одній лінії, без карток (Students, Turnitin, українська сторінка). cards — картка на крок (PDF, головна, AI Detector, API). rows — один аркуш, рядок на крок (Business &amp; Teams, Affiliate). Це різні фрагменти — беріть відповідний зразок, а не міняйте атрибут.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-marker</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">icon</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">icon-stack</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">badge</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">badge-sm</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">disc</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. чим позначено крок. rail: icon — плитка з іконкою і номер; disc — великий круглий номер (останній — темний). cards: icon — плитка і номер в одному рядку; icon-stack — плитка зверху, номер перед назвою (головна); badge — круглий номер 32px; badge-sm — компактна картка з номером 28px, три в ряд уже з 640px (AI Detector). rows: без атрибута — лише велика цифра; icon — ще й плитка з іконкою та підписом «Step 1». Розмітка кроку в кожного маркера своя — беріть зразок.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">white</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">cool</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">aqua</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. фон секції: white — білий, cool — холодний світлий (#F7FAFC), aqua — світло-бірюзовий (#F2FCFC). Пігулка, картки з номером і панель-примітка самі беруть протилежну поверхню.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-space</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">md</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">lg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. вертикальний ритм сторінки на десктопі: lg — 128px, md — 112px. Беріть той, що в сусідніх секцій сторінки.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-accent</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. колір крапки в пігулці. Без атрибута — помаранчева; teal — бірюзова.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">head</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">720</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">760</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">860</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. ширина блока заголовка, px. Без атрибута — 820. 720 — головна (і менший відступ до списку).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">intro</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">72</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. найдовший рядок вступу, у символах (українська сторінка). Без атрибута — на всю ширину блока.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">list</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-cols</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">3</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">4</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. скільки кроків у ряд на десктопі (rail і cards — обов’язковий): 3 — три з 768px; 4 — два з 640px, чотири з 1024px. Ставте за кількістю кроків.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">list</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-link</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">line</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. cards: line — картки з’єднані рисками (span.steps-link у кожній картці, крім останньої).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">list</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-last</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">apart</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. rail: apart — остання станція окремо, у пунктирній рамці, лінія закінчується перед нею (українська сторінка: Storage — окрема дія).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">list</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-stagger</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.06</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. такт появи елементів списку, с (українська сторінка). Без атрибута — .08.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">tile</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ink</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">orange</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">mint</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. колір плитки з іконкою (.icon-tile): один атрибут задає і тло плитки, і колір іконки.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">tile</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-variant</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ring</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. ring — плитка головної: з тонким кольоровим обідком (лише з data-marker="icon-stack").</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">noteLine</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">strong</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. рядок панелі-примітки. Без атрибута — звичайний; strong — напівжирний темний.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">button</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">light</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ghost</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. кнопка внизу секції: light — біла з обідком; ghost — велика прозора з обідком (головна).</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-students.html">plagiarism-checker-for-students.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">rail · icon · white · lg</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">4 станції; панель-примітка зі світлою кнопкою</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="turnitin-checker-alternative.html">turnitin-checker-alternative.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">rail · icon · cool · md</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 станції; світла кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">ua-plagiarism-check.html (#your-document)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">rail · icon · cool · md · last apart</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">4 станції, остання окремо; вступ 72</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">ua-plagiarism-check.html (#how-to-read)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">rail · disc · white · md</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 кроки; виноска</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="pdf-plagiarism-checker.html">pdf-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">cards · icon · white · md · link line</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 картки з рисками</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="index.html">index.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">cards · icon-stack · aqua · md</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">4 картки; світіння; панель-примітка з кнопкою ghost; блок заголовка 720</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="api.html">api.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">cards · badge · white · lg</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">4 картки (&lt;div&gt;); запечатана схема; блок заголовка 760</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ai-detector.html">ai-detector.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">cards · badge-sm · aqua · lg</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 картки (&lt;div&gt;); рядок із посиланням; блок заголовка 760</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-organization.html">plagiarism-checker-for-organization.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">rows · white · lg</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 рядки з мітками</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="affiliate-program-at-plagiarismsearch.html">affiliate-program-at-plagiarismsearch.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">rows · icon · cool · lg</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 рядки (&lt;ol&gt;) з іконкою і підписом</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── steps · 1 · steps-rail.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · лінія зі станціями (rail)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Чотири станції на одній лінії: плитка з іконкою, номер, назва, текст. Під списком — панель-примітка з кнопкою (на білій секції панель сіра). Копія — Students.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-students · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-rail.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-rail" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="white" data-space="lg">
+  <div class="steps-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Your Paper &amp; Report</span>
+      </div>
+      <h2 class="section-title">Know what happens to your paper</h2>
+      <p class="section-intro">Your document is processed to perform the checks you select. The file you upload is not retained as a stored source document, while a generated report may remain in your account for convenient access.</p>
+    </div>
+    <ol class="steps-list rv-kids" data-cols="4">
+      <span class="steps-line" aria-hidden="true"></span>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
+          <span class="steps-num">01</span>
+        </div>
+        <h3 class="steps-title">Upload &amp; process</h3>
+        <p class="steps-text">Your document is processed for the checks you select.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+          <span class="steps-num">02</span>
+        </div>
+        <h3 class="steps-title">Source document</h3>
+        <p class="steps-text">The uploaded file is not retained as a stored source document.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+          <span class="steps-num">03</span>
+        </div>
+        <h3 class="steps-title">Report</h3>
+        <p class="steps-text">Your generated report may remain in your account for convenient access.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+          <span class="steps-num">04</span>
+        </div>
+        <h3 class="steps-title">Delete</h3>
+        <p class="steps-text">You can permanently delete reports from your account.</p>
+      </li>
+    </ol>
+    <div class="steps-note rv">
+      <div class="steps-note-text">
+        <p class="steps-note-line">If you choose Add to storage, that is a separate action you control.</p>
+        <p class="steps-note-line" data-tone="strong">Running a plagiarism check does not automatically add your paper to storage.</p>
+      </div>
+      <div class="steps-note-action">
+        <a href="policy.html" class="action-button btn-press group" data-tone="light">
+          Read our Privacy Policy
+          <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-8">HTML для копіювання</label>
+    <textarea id="snippet-8" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="white" data-space="lg"&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Your Paper &amp;amp; Report&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Know what happens to your paper&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;Your document is processed to perform the checks you select. The file you upload is not retained as a stored source document, while a generated report may remain in your account for convenient access.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;ol class="steps-list rv-kids" data-cols="4"&gt;
+      &lt;span class="steps-line" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;&lt;polyline points="17 8 12 3 7 8"/&gt;&lt;line x1="12" x2="12" y1="3" y2="15"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;01&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Upload &amp;amp; process&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Your document is processed for the checks you select.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M16 13H8"/&gt;&lt;path d="M16 17H8"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;02&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Source document&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;The uploaded file is not retained as a stored source document.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M8 17v-3"/&gt;&lt;path d="M12 17v-6"/&gt;&lt;path d="M16 17v-4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;03&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Report&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Your generated report may remain in your account for convenient access.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M3 6h18"/&gt;&lt;path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/&gt;&lt;path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;04&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Delete&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;You can permanently delete reports from your account.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;div class="steps-note rv"&gt;
+      &lt;div class="steps-note-text"&gt;
+        &lt;p class="steps-note-line"&gt;If you choose Add to storage, that is a separate action you control.&lt;/p&gt;
+        &lt;p class="steps-note-line" data-tone="strong"&gt;Running a plagiarism check does not automatically add your paper to storage.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="steps-note-action"&gt;
+        &lt;a href="policy.html" class="action-button btn-press group" data-tone="light"&gt;
+          Read our Privacy Policy
+          &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── steps · 2 · steps-rail-3.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · лінія, три станції, кнопка під списком</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-cols="3" на холодному тлі: без пігулки і вступу, під списком — одна світла кнопка (div.steps-actions). Копія — Turnitin Alternative.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: turnitin-checker-alternative · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-rail-3.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-rail-3" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="cool" data-space="md">
+  <div class="steps-inner">
+    <div class="section-head rv">
+      <h2 class="section-title">Know what happens to your document in PlagiarismSearch</h2>
+    </div>
+    <ol class="steps-list rv-kids" data-cols="3">
+      <span class="steps-line" aria-hidden="true"></span>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+          <span class="steps-num">01</span>
+        </div>
+        <h3 class="steps-title">Your document</h3>
+        <p class="steps-text">Your uploaded document is processed to perform the checks you select. The uploaded source document is not retained as a stored source document.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+          <span class="steps-num">02</span>
+        </div>
+        <h3 class="steps-title">Your report</h3>
+        <p class="steps-text">A generated report may remain available in your account for convenience, and you can permanently delete reports.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
+          <span class="steps-num">03</span>
+        </div>
+        <h3 class="steps-title">Storage</h3>
+        <p class="steps-text">Adding content to Storage is a separate action you control. Running a plagiarism check does not automatically add the document to Storage.</p>
+      </li>
+    </ol>
+    <div class="steps-actions rv">
+      <a href="policy.html" class="action-button btn-press group" data-tone="light">
+        Read the Privacy Policy
+        <span class="action-button-orb icon-orb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-9">HTML для копіювання</label>
+    <textarea id="snippet-9" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail-3" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="cool" data-space="md"&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv"&gt;
+      &lt;h2 class="section-title"&gt;Know what happens to your document in PlagiarismSearch&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;ol class="steps-list rv-kids" data-cols="3"&gt;
+      &lt;span class="steps-line" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M16 13H8"/&gt;&lt;path d="M16 17H8"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;01&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Your document&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Your uploaded document is processed to perform the checks you select. The uploaded source document is not retained as a stored source document.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M8 17v-3"/&gt;&lt;path d="M12 17v-6"/&gt;&lt;path d="M16 17v-4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;02&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Your report&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;A generated report may remain available in your account for convenience, and you can permanently delete reports.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="20" height="5" x="2" y="3" rx="1"/&gt;&lt;path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/&gt;&lt;path d="M10 12h4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;03&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Storage&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Adding content to Storage is a separate action you control. Running a plagiarism check does not automatically add the document to Storage.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;div class="steps-actions rv"&gt;
+      &lt;a href="policy.html" class="action-button btn-press group" data-tone="light"&gt;
+        Read the Privacy Policy
+        &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── steps · 3 · steps-rail-apart.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 3</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · лінія, остання станція окремо</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-last="apart": остання станція — окрема дія, тому вона в пунктирній рамці, а лінія закінчується перед нею. Копія — українська сторінка.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ua-plagiarism-check (#your-document) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-rail-apart.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-rail-apart" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="cool" data-space="md" data-accent="teal">
+  <div class="steps-inner">
+    <div class="section-head rv" data-measure="860">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Ваш документ і звіт</span>
+      </div>
+      <h2 class="section-title">Що відбувається з документом після перевірки</h2>
+      <p class="section-intro" data-measure="72">Перевірка, звіт і функція Storage — це різні етапи. Важливо не змішувати їх в одну дію.</p>
+    </div>
+    <ol data-stagger=".06" class="steps-list rv-kids" data-cols="4" data-last="apart">
+      <span class="steps-line" aria-hidden="true"></span>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
+          <span class="steps-num">01</span>
+        </div>
+        <h3 class="steps-title">Обробка</h3>
+        <p class="steps-text">Завантажений текст використовується для виконання запущеної вами перевірки.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+          <span class="steps-num">02</span>
+        </div>
+        <h3 class="steps-title">Вихідний документ</h3>
+        <p class="steps-text">Вихідний документ не зберігається як окремий документ після звичайної перевірки. Зберігання результату не означає автоматичне додавання документа до бази для майбутніх порівнянь.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+          <span class="steps-num">03</span>
+        </div>
+        <h3 class="steps-title">Звіт</h3>
+        <p class="steps-text">Згенеровані звіти можуть зберігатися у вашому акаунті для повторного перегляду. Користувач може видалити звіт зі свого акаунта.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="mint"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
+          <span class="steps-num">04</span>
+        </div>
+        <h3 class="steps-title">Storage</h3>
+        <p class="steps-text">Додавання документа до персонального або організаційного сховища відбувається окремо, коли користувач сам використовує відповідну функцію.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-10">HTML для копіювання</label>
+    <textarea id="snippet-10" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail-apart" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="cool" data-space="md" data-accent="teal"&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv" data-measure="860"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Ваш документ і звіт&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Що відбувається з документом після перевірки&lt;/h2&gt;
+      &lt;p class="section-intro" data-measure="72"&gt;Перевірка, звіт і функція Storage — це різні етапи. Важливо не змішувати їх в одну дію.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;ol data-stagger=".06" class="steps-list rv-kids" data-cols="4" data-last="apart"&gt;
+      &lt;span class="steps-line" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;&lt;polyline points="17 8 12 3 7 8"/&gt;&lt;line x1="12" x2="12" y1="3" y2="15"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;01&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Обробка&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Завантажений текст використовується для виконання запущеної вами перевірки.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M16 13H8"/&gt;&lt;path d="M16 17H8"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;02&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Вихідний документ&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Вихідний документ не зберігається як окремий документ після звичайної перевірки. Зберігання результату не означає автоматичне додавання документа до бази для майбутніх порівнянь.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M8 17v-3"/&gt;&lt;path d="M12 17v-6"/&gt;&lt;path d="M16 17v-4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;03&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Звіт&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Згенеровані звіти можуть зберігатися у вашому акаунті для повторного перегляду. Користувач може видалити звіт зі свого акаунта.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="mint"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="20" height="5" x="2" y="3" rx="1"/&gt;&lt;path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/&gt;&lt;path d="M10 12h4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;04&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Storage&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Додавання документа до персонального або організаційного сховища відбувається окремо, коли користувач сам використовує відповідну функцію.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── steps · 4 · steps-rail-disc.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 4</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · лінія з великими номерами (disc)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-marker="disc": замість іконок — великі круглі номери, останній темний; під списком — виноска з плиткою-іконкою (div.steps-callout). Копія — українська сторінка.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ua-plagiarism-check (#how-to-read) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-rail-disc.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-rail-disc" data-component="steps" class="steps-section" data-layout="rail" data-marker="disc" data-bg="white" data-space="md">
+  <div class="steps-inner">
+    <div class="section-head rv" data-measure="860">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Як читати результат</span>
+      </div>
+      <h2 class="section-title">Як правильно оцінити знайдений збіг</h2>
+      <p class="section-intro" data-measure="72">Один загальний показник не пояснює, чому система позначила конкретний фрагмент. Переглядайте результат на рівні тексту й джерела.</p>
+    </div>
+    <ol data-stagger=".06" class="steps-list rv-kids" data-cols="3">
+      <span class="steps-line" aria-hidden="true"></span>
+      <li class="steps-item">
+        <span class="steps-disc">1</span>
+        <h3 class="steps-title">Відкрийте збіг</h3>
+        <p class="steps-text">Подивіться, який саме фрагмент вашого тексту має відповідність у знайденому джерелі.</p>
+      </li>
+      <li class="steps-item">
+        <span class="steps-disc">2</span>
+        <h3 class="steps-title">Перевірте джерело й контекст</h3>
+        <p class="steps-text">Порівняйте формулювання та переконайтеся, чи є це цитатою, коректно оформленим запозиченням, загальним формулюванням або фрагментом, що потребує уваги.</p>
+      </li>
+      <li class="steps-item">
+        <span class="steps-disc">3</span>
+        <h3 class="steps-title">Вирішіть, чи потрібна зміна</h3>
+        <p class="steps-text">За потреби додайте посилання, уточніть цитату або перепишіть фрагмент власними словами, зберігаючи коректну атрибуцію джерела.</p>
+      </li>
+    </ol>
+    <div class="steps-callout rv">
+      <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+      <p class="steps-callout-text">PlagiarismSearch не виносить автоматичний академічний чи юридичний висновок про плагіат. Звіт надає дані для перевірки й рішення людиною.</p>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-11">HTML для копіювання</label>
+    <textarea id="snippet-11" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail-disc" data-component="steps" class="steps-section" data-layout="rail" data-marker="disc" data-bg="white" data-space="md"&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv" data-measure="860"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Як читати результат&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Як правильно оцінити знайдений збіг&lt;/h2&gt;
+      &lt;p class="section-intro" data-measure="72"&gt;Один загальний показник не пояснює, чому система позначила конкретний фрагмент. Переглядайте результат на рівні тексту й джерела.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;ol data-stagger=".06" class="steps-list rv-kids" data-cols="3"&gt;
+      &lt;span class="steps-line" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;span class="steps-disc"&gt;1&lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Відкрийте збіг&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Подивіться, який саме фрагмент вашого тексту має відповідність у знайденому джерелі.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;span class="steps-disc"&gt;2&lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Перевірте джерело й контекст&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Порівняйте формулювання та переконайтеся, чи є це цитатою, коректно оформленим запозиченням, загальним формулюванням або фрагментом, що потребує уваги.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;span class="steps-disc"&gt;3&lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Вирішіть, чи потрібна зміна&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;За потреби додайте посилання, уточніть цитату або перепишіть фрагмент власними словами, зберігаючи коректну атрибуцію джерела.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;div class="steps-callout rv"&gt;
+      &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;path d="M12 16v-4"/&gt;&lt;path d="M12 8h.01"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;p class="steps-callout-text"&gt;PlagiarismSearch не виносить автоматичний академічний чи юридичний висновок про плагіат. Звіт надає дані для перевірки й рішення людиною.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── steps · 5 · steps-cards-linked.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 5</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · картки з рисками між ними (cards)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Картка на крок: плитка з іконкою й номер в одному рядку, назва, текст; data-link="line" з’єднує картки рисками. Копія — PDF.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: pdf-plagiarism-checker · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-cards-linked.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-cards" data-component="steps" class="steps-section" data-layout="cards" data-marker="icon" data-bg="white" data-space="md" data-accent="teal">
+  <div class="steps-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">How It Works</span>
+      </div>
+      <h2 class="section-title">How to check a PDF for plagiarism</h2>
+      <p class="section-intro">You can upload a PDF directly without converting it to another format. The checker extracts the machine-readable text in the file, runs the plagiarism search using your selected settings, and returns the matches and sources found for review.</p>
+    </div>
+    <ol class="steps-list rv-kids" data-cols="3" data-link="line">
+      <li class="steps-item">
+        <span class="steps-link" aria-hidden="true"></span>
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
+          <span class="steps-num">01</span>
+        </div>
+        <h3 class="steps-title">Upload your PDF</h3>
+        <p class="steps-text">Drag and drop the PDF or select it from your device. You can upload up to 10 files at once. The upload size limit is 2 MB for guests and 24 MB when signed in.</p>
+      </li>
+      <li class="steps-item">
+        <span class="steps-link" aria-hidden="true"></span>
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+          <span class="steps-num">02</span>
+        </div>
+        <h3 class="steps-title">Choose your plagiarism settings</h3>
+        <p class="steps-text">Select the source collections and exclusions that fit your check. Available options can include web search, academic database search, storage sources, reference exclusion, and in-text citation exclusion.</p>
+      </li>
+      <li class="steps-item">
+        <div class="steps-marker">
+          <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+          <span class="steps-num">03</span>
+        </div>
+        <h3 class="steps-title">Review the matches and sources</h3>
+        <p class="steps-text">Open the completed report to inspect matching or similar passages and the sources found for them. Review each result in context before deciding whether the text needs attention.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-12">HTML для копіювання</label>
+    <textarea id="snippet-12" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-cards" data-component="steps" class="steps-section" data-layout="cards" data-marker="icon" data-bg="white" data-space="md" data-accent="teal"&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;How It Works&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;How to check a PDF for plagiarism&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;You can upload a PDF directly without converting it to another format. The checker extracts the machine-readable text in the file, runs the plagiarism search using your selected settings, and returns the matches and sources found for review.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;ol class="steps-list rv-kids" data-cols="3" data-link="line"&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;span class="steps-link" aria-hidden="true"&gt;&lt;/span&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;&lt;polyline points="17 8 12 3 7 8"/&gt;&lt;line x1="12" x2="12" y1="3" y2="15"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;01&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Upload your PDF&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Drag and drop the PDF or select it from your device. You can upload up to 10 files at once. The upload size limit is 2 MB for guests and 24 MB when signed in.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;span class="steps-link" aria-hidden="true"&gt;&lt;/span&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;line x1="4" x2="4" y1="21" y2="14"/&gt;&lt;line x1="4" x2="4" y1="10" y2="3"/&gt;&lt;line x1="12" x2="12" y1="21" y2="12"/&gt;&lt;line x1="12" x2="12" y1="8" y2="3"/&gt;&lt;line x1="20" x2="20" y1="21" y2="16"/&gt;&lt;line x1="20" x2="20" y1="12" y2="3"/&gt;&lt;line x1="2" x2="6" y1="14" y2="14"/&gt;&lt;line x1="10" x2="14" y1="8" y2="8"/&gt;&lt;line x1="18" x2="22" y1="16" y2="16"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;02&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Choose your plagiarism settings&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Select the source collections and exclusions that fit your check. Available options can include web search, academic database search, storage sources, reference exclusion, and in-text citation exclusion.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;div class="steps-marker"&gt;
+          &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M8 17v-3"/&gt;&lt;path d="M12 17v-6"/&gt;&lt;path d="M16 17v-4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="steps-num"&gt;03&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h3 class="steps-title"&gt;Review the matches and sources&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Open the completed report to inspect matching or similar passages and the sources found for them. Review each result in context before deciding whether the text needs attention.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── steps · 6 · steps-cards-stack.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 6</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · картки головної (icon-stack)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-marker="icon-stack": плитка з обідком зверху, номер перед назвою; світіння на бірюзовому тлі; під списком — біла панель-примітка з великою кнопкою (data-tone="ghost"). Копія — головна.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: index (головна) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-cards-stack.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-stack" data-component="steps" class="steps-section" data-layout="cards" data-marker="icon-stack" data-bg="aqua" data-space="md">
+  <div class="steps-bg">
+    <div class="orb steps-glow"></div>
+  </div>
+  <div class="steps-inner">
+    <div class="section-head rv" data-measure="720">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Document handling</span>
+      </div>
+      <h2 class="section-title">Know what happens to your document</h2>
+      <p class="section-intro">Your document is processed to perform the checks you select. The file you upload is not retained as a stored source document, while a generated report may remain in your account for convenient access.</p>
+    </div>
+    <ol class="steps-list rv-kids" data-cols="4">
+      <li class="steps-item">
+        <span class="icon-tile" data-tone="teal" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
+        <div class="steps-heading">
+          <span class="steps-num">01</span>
+          <p class="steps-title">Upload &amp; process</p>
+        </div>
+        <p class="steps-text">Your document is processed for the checks you select.</p>
+      </li>
+      <li class="steps-item">
+        <span class="icon-tile" data-tone="orange" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+        <div class="steps-heading">
+          <span class="steps-num">02</span>
+          <p class="steps-title">Source document</p>
+        </div>
+        <p class="steps-text">The uploaded file is not retained as a stored source document.</p>
+      </li>
+      <li class="steps-item">
+        <span class="icon-tile" data-tone="mint" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-4"/></svg></span>
+        <div class="steps-heading">
+          <span class="steps-num">03</span>
+          <p class="steps-title">Report</p>
+        </div>
+        <p class="steps-text">Your generated report may remain in your account for convenient access.</p>
+      </li>
+      <li class="steps-item">
+        <span class="icon-tile" data-tone="teal" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+        <div class="steps-heading">
+          <span class="steps-num">04</span>
+          <p class="steps-title">Delete</p>
+        </div>
+        <p class="steps-text">You can permanently delete reports from your account.</p>
+      </li>
+    </ol>
+    <div class="steps-note rv">
+      <div class="steps-note-text">
+        <p class="steps-note-line">If you choose Add to storage, that is a separate action you control.</p>
+        <p class="steps-note-line">AI checks are processed on PlagiarismSearch infrastructure.</p>
+      </div>
+      <div class="steps-note-action">
+        <a href="policy.html" class="action-button btn-press group" data-tone="ghost">
+          Read our Privacy Policy
+          <span class="action-button-orb icon-orb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-13">HTML для копіювання</label>
+    <textarea id="snippet-13" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-stack" data-component="steps" class="steps-section" data-layout="cards" data-marker="icon-stack" data-bg="aqua" data-space="md"&gt;
+  &lt;div class="steps-bg"&gt;
+    &lt;div class="orb steps-glow"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv" data-measure="720"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Document handling&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Know what happens to your document&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;Your document is processed to perform the checks you select. The file you upload is not retained as a stored source document, while a generated report may remain in your account for convenient access.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;ol class="steps-list rv-kids" data-cols="4"&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;span class="icon-tile" data-tone="teal" data-variant="ring"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/&gt;&lt;polyline points="17 8 12 3 7 8"/&gt;&lt;line x1="12" x2="12" y1="3" y2="15"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;div class="steps-heading"&gt;
+          &lt;span class="steps-num"&gt;01&lt;/span&gt;
+          &lt;p class="steps-title"&gt;Upload &amp;amp; process&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;p class="steps-text"&gt;Your document is processed for the checks you select.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;span class="icon-tile" data-tone="orange" data-variant="ring"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M16 13H8"/&gt;&lt;path d="M16 17H8"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;div class="steps-heading"&gt;
+          &lt;span class="steps-num"&gt;02&lt;/span&gt;
+          &lt;p class="steps-title"&gt;Source document&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;p class="steps-text"&gt;The uploaded file is not retained as a stored source document.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;span class="icon-tile" data-tone="mint" data-variant="ring"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M8 17v-3"/&gt;&lt;path d="M12 17v-6"/&gt;&lt;path d="M16 17v-4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;div class="steps-heading"&gt;
+          &lt;span class="steps-num"&gt;03&lt;/span&gt;
+          &lt;p class="steps-title"&gt;Report&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;p class="steps-text"&gt;Your generated report may remain in your account for convenient access.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li class="steps-item"&gt;
+        &lt;span class="icon-tile" data-tone="teal" data-variant="ring"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M3 6h18"/&gt;&lt;path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/&gt;&lt;path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;div class="steps-heading"&gt;
+          &lt;span class="steps-num"&gt;04&lt;/span&gt;
+          &lt;p class="steps-title"&gt;Delete&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;p class="steps-text"&gt;You can permanently delete reports from your account.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;div class="steps-note rv"&gt;
+      &lt;div class="steps-note-text"&gt;
+        &lt;p class="steps-note-line"&gt;If you choose Add to storage, that is a separate action you control.&lt;/p&gt;
+        &lt;p class="steps-note-line"&gt;AI checks are processed on PlagiarismSearch infrastructure.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="steps-note-action"&gt;
+        &lt;a href="policy.html" class="action-button btn-press group" data-tone="ghost"&gt;
+          Read our Privacy Policy
+          &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── steps · 7 · steps-cards-badge.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 7</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · картки з круглим номером (badge)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-marker="badge": на білій секції картки сірі, без тіні. Під списком — запечатаний блок сторінки [data-slot="media"] (тут — схема асинхронного запиту). Копія — API.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: api · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-cards-badge.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-badge" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge" data-bg="white" data-space="lg">
+  <div class="steps-inner">
+    <div class="section-head rv" data-measure="760">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Workflow</span>
+      </div>
+      <h2 class="section-title">How the PlagiarismSearch API workflow works</h2>
+    </div>
+    <div class="steps-list rv-kids" data-cols="4">
+      <div class="steps-item">
+        <span class="steps-badge">1</span>
+        <h3 class="steps-title">Submit</h3>
+        <p class="steps-text">Send text or a public URL as JSON, or upload a document with multipart form data.</p>
+      </div>
+      <div class="steps-item">
+        <span class="steps-badge">2</span>
+        <h3 class="steps-title">Configure</h3>
+        <p class="steps-text">Select the search sources and options required for the check and provide the callback_url where completion events should be sent.</p>
+      </div>
+      <div class="steps-item">
+        <span class="steps-badge">3</span>
+        <h3 class="steps-title">Process</h3>
+        <p class="steps-text">The API creates the report and returns a 202 response with the report ID while plagiarism checking continues asynchronously.</p>
+      </div>
+      <div class="steps-item">
+        <span class="steps-badge">4</span>
+        <h3 class="steps-title">Receive</h3>
+        <p class="steps-text">When processing is complete, PlagiarismSearch sends a report.checked webhook to your callback URL. Use the report ID and returned report link to continue the workflow inside your own system.</p>
+      </div>
+    </div>
+    <div data-slot="media" data-surface="dark" class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
+
+            <div class="max-w-[54ch]">
+              <p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] text-white mb-3 lg:mb-4">Your integration <span class="text-orange-300">does not need to wait</span> for the plagiarism check to finish before continuing other work.</p>
+              <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/65">The initial response identifies the report, and the completion webhook tells your system when the check is ready.</p>
+            </div>
+
+            <!-- The sequence, read top to bottom as time. Two hosts, three messages, and a
+                 gap in the middle that is the whole point: the app is free between the 202
+                 and the webhook.
+
+                 Every label is a literal from the hero code samples — your.app and
+                 plagiarismsearch.com are the two hosts in the curl commands, and the rest are
+                 the endpoint, the status code, the processing label and the event name. A
+                 diagram that quotes the contract needs no invented copy. -->
+            <div class="w-full lg:w-[400px] rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6">
+              <div class="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-white/10">
+                <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">your.app</code>
+                <code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70">plagiarismsearch.com</code>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 ">POST /api/v3/reports/create</code>
+                  <div class="flex items-center gap-2" aria-hidden="true">
+                    
+                    <span class="flex-1 h-px bg-[#2CC3DB66]"></span>
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1 4.5h7M5 1.5l3 3-3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+                <div>
+                  <code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 text-right">202</code>
+                  <div class="flex items-center gap-2" aria-hidden="true">
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="flex-1 h-px bg-[#2CC3DB66]"></span>
+                    
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 py-1">
+                  <span class="flex-1 border-t border-dashed border-white/15"></span>
+                  <code class="shrink-0 text-[11.5px] sm:text-[12px] text-white/60">status_label: "processing"</code>
+                  <span class="flex-1 border-t border-dashed border-white/15"></span>
+                </div>
+                <div>
+                  <code class="block text-[12px] sm:text-[13px] font-semibold text-orange-300 mb-1.5 text-right">report.checked</code>
+                  <div class="flex items-center gap-2" aria-hidden="true">
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#F58971" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="flex-1 h-px bg-[#F5897166]"></span>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-14">HTML для копіювання</label>
+    <textarea id="snippet-14" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-badge" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge" data-bg="white" data-space="lg"&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv" data-measure="760"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Workflow&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;How the PlagiarismSearch API workflow works&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;div class="steps-list rv-kids" data-cols="4"&gt;
+      &lt;div class="steps-item"&gt;
+        &lt;span class="steps-badge"&gt;1&lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Submit&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Send text or a public URL as JSON, or upload a document with multipart form data.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="steps-item"&gt;
+        &lt;span class="steps-badge"&gt;2&lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Configure&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Select the search sources and options required for the check and provide the callback_url where completion events should be sent.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="steps-item"&gt;
+        &lt;span class="steps-badge"&gt;3&lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Process&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;The API creates the report and returns a 202 response with the report ID while plagiarism checking continues asynchronously.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="steps-item"&gt;
+        &lt;span class="steps-badge"&gt;4&lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Receive&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;When processing is complete, PlagiarismSearch sends a report.checked webhook to your callback URL. Use the report ID and returned report link to continue the workflow inside your own system.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div data-slot="media" data-surface="dark" class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center"&gt;
+
+            &lt;div class="max-w-[54ch]"&gt;
+              &lt;p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] text-white mb-3 lg:mb-4"&gt;Your integration &lt;span class="text-orange-300"&gt;does not need to wait&lt;/span&gt; for the plagiarism check to finish before continuing other work.&lt;/p&gt;
+              &lt;p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/65"&gt;The initial response identifies the report, and the completion webhook tells your system when the check is ready.&lt;/p&gt;
+            &lt;/div&gt;
+
+            &lt;!-- The sequence, read top to bottom as time. Two hosts, three messages, and a
+                 gap in the middle that is the whole point: the app is free between the 202
+                 and the webhook.
+
+                 Every label is a literal from the hero code samples — your.app and
+                 plagiarismsearch.com are the two hosts in the curl commands, and the rest are
+                 the endpoint, the status code, the processing label and the event name. A
+                 diagram that quotes the contract needs no invented copy. --&gt;
+            &lt;div class="w-full lg:w-[400px] rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-5 sm:p-6"&gt;
+              &lt;div class="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-white/10"&gt;
+                &lt;code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70"&gt;your.app&lt;/code&gt;
+                &lt;code class="text-[12px] sm:text-[12.5px] font-semibold text-white/70"&gt;plagiarismsearch.com&lt;/code&gt;
+              &lt;/div&gt;
+
+              &lt;div class="space-y-4"&gt;
+                &lt;div&gt;
+                  &lt;code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 "&gt;POST /api/v3/reports/create&lt;/code&gt;
+                  &lt;div class="flex items-center gap-2" aria-hidden="true"&gt;
+                    
+                    &lt;span class="flex-1 h-px bg-[#2CC3DB66]"&gt;&lt;/span&gt;
+                    &lt;svg width="9" height="9" viewBox="0 0 9 9" fill="none"&gt;&lt;path d="M1 4.5h7M5 1.5l3 3-3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                  &lt;code class="block text-[12px] sm:text-[13px] font-semibold text-teal-300 mb-1.5 text-right"&gt;202&lt;/code&gt;
+                  &lt;div class="flex items-center gap-2" aria-hidden="true"&gt;
+                    &lt;svg width="9" height="9" viewBox="0 0 9 9" fill="none"&gt;&lt;path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#2CC3DB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;
+                    &lt;span class="flex-1 h-px bg-[#2CC3DB66]"&gt;&lt;/span&gt;
+                    
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class="flex items-center gap-3 py-1"&gt;
+                  &lt;span class="flex-1 border-t border-dashed border-white/15"&gt;&lt;/span&gt;
+                  &lt;code class="shrink-0 text-[11.5px] sm:text-[12px] text-white/60"&gt;status_label: "processing"&lt;/code&gt;
+                  &lt;span class="flex-1 border-t border-dashed border-white/15"&gt;&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                  &lt;code class="block text-[12px] sm:text-[13px] font-semibold text-orange-300 mb-1.5 text-right"&gt;report.checked&lt;/code&gt;
+                  &lt;div class="flex items-center gap-2" aria-hidden="true"&gt;
+                    &lt;svg width="9" height="9" viewBox="0 0 9 9" fill="none"&gt;&lt;path d="M8 4.5H1M4 1.5 1 4.5l3 3" stroke="#F58971" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/&gt;&lt;/svg&gt;
+                    &lt;span class="flex-1 h-px bg-[#F5897166]"&gt;&lt;/span&gt;
+                    
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── steps · 8 · steps-cards-compact.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 8</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · компактні картки (badge-sm)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-marker="badge-sm": менший номер, три картки в ряд уже з 640px; на бірюзовому тлі картки білі. Під списком — рядок із тихим посиланням (div.steps-more). Копія — AI Detector.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ai-detector · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-cards-compact.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-compact" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge-sm" data-bg="aqua" data-space="lg" data-accent="teal">
+  <div class="steps-inner">
+    <div class="section-head rv" data-measure="760">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Data handling</span>
+      </div>
+      <h2 class="section-title">Your AI check is processed on PlagiarismSearch infrastructure</h2>
+      <p class="section-intro">AI checks are processed on PlagiarismSearch infrastructure. Checked content is not sent to an external AI detector provider.</p>
+    </div>
+    <div class="steps-list rv-kids" data-cols="3">
+      <div class="steps-item">
+        <span class="steps-marker">
+          <span class="steps-badge">1</span>
+        </span>
+        <h3 class="steps-title">Submit</h3>
+        <p class="steps-text">Paste text or upload a document for AI analysis.</p>
+      </div>
+      <div class="steps-item">
+        <span class="steps-marker">
+          <span class="steps-badge">2</span>
+        </span>
+        <h3 class="steps-title">Process</h3>
+        <p class="steps-text">The AI check runs on PlagiarismSearch infrastructure without sending the checked content to an external AI detector provider.</p>
+      </div>
+      <div class="steps-item">
+        <span class="steps-marker">
+          <span class="steps-badge">3</span>
+        </span>
+        <h3 class="steps-title">Review or delete</h3>
+        <p class="steps-text">The generated AI report may remain available in your account for convenience. You can permanently delete the report when you no longer need it.</p>
+      </div>
+    </div>
+    <div class="steps-more rv">
+      <p class="steps-more-text">For broader information about account data and privacy practices, read the PlagiarismSearch Privacy Policy.</p>
+      <span class="steps-more-link"><a href="policy.html" class="section-link">Read the Privacy Policy</a></span>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-15">HTML для копіювання</label>
+    <textarea id="snippet-15" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-compact" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge-sm" data-bg="aqua" data-space="lg" data-accent="teal"&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv" data-measure="760"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Data handling&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Your AI check is processed on PlagiarismSearch infrastructure&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;AI checks are processed on PlagiarismSearch infrastructure. Checked content is not sent to an external AI detector provider.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="steps-list rv-kids" data-cols="3"&gt;
+      &lt;div class="steps-item"&gt;
+        &lt;span class="steps-marker"&gt;
+          &lt;span class="steps-badge"&gt;1&lt;/span&gt;
+        &lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Submit&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;Paste text or upload a document for AI analysis.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="steps-item"&gt;
+        &lt;span class="steps-marker"&gt;
+          &lt;span class="steps-badge"&gt;2&lt;/span&gt;
+        &lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Process&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;The AI check runs on PlagiarismSearch infrastructure without sending the checked content to an external AI detector provider.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="steps-item"&gt;
+        &lt;span class="steps-marker"&gt;
+          &lt;span class="steps-badge"&gt;3&lt;/span&gt;
+        &lt;/span&gt;
+        &lt;h3 class="steps-title"&gt;Review or delete&lt;/h3&gt;
+        &lt;p class="steps-text"&gt;The generated AI report may remain available in your account for convenience. You can permanently delete the report when you no longer need it.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="steps-more rv"&gt;
+      &lt;p class="steps-more-text"&gt;For broader information about account data and privacy practices, read the PlagiarismSearch Privacy Policy.&lt;/p&gt;
+      &lt;span class="steps-more-link"&gt;&lt;a href="policy.html" class="section-link"&gt;Read the Privacy Policy&lt;/a&gt;&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── steps · 9 · steps-rows.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 9</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · рядки на одному аркуші (rows)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Один аркуш у подвійній рамці, рядок на крок: велика цифра, назва з мітками, текст. Копія — Business &amp; Teams.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-organization · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-rows.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-rows" data-component="steps" class="steps-section" data-layout="rows" data-bg="white" data-space="lg">
+  <div class="steps-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Business Workflows</span>
+      </div>
+      <h2 class="section-title">Fit plagiarism checking into the way your team already reviews content</h2>
+      <p class="section-intro">The same organization controls can support different recurring review workflows without requiring a separate plagiarism product for each type of business.</p>
+    </div>
+    <div class="steps-frame rv">
+      <div class="steps-sheet">
+        <div class="steps-row">
+          <span class="steps-num">01</span>
+          <div class="steps-row-head">
+            <h3 class="steps-title">Agencies and content teams</h3>
+            <div class="steps-tags">
+              <span class="steps-tag">Organization resources</span>
+              <span class="steps-tag">Permissions and balances</span>
+              <span class="steps-tag">Source matches</span>
+            </div>
+          </div>
+          <p class="steps-text">Give writers, editors, and reviewers access to organization resources while the administrator manages permissions and balances. Review source matches before work is delivered or published.</p>
+        </div>
+        <div class="steps-row">
+          <span class="steps-num">02</span>
+          <div class="steps-row-head">
+            <h3 class="steps-title">In-house teams</h3>
+            <div class="steps-tags">
+              <span class="steps-tag">Recurring checks</span>
+              <span class="steps-tag">Personal resources separate</span>
+              <span class="steps-tag">Organization balances</span>
+            </div>
+          </div>
+          <p class="steps-text">Coordinate recurring plagiarism checks across a team while each member can keep personal resources separate from the organization balances assigned to them.</p>
+        </div>
+        <div class="steps-row">
+          <span class="steps-num">03</span>
+          <div class="steps-row-head">
+            <h3 class="steps-title">Publishers and recurring document review</h3>
+            <div class="steps-tags">
+              <span class="steps-tag">Organization Storage</span>
+              <span class="steps-tag">API</span>
+            </div>
+          </div>
+          <p class="steps-text">Use Organization Storage when your own repository should be part of comparison, and use the API for workflows that need plagiarism checks to run from another system.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-16">HTML для копіювання</label>
+    <textarea id="snippet-16" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rows" data-component="steps" class="steps-section" data-layout="rows" data-bg="white" data-space="lg"&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Business Workflows&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Fit plagiarism checking into the way your team already reviews content&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;The same organization controls can support different recurring review workflows without requiring a separate plagiarism product for each type of business.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="steps-frame rv"&gt;
+      &lt;div class="steps-sheet"&gt;
+        &lt;div class="steps-row"&gt;
+          &lt;span class="steps-num"&gt;01&lt;/span&gt;
+          &lt;div class="steps-row-head"&gt;
+            &lt;h3 class="steps-title"&gt;Agencies and content teams&lt;/h3&gt;
+            &lt;div class="steps-tags"&gt;
+              &lt;span class="steps-tag"&gt;Organization resources&lt;/span&gt;
+              &lt;span class="steps-tag"&gt;Permissions and balances&lt;/span&gt;
+              &lt;span class="steps-tag"&gt;Source matches&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;p class="steps-text"&gt;Give writers, editors, and reviewers access to organization resources while the administrator manages permissions and balances. Review source matches before work is delivered or published.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="steps-row"&gt;
+          &lt;span class="steps-num"&gt;02&lt;/span&gt;
+          &lt;div class="steps-row-head"&gt;
+            &lt;h3 class="steps-title"&gt;In-house teams&lt;/h3&gt;
+            &lt;div class="steps-tags"&gt;
+              &lt;span class="steps-tag"&gt;Recurring checks&lt;/span&gt;
+              &lt;span class="steps-tag"&gt;Personal resources separate&lt;/span&gt;
+              &lt;span class="steps-tag"&gt;Organization balances&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;p class="steps-text"&gt;Coordinate recurring plagiarism checks across a team while each member can keep personal resources separate from the organization balances assigned to them.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="steps-row"&gt;
+          &lt;span class="steps-num"&gt;03&lt;/span&gt;
+          &lt;div class="steps-row-head"&gt;
+            &lt;h3 class="steps-title"&gt;Publishers and recurring document review&lt;/h3&gt;
+            &lt;div class="steps-tags"&gt;
+              &lt;span class="steps-tag"&gt;Organization Storage&lt;/span&gt;
+              &lt;span class="steps-tag"&gt;API&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;p class="steps-text"&gt;Use Organization Storage when your own repository should be part of comparison, and use the API for workflows that need plagiarism checks to run from another system.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── steps · 10 · steps-rows-icon.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Steps · варіант 10</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Steps · рядки з іконкою і підписом (rows, icon)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-marker="icon": у рядку ще плитка з іконкою та підпис «Step 1» над назвою; аркуш — список &lt;ol&gt;. Копія — Affiliate Program.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: affiliate-program-at-plagiarismsearch · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/steps-rows-icon.html</code></p>
+    </div>
+  </div>
+
+<section id="example-steps-rows-icon" data-component="steps" class="steps-section" data-layout="rows" data-marker="icon" data-bg="cool" data-space="lg">
+  <div class="steps-inner">
+    <div class="section-head rv">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-intro">Explore our affiliate program below and kickstart your academic year on the right note!</p>
+    </div>
+    <div class="steps-frame rv">
+      <ol class="steps-sheet" role="list">
+        <li class="steps-row">
+          <span class="steps-num" aria-hidden="true">01</span>
+          <div class="steps-row-head">
+            <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg></span>
+            <div class="steps-row-title">
+              <p class="steps-kicker">Step 1</p>
+              <h3 class="steps-title">Sign Up</h3>
+            </div>
+          </div>
+          <p class="steps-text">Register an account with us to receive an individual affiliate link for directing your traffic.</p>
+        </li>
+        <li class="steps-row">
+          <span class="steps-num" aria-hidden="true">02</span>
+          <div class="steps-row-head">
+            <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+            <div class="steps-row-title">
+              <p class="steps-kicker">Step 2</p>
+              <h3 class="steps-title">Advertise PlagiarismSearch</h3>
+            </div>
+          </div>
+          <p class="steps-text">Introduce PlagiarismSearch to your audience by sharing your affiliate link within relevant content.</p>
+        </li>
+        <li class="steps-row">
+          <span class="steps-num" aria-hidden="true">03</span>
+          <div class="steps-row-head">
+            <span class="icon-tile" data-tone="mint"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></span>
+            <div class="steps-row-title">
+              <p class="steps-kicker">Step 3</p>
+              <h3 class="steps-title">Get Paid</h3>
+            </div>
+          </div>
+          <p class="steps-text">Earn money swiftly with timely payouts when your referral makes a purchase.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-17">HTML для копіювання</label>
+    <textarea id="snippet-17" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rows-icon" data-component="steps" class="steps-section" data-layout="rows" data-marker="icon" data-bg="cool" data-space="lg"&gt;
+  &lt;div class="steps-inner"&gt;
+    &lt;div class="section-head rv"&gt;
+      &lt;h2 class="section-title"&gt;How It Works&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;Explore our affiliate program below and kickstart your academic year on the right note!&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="steps-frame rv"&gt;
+      &lt;ol class="steps-sheet" role="list"&gt;
+        &lt;li class="steps-row"&gt;
+          &lt;span class="steps-num" aria-hidden="true"&gt;01&lt;/span&gt;
+          &lt;div class="steps-row-head"&gt;
+            &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="9" cy="7" r="4"/&gt;&lt;line x1="19" x2="19" y1="8" y2="14"/&gt;&lt;line x1="22" x2="16" y1="11" y2="11"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;div class="steps-row-title"&gt;
+              &lt;p class="steps-kicker"&gt;Step 1&lt;/p&gt;
+              &lt;h3 class="steps-title"&gt;Sign Up&lt;/h3&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;p class="steps-text"&gt;Register an account with us to receive an individual affiliate link for directing your traffic.&lt;/p&gt;
+        &lt;/li&gt;
+        &lt;li class="steps-row"&gt;
+          &lt;span class="steps-num" aria-hidden="true"&gt;02&lt;/span&gt;
+          &lt;div class="steps-row-head"&gt;
+            &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m3 11 18-5v12L3 14v-3z"/&gt;&lt;path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;div class="steps-row-title"&gt;
+              &lt;p class="steps-kicker"&gt;Step 2&lt;/p&gt;
+              &lt;h3 class="steps-title"&gt;Advertise PlagiarismSearch&lt;/h3&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;p class="steps-text"&gt;Introduce PlagiarismSearch to your audience by sharing your affiliate link within relevant content.&lt;/p&gt;
+        &lt;/li&gt;
+        &lt;li class="steps-row"&gt;
+          &lt;span class="steps-num" aria-hidden="true"&gt;03&lt;/span&gt;
+          &lt;div class="steps-row-head"&gt;
+            &lt;span class="icon-tile" data-tone="mint"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="20" height="12" x="2" y="6" rx="2"/&gt;&lt;circle cx="12" cy="12" r="2"/&gt;&lt;path d="M6 12h.01M18 12h.01"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;div class="steps-row-title"&gt;
+              &lt;p class="steps-kicker"&gt;Step 3&lt;/p&gt;
+              &lt;h3 class="steps-title"&gt;Get Paid&lt;/h3&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;p class="steps-text"&gt;Earn money swiftly with timely payouts when your referral makes a purchase.&lt;/p&gt;
+        &lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
   <section id="lib-faq" class="bg-white border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
       <div>
@@ -1568,8 +2822,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-8">HTML для копіювання</label>
-    <textarea id="snippet-8" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-18">HTML для копіювання</label>
+    <textarea id="snippet-18" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -1661,8 +2915,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-9">HTML для копіювання</label>
-    <textarea id="snippet-9" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-19">HTML для копіювання</label>
+    <textarea id="snippet-19" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -1754,8 +3008,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-10">HTML для копіювання</label>
-    <textarea id="snippet-10" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-20">HTML для копіювання</label>
+    <textarea id="snippet-20" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -1854,8 +3108,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-11">HTML для копіювання</label>
-    <textarea id="snippet-11" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-21">HTML для копіювання</label>
+    <textarea id="snippet-21" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -1948,8 +3202,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-12">HTML для копіювання</label>
-    <textarea id="snippet-12" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-22">HTML для копіювання</label>
+    <textarea id="snippet-22" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -2040,8 +3294,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-13">HTML для копіювання</label>
-    <textarea id="snippet-13" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-23">HTML для копіювання</label>
+    <textarea id="snippet-23" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -2139,8 +3393,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-14">HTML для копіювання</label>
-    <textarea id="snippet-14" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
+    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
   &lt;div class="faq-aside"&gt;
     &lt;div class="section-eyebrow"&gt;
       &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
@@ -2227,8 +3481,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-15">HTML для копіювання</label>
-    <textarea id="snippet-15" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
+    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
   &lt;div class="faq-list" data-faq&gt;
     &lt;div class="faq-item open"&gt;
       &lt;h3 class="faq-heading"&gt;&lt;button type="button" aria-controls="example-faq-doc-a1" aria-expanded="true" class="faq-q"&gt;
@@ -2381,8 +3635,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-16">HTML для копіювання</label>
-    <textarea id="snippet-16" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-26">HTML для копіювання</label>
+    <textarea id="snippet-26" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -2433,8 +3687,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-17">HTML для копіювання</label>
-    <textarea id="snippet-17" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-27">HTML для копіювання</label>
+    <textarea id="snippet-27" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -2487,8 +3741,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-18">HTML для копіювання</label>
-    <textarea id="snippet-18" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-28">HTML для копіювання</label>
+    <textarea id="snippet-28" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -2546,8 +3800,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-19">HTML для копіювання</label>
-    <textarea id="snippet-19" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-29">HTML для копіювання</label>
+    <textarea id="snippet-29" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -2601,8 +3855,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-20">HTML для копіювання</label>
-    <textarea id="snippet-20" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-30">HTML для копіювання</label>
+    <textarea id="snippet-30" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -2652,8 +3906,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-21">HTML для копіювання</label>
-    <textarea id="snippet-21" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-31">HTML для копіювання</label>
+    <textarea id="snippet-31" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -2703,8 +3957,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-22">HTML для копіювання</label>
-    <textarea id="snippet-22" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-32">HTML для копіювання</label>
+    <textarea id="snippet-32" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -2747,8 +4001,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-23">HTML для копіювання</label>
-    <textarea id="snippet-23" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-33">HTML для копіювання</label>
+    <textarea id="snippet-33" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -2786,8 +4040,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
-    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-34">HTML для копіювання</label>
+    <textarea id="snippet-34" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -2910,8 +4164,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
-    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-35">HTML для копіювання</label>
+    <textarea id="snippet-35" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -2968,8 +4222,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-26">HTML для копіювання</label>
-    <textarea id="snippet-26" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-36">HTML для копіювання</label>
+    <textarea id="snippet-36" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -3027,8 +4281,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-27">HTML для копіювання</label>
-    <textarea id="snippet-27" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-37">HTML для копіювання</label>
+    <textarea id="snippet-37" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -3109,8 +4363,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-28">HTML для копіювання</label>
-    <textarea id="snippet-28" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-38">HTML для копіювання</label>
+    <textarea id="snippet-38" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -3214,8 +4468,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-29">HTML для копіювання</label>
-    <textarea id="snippet-29" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-39">HTML для копіювання</label>
+    <textarea id="snippet-39" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -3440,8 +4694,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-30">HTML для копіювання</label>
-    <textarea id="snippet-30" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-40">HTML для копіювання</label>
+    <textarea id="snippet-40" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -3647,8 +4901,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-31">HTML для копіювання</label>
-    <textarea id="snippet-31" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-41">HTML для копіювання</label>
+    <textarea id="snippet-41" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -3825,8 +5079,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-32">HTML для копіювання</label>
-    <textarea id="snippet-32" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-42">HTML для копіювання</label>
+    <textarea id="snippet-42" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;

@@ -33,6 +33,7 @@ const SITE = path.join(ROOT, 'site');
 const OUT = 'api.html';
 const cta = require('./sections/cta-band');
 const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
+const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const { dotField } = require('./dots');   /* the closing band — recipe and reasoning live there */
 
 const DOCS = 'https://plagiarismsearch.com/docs/';   /* live production, no page here */
@@ -402,27 +403,8 @@ ${proof ? `            <p class="mt-5 pt-4 border-t border-ink-100 text-[12.5px]
   </section>`;
 
 /* ═══════════════ 04 · THE ACTUAL API WORKFLOW ═══════════════ */
-const section4 = () => `  <!-- ================= 04 · ACTUAL API WORKFLOW =================
-       A product workflow, not a sales workflow. The legacy "Contact us → Describe
-       requirements → Receive API → Stay in touch" is gone; these four are what the
-       integration actually does. No stock developer photograph: the brief calls for
-       actual product evidence, and the async callout is that evidence. -->
-  <section id="api-workflow" data-component="workflow-steps" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-10 sm:mb-12">
-${eyebrow('orange-500', 'Workflow')}
-        ${h2(COPY.s4.h2)}
-      </div>
-
-      <div class="rv-kids grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-${COPY.s4.steps.map(([head, body], i) => `        <div class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-5 sm:p-6 lg:p-7">
-          <span class="inline-flex w-8 h-8 rounded-full bg-ink-900 text-white text-[12.5px] font-bold items-center justify-center tabular-nums mb-4">${i + 1}</span>
-          <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-2">${head}</h3>
-          <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600">${body}</p>
-        </div>`).join('\n')}
-      </div>
-
-      <div data-surface="dark" class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
+/* the async callout: the page's own panel under the steps — the Steps section's sealed slot */
+const asyncPanel = () => `      <div data-surface="dark" class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
 
         <div class="max-w-[54ch]">
           <p class="text-[19px] sm:text-[21px] lg:text-[23px] font-bold tracking-tight leading-[1.25] text-white mb-3 lg:mb-4">${
@@ -472,9 +454,22 @@ ${[
 }).join('\n')}
           </div>
         </div>
-      </div>
-    </div>
-  </section>`;
+      </div>`;
+
+const section4 = () => `  <!-- ================= 04 · ACTUAL API WORKFLOW =================
+       A product workflow, not a sales workflow. The legacy "Contact us → Describe
+       requirements → Receive API → Stay in touch" is gone; these four are what the
+       integration actually does. No stock developer photograph: the brief calls for
+       actual product evidence, and the async callout is that evidence.
+       The library's Steps (build/sections/steps.js): four badge cards, and the async
+       panel as the section's sealed block. -->
+${steps.section({
+    id: 'api-workflow', layout: 'cards', marker: 'badge', bg: 'white', space: 'lg', tag: 'div',
+    head: { eyebrow: 'Workflow', title: COPY.s4.h2, measure: '760' },
+    cols: 4,
+    items: COPY.s4.steps.map(([title, text]) => ({ title, text })),
+    foot: { media: asyncPanel() },
+  })}`;
 
 /* ═══════════════ 05 · RESULT LIFECYCLE ═══════════════ */
 const section5 = () => `  <!-- ================= 05 · RESULT LIFECYCLE =================
