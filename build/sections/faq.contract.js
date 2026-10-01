@@ -26,14 +26,10 @@ const variants = {
     'data-variant': { values: ['doc'], required: false,
       uk: 'doc — список усередині колонки документації (Moodle guide): компактніші відступи на десктопі, колір тексту ink-700, посилання в стилі гайду.' },
   },
-  eyebrow: {
-    'data-bg': { values: ['white', 'tint'], required: false,
-      uk: 'фон «пігулки» над заголовком: white (за замовчуванням) або tint (ink-50) — щоб пігулка читалась на білій секції.' },
-  },
-  intro: {
-    'data-size': { values: ['lead', 'small'], required: false,
-      uk: 'розмір вступу: lead (за замовчуванням) — 14.5/15/15.5px; small — 14.5/15/15px (так затверджено на AI Detector і API).' },
-  },
+  /* no switches of their own since 2026-10-01: the pill's background follows the section's
+     data-bg (white section → tint pill, tint section → white pill), the intro has one size */
+  eyebrow: {},
+  intro: {},
 };
 
 /* the classes each part may carry — nothing else, anywhere inside a FAQ */
@@ -72,16 +68,16 @@ const editable = [
   { field: 'Якір секції', where: '<section id="…">', rule: 'латиниця, унікальний на сторінці; можна прибрати, якщо на FAQ ніхто не посилається' },
   { field: 'Варіанти секції', where: 'data-bg, data-space, data-layout на <section>', rule: 'лише значення зі списку variants' },
   { field: 'Надпис-пігулка', where: '.section-eyebrow-label', rule: 'текст; блок .section-eyebrow можна прибрати цілком' },
-  { field: 'Фон пігулки', where: 'data-bg на .section-eyebrow', rule: 'white | tint' },
+  { field: 'Фон пігулки', where: '—', rule: 'не задається: пігулка сама бере фон, протилежний секції (біла секція → сіра пігулка, сіра → біла)' },
   { field: 'Заголовок H2', where: '.section-title', rule: 'текст (обов’язковий); допускаються <br>, <em>, <strong>' },
-  { field: 'Вступ', where: 'p.section-intro', rule: 'текст; можна прибрати; data-size = lead | small' },
+  { field: 'Вступ', where: 'p.section-intro', rule: 'текст; можна прибрати' },
   { field: 'Посилання під вступом', where: 'a.section-link (у div.section-more або сам із класом section-more)', rule: 'текст, href, rel; іконку <svg> можна прибрати, але не змінювати; блок можна прибрати' },
   { field: 'Питання', where: '.faq-q-text', rule: 'лише текст, без тегів' },
   { field: 'Відповідь (один абзац)', where: 'p.faq-a-body', rule: 'текст; усередині — a.faq-link, strong, em, br' },
   { field: 'Відповідь (кілька абзаців)', where: 'div.faq-a-body > p', rule: 'кожен абзац — простий <p> без класів; ті самі inline-теги' },
   { field: 'Посилання під відповіддю', where: 'p.faq-a-more > a.faq-a-link', rule: 'текст, href, target/rel; лише в останньому абзаці div.faq-a-body' },
-  { field: 'Кількість питань', where: '.faq-item', rule: 'копіюйте або видаляйте цілий .faq-item; перший завжди class="faq-item open" + aria-expanded="true", решта — без open + "false"' },
-  { field: 'Id відповідей', where: 'id на .faq-a і aria-controls на кнопці', rule: '<простір-імен>-a1, -a2 … — однакові пари, унікальні на сторінці; при копіюванні секції змініть простір імен' },
+  { field: 'Кількість питань', where: '.faq-item', rule: 'копіюйте або видаляйте цілий .faq-item, нічого в ньому не правлячи, крім тексту; перший завжди class="faq-item open" + aria-expanded="true", решта — без open + "false"' },
+  { field: 'Id відповідей', where: 'id на .faq-a і aria-controls на кнопці', rule: 'чіпати не треба: скрипт сторінки сам розставляє унікальні пари під час завантаження. Скопійований .faq-item можна лишити з тими самими id або без них' },
 ];
 
 /* what stays locked */

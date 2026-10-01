@@ -923,7 +923,7 @@ const section9 = () => `  <!-- ================= 09 · AI DETECTOR FAQ =========
        AI" filler, no model-name keyword questions, no audience variations. -->
 ${faq.section({
   id: 'ai-detector-faq', ns: 'ai-detector-faq', bg: 'white', space: 'lg', layout: 'fluid',
-  head: { eyebrow: 'Questions', title: COPY.s9.h2, intro: COPY.s9.footer, introSize: 'small',
+  head: { eyebrow: 'Questions', title: COPY.s9.h2, intro: COPY.s9.footer,
           more: { label: COPY.s9.cta, href: COPY.s9.ctaHref, rel: /^https?:/.test(COPY.s9.ctaHref) ? 'noopener' : '' } },
   items: COPY.s9.items.map(([q, a]) => ({ q, a })),
 })}`;

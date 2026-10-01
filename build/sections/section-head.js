@@ -6,11 +6,9 @@
 
      const sh = require('./sections/section-head');
      sh.render({
-       eyebrow: 'Questions',                       // optional
-       eyebrowBg: 'tint',                          // optional: the pill on a white section
+       eyebrow: 'Questions',                       // optional; its background follows the section's
        title: 'Pricing FAQ',                       // required, the h2 (inline HTML allowed)
        intro: 'Need help with an existing plan?',  // optional
-       introSize: 'small',                         // optional: 15px from sm up
        more: { label, href, rel, icon, bare },     // optional quiet link under the intro
      }, indent)
 
@@ -19,15 +17,15 @@
 
 const attr = (name, value) => (value ? ` ${name}="${value}"` : '');
 
-const eyebrow = (label, { bg } = {}) =>
-  `<div class="section-eyebrow"${bg && bg !== 'white' ? attr('data-bg', bg) : ''}>
+const eyebrow = label =>
+  `<div class="section-eyebrow">
   <span class="section-eyebrow-dot"></span>
   <span class="section-eyebrow-label">${label}</span>
 </div>`;
 
 const title = (text, { tag = 'h2', id } = {}) => `<${tag}${attr('id', id)} class="section-title">${text}</${tag}>`;
 
-const intro = (text, { size } = {}) => `<p class="section-intro"${size && size !== 'lead' ? attr('data-size', size) : ''}>${text}</p>`;
+const intro = text => `<p class="section-intro">${text}</p>`;
 
 const more = ({ label, href, rel, icon, bare }) => {
   const a = (cls, inner) => `<a href="${href}"${attr('rel', rel)} class="${cls}">${inner}</a>`;
@@ -39,9 +37,9 @@ const more = ({ label, href, rel, icon, bare }) => {
 function render(h, pad = '') {
   if (!h || !h.title) throw new Error('section-head: a title is required');
   const parts = [];
-  if (h.eyebrow) parts.push(eyebrow(h.eyebrow, { bg: h.eyebrowBg }));
+  if (h.eyebrow) parts.push(eyebrow(h.eyebrow));
   parts.push(title(h.title, { tag: h.tag, id: h.titleId }));
-  if (h.intro) parts.push(intro(h.intro, { size: h.introSize }));
+  if (h.intro) parts.push(intro(h.intro));
   if (h.more) parts.push(more(h.more));
   return parts.join('\n').split('\n').map(l => (l ? pad + l : l)).join('\n');
 }

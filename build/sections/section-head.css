@@ -5,11 +5,11 @@
    The head most sections open with: an eyebrow pill (dot + label), the h2, an intro line,
    and optionally a quiet "more" link under it. Four classes an editor can read:
 
-     .section-eyebrow            the pill           data-bg="white" (default) | "tint"
+     .section-eyebrow            the pill; its background follows the section it is in
        .section-eyebrow-dot        its dot
        .section-eyebrow-label      its label
      .section-title              the h2
-     .section-intro              the intro line     data-size="lead" (default) | "small"
+     .section-intro              the intro line
      .section-more               the spacing above the more link (a wrapper <div>, or the link itself)
      .section-link               the quiet more link
 
@@ -31,8 +31,10 @@
 .section-eyebrow {
   @apply inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6;
 }
-/* on a white section the pill takes the tint, so it still reads as a chip */
-.section-eyebrow:where([data-bg="tint"]) {
+/* The pill is the opposite of its ground, by itself: white on a tint section, tint on a
+   white one (the host section carries data-bg). Nobody sets it by hand, so a white pill
+   cannot end up on a white section again (Home, AI Detector and API had one). */
+:where([data-bg="white"]) .section-eyebrow {
   @apply bg-ink-50;
 }
 .section-eyebrow-dot {
@@ -48,10 +50,6 @@
 
 .section-intro {
   @apply mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600;
-}
-/* the smaller intro: stays at 15px from sm up (AI Detector, API) */
-.section-intro:where([data-size="small"]) {
-  @apply lg:text-[15px];
 }
 
 .section-more {

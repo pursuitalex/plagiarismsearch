@@ -163,7 +163,7 @@ const html = shell.render({ title: 'User Guide | PlagiarismSearch', sections: [`
       <!-- No items-start: the cards stretch to the tallest in their row. The lists are
            six, five, four and five long, so left to themselves the pairs sat at
            different heights and the row edge stepped. -->
-      <div class="grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+      <div class="grid md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 mb-12 sm:mb-16 lg:mb-20">
 ${groups.map(card).join('\n')}
       </div>
 
@@ -173,10 +173,11 @@ ${groups.map(card).join('\n')}
            the last question a screen and a half from its own title.
 
            The FAQ library block without its section shell (build/sections/faq.js, grid):
-           the user guide is the section. No .rv on it, as approved. The grid's top margin
-           is the guide's own spacing, so it stays a utility on the root. -->
+           the user guide is the section. No .rv on it, as approved. The space above it is
+           the guide's own, so the guide holds it: the cards above carry the bottom margin,
+           and the FAQ block's markup carries no utilities (2026-10-01). -->
 ${faq.grid({
-  ns: 'manuals-faq', layout: 'fixed', reveal: false, hostClass: 'mt-12 sm:mt-16 lg:mt-20',
+  ns: 'manuals-faq', layout: 'fixed', reveal: false,
   head: { eyebrow: 'Questions', title: faqTitle, intro: faqLead,
           more: { label: 'More questions? Visit the Help Center.', href: 'help-center.html',
                   icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>' } },

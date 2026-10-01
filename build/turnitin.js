@@ -658,7 +658,7 @@ const section10 = () => `  <!-- ================= 10 · FAQ =================
        buying Turnitin directly is followed by the official purchase guide. -->
 ${faq.section({
   id: 'turnitin-alternative-faq', ns: 'turnitin-alternative-faq', bg: 'white', space: 'md', layout: 'fluid',
-  head: { eyebrow: 'Questions', eyebrowBg: 'tint', title: COPY.faq.h2 },
+  head: { eyebrow: 'Questions', title: COPY.faq.h2 },
   rich: true,
   items: COPY.faq.items.map(([q, a, n]) => ({ q, a,
     link: n ? { label: 'Official Turnitin guide: ' + SOURCES[n - 1][0], href: SOURCES[n - 1][1], target: '_blank', rel: 'noopener noreferrer', icon: extIcon } : null })),

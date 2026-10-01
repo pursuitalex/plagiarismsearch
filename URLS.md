@@ -45,6 +45,7 @@ driven by this table.
 | `plagiarism-checker-for-organization.html` | `/plagiarism-checker-for-organization` | built | Business & Teams to the 2026-09-15 brief: no checker; the managed organization in the hero, Organization Management as a bento led by the personal-vs-organization separation, Storage as two tracks, workspace-vs-API as one split card, the business inquiry as the conversion. Replaced the stub. Built by build/business.js, checked by build/check-business.js. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
 | `paper-analysis.html` | `/rate-my-paper` | built · out of global nav |  |
+| `paper-analysis-v2.html` | — | no approved path | Rate my paper (Paper analysis), illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Every word the live page's (build/paper-data.json); the order form rebuilt to be read at a glance — the document, one level × deadline price table, the services, and a summary that shows the sum. Built by build/paper-v2.js. |
 | `spell-check.html` | `/spell-checker` | built · out of global nav |  |
 | `readability-check.html` | `/readability-checker` | built · out of global nav |  |
 | `chat-bot.html` | `/plagiarism-checker-app` | built · out of global nav |  |
@@ -61,7 +62,7 @@ driven by this table.
 ## Counts
 
 - 28 × built
-- 9 × no approved path
+- 10 × no approved path
 - 5 × stub
 - 4 × built · out of global nav
 

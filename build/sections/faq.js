@@ -15,11 +15,12 @@
      id        the section's anchor id (section only)
      ns        REQUIRED: the accessibility namespace. Answer n gets id="<ns>-a<n>" and its
                button aria-controls="<ns>-a<n>", written here, never by script. Unique per page.
-     bg        'white' | 'tint'                          (section) background
+     bg        'white' | 'tint'                          (section) background; the eyebrow
+               pill takes the other one by itself (section-head.css)
      space     'lg' (lg:py-32) | 'md' (lg:py-28)          (section) vertical padding
      layout    'fluid' (0.85fr/1.15fr) | 'fluid-narrow' (0.8fr/1.2fr) | 'fixed' (380px/1fr)
-     head      the Section Header (build/sections/section-head.js): eyebrow, eyebrowBg,
-               title, intro, introSize, more. In the fixed layout the more link is bare.
+     head      the Section Header (build/sections/section-head.js): eyebrow, title, intro,
+               more. In the fixed layout the more link is bare.
      aside     optional extra markup under the head (another library block, e.g. a contact card)
      items     [{ q, a }]           a one-paragraph answer (inline HTML: a.faq-link, strong, em, br)
                [{ q, paras: [..] }] a rich answer: several paragraphs
@@ -30,7 +31,9 @@
      heading   'h3': each question button sits in <h3 class="faq-heading"> (the guide's outline)
      variant   'doc' (frame only): the guide's compact sizes, body colour and link
      reveal    false: no .rv on the aside and the frame (the user guide carries none)
-     hostClass (grid only) the host's spacing utilities on the grid root — margins only
+   Retired on 2026-10-01 and refused if passed: head.eyebrowBg and head.introSize (the pill
+   follows the section background, the intro has one size), and hostClass (the grid carries
+   no utilities; the host component spaces it, with a wrapper of its own).
 
    The first answer renders open (class "open", aria-expanded="true"); the rest closed.
    Without JS every answer is visible: the collapse exists only under html.js (faq.css). */
@@ -83,6 +86,12 @@ ${o.items.map((it, i) => indent(item(it, i, o), '    ')).join('\n')}
 </div>`;
 }
 
+/* retired options: a caller still passing one is told, not ignored */
+function retired(o) {
+  need(!o.head || (o.head.eyebrowBg === undefined && o.head.introSize === undefined), 'head.eyebrowBg and head.introSize are retired: the pill follows the section background, the intro has one size');
+  need(o.hostClass === undefined, 'hostClass is retired: the FAQ markup carries no utilities, the host component spaces the grid');
+}
+
 function aside(o) {
   const head = { ...o.head };
   if (head.more) head.more = { ...head.more, bare: o.layout === 'fixed' };
@@ -98,15 +107,16 @@ ${frame(o)}`;
 
 /* the head + list grid, inside another component */
 function grid(o) {
+  retired(o);
   need(LAYOUTS.includes(o.layout), 'layout must be one of ' + LAYOUTS.join(', '));
-  need(!o.hostClass || o.hostClass.split(/\s+/).every(c => /^(?:(?:sm|md|lg|xl):)?-?m[tbyxlr]?-/.test(c)), 'hostClass: margins only');
-  return `<div class="faq-grid${o.hostClass ? ' ' + o.hostClass : ''}" data-layout="${o.layout}">
+  return `<div class="faq-grid" data-layout="${o.layout}">
 ${indent(body(o), '  ')}
 </div>`;
 }
 
 /* the section */
 function section(o) {
+  retired(o);
   need(['white', 'tint'].includes(o.bg), 'bg must be white or tint');
   need(['lg', 'md'].includes(o.space), 'space must be lg or md');
   need(LAYOUTS.includes(o.layout), 'layout must be one of ' + LAYOUTS.join(', '));

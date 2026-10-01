@@ -20,8 +20,9 @@
      variants    every data-* switch present where required, with an allowed value
      content     question text only; answers and intro limited to the allowed inline tags;
                  nothing empty
-     a11y        each button type="button", aria-controls → an existing .faq-a id in the same
-                 item; ids unique on the page; aria-expanded matches .open
+     a11y        each button type="button"; aria-expanded matches .open. The answer id /
+                 aria-controls pairs are the script's to repair (50-faq.js), so a missing,
+                 mismatched or copied pair is a warning, never an error
      behaviour   data-faq on the list; exactly the first item open (the no-JS state shows all)
      safety      no style="", no on* handlers, no <script>/<style>, no javascript: links,
                  target="_blank" only with rel="noopener"
@@ -154,8 +155,8 @@ function checkFaq(rootEl, kind, ctx) {
   } else if (kind === 'grid') {
     grid = rootEl;
     if (rootEl.tag !== 'div') E(rootEl, `${label(rootEl)}: the grid is a <div>`);
-    /* inside another component the host may space the grid: margin utilities only */
-    onlyClasses(rootEl, C.classes.grid, c => /^(?:(?:sm|md|lg|xl):)?-?m[tbyxlr]?-[\w.[\]]+$/.test(c));
+    /* no utilities on the grid, margins included: the host component spaces it */
+    onlyClasses(rootEl, C.classes.grid);
     onlyAttrs(rootEl, ['class', ...Object.keys(C.variants.grid)]);
     variantsOf(rootEl, C.variants.grid);
   } else frame = rootEl;
@@ -256,11 +257,11 @@ function checkFaq(rootEl, kind, ctx) {
         if (!ch || !need(ch, 'the chevron', C.classes.chev, 'span')) E(btn, `${label(btn)}: second child is span.faq-chev with its <svg>`);
         else { onlyAttrs(ch, ['class']); noText(ch); const s = kids(ch); if (s.length !== 1) E(ch, `${label(ch)}: holds only the chevron <svg>`); svgIcon(s[0], label(ch)); }
         rest.forEach(r => E(r, `${label(r)}: nothing else goes in the button`));
-        if (ans && ans.attrs && btn.attrs['aria-controls'] !== ans.attrs.id) E(btn, `${label(btn)}: aria-controls="${btn.attrs['aria-controls'] || ''}" must name this item's answer id "${ans.attrs.id || ''}"`);
+        if (ans && ans.attrs && btn.attrs['aria-controls'] !== ans.attrs.id) W(btn, `${label(btn)}: aria-controls="${btn.attrs['aria-controls'] || ''}" does not name this item's answer id "${ans.attrs.id || ''}" — the script repairs the pair on load`);
       } else if (!btn) E(it, `${label(it)}: the question is a button.faq-q`);
       if (ans && need(ans, 'the answer', C.classes.a, 'div')) {
         onlyAttrs(ans, ['class', 'id']); noText(ans);
-        if (!ans.attrs.id) E(ans, `${label(ans)}: the answer needs an id (the button's aria-controls names it)`);
+        if (!ans.attrs.id) W(ans, `${label(ans)}: no id — the script gives it one on load`);
         else ids.push({ id: ans.attrs.id, n: n + 1, el: ans });
         const ak = kids(ans);
         if (ak.length !== 1 || ak[0].tag !== 'div' || Object.keys(ak[0].attrs).length) E(ans, `${label(ans)}: holds exactly one plain <div> (it clips the answer while it opens)`);
@@ -357,7 +358,8 @@ function validate(html) {
   const seen = new Map();
   walk(root, n => {
     if (!n.attrs || !n.attrs.id) return;
-    if (seen.has(n.attrs.id)) ctx.errors.push({ line: n.line, msg: `id "${n.attrs.id}" is used twice (also line ${seen.get(n.attrs.id)})` });
+    /* a copied question brings its answer id with it: the script renumbers it on load */
+    if (seen.has(n.attrs.id)) (has(n, 'faq-a') ? ctx.warnings : ctx.errors).push({ line: n.line, msg: `id "${n.attrs.id}" is used twice (also line ${seen.get(n.attrs.id)})` + (has(n, 'faq-a') ? ' — a copied answer; the script renumbers it on load' : '') });
     else seen.set(n.attrs.id, n.line);
   });
   /* a page (not a fragment): a section.faq sits at the top level of <main> */
@@ -408,14 +410,16 @@ if (require.main === module) {
     /* the validator must also say no: each known-bad paste has to fail */
     console.log('\nFAQ contract — the validator rejects known-bad pastes');
     const good = fs.existsSync(path.join(LIB, 'faq-fluid.html')) ? fs.readFileSync(path.join(LIB, 'faq-fluid.html'), 'utf8') : null;
+    const GRID = fs.existsSync(path.join(LIB, 'faq-grid-embedded.html')) ? fs.readFileSync(path.join(LIB, 'faq-grid-embedded.html'), 'utf8') : null;
     if (good) {
       const BAD = [
         ['a utility added to an answer', h => h.replace('class="faq-a-body"', 'class="faq-a-body text-ink-900"')],
         ['an unknown variant value', h => h.replace('data-bg="tint"', 'data-bg="blue"')],
         ['a variant removed', h => h.replace(' data-space="lg"', '')],
-        ['aria-controls not matching the answer id', h => h.replace('aria-controls="example-faq-a2"', 'aria-controls="example-faq-a9"')],
+        ['a pill given its own background', h => h.replace('<div class="section-eyebrow">', '<div class="section-eyebrow" data-bg="tint">')],
+        ['an intro given a size', h => h.replace('<p class="section-intro">', '<p class="section-intro" data-size="small">')],
+        ['a margin utility on an embedded grid', () => GRID && GRID.replace('<div class="faq-grid"', '<div class="faq-grid mt-12"')],
         ['aria-expanded out of step with .open', h => h.replace('aria-expanded="true"', 'aria-expanded="false"')],
-        ['a duplicated question (same ids twice)', h => h.replace(/(<div class="faq-item">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>)/, '$1\n$1')],
         ['the inner <div> of an answer removed', h => h.replace(/<div class="faq-a" id="example-faq-a2"><div>([\s\S]*?)<\/div><\/div>/, '<div class="faq-a" id="example-faq-a2">$1</div>')],
         ['data-faq removed', h => h.replace(' data-faq', '')],
         ['a style attribute', h => h.replace('<h2 class="section-title"', '<h2 class="section-title" style="color:red"')],
@@ -437,6 +441,9 @@ if (require.main === module) {
         ['the last question removed', h => h.replace(/\s*<div class="faq-item">(?:(?!<div class="faq-item)[\s\S])*?<\/div><\/div>\s*<\/div>(\s*<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<\/section>)/, '$1')],
         ['the intro and the more link removed', h => h.replace(/\s*<p class="section-intro">[\s\S]*?<\/p>/, '').replace(/\s*<div class="section-more">[\s\S]*?<\/div>/, '')],
         ['other variant values', h => h.replace('data-bg="tint"', 'data-bg="white"').replace('data-space="lg"', 'data-space="md"').replace('data-layout="fluid"', 'data-layout="fluid-narrow"')],
+        ['a question copied as it is, ids and all (the script renumbers)', h => h.replace(/(<div class="faq-item">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>)/, '$1\n$1')],
+        ['a question pasted without its id pair', h => h.replace(' aria-controls="example-faq-a2"', '').replace(' id="example-faq-a2"', '')],
+        ['aria-controls left pointing at another answer', h => h.replace('aria-controls="example-faq-a2"', 'aria-controls="example-faq-a9"')],
         ['an aside slot for another block (a contact card)', h => h.replace(/(\s*<\/div>\s*<div class="faq-frame)/, '\n<div data-slot="aside"><p class="anything">card</p></div>$1')],
       ];
       for (const [what, mutate] of GOOD) {

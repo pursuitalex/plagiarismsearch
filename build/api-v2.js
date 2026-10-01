@@ -682,7 +682,7 @@ const section10 = () => `  <!-- ================= 10 · PLAGIARISM API FAQ =====
        gated until that page is synchronized with 3.1.0, so the footer offers docs only. -->
 ${faq.section({
   id: 'api-faq', ns: 'api-faq', bg: 'white', space: 'lg', layout: 'fluid',
-  head: { eyebrow: 'Questions', title: COPY.s10.h2, intro: COPY.s10.footer, introSize: 'small',
+  head: { eyebrow: 'Questions', title: COPY.s10.h2, intro: COPY.s10.footer,
           more: { label: COPY.s10.cta, href: DOCS, rel: /^https?:/.test(DOCS) ? 'noopener' : '' } },
   items: COPY.s10.items.map(([q, a]) => ({ q, a })),
 })}`;

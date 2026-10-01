@@ -296,3 +296,28 @@ module.exports = {
     },
   },
 };
+
+/* CLOSING THE PILOT (2026-10-01), against 5330452 — the last commit before it. Olex reviewed
+   the pilot's five proposed unifications and took three; they are design changes, so the
+   pages they touch differ from that baseline in exactly the properties named here:
+
+     the intro of the AI Detector and API FAQs lost its small size (15px → 15.5px at lg)
+     the eyebrow pill on a white section took the tint (Home, AI Detector, API) — and its
+       background is now derived from the section's data-bg, never set per pill
+
+   Not taken, and unchanged: the lg:py-28 / lg:py-32 section rhythm (data-space md | lg) and
+   the Ukrainian page's 0.8fr / 1.2fr grid (data-layout fluid-narrow) stay as variants.
+
+   The user guide: its FAQ block lost the margin utilities on its root; the guide spaces it
+   from its own side — the cards above carry the same value as a bottom margin. The same
+   elements in the same places; only which of the two neighbours holds the margin changed. */
+const CLOSED = {
+  'user-manuals.html': [['margin-top', 'margin-bottom'], 'the space above the FAQ block is the guide\'s: the cards above carry it as a bottom margin, the block carries no utilities'],
+  'index.html': [['background-color'], 'the FAQ pill takes the tint on its white section'],
+  'ai-detector.html': [['background-color', 'font-size', 'line-height'], 'the FAQ intro at the one size; the FAQ pill takes the tint on its white section'],
+  'api.html': [['background-color', 'font-size', 'line-height'], 'the FAQ intro at the one size; the FAQ pill takes the tint on its white section'],
+};
+for (const [file, [props, reason]] of Object.entries(CLOSED)) {
+  const e = module.exports[file] = module.exports[file] || {};
+  e.byRef = { ...(e.byRef || {}), '5330452': { ...((e.byRef || {})['5330452'] || {}), acceptGeometry: { props, reason: 'pilot review: ' + reason } } };
+}
