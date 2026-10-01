@@ -74,13 +74,13 @@ console.log('\nfacts and tone (brief §2, §3, §9, §13, §25)');
   ok('Pavlo Kucheruk: founder and owner, actively involved', /founder and owner, Pavlo Kucheruk, remains actively involved/.test(text));
   ok('AI text detection kept separate from plagiarism detection', (text.match(/AI text detection (is added )?as a capability separate from plagiarism detection/g) || []).length === 2);
   const years = [...new Set(text.match(/\b(?:19|20)\d\d\b/g) || [])].sort();
-  ok('no year but the six approved', years.join() === '2009,2013,2017,2018,2023,2026', years.join());
+  ok('no year but the six approved', years.join() === '2010,2013,2017,2018,2023,2026', years.join());
 }
 
 console.log('\ntimeline (brief §3, §6)');
 {
   const items = [...body.matchAll(/<li class="timeline-item[^"]*">\s*<p class="timeline-year">([^<]*)<\/p>\s*<h3 class="timeline-title">([^<]*)<\/h3>\s*<p class="timeline-text">([^<]*)<\/p>/g)].map(m => [m[1], unesc(m[2]), unesc(m[3])]);
-  const want = [['2009', 'Launch'], ['2013', 'API'], ['2017', 'Moodle'], ['2018', 'Google Docs'], ['2023', 'AI Detection'], ['2026', 'Canvas']];
+  const want = [['2010', 'Launch'], ['2013', 'API'], ['2017', 'Moodle'], ['2018', 'Google Docs'], ['2023', 'AI Detection'], ['2026', 'Canvas']];
   ok('six milestones, the approved years and labels, in order', JSON.stringify(items.map(i => i.slice(0, 2))) === JSON.stringify(want), items.map(i => i[0]).join(' '));
   ok('each with its text from COPY', items.every((i, n) => i[2] === COPY.timeline.items[n].text));
   ok('an ordered list', /<ol class="timeline-list" role="list">/.test(body));

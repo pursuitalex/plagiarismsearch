@@ -2,7 +2,7 @@
    (new-tasks/new-page-5/PlagiarismSearch_About_Us_Claude_Brief_2026-09-30.md).
 
    A company / trust page: who is behind PlagiarismSearch, how the product developed from
-   2009, and which people answer for which part of it today. Not a product page and not a
+   2010, and which people answer for which part of it today. Not a product page and not a
    second "Why us": no checker, no ratings, no user counts, no pricing, no sales CTA.
 
    THE COPY is an English draft written inside the brief's facts (§3, §9) and tone rules
@@ -10,6 +10,11 @@
    build/check-about.js holds the page to it word for word. Two rules the copy never
    breaks: Oleksandr Kozuliov is never a co-founder, and AI text detection is never
    presented as plagiarism detection.
+
+   THE LAUNCH YEAR IS 2010 (Olex, 2026-10-01). The brief's §3 says 2009, but the approved
+   Why us and Mission pages say 2010, and Olex confirmed 2010 as the right one — so the
+   fact sheet, the story, the first milestone, the timeline heading, the founder's bio and
+   the meta description all say 2010.
 
    SIX SECTIONS
      01  hero        bespoke     the title, three sentences, an anchor to the team, and a
@@ -47,19 +52,19 @@ const OUT = 'about-us.html';
    ───────────────────────────────────────────────────────────────────────────── */
 const COPY = {
   title: 'About PlagiarismSearch | Our Team & Story',
-  meta: 'PlagiarismSearch launched in 2009. Read how the product has developed since then and meet the people who build, design and support it today.',
+  meta: 'PlagiarismSearch launched in 2010. Read how the product has developed since then and meet the people who build, design and support it today.',
   canonical: 'https://plagiarismsearch.com/about-us',
 
   hero: {
     eyebrow: 'About us',
     h1: 'About PlagiarismSearch',
-    lead: 'PlagiarismSearch launched in 2009 as a plagiarism checker for students. It has been built and developed year by year since then, and today it is a much broader product. This page is about its history and the people behind it.',
+    lead: 'PlagiarismSearch launched in 2010 as a plagiarism checker for students. It has been built and developed year by year since then, and today it is a much broader product. This page is about its history and the people behind it.',
     cta: 'Meet the team',
     ctaHref: '#team',
     factsLabel: 'At a glance',
     /* [label, value, note] — the value is the bold line, the note the plain one under it */
     facts: [
-      ['Launched', '2009', ''],
+      ['Launched', '2010', ''],
       ['First built for', 'Students', ''],
       ['Founder', 'Pavlo Kucheruk', ''],
       ['Technical lead', 'Oleksandr Kozuliov', 'With the product from the beginning'],
@@ -71,7 +76,7 @@ const COPY = {
     eyebrow: 'Our story',
     h2: 'The story behind PlagiarismSearch',
     paras: [
-      'PlagiarismSearch launched in 2009 as a plagiarism-checking product for students. Its founder and owner, Pavlo Kucheruk, remains actively involved in the product and its direction.',
+      'PlagiarismSearch launched in 2010 as a plagiarism-checking product for students. Its founder and owner, Pavlo Kucheruk, remains actively involved in the product and its direction.',
       'Oleksandr Kozuliov has guided the technical development of PlagiarismSearch from the beginning and, as Technical Lead, is responsible for the whole technical side of the product.',
       'Since then the product has grown beyond its first audience. A Plagiarism API, Moodle and Google Docs integrations, AI text detection as a capability separate from plagiarism detection, and a Canvas integration were each added along the way.',
     ],
@@ -81,10 +86,10 @@ const COPY = {
 
   timeline: {
     eyebrow: 'Timeline',
-    h2: 'Built and evolving since 2009',
+    h2: 'Built and evolving since 2010',
     intro: 'Six milestones, in the order they happened.',
     items: [
-      { year: '2009', title: 'Launch', text: 'PlagiarismSearch launches with an initial focus on student plagiarism checking.' },
+      { year: '2010', title: 'Launch', text: 'PlagiarismSearch launches with an initial focus on student plagiarism checking.' },
       { year: '2013', title: 'API', text: 'The Plagiarism API becomes available for integrations and external workflows.' },
       { year: '2017', title: 'Moodle', text: 'The Moodle integration extends PlagiarismSearch into learning-management workflows.' },
       { year: '2018', title: 'Google Docs', text: 'The Google Docs integration brings plagiarism checking closer to document workflows.' },
@@ -102,7 +107,7 @@ const COPY = {
        Both stay empty until the real ones are supplied (brief §26). */
     people: [
       { name: 'Pavlo Kucheruk', role: 'Founder & Product Lead', photo: null, linkedin: '',
-        bio: 'Pavlo founded PlagiarismSearch and has stayed actively involved since its launch in 2009. He sets the product’s direction and priorities and takes part in the major product decisions. His focus is the long-term development of the product rather than any single release.' },
+        bio: 'Pavlo founded PlagiarismSearch and has stayed actively involved since its launch in 2010. He sets the product’s direction and priorities and takes part in the major product decisions. His focus is the long-term development of the product rather than any single release.' },
       { name: 'Oleksandr Kozuliov', role: 'Technical Lead', photo: null, linkedin: '',
         bio: 'Oleksandr has worked on PlagiarismSearch since the beginning and is responsible for the entire technical side of the product. That covers its architecture, day-to-day development and integrations, as well as reliability. He also guides how the technology evolves as new capabilities are added.' },
       { name: 'Denys Olshtynskyi', role: 'Senior Software Engineer', photo: null, linkedin: '',
