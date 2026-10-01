@@ -29,6 +29,7 @@
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-hero">Hero <span class="text-ink-400 font-medium">7</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-steps">Steps <span class="text-ink-400 font-medium">10</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-feature-cards">Feature cards <span class="text-ink-400 font-medium">6</span></a></li>
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-sources">Sources <span class="text-ink-400 font-medium">5</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-faq">FAQ <span class="text-ink-400 font-medium">8</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-cta-band">CTA band <span class="text-ink-400 font-medium">9</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-banner">Banner <span class="text-ink-400 font-medium">5</span></a></li>
@@ -3291,6 +3292,760 @@
 &lt;/section&gt;</textarea>
   </div>
 
+  <section id="lib-sources" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">Sources</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>З чим порівнюється перевірка і що з неї можна виключити: джерела й налаштування сканування. Показано як доступне — галочками й плитками, ніколи перемикачами.</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/sources.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/sources.css</code> · JS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/assets/js/20-motion.js (поява .rv і .rv-kids)</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/sources.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/sources-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіанти</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg, data-space, data-accent на &lt;section&gt;; data-measure на .section-head і p.section-intro; data-tone на плитці й примітці</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише значення зі списку варіантів. data-layout і data-items не міняйте на готовому фрагменті: у кожного своя розмітка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Надпис-пігулка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-eyebrow-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; блок .section-eyebrow можна прибрати цілком. Фон пігулки не задається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Заголовок H2</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">h2.section-title</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст (обов’язковий); допускаються &lt;br&gt;, &lt;em&gt;, &lt;strong&gt;</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Вступ</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.section-intro</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Назва групи</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.sources-kicker</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст без розмітки</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Пункт групи</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">li.sources-item</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">додати чи прибрати — цілим пунктом; у групі 1–6 пунктів. Назва — span.sources-item-title, опис — span.sources-item-text (strong, em, br); у вигляді labels — лише span.sources-label</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Картка з цифрою</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.sources-stat-value, p.sources-stat-text</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; іконка лишається</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Примітки під групами</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.sources-notes &gt; p.sources-note</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; одна або дві; блок можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Джерело (list, cells)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">dt.sources-term, dd.sources-desc</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; додати чи прибрати — цілим рядком (.sources-row) чи коміркою (.sources-cell); у cells — 2 або 4 комірки</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Підпис комірки</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.sources-cell-head &gt; span.sources-kicker</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст без розмітки (вид: «Джерело», «Параметр»)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Темний рядок аркуша (list)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">p.sources-foot &gt; span.sources-foot-text</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; рядок можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Іконка</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.icon-tile &gt; svg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">іконку &lt;svg&gt; можна замінити іншою з Lucide (24×24, stroke="currentColor"); колір — data-tone на плитці</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>усі класи й обгортки: .sources-inner, .section-head, .sources-grid, .sources-group, .sources-frame, .sources-sheet …</li>
+          <li>data-component="sources" на секції — гачок для перевірок; data-layout, data-bg, data-space — обов’язкові</li>
+          <li>класи-гачки: rv на блоці заголовка, рамці аркуша, примітках і flow; rv-kids на сітці груп; cells на &lt;dl&gt; комірок (риски між комірками)</li>
+          <li>джерела показано як доступні: галочки й плитки. Жодних перемикачів, &lt;input&gt;, кнопок — сторінка не може діяти на перемикач</li>
+          <li>groups: рівно дві групи і картка з цифрою; flow: запечатаний блок [data-slot="media"] (малюнок сторінки — копіюється як є), стрілка, одна група</li>
+          <li>іконки &lt;svg&gt; (галочка, стрілка, іконка картки з цифрою, іконка темного рядка) — копіюються як є</li>
+          <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) поза запечатаним блоком</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">groups</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">flow</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">list</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">cells</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. розкладка. groups — дві групи з галочками і темна картка з цифрою (головна, Students). flow — «вхід → джерела»: запечатаний блок, стрілка, одна група (PDF). list — заголовок ліворуч, праворуч аркуш із рядками (Turnitin). cells — заголовок над аркушем із чотирьох комірок (українська сторінка). Це різні фрагменти — беріть відповідний зразок.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">white</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">cool</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. фон секції: white — білий, cool — холодний світлий (#F7FAFC). Пігулка сама бере протилежний фон.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-space</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">md</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">lg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. вертикальний ритм сторінки на десктопі: lg — 128px, md — 112px. Беріть той, що в сусідніх секцій сторінки.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-accent</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. колір крапки в пігулці. Без атрибута — помаранчева; teal — бірюзова.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-items</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">labels</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. лише groups. labels — вигляд головної: пункт — галочка і короткий підпис (span.sources-label) без опису; плитка з обідком. Без атрибута — пункт із назвою та описом.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">head</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">720</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">760</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">860</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. ширина блока заголовка, px. Без атрибута — 820. 720 — головна (і менший відступ до карток).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">intro</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">72</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. найдовший рядок вступу, у символах (українська сторінка).</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">note</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">warm</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. примітка під групами. Без атрибута — біла, звичайним текстом; warm — тепла, напівжирна: та, на яку треба зважити.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">tile</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ink</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">orange</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">mint</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. колір плитки з іконкою (.icon-tile): один атрибут задає і тло плитки, і колір іконки.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">tile</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-variant</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">ring</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. ring — плитка головної з тонким кольоровим обідком (лише з data-items="labels").</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-students.html">plagiarism-checker-for-students.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">groups · cool · lg · accent teal</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">2 + 2 пункти з описом; цифра; дві примітки</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="index.html">index.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">groups · labels · cool · md</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">4 + 4 підписи; цифра; блок заголовка 720</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="pdf-plagiarism-checker.html">pdf-plagiarism-checker.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">flow · white · lg · accent teal</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">запечатаний вхід; стрілка; група з 4 пунктів</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="turnitin-checker-alternative.html">turnitin-checker-alternative.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">list · cool · md · accent teal</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">4 рядки; темний рядок</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ua-plagiarism-check.html">ua-plagiarism-check.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">cells · cool · md · accent teal</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">4 комірки; блок заголовка 860, вступ 72</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── sources · 1 · sources-groups.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Sources · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Sources · дві групи і цифра (groups)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Дві групи з галочками — що шукати і що виключити; у кожному пункті назва й опис. Поруч темна картка з цифрою охоплення; під ними дві примітки, друга — тепла (data-tone="warm"). Копія — Students.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-students · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/sources-groups.html</code></p>
+    </div>
+  </div>
+
+<section id="example-sources-groups" data-component="sources" class="sources-section" data-layout="groups" data-bg="cool" data-space="lg" data-accent="teal">
+  <div class="sources-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Sources &amp; Settings</span>
+      </div>
+      <h2 class="section-title">Control what your paper is checked against</h2>
+      <p class="section-intro">Choose the source collections and exclusions that fit your paper before you interpret the result. Search the web and academic databases, and exclude references or in-text citations when appropriate.</p>
+    </div>
+    <div class="sources-grid rv-kids">
+      <div class="sources-group">
+        <div class="sources-group-head">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <span class="sources-kicker">Search sources</span>
+        </div>
+        <ul class="sources-list">
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Web</span>
+              <span class="sources-item-text">Search available web sources for matching or similar text.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Academic databases</span>
+              <span class="sources-item-text">Include academic database search when you want the paper compared with indexed academic material.</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="sources-group">
+        <div class="sources-group-head">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+          <span class="sources-kicker">Exclusions</span>
+        </div>
+        <ul class="sources-list">
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Exclude references</span>
+              <span class="sources-item-text">Exclude the reference section when that fits the way you need to review the paper.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Exclude in-text citations</span>
+              <span class="sources-item-text">Exclude in-text citations when appropriate for the check.</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="sources-stat">
+        <span class="sources-stat-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></span>
+        <div class="sources-stat-value">500 million</div>
+        <p class="sources-stat-text">When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts.</p>
+      </div>
+    </div>
+    <div class="sources-notes rv">
+      <p class="sources-note">Depending on your account, settings, and access, personal or organization storage may also be available as comparison sources.</p>
+      <p class="sources-note" data-tone="warm">Changing the source collections or exclusions changes what the report can show, so review your settings before comparing results between checks.</p>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
+    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-groups" data-component="sources" class="sources-section" data-layout="groups" data-bg="cool" data-space="lg" data-accent="teal"&gt;
+  &lt;div class="sources-inner"&gt;
+    &lt;div class="section-head rv"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Sources &amp;amp; Settings&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Control what your paper is checked against&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;Choose the source collections and exclusions that fit your paper before you interpret the result. Search the web and academic databases, and exclude references or in-text citations when appropriate.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="sources-grid rv-kids"&gt;
+      &lt;div class="sources-group"&gt;
+        &lt;div class="sources-group-head"&gt;
+          &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="11" cy="11" r="8"/&gt;&lt;path d="m21 21-4.3-4.3"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="sources-kicker"&gt;Search sources&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="sources-list"&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-item-body"&gt;
+              &lt;span class="sources-item-title"&gt;Web&lt;/span&gt;
+              &lt;span class="sources-item-text"&gt;Search available web sources for matching or similar text.&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-item-body"&gt;
+              &lt;span class="sources-item-title"&gt;Academic databases&lt;/span&gt;
+              &lt;span class="sources-item-text"&gt;Include academic database search when you want the paper compared with indexed academic material.&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div class="sources-group"&gt;
+        &lt;div class="sources-group-head"&gt;
+          &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;line x1="4" x2="4" y1="21" y2="14"/&gt;&lt;line x1="4" x2="4" y1="10" y2="3"/&gt;&lt;line x1="12" x2="12" y1="21" y2="12"/&gt;&lt;line x1="12" x2="12" y1="8" y2="3"/&gt;&lt;line x1="20" x2="20" y1="21" y2="16"/&gt;&lt;line x1="20" x2="20" y1="12" y2="3"/&gt;&lt;line x1="2" x2="6" y1="14" y2="14"/&gt;&lt;line x1="10" x2="14" y1="8" y2="8"/&gt;&lt;line x1="18" x2="22" y1="16" y2="16"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="sources-kicker"&gt;Exclusions&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="sources-list"&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-item-body"&gt;
+              &lt;span class="sources-item-title"&gt;Exclude references&lt;/span&gt;
+              &lt;span class="sources-item-text"&gt;Exclude the reference section when that fits the way you need to review the paper.&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-item-body"&gt;
+              &lt;span class="sources-item-title"&gt;Exclude in-text citations&lt;/span&gt;
+              &lt;span class="sources-item-text"&gt;Exclude in-text citations when appropriate for the check.&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div class="sources-stat"&gt;
+        &lt;span class="sources-stat-icon"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;ellipse cx="12" cy="5" rx="9" ry="3"/&gt;&lt;path d="M3 5V19A9 3 0 0 0 21 19V5"/&gt;&lt;path d="M3 12A9 3 0 0 0 21 12"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;div class="sources-stat-value"&gt;500 million&lt;/div&gt;
+        &lt;p class="sources-stat-text"&gt;When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="sources-notes rv"&gt;
+      &lt;p class="sources-note"&gt;Depending on your account, settings, and access, personal or organization storage may also be available as comparison sources.&lt;/p&gt;
+      &lt;p class="sources-note" data-tone="warm"&gt;Changing the source collections or exclusions changes what the report can show, so review your settings before comparing results between checks.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── sources · 2 · sources-groups-labels.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Sources · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Sources · групи з короткими підписами (головна)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-items="labels": пункт — галочка і короткий підпис без опису; плитки з обідком; без приміток. Копія — головна.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: index (головна) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/sources-groups-labels.html</code></p>
+    </div>
+  </div>
+
+<section id="example-sources-labels" data-component="sources" class="sources-section" data-layout="groups" data-bg="cool" data-space="md" data-items="labels">
+  <div class="sources-inner">
+    <div class="section-head rv" data-measure="720">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Scan controls</span>
+      </div>
+      <h2 class="section-title">Control what your plagiarism check includes</h2>
+      <p class="section-intro">Choose the source collections and exclusions that fit your document before you interpret the result. Search the web, academic databases, your storage, or organization storage, and exclude references or in-text citations when appropriate.</p>
+    </div>
+    <div class="sources-grid rv-kids">
+      <div class="sources-group">
+        <div class="sources-group-head">
+          <span class="icon-tile" data-tone="teal" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <span class="sources-kicker">Search sources</span>
+        </div>
+        <ul class="sources-list">
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-label">Web</span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-label">Academic databases</span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-label">My storage</span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-label">Organization storage</span>
+          </li>
+        </ul>
+      </div>
+      <div class="sources-group">
+        <div class="sources-group-head">
+          <span class="icon-tile" data-tone="orange" data-variant="ring"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+          <span class="sources-kicker">Review settings</span>
+        </div>
+        <ul class="sources-list">
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-label">Exclude references</span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-label">Exclude in-text citations</span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-label">Character normalization</span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-label">Add to storage</span>
+          </li>
+        </ul>
+      </div>
+      <div class="sources-stat">
+        <span class="sources-stat-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></span>
+        <div class="sources-stat-value">500 million</div>
+        <p class="sources-stat-text">When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
+    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-labels" data-component="sources" class="sources-section" data-layout="groups" data-bg="cool" data-space="md" data-items="labels"&gt;
+  &lt;div class="sources-inner"&gt;
+    &lt;div class="section-head rv" data-measure="720"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Scan controls&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Control what your plagiarism check includes&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;Choose the source collections and exclusions that fit your document before you interpret the result. Search the web, academic databases, your storage, or organization storage, and exclude references or in-text citations when appropriate.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="sources-grid rv-kids"&gt;
+      &lt;div class="sources-group"&gt;
+        &lt;div class="sources-group-head"&gt;
+          &lt;span class="icon-tile" data-tone="teal" data-variant="ring"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="11" cy="11" r="8"/&gt;&lt;path d="m21 21-4.3-4.3"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="sources-kicker"&gt;Search sources&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="sources-list"&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-label"&gt;Web&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-label"&gt;Academic databases&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-label"&gt;My storage&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-label"&gt;Organization storage&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div class="sources-group"&gt;
+        &lt;div class="sources-group-head"&gt;
+          &lt;span class="icon-tile" data-tone="orange" data-variant="ring"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;line x1="4" x2="4" y1="21" y2="14"/&gt;&lt;line x1="4" x2="4" y1="10" y2="3"/&gt;&lt;line x1="12" x2="12" y1="21" y2="12"/&gt;&lt;line x1="12" x2="12" y1="8" y2="3"/&gt;&lt;line x1="20" x2="20" y1="21" y2="16"/&gt;&lt;line x1="20" x2="20" y1="12" y2="3"/&gt;&lt;line x1="2" x2="6" y1="14" y2="14"/&gt;&lt;line x1="10" x2="14" y1="8" y2="8"/&gt;&lt;line x1="18" x2="22" y1="16" y2="16"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="sources-kicker"&gt;Review settings&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="sources-list"&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-label"&gt;Exclude references&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-label"&gt;Exclude in-text citations&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-label"&gt;Character normalization&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-label"&gt;Add to storage&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div class="sources-stat"&gt;
+        &lt;span class="sources-stat-icon"&gt;&lt;svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;ellipse cx="12" cy="5" rx="9" ry="3"/&gt;&lt;path d="M3 5V19A9 3 0 0 0 21 19V5"/&gt;&lt;path d="M3 12A9 3 0 0 0 21 12"/&gt;&lt;/svg&gt;&lt;/span&gt;
+        &lt;div class="sources-stat-value"&gt;500 million&lt;/div&gt;
+        &lt;p class="sources-stat-text"&gt;When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── sources · 3 · sources-flow.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Sources · варіант 3</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Sources · «вхід → джерела» (flow)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Ліворуч запечатаний блок сторінки [data-slot="media"] (тут — «Input format: PDF»), стрілка, праворуч одна група з галочками. Копія — PDF.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: pdf-plagiarism-checker · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/sources-flow.html</code></p>
+    </div>
+  </div>
+
+<section id="example-sources-flow" data-component="sources" class="sources-section" data-layout="flow" data-bg="white" data-space="lg" data-accent="teal">
+  <div class="sources-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Sources &amp; Settings</span>
+      </div>
+      <h2 class="section-title">Choose what your PDF is checked against</h2>
+      <p class="section-intro">PDF is the input format. The sources searched during a plagiarism check are determined by the settings you choose, not by the PDF file extension.</p>
+    </div>
+    <div class="sources-flow rv">
+      <div data-slot="media" data-surface="dark" class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
+                <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/50 mb-4">Input format</p>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex w-14 h-14 rounded-2xl bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+                  <div>
+                    <p class="text-[22px] sm:text-[24px] font-extrabold tracking-tightest leading-none">PDF</p>
+                    <p class="text-[12.5px] sm:text-[13px] text-white/60 mt-1.5">The extractable text goes in</p>
+                  </div>
+                </div>
+              </div>
+      <div class="sources-arrow" aria-hidden="true">
+        <span class="sources-arrow-line"></span>
+        <svg class="sources-arrow-head" width="10" height="12" viewBox="0 0 10 12" fill="#D1D5DB"><path d="M0 0 10 6 0 12z"/></svg>
+      </div>
+      <div class="sources-group">
+        <div class="sources-group-head">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+          <span class="sources-kicker">Scan settings decide the sources</span>
+        </div>
+        <ul class="sources-list">
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Web search</span>
+              <span class="sources-item-text">Search available web sources for matching or similar text.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Academic database</span>
+              <span class="sources-item-text">Enable academic database search when you want to compare the document with indexed academic material. PlagiarismSearch provides access to over 500 million indexed academic texts when academic database search is enabled.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">References and citations</span>
+              <span class="sources-item-text">Exclude references or in-text citations when those exclusions fit the document and the purpose of your review.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Storage sources</span>
+              <span class="sources-item-text">Personal or organization storage can also be used as comparison sources when they are available for the account and enabled for the check.</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-26">HTML для копіювання</label>
+    <textarea id="snippet-26" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-flow" data-component="sources" class="sources-section" data-layout="flow" data-bg="white" data-space="lg" data-accent="teal"&gt;
+  &lt;div class="sources-inner"&gt;
+    &lt;div class="section-head rv"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Sources &amp;amp; Settings&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Choose what your PDF is checked against&lt;/h2&gt;
+      &lt;p class="section-intro"&gt;PDF is the input format. The sources searched during a plagiarism check are determined by the settings you choose, not by the PDF file extension.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="sources-flow rv"&gt;
+      &lt;div data-slot="media" data-surface="dark" class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8"&gt;
+                &lt;p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/50 mb-4"&gt;Input format&lt;/p&gt;
+                &lt;div class="flex items-center gap-4"&gt;
+                  &lt;span class="inline-flex w-14 h-14 rounded-2xl bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0"&gt;&lt;svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/&gt;&lt;path d="M14 2v4a2 2 0 0 0 2 2h4"/&gt;&lt;path d="M16 13H8"/&gt;&lt;path d="M16 17H8"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                  &lt;div&gt;
+                    &lt;p class="text-[22px] sm:text-[24px] font-extrabold tracking-tightest leading-none"&gt;PDF&lt;/p&gt;
+                    &lt;p class="text-[12.5px] sm:text-[13px] text-white/60 mt-1.5"&gt;The extractable text goes in&lt;/p&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+      &lt;div class="sources-arrow" aria-hidden="true"&gt;
+        &lt;span class="sources-arrow-line"&gt;&lt;/span&gt;
+        &lt;svg class="sources-arrow-head" width="10" height="12" viewBox="0 0 10 12" fill="#D1D5DB"&gt;&lt;path d="M0 0 10 6 0 12z"/&gt;&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;div class="sources-group"&gt;
+        &lt;div class="sources-group-head"&gt;
+          &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;line x1="4" x2="4" y1="21" y2="14"/&gt;&lt;line x1="4" x2="4" y1="10" y2="3"/&gt;&lt;line x1="12" x2="12" y1="21" y2="12"/&gt;&lt;line x1="12" x2="12" y1="8" y2="3"/&gt;&lt;line x1="20" x2="20" y1="21" y2="16"/&gt;&lt;line x1="20" x2="20" y1="12" y2="3"/&gt;&lt;line x1="2" x2="6" y1="14" y2="14"/&gt;&lt;line x1="10" x2="14" y1="8" y2="8"/&gt;&lt;line x1="18" x2="22" y1="16" y2="16"/&gt;&lt;/svg&gt;&lt;/span&gt;
+          &lt;span class="sources-kicker"&gt;Scan settings decide the sources&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="sources-list"&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-item-body"&gt;
+              &lt;span class="sources-item-title"&gt;Web search&lt;/span&gt;
+              &lt;span class="sources-item-text"&gt;Search available web sources for matching or similar text.&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-item-body"&gt;
+              &lt;span class="sources-item-title"&gt;Academic database&lt;/span&gt;
+              &lt;span class="sources-item-text"&gt;Enable academic database search when you want to compare the document with indexed academic material. PlagiarismSearch provides access to over 500 million indexed academic texts when academic database search is enabled.&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-item-body"&gt;
+              &lt;span class="sources-item-title"&gt;References and citations&lt;/span&gt;
+              &lt;span class="sources-item-text"&gt;Exclude references or in-text citations when those exclusions fit the document and the purpose of your review.&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li class="sources-item"&gt;
+            &lt;svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;
+            &lt;span class="sources-item-body"&gt;
+              &lt;span class="sources-item-title"&gt;Storage sources&lt;/span&gt;
+              &lt;span class="sources-item-text"&gt;Personal or organization storage can also be used as comparison sources when they are available for the account and enabled for the check.&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── sources · 4 · sources-list.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Sources · варіант 4</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Sources · заголовок поруч з аркушем рядків (list)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Заголовок ліворуч (на десктопі їде за прокруткою), праворуч аркуш у подвійній рамці: рядок — плитка з іконкою, назва, опис; останній темний рядок каже, чого список стосується. Копія — Turnitin Alternative.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: turnitin-checker-alternative · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/sources-list.html</code></p>
+    </div>
+  </div>
+
+<section id="example-sources-list" data-component="sources" class="sources-section" data-layout="list" data-bg="cool" data-space="md" data-accent="teal">
+  <div class="sources-inner">
+    <div class="sources-split">
+      <div class="sources-aside rv">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Scan Sources &amp; Settings</span>
+        </div>
+        <h2 class="section-title">Know what PlagiarismSearch checks against</h2>
+        <p class="section-intro">The results you see depend on the source collections and exclusions used for your PlagiarismSearch check.</p>
+      </div>
+      <div class="sources-frame rv">
+        <div class="sources-sheet">
+          <dl class="sources-rows">
+            <div class="sources-row">
+              <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
+              <div class="sources-row-body">
+                <dt class="sources-term">Web</dt>
+                <dd class="sources-desc">Search available web sources for matching or similar text.</dd>
+              </div>
+            </div>
+            <div class="sources-row">
+              <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></span>
+              <div class="sources-row-body">
+                <dt class="sources-term">Academic database</dt>
+                <dd class="sources-desc">Include academic database search when you want to compare text with indexed academic material. PlagiarismSearch provides access to over 500 million indexed academic texts when this search source is enabled.</dd>
+              </div>
+            </div>
+            <div class="sources-row">
+              <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
+              <div class="sources-row-body">
+                <dt class="sources-term">Storage</dt>
+                <dd class="sources-desc">Personal or organization storage can also be used as comparison sources where available for the account.</dd>
+              </div>
+            </div>
+            <div class="sources-row">
+              <span class="icon-tile" data-tone="mint"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+              <div class="sources-row-body">
+                <dt class="sources-term">Exclusions</dt>
+                <dd class="sources-desc">References and in-text citations can be excluded when appropriate for the purpose of the check.</dd>
+              </div>
+            </div>
+          </dl>
+          <p class="sources-foot">
+            <span class="sources-foot-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+            <span class="sources-foot-text">These source options apply to PlagiarismSearch checks.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-27">HTML для копіювання</label>
+    <textarea id="snippet-27" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-list" data-component="sources" class="sources-section" data-layout="list" data-bg="cool" data-space="md" data-accent="teal"&gt;
+  &lt;div class="sources-inner"&gt;
+    &lt;div class="sources-split"&gt;
+      &lt;div class="sources-aside rv"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Scan Sources &amp;amp; Settings&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;Know what PlagiarismSearch checks against&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;The results you see depend on the source collections and exclusions used for your PlagiarismSearch check.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="sources-frame rv"&gt;
+        &lt;div class="sources-sheet"&gt;
+          &lt;dl class="sources-rows"&gt;
+            &lt;div class="sources-row"&gt;
+              &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/&gt;&lt;path d="M2 12h20"/&gt;&lt;/svg&gt;&lt;/span&gt;
+              &lt;div class="sources-row-body"&gt;
+                &lt;dt class="sources-term"&gt;Web&lt;/dt&gt;
+                &lt;dd class="sources-desc"&gt;Search available web sources for matching or similar text.&lt;/dd&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="sources-row"&gt;
+              &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;ellipse cx="12" cy="5" rx="9" ry="3"/&gt;&lt;path d="M3 5V19A9 3 0 0 0 21 19V5"/&gt;&lt;path d="M3 12A9 3 0 0 0 21 12"/&gt;&lt;/svg&gt;&lt;/span&gt;
+              &lt;div class="sources-row-body"&gt;
+                &lt;dt class="sources-term"&gt;Academic database&lt;/dt&gt;
+                &lt;dd class="sources-desc"&gt;Include academic database search when you want to compare text with indexed academic material. PlagiarismSearch provides access to over 500 million indexed academic texts when this search source is enabled.&lt;/dd&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="sources-row"&gt;
+              &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="20" height="5" x="2" y="3" rx="1"/&gt;&lt;path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/&gt;&lt;path d="M10 12h4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+              &lt;div class="sources-row-body"&gt;
+                &lt;dt class="sources-term"&gt;Storage&lt;/dt&gt;
+                &lt;dd class="sources-desc"&gt;Personal or organization storage can also be used as comparison sources where available for the account.&lt;/dd&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="sources-row"&gt;
+              &lt;span class="icon-tile" data-tone="mint"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;line x1="4" x2="4" y1="21" y2="14"/&gt;&lt;line x1="4" x2="4" y1="10" y2="3"/&gt;&lt;line x1="12" x2="12" y1="21" y2="12"/&gt;&lt;line x1="12" x2="12" y1="8" y2="3"/&gt;&lt;line x1="20" x2="20" y1="21" y2="16"/&gt;&lt;line x1="20" x2="20" y1="12" y2="3"/&gt;&lt;line x1="2" x2="6" y1="14" y2="14"/&gt;&lt;line x1="10" x2="14" y1="8" y2="8"/&gt;&lt;line x1="18" x2="22" y1="16" y2="16"/&gt;&lt;/svg&gt;&lt;/span&gt;
+              &lt;div class="sources-row-body"&gt;
+                &lt;dt class="sources-term"&gt;Exclusions&lt;/dt&gt;
+                &lt;dd class="sources-desc"&gt;References and in-text citations can be excluded when appropriate for the purpose of the check.&lt;/dd&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/dl&gt;
+          &lt;p class="sources-foot"&gt;
+            &lt;span class="sources-foot-icon"&gt;&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;path d="M12 16v-4"/&gt;&lt;path d="M12 8h.01"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;span class="sources-foot-text"&gt;These source options apply to PlagiarismSearch checks.&lt;/span&gt;
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── sources · 5 · sources-cells.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Sources · варіант 5</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Sources · аркуш із чотирьох комірок (cells)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Заголовок над аркушем; чотири комірки по дві в ряд: плитка з іконкою, вид («Джерело» / «Параметр»), назва, опис. Копія — українська сторінка.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ua-plagiarism-check · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/sources-cells.html</code></p>
+    </div>
+  </div>
+
+<section id="example-sources-cells" data-component="sources" class="sources-section" data-layout="cells" data-bg="cool" data-space="md" data-accent="teal">
+  <div class="sources-inner">
+    <div class="section-head rv" data-measure="860">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Налаштування перевірки</span>
+      </div>
+      <h2 class="section-title">Перевіряйте текст із потрібними джерелами та налаштуваннями</h2>
+      <p class="section-intro" data-measure="72">Залежно від доступних у вашому акаунті налаштувань перевірка може включати вебджерела, академічну базу та ваші сховища. Перед запуском можна керувати окремими параметрами аналізу.</p>
+    </div>
+    <div class="sources-frame rv">
+      <dl class="sources-cells cells">
+        <div class="sources-cell">
+          <div class="sources-cell-head">
+            <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
+            <span class="sources-kicker">Джерело</span>
+          </div>
+          <dt class="sources-term">Вебджерела</dt>
+          <dd class="sources-desc">Шукайте схожі фрагменти серед доступних вебджерел.</dd>
+        </div>
+        <div class="sources-cell">
+          <div class="sources-cell-head">
+            <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></span>
+            <span class="sources-kicker">Джерело</span>
+          </div>
+          <dt class="sources-term">Академічна база</dt>
+          <dd class="sources-desc">Академічна база PlagiarismSearch містить понад 500 млн проіндексованих текстів. Доступність цього джерела залежить від налаштувань перевірки.</dd>
+        </div>
+        <div class="sources-cell">
+          <div class="sources-cell-head">
+            <span class="icon-tile" data-tone="ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
+            <span class="sources-kicker">Джерело</span>
+          </div>
+          <dt class="sources-term">Ваші сховища</dt>
+          <dd class="sources-desc">За наявності відповідного доступу можна виконувати пошук у персональному або організаційному сховищі.</dd>
+        </div>
+        <div class="sources-cell">
+          <div class="sources-cell-head">
+            <span class="icon-tile" data-tone="mint"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg></span>
+            <span class="sources-kicker">Параметр</span>
+          </div>
+          <dt class="sources-term">Цитати та список джерел</dt>
+          <dd class="sources-desc">Налаштування дозволяють окремо керувати виключенням списку літератури та внутрішньотекстових цитат.</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-28">HTML для копіювання</label>
+    <textarea id="snippet-28" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-cells" data-component="sources" class="sources-section" data-layout="cells" data-bg="cool" data-space="md" data-accent="teal"&gt;
+  &lt;div class="sources-inner"&gt;
+    &lt;div class="section-head rv" data-measure="860"&gt;
+      &lt;div class="section-eyebrow"&gt;
+        &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+        &lt;span class="section-eyebrow-label"&gt;Налаштування перевірки&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class="section-title"&gt;Перевіряйте текст із потрібними джерелами та налаштуваннями&lt;/h2&gt;
+      &lt;p class="section-intro" data-measure="72"&gt;Залежно від доступних у вашому акаунті налаштувань перевірка може включати вебджерела, академічну базу та ваші сховища. Перед запуском можна керувати окремими параметрами аналізу.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="sources-frame rv"&gt;
+      &lt;dl class="sources-cells cells"&gt;
+        &lt;div class="sources-cell"&gt;
+          &lt;div class="sources-cell-head"&gt;
+            &lt;span class="icon-tile" data-tone="teal"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/&gt;&lt;path d="M2 12h20"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;span class="sources-kicker"&gt;Джерело&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;dt class="sources-term"&gt;Вебджерела&lt;/dt&gt;
+          &lt;dd class="sources-desc"&gt;Шукайте схожі фрагменти серед доступних вебджерел.&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div class="sources-cell"&gt;
+          &lt;div class="sources-cell-head"&gt;
+            &lt;span class="icon-tile" data-tone="orange"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;ellipse cx="12" cy="5" rx="9" ry="3"/&gt;&lt;path d="M3 5V19A9 3 0 0 0 21 19V5"/&gt;&lt;path d="M3 12A9 3 0 0 0 21 12"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;span class="sources-kicker"&gt;Джерело&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;dt class="sources-term"&gt;Академічна база&lt;/dt&gt;
+          &lt;dd class="sources-desc"&gt;Академічна база PlagiarismSearch містить понад 500 млн проіндексованих текстів. Доступність цього джерела залежить від налаштувань перевірки.&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div class="sources-cell"&gt;
+          &lt;div class="sources-cell-head"&gt;
+            &lt;span class="icon-tile" data-tone="ink"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;rect width="20" height="5" x="2" y="3" rx="1"/&gt;&lt;path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/&gt;&lt;path d="M10 12h4"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;span class="sources-kicker"&gt;Джерело&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;dt class="sources-term"&gt;Ваші сховища&lt;/dt&gt;
+          &lt;dd class="sources-desc"&gt;За наявності відповідного доступу можна виконувати пошук у персональному або організаційному сховищі.&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div class="sources-cell"&gt;
+          &lt;div class="sources-cell-head"&gt;
+            &lt;span class="icon-tile" data-tone="mint"&gt;&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/&gt;&lt;path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+            &lt;span class="sources-kicker"&gt;Параметр&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;dt class="sources-term"&gt;Цитати та список джерел&lt;/dt&gt;
+          &lt;dd class="sources-desc"&gt;Налаштування дозволяють окремо керувати виключенням списку літератури та внутрішньотекстових цитат.&lt;/dd&gt;
+        &lt;/div&gt;
+      &lt;/dl&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
   <section id="lib-faq" class="bg-white border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
       <div>
@@ -3427,8 +4182,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
-    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-29">HTML для копіювання</label>
+    <textarea id="snippet-29" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3520,8 +4275,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
-    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-30">HTML для копіювання</label>
+    <textarea id="snippet-30" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3613,8 +4368,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-26">HTML для копіювання</label>
-    <textarea id="snippet-26" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-31">HTML для копіювання</label>
+    <textarea id="snippet-31" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3713,8 +4468,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-27">HTML для копіювання</label>
-    <textarea id="snippet-27" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-32">HTML для копіювання</label>
+    <textarea id="snippet-32" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3807,8 +4562,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-28">HTML для копіювання</label>
-    <textarea id="snippet-28" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-33">HTML для копіювання</label>
+    <textarea id="snippet-33" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3899,8 +4654,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-29">HTML для копіювання</label>
-    <textarea id="snippet-29" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-34">HTML для копіювання</label>
+    <textarea id="snippet-34" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -3998,8 +4753,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-30">HTML для копіювання</label>
-    <textarea id="snippet-30" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-35">HTML для копіювання</label>
+    <textarea id="snippet-35" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
   &lt;div class="faq-aside"&gt;
     &lt;div class="section-eyebrow"&gt;
       &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
@@ -4086,8 +4841,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-31">HTML для копіювання</label>
-    <textarea id="snippet-31" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-36">HTML для копіювання</label>
+    <textarea id="snippet-36" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
   &lt;div class="faq-list" data-faq&gt;
     &lt;div class="faq-item open"&gt;
       &lt;h3 class="faq-heading"&gt;&lt;button type="button" aria-controls="example-faq-doc-a1" aria-expanded="true" class="faq-q"&gt;
@@ -4240,8 +4995,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-32">HTML для копіювання</label>
-    <textarea id="snippet-32" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-37">HTML для копіювання</label>
+    <textarea id="snippet-37" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -4292,8 +5047,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-33">HTML для копіювання</label>
-    <textarea id="snippet-33" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-38">HTML для копіювання</label>
+    <textarea id="snippet-38" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -4346,8 +5101,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-34">HTML для копіювання</label>
-    <textarea id="snippet-34" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-39">HTML для копіювання</label>
+    <textarea id="snippet-39" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -4405,8 +5160,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-35">HTML для копіювання</label>
-    <textarea id="snippet-35" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-40">HTML для копіювання</label>
+    <textarea id="snippet-40" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -4460,8 +5215,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-36">HTML для копіювання</label>
-    <textarea id="snippet-36" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-41">HTML для копіювання</label>
+    <textarea id="snippet-41" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -4511,8 +5266,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-37">HTML для копіювання</label>
-    <textarea id="snippet-37" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-42">HTML для копіювання</label>
+    <textarea id="snippet-42" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -4562,8 +5317,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-38">HTML для копіювання</label>
-    <textarea id="snippet-38" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-43">HTML для копіювання</label>
+    <textarea id="snippet-43" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -4606,8 +5361,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-39">HTML для копіювання</label>
-    <textarea id="snippet-39" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-44">HTML для копіювання</label>
+    <textarea id="snippet-44" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -4645,8 +5400,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-40">HTML для копіювання</label>
-    <textarea id="snippet-40" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-45">HTML для копіювання</label>
+    <textarea id="snippet-45" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -4769,8 +5524,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-41">HTML для копіювання</label>
-    <textarea id="snippet-41" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-46">HTML для копіювання</label>
+    <textarea id="snippet-46" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -4827,8 +5582,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-42">HTML для копіювання</label>
-    <textarea id="snippet-42" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-47">HTML для копіювання</label>
+    <textarea id="snippet-47" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -4886,8 +5641,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-43">HTML для копіювання</label>
-    <textarea id="snippet-43" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-48">HTML для копіювання</label>
+    <textarea id="snippet-48" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -4968,8 +5723,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-44">HTML для копіювання</label>
-    <textarea id="snippet-44" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-49">HTML для копіювання</label>
+    <textarea id="snippet-49" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -5073,8 +5828,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-45">HTML для копіювання</label>
-    <textarea id="snippet-45" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-50">HTML для копіювання</label>
+    <textarea id="snippet-50" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -5299,8 +6054,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-46">HTML для копіювання</label>
-    <textarea id="snippet-46" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-51">HTML для копіювання</label>
+    <textarea id="snippet-51" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -5506,8 +6261,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-47">HTML для копіювання</label>
-    <textarea id="snippet-47" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-52">HTML для копіювання</label>
+    <textarea id="snippet-52" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -5684,8 +6439,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-48">HTML для копіювання</label>
-    <textarea id="snippet-48" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-53">HTML для копіювання</label>
+    <textarea id="snippet-53" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;

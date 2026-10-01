@@ -32,6 +32,7 @@ const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const cards = require('./sections/feature-cards');   /* the feature cards: one library template */
+const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -403,17 +404,13 @@ ${COPY.report.steps.map(([head, body], i) => `        <li class="flex items-star
 const section5 = () => `  <!-- ================= 05 · SOURCES & SETTINGS =================
        The point of the section drawn as its layout: the PDF is the input, on the left,
        one node; the sources are the settings, on the right, four of them. The file
-       extension decides nothing about the right-hand side. -->
-  <section id="sources-and-settings" data-component="sources-controls" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-${eyebrow('teal-400', COPY.sources.eyebrow, 'ink')}
-        <h2 class="${H2}">${COPY.sources.h2}</h2>
-        <p class="${INTRO}">${COPY.sources.intro}</p>
-      </div>
-
-      <div class="rv grid lg:grid-cols-[.7fr_3rem_1.3fr] gap-5 lg:gap-0 items-center">
-        <div data-surface="dark" class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
+       extension decides nothing about the right-hand side.
+       The library's Sources (build/sections/sources.js), layout "flow": the input node
+       is this page's drawing, sealed in the section's slot. -->
+${sources.section({
+    id: 'sources-and-settings', layout: 'flow', bg: 'white', space: 'lg', accent: 'teal',
+    head: { eyebrow: COPY.sources.eyebrow, title: COPY.sources.h2, intro: COPY.sources.intro },
+    media: `        <div data-surface="dark" class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
           <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/50 mb-4">Input format</p>
           <div class="flex items-center gap-4">
             <span class="inline-flex w-14 h-14 rounded-2xl bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0">${ico(I.file, '#fff', 26)}</span>
@@ -422,23 +419,9 @@ ${eyebrow('teal-400', COPY.sources.eyebrow, 'ink')}
               <p class="text-[12.5px] sm:text-[13px] text-white/60 mt-1.5">The extractable text goes in</p>
             </div>
           </div>
-        </div>
-        <div class="hidden lg:flex items-center" aria-hidden="true">
-          <span class="flex-1 h-px bg-ink-200"></span>
-          <svg class="-ml-1.5 shrink-0" width="10" height="12" viewBox="0 0 10 12" fill="#D1D5DB"><path d="M0 0 10 6 0 12z"/></svg>
-        </div>
-        <div class="${CARD}">
-          <div class="flex items-center gap-3 mb-2">
-            ${chip('teal', I.sliders)}
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Scan settings decide the sources</span>
-          </div>
-          <ul class="divide-y divide-ink-100">
-${COPY.sources.items.map(([h, b]) => tick(h, b)).join('\n')}
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>`;
+        </div>`,
+    group: { label: 'Scan settings decide the sources', icon: I.sliders, tone: 'teal', items: COPY.sources.items },
+  })}`;
 
 /* ═══════════════ 06 · PDF & REPORT HANDLING ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · PDF & REPORT HANDLING =================

@@ -411,3 +411,16 @@ acceptAgainst('6c16c1a', {
 acceptAgainst('d361aa7', {
   'index.html': [['margin-top', 'margin-bottom'], 'the intro carries the gap above itself (the h2 carried it below)'],
 }, 'Feature cards: ');
+
+/* SECTION LIBRARY, WAVE 2 · THE SOURCES (2026-10-01), against 330c9c9 — the last commit before
+   the "sources and scan settings" sections moved onto their library template
+   (build/sections/sources.js). Five sections on five pages, 0 px on every page. Four are
+   identical in every measured property (Students, PDF, Turnitin, the Ukrainian page). One
+   differs in exactly the properties named here:
+
+     Home, the scan controls. The head is the Section Header block, whose intro carries
+       the gap above itself (the homepage's h2 carried it below). The same elements in
+       the same places; only which of the two neighbours holds the margin changed. */
+acceptAgainst('330c9c9', {
+  'index.html': [['margin-top', 'margin-bottom'], 'the intro carries the gap above itself (the h2 carried it below)'],
+}, 'Sources: ');

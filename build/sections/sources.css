@@ -1,0 +1,214 @@
+/* ═══ Sources — library component ═══════════════════════════════════════════════════
+   Template: build/sections/sources.js · contract: build/sections/sources.contract.js
+   Behaviour: build/assets/js/20-motion.js (.rv, .rv-kids) — nothing of its own
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   What a check is compared against, and what it can leave out: the source collections and
+   the scan settings. Shown as a list of what is available — ticks and tiles, never
+   switches: the page cannot act on a control that moves. Four approved layouts
+   (data-layout on the section):
+
+   section.sources-section  data-layout="groups|flow|list|cells"   data-bg="white|cool"
+                            data-space="md|lg"   data-accent="teal"   data-items="labels"
+
+   data-layout="groups"     two groups of ticks and the coverage figure (Home, Students)
+     .sources-inner
+       .section-head.rv
+       div.sources-grid.rv-kids
+         div.sources-group ×2                  .sources-group-head > span.icon-tile, span.sources-kicker
+           ul.sources-list > li.sources-item   svg.sources-tick, then
+                                               span.sources-item-body > span.sources-item-title, span.sources-item-text
+                                               or, with data-items="labels" on the section, span.sources-label
+         div.sources-stat                      span.sources-stat-icon, div.sources-stat-value, p.sources-stat-text
+       (div.sources-notes.rv > p.sources-note) one or two notes; data-tone="warm": the one to act on
+
+   data-layout="flow"       an input, an arrow, one group of ticks (PDF)
+       div.sources-flow.rv > [data-slot="media"], div.sources-arrow, div.sources-group
+
+   data-layout="list"       the head beside one sheet of rows (Turnitin)
+       div.sources-split
+         div.sources-aside.rv                  the Section Header's parts, sticky from lg
+         div.sources-frame.rv > div.sources-sheet
+           dl.sources-rows > div.sources-row   span.icon-tile, div.sources-row-body > dt.sources-term, dd.sources-desc
+           (p.sources-foot > span.sources-foot-icon, span.sources-foot-text)
+
+   data-layout="cells"      the head over one sheet of four cells (the Ukrainian page)
+       .section-head.rv
+       div.sources-frame.rv > dl.sources-cells.cells
+         div.sources-cell                      .sources-cell-head > span.icon-tile, span.sources-kicker
+                                               dt.sources-term, dd.sources-desc */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.sources-section {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-white;
+}
+.sources-section:where([data-space="md"]) { @apply lg:py-28; }
+.sources-section:where([data-bg="cool"]) { @apply bg-[#F7FAFC]; }
+
+.sources-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+
+/* ── a group of ticks: the card the groups and the flow share ─────────────────── */
+.sources-group {
+  @apply rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7;
+}
+.sources-group-head {
+  @apply flex items-center gap-3 mb-3;
+}
+.sources-kicker {
+  @apply text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500;
+}
+:where(.sources-section:not([data-items="labels"])) .sources-list {
+  @apply divide-y divide-ink-100;
+}
+.sources-item {
+  @apply flex items-start gap-3 py-3;
+}
+.sources-tick {
+  @apply shrink-0 mt-1;
+}
+.sources-item-body {
+  @apply min-w-0;
+}
+.sources-item-title {
+  @apply block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900;
+}
+.sources-item-text {
+  @apply block text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 mt-0.5;
+}
+
+/* ── layout: groups ──────────────────────────────────────────────────────────── */
+.sources-grid {
+  @apply grid lg:grid-cols-[1fr_1fr_.85fr] gap-4 sm:gap-5 lg:gap-6;
+}
+/* the coverage figure: the one dark card of the row */
+.sources-stat {
+  @apply rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7 flex flex-col justify-center;
+}
+.sources-stat-icon {
+  @apply inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0;
+}
+.sources-stat-value { font-variant-numeric:tabular-nums;
+  @apply text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest leading-none mt-5 mb-3;
+}
+.sources-stat-text {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/60;
+}
+.sources-notes {
+  @apply mt-4 sm:mt-5 lg:mt-6 grid sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6;
+}
+.sources-note {
+  @apply rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 px-5 py-4 sm:px-6 sm:py-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600;
+}
+.sources-note:where([data-tone="warm"]) {
+  @apply bg-orange-50 ring-orange-200 text-ink-900 font-semibold;
+}
+
+/* items "labels" — the homepage's groups: a tick and a label, no description; the ringed
+   tile, a lighter kicker further from the list, a slightly wider figure card, and the
+   homepage's container, which is not positioned */
+:where(.sources-section[data-items="labels"]) > .sources-inner {
+  @apply static;
+}
+:where(.sources-section[data-items="labels"]) .sources-grid {
+  @apply lg:grid-cols-[1fr_1fr_.9fr];
+}
+:where(.sources-section[data-items="labels"]) .sources-group-head {
+  @apply mb-5;
+}
+:where(.sources-section[data-items="labels"]) .sources-kicker {
+  @apply text-ink-400;
+}
+:where(.sources-section[data-items="labels"]) .sources-list {
+  @apply space-y-1;
+}
+:where(.sources-section[data-items="labels"]) .sources-item {
+  @apply items-center py-2.5;
+}
+:where(.sources-section[data-items="labels"]) .sources-tick {
+  @apply mt-0;
+}
+.sources-label {
+  @apply text-[13.5px] sm:text-[14.5px] font-semibold text-ink-800;
+}
+:where(.sources-section[data-items="labels"]) .sources-stat-icon {
+  @apply flex;
+}
+
+/* ── layout: flow ────────────────────────────────────────────────────────────── */
+.sources-flow {
+  @apply grid lg:grid-cols-[.7fr_3rem_1.3fr] gap-5 lg:gap-0 items-center;
+}
+.sources-arrow {
+  @apply hidden lg:flex items-center;
+}
+.sources-arrow-line {
+  @apply flex-1 h-px bg-ink-200;
+}
+.sources-arrow-head {
+  @apply -ml-1.5 shrink-0;
+}
+:where(.sources-flow) .sources-group-head {
+  @apply mb-2;
+}
+
+/* ── the sheet the list and the cells share ──────────────────────────────────── */
+.sources-frame {
+  @apply rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse;
+}
+.sources-term {
+  @apply text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-900;
+}
+.sources-desc {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 mt-1 max-w-[62ch];
+}
+
+/* ── layout: list ────────────────────────────────────────────────────────────── */
+.sources-split {
+  @apply grid lg:grid-cols-[.85fr_1.15fr] gap-8 lg:gap-14 items-start;
+}
+.sources-aside {
+  @apply lg:sticky lg:top-28;
+}
+.sources-sheet {
+  @apply rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden;
+}
+.sources-rows {
+  @apply divide-y divide-ink-100;
+}
+.sources-row {
+  @apply flex items-start gap-4 sm:gap-5 px-5 py-5 sm:px-6 sm:py-6 lg:px-7;
+}
+.sources-row-body {
+  @apply min-w-0;
+}
+/* the sheet's dark last line: what the list is, and is not, about */
+.sources-foot {
+  @apply flex items-start gap-3 px-5 py-4 sm:px-6 sm:py-5 lg:px-7 bg-ink-900 text-white text-[14px] sm:text-[15px] font-semibold leading-relaxed;
+}
+.sources-foot-icon {
+  @apply mt-0.5 shrink-0;
+}
+
+/* ── layout: cells ───────────────────────────────────────────────────────────────
+   The hairlines between the cells are .cells (13-cells.css): the class stays on the <dl>. */
+.sources-cells {
+  @apply rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden grid md:grid-cols-2;
+}
+.sources-cell {
+  @apply p-5 sm:p-6 lg:p-8;
+}
+.sources-cell-head {
+  @apply flex items-center justify-between gap-3 mb-4;
+}
+:where(.sources-cell-head) > .sources-kicker {
+  @apply text-ink-400;
+}
+:where(.sources-cell) > .sources-term {
+  @apply text-[16.5px] sm:text-[18px] text-inherit;
+}
+:where(.sources-cell) > .sources-desc {
+  @apply mt-1.5 max-w-[52ch];
+}

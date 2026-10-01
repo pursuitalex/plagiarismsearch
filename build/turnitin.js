@@ -36,6 +36,7 @@ const OUT = 'turnitin-checker-alternative.html';
 const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
+const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
 const pricing = require('./pricing');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
@@ -500,36 +501,14 @@ ${COPY.report.points.map(([head, body], i) => `          <li>
 const section6 = () => `  <!-- ================= 06 · WHAT PLAGIARISMSEARCH CHECKS AGAINST =================
        Heading left, the four collections as one list on the right — a definition list in
        a double-bezel card, not four cards — and the boundary line as the card's footer:
-       these are ours, they are not Turnitin's. -->
-  <section id="sources-and-settings" data-component="source-list" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[.85fr_1.15fr] gap-8 lg:gap-14 items-start">
-        <div class="rv lg:sticky lg:top-28">
-${eyebrow('teal-400', COPY.sources.eyebrow)}
-          <h2 class="${H2}">${COPY.sources.h2}</h2>
-          <p class="${INTRO}">${COPY.sources.intro}</p>
-        </div>
-
-        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden">
-            <dl class="divide-y divide-ink-100">
-${COPY.sources.items.map(([head, body], i) => `              <div class="flex items-start gap-4 sm:gap-5 px-5 py-5 sm:px-6 sm:py-6 lg:px-7">
-                ${chip(['teal', 'orange', 'ink', 'mint'][i], [I.globe, I.database, I.archive, I.sliders][i])}
-                <div class="min-w-0">
-                  <dt class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight text-ink-900">${head}</dt>
-                  <dd class="${BODY} text-ink-600 mt-1 max-w-[62ch]">${body}</dd>
-                </div>
-              </div>`).join('\n')}
-            </dl>
-            <p class="flex items-start gap-3 px-5 py-4 sm:px-6 sm:py-5 lg:px-7 bg-ink-900 text-white text-[14px] sm:text-[15px] font-semibold leading-relaxed">
-              <span class="mt-0.5 shrink-0">${ico(I.info, '#6ED7E8', 18)}</span>
-              <span>${COPY.sources.boundary}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+       these are ours, they are not Turnitin's.
+       The library's Sources (build/sections/sources.js), layout "list". -->
+${sources.section({
+    id: 'sources-and-settings', layout: 'list', bg: 'cool', space: 'md', accent: 'teal',
+    head: { eyebrow: COPY.sources.eyebrow, title: COPY.sources.h2, intro: COPY.sources.intro },
+    rows: COPY.sources.items.map(([term, desc], i) => ({ term, desc, tone: ['teal', 'orange', 'ink', 'mint'][i], icon: [I.globe, I.database, I.archive, I.sliders][i] })),
+    foot: { icon: I.info, text: COPY.sources.boundary },
+  })}`;
 
 /* ═══════════════ 07 · AI, COMPACT ═══════════════ */
 const section7 = () => `  <!-- ================= 07 · AI WRITING IS A SEPARATE CHECK =================

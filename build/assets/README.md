@@ -65,7 +65,7 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
    needs (catalogue below). A library component (the registry is `build/sections/index.js`:
    the FAQ with the Section Header since the pilot of 2026-09-30, the CTA band, the
    Banner and the Inquiry form since 2026-10-01, and wave 2 the same day: the Hero, the
-   Steps and the Feature cards, with the Action and Icon tile primitives) is written with semantic classes instead: one template in
+   Steps, the Feature cards and the Sources, with the Action and Icon tile primitives) is written with semantic classes instead: one template in
    `build/sections/<name>.js` called by every generator (a hand-written page carries the
    same markup), its CSS in `build/sections/<name>.css` compiled with `@apply` in the
    Tailwind run (between components and utilities, outside `@layer`), variants as `data-*`

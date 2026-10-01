@@ -1,0 +1,64 @@
+<section id="example-sources-flow" data-component="sources" class="sources-section" data-layout="flow" data-bg="white" data-space="lg" data-accent="teal">
+  <div class="sources-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Sources &amp; Settings</span>
+      </div>
+      <h2 class="section-title">Choose what your PDF is checked against</h2>
+      <p class="section-intro">PDF is the input format. The sources searched during a plagiarism check are determined by the settings you choose, not by the PDF file extension.</p>
+    </div>
+    <div class="sources-flow rv">
+      <div data-slot="media" data-surface="dark" class="rounded-3xl sm:rounded-4xl bg-ink-950 text-white p-6 sm:p-7 lg:p-8">
+                <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/50 mb-4">Input format</p>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex w-14 h-14 rounded-2xl bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+                  <div>
+                    <p class="text-[22px] sm:text-[24px] font-extrabold tracking-tightest leading-none">PDF</p>
+                    <p class="text-[12.5px] sm:text-[13px] text-white/60 mt-1.5">The extractable text goes in</p>
+                  </div>
+                </div>
+              </div>
+      <div class="sources-arrow" aria-hidden="true">
+        <span class="sources-arrow-line"></span>
+        <svg class="sources-arrow-head" width="10" height="12" viewBox="0 0 10 12" fill="#D1D5DB"><path d="M0 0 10 6 0 12z"/></svg>
+      </div>
+      <div class="sources-group">
+        <div class="sources-group-head">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+          <span class="sources-kicker">Scan settings decide the sources</span>
+        </div>
+        <ul class="sources-list">
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Web search</span>
+              <span class="sources-item-text">Search available web sources for matching or similar text.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Academic database</span>
+              <span class="sources-item-text">Enable academic database search when you want to compare the document with indexed academic material. PlagiarismSearch provides access to over 500 million indexed academic texts when academic database search is enabled.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">References and citations</span>
+              <span class="sources-item-text">Exclude references or in-text citations when those exclusions fit the document and the purpose of your review.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Storage sources</span>
+              <span class="sources-item-text">Personal or organization storage can also be used as comparison sources when they are available for the account and enabled for the check.</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

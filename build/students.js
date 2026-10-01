@@ -33,6 +33,7 @@ const OUT = 'plagiarism-checker-for-students.html';
 const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
+const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -395,49 +396,18 @@ const section5 = () => `  <!-- ================= 05 · SOURCES & SETTINGS ======
        Control-style evidence, academic first: two lists a student actually sets — what
        to search and what to exclude — with the coverage fact as the one figure, and the
        two qualifying lines set as the notes they are. Ticks, not switches: the page
-       cannot act on a control that moves. -->
-  <section id="sources-and-settings" data-component="sources-controls" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-${eyebrow('teal-400', COPY.sources.eyebrow)}
-        <h2 class="${H2}">${COPY.sources.h2}</h2>
-        <p class="${INTRO}">${COPY.sources.intro}</p>
-      </div>
-
-      <div class="rv-kids grid lg:grid-cols-[1fr_1fr_.85fr] gap-4 sm:gap-5 lg:gap-6">
-        <div class="${CARD}">
-          <div class="flex items-center gap-3 mb-3">
-            ${chip('teal', I.search)}
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Search sources</span>
-          </div>
-          <ul class="divide-y divide-ink-100">
-${COPY.sources.search.map(([h, b]) => tick(h, b)).join('\n')}
-          </ul>
-        </div>
-
-        <div class="${CARD}">
-          <div class="flex items-center gap-3 mb-3">
-            ${chip('orange', I.sliders)}
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Exclusions</span>
-          </div>
-          <ul class="divide-y divide-ink-100">
-${COPY.sources.exclusions.map(([h, b]) => tick(h, b)).join('\n')}
-          </ul>
-        </div>
-
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7 flex flex-col justify-center">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0">${ico(I.database, '#fff', 19)}</span>
-          <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none mt-5 mb-3">500 million</div>
-          <p class="${BODY} text-white/60">${COPY.sources.coverage}</p>
-        </div>
-      </div>
-
-      <div class="rv mt-4 sm:mt-5 lg:mt-6 grid sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
-        <p class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 px-5 py-4 sm:px-6 sm:py-5 ${BODY} text-ink-600">${COPY.sources.note}</p>
-        <p class="rounded-2xl sm:rounded-3xl bg-orange-50 ring-1 ring-orange-200 px-5 py-4 sm:px-6 sm:py-5 ${BODY} text-ink-900 font-semibold">${COPY.sources.interpretation}</p>
-      </div>
-    </div>
-  </section>`;
+       cannot act on a control that moves.
+       The library's Sources (build/sections/sources.js), layout "groups". -->
+${sources.section({
+    id: 'sources-and-settings', layout: 'groups', bg: 'cool', space: 'lg', accent: 'teal',
+    head: { eyebrow: COPY.sources.eyebrow, title: COPY.sources.h2, intro: COPY.sources.intro },
+    groups: [
+      { label: 'Search sources', icon: I.search, tone: 'teal', items: COPY.sources.search },
+      { label: 'Exclusions', icon: I.sliders, tone: 'orange', items: COPY.sources.exclusions },
+    ],
+    stat: { icon: I.database, value: '500 million', text: COPY.sources.coverage },
+    notes: [COPY.sources.note, { text: COPY.sources.interpretation, tone: 'warm' }],
+  })}`;
 
 /* ═══════════════ 06 · YOUR PAPER & REPORT ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · YOUR PAPER & REPORT =================

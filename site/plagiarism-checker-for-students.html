@@ -520,78 +520,75 @@
        Control-style evidence, academic first: two lists a student actually sets — what
        to search and what to exclude — with the coverage fact as the one figure, and the
        two qualifying lines set as the notes they are. Ticks, not switches: the page
-       cannot act on a control that moves. -->
-  <section id="sources-and-settings" data-component="sources-controls" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[820px] mb-10 sm:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Sources &amp; Settings</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Control what your paper is checked against</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Choose the source collections and exclusions that fit your paper before you interpret the result. Search the web and academic databases, and exclude references or in-text citations when appropriate.</p>
+       cannot act on a control that moves.
+       The library's Sources (build/sections/sources.js), layout "groups". -->
+<section id="sources-and-settings" data-component="sources" class="sources-section" data-layout="groups" data-bg="cool" data-space="lg" data-accent="teal">
+  <div class="sources-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Sources &amp; Settings</span>
       </div>
-
-      <div class="rv-kids grid lg:grid-cols-[1fr_1fr_.85fr] gap-4 sm:gap-5 lg:gap-6">
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-teal-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06748A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Search sources</span>
-          </div>
-          <ul class="divide-y divide-ink-100">
-            <li class="flex items-start gap-3 py-3">
-              <svg class="shrink-0 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              <span class="min-w-0">
-                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Web</span>
-                <span class="block text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 mt-0.5">Search available web sources for matching or similar text.</span>
-              </span>
-            </li>
-            <li class="flex items-start gap-3 py-3">
-              <svg class="shrink-0 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              <span class="min-w-0">
-                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Academic databases</span>
-                <span class="block text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 mt-0.5">Include academic database search when you want the paper compared with indexed academic material.</span>
-              </span>
-            </li>
-          </ul>
+      <h2 class="section-title">Control what your paper is checked against</h2>
+      <p class="section-intro">Choose the source collections and exclusions that fit your paper before you interpret the result. Search the web and academic databases, and exclude references or in-text citations when appropriate.</p>
+    </div>
+    <div class="sources-grid rv-kids">
+      <div class="sources-group">
+        <div class="sources-group-head">
+          <span class="icon-tile" data-tone="teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <span class="sources-kicker">Search sources</span>
         </div>
-
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-orange-100 items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B84431" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500">Exclusions</span>
-          </div>
-          <ul class="divide-y divide-ink-100">
-            <li class="flex items-start gap-3 py-3">
-              <svg class="shrink-0 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              <span class="min-w-0">
-                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Exclude references</span>
-                <span class="block text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 mt-0.5">Exclude the reference section when that fits the way you need to review the paper.</span>
-              </span>
-            </li>
-            <li class="flex items-start gap-3 py-3">
-              <svg class="shrink-0 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              <span class="min-w-0">
-                <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-ink-900">Exclude in-text citations</span>
-                <span class="block text-[13px] sm:text-[13.5px] leading-relaxed text-ink-600 mt-0.5">Exclude in-text citations when appropriate for the check.</span>
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7 flex flex-col justify-center">
-          <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></span>
-          <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none mt-5 mb-3">500 million</div>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/60">When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts.</p>
-        </div>
+        <ul class="sources-list">
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Web</span>
+              <span class="sources-item-text">Search available web sources for matching or similar text.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Academic databases</span>
+              <span class="sources-item-text">Include academic database search when you want the paper compared with indexed academic material.</span>
+            </span>
+          </li>
+        </ul>
       </div>
-
-      <div class="rv mt-4 sm:mt-5 lg:mt-6 grid sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
-        <p class="rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 px-5 py-4 sm:px-6 sm:py-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Depending on your account, settings, and access, personal or organization storage may also be available as comparison sources.</p>
-        <p class="rounded-2xl sm:rounded-3xl bg-orange-50 ring-1 ring-orange-200 px-5 py-4 sm:px-6 sm:py-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-900 font-semibold">Changing the source collections or exclusions changes what the report can show, so review your settings before comparing results between checks.</p>
+      <div class="sources-group">
+        <div class="sources-group-head">
+          <span class="icon-tile" data-tone="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg></span>
+          <span class="sources-kicker">Exclusions</span>
+        </div>
+        <ul class="sources-list">
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Exclude references</span>
+              <span class="sources-item-text">Exclude the reference section when that fits the way you need to review the paper.</span>
+            </span>
+          </li>
+          <li class="sources-item">
+            <svg class="sources-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="sources-item-body">
+              <span class="sources-item-title">Exclude in-text citations</span>
+              <span class="sources-item-text">Exclude in-text citations when appropriate for the check.</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="sources-stat">
+        <span class="sources-stat-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg></span>
+        <div class="sources-stat-value">500 million</div>
+        <p class="sources-stat-text">When academic database search is enabled, PlagiarismSearch can search over 500 million indexed academic texts.</p>
       </div>
     </div>
-  </section>
+    <div class="sources-notes rv">
+      <p class="sources-note">Depending on your account, settings, and access, personal or organization storage may also be available as comparison sources.</p>
+      <p class="sources-note" data-tone="warm">Changing the source collections or exclusions changes what the report can show, so review your settings before comparing results between checks.</p>
+    </div>
+  </div>
+</section>
 
   <!-- ================= 06 · YOUR PAPER & REPORT =================
        The lifecycle as one rail of four stations rather than four cards: the document

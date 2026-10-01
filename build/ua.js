@@ -40,6 +40,7 @@ const cta = require('./sections/cta-band');
 const banner = require('./sections/banner');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
+const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 const { REVIEWS, reviewCard } = require('./reviews');
 const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
 
@@ -339,28 +340,13 @@ const section4 = () => `  <!-- ================= 04 · SOURCES AND SCAN CONTROLS
        One sheet, four cells — three things that can be searched and one thing that can be
        set — shown as what is available, not as switches that are on: each cell carries a
        kind tag and no state. The 500 млн figure stays inside its sentence so it cannot be
-       read as "every check searches all of it". -->
-  <section id="sources" data-component="source-cells" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[860px] mb-10 sm:mb-12">
-${eyebrow('teal-400', COPY.controls.eyebrow)}
-        <h2 class="${H2}">${COPY.controls.h2}</h2>
-        <p class="${INTRO} max-w-[72ch]">${COPY.controls.intro}</p>
-      </div>
-      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-        <dl class="cells rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden grid md:grid-cols-2">
-${COPY.controls.cells.map(([head, body], i) => `          <div class="p-5 sm:p-6 lg:p-8">
-            <div class="flex items-center justify-between gap-3 mb-4">
-              ${chip(['teal', 'orange', 'ink', 'mint'][i], [I.globe, I.database, I.archive, I.quote][i])}
-              <span class="${LABEL} text-ink-400">${i < 3 ? 'Джерело' : 'Параметр'}</span>
-            </div>
-            <dt class="text-[16.5px] sm:text-[18px] font-bold tracking-tight">${head}</dt>
-            <dd class="${BODY} text-ink-600 mt-1.5 max-w-[52ch]">${body}</dd>
-          </div>`).join('\n')}
-        </dl>
-      </div>
-    </div>
-  </section>`;
+       read as "every check searches all of it".
+       The library's Sources (build/sections/sources.js), layout "cells". -->
+${sources.section({
+    id: 'sources', layout: 'cells', bg: 'cool', space: 'md', accent: 'teal',
+    head: { eyebrow: COPY.controls.eyebrow, title: COPY.controls.h2, intro: COPY.controls.intro, measure: '860', introMeasure: '72' },
+    cells: COPY.controls.cells.map(([term, desc], i) => ({ term, desc, kicker: i < 3 ? 'Джерело' : 'Параметр', tone: ['teal', 'orange', 'ink', 'mint'][i], icon: [I.globe, I.database, I.archive, I.quote][i] })),
+  })}`;
 
 /* ═══════════════ 05 · HOW TO READ A MATCH ═══════════════ */
 const section5 = () => `  <!-- ================= 05 · INTERPRETATION =================

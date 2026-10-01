@@ -693,6 +693,23 @@ spot cards of the v2 pages and Mission (one card in three title sizes — 15/16,
 values, Home integrations with partner marks), the API input cards (a format tag and the
 page's own tile), Pricing services (prices), the Scholarship's rule tiles.
 
+#### The sources — `build/sections/sources.js`
+
+"What a check is compared against, and what it can leave out" — the source collections
+and the scan settings — is one Section Library component (wave 2):
+`section.sources-section`, `data-component="sources"`. Shown as what is available: ticks
+and tiles, never switches (the validator refuses an `<input>` or a button here). Four
+layouts (`data-layout`):
+
+| layout | what | pages |
+|---|---|---|
+| `groups` | two groups of ticks and the dark coverage figure; optional notes under them (`data-tone="warm"` for the one to act on). `data-items="labels"` is the homepage's version: a tick and a short label, the ringed tile | Students, Home |
+| `flow` | an input, an arrow, one group of ticks; the input is the page's own drawing in a sealed `[data-slot="media"]` | PDF |
+| `list` | the head beside one double-bezel sheet of rows (tile, `dt`, `dd`), with a dark last line | Turnitin |
+| `cells` | the head over one sheet of four cells, two across (`.cells` draws the hairlines) | UA |
+
+Section switches: `data-bg="white|cool"`, `data-space="md|lg"`, `data-accent="teal"`.
+
 The in-section button and quiet link are a library primitive, the **Action**
 (`build/sections/action.js`, `.action-button` / `.action-link`, `data-tone="light|ghost"`),
 and so is the **Icon tile** (`build/sections/icon-tile.js`, `.icon-tile[data-tone]`): one

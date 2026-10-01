@@ -3424,6 +3424,717 @@ video {
   margin-top: auto;
 }
 
+/* ═══ Sources — library component ═══════════════════════════════════════════════════
+   Template: build/sections/sources.js · contract: build/sections/sources.contract.js
+   Behaviour: build/assets/js/20-motion.js (.rv, .rv-kids) — nothing of its own
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   What a check is compared against, and what it can leave out: the source collections and
+   the scan settings. Shown as a list of what is available — ticks and tiles, never
+   switches: the page cannot act on a control that moves. Four approved layouts
+   (data-layout on the section):
+
+   section.sources-section  data-layout="groups|flow|list|cells"   data-bg="white|cool"
+                            data-space="md|lg"   data-accent="teal"   data-items="labels"
+
+   data-layout="groups"     two groups of ticks and the coverage figure (Home, Students)
+     .sources-inner
+       .section-head.rv
+       div.sources-grid.rv-kids
+         div.sources-group ×2                  .sources-group-head > span.icon-tile, span.sources-kicker
+           ul.sources-list > li.sources-item   svg.sources-tick, then
+                                               span.sources-item-body > span.sources-item-title, span.sources-item-text
+                                               or, with data-items="labels" on the section, span.sources-label
+         div.sources-stat                      span.sources-stat-icon, div.sources-stat-value, p.sources-stat-text
+       (div.sources-notes.rv > p.sources-note) one or two notes; data-tone="warm": the one to act on
+
+   data-layout="flow"       an input, an arrow, one group of ticks (PDF)
+       div.sources-flow.rv > [data-slot="media"], div.sources-arrow, div.sources-group
+
+   data-layout="list"       the head beside one sheet of rows (Turnitin)
+       div.sources-split
+         div.sources-aside.rv                  the Section Header's parts, sticky from lg
+         div.sources-frame.rv > div.sources-sheet
+           dl.sources-rows > div.sources-row   span.icon-tile, div.sources-row-body > dt.sources-term, dd.sources-desc
+           (p.sources-foot > span.sources-foot-icon, span.sources-foot-text)
+
+   data-layout="cells"      the head over one sheet of four cells (the Ukrainian page)
+       .section-head.rv
+       div.sources-frame.rv > dl.sources-cells.cells
+         div.sources-cell                      .sources-cell-head > span.icon-tile, span.sources-kicker
+                                               dt.sources-term, dd.sources-desc */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+
+.sources-section {
+  position: relative;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 640px) {
+  .sources-section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-section {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+
+  .sources-section:where([data-space="md"]) {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+.sources-section:where([data-bg="cool"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(247 250 252 / var(--tw-bg-opacity, 1));
+}
+
+.sources-inner {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .sources-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-inner {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* ── a group of ticks: the card the groups and the flow share ─────────────────── */
+
+.sources-group {
+  border-radius: 1rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding: 1.25rem;
+  --tw-shadow: 0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08);
+  --tw-shadow-colored: 0 1px 2px var(--tw-shadow-color), 0 20px 40px -15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .sources-group {
+    border-radius: 20px;
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-group {
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+  }
+}
+
+.sources-group-head {
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sources-kicker {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .sources-kicker {
+    font-size: 10.5px;
+  }
+}
+
+:where(.sources-section:not([data-items="labels"])) .sources-list > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+  --tw-divide-opacity: 1;
+  border-color: rgb(241 242 246 / var(--tw-divide-opacity, 1));
+}
+
+.sources-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.sources-tick {
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.sources-item-body {
+  min-width: 0px;
+}
+
+.sources-item-title {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .sources-item-title {
+    font-size: 15px;
+  }
+}
+
+.sources-item-text {
+  margin-top: 0.125rem;
+  display: block;
+  font-size: 13px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .sources-item-text {
+    font-size: 13.5px;
+  }
+}
+
+/* ── layout: groups ──────────────────────────────────────────────────────────── */
+
+.sources-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .sources-grid {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-grid {
+    grid-template-columns: 1fr 1fr .85fr;
+    gap: 1.5rem;
+  }
+}
+
+/* the coverage figure: the one dark card of the row */
+
+.sources-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 1rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+  padding: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .sources-stat {
+    border-radius: 20px;
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-stat {
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+  }
+}
+
+.sources-stat-icon {
+  display: inline-flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background-color: rgb(255 255 255 / 0.1);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(255 255 255 / 0.15);
+}
+
+@media (min-width: 640px) {
+  .sources-stat-icon {
+    border-radius: 14px;
+  }
+}
+
+.sources-stat-value {
+  font-variant-numeric:tabular-nums;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.7rem,3vw,2.6rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.sources-stat-text {
+  font-size: 13.5px;
+  line-height: 1.625;
+  color: rgb(255 255 255 / 0.6);
+}
+
+@media (min-width: 640px) {
+  .sources-stat-text {
+    font-size: 14.5px;
+  }
+}
+
+.sources-notes {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .sources-notes {
+    margin-top: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-notes {
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+  }
+}
+
+.sources-note {
+  border-radius: 1rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 13.5px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .sources-note {
+    border-radius: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    font-size: 14.5px;
+  }
+}
+
+.sources-note:where([data-tone="warm"]) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 244 241 / var(--tw-bg-opacity, 1));
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(251 201 191 / var(--tw-ring-opacity, 1));
+}
+
+/* items "labels" — the homepage's groups: a tick and a label, no description; the ringed
+   tile, a lighter kicker further from the list, a slightly wider figure card, and the
+   homepage's container, which is not positioned */
+
+:where(.sources-section[data-items="labels"]) > .sources-inner {
+  position: static;
+}
+
+@media (min-width: 1024px) {
+  :where(.sources-section[data-items="labels"]) .sources-grid {
+    grid-template-columns: 1fr 1fr .9fr;
+  }
+}
+
+:where(.sources-section[data-items="labels"]) .sources-group-head {
+  margin-bottom: 1.25rem;
+}
+
+:where(.sources-section[data-items="labels"]) .sources-kicker {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
+
+:where(.sources-section[data-items="labels"]) .sources-list > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+:where(.sources-section[data-items="labels"]) .sources-item {
+  align-items: center;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+:where(.sources-section[data-items="labels"]) .sources-tick {
+  margin-top: 0px;
+}
+
+.sources-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .sources-label {
+    font-size: 14.5px;
+  }
+}
+
+:where(.sources-section[data-items="labels"]) .sources-stat-icon {
+  display: flex;
+}
+
+/* ── layout: flow ────────────────────────────────────────────────────────────── */
+
+.sources-flow {
+  display: grid;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .sources-flow {
+    grid-template-columns: .7fr 3rem 1.3fr;
+    gap: 0px;
+  }
+}
+
+.sources-arrow {
+  display: none;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .sources-arrow {
+    display: flex;
+  }
+}
+
+.sources-arrow-line {
+  height: 1px;
+  flex: 1 1 0%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+}
+
+.sources-arrow-head {
+  margin-left: -0.375rem;
+  flex-shrink: 0;
+}
+
+:where(.sources-flow) .sources-group-head {
+  margin-bottom: 0.5rem;
+}
+
+/* ── the sheet the list and the cells share ──────────────────────────────────── */
+
+.sources-frame {
+  border-radius: 1.5rem;
+  background-color: rgb(0 0 0 / .02);
+  padding: 0.375rem;
+  --tw-shadow: 0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08);
+  --tw-shadow-colored: 0 1px 2px var(--tw-shadow-color), 0 20px 40px -15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .sources-frame {
+    border-radius: 28px;
+    padding: 0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-frame {
+    border-radius: 2rem;
+  }
+}
+
+.sources-term {
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .sources-term {
+    font-size: 16.5px;
+  }
+}
+
+.sources-desc {
+  margin-top: 0.25rem;
+  max-width: 62ch;
+  font-size: 13.5px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .sources-desc {
+    font-size: 14.5px;
+  }
+}
+
+/* ── layout: list ────────────────────────────────────────────────────────────── */
+
+.sources-split {
+  display: grid;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .sources-split {
+    grid-template-columns: .85fr 1.15fr;
+    gap: 3.5rem;
+  }
+
+  .sources-aside {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 7rem;
+  }
+}
+
+.sources-sheet {
+  overflow: hidden;
+  border-radius: 18px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  --tw-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+  --tw-shadow-colored: inset 0 1px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+@media (min-width: 640px) {
+  .sources-sheet {
+    border-radius: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-sheet {
+    border-radius: calc(2rem - 0.5rem);
+  }
+}
+
+.sources-rows > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+  --tw-divide-opacity: 1;
+  border-color: rgb(241 242 246 / var(--tw-divide-opacity, 1));
+}
+
+.sources-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .sources-row {
+    gap: 1.25rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-row {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+}
+
+.sources-row-body {
+  min-width: 0px;
+}
+
+/* the sheet's dark last line: what the list is, and is not, about */
+
+.sources-foot {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .sources-foot {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-foot {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+}
+
+.sources-foot-icon {
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+/* ── layout: cells ───────────────────────────────────────────────────────────────
+   The hairlines between the cells are .cells (13-cells.css): the class stays on the <dl>. */
+
+.sources-cells {
+  display: grid;
+  overflow: hidden;
+  border-radius: 18px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  --tw-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+  --tw-shadow-colored: inset 0 1px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+@media (min-width: 640px) {
+  .sources-cells {
+    border-radius: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .sources-cells {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-cells {
+    border-radius: calc(2rem - 0.5rem);
+  }
+}
+
+.sources-cell {
+  padding: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .sources-cell {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sources-cell {
+    padding: 2rem;
+  }
+}
+
+.sources-cell-head {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+:where(.sources-cell-head) > .sources-kicker {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
+
+:where(.sources-cell) > .sources-term {
+  font-size: 16.5px;
+  color: inherit;
+}
+
+@media (min-width: 640px) {
+  :where(.sources-cell) > .sources-term {
+    font-size: 18px;
+  }
+}
+
+:where(.sources-cell) > .sources-desc {
+  margin-top: 0.375rem;
+  max-width: 52ch;
+}
+
 /* ═══ FAQ — library component ═══════════════════════════════════════════════════════
    Template: build/sections/faq.js · contract: build/sections/faq.contract.js
    Behaviour: build/assets/js/50-faq.js ([data-faq], .faq-item, .faq-q, .open)
@@ -9516,10 +10227,6 @@ a.team-linkedin:focus-visible {
   font-size: 15px;
 }
 
-.text-\[16\.5px\] {
-  font-size: 16.5px;
-}
-
 .text-\[16px\] {
   font-size: 16px;
 }
@@ -12260,10 +12967,6 @@ a.team-linkedin:focus-visible {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  .lg\:grid-cols-\[\.7fr_3rem_1\.3fr\] {
-    grid-template-columns: .7fr 3rem 1.3fr;
-  }
-
   .lg\:grid-cols-\[\.85fr_1\.15fr\] {
     grid-template-columns: .85fr 1.15fr;
   }
@@ -12396,16 +13099,8 @@ a.team-linkedin:focus-visible {
     grid-template-columns: 1fr 1fr;
   }
 
-  .lg\:grid-cols-\[1fr_1fr_\.85fr\] {
-    grid-template-columns: 1fr 1fr .85fr;
-  }
-
   .lg\:grid-cols-\[1fr_1fr_\.8fr\] {
     grid-template-columns: 1fr 1fr .8fr;
-  }
-
-  .lg\:grid-cols-\[1fr_1fr_\.9fr\] {
-    grid-template-columns: 1fr 1fr .9fr;
   }
 
   .lg\:grid-cols-\[1fr_360px\] {

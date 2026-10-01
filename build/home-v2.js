@@ -333,6 +333,7 @@ const faq = require('./sections/faq');   /* the FAQ: one library template */
 const hero = require('./sections/hero');
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const cards = require('./sections/feature-cards');   /* the feature cards: one library template */
+const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 
 const section1 = () => `
   <!-- ================= 01 · HERO / REAL CHECKER =================
@@ -506,48 +507,21 @@ const section4 = () => `
   </section>`;
 
 const section5 = () => `
-  <!-- ================= 05 · SIGNATURE · SOURCES & SCAN CONTROLS ================= -->
-  <section data-component="sources-controls" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        ${eyebrow('Scan controls')}
-        <h2 class="${H2} mb-4 lg:mb-5">${S.s5.h2}</h2>
-        <p class="${LEAD} text-ink-600">${S.s5.intro}</p>
-      </div>
-
-      <!-- Ticks, not switches. These are a list of what a check can include, so a
-           control that moves invites you to set something the page cannot act on. The
-           coverage card no longer dims with a toggle for the same reason — its sentence
-           already carries the condition. -->
-      <div class="rv-kids grid lg:grid-cols-[1fr_1fr_.9fr] gap-4 sm:gap-5 lg:gap-6">
-        <div class="${CARD}">
-          <div class="flex items-center gap-3 mb-5">
-            ${chip(I.search, 0)}
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400">Search sources</span>
-          </div>
-          <ul class="space-y-1">
-            ${S.s5.sources.map(tick).join('\n            ')}
-          </ul>
-        </div>
-
-        <div class="${CARD}">
-          <div class="flex items-center gap-3 mb-5">
-            ${chip(I.sliders, 1)}
-            <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400">Review settings</span>
-          </div>
-          <ul class="space-y-1">
-            ${S.s5.settings.map(tick).join('\n            ')}
-          </ul>
-        </div>
-
-        <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-900 text-white p-5 sm:p-6 lg:p-7 flex flex-col justify-center">
-          ${chip(I.database, 0, true)}
-          <div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none mt-5 mb-3">500 million</div>
-          <p class="${BODY} text-white/60">${S.s5.coverage}</p>
-        </div>
-      </div>
-    </div>
-  </section>`;
+  <!-- ================= 05 · SIGNATURE · SOURCES & SCAN CONTROLS =================
+       The library's Sources (build/sections/sources.js), layout "groups", the
+       homepage's short labels. Ticks, not switches: these are a list of what a check
+       can include, so a control that moves invites you to set something the page cannot
+       act on. The coverage card does not dim with a toggle for the same reason — its
+       sentence already carries the condition. -->
+${sources.section({
+    layout: 'groups', bg: 'cool', space: 'md', labels: true,
+    head: { eyebrow: 'Scan controls', title: S.s5.h2, intro: S.s5.intro, measure: '720' },
+    groups: [
+      { label: 'Search sources', icon: I.search, tone: 'teal', items: S.s5.sources },
+      { label: 'Review settings', icon: I.sliders, tone: 'orange', items: S.s5.settings },
+    ],
+    stat: { icon: I.database, value: '500 million', text: S.s5.coverage },
+  })}`;
 
 const section6 = () => `
   <!-- ================= 06 · SIGNATURE · PLAGIARISM VS AI =================
