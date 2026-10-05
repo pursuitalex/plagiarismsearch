@@ -775,189 +775,199 @@
        No quote, name or rating is filled in. The brief lists them as dynamic and
        says not to browse for them; beyond that, a mistranscribed review is an
        invented quote with a real person's name under it. -->
-  <section data-component="reviews-carousel" data-carousel data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[560px] h-[560px] bg-orange-500/12 left-[-160px] bottom-[-140px]"></div>
-    </div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv flex flex-wrap items-end justify-between gap-5 mb-8 sm:mb-10 lg:mb-12">
-        <div class="max-w-[720px]">
-          <div class="inline-flex items-center gap-2 rounded-full bg-white/[.07] ring-1 ring-white/10 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/70">Reviews</span>
+<section data-component="reviews" class="reviews-section" data-layout="carousel" data-surface="dark" data-space="md" data-tone="quiet" data-carousel>
+  <div class="reviews-bg">
+    <div class="orb reviews-glow"></div>
+  </div>
+  <div class="reviews-inner">
+    <div class="reviews-top rv">
+      <div class="section-head" data-measure="720">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Reviews</span>
         </div>
-          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">What users say about PlagiarismSearch</h2>
+        <h2 class="section-title">What users say about PlagiarismSearch</h2>
+      </div>
+    </div>
+    <div class="reviews-rail rv">
+      <div data-carousel-track class="reviews-track">
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">Trustpilot</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Tersia Gouws</span>
+              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on Trustpilot</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/partners/g2.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">G2</span>
+              <span class="review-rating" data-rating="4">
+                <span class="review-stars" role="img" aria-label="4 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">4.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">I appreciate the accuracy and speed of the PlagiarismSearch Checker. It provides detailed reports, clearly identifying matched sources, and the user interface is intuitive, making the whole process seamless.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Verified User in Higher Education</span>
+              <a href="https://www.g2.com/sellers/plagiarismsearch-com" rel="nofollow noopener" class="review-link">Read on G2</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">SmartCustomer</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">One of the biggest advantages of this plagiarism checker is its ability to analyze documents in different formats. This flexibility has saved me countless hours of converting files or dealing with compatibility issues…</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Maybelle R.</span>
+              <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on SmartCustomer</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/google-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">Google Workspace Marketplace</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">It is a modern multifunctional tool that I use not only to check for plagiarism in various written works, but also to identify the generated content.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Carmel Smith</span>
+              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="review-link">Read on Google</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">Trustpilot</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">PlagiarismSearch is by far the best plagiarism checkers I&rsquo;ve ever seen. And, I&rsquo;ve used quite a number of them. In fact, they are so good I had to subscribe.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Chioma Isaac Asiwaju</span>
+              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on Trustpilot</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">SmartCustomer</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">I am glad that I decided to use the tool for checking the presence of plagiarism. Thanks to the quick and high-quality review, I sent the edited term paper to my teacher on time.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Clarissa C.</span>
+              <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on SmartCustomer</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/google-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">Google Workspace Marketplace</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">The interface is user-friendly and intuitive, making it easy for even non-tech-savvy individuals to navigate effortlessly. The speed at which it scans and analyzes content is truly remarkable…</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Madison Lambret</span>
+              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="review-link">Read on Google</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/partners/g2.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">G2</span>
+              <span class="review-rating" data-rating="4.5">
+                <span class="review-stars" role="img" aria-label="4.5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">4.5</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">It is very helpful in-depth research for bloggers and content writers. The content quality seems very genuine and authentic.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Sukhpreet K.</span>
+              <a href="https://www.g2.com/sellers/plagiarismsearch-com" rel="nofollow noopener" class="review-link">Read on G2</a>
+            </figcaption>
+          </figure>
         </div>
       </div>
-
-      <div class="rv group relative">
-        <div data-carousel-track class="rev-track flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory no-bar">
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Trustpilot</span>
-              <span class="ml-auto flex items-center gap-2"><span class="relative inline-flex shrink-0" role="img" aria-label="5 out of 5">
-            <span class="flex gap-px text-white/20"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:100%"><span class="flex gap-px w-max"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span><span class="text-[12px] font-bold nums text-white">5.0</span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Tersia Gouws</span>
-              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Trustpilot</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="/assets/svg/partners/g2.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">G2</span>
-              <span class="ml-auto flex items-center gap-2"><span class="relative inline-flex shrink-0" role="img" aria-label="4 out of 5">
-            <span class="flex gap-px text-white/20"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:80%"><span class="flex gap-px w-max"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span><span class="text-[12px] font-bold nums text-white">4.0</span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">I appreciate the accuracy and speed of the PlagiarismSearch Checker. It provides detailed reports, clearly identifying matched sources, and the user interface is intuitive, making the whole process seamless.</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Verified User in Higher Education</span>
-              <a href="https://www.g2.com/sellers/plagiarismsearch-com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on G2</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">SmartCustomer</span>
-              <span class="ml-auto flex items-center gap-2"><span class="relative inline-flex shrink-0" role="img" aria-label="5 out of 5">
-            <span class="flex gap-px text-white/20"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:100%"><span class="flex gap-px w-max"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span><span class="text-[12px] font-bold nums text-white">5.0</span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">One of the biggest advantages of this plagiarism checker is its ability to analyze documents in different formats. This flexibility has saved me countless hours of converting files or dealing with compatibility issues…</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Maybelle R.</span>
-              <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on SmartCustomer</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="/assets/svg/google-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Google Workspace Marketplace</span>
-              <span class="ml-auto flex items-center gap-2"><span class="relative inline-flex shrink-0" role="img" aria-label="5 out of 5">
-            <span class="flex gap-px text-white/20"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:100%"><span class="flex gap-px w-max"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span><span class="text-[12px] font-bold nums text-white">5.0</span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">It is a modern multifunctional tool that I use not only to check for plagiarism in various written works, but also to identify the generated content.</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Carmel Smith</span>
-              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Google</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Trustpilot</span>
-              <span class="ml-auto flex items-center gap-2"><span class="relative inline-flex shrink-0" role="img" aria-label="5 out of 5">
-            <span class="flex gap-px text-white/20"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:100%"><span class="flex gap-px w-max"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span><span class="text-[12px] font-bold nums text-white">5.0</span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">PlagiarismSearch is by far the best plagiarism checkers I&rsquo;ve ever seen. And, I&rsquo;ve used quite a number of them. In fact, they are so good I had to subscribe.</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Chioma Isaac Asiwaju</span>
-              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Trustpilot</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">SmartCustomer</span>
-              <span class="ml-auto flex items-center gap-2"><span class="relative inline-flex shrink-0" role="img" aria-label="5 out of 5">
-            <span class="flex gap-px text-white/20"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:100%"><span class="flex gap-px w-max"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span><span class="text-[12px] font-bold nums text-white">5.0</span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">I am glad that I decided to use the tool for checking the presence of plagiarism. Thanks to the quick and high-quality review, I sent the edited term paper to my teacher on time.</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Clarissa C.</span>
-              <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on SmartCustomer</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="/assets/svg/google-icon.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">Google Workspace Marketplace</span>
-              <span class="ml-auto flex items-center gap-2"><span class="relative inline-flex shrink-0" role="img" aria-label="5 out of 5">
-            <span class="flex gap-px text-white/20"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:100%"><span class="flex gap-px w-max"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span><span class="text-[12px] font-bold nums text-white">5.0</span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">The interface is user-friendly and intuitive, making it easy for even non-tech-savvy individuals to navigate effortlessly. The speed at which it scans and analyzes content is truly remarkable…</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Madison Lambret</span>
-              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on Google</a>
-            </figcaption>
-          </figure></div>
-          <div class="snap-start shrink-0 flex"><figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              <img src="/assets/svg/partners/g2.svg" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">
-              <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/60">G2</span>
-              <span class="ml-auto flex items-center gap-2"><span class="relative inline-flex shrink-0" role="img" aria-label="4.5 out of 5">
-            <span class="flex gap-px text-white/20"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
-            <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:90%"><span class="flex gap-px w-max"><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
-          </span><span class="text-[12px] font-bold nums text-white">4.5</span></span>
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 mb-5">It is very helpful in-depth research for bloggers and content writers. The content quality seems very genuine and authentic.</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-white/10">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold text-white/70">Sukhpreet K.</span>
-              <a href="https://www.g2.com/sellers/plagiarismsearch-com" rel="nofollow noopener" class="text-[11.5px] font-semibold text-white/45 hover:text-white underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on G2</a>
-            </figcaption>
-          </figure></div>
-        </div>
-
-        <!-- shown on hover, and always once focused, so the control is reachable
-             from the keyboard rather than being a mouse-only affordance -->
-        <button type="button" data-carousel-prev aria-label="Previous reviews"
-          class="rev-nav absolute left-0 sm:-left-2 lg:-left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-ink-900 shadow-diffuse-lg flex items-center justify-center">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-        </button>
-        <button type="button" data-carousel-next aria-label="More reviews"
-          class="rev-nav absolute right-0 sm:-right-2 lg:-right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-ink-900 shadow-diffuse-lg flex items-center justify-center">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-        </button>
-      </div>
-
-      <div data-carousel-dots data-dot-label="Reviews page" class="flex justify-center items-center gap-2 mt-6 sm:mt-7 lg:mt-8"></div>
-
-      <!-- Stacked and centred below 768, the width Olex draws the line at for phone and
-           tablet: above it the pool line and the button share a row, below it the row
-           leaves the sentence ragged against a button pinned to the far edge. -->
-      <!-- The source-pool line was working copy for review, not public text, and went
-           with the placeholders. The button is centred under the centred pagination
-           rather than pushed to an edge it no longer shares with anything. -->
-      <div class="rv flex justify-center mt-8 sm:mt-10 lg:mt-12"><a href="testimonials.html" class="group btn-press inline-flex items-center gap-2 h-12 sm:h-14 pl-5 sm:pl-7 pr-2.5 rounded-full bg-white text-ink-900 hover:bg-white/90 text-[14px] sm:text-[15px] font-semibold transition-colors duration-300">
-          Read more reviews
-          <span class="icon-orb w-9 h-9 rounded-full bg-ink-900/10 flex items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </span>
-        </a></div>
+      <button type="button" data-carousel-prev aria-label="Previous reviews" class="reviews-nav">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button type="button" data-carousel-next aria-label="More reviews" class="reviews-nav">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
     </div>
-  </section>
+    <div data-carousel-dots data-dot-label="Reviews page" class="reviews-dots"></div>
+    <div class="reviews-actions rv">
+      <a href="testimonials.html" class="action-button btn-press group" data-tone="inverse">
+        Read more reviews
+        <span class="action-button-orb icon-orb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
 
 
   <!-- ================= 11 · PRICING PREVIEW =================

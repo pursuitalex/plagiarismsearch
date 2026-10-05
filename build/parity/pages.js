@@ -243,6 +243,29 @@ module.exports = {
       1440: { maxPx: 60, maxDelta: 8, reason: 'sub-pixel anti-aliasing where the closing band ends on a fractional y; geometry identical' },
     },
     } },
+    /* the reviews rail: its dots are drawn, an arrow pages it, a dot jumps to its page, the
+       other arrow pages back. Read by the data-carousel-* hooks, which the approved markup
+       and the library's share (the arrows are a hover affordance, so they are clicked in
+       the DOM, not by the pointer). */
+    async behaviour(page, width, { sleep }) {
+      if (!(await page.locator('[data-carousel] [data-carousel-track]').count())) return {};
+      const read = () => page.evaluate(() => {
+        const c = document.querySelector('[data-carousel]');
+        const t = c.querySelector('[data-carousel-track]');
+        const dots = [...c.querySelectorAll('[data-carousel-dots] > *')];
+        return [t.children.length, dots.length, dots.findIndex(d => d.classList.contains('on')), Math.round(t.scrollLeft),
+          +c.querySelector('[data-carousel-prev]').hidden, dots[1] ? dots[1].getAttribute('aria-label') : '-'].join('|');
+      });
+      await page.locator('[data-carousel]').scrollIntoViewIfNeeded(); await sleep(400);
+      const r = { carouselStart: await read() };
+      await page.evaluate(() => document.querySelector('[data-carousel-next]').click()); await sleep(1200);
+      r.carouselNext = await read();
+      await page.evaluate(() => { const d = document.querySelectorAll('[data-carousel-dots] > *'); if (d.length) d[d.length - 1].click(); }); await sleep(1200);
+      r.carouselLastDot = await read();
+      await page.evaluate(() => document.querySelector('[data-carousel-prev]').click()); await sleep(1200);
+      r.carouselPrev = await read();
+      return r;
+    },
   },
   'prices.html': {
     /* the AI package selector: the chosen row fills and the button names it */
@@ -463,4 +486,12 @@ acceptAgainst('6d093df', {
 }, 'Pricing preview: ');
 
 /* SECTION LIBRARY, WAVE 3 · THE STAT RAIL (2026-10-05), against 688cb42: two pages (Home,
-   Students), 0 px, identical in every measured property. Nothing accepted. */
+   Students), 0 px, identical in every measured property. Nothing accepted.
+
+   SECTION LIBRARY, WAVE 3 · THE REVIEWS (2026-10-05), against ca03f6a: two pages (Home, the
+   Ukrainian page), 0 px, identical in every measured property; the homepage's rail pages
+   identically (the behaviour test above — an arrow, a dot, the other arrow — at 1440 and
+   375, and for the section alone). Nothing accepted. Not measured, and changed on
+   purpose: a rating's lit stars take their width from data-rating in the stylesheet
+   instead of an inline style (the same computed width), and the rail's arrows show on
+   hovering the rail itself, not through a .group hook. */

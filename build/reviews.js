@@ -1,16 +1,22 @@
-/* Reviews — the data and the card, one copy for every page that shows them.
+/* Reviews — the data, one copy for every page that shows them.
 
    Lifted out of build/home-v2.js on 2026-09-18, when the Ukrainian checker page needed
    the same verified reviews: a second transcription of a real person's words is how a
    quote drifts. The homepage renders through this module, byte for byte what it rendered
-   before. The carousel that pages them stays with the homepage; a page may lay the cards
-   out however it likes.
+   before.
 
-     const { REVIEWS, SOURCES, reviewCard, stars } = require('./reviews');
-     reviewCard(REVIEWS[0], false)   // light skin; true for the dark rail
+   Since the Section Library's wave 3 the card itself is the library's
+   (build/sections/reviews.js: figure.review-card, in a rail or a grid); this file is the
+   DATA — the reviews as read off the platforms — and item() hands one to that template:
+
+     const { REVIEWS, item } = require('./reviews');
+     reviews.section({ …, items: REVIEWS.map(item) })
+
+   stars() is the earlier utility-markup star strip (its lit width an inline style): the
+   Reviews pages (build/testimonials*.js), which are page-specific compositions, still
+   draw their platform summaries with it. The library card lights its stars from
+   data-rating instead (build/sections/reviews.css).
 */
-const CARD = 'rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7';
-const CARD_DARK = 'rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7';
 const I = { star: '<path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/>' };
 
 /* ── review sources ──────────────────────────────────────────────────────────
@@ -48,8 +54,6 @@ const SOURCES = {
   },
 };
 
-/* One card, two skins. Everything a review can carry is optional, so a card with only
-   a quote still renders and a card with mark, rating, count and author renders more. */
 /* Half stars matter here: the value is one person's rating, and G2 publishes halves.
 
    The lit row sits in a box narrowed to the rating and must be CLIPPED by it, never
@@ -65,28 +69,6 @@ const stars = (value, dark) => {
             <span class="flex gap-px ${dark ? 'text-white/20' : 'text-ink-200'}">${star.repeat(5)}</span>
             <span class="absolute inset-y-0 left-0 overflow-hidden text-orange-500" style="width:${pct}%"><span class="flex gap-px w-max">${star.repeat(5)}</span></span>
           </span>`;
-};
-
-/* opts.static: root-relative asset paths, for pages on the shared assets */
-const reviewCard = (r, dark, opts = {}) => {
-  const src = SOURCES[r.source];
-  const muted = dark ? 'text-white/45' : 'text-ink-400';
-  return `<figure class="${dark ? CARD_DARK : CARD} flex flex-col h-full w-full">
-            <div class="flex items-center gap-2.5 mb-5">
-              ${src.mark
-                ? `<img src="${opts.static ? '/' : ''}${src.mark}" alt="" aria-hidden="true" class="w-5 h-5 shrink-0">`
-                : ''}
-              <span class="text-[11px] sm:text-[11.5px] font-semibold ${dark ? 'text-white/60' : 'text-ink-500'}">${src.name}</span>
-              ${r.rating != null ? `<span class="ml-auto flex items-center gap-2">${stars(r.rating, dark)}<span class="text-[12px] font-bold nums ${dark ? 'text-white' : 'text-ink-900'}">${r.rating.toFixed(1)}</span></span>` : ''}
-            </div>
-
-            <blockquote class="flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed ${dark ? 'text-white/85' : 'text-ink-800'} mb-5">${r.quote}</blockquote>
-
-            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t ${dark ? 'border-white/10' : 'border-ink-100'}">
-              <span class="text-[12.5px] sm:text-[13px] font-semibold ${dark ? 'text-white/70' : 'text-ink-700'}">${r.author}</span>
-              ${src.url ? `<a href="${src.url}" rel="nofollow noopener" class="text-[11.5px] font-semibold ${muted} hover:${dark ? 'text-white' : 'text-ink-900'} underline decoration-current/30 underline-offset-4 transition-colors duration-300">Read on ${src.name.split(' ')[0]}</a>` : ''}
-            </figcaption>
-          </figure>`;
 };
 
 /* Eight reviews, two from each platform, read off the live profiles on 2026-08-20:
@@ -138,4 +120,13 @@ const REVIEWS = [
     quote: 'It is very helpful in-depth research for bloggers and content writers. The content quality seems very genuine and authentic.' },
 ];
 
-module.exports = { REVIEWS, SOURCES, reviewCard, stars };
+/* A review as the Section Library's Reviews template takes it (build/sections/reviews.js):
+   the quote, the name and the rating as they stand above, and the platform it was read
+   on. The mark's path is root-relative (pages on the shared assets). */
+const item = r => {
+  const src = SOURCES[r.source];
+  return { quote: r.quote, author: r.author, rating: r.rating,
+    source: { name: src.name, mark: src.mark ? '/' + src.mark : null, url: src.url, linkLabel: 'Read on ' + src.name.split(' ')[0] } };
+};
+
+module.exports = { REVIEWS, SOURCES, stars, item };

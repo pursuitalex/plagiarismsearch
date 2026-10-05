@@ -249,5 +249,29 @@ console.log('\nstructure');
      (boxes.length === 2 && / checked\b/.test(boxes[0]) && !/ checked\b/.test(boxes[1])));
 }
 
+/* ── the reviews: quotations, word for word ─────────────────────────────── *
+ * The cards are the library's (build/sections/reviews.js); their words are
+ * build/reviews.js's — eight reviews read off the platforms. A card that is
+ * not one of them, or one of them altered, is a fabricated quote under a
+ * real name.                                                              */
+console.log('\nreviews');
+{
+  const { REVIEWS, SOURCES } = require('./reviews');
+  const sec = (body.match(/<section[^>]*data-component="reviews"[\s\S]*?<\/section>/) || [''])[0];
+  const cards = [...sec.matchAll(/<figure class="review-card">([\s\S]*?)<\/figure>/g)].map(m => m[1]);
+  const part = (c, re) => ((c.match(re) || [])[1] || '').trim();
+  ok(REVIEWS.length + ' review cards, in the data\'s order', cards.length === REVIEWS.length, cards.length + ' found');
+  const bad = REVIEWS.filter((r, n) => {
+    const c = cards[n] || '';
+    return !(part(c, /<blockquote class="review-quote">([\s\S]*?)<\/blockquote>/) === r.quote
+      && part(c, /<span class="review-author">([\s\S]*?)<\/span>/) === r.author
+      && part(c, /<span class="review-source-name">([\s\S]*?)<\/span>/) === SOURCES[r.source].name
+      && part(c, /data-rating="([^"]*)"/) === String(r.rating)
+      && part(c, /<span class="review-rating-value">([\s\S]*?)<\/span>/) === r.rating.toFixed(1)
+      && c.includes('href="' + SOURCES[r.source].url + '"'));
+  }).map(r => r.author);
+  ok('every quote, name, platform and rating as published', !bad.length, bad.join(', '));
+}
+
 console.log('\n' + (failed ? failed + ' check(s) FAILED' : 'index.html matches DEC-0030'));
 process.exit(failed ? 1 : 0);

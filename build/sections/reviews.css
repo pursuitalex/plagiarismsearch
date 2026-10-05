@@ -1,0 +1,204 @@
+/* ═══ Reviews — library component ═══════════════════════════════════════════════════
+   Template: build/sections/reviews.js · contract: build/sections/reviews.contract.js
+   Behaviour: build/assets/js/45-carousel.js ([data-carousel]), 44-review-rating.js
+   (.review-rating[data-rating]), 20-motion.js (.rv, .rv-kids)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   Customers quoted: a head and a set of review cards. Two approved layouts; the card is
+   one, and takes its skin from the section's surface.
+
+   section.reviews-section          data-layout="carousel|grid"   data-space="md|lg"
+                                    data-surface="dark" (carousel) | data-bg="tint" (grid)
+                                    data-accent="teal"   data-tone="quiet"   data-carousel
+     (div.reviews-bg > div.orb.reviews-glow)          the dark section's ground
+     .reviews-inner
+       carousel   div.reviews-top.rv > div.section-head                the head, in the rail's top row
+                  div.reviews-rail.rv
+                    div.reviews-track[data-carousel-track]             the cards, one row, scrolling
+                      div.reviews-item > figure.review-card
+                    button.reviews-nav[data-carousel-prev]  button.reviews-nav[data-carousel-next]
+                  div.reviews-dots[data-carousel-dots]                 the script draws .rev-dot buttons here
+                  (div.reviews-actions.rv > a.action-button[data-tone="inverse"])
+       grid       div.section-head.rv
+                  div.reviews-grid.rv-kids > div.reviews-item > figure.review-card
+
+   figure.review-card
+     div.review-source              img.review-source-mark, span.review-source-name,
+                                    span.review-rating[data-rating] > span.review-stars (ten <svg>, in
+                                    span.review-stars-base and span.review-stars-lit > span.review-stars-row),
+                                    span.review-rating-value
+     blockquote.review-quote
+     figcaption.review-by           span.review-author, a.review-link
+
+   The carousel's rules came here from 23-carousel.css with the component (the rail was
+   .rev-track, the arrows .rev-nav); .rev-dot stays the name 45-carousel.js writes. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.reviews-section {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-ink-50;
+}
+.reviews-section:where([data-space="md"]) { @apply lg:py-28; }
+.reviews-section:where([data-surface="dark"]) {
+  @apply bg-ink-950 text-white overflow-hidden;
+}
+
+/* the dark section's ground. Its glow has no fill: the homepage wrote it with a class
+   Tailwind 3 does not have (an opacity of 12), so it was never drawn — the approved
+   ground is the plain dark, and the block stays as the approved page has it. */
+.reviews-bg {
+  @apply absolute inset-0 overflow-hidden pointer-events-none;
+}
+.reviews-glow {
+  @apply w-[560px] h-[560px] left-[-160px] bottom-[-140px];
+}
+
+.reviews-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+
+/* ── the head ────────────────────────────────────────────────────────────────── */
+:where(.reviews-section) .section-head {
+  @apply mb-8 sm:mb-10 lg:mb-12;
+}
+/* carousel: the head is the first column of the rail's top row, which carries the gap */
+.reviews-top {
+  @apply flex flex-wrap items-end justify-between gap-5 mb-8 sm:mb-10 lg:mb-12;
+}
+:where(.reviews-top) > .section-head {
+  @apply mb-0 sm:mb-0 lg:mb-0;
+}
+
+/* ── layout: grid ────────────────────────────────────────────────────────────── */
+.reviews-grid {
+  @apply grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-stretch;
+}
+.reviews-item {
+  @apply flex;
+}
+
+/* ── layout: carousel ────────────────────────────────────────────────────────────
+   The rail runs the full viewport; the reading zone stays the container's. A mask
+   dissolves the cards from the screen edge to where the content column starts, so
+   resting cards sit in the 1200px zone at full strength and their neighbours peek from
+   inside the fade. --rev-edge is screen edge to content edge: the centring gap plus the
+   container gutter. Card width is pinned to the content zone, not the track, so three
+   rest inside the column exactly. scroll-padding keeps the snap points on the content
+   edge rather than the track edge. */
+.reviews-rail {
+  @apply relative;
+}
+.reviews-track { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 16px);
+  margin-inline:calc(50% - 50vw);
+  padding-inline:var(--rev-edge); scroll-padding-inline:var(--rev-edge);
+  -webkit-mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent);
+          mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent);
+  scrollbar-width:none; -ms-overflow-style:none;
+  @apply flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory;
+}
+.reviews-track::-webkit-scrollbar { display:none; }
+:where(.reviews-track) > .reviews-item { flex-basis:86%;
+  @apply snap-start shrink-0;
+}
+@media (min-width:640px)  { .reviews-track { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 24px); }
+                            :where(.reviews-track) > .reviews-item { flex-basis:54%; } }
+@media (min-width:1024px) { .reviews-track { --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 40px); }
+                            :where(.reviews-track) > .reviews-item { flex-basis:calc((min(100vw, 1280px) - 80px - 3rem) / 3); } }
+
+/* the arrows are a hover affordance, but focus reaches them too, or the control is
+   mouse-only; hidden entirely when there is nothing to scroll */
+.reviews-nav { opacity:0; pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1);
+  @apply absolute top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-ink-900 shadow-diffuse-lg flex items-center justify-center;
+}
+.reviews-nav:where([data-carousel-prev]) { @apply left-0 sm:-left-2 lg:-left-5; }
+.reviews-nav:where([data-carousel-next]) { @apply right-0 sm:-right-2 lg:-right-5; }
+.reviews-rail:hover .reviews-nav, .reviews-nav:focus-visible { opacity:1; pointer-events:auto; }
+.reviews-nav[hidden] { display:none; }
+.reviews-nav:hover { transform:translateY(-50%) scale(1.06); }
+@media (hover: none) { .reviews-nav { opacity:1; pointer-events:auto; } }
+
+.reviews-dots {
+  @apply flex justify-center items-center gap-2 mt-6 sm:mt-7 lg:mt-8;
+}
+.rev-dot { width:7px; height:7px; border-radius:999px; background:rgba(255,255,255,.22);
+           transition:width .3s cubic-bezier(.32,.72,0,1), background-color .3s ease; }
+.rev-dot.on { width:22px; background:#fff; }
+
+.reviews-actions {
+  @apply flex justify-center mt-8 sm:mt-10 lg:mt-12;
+}
+
+/* ── the card ────────────────────────────────────────────────────────────────────
+   One card, two skins: white with the hairline and the soft shadow on a light section,
+   translucent on the dark one — taken from the section's surface, never set per card. */
+.review-card {
+  @apply rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col h-full w-full;
+}
+:where([data-surface="dark"]) .review-card {
+  @apply bg-white/[.06] ring-white/10 shadow-none;
+}
+
+.review-source {
+  @apply flex items-center gap-2.5 mb-5;
+}
+.review-source-mark {
+  @apply w-5 h-5 shrink-0;
+}
+.review-source-name {
+  @apply text-[11px] sm:text-[11.5px] font-semibold text-ink-500;
+}
+:where([data-surface="dark"]) .review-source-name { @apply text-white/60; }
+
+/* the rating: two rows of five stars, the lit one clipped to the rating. The lit row sits
+   in a box narrowed to the rating and must be CLIPPED by it, never fitted to it: w-max on
+   the row and no shrinking on a star keep the two rows in register, so 4.5 reads as four
+   and a half. The width comes from data-rating — one attribute, no inline style. */
+.review-rating {
+  @apply ml-auto flex items-center gap-2;
+}
+.review-stars {
+  @apply relative inline-flex shrink-0;
+}
+.review-stars-base {
+  @apply flex gap-px text-ink-200;
+}
+:where([data-surface="dark"]) .review-stars-base { @apply text-white/20; }
+.review-stars-lit { width:0;
+  @apply absolute inset-y-0 left-0 overflow-hidden text-orange-500;
+}
+.review-stars-row {
+  @apply flex gap-px w-max;
+}
+:where(.review-stars) svg { flex-shrink:0; }
+:where(.review-rating[data-rating="1"]) .review-stars-lit   { width:20%; }
+:where(.review-rating[data-rating="1.5"]) .review-stars-lit { width:30%; }
+:where(.review-rating[data-rating="2"]) .review-stars-lit   { width:40%; }
+:where(.review-rating[data-rating="2.5"]) .review-stars-lit { width:50%; }
+:where(.review-rating[data-rating="3"]) .review-stars-lit   { width:60%; }
+:where(.review-rating[data-rating="3.5"]) .review-stars-lit { width:70%; }
+:where(.review-rating[data-rating="4"]) .review-stars-lit   { width:80%; }
+:where(.review-rating[data-rating="4.5"]) .review-stars-lit { width:90%; }
+:where(.review-rating[data-rating="5"]) .review-stars-lit   { width:100%; }
+.review-rating-value { font-variant-numeric:tabular-nums;
+  @apply text-[12px] font-bold text-ink-900;
+}
+:where([data-surface="dark"]) .review-rating-value { @apply text-white; }
+
+.review-quote {
+  @apply flex-1 text-[14.5px] sm:text-[15.5px] leading-relaxed text-ink-800 mb-5;
+}
+:where([data-surface="dark"]) .review-quote { @apply text-white/85; }
+
+.review-by {
+  @apply flex items-center justify-between gap-3 pt-4 border-t border-ink-100;
+}
+:where([data-surface="dark"]) .review-by { @apply border-white/10; }
+.review-author {
+  @apply text-[12.5px] sm:text-[13px] font-semibold text-ink-700;
+}
+:where([data-surface="dark"]) .review-author { @apply text-white/70; }
+.review-link {
+  @apply text-[11.5px] font-semibold text-ink-400 hover:text-ink-900 underline underline-offset-4 transition-colors duration-300;
+}
+:where([data-surface="dark"]) .review-link { @apply text-white/45 hover:text-white; }

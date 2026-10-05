@@ -864,7 +864,9 @@ video {
        text                              data-tone="light": white with a hairline ring
        span.action-button-orb.icon-orb   data-tone="ghost": the 48 / 56px ring-only button of
          svg                             the homepage cards
-     a.action-link                       the quiet link beside a button
+                                         data-tone="inverse": the same size in white, for a
+                                         dark section
+     a.action-link                      the quiet link beside a button
 
    The smaller quiet link that stands alone (under a card, at the foot of a section) is
    the Section Header's a.section-link.
@@ -981,6 +983,42 @@ video {
   height: 2.25rem;
   width: 2.25rem;
   background-color: rgb(17 24 39 / 0.05);
+}
+
+/* on a dark section: the same 48 / 56px size, white (the homepage's reviews) */
+
+.action-button:where([data-tone="inverse"]) {
+  height: 3rem;
+  gap: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 1.25rem;
+  padding-right: 0.625rem;
+  font-size: 14px;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+.action-button:where([data-tone="inverse"]):hover {
+  background-color: rgb(255 255 255 / 0.9);
+}
+
+@media (min-width: 640px) {
+  .action-button:where([data-tone="inverse"]) {
+    height: 3.5rem;
+    padding-left: 1.75rem;
+    padding-right: 0.625rem;
+    font-size: 15px;
+  }
+}
+
+:where(.action-button[data-tone="inverse"]) .action-button-orb {
+  display: flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  background-color: rgb(17 24 39 / 0.1);
 }
 
 .action-link {
@@ -4962,6 +5000,663 @@ video {
           text-decoration-color: #6B7280;
 }
 
+/* ═══ Reviews — library component ═══════════════════════════════════════════════════
+   Template: build/sections/reviews.js · contract: build/sections/reviews.contract.js
+   Behaviour: build/assets/js/45-carousel.js ([data-carousel]), 44-review-rating.js
+   (.review-rating[data-rating]), 20-motion.js (.rv, .rv-kids)
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   Customers quoted: a head and a set of review cards. Two approved layouts; the card is
+   one, and takes its skin from the section's surface.
+
+   section.reviews-section          data-layout="carousel|grid"   data-space="md|lg"
+                                    data-surface="dark" (carousel) | data-bg="tint" (grid)
+                                    data-accent="teal"   data-tone="quiet"   data-carousel
+     (div.reviews-bg > div.orb.reviews-glow)          the dark section's ground
+     .reviews-inner
+       carousel   div.reviews-top.rv > div.section-head                the head, in the rail's top row
+                  div.reviews-rail.rv
+                    div.reviews-track[data-carousel-track]             the cards, one row, scrolling
+                      div.reviews-item > figure.review-card
+                    button.reviews-nav[data-carousel-prev]  button.reviews-nav[data-carousel-next]
+                  div.reviews-dots[data-carousel-dots]                 the script draws .rev-dot buttons here
+                  (div.reviews-actions.rv > a.action-button[data-tone="inverse"])
+       grid       div.section-head.rv
+                  div.reviews-grid.rv-kids > div.reviews-item > figure.review-card
+
+   figure.review-card
+     div.review-source              img.review-source-mark, span.review-source-name,
+                                    span.review-rating[data-rating] > span.review-stars (ten <svg>, in
+                                    span.review-stars-base and span.review-stars-lit > span.review-stars-row),
+                                    span.review-rating-value
+     blockquote.review-quote
+     figcaption.review-by           span.review-author, a.review-link
+
+   The carousel's rules came here from 23-carousel.css with the component (the rail was
+   .rev-track, the arrows .rev-nav); .rev-dot stays the name 45-carousel.js writes. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+
+.reviews-section {
+  position: relative;
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 249 251 / var(--tw-bg-opacity, 1));
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 640px) {
+  .reviews-section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-section {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+
+  .reviews-section:where([data-space="md"]) {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+.reviews-section:where([data-surface="dark"]) {
+  overflow: hidden;
+  --tw-bg-opacity: 1;
+  background-color: rgb(10 14 26 / var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+/* the dark section's ground. Its glow has no fill: the homepage wrote it with a class
+   Tailwind 3 does not have (an opacity of 12), so it was never drawn — the approved
+   ground is the plain dark, and the block stays as the approved page has it. */
+
+.reviews-bg {
+  pointer-events: none;
+  position: absolute;
+  inset: 0px;
+  overflow: hidden;
+}
+
+.reviews-glow {
+  left: -160px;
+  bottom: -140px;
+  height: 560px;
+  width: 560px;
+}
+
+.reviews-inner {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .reviews-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-inner {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* ── the head ────────────────────────────────────────────────────────────────── */
+
+:where(.reviews-section) .section-head {
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  :where(.reviews-section) .section-head {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.reviews-section) .section-head {
+    margin-bottom: 3rem;
+  }
+}
+
+/* carousel: the head is the first column of the rail's top row, which carries the gap */
+
+.reviews-top {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .reviews-top {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-top {
+    margin-bottom: 3rem;
+  }
+}
+
+:where(.reviews-top) > .section-head {
+  margin-bottom: 0px;
+}
+
+@media (min-width: 640px) {
+  :where(.reviews-top) > .section-head {
+    margin-bottom: 0px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :where(.reviews-top) > .section-head {
+    margin-bottom: 0px;
+  }
+}
+
+/* ── layout: grid ────────────────────────────────────────────────────────────── */
+
+.reviews-grid {
+  display: grid;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .reviews-grid {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .reviews-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-grid {
+    gap: 1.5rem;
+  }
+}
+
+.reviews-item {
+  display: flex;
+}
+
+/* ── layout: carousel ────────────────────────────────────────────────────────────
+   The rail runs the full viewport; the reading zone stays the container's. A mask
+   dissolves the cards from the screen edge to where the content column starts, so
+   resting cards sit in the 1200px zone at full strength and their neighbours peek from
+   inside the fade. --rev-edge is screen edge to content edge: the centring gap plus the
+   container gutter. Card width is pinned to the content zone, not the track, so three
+   rest inside the column exactly. scroll-padding keeps the snap points on the content
+   edge rather than the track edge. */
+
+.reviews-rail {
+  position: relative;
+}
+
+.reviews-track {
+  --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 16px);
+  margin-inline:calc(50% - 50vw);
+  padding-inline:var(--rev-edge);
+  scroll-padding-inline:var(--rev-edge);
+  -webkit-mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent);
+  mask-image:linear-gradient(to right, transparent, #000 var(--rev-edge), #000 calc(100% - var(--rev-edge)), transparent);
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  display: flex;
+  scroll-snap-type: x var(--tw-scroll-snap-strictness);
+  --tw-scroll-snap-strictness: mandatory;
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+@media (min-width: 640px) {
+  .reviews-track {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-track {
+    gap: 1.5rem;
+  }
+}
+
+.reviews-track::-webkit-scrollbar {
+  display:none;
+}
+
+:where(.reviews-track) > .reviews-item {
+  flex-basis:86%;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+@media (min-width:640px)  {
+  .reviews-track {
+    --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 24px);
+  }
+
+  :where(.reviews-track) > .reviews-item {
+    flex-basis:54%;
+  }
+}
+
+@media (min-width:1024px) {
+  .reviews-track {
+    --rev-edge:calc(max((100vw - 1280px) / 2, 0px) + 40px);
+  }
+
+  :where(.reviews-track) > .reviews-item {
+    flex-basis:calc((min(100vw, 1280px) - 80px - 3rem) / 3);
+  }
+}
+
+/* the arrows are a hover affordance, but focus reaches them too, or the control is
+   mouse-only; hidden entirely when there is nothing to scroll */
+
+.reviews-nav {
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1);
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  display: flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+  --tw-shadow: 0 2px 6px rgba(0,0,0,.05), 0 32px 64px -16px rgba(0,0,0,.12);
+  --tw-shadow-colored: 0 2px 6px var(--tw-shadow-color), 0 32px 64px -16px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.reviews-nav:where([data-carousel-prev]) {
+  left: 0px;
+}
+
+@media (min-width: 640px) {
+  .reviews-nav:where([data-carousel-prev]) {
+    left: -0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-nav:where([data-carousel-prev]) {
+    left: -1.25rem;
+  }
+}
+
+.reviews-nav:where([data-carousel-next]) {
+  right: 0px;
+}
+
+@media (min-width: 640px) {
+  .reviews-nav:where([data-carousel-next]) {
+    right: -0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-nav:where([data-carousel-next]) {
+    right: -1.25rem;
+  }
+}
+
+.reviews-rail:hover .reviews-nav, .reviews-nav:focus-visible {
+  opacity:1;
+  pointer-events:auto;
+}
+
+.reviews-nav[hidden] {
+  display:none;
+}
+
+.reviews-nav:hover {
+  transform:translateY(-50%) scale(1.06);
+}
+
+@media (hover: none) {
+  .reviews-nav {
+    opacity:1;
+    pointer-events:auto;
+  }
+}
+
+.reviews-dots {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .reviews-dots {
+    margin-top: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-dots {
+    margin-top: 2rem;
+  }
+}
+
+.rev-dot {
+  width:7px;
+  height:7px;
+  border-radius:999px;
+  background:rgba(255,255,255,.22);
+  transition:width .3s cubic-bezier(.32,.72,0,1), background-color .3s ease;
+}
+
+.rev-dot.on {
+  width:22px;
+  background:#fff;
+}
+
+.reviews-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .reviews-actions {
+    margin-top: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviews-actions {
+    margin-top: 3rem;
+  }
+}
+
+/* ── the card ────────────────────────────────────────────────────────────────────
+   One card, two skins: white with the hairline and the soft shadow on a light section,
+   translucent on the dark one — taken from the section's surface, never set per card. */
+
+.review-card {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  border-radius: 1rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding: 1.25rem;
+  --tw-shadow: 0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08);
+  --tw-shadow-colored: 0 1px 2px var(--tw-shadow-color), 0 20px 40px -15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(0 0 0 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .review-card {
+    border-radius: 20px;
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .review-card {
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+  }
+}
+
+:where([data-surface="dark"]) .review-card {
+  background-color: rgb(255 255 255 / .06);
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-ring-color: rgb(255 255 255 / 0.1);
+}
+
+.review-source {
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.review-source-mark {
+  height: 1.25rem;
+  width: 1.25rem;
+  flex-shrink: 0;
+}
+
+.review-source-name {
+  font-size: 11px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .review-source-name {
+    font-size: 11.5px;
+  }
+}
+
+:where([data-surface="dark"]) .review-source-name {
+  color: rgb(255 255 255 / 0.6);
+}
+
+/* the rating: two rows of five stars, the lit one clipped to the rating. The lit row sits
+   in a box narrowed to the rating and must be CLIPPED by it, never fitted to it: w-max on
+   the row and no shrinking on a star keep the two rows in register, so 4.5 reads as four
+   and a half. The width comes from data-rating — one attribute, no inline style. */
+
+.review-rating {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-stars {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.review-stars-base {
+  display: flex;
+  gap: 1px;
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity, 1));
+}
+
+:where([data-surface="dark"]) .review-stars-base {
+  color: rgb(255 255 255 / 0.2);
+}
+
+.review-stars-lit {
+  width:0;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  overflow: hidden;
+  --tw-text-opacity: 1;
+  color: rgb(243 111 90 / var(--tw-text-opacity, 1));
+}
+
+.review-stars-row {
+  display: flex;
+  width: -moz-max-content;
+  width: -webkit-max-content;
+  width: max-content;
+  gap: 1px;
+}
+
+:where(.review-stars) svg {
+  flex-shrink:0;
+}
+
+:where(.review-rating[data-rating="1"]) .review-stars-lit   {
+  width:20%;
+}
+
+:where(.review-rating[data-rating="1.5"]) .review-stars-lit {
+  width:30%;
+}
+
+:where(.review-rating[data-rating="2"]) .review-stars-lit   {
+  width:40%;
+}
+
+:where(.review-rating[data-rating="2.5"]) .review-stars-lit {
+  width:50%;
+}
+
+:where(.review-rating[data-rating="3"]) .review-stars-lit   {
+  width:60%;
+}
+
+:where(.review-rating[data-rating="3.5"]) .review-stars-lit {
+  width:70%;
+}
+
+:where(.review-rating[data-rating="4"]) .review-stars-lit   {
+  width:80%;
+}
+
+:where(.review-rating[data-rating="4.5"]) .review-stars-lit {
+  width:90%;
+}
+
+:where(.review-rating[data-rating="5"]) .review-stars-lit   {
+  width:100%;
+}
+
+.review-rating-value {
+  font-variant-numeric:tabular-nums;
+  font-size: 12px;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+:where([data-surface="dark"]) .review-rating-value {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.review-quote {
+  margin-bottom: 1.25rem;
+  flex: 1 1 0%;
+  font-size: 14.5px;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .review-quote {
+    font-size: 15.5px;
+  }
+}
+
+:where([data-surface="dark"]) .review-quote {
+  color: rgb(255 255 255 / 0.85);
+}
+
+.review-by {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-top-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(241 242 246 / var(--tw-border-opacity, 1));
+  padding-top: 1rem;
+}
+
+:where([data-surface="dark"]) .review-by {
+  border-color: rgb(255 255 255 / 0.1);
+}
+
+.review-author {
+  font-size: 12.5px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+}
+
+@media (min-width: 640px) {
+  .review-author {
+    font-size: 13px;
+  }
+}
+
+:where([data-surface="dark"]) .review-author {
+  color: rgb(255 255 255 / 0.7);
+}
+
+.review-link {
+  font-size: 11.5px;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  text-underline-offset: 4px;
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.review-link:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+:where([data-surface="dark"]) .review-link {
+  color: rgb(255 255 255 / 0.45);
+}
+
+:where([data-surface="dark"]) .review-link:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
 /* ═══ Report showcase — library component ═══════════════════════════════════════════
    Template: build/sections/report-showcase.js · contract: build/sections/report-showcase.contract.js
    Behaviour: build/assets/js/40-report.js ([data-report]), 42-report-pass.js (the
@@ -8922,10 +9617,6 @@ a.team-linkedin:focus-visible {
   bottom: 2.25rem;
 }
 
-.bottom-\[-140px\] {
-  bottom: -140px;
-}
-
 .bottom-\[-160px\] {
   bottom: -160px;
 }
@@ -8952,10 +9643,6 @@ a.team-linkedin:focus-visible {
 
 .left-\[-140px\] {
   left: -140px;
-}
-
-.left-\[-160px\] {
-  left: -160px;
 }
 
 .left-\[21px\] {
@@ -10292,18 +10979,6 @@ a.team-linkedin:focus-visible {
 
 .resize {
   resize: both;
-}
-
-.snap-x {
-  scroll-snap-type: x var(--tw-scroll-snap-strictness);
-}
-
-.snap-mandatory {
-  --tw-scroll-snap-strictness: mandatory;
-}
-
-.snap-start {
-  scroll-snap-align: start;
 }
 
 .scroll-mt-28 {
@@ -13219,16 +13894,8 @@ a.team-linkedin:focus-visible {
     position: absolute;
   }
 
-  .sm\:-left-2 {
-    left: -0.5rem;
-  }
-
   .sm\:-left-4 {
     left: -1rem;
-  }
-
-  .sm\:-right-2 {
-    right: -0.5rem;
   }
 
   .sm\:-right-4 {
@@ -14271,16 +14938,8 @@ a.team-linkedin:focus-visible {
     position: sticky;
   }
 
-  .lg\:-left-5 {
-    left: -1.25rem;
-  }
-
   .lg\:-left-6 {
     left: -1.5rem;
-  }
-
-  .lg\:-right-5 {
-    right: -1.25rem;
   }
 
   .lg\:-right-6 {

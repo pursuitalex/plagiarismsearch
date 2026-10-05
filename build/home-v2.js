@@ -192,7 +192,7 @@ const reportShowcase = require('./sections/report-showcase');
 
 /* ── page-specific styles ────────────────────────────────────────────────── */
 /* The page's CSS lives in build/assets/css (site.css): the odometer, hero title and pulse
-   dot in 22-home, the reviews rail in 23-carousel, the report's pass and tab colours in
+   dot in 22-home, the reviews rail with the library's Reviews (build/sections/reviews.css), the report's pass and tab colours in
    09-report, the tinted FAQ chevron in 03-faq; the quick-check form, the period switcher
    and the closing band are the shared components. */
 
@@ -289,7 +289,8 @@ const partner = (file, alt) => `<span class="rounded-xl bg-ink-50 aspect-[324/11
 
 /* the reviews — sources, the eight quotes, the card and its stars — live in
    build/reviews.js since the Ukrainian checker page needed the same ones */
-const { REVIEWS, SOURCES, reviewCard, stars } = require('./reviews');
+const { REVIEWS, item: reviewItem } = require('./reviews');
+const reviews = require('./sections/reviews');   /* the reviews: one library template (the card, the rail, the grid) */
 
 /* Dark-theme plate and marks, from Figma node 5545-515. The light sections keep the
    colour logos on white; only this rail uses the reversed set — Canvas in white,
@@ -548,46 +549,15 @@ const section10 = () => `
        No quote, name or rating is filled in. The brief lists them as dynamic and
        says not to browse for them; beyond that, a mistranscribed review is an
        invented quote with a real person's name under it. -->
-  <section data-component="reviews-carousel" data-carousel data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[560px] h-[560px] bg-orange-500/12 left-[-160px] bottom-[-140px]"></div>
-    </div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv flex flex-wrap items-end justify-between gap-5 mb-8 sm:mb-10 lg:mb-12">
-        <div class="max-w-[720px]">
-          ${eyebrow('Reviews', true)}
-          <h2 class="${H2}">${S.s10.h2}</h2>
-        </div>
-      </div>
-
-      <div class="rv group relative">
-        <div data-carousel-track class="rev-track flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory no-bar">
-          ${REVIEWS.map(r => `<div class="snap-start shrink-0 flex">${reviewCard(r, true, { static: true })}</div>`).join('\n          ')}
-        </div>
-
-        <!-- shown on hover, and always once focused, so the control is reachable
-             from the keyboard rather than being a mouse-only affordance -->
-        <button type="button" data-carousel-prev aria-label="Previous reviews"
-          class="rev-nav absolute left-0 sm:-left-2 lg:-left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-ink-900 shadow-diffuse-lg flex items-center justify-center">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-        </button>
-        <button type="button" data-carousel-next aria-label="More reviews"
-          class="rev-nav absolute right-0 sm:-right-2 lg:-right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-ink-900 shadow-diffuse-lg flex items-center justify-center">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-        </button>
-      </div>
-
-      <div data-carousel-dots data-dot-label="Reviews page" class="flex justify-center items-center gap-2 mt-6 sm:mt-7 lg:mt-8"></div>
-
-      <!-- Stacked and centred below 768, the width Olex draws the line at for phone and
-           tablet: above it the pool line and the button share a row, below it the row
-           leaves the sentence ragged against a button pinned to the far edge. -->
-      <!-- The source-pool line was working copy for review, not public text, and went
-           with the placeholders. The button is centred under the centred pagination
-           rather than pushed to an edge it no longer shares with anything. -->
-      <div class="rv flex justify-center mt-8 sm:mt-10 lg:mt-12">${btn(S.s10.cta, S.s10.ctaHref, 'onDark')}</div>
-    </div>
-  </section>`;
+${reviews.section({
+  layout: 'carousel', space: 'md', tone: 'quiet',
+  head: { eyebrow: 'Reviews', title: S.s10.h2, measure: '720' },
+  items: REVIEWS.map(reviewItem),
+  /* The source-pool line was working copy for review, not public text, and went with the
+     placeholders. The button is centred under the centred pagination rather than pushed
+     to an edge it no longer shares with anything. */
+  action: { label: S.s10.cta, href: S.s10.ctaHref },
+})}`;
 
 const section11 = () => `
   <!-- ================= 11 · PRICING PREVIEW =================

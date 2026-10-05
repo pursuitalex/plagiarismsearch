@@ -21,7 +21,14 @@
    The Section Header (section-head.js / .css) is a primitive hosted by components, not a
    component of its own: each host's check validates the head it holds. So are the Action
    (action.js / .css — the in-section button and quiet link) and the Icon tile
-   (icon-tile.js / .css); check-tools.js holds their rules for every host. */
+   (icon-tile.js / .css); check-tools.js holds their rules for every host. The pen mark
+   (.pen-word > svg.pen-mark) is hosted by the hero and the report showcase.
+
+   What is not editor content is a sealed block: rendered by the template, marked
+   data-slot, copied as it is — the quick-check form, a page's diagram, the report
+   mock-up (build/report.js), the pricing switch and plan cards (build/pricing.js).
+
+   The guide for whoever maintains this: build/sections/README.md. */
 module.exports = [
   { name: 'hero', title: 'Hero', contract: require('./hero.contract'), check: require('./hero.check') },
   { name: 'stat-rail', title: 'Stat rail', contract: require('./stat-rail.contract'), check: require('./stat-rail.check') },
@@ -31,6 +38,7 @@ module.exports = [
   { name: 'report-showcase', title: 'Report showcase', contract: require('./report-showcase.contract'), check: require('./report-showcase.check') },
   { name: 'start-free', title: 'Start free', contract: require('./start-free.contract'), check: require('./start-free.check') },
   { name: 'pricing-preview', title: 'Pricing preview', contract: require('./pricing-preview.contract'), check: require('./pricing-preview.check') },
+  { name: 'reviews', title: 'Reviews', contract: require('./reviews.contract'), check: require('./reviews.check') },
   { name: 'faq', title: 'FAQ', contract: require('./faq.contract'), check: require('./faq.check') },
   { name: 'cta-band', title: 'CTA band', contract: require('./cta-band.contract'), check: require('./cta-band.check') },
   { name: 'banner', title: 'Banner', contract: require('./banner.contract'), check: require('./banner.check') },

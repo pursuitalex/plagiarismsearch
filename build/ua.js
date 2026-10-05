@@ -42,7 +42,8 @@ const hero = require('./sections/hero');   /* the hero: one library template; it
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 const startFree = require('./sections/start-free');   /* the free entry: one library template */
-const { REVIEWS, reviewCard } = require('./reviews');
+const { REVIEWS, item: reviewItem } = require('./reviews');
+const reviews = require('./sections/reviews');   /* the reviews: one library template (the card, the rail, the grid) */
 const reportShowcase = require('./sections/report-showcase');
 
 const UNIVERSITY_PROOF = true;
@@ -343,16 +344,12 @@ const section8 = () => `  <!-- ================= 08 · REVIEWS =================
        Three of the homepage's verified reviews (build/reviews.js), one per platform, as
        their authors wrote them — in English, marked as such, not translated: a translated
        quote is a different quote under a real name. No aggregate score, no "customers". -->
-  <section id="reviews" data-component="reviews" class="relative py-16 sm:py-24 lg:py-28 bg-ink-50">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[860px] mb-8 sm:mb-10 lg:mb-12">
-        <h2 class="${H2}">${COPY.reviews.h2}</h2>
-      </div>
-      <div data-stagger=".06" class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-stretch" lang="en">
-${PICK.map(i => `        <div class="flex">${reviewCard(REVIEWS[i], false, { static: true })}</div>`).join('\n')}
-      </div>
-    </div>
-  </section>`;
+${reviews.section({
+  id: 'reviews', layout: 'grid', space: 'md',
+  head: { title: COPY.reviews.h2, measure: '860' },
+  lang: 'en', stagger: '.06',
+  items: PICK.map(i => reviewItem(REVIEWS[i])),
+})}`;
 
 /* ═══════════════ 09 · AI IS A DIFFERENT CHECK ═══════════════ */
 const section9 = () => banner.section({

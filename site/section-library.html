@@ -34,6 +34,7 @@
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-report-showcase">Report showcase <span class="text-ink-400 font-medium">5</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-start-free">Start free <span class="text-ink-400 font-medium">2</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-pricing-preview">Pricing preview <span class="text-ink-400 font-medium">2</span></a></li>
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-reviews">Reviews <span class="text-ink-400 font-medium">2</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-faq">FAQ <span class="text-ink-400 font-medium">8</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-cta-band">CTA band <span class="text-ink-400 font-medium">9</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-banner">Banner <span class="text-ink-400 font-medium">5</span></a></li>
@@ -6630,6 +6631,642 @@
 &lt;/section&gt;</textarea>
   </div>
 
+  <section id="lib-reviews" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">Reviews</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>Відгуки користувачів: заголовок і набір карток — стрічкою, що гортається, або сіткою. Картка — цитата справжнього відгуку з платформи: редактор додає чи прибирає картку цілком, а текст, ім’я й оцінку змінює лише на інший справжній відгук.</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/reviews.js (відгуки — build/reviews.js)</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/reviews.css</code> · JS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/assets/js/45-carousel.js (стрілки й крапки стрічки), 44-review-rating.js (цифра й підпис оцінки за data-rating), 20-motion.js (поява .rv, .rv-kids)</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/reviews.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/reviews-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіанти</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-space, data-accent, data-tone на &lt;section&gt;; data-measure на .section-head</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">лише значення зі списку варіантів. data-layout і фон не міняйте на готовому фрагменті</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Надпис-пігулка, заголовок, вступ</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.section-eyebrow-label, h2.section-title, p.section-intro</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст; заголовок обов’язковий, пігулку і вступ можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Картка відгуку</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.reviews-item &gt; figure.review-card</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">додати чи прибрати — лише цілим блоком div.reviews-item, скопіювавши сусідній. carousel: 3–12 карток; grid: 3 або 6</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Текст відгуку</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">blockquote.review-quote</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ЦИТАТА справжнього відгуку, слово в слово, як його опублікувала платформа. Скоротити можна лише з кінця, позначивши трьома крапками (…). Не виправляти, не покращувати, не перекладати: перекладений відгук — це вже інший текст під справжнім іменем</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Автор</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.review-author</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">ім’я так, як його друкує платформа («Maybelle R.», «Verified User in Higher Education»). Без посад і організацій, яких платформа не публікувала</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Оцінка відгуку</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">span.review-rating: data-rating, aria-label на .review-stars, span.review-rating-value</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">оцінка, яку поставив автор: data-rating (1 … 5, з половинками), та сама цифра з одним знаком після крапки («4.5») і той самий підпис («4.5 out of 5»). Якщо оцінки немає — приберіть увесь блок span.review-rating</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Платформа</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">img.review-source-mark (src), span.review-source-name</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">назва платформи, де опубліковано відгук, і її знак (шлях до файла; alt порожній). Знак можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Посилання на джерело</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">figcaption.review-by &gt; a.review-link</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст («Read on Trustpilot») і href — сторінка відгуків на платформі; rel="nofollow noopener". Можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Мова цитат</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">lang на .reviews-track / .reviews-grid</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">якщо відгуки подано мовою оригіналу, а сторінка іншою мовою (українська сторінка: lang="en")</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Слова стрічки (carousel)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">aria-label на кнопках .reviews-nav; data-dot-label на .reviews-dots</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">підписи для читачів екрана: «Previous reviews», «More reviews», «Reviews page» (до останнього скрипт додає номер сторінки)</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Кнопка під стрічкою (carousel)</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.reviews-actions &gt; a.action-button</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст і href; блок можна прибрати</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>відгук — цитата: текст, ім’я й оцінка беруться зі справжнього відгуку на платформі й не редагуються по суті (див. «Текст відгуку»). Відгуки з критикою не обрізають до похвали — їх не беруть узагалі</li>
+          <li>оцінки цифрами — факти: і оцінка окремого відгуку, і будь-яка зведена оцінка платформи («4.7», «4.9 / 5») є даними, а не оздобою; зведених оцінок ця секція не показує</li>
+          <li>усі класи й обгортки: .reviews-inner, .reviews-top, .section-head, .reviews-rail, .reviews-track, .reviews-grid, .reviews-item, .review-card і частини картки</li>
+          <li>data-component="reviews" на секції — гачок для перевірок; data-layout, data-space і фон (data-surface="dark" для carousel, data-bg="tint" для grid) — обов’язкові</li>
+          <li>гачки стрічки (carousel): data-carousel на секції, data-carousel-track на стрічці, data-carousel-prev і data-carousel-next на кнопках, порожній блок data-carousel-dots — їх читає build/assets/js/45-carousel.js; крапки він малює сам</li>
+          <li>класи-гачки: rv на рядку заголовка, стрічці й кнопці; rv-kids на сітці; btn-press, group, icon-orb на кнопці; orb на світінні</li>
+          <li>зірки — блок span.review-stars (десять &lt;svg&gt;): копіюється як є; скільки з них зафарбовано, визначає лише data-rating</li>
+          <li>тло темної секції — блок div.reviews-bg зі світінням: копіюється як є</li>
+          <li>порядок у картці: платформа й оцінка → цитата → автор і посилання</li>
+          <li>жодних style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) усередині секції</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-layout</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">carousel</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">grid</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. розкладка. carousel — стрічка карток на темній секції, що гортається стрілками й крапками (головна). grid — три картки в ряд на сірій секції (українська сторінка). Це різні фрагменти — беріть відповідний зразок, а не міняйте атрибут.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-surface</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">dark</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. темна секція — обов’язкова для carousel: картки стають напівпрозорими, шапка й текст — світлими. Секція має рівно один із двох: data-surface="dark" або data-bg="tint".</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-bg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">tint</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. сіра секція (ink-50) — для grid: картки білі з тінню.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-space</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">md</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">lg</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. вертикальний ритм сторінки на десктопі: lg — 128px, md — 112px. Беріть той, що в сусідніх секцій сторінки.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-accent</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">teal</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. колір крапки в пігулці. Без атрибута — помаранчева; teal — бірюзова.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">quiet</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. лише для темної секції: quiet — темний акт головної, пігулка на крок тихіша.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">head</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-measure</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">720</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">760</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">860</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. ширина блока заголовка, px. Без атрибута — 820.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">list</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-stagger</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">.06</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. grid: такт появи карток, с (українська сторінка). Без атрибута — .08.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">rating</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-rating</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">1</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">1.5</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">2</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">2.5</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">3</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">3.5</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">4</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">4.5</code> <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">5</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. оцінка цього відгуку — стільки зірок і зафарбовано. Цілі та половинки від 1 до 5, як їх публікує платформа. Це факт: оцінка, яку поставила саме ця людина. Цифру поруч (.review-rating-value) і підпис для читачів екрана (aria-label) пишіть ті самі; якщо вони розійдуться, скрипт виправить їх за цим атрибутом, а валідатор попередить.</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">button</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">inverse</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">обов’язковий. кнопка під стрічкою (carousel) — біла, для темної секції.</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="index.html">index.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">carousel · dark · md · quiet</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">8 відгуків (по два з Trustpilot, G2, SmartCustomer, Google Workspace Marketplace); пігулка; блок заголовка 720; біла кнопка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="ua-plagiarism-check.html">ua-plagiarism-check.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">grid · tint · md</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 відгуки (по одному з трьох платформ), lang="en"; блок заголовка 860; такт появи .06</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── reviews · 1 · reviews-carousel.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Reviews · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Reviews · стрічка на темній секції (carousel)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Вісім карток у стрічці, що гортається стрілками (з’являються при наведенні й фокусі) та крапками; під стрічкою — біла кнопка. Картки напівпрозорі, бо секція темна. Кожна картка — цитата справжнього відгуку: текст, ім’я й оцінка не редагуються по суті. Копія — головна.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: index (головна) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/reviews-carousel.html</code></p>
+    </div>
+  </div>
+
+<section id="example-reviews" data-component="reviews" class="reviews-section" data-layout="carousel" data-surface="dark" data-space="md" data-tone="quiet" data-carousel>
+  <div class="reviews-bg">
+    <div class="orb reviews-glow"></div>
+  </div>
+  <div class="reviews-inner">
+    <div class="reviews-top rv">
+      <div class="section-head" data-measure="720">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          <span class="section-eyebrow-label">Reviews</span>
+        </div>
+        <h2 class="section-title">What users say about PlagiarismSearch</h2>
+      </div>
+    </div>
+    <div class="reviews-rail rv">
+      <div data-carousel-track class="reviews-track">
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">Trustpilot</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Tersia Gouws</span>
+              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on Trustpilot</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/partners/g2.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">G2</span>
+              <span class="review-rating" data-rating="4">
+                <span class="review-stars" role="img" aria-label="4 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">4.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">I appreciate the accuracy and speed of the PlagiarismSearch Checker. It provides detailed reports, clearly identifying matched sources, and the user interface is intuitive, making the whole process seamless.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Verified User in Higher Education</span>
+              <a href="https://www.g2.com/sellers/plagiarismsearch-com" rel="nofollow noopener" class="review-link">Read on G2</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">SmartCustomer</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">One of the biggest advantages of this plagiarism checker is its ability to analyze documents in different formats. This flexibility has saved me countless hours of converting files or dealing with compatibility issues…</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Maybelle R.</span>
+              <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on SmartCustomer</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/google-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">Google Workspace Marketplace</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">It is a modern multifunctional tool that I use not only to check for plagiarism in various written works, but also to identify the generated content.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Carmel Smith</span>
+              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="review-link">Read on Google</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">Trustpilot</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">PlagiarismSearch is by far the best plagiarism checkers I&rsquo;ve ever seen. And, I&rsquo;ve used quite a number of them. In fact, they are so good I had to subscribe.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Chioma Isaac Asiwaju</span>
+              <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on Trustpilot</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">SmartCustomer</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">I am glad that I decided to use the tool for checking the presence of plagiarism. Thanks to the quick and high-quality review, I sent the edited term paper to my teacher on time.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Clarissa C.</span>
+              <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on SmartCustomer</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/google-icon.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">Google Workspace Marketplace</span>
+              <span class="review-rating" data-rating="5">
+                <span class="review-stars" role="img" aria-label="5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">5.0</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">The interface is user-friendly and intuitive, making it easy for even non-tech-savvy individuals to navigate effortlessly. The speed at which it scans and analyzes content is truly remarkable…</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Madison Lambret</span>
+              <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="review-link">Read on Google</a>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="reviews-item">
+          <figure class="review-card">
+            <div class="review-source">
+              <img class="review-source-mark" src="/assets/svg/partners/g2.svg" alt="" aria-hidden="true">
+              <span class="review-source-name">G2</span>
+              <span class="review-rating" data-rating="4.5">
+                <span class="review-stars" role="img" aria-label="4.5 out of 5">
+                  <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                  <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+                </span>
+                <span class="review-rating-value">4.5</span>
+              </span>
+            </div>
+            <blockquote class="review-quote">It is very helpful in-depth research for bloggers and content writers. The content quality seems very genuine and authentic.</blockquote>
+            <figcaption class="review-by">
+              <span class="review-author">Sukhpreet K.</span>
+              <a href="https://www.g2.com/sellers/plagiarismsearch-com" rel="nofollow noopener" class="review-link">Read on G2</a>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <button type="button" data-carousel-prev aria-label="Previous reviews" class="reviews-nav">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button type="button" data-carousel-next aria-label="More reviews" class="reviews-nav">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div data-carousel-dots data-dot-label="Reviews page" class="reviews-dots"></div>
+    <div class="reviews-actions rv">
+      <a href="testimonials.html" class="action-button btn-press group" data-tone="inverse">
+        Read more reviews
+        <span class="action-button-orb icon-orb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-40">HTML для копіювання</label>
+    <textarea id="snippet-40" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-reviews" data-component="reviews" class="reviews-section" data-layout="carousel" data-surface="dark" data-space="md" data-tone="quiet" data-carousel&gt;
+  &lt;div class="reviews-bg"&gt;
+    &lt;div class="orb reviews-glow"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="reviews-inner"&gt;
+    &lt;div class="reviews-top rv"&gt;
+      &lt;div class="section-head" data-measure="720"&gt;
+        &lt;div class="section-eyebrow"&gt;
+          &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
+          &lt;span class="section-eyebrow-label"&gt;Reviews&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;h2 class="section-title"&gt;What users say about PlagiarismSearch&lt;/h2&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="reviews-rail rv"&gt;
+      &lt;div data-carousel-track class="reviews-track"&gt;
+        &lt;div class="reviews-item"&gt;
+          &lt;figure class="review-card"&gt;
+            &lt;div class="review-source"&gt;
+              &lt;img class="review-source-mark" src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true"&gt;
+              &lt;span class="review-source-name"&gt;Trustpilot&lt;/span&gt;
+              &lt;span class="review-rating" data-rating="5"&gt;
+                &lt;span class="review-stars" role="img" aria-label="5 out of 5"&gt;
+                  &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                  &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class="review-rating-value"&gt;5.0&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;blockquote class="review-quote"&gt;Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.&lt;/blockquote&gt;
+            &lt;figcaption class="review-by"&gt;
+              &lt;span class="review-author"&gt;Tersia Gouws&lt;/span&gt;
+              &lt;a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="review-link"&gt;Read on Trustpilot&lt;/a&gt;
+            &lt;/figcaption&gt;
+          &lt;/figure&gt;
+        &lt;/div&gt;
+        &lt;div class="reviews-item"&gt;
+          &lt;figure class="review-card"&gt;
+            &lt;div class="review-source"&gt;
+              &lt;img class="review-source-mark" src="/assets/svg/partners/g2.svg" alt="" aria-hidden="true"&gt;
+              &lt;span class="review-source-name"&gt;G2&lt;/span&gt;
+              &lt;span class="review-rating" data-rating="4"&gt;
+                &lt;span class="review-stars" role="img" aria-label="4 out of 5"&gt;
+                  &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                  &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class="review-rating-value"&gt;4.0&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;blockquote class="review-quote"&gt;I appreciate the accuracy and speed of the PlagiarismSearch Checker. It provides detailed reports, clearly identifying matched sources, and the user interface is intuitive, making the whole process seamless.&lt;/blockquote&gt;
+            &lt;figcaption class="review-by"&gt;
+              &lt;span class="review-author"&gt;Verified User in Higher Education&lt;/span&gt;
+              &lt;a href="https://www.g2.com/sellers/plagiarismsearch-com" rel="nofollow noopener" class="review-link"&gt;Read on G2&lt;/a&gt;
+            &lt;/figcaption&gt;
+          &lt;/figure&gt;
+        &lt;/div&gt;
+        &lt;div class="reviews-item"&gt;
+          &lt;figure class="review-card"&gt;
+            &lt;div class="review-source"&gt;
+              &lt;img class="review-source-mark" src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true"&gt;
+              &lt;span class="review-source-name"&gt;SmartCustomer&lt;/span&gt;
+              &lt;span class="review-rating" data-rating="5"&gt;
+                &lt;span class="review-stars" role="img" aria-label="5 out of 5"&gt;
+                  &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                  &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class="review-rating-value"&gt;5.0&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;blockquote class="review-quote"&gt;One of the biggest advantages of this plagiarism checker is its ability to analyze documents in different formats. This flexibility has saved me countless hours of converting files or dealing with compatibility issues…&lt;/blockquote&gt;
+            &lt;figcaption class="review-by"&gt;
+              &lt;span class="review-author"&gt;Maybelle R.&lt;/span&gt;
+              &lt;a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="review-link"&gt;Read on SmartCustomer&lt;/a&gt;
+            &lt;/figcaption&gt;
+          &lt;/figure&gt;
+        &lt;/div&gt;
+        &lt;div class="reviews-item"&gt;
+          &lt;figure class="review-card"&gt;
+            &lt;div class="review-source"&gt;
+              &lt;img class="review-source-mark" src="/assets/svg/google-icon.svg" alt="" aria-hidden="true"&gt;
+              &lt;span class="review-source-name"&gt;Google Workspace Marketplace&lt;/span&gt;
+              &lt;span class="review-rating" data-rating="5"&gt;
+                &lt;span class="review-stars" role="img" aria-label="5 out of 5"&gt;
+                  &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                  &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class="review-rating-value"&gt;5.0&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;blockquote class="review-quote"&gt;It is a modern multifunctional tool that I use not only to check for plagiarism in various written works, but also to identify the generated content.&lt;/blockquote&gt;
+            &lt;figcaption class="review-by"&gt;
+              &lt;span class="review-author"&gt;Carmel Smith&lt;/span&gt;
+              &lt;a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="review-link"&gt;Read on Google&lt;/a&gt;
+            &lt;/figcaption&gt;
+          &lt;/figure&gt;
+        &lt;/div&gt;
+        &lt;div class="reviews-item"&gt;
+          &lt;figure class="review-card"&gt;
+            &lt;div class="review-source"&gt;
+              &lt;img class="review-source-mark" src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true"&gt;
+              &lt;span class="review-source-name"&gt;Trustpilot&lt;/span&gt;
+              &lt;span class="review-rating" data-rating="5"&gt;
+                &lt;span class="review-stars" role="img" aria-label="5 out of 5"&gt;
+                  &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                  &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class="review-rating-value"&gt;5.0&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;blockquote class="review-quote"&gt;PlagiarismSearch is by far the best plagiarism checkers I&amp;rsquo;ve ever seen. And, I&amp;rsquo;ve used quite a number of them. In fact, they are so good I had to subscribe.&lt;/blockquote&gt;
+            &lt;figcaption class="review-by"&gt;
+              &lt;span class="review-author"&gt;Chioma Isaac Asiwaju&lt;/span&gt;
+              &lt;a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="review-link"&gt;Read on Trustpilot&lt;/a&gt;
+            &lt;/figcaption&gt;
+          &lt;/figure&gt;
+        &lt;/div&gt;
+        &lt;div class="reviews-item"&gt;
+          &lt;figure class="review-card"&gt;
+            &lt;div class="review-source"&gt;
+              &lt;img class="review-source-mark" src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true"&gt;
+              &lt;span class="review-source-name"&gt;SmartCustomer&lt;/span&gt;
+              &lt;span class="review-rating" data-rating="5"&gt;
+                &lt;span class="review-stars" role="img" aria-label="5 out of 5"&gt;
+                  &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                  &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class="review-rating-value"&gt;5.0&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;blockquote class="review-quote"&gt;I am glad that I decided to use the tool for checking the presence of plagiarism. Thanks to the quick and high-quality review, I sent the edited term paper to my teacher on time.&lt;/blockquote&gt;
+            &lt;figcaption class="review-by"&gt;
+              &lt;span class="review-author"&gt;Clarissa C.&lt;/span&gt;
+              &lt;a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="review-link"&gt;Read on SmartCustomer&lt;/a&gt;
+            &lt;/figcaption&gt;
+          &lt;/figure&gt;
+        &lt;/div&gt;
+        &lt;div class="reviews-item"&gt;
+          &lt;figure class="review-card"&gt;
+            &lt;div class="review-source"&gt;
+              &lt;img class="review-source-mark" src="/assets/svg/google-icon.svg" alt="" aria-hidden="true"&gt;
+              &lt;span class="review-source-name"&gt;Google Workspace Marketplace&lt;/span&gt;
+              &lt;span class="review-rating" data-rating="5"&gt;
+                &lt;span class="review-stars" role="img" aria-label="5 out of 5"&gt;
+                  &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                  &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class="review-rating-value"&gt;5.0&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;blockquote class="review-quote"&gt;The interface is user-friendly and intuitive, making it easy for even non-tech-savvy individuals to navigate effortlessly. The speed at which it scans and analyzes content is truly remarkable…&lt;/blockquote&gt;
+            &lt;figcaption class="review-by"&gt;
+              &lt;span class="review-author"&gt;Madison Lambret&lt;/span&gt;
+              &lt;a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="review-link"&gt;Read on Google&lt;/a&gt;
+            &lt;/figcaption&gt;
+          &lt;/figure&gt;
+        &lt;/div&gt;
+        &lt;div class="reviews-item"&gt;
+          &lt;figure class="review-card"&gt;
+            &lt;div class="review-source"&gt;
+              &lt;img class="review-source-mark" src="/assets/svg/partners/g2.svg" alt="" aria-hidden="true"&gt;
+              &lt;span class="review-source-name"&gt;G2&lt;/span&gt;
+              &lt;span class="review-rating" data-rating="4.5"&gt;
+                &lt;span class="review-stars" role="img" aria-label="4.5 out of 5"&gt;
+                  &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                  &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class="review-rating-value"&gt;4.5&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;blockquote class="review-quote"&gt;It is very helpful in-depth research for bloggers and content writers. The content quality seems very genuine and authentic.&lt;/blockquote&gt;
+            &lt;figcaption class="review-by"&gt;
+              &lt;span class="review-author"&gt;Sukhpreet K.&lt;/span&gt;
+              &lt;a href="https://www.g2.com/sellers/plagiarismsearch-com" rel="nofollow noopener" class="review-link"&gt;Read on G2&lt;/a&gt;
+            &lt;/figcaption&gt;
+          &lt;/figure&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button type="button" data-carousel-prev aria-label="Previous reviews" class="reviews-nav"&gt;
+        &lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m15 18-6-6 6-6"/&gt;&lt;/svg&gt;
+      &lt;/button&gt;
+      &lt;button type="button" data-carousel-next aria-label="More reviews" class="reviews-nav"&gt;
+        &lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="m9 18 6-6-6-6"/&gt;&lt;/svg&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div data-carousel-dots data-dot-label="Reviews page" class="reviews-dots"&gt;&lt;/div&gt;
+    &lt;div class="reviews-actions rv"&gt;
+      &lt;a href="testimonials.html" class="action-button btn-press group" data-tone="inverse"&gt;
+        Read more reviews
+        &lt;span class="action-button-orb icon-orb"&gt;&lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;&lt;path d="M5 12h14"/&gt;&lt;path d="m12 5 7 7-7 7"/&gt;&lt;/svg&gt;&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── reviews · 2 · reviews-grid.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Reviews · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Reviews · три картки в ряд (grid)</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">data-layout="grid" на сірій секції: три білі картки, без пігулки. Відгуки подано мовою оригіналу — lang="en" на сітці, бо сторінка українська: перекладений відгук був би вже іншим текстом. Копія — українська сторінка.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: ua-plagiarism-check · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/reviews-grid.html</code></p>
+    </div>
+  </div>
+
+<section id="example-reviews-grid" data-component="reviews" class="reviews-section" data-layout="grid" data-bg="tint" data-space="md">
+  <div class="reviews-inner">
+    <div class="section-head rv" data-measure="860">
+      <h2 class="section-title">Відгуки користувачів PlagiarismSearch</h2>
+    </div>
+    <div data-stagger=".06" class="reviews-grid rv-kids" lang="en">
+      <div class="reviews-item">
+        <figure class="review-card">
+          <div class="review-source">
+            <img class="review-source-mark" src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true">
+            <span class="review-source-name">Trustpilot</span>
+            <span class="review-rating" data-rating="5">
+              <span class="review-stars" role="img" aria-label="5 out of 5">
+                <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+              </span>
+              <span class="review-rating-value">5.0</span>
+            </span>
+          </div>
+          <blockquote class="review-quote">Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.</blockquote>
+          <figcaption class="review-by">
+            <span class="review-author">Tersia Gouws</span>
+            <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on Trustpilot</a>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="reviews-item">
+        <figure class="review-card">
+          <div class="review-source">
+            <img class="review-source-mark" src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true">
+            <span class="review-source-name">SmartCustomer</span>
+            <span class="review-rating" data-rating="5">
+              <span class="review-stars" role="img" aria-label="5 out of 5">
+                <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+              </span>
+              <span class="review-rating-value">5.0</span>
+            </span>
+          </div>
+          <blockquote class="review-quote">One of the biggest advantages of this plagiarism checker is its ability to analyze documents in different formats. This flexibility has saved me countless hours of converting files or dealing with compatibility issues…</blockquote>
+          <figcaption class="review-by">
+            <span class="review-author">Maybelle R.</span>
+            <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="review-link">Read on SmartCustomer</a>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="reviews-item">
+        <figure class="review-card">
+          <div class="review-source">
+            <img class="review-source-mark" src="/assets/svg/google-icon.svg" alt="" aria-hidden="true">
+            <span class="review-source-name">Google Workspace Marketplace</span>
+            <span class="review-rating" data-rating="5">
+              <span class="review-stars" role="img" aria-label="5 out of 5">
+                <span class="review-stars-base"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span>
+                <span class="review-stars-lit"><span class="review-stars-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/></svg></span></span>
+              </span>
+              <span class="review-rating-value">5.0</span>
+            </span>
+          </div>
+          <blockquote class="review-quote">It is a modern multifunctional tool that I use not only to check for plagiarism in various written works, but also to identify the generated content.</blockquote>
+          <figcaption class="review-by">
+            <span class="review-author">Carmel Smith</span>
+            <a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="review-link">Read on Google</a>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-41">HTML для копіювання</label>
+    <textarea id="snippet-41" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-reviews-grid" data-component="reviews" class="reviews-section" data-layout="grid" data-bg="tint" data-space="md"&gt;
+  &lt;div class="reviews-inner"&gt;
+    &lt;div class="section-head rv" data-measure="860"&gt;
+      &lt;h2 class="section-title"&gt;Відгуки користувачів PlagiarismSearch&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;div data-stagger=".06" class="reviews-grid rv-kids" lang="en"&gt;
+      &lt;div class="reviews-item"&gt;
+        &lt;figure class="review-card"&gt;
+          &lt;div class="review-source"&gt;
+            &lt;img class="review-source-mark" src="/assets/svg/trustpilot-icon.svg" alt="" aria-hidden="true"&gt;
+            &lt;span class="review-source-name"&gt;Trustpilot&lt;/span&gt;
+            &lt;span class="review-rating" data-rating="5"&gt;
+              &lt;span class="review-stars" role="img" aria-label="5 out of 5"&gt;
+                &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+              &lt;/span&gt;
+              &lt;span class="review-rating-value"&gt;5.0&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/div&gt;
+          &lt;blockquote class="review-quote"&gt;Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.&lt;/blockquote&gt;
+          &lt;figcaption class="review-by"&gt;
+            &lt;span class="review-author"&gt;Tersia Gouws&lt;/span&gt;
+            &lt;a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="review-link"&gt;Read on Trustpilot&lt;/a&gt;
+          &lt;/figcaption&gt;
+        &lt;/figure&gt;
+      &lt;/div&gt;
+      &lt;div class="reviews-item"&gt;
+        &lt;figure class="review-card"&gt;
+          &lt;div class="review-source"&gt;
+            &lt;img class="review-source-mark" src="/assets/svg/partners/smartcustomer-icon.svg" alt="" aria-hidden="true"&gt;
+            &lt;span class="review-source-name"&gt;SmartCustomer&lt;/span&gt;
+            &lt;span class="review-rating" data-rating="5"&gt;
+              &lt;span class="review-stars" role="img" aria-label="5 out of 5"&gt;
+                &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+              &lt;/span&gt;
+              &lt;span class="review-rating-value"&gt;5.0&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/div&gt;
+          &lt;blockquote class="review-quote"&gt;One of the biggest advantages of this plagiarism checker is its ability to analyze documents in different formats. This flexibility has saved me countless hours of converting files or dealing with compatibility issues…&lt;/blockquote&gt;
+          &lt;figcaption class="review-by"&gt;
+            &lt;span class="review-author"&gt;Maybelle R.&lt;/span&gt;
+            &lt;a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="review-link"&gt;Read on SmartCustomer&lt;/a&gt;
+          &lt;/figcaption&gt;
+        &lt;/figure&gt;
+      &lt;/div&gt;
+      &lt;div class="reviews-item"&gt;
+        &lt;figure class="review-card"&gt;
+          &lt;div class="review-source"&gt;
+            &lt;img class="review-source-mark" src="/assets/svg/google-icon.svg" alt="" aria-hidden="true"&gt;
+            &lt;span class="review-source-name"&gt;Google Workspace Marketplace&lt;/span&gt;
+            &lt;span class="review-rating" data-rating="5"&gt;
+              &lt;span class="review-stars" role="img" aria-label="5 out of 5"&gt;
+                &lt;span class="review-stars-base"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+                &lt;span class="review-stars-lit"&gt;&lt;span class="review-stars-row"&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;&lt;path d="m12 2 2.9 6.26 6.6.83-4.9 4.6 1.3 6.31L12 16.9 6.1 20l1.3-6.31L2.5 9.09l6.6-.83z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
+              &lt;/span&gt;
+              &lt;span class="review-rating-value"&gt;5.0&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/div&gt;
+          &lt;blockquote class="review-quote"&gt;It is a modern multifunctional tool that I use not only to check for plagiarism in various written works, but also to identify the generated content.&lt;/blockquote&gt;
+          &lt;figcaption class="review-by"&gt;
+            &lt;span class="review-author"&gt;Carmel Smith&lt;/span&gt;
+            &lt;a href="https://workspace.google.com/marketplace/app/check_for_plagiarism_in_google_docs/347088629827" rel="nofollow noopener" class="review-link"&gt;Read on Google&lt;/a&gt;
+          &lt;/figcaption&gt;
+        &lt;/figure&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
   <section id="lib-faq" class="bg-white border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
       <div>
@@ -6766,8 +7403,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-40">HTML для копіювання</label>
-    <textarea id="snippet-40" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-42">HTML для копіювання</label>
+    <textarea id="snippet-42" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -6859,8 +7496,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-41">HTML для копіювання</label>
-    <textarea id="snippet-41" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-43">HTML для копіювання</label>
+    <textarea id="snippet-43" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -6952,8 +7589,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-42">HTML для копіювання</label>
-    <textarea id="snippet-42" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-44">HTML для копіювання</label>
+    <textarea id="snippet-44" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -7052,8 +7689,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-43">HTML для копіювання</label>
-    <textarea id="snippet-43" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-45">HTML для копіювання</label>
+    <textarea id="snippet-45" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -7146,8 +7783,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-44">HTML для копіювання</label>
-    <textarea id="snippet-44" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-46">HTML для копіювання</label>
+    <textarea id="snippet-46" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -7238,8 +7875,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-45">HTML для копіювання</label>
-    <textarea id="snippet-45" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-47">HTML для копіювання</label>
+    <textarea id="snippet-47" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -7337,8 +7974,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-46">HTML для копіювання</label>
-    <textarea id="snippet-46" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-48">HTML для копіювання</label>
+    <textarea id="snippet-48" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
   &lt;div class="faq-aside"&gt;
     &lt;div class="section-eyebrow"&gt;
       &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
@@ -7425,8 +8062,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-47">HTML для копіювання</label>
-    <textarea id="snippet-47" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-49">HTML для копіювання</label>
+    <textarea id="snippet-49" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
   &lt;div class="faq-list" data-faq&gt;
     &lt;div class="faq-item open"&gt;
       &lt;h3 class="faq-heading"&gt;&lt;button type="button" aria-controls="example-faq-doc-a1" aria-expanded="true" class="faq-q"&gt;
@@ -7579,8 +8216,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-48">HTML для копіювання</label>
-    <textarea id="snippet-48" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-50">HTML для копіювання</label>
+    <textarea id="snippet-50" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7631,8 +8268,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-49">HTML для копіювання</label>
-    <textarea id="snippet-49" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-51">HTML для копіювання</label>
+    <textarea id="snippet-51" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7685,8 +8322,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-50">HTML для копіювання</label>
-    <textarea id="snippet-50" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-52">HTML для копіювання</label>
+    <textarea id="snippet-52" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7744,8 +8381,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-51">HTML для копіювання</label>
-    <textarea id="snippet-51" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-53">HTML для копіювання</label>
+    <textarea id="snippet-53" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7799,8 +8436,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-52">HTML для копіювання</label>
-    <textarea id="snippet-52" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-54">HTML для копіювання</label>
+    <textarea id="snippet-54" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7850,8 +8487,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-53">HTML для копіювання</label>
-    <textarea id="snippet-53" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-55">HTML для копіювання</label>
+    <textarea id="snippet-55" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7901,8 +8538,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-54">HTML для копіювання</label>
-    <textarea id="snippet-54" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-56">HTML для копіювання</label>
+    <textarea id="snippet-56" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7945,8 +8582,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-55">HTML для копіювання</label>
-    <textarea id="snippet-55" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-57">HTML для копіювання</label>
+    <textarea id="snippet-57" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -7984,8 +8621,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-56">HTML для копіювання</label>
-    <textarea id="snippet-56" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-58">HTML для копіювання</label>
+    <textarea id="snippet-58" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -8108,8 +8745,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-57">HTML для копіювання</label>
-    <textarea id="snippet-57" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-59">HTML для копіювання</label>
+    <textarea id="snippet-59" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -8166,8 +8803,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-58">HTML для копіювання</label>
-    <textarea id="snippet-58" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-60">HTML для копіювання</label>
+    <textarea id="snippet-60" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -8225,8 +8862,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-59">HTML для копіювання</label>
-    <textarea id="snippet-59" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-61">HTML для копіювання</label>
+    <textarea id="snippet-61" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -8307,8 +8944,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-60">HTML для копіювання</label>
-    <textarea id="snippet-60" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-62">HTML для копіювання</label>
+    <textarea id="snippet-62" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -8412,8 +9049,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-61">HTML для копіювання</label>
-    <textarea id="snippet-61" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-63">HTML для копіювання</label>
+    <textarea id="snippet-63" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -8638,8 +9275,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-62">HTML для копіювання</label>
-    <textarea id="snippet-62" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-64">HTML для копіювання</label>
+    <textarea id="snippet-64" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -8845,8 +9482,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-63">HTML для копіювання</label>
-    <textarea id="snippet-63" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-65">HTML для копіювання</label>
+    <textarea id="snippet-65" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -9023,8 +9660,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-64">HTML для копіювання</label>
-    <textarea id="snippet-64" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-66">HTML для копіювання</label>
+    <textarea id="snippet-66" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;

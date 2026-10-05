@@ -12,7 +12,9 @@
        text                              data-tone="light": white with a hairline ring
        span.action-button-orb.icon-orb   data-tone="ghost": the 48 / 56px ring-only button of
          svg                             the homepage cards
-     a.action-link                       the quiet link beside a button
+                                         data-tone="inverse": the same size in white, for a
+                                         dark section
+     a.action-link                      the quiet link beside a button
 
    The smaller quiet link that stands alone (under a card, at the foot of a section) is
    the Section Header's a.section-link.
@@ -40,6 +42,14 @@
 }
 :where(.action-button[data-tone="ghost"]) .action-button-orb {
   @apply flex w-9 h-9 bg-ink-900/5;
+}
+
+/* on a dark section: the same 48 / 56px size, white (the homepage's reviews) */
+.action-button:where([data-tone="inverse"]) {
+  @apply gap-2 h-12 sm:h-14 bg-white hover:bg-white/90 text-ink-900 text-[14px] sm:text-[15px] pl-5 sm:pl-7 pr-2.5 sm:pr-2.5 py-0;
+}
+:where(.action-button[data-tone="inverse"]) .action-button-orb {
+  @apply flex w-9 h-9 bg-ink-900/10;
 }
 
 .action-link {
