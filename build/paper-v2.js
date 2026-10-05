@@ -269,7 +269,7 @@ const SP = C.specifics;
 const section4 = () => `  <!-- ================= 04 · SPECIFICS OF USING OUR SERVICES =================
        The text, then the live four-step procedure as a numbered row; the last step's card
        is dark, where the work arrives. -->
-  <section id="how-it-works" data-component="steps" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="how-it-works" data-component="order-steps" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv grid lg:grid-cols-[1fr_1fr] gap-6 lg:gap-14 mb-10 sm:mb-12">
         <div>
