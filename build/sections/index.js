@@ -24,6 +24,7 @@
    (icon-tile.js / .css); check-tools.js holds their rules for every host. */
 module.exports = [
   { name: 'hero', title: 'Hero', contract: require('./hero.contract'), check: require('./hero.check') },
+  { name: 'stat-rail', title: 'Stat rail', contract: require('./stat-rail.contract'), check: require('./stat-rail.check') },
   { name: 'steps', title: 'Steps', contract: require('./steps.contract'), check: require('./steps.check') },
   { name: 'feature-cards', title: 'Feature cards', contract: require('./feature-cards.contract'), check: require('./feature-cards.check') },
   { name: 'sources', title: 'Sources', contract: require('./sources.contract'), check: require('./sources.check') },

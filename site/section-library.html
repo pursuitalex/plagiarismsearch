@@ -27,6 +27,7 @@
     </div>
     <ul class="mt-6 flex flex-wrap gap-2.5">
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-hero">Hero <span class="text-ink-400 font-medium">7</span></a></li>
+      <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-stat-rail">Stat rail <span class="text-ink-400 font-medium">2</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-steps">Steps <span class="text-ink-400 font-medium">10</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-feature-cards">Feature cards <span class="text-ink-400 font-medium">6</span></a></li>
       <li><a class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[13.5px] font-semibold text-ink-800 hover:ring-black/20" href="#lib-sources">Sources <span class="text-ink-400 font-medium">5</span></a></li>
@@ -1438,6 +1439,183 @@
 &lt;/section&gt;</textarea>
   </div>
 
+  <section id="lib-stat-rail" class="bg-white border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
+      <div>
+        <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-3">Компонент</p>
+        <h2 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-3">Stat rail</h2>
+        <div class="max-w-[76ch] space-y-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <p>Вузька смуга доказів одразу під hero: кілька цифр або знаків в один ряд, кожен із коротким підписом. Власного заголовка не має.</p>
+          <p>Шаблон: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/stat-rail.js</code> · CSS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/stat-rail.css</code> · JS: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/assets/js/20-motion.js (поява .rv), 24-odometer.js (цифри з класом od-num)</code> · контракт: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/stat-rail.contract.js</code> · фрагменти: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/stat-rail-*.html</code></p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що редактор може змінювати</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Поле</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Де в HTML</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Правило</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Якір секції</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">&lt;section id="…"&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">латиниця, унікальний на сторінці; можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Варіант</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone на &lt;section&gt;</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">soft або без атрибута</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Пункт</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.stat-rail-item</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">додати чи прибрати — цілим блоком, скопіювавши сусідній; пунктів 2–5</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Рядок над цифрою</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.stat-rail-lead</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">короткий текст («Plagiarism checking in»). Якщо рядка немає, на його місці стоїть порожній &lt;div class="stat-rail-gap" aria-hidden="true"&gt;&lt;/div&gt; — він тримає цифри на одній лінії; щоб додати рядок, замініть його на div.stat-rail-lead з текстом</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Цифра</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.stat-rail-value</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">коротка цифра з позначками («500,000+», «80+»), без розмітки. Це твердження про продукт: змінюйте лише на підтверджене число. Клас od-num — цифра «прокручується» при появі; його можна прибрати</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Знак замість цифри</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">img.stat-rail-mark</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">src — шлях до файла знака (SVG); alt порожній і aria-hidden="true", бо назву каже підпис під знаком. Розміри задає рейка</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">Підпис</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">div.stat-rail-label</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">текст (обов’язковий), без розмітки</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Що не змінюється</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">
+          <li>усі класи й обгортки: .stat-rail-inner, .stat-rail-list, .stat-rail-item, .stat-rail-figure</li>
+          <li>data-component="stat-rail" на секції — гачок для перевірок</li>
+          <li>клас-гачок rv на списку (анімація появи); od-num на цифрі — гачок «одометра» (build/assets/js/24-odometer.js)</li>
+          <li>склад пункту і порядок: рядок над цифрою або порожній проміжок → цифра або знак (усередині div.stat-rail-figure) → підпис</li>
+          <li>жодних посилань, кнопок, style="", &lt;script&gt;, &lt;style&gt;, класів Tailwind (px-4, text-ink-600 …) усередині рейки</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Варіанти</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Де</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Атрибут</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Значення</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Що робить</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900">section</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">data-tone</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">soft</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">необов’язковий. колір підписів. Без атрибута — ink-500 (контрастний, для читання). soft — світліший ink-400, як на головній.</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+      <div>
+        <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-3">Де що використано зараз</h3>
+        <div class="overflow-x-auto rounded-xl ring-1 ring-black/5 bg-white">
+      <table class="w-full text-left text-[13px] sm:text-[13.5px]">
+        <thead class="bg-ink-50 text-ink-500"><tr><th class="px-3 sm:px-4 py-2.5 font-semibold">Сторінка</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Корінь</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Варіанти</th><th class="px-3 sm:px-4 py-2.5 font-semibold">Склад</th></tr></thead>
+        <tbody class="divide-y divide-ink-100">
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="plagiarism-checker-for-students.html">plagiarism-checker-for-students.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">—</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 пункти: дві цифри, знак BBB; один рядок над цифрою</td></tr>
+          <tr><td class="px-3 sm:px-4 py-2.5 align-top font-semibold text-ink-900"><a class="underline decoration-ink-300 underline-offset-4" href="index.html">index.html</a></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600"><code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">section</code></td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">soft</td><td class="px-3 sm:px-4 py-2.5 align-top text-ink-600">3 пункти: дві цифри з od-num, знак BBB; один рядок над цифрою</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── stat-rail · 1 · stat-rail.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Stat rail · варіант 1</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Stat rail · дві цифри і знак</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Вузька смуга доказів під hero: цифра або знак, під ними короткий підпис; над другою цифрою — рядок «Plagiarism checking in», в інших пунктах на його місці порожній проміжок. Підписи контрастні (ink-500). Копія — Students.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: plagiarism-checker-for-students · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/stat-rail.html</code></p>
+    </div>
+  </div>
+
+<section id="example-stat-rail" data-component="stat-rail" class="stat-rail">
+  <div class="stat-rail-inner">
+    <div class="stat-rail-list rv">
+      <div class="stat-rail-item">
+        <div class="stat-rail-gap" aria-hidden="true"></div>
+        <div class="stat-rail-figure"><div class="stat-rail-value">500,000+</div></div>
+        <div class="stat-rail-label">users</div>
+      </div>
+      <div class="stat-rail-item">
+        <div class="stat-rail-lead">Plagiarism checking in</div>
+        <div class="stat-rail-figure"><div class="stat-rail-value">80+</div></div>
+        <div class="stat-rail-label">languages</div>
+      </div>
+      <div class="stat-rail-item">
+        <div class="stat-rail-gap" aria-hidden="true"></div>
+        <div class="stat-rail-figure"><img class="stat-rail-mark" src="/assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+        <div class="stat-rail-label">BBB Accredited</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-8">HTML для копіювання</label>
+    <textarea id="snippet-8" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-stat-rail" data-component="stat-rail" class="stat-rail"&gt;
+  &lt;div class="stat-rail-inner"&gt;
+    &lt;div class="stat-rail-list rv"&gt;
+      &lt;div class="stat-rail-item"&gt;
+        &lt;div class="stat-rail-gap" aria-hidden="true"&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-figure"&gt;&lt;div class="stat-rail-value"&gt;500,000+&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-label"&gt;users&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="stat-rail-item"&gt;
+        &lt;div class="stat-rail-lead"&gt;Plagiarism checking in&lt;/div&gt;
+        &lt;div class="stat-rail-figure"&gt;&lt;div class="stat-rail-value"&gt;80+&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-label"&gt;languages&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="stat-rail-item"&gt;
+        &lt;div class="stat-rail-gap" aria-hidden="true"&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-figure"&gt;&lt;img class="stat-rail-mark" src="/assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async"&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-label"&gt;BBB Accredited&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
+  <!-- ── stat-rail · 2 · stat-rail-roll.html ── -->
+  <div class="border-t border-ink-200/60">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-6">
+      <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-2">Stat rail · варіант 2</p>
+      <h3 class="text-[18px] sm:text-[20px] lg:text-[22px] font-extrabold tracking-tight mb-2">Stat rail · цифри «прокручуються», світліші підписи</h3>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch]">Те саме з класом od-num на цифрах — вони набігають, як одометр, коли смуга з’являється, — і з data-tone="soft" (світліші підписи головної). Копія — головна.</p>
+      <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600 max-w-[76ch] mt-1">Сторінки: index (головна) · файл: <code class="font-mono text-[12.5px] text-ink-800 bg-ink-100 rounded px-1 py-0.5">build/sections/snippets/stat-rail-roll.html</code></p>
+    </div>
+  </div>
+
+<section id="example-stat-rail-roll" data-component="stat-rail" class="stat-rail" data-tone="soft">
+  <div class="stat-rail-inner">
+    <div class="stat-rail-list rv">
+      <div class="stat-rail-item">
+        <div class="stat-rail-gap" aria-hidden="true"></div>
+        <div class="stat-rail-figure"><div class="stat-rail-value od-num">500,000+</div></div>
+        <div class="stat-rail-label">users</div>
+      </div>
+      <div class="stat-rail-item">
+        <div class="stat-rail-lead">Plagiarism checking in</div>
+        <div class="stat-rail-figure"><div class="stat-rail-value od-num">80+</div></div>
+        <div class="stat-rail-label">languages</div>
+      </div>
+      <div class="stat-rail-item">
+        <div class="stat-rail-gap" aria-hidden="true"></div>
+        <div class="stat-rail-figure"><img class="stat-rail-mark" src="/assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+        <div class="stat-rail-label">BBB Accredited</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-9">HTML для копіювання</label>
+    <textarea id="snippet-9" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-stat-rail-roll" data-component="stat-rail" class="stat-rail" data-tone="soft"&gt;
+  &lt;div class="stat-rail-inner"&gt;
+    &lt;div class="stat-rail-list rv"&gt;
+      &lt;div class="stat-rail-item"&gt;
+        &lt;div class="stat-rail-gap" aria-hidden="true"&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-figure"&gt;&lt;div class="stat-rail-value od-num"&gt;500,000+&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-label"&gt;users&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="stat-rail-item"&gt;
+        &lt;div class="stat-rail-lead"&gt;Plagiarism checking in&lt;/div&gt;
+        &lt;div class="stat-rail-figure"&gt;&lt;div class="stat-rail-value od-num"&gt;80+&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-label"&gt;languages&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="stat-rail-item"&gt;
+        &lt;div class="stat-rail-gap" aria-hidden="true"&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-figure"&gt;&lt;img class="stat-rail-mark" src="/assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async"&gt;&lt;/div&gt;
+        &lt;div class="stat-rail-label"&gt;BBB Accredited&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea>
+  </div>
+
   <section id="lib-steps" class="bg-white border-t border-ink-200/60">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 sm:pt-12 pb-10 space-y-8">
       <div>
@@ -1606,8 +1784,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-8">HTML для копіювання</label>
-    <textarea id="snippet-8" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="white" data-space="lg"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-10">HTML для копіювання</label>
+    <textarea id="snippet-10" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="white" data-space="lg"&gt;
   &lt;div class="steps-inner"&gt;
     &lt;div class="section-head rv"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -1720,8 +1898,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-9">HTML для копіювання</label>
-    <textarea id="snippet-9" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail-3" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="cool" data-space="md"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-11">HTML для копіювання</label>
+    <textarea id="snippet-11" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail-3" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="cool" data-space="md"&gt;
   &lt;div class="steps-inner"&gt;
     &lt;div class="section-head rv"&gt;
       &lt;h2 class="section-title"&gt;Know what happens to your document in PlagiarismSearch&lt;/h2&gt;
@@ -1822,8 +2000,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-10">HTML для копіювання</label>
-    <textarea id="snippet-10" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail-apart" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="cool" data-space="md" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-12">HTML для копіювання</label>
+    <textarea id="snippet-12" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail-apart" data-component="steps" class="steps-section" data-layout="rail" data-marker="icon" data-bg="cool" data-space="md" data-accent="teal"&gt;
   &lt;div class="steps-inner"&gt;
     &lt;div class="section-head rv" data-measure="860"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -1918,8 +2096,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-11">HTML для копіювання</label>
-    <textarea id="snippet-11" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail-disc" data-component="steps" class="steps-section" data-layout="rail" data-marker="disc" data-bg="white" data-space="md"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-13">HTML для копіювання</label>
+    <textarea id="snippet-13" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rail-disc" data-component="steps" class="steps-section" data-layout="rail" data-marker="disc" data-bg="white" data-space="md"&gt;
   &lt;div class="steps-inner"&gt;
     &lt;div class="section-head rv" data-measure="860"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -2007,8 +2185,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-12">HTML для копіювання</label>
-    <textarea id="snippet-12" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-cards" data-component="steps" class="steps-section" data-layout="cards" data-marker="icon" data-bg="white" data-space="md" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-14">HTML для копіювання</label>
+    <textarea id="snippet-14" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-cards" data-component="steps" class="steps-section" data-layout="cards" data-marker="icon" data-bg="white" data-space="md" data-accent="teal"&gt;
   &lt;div class="steps-inner"&gt;
     &lt;div class="section-head rv"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -2123,8 +2301,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-13">HTML для копіювання</label>
-    <textarea id="snippet-13" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-stack" data-component="steps" class="steps-section" data-layout="cards" data-marker="icon-stack" data-bg="aqua" data-space="md"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-15">HTML для копіювання</label>
+    <textarea id="snippet-15" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-stack" data-component="steps" class="steps-section" data-layout="cards" data-marker="icon-stack" data-bg="aqua" data-space="md"&gt;
   &lt;div class="steps-bg"&gt;
     &lt;div class="orb steps-glow"&gt;&lt;/div&gt;
   &lt;/div&gt;
@@ -2286,8 +2464,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-14">HTML для копіювання</label>
-    <textarea id="snippet-14" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-badge" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge" data-bg="white" data-space="lg"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-16">HTML для копіювання</label>
+    <textarea id="snippet-16" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-badge" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge" data-bg="white" data-space="lg"&gt;
   &lt;div class="steps-inner"&gt;
     &lt;div class="section-head rv" data-measure="760"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -2427,8 +2605,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-15">HTML для копіювання</label>
-    <textarea id="snippet-15" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-compact" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge-sm" data-bg="aqua" data-space="lg" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-17">HTML для копіювання</label>
+    <textarea id="snippet-17" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-compact" data-component="steps" class="steps-section" data-layout="cards" data-marker="badge-sm" data-bg="aqua" data-space="lg" data-accent="teal"&gt;
   &lt;div class="steps-inner"&gt;
     &lt;div class="section-head rv" data-measure="760"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -2532,8 +2710,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-16">HTML для копіювання</label>
-    <textarea id="snippet-16" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rows" data-component="steps" class="steps-section" data-layout="rows" data-bg="white" data-space="lg"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-18">HTML для копіювання</label>
+    <textarea id="snippet-18" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rows" data-component="steps" class="steps-section" data-layout="rows" data-bg="white" data-space="lg"&gt;
   &lt;div class="steps-inner"&gt;
     &lt;div class="section-head rv"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -2643,8 +2821,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-17">HTML для копіювання</label>
-    <textarea id="snippet-17" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rows-icon" data-component="steps" class="steps-section" data-layout="rows" data-marker="icon" data-bg="cool" data-space="lg"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-19">HTML для копіювання</label>
+    <textarea id="snippet-19" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-steps-rows-icon" data-component="steps" class="steps-section" data-layout="rows" data-marker="icon" data-bg="cool" data-space="lg"&gt;
   &lt;div class="steps-inner"&gt;
     &lt;div class="section-head rv"&gt;
       &lt;h2 class="section-title"&gt;How It Works&lt;/h2&gt;
@@ -2829,8 +3007,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-18">HTML для копіювання</label>
-    <textarea id="snippet-18" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-grid" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-20">HTML для копіювання</label>
+    <textarea id="snippet-20" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-grid" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg"&gt;
   &lt;div class="cards-inner"&gt;
     &lt;div class="section-head rv"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -2919,8 +3097,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-19">HTML для копіювання</label>
-    <textarea id="snippet-19" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-inline" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-21">HTML для копіювання</label>
+    <textarea id="snippet-21" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-inline" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="lg"&gt;
   &lt;div class="cards-inner"&gt;
     &lt;div class="cards-grid rv" data-head="inline"&gt;
       &lt;div class="cards-head-cell"&gt;
@@ -2998,8 +3176,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-20">HTML для копіювання</label>
-    <textarea id="snippet-20" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-compact" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="aqua" data-space="lg" data-size="compact"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-22">HTML для копіювання</label>
+    <textarea id="snippet-22" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-compact" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="aqua" data-space="lg" data-size="compact"&gt;
   &lt;div class="cards-inner"&gt;
     &lt;div class="section-head rv" data-measure="760"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -3089,8 +3267,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-21">HTML для копіювання</label>
-    <textarea id="snippet-21" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-lead" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="md" data-size="lead"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-23">HTML для копіювання</label>
+    <textarea id="snippet-23" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-lead" data-component="feature-cards" class="cards-section" data-layout="grid" data-bg="cool" data-space="md" data-size="lead"&gt;
   &lt;div class="cards-inner"&gt;
     &lt;div class="section-head rv" data-measure="720"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -3191,8 +3369,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-22">HTML для копіювання</label>
-    <textarea id="snippet-22" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-panel" data-component="feature-cards" class="cards-section" data-layout="panel" data-bg="white" data-space="lg"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
+    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-panel" data-component="feature-cards" class="cards-section" data-layout="panel" data-bg="white" data-space="lg"&gt;
   &lt;div class="cards-inner"&gt;
     &lt;div class="section-head rv"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -3269,8 +3447,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-23">HTML для копіювання</label>
-    <textarea id="snippet-23" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-panel-bare" data-component="feature-cards" aria-label="Affiliate Dashboard, Performance Statistics, Conversion Tracking" class="cards-section" data-layout="panel" data-bg="white" data-space="sm"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
+    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cards-panel-bare" data-component="feature-cards" aria-label="Affiliate Dashboard, Performance Statistics, Conversion Tracking" class="cards-section" data-layout="panel" data-bg="white" data-space="sm"&gt;
   &lt;div class="cards-inner"&gt;
     &lt;div class="cards-panel rv"&gt;
       &lt;div class="cards-cells"&gt;
@@ -3457,8 +3635,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-24">HTML для копіювання</label>
-    <textarea id="snippet-24" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-groups" data-component="sources" class="sources-section" data-layout="groups" data-bg="cool" data-space="lg" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-26">HTML для копіювання</label>
+    <textarea id="snippet-26" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-groups" data-component="sources" class="sources-section" data-layout="groups" data-bg="cool" data-space="lg" data-accent="teal"&gt;
   &lt;div class="sources-inner"&gt;
     &lt;div class="section-head rv"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -3606,8 +3784,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-25">HTML для копіювання</label>
-    <textarea id="snippet-25" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-labels" data-component="sources" class="sources-section" data-layout="groups" data-bg="cool" data-space="md" data-items="labels"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-27">HTML для копіювання</label>
+    <textarea id="snippet-27" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-labels" data-component="sources" class="sources-section" data-layout="groups" data-bg="cool" data-space="md" data-items="labels"&gt;
   &lt;div class="sources-inner"&gt;
     &lt;div class="section-head rv" data-measure="720"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -3752,8 +3930,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-26">HTML для копіювання</label>
-    <textarea id="snippet-26" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-flow" data-component="sources" class="sources-section" data-layout="flow" data-bg="white" data-space="lg" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-28">HTML для копіювання</label>
+    <textarea id="snippet-28" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-flow" data-component="sources" class="sources-section" data-layout="flow" data-bg="white" data-space="lg" data-accent="teal"&gt;
   &lt;div class="sources-inner"&gt;
     &lt;div class="section-head rv"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -3883,8 +4061,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-27">HTML для копіювання</label>
-    <textarea id="snippet-27" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-list" data-component="sources" class="sources-section" data-layout="list" data-bg="cool" data-space="md" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-29">HTML для копіювання</label>
+    <textarea id="snippet-29" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-list" data-component="sources" class="sources-section" data-layout="list" data-bg="cool" data-space="md" data-accent="teal"&gt;
   &lt;div class="sources-inner"&gt;
     &lt;div class="sources-split"&gt;
       &lt;div class="sources-aside rv"&gt;
@@ -3998,8 +4176,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-28">HTML для копіювання</label>
-    <textarea id="snippet-28" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-cells" data-component="sources" class="sources-section" data-layout="cells" data-bg="cool" data-space="md" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-30">HTML для копіювання</label>
+    <textarea id="snippet-30" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-sources-cells" data-component="sources" class="sources-section" data-layout="cells" data-bg="cool" data-space="md" data-accent="teal"&gt;
   &lt;div class="sources-inner"&gt;
     &lt;div class="section-head rv" data-measure="860"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -4310,8 +4488,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-29">HTML для копіювання</label>
-    <textarea id="snippet-29" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report" data-component="report-showcase" class="report-showcase" data-surface="dark" data-space="md" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-31">HTML для копіювання</label>
+    <textarea id="snippet-31" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report" data-component="report-showcase" class="report-showcase" data-surface="dark" data-space="md" data-accent="teal"&gt;
   &lt;div class="orb orb-dark-teal"&gt;&lt;/div&gt;
   &lt;div class="orb orb-dark-coral"&gt;&lt;/div&gt;
   &lt;div class="report-inner"&gt;
@@ -4631,8 +4809,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-30">HTML для копіювання</label>
-    <textarea id="snippet-30" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report-pair" data-component="report-showcase" class="report-showcase" data-surface="dark" data-space="md" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-32">HTML для копіювання</label>
+    <textarea id="snippet-32" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report-pair" data-component="report-showcase" class="report-showcase" data-surface="dark" data-space="md" data-accent="teal"&gt;
   &lt;div class="orb orb-dark-teal"&gt;&lt;/div&gt;
   &lt;div class="orb orb-dark-coral"&gt;&lt;/div&gt;
   &lt;div class="report-inner"&gt;
@@ -4947,8 +5125,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-31">HTML для копіювання</label>
-    <textarea id="snippet-31" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report-path" data-component="report-showcase" class="report-showcase" data-surface="dark" data-space="md" data-accent="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-33">HTML для копіювання</label>
+    <textarea id="snippet-33" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report-path" data-component="report-showcase" class="report-showcase" data-surface="dark" data-space="md" data-accent="teal"&gt;
   &lt;div class="orb orb-dark-teal"&gt;&lt;/div&gt;
   &lt;div class="orb orb-dark-coral"&gt;&lt;/div&gt;
   &lt;div class="report-inner"&gt;
@@ -5287,8 +5465,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-32">HTML для копіювання</label>
-    <textarea id="snippet-32" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report-quiet" data-component="report-showcase" class="report-showcase" data-surface="dark" data-space="md" data-tone="quiet"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-34">HTML для копіювання</label>
+    <textarea id="snippet-34" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report-quiet" data-component="report-showcase" class="report-showcase" data-surface="dark" data-space="md" data-tone="quiet"&gt;
   &lt;div class="report-bg"&gt;
     &lt;div class="orb report-orb-cool"&gt;&lt;/div&gt;
     &lt;div class="orb report-orb-warm"&gt;&lt;/div&gt;
@@ -5628,8 +5806,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-33">HTML для копіювання</label>
-    <textarea id="snippet-33" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report-light" data-component="report-showcase" class="report-showcase" data-bg="white" data-space="md"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-35">HTML для копіювання</label>
+    <textarea id="snippet-35" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-report-light" data-component="report-showcase" class="report-showcase" data-bg="white" data-space="md"&gt;
   &lt;div class="report-inner"&gt;
     &lt;div class="section-head rv" data-measure="760"&gt;
       &lt;div class="section-eyebrow"&gt;
@@ -5907,8 +6085,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-34">HTML для копіювання</label>
-    <textarea id="snippet-34" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-start-free" data-component="start-free" class="start-free" data-layout="open" data-bg="white" data-space="lg"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-36">HTML для копіювання</label>
+    <textarea id="snippet-36" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-start-free" data-component="start-free" class="start-free" data-layout="open" data-bg="white" data-space="lg"&gt;
   &lt;div class="start-free-inner"&gt;
     &lt;div class="start-free-grid"&gt;
       &lt;div class="start-free-text rv"&gt;
@@ -5993,8 +6171,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-35">HTML для копіювання</label>
-    <textarea id="snippet-35" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-start-free-framed" data-component="start-free" class="start-free" data-layout="framed" data-bg="white" data-space="lg"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-37">HTML для копіювання</label>
+    <textarea id="snippet-37" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-start-free-framed" data-component="start-free" class="start-free" data-layout="framed" data-bg="white" data-space="lg"&gt;
   &lt;div class="start-free-inner"&gt;
     &lt;div class="start-free-frame rv"&gt;
       &lt;div class="start-free-grid"&gt;
@@ -6205,8 +6383,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-36">HTML для копіювання</label>
-    <textarea id="snippet-36" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-pricing" data-component="pricing-preview" class="pricing-preview" data-layout="center" data-bg="tint" data-space="md" data-pricing="onetime" data-pricing-animate&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-38">HTML для копіювання</label>
+    <textarea id="snippet-38" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-pricing" data-component="pricing-preview" class="pricing-preview" data-layout="center" data-bg="tint" data-space="md" data-pricing="onetime" data-pricing-animate&gt;
   &lt;div class="orb pricing-glow"&gt;&lt;/div&gt;
   &lt;div class="pricing-inner"&gt;
     &lt;div class="section-head rv"&gt;
@@ -6377,8 +6555,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-37">HTML для копіювання</label>
-    <textarea id="snippet-37" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-pricing-split" data-component="pricing-preview" class="pricing-preview" data-layout="split" data-bg="tint" data-space="md" data-accent="teal" data-pricing="onetime" data-pricing-animate&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-39">HTML для копіювання</label>
+    <textarea id="snippet-39" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-pricing-split" data-component="pricing-preview" class="pricing-preview" data-layout="split" data-bg="tint" data-space="md" data-accent="teal" data-pricing="onetime" data-pricing-animate&gt;
   &lt;div class="pricing-inner"&gt;
     &lt;div class="pricing-top"&gt;
       &lt;div class="pricing-top-head rv"&gt;
@@ -6588,8 +6766,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-38">HTML для копіювання</label>
-    <textarea id="snippet-38" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-40">HTML для копіювання</label>
+    <textarea id="snippet-40" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -6681,8 +6859,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-39">HTML для копіювання</label>
-    <textarea id="snippet-39" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-41">HTML для копіювання</label>
+    <textarea id="snippet-41" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-title" data-component="faq" class="faq" data-bg="tint" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -6774,8 +6952,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-40">HTML для копіювання</label>
-    <textarea id="snippet-40" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-42">HTML для копіювання</label>
+    <textarea id="snippet-42" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-white" data-component="faq" class="faq" data-bg="white" data-space="lg" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -6874,8 +7052,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-41">HTML для копіювання</label>
-    <textarea id="snippet-41" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-43">HTML для копіювання</label>
+    <textarea id="snippet-43" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-rich" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fluid"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -6968,8 +7146,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-42">HTML для копіювання</label>
-    <textarea id="snippet-42" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-44">HTML для копіювання</label>
+    <textarea id="snippet-44" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-narrow" data-component="faq" class="faq" data-bg="tint" data-space="md" data-layout="fluid-narrow"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -7060,8 +7238,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-43">HTML для копіювання</label>
-    <textarea id="snippet-43" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-45">HTML для копіювання</label>
+    <textarea id="snippet-45" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-faq-fixed" data-component="faq" class="faq" data-bg="white" data-space="md" data-layout="fixed"&gt;
   &lt;div class="faq-inner"&gt;
     &lt;div class="faq-grid"&gt;
       &lt;div class="faq-aside rv"&gt;
@@ -7159,8 +7337,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-44">HTML для копіювання</label>
-    <textarea id="snippet-44" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-46">HTML для копіювання</label>
+    <textarea id="snippet-46" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-grid" data-layout="fixed"&gt;
   &lt;div class="faq-aside"&gt;
     &lt;div class="section-eyebrow"&gt;
       &lt;span class="section-eyebrow-dot"&gt;&lt;/span&gt;
@@ -7247,8 +7425,8 @@
 </div>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-45">HTML для копіювання</label>
-    <textarea id="snippet-45" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-47">HTML для копіювання</label>
+    <textarea id="snippet-47" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;div class="faq-frame" data-variant="doc"&gt;
   &lt;div class="faq-list" data-faq&gt;
     &lt;div class="faq-item open"&gt;
       &lt;h3 class="faq-heading"&gt;&lt;button type="button" aria-controls="example-faq-doc-a1" aria-expanded="true" class="faq-q"&gt;
@@ -7401,8 +7579,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-46">HTML для копіювання</label>
-    <textarea id="snippet-46" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-48">HTML для копіювання</label>
+    <textarea id="snippet-48" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7453,8 +7631,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-47">HTML для копіювання</label>
-    <textarea id="snippet-47" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-49">HTML для копіювання</label>
+    <textarea id="snippet-49" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-button" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7507,8 +7685,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-48">HTML для копіювання</label>
-    <textarea id="snippet-48" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-50">HTML для копіювання</label>
+    <textarea id="snippet-50" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-stack" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7566,8 +7744,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-49">HTML для копіювання</label>
-    <textarea id="snippet-49" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-51">HTML для копіювання</label>
+    <textarea id="snippet-51" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-eyebrow" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7621,8 +7799,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-50">HTML для копіювання</label>
-    <textarea id="snippet-50" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-52">HTML для копіювання</label>
+    <textarea id="snippet-52" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-kicker" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7672,8 +7850,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-51">HTML для копіювання</label>
-    <textarea id="snippet-51" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-53">HTML для копіювання</label>
+    <textarea id="snippet-53" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-pair" data-component="cta-band" class="cta-band"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7723,8 +7901,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-52">HTML для копіювання</label>
-    <textarea id="snippet-52" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-54">HTML для копіювання</label>
+    <textarea id="snippet-54" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-wide" data-component="cta-band" class="cta-band" data-width="wide"&gt;
   &lt;div class="cta-band-bg"&gt;
     &lt;div class="dot-field cta-band-dots" aria-hidden="true"&gt;&lt;/div&gt;
     &lt;div class="orb cta-glow-warm"&gt;&lt;/div&gt;
@@ -7767,8 +7945,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-53">HTML для копіювання</label>
-    <textarea id="snippet-53" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-55">HTML для копіювання</label>
+    <textarea id="snippet-55" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -7806,8 +7984,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-54">HTML для копіювання</label>
-    <textarea id="snippet-54" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-56">HTML для копіювання</label>
+    <textarea id="snippet-56" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-cta-plain-orange" data-component="cta-band" class="cta-band" data-variant="plain"&gt;
   &lt;div class="orb cta-orb-warm"&gt;&lt;/div&gt;
   &lt;div class="orb cta-orb-cool"&gt;&lt;/div&gt;
   &lt;div class="cta-band-inner"&gt;
@@ -7930,8 +8108,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-55">HTML для копіювання</label>
-    <textarea id="snippet-55" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-57">HTML для копіювання</label>
+    <textarea id="snippet-57" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -7988,8 +8166,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-56">HTML для копіювання</label>
-    <textarea id="snippet-56" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-58">HTML для копіювання</label>
+    <textarea id="snippet-58" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-detail" data-component="banner" class="banner" data-glow="teal"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -8047,8 +8225,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-57">HTML для копіювання</label>
-    <textarea id="snippet-57" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-59">HTML для копіювання</label>
+    <textarea id="snippet-59" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-link" data-component="banner" class="banner" data-glow="coral"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -8129,8 +8307,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-58">HTML для копіювання</label>
-    <textarea id="snippet-58" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-60">HTML для копіювання</label>
+    <textarea id="snippet-60" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-split" data-component="banner" class="banner" data-glow="teal" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -8234,8 +8412,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-59">HTML для копіювання</label>
-    <textarea id="snippet-59" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-61">HTML для копіювання</label>
+    <textarea id="snippet-61" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-banner-callout" data-component="banner" class="banner" data-glow="violet" data-layout="split"&gt;
   &lt;div class="banner-inner"&gt;
     &lt;div class="banner-box rv" data-surface="dark"&gt;
       &lt;div class="orb banner-glow"&gt;&lt;/div&gt;
@@ -8460,8 +8638,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-60">HTML для копіювання</label>
-    <textarea id="snippet-60" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-62">HTML для копіювання</label>
+    <textarea id="snippet-62" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -8667,8 +8845,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-61">HTML для копіювання</label>
-    <textarea id="snippet-61" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-63">HTML для копіювання</label>
+    <textarea id="snippet-63" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-chips" data-component="inquiry-form" class="inquiry" data-bg="white"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;
@@ -8845,8 +9023,8 @@
 </section>
 
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
-    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-62">HTML для копіювання</label>
-    <textarea id="snippet-62" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
+    <label class="block text-[12.5px] font-semibold text-ink-500 mb-2" for="snippet-64">HTML для копіювання</label>
+    <textarea id="snippet-64" readonly rows="14" spellcheck="false" class="w-full font-mono text-[12px] leading-relaxed text-ink-800 bg-white rounded-xl ring-1 ring-black/10 p-3 sm:p-4">&lt;section id="example-inquiry-cool" data-component="inquiry-form" class="inquiry" data-bg="cool" data-layout="fluid-wide" data-accent="teal" data-sticky="off"&gt;
   &lt;div class="inquiry-inner"&gt;
     &lt;div class="inquiry-grid"&gt;
       &lt;div class="inquiry-aside rv"&gt;

@@ -36,6 +36,7 @@ const steps = require('./sections/steps');   /* the numbered sequences: one libr
 const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 const startFree = require('./sections/start-free');   /* the free entry: one library template */
 const reportShowcase = require('./sections/report-showcase');
+const statRail = require('./sections/stat-rail');   /* the proof rail under the hero: one library template */
 
 /* ─────────────────────────────────────────────────────────────────────────────
    APPROVED COPY — Students brief, 2026-09-15. Verbatim.
@@ -253,27 +254,13 @@ const section2 = () => `  <!-- ================= 02 · COMPACT TRUST PROOF =====
        The homepage rail, still: three verified facts in reading order, each column one
        element so "500,000+ users" survives as a sentence. Static here — the page's
        object is the checker and a roll beside it would compete. -->
-  <section data-component="proof-rail" class="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv flex flex-wrap items-start justify-center gap-x-12 sm:gap-x-16 lg:gap-x-24 gap-y-8 text-center">
-        <div class="flex flex-col items-center">
-          <div class="hidden sm:block h-[17px]" aria-hidden="true"></div>
-          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">500,000+</div></div>
-          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-2">users</div>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="text-[11px] sm:text-[11.5px] font-medium text-ink-500 h-[17px] leading-[17px]">Plagiarism checking in</div>
-          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><div class="text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest nums leading-none">80+</div></div>
-          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-2">languages</div>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="hidden sm:block h-[17px]" aria-hidden="true"></div>
-          <div class="h-[63px] sm:h-[78px] lg:h-[90px] flex items-center"><img src="/assets/svg/partners/bbb.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="h-full w-auto object-contain"></div>
-          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-2">BBB Accredited</div>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${statRail.section({
+  items: [
+    { value: '500,000+', label: 'users' },
+    { lead: 'Plagiarism checking in', value: '80+', label: 'languages' },
+    { mark: { src: '/assets/svg/partners/bbb.svg' }, label: 'BBB Accredited' },
+  ],
+})}`;
 
 /* ═══════════════ 03 · THE REPORT, AND THE PRINCIPLE ═══════════════ */
 const section3 = () => `  <!-- ================= 03 · SIGNATURE · THE REPORT, BEFORE YOU SUBMIT =================

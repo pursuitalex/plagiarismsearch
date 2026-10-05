@@ -1,0 +1,62 @@
+/* ═══ Stat rail — library component ═════════════════════════════════════════════════
+   Template: build/sections/stat-rail.js · contract: build/sections/stat-rail.contract.js
+   Behaviour: build/assets/js/20-motion.js (.rv), 24-odometer.js (.od-num) — nothing of
+   its own
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The thin band of proof under a hero: a few figures or marks in one centred row, each
+   with a short label. Not a section with a head — it has no heading of its own.
+
+   section.stat-rail                data-tone="soft"
+     .stat-rail-inner
+       div.stat-rail-list.rv
+         div.stat-rail-item
+           div.stat-rail-lead                 a short line over the figure — or, where an item
+           (div.stat-rail-gap)                has none, the empty spacer that keeps the figures level
+           div.stat-rail-figure               the figure's row: one height for a number and a mark
+             div.stat-rail-value(.od-num)     the figure
+             img.stat-rail-mark               or a mark, as tall as the row
+           div.stat-rail-label                what the figure counts */
+
+.stat-rail {
+  @apply relative py-10 sm:py-12 lg:py-14 bg-white border-b border-ink-100;
+}
+.stat-rail-inner {
+  @apply max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+.stat-rail-list {
+  @apply flex flex-wrap items-start justify-center gap-x-12 sm:gap-x-16 lg:gap-x-24 gap-y-8 text-center;
+}
+.stat-rail-item {
+  @apply flex flex-col items-center;
+}
+
+/* the line over a figure; an item without one holds a spacer of the same height from sm
+   up (on a phone the items stack, and the spacer would only be a gap) */
+.stat-rail-lead {
+  @apply text-[11px] sm:text-[11.5px] font-medium text-ink-500 h-[17px] leading-[17px];
+}
+.stat-rail-gap {
+  @apply hidden sm:block h-[17px];
+}
+
+.stat-rail-figure {
+  @apply h-[63px] sm:h-[78px] lg:h-[90px] flex items-center;
+}
+.stat-rail-value { font-variant-numeric: tabular-nums;
+  @apply text-[clamp(1.7rem,3vw,2.6rem)] font-extrabold tracking-tightest leading-none;
+}
+.stat-rail-mark {
+  @apply h-full w-auto object-contain;
+}
+
+.stat-rail-label {
+  @apply text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mt-2;
+}
+
+/* the homepage's lighter labels */
+:where(.stat-rail[data-tone="soft"]) .stat-rail-lead,
+:where(.stat-rail[data-tone="soft"]) .stat-rail-label {
+  @apply text-ink-400;
+}

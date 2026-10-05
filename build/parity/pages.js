@@ -461,3 +461,6 @@ acceptAgainst('81480d5', {
 acceptAgainst('6d093df', {
   'index.html': [['margin-top', 'margin-bottom'], 'the intro carries the gap above itself (the h2 carried it below)'],
 }, 'Pricing preview: ');
+
+/* SECTION LIBRARY, WAVE 3 · THE STAT RAIL (2026-10-05), against 688cb42: two pages (Home,
+   Students), 0 px, identical in every measured property. Nothing accepted. */
