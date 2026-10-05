@@ -495,3 +495,25 @@ acceptAgainst('6d093df', {
    purpose: a rating's lit stars take their width from data-rating in the stylesheet
    instead of an inline style (the same computed width), and the rail's arrows show on
    hovering the rail itself, not through a .group hook. */
+
+/* THE SPEC SHEET'S TWO CAPTIONS (recorded 2026-10-05, closing the Section Library).
+   design-system.html shows the closing band and the compact banner, and under each a
+   caption that names the template's file. Wave 1 moved both templates into
+   build/sections/, so the captions say the new paths: one phrase each, in a <code> that is
+   as wide as its text. The run failed on exactly that ever since — the text of <main>, and
+   the box of those two <code> elements — with 0 differing pixels elsewhere. It is a
+   content difference taken on purpose, recorded against the two baselines it was measured
+   from: f15c5ba, the commit before the CTA band moved (both captions differ from it), and
+   58987c7, the commit before the banner moved (the banner's caption alone).
+   acceptText holds only for these phrases (build/parity/run.js); the geometry acceptance
+   lists no property at all — only the boxes that follow from the longer text. */
+{
+  const CTA = ['build/cta.js', 'build/sections/cta-band.js'];
+  const BANNER = ['build/banner.js', 'build/sections/banner.js'];
+  const caption = phrases => ({
+    acceptText: { phrases, reason: 'the caption names the template\'s file, which moved into build/sections/' },
+    acceptGeometry: { props: [], reason: 'the caption\'s <code> is as wide as the path it names' },
+  });
+  const ds = module.exports['design-system.html'];
+  ds.byRef = { ...ds.byRef, f15c5ba: caption([CTA, BANNER]), '58987c7': caption([BANNER]) };
+}

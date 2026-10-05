@@ -721,8 +721,114 @@ Two layouts (`data-layout`): `open` — text and two large figures side by side,
 with smaller figures and a line under them (PDF). `data-bg="white"` is the only ground;
 `data-space="md|lg"` follows the page. The pill's dot is teal here, by itself.
 
+#### The report showcase — `build/sections/report-showcase.js`
+
+The section that shows the plagiarism report is one Section Library component (wave 3):
+`section.report-showcase`, `data-component="report-showcase"` — seven sections on seven
+pages ("report-dark" on Home, PDF, Business & Teams, University, Students and the
+Ukrainian page; "report-light" on Turnitin). A head, the report, a few lines on how to
+read it.
+
+**The report is sealed.** It is the product's screen: `build/report.js` renders it
+(`report.mock()`), marks it `data-slot="report"`, and the validator checks only that it is
+there and whole. Its document, figures, sources and category colours are the sample
+report's, never a page's copy. Three renditions, chosen by the section: two white panels
+on the dark ground; the panels in a grey frame on a white section (Turnitin); the
+homepage's, with the scan pass.
+
+| surface | under the report | pages |
+|---|---|---|
+| `data-surface="dark"` | a strip of three numbered points (`ol.report-points[data-marker="number"]`) and the teal callout | PDF, Business & Teams, University |
+| `data-surface="dark"` | a pair of cards (`div.report-pair`; `data-split="tail"` makes the second the wider): the white display card, the teal callout, a quiet text card, a white statement card with an icon tile | Students, UA |
+| `data-surface="dark"` `data-tone="quiet"` | a footnote (`p.report-caveat`) and the page's own block in a sealed `[data-slot="media"]` (the integrations rail) | Home |
+| `data-bg="white"` | three points with icon tiles (`data-marker="icon"`) beside the orange callout | Turnitin |
+
+The head is the Section Header block; on the Ukrainian page it stands beside a path in
+pills (`div.report-top` > the head's column, `ol.report-path`). **The Section Header reads
+the surface**: under `[data-surface="dark"]` the pill is translucent and its label and the
+intro are white at reduced strength; `data-tone="quiet"` on the same host is the
+homepage's dark act, a step quieter (pill .07 / .10 instead of .10 / .15, label .70
+instead of .80, intro .60 instead of .70). One word of the title, or of the display card's
+statement, may carry the pen mark (`span.pen-word` > `svg.pen-mark`), as in the hero.
+Section switches: `data-space="md|lg"`, `data-accent="teal"`.
+
+Not on the template: the AI Detector's `report-ai-dark` (the AI report's own mock-up and
+tabs), the API page's `results-dark` (a response panel), and the diagrams `source-map`,
+`storage-map`, `relationship-map` — each drawn for its page.
+
+#### The pricing preview — `build/sections/pricing-preview.js`
+
+The plans, previewed on a page that is not the Pricing page, are one Section Library
+component (wave 3): `section.pricing-preview`, `data-component="pricing-preview"` — Home
+and Turnitin. A head, the period switch, three plan cards, a way on to the full pricing.
+
+**The figures are not the page's.** Plan names, prices, rates, quotas, periods and the
+Recommended state come from `build/pricing-data.js` through `build/pricing.js`
+(DEC-0042): the switch and the cards are rendered there as two sealed blocks,
+`[data-slot="pricing-periods"]` and `[data-slot="pricing-plans"]`, and the plans block
+carries the feature-line `<template>` and the JSON island `60-pricing.js` switches periods
+with. An editor changes the words around the cards and where the link under them leads —
+never a figure. The validator holds the figures to the data: a missing or unreadable
+island, an island that is not the data source's, a card whose first-paint price, term,
+rate or feature lines disagree with the island, a switch that does not match the data's
+periods, a rewritten period note, a price typed into the heading or the intro — each is
+refused.
+
+| layout | what | page |
+|---|---|---|
+| `center` | the head and the switch centred; the recommended plan dark and raised; under the cards the period's note (from the data) and a quiet link | Home |
+| `split` | the head beside a note card; the switch at the column's edge; three equal white cards with dark buttons; a light button under them | Turnitin |
+
+Section switches: `data-bg="tint"` (the one ground), `data-space="md|lg"`,
+`data-accent="teal"`; `data-pricing="onetime"` and `data-pricing-animate` are the
+script's hooks. Not on the template: the Pricing page's own widget (`pricing-widget`,
+with the "Recurring payments" switch), the AI packages, and the static plan lists of the
+older hand-written pages (`plans` on Plagiarism check and VIP, `pricing` on Rate my
+paper) — none of them is a preview of the three plans locked to the data.
+
+#### The stat rail — `build/sections/stat-rail.js`
+
+The thin band of proof under a hero is one Section Library component (wave 3):
+`section.stat-rail`, `data-component="stat-rail"` — "trust-rail" on Home, "proof-rail" on
+Students. A few figures or marks in one centred row, each with a short label
+(`div.stat-rail-item` > a line over the figure or its empty spacer, `div.stat-rail-figure`
+> `div.stat-rail-value` or `img.stat-rail-mark`, `div.stat-rail-label`). No heading, no
+button. Two switches: the hook class `od-num` on a figure makes it roll like an odometer
+(Home; static on Students, where a roll beside the checker would compete), and
+`data-tone="soft"` on the section is the homepage's lighter labels (ink-400; the default
+is the contrast-safe ink-500).
+
+#### The reviews — `build/sections/reviews.js`
+
+Customers quoted are one Section Library component (wave 3): `section.reviews-section`,
+`data-component="reviews"` — the homepage's carousel and the Ukrainian page's grid.
+
+**A review is a quotation.** The quote, the name and the rating are a real person's, as
+the platform published them (`build/reviews.js`); an editor adds or removes a whole card
+and changes a card's text only to another real review. Ratings shown as figures are
+facts, not decoration.
+
+| layout | what | page |
+|---|---|---|
+| `carousel` | a rail of cards on the dark section (`data-surface="dark"`), paged by arrows and dots (`45-carousel.js`); a white button under it (`data-tone="inverse"`) | Home |
+| `grid` | three cards across on the tint section (`data-bg="tint"`); `lang` on the grid where the quotes are in another language than the page | UA |
+
+One card, `figure.review-card`: the platform and its mark, the rating, the quote, the
+author and a link to the platform. The card takes its skin from the section's surface. A
+rating is written once — `data-rating` on `span.review-rating`, whole and half stars from
+1 to 5 — and the stylesheet lights the stars from it (no inline style); the figure beside
+them and the stars' `aria-label` repeat it, and `44-review-rating.js` puts them back in
+step if an editor changed only the attribute. The carousel's rules moved here from
+`23-carousel.css`.
+
+Not on the template, each a page's own composition: the Reviews pages' walls, marquees,
+rating tiles and video stage (`review-wall`, `review-marquee`, `rating-tiles`,
+`video-reviews`, `video-stage`, `photo-tiles`) and the Trustpilot masonry of the tool
+pages and Reviews v2 (`review-masonry`).
+
 The in-section button and quiet link are a library primitive, the **Action**
-(`build/sections/action.js`, `.action-button` / `.action-link`, `data-tone="light|ghost"`),
+(`build/sections/action.js`, `.action-button` / `.action-link`,
+`data-tone="light|ghost|inverse"`),
 and so is the **Icon tile** (`build/sections/icon-tile.js`, `.icon-tile[data-tone]`): one
 attribute sets the tile's wash and the icon's ink.
 

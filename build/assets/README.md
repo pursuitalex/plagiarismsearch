@@ -66,7 +66,8 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
    the FAQ with the Section Header since the pilot of 2026-09-30, the CTA band, the
    Banner and the Inquiry form since 2026-10-01, and wave 2 the same day: the Hero, the
    Steps, the Feature cards, the Sources and Start free, with the Action and Icon tile
-   primitives) is written with semantic classes instead: one template in
+   primitives; wave 3, 2026-10-05: the Report showcase, the Pricing preview, the Stat rail
+   and the Reviews) is written with semantic classes instead: one template in
    `build/sections/<name>.js` called by every generator (a hand-written page carries the
    same markup), its CSS in `build/sections/<name>.css` compiled with `@apply` in the
    Tailwind run (between components and utilities, outside `@layer`), variants as `data-*`
@@ -76,7 +77,11 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
    `site/section-library.html`. A component's CSS lives with it: the FAQ's accordion moved
    there from `03-faq.css`, the closing band's knobs and glows from `10-cta-band.css`, the banner's glow from
    `11-banner.css`, the inquiry form's chips from `14-forms.css` (which keeps the field
-   recipe every form shares, `.cf-label` / `.cf-field`).
+   recipe every form shares, `.cf-label` / `.cf-field`), the reviews rail from
+   `23-carousel.css` (retired). What is not editor content is a **sealed block** the
+   template renders and marks `data-slot`: the quick-check form, a page's diagram, the
+   report mock-up (`build/report.js`), the pricing switch and plan cards
+   (`build/pricing.js`). The library's own guide is `build/sections/README.md`.
 5. **No id is a CSS or JS hook.** Ids exist for in-page anchors and for accessibility
    pairs only.
 6. **Accessibility ids are rendered, not scripted.** `label for`/`id` on the checker field
@@ -121,7 +126,8 @@ markup. The one `<script>` a body may hold is data: a pricing section's JSON isl
 | inquiry-form | `form[data-inquiry-form]`, `.inquiry-field` | repairs the label `for` / field `id` pairs at load (a copied field gets a fresh id); nothing else — the form's submission is its binding's |
 | report | `[data-report]` (`.cab-mark`, `.cab-src`) | select a passage |
 | report-pass | `[data-report-doc]`, `[data-report-side]`, `[data-report-scan]` | the scan plays once |
-| carousel | `[data-carousel]`, `-track`, `-prev`, `-next`, `-dots` (`data-dot-label`) | reviews rail |
+| review-rating | `.review-rating[data-rating]` (the library's Reviews) | the stars are lit from the attribute by CSS; the module keeps the figure beside them and the stars' `aria-label` in step with it (a card copied in the CMS with only the attribute changed) |
+| carousel | `[data-carousel]`, `-track`, `-prev`, `-next`, `-dots` (`data-dot-label`) | reviews rail (the library's Reviews, `data-layout="carousel"`) |
 | faq | `[data-faq]` | accordion |
 | pricing | `[data-pricing="period"]`, JSON island, `template[data-pricing-feat]` | period switch |
 | ai-package | `[data-ai-package]`, `[data-purchase-hook="ai-package"]` | package pick |

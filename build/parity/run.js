@@ -464,9 +464,24 @@ async function behaviour(page, width, { walk = true, chrome = true } = {}) {
       return t;
     };
     const ta = await domText(A), tb = await domText(B);
-    ok('content', `rendered text of <main> identical (${tb.length} chars)`, ta === tb);
+    /* EXTRA.acceptText = { phrases: [[approved, now], …], reason }: a phrase the page says
+       differently on purpose — a caption that names a file which has moved. It holds only
+       if the approved text has the old phrase, the page now has the new one, and with
+       exactly those phrases swapped the two texts are identical; any other difference
+       fails as usual (build/parity/pages.js records it against its baseline). */
+    const at = EXTRA.acceptText;
+    const swapped = t => at.phrases.reduce((s, [from, to]) => s.split(from).join(to), t);
+    const used = t => at.phrases.every(([from, to]) => t.includes(from) && tb.includes(to));
+    if (ta !== tb && at && used(ta) && swapped(ta) === tb) {
+      console.log(`  ACCEPT rendered text of <main> identical once ${at.phrases.length} phrase(s) are read as they now stand — ${at.reason}`);
+      at.phrases.forEach(([from, to]) => console.log(`         approved "${from}"\n         now      "${to}"`));
+      results.push({ group: 'content', label: `rendered text identical but for ${at.phrases.length} accepted phrase(s)`, pass: true });
+    } else ok('content', `rendered text of <main> identical (${tb.length} chars)`, ta === tb);
     if (same0) ok('content', `served text of <main> identical (${text(current).length} chars)`, true);
-    else {
+    else if (at && used(text(base)) && swapped(text(base)) === text(current)) {
+      console.log(`  ACCEPT served text of <main> identical but for the same ${at.phrases.length} phrase(s)`);
+      results.push({ group: 'content', label: 'served text identical but for the accepted phrase(s)', pass: true });
+    } else {
       /* empty the price slots the script used to fill; everything else must match exactly */
       const unfilled = h => h
         .replace(/(class="[^"]*\bjs-(?:price|term|rate)\b[^"]*">)[^<]*</g, '$1<')

@@ -72,7 +72,7 @@ const snippets = [
       items: take(ai.items, 3) }) },
   { file: 'faq-fluid-rich.html', name: 'FAQ · fluid, розгорнуті відповіді з посиланням на джерело',
     about: 'Біла секція з меншими відступами (data-space="md"); кожна відповідь — div.faq-a-body з абзацами, під відповіддю може стояти p.faq-a-more з посиланням. Копія — Turnitin Alternative FAQ.',
-    uses: 'turnitin-checker-alternative; так само — багатоабзацні відповіді (scholarship після злиття)',
+    uses: 'turnitin-checker-alternative; так само — багатоабзацні відповіді: affiliate-program-at-plagiarismsearch і scholarship (обидві — v1 і v2, на lg, без пігулки)',
     html: faq.section({ id: 'example-faq-rich', ns: 'example-faq-rich', bg: 'white', space: 'md', layout: 'fluid', rich: true,
       head: { eyebrow: 'Questions', title: turnitin.head.title }, items: take(turnitin.items, 3) }) },
   { file: 'faq-fluid-narrow.html', name: 'FAQ · fluid-narrow, без пігулки',
@@ -108,6 +108,9 @@ const pages = [
   ['plagiarism-checker-for-students.html', 'section', 'tint · lg · fluid', 'пігулка'],
   ['turnitin-checker-alternative.html', 'section', 'white · md · fluid', 'пігулка; розгорнуті відповіді; посилання на джерело'],
   ['ua-plagiarism-check.html', 'section', 'tint · md · fluid-narrow', 'без пігулки'],
+  ['affiliate-program-at-plagiarismsearch.html (і -v2)', 'section', 'white · lg · fluid', 'без пігулки; вступ; під вступом — блок сторінки [data-slot="aside"] (картка «Contact Us»); розгорнуті відповіді'],
+  ['scholarship.html', 'section', 'tint · lg · fluid', 'без пігулки й вступу — лише заголовок; розгорнуті відповіді'],
+  ['scholarship-v2.html', 'section', 'white · lg · fluid', 'без пігулки й вступу — лише заголовок; розгорнуті відповіді'],
   ['user-manuals.html', 'grid', 'fixed', 'усередині user-guide; без .rv; відступ дає хост'],
   ['integration-guide.html', 'frame', 'doc', 'усередині гайду; h3; без .rv'],
 ];
