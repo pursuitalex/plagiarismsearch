@@ -61,6 +61,7 @@ const intro = `  <section class="${WRAP} pt-10 sm:pt-14 lg:pt-16 pb-8">
     <h1 class="text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-[1.1] mb-4">Бібліотека секцій</h1>
     <div class="max-w-[76ch] space-y-3 ${P}">
       <p>Готовий HTML секцій для вставки в body сторінки CMS. Стилі й поведінка — у спільних ${code('site.css')} / ${code('tailwind.css')} / ${code('site.js')}; сторінка не несе власного CSS чи JS. Копіюйте фрагмент із поля під прикладом цілком, потім змінюйте лише те, що дозволено в таблиці компонента.</p>
+      <p><strong class="font-semibold text-ink-900">Версія 1, зафіксована 5 жовтня 2026</strong> для поточного етапу дизайну: ${COMPONENTS.length} компонентів, ${total} фрагментів. Нові компоненти додаються лише під конкретну потребу нової сторінки.</p>
       <p>Перед публікацією перевірте вставку: збережіть HTML у файл і запустіть ${code('node build/check-library.js файл.html')} (або ${code('… --stdin')}). Валідатор назве рядок і причину, якщо щось зламано.</p>
     </div>
     <ul class="mt-6 flex flex-wrap gap-2.5">

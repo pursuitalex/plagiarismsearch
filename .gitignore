@@ -12,3 +12,9 @@ build/parity/out/
 
 # local backups, never pushed
 _backup/
+
+# agent worktrees of the desktop app (each is its own checkout)
+.claude/worktrees/
+
+# source screenshots kept locally; no page references them
+site/assets/carousel/

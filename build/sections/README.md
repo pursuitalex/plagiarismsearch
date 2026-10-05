@@ -6,6 +6,13 @@ looks and behaves right — without knowing Tailwind and without copying CSS or 
 and behaviour live in the shared `site.css` / `tailwind.css` / `site.js`; a page carries
 none of its own.
 
+**Status: V1, frozen on 2026-10-05 for the current design stage.** Thirteen components
+and three primitives; the catalogue, the validator and this guide describe exactly that
+set. The library is not extended on speculation: a component is added or changed only
+when a new page concretely needs it. CMS and backend integration has not been started —
+what a developer has to bind, replace or decide is listed in `INTEGRATION.md`, next to
+this file.
+
 This file is for whoever maintains the library. `DESIGN.md` describes each component's
 look; `build/assets/README.md` describes the asset pipeline it is compiled in.
 
