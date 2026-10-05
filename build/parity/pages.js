@@ -443,3 +443,21 @@ acceptAgainst('330c9c9', {
 acceptAgainst('81480d5', {
   'index.html': [['margin-top', 'margin-bottom'], 'the intro and the integrations rail carry the gap above themselves (the h2 and the footnote carried it below)'],
 }, 'Report showcase: ');
+
+/* SECTION LIBRARY, WAVE 3 · THE PRICING PREVIEW (2026-10-05), against 6d093df — the last
+   commit before the two pricing previews moved onto their library template
+   (build/sections/pricing-preview.js; the period switch and the plan cards are
+   build/pricing.js's sealed blocks). Two sections on two pages, 0 px on both, the four
+   periods switching to the same figures on both. Turnitin is identical in every measured
+   property. Home differs in exactly the properties named here:
+
+     Home, the head. It is the Section Header block, whose intro carries the gap above
+       itself (the homepage's h2 carried it below). The same elements in the same places;
+       only which of the two neighbours holds the margin changed.
+
+   Not measured, and changed on purpose: the homepage's switch took role="group", an
+   aria-label and aria-pressed on its buttons (Turnitin's had them), and on both pages the
+   JSON island and the feature-line <template> moved inside the plans block. */
+acceptAgainst('6d093df', {
+  'index.html': [['margin-top', 'margin-bottom'], 'the intro carries the gap above itself (the h2 carried it below)'],
+}, 'Pricing preview: ');

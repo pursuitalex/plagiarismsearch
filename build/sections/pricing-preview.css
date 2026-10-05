@@ -1,0 +1,78 @@
+/* ═══ Pricing preview — library component ═══════════════════════════════════════════
+   Template: build/sections/pricing-preview.js · contract: build/sections/pricing-preview.contract.js
+   Behaviour: build/assets/js/60-pricing.js ([data-pricing]: the period switch),
+   20-motion.js (.rv) — nothing of its own
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The plans, previewed on a page that is not the Pricing page. Only the frame is here:
+   the period switch and the plan cards are the pricing widget's two sealed blocks
+   (build/pricing.js renders them with their own markup; 17-pricing.css holds the tabs'
+   states). No figure is styled, named or held by this file.
+
+   section.pricing-preview          data-layout="center|split"   data-bg="tint"   data-space="md|lg"
+                                    data-accent="teal"   data-pricing="onetime"   data-pricing-animate
+     (div.orb.pricing-glow)                     center only
+     .pricing-inner
+       THE HEAD     center: div.section-head.rv, centred                      (section-head.css)
+                    split:  div.pricing-top > div.pricing-top-head.rv (the head's parts),
+                            p.pricing-aside.rv > span.pricing-aside-icon > svg, span.pricing-aside-text
+       [data-slot="pricing-periods"]            the period switch — sealed
+       [data-slot="pricing-plans"]              the plan cards, the feature-line template and
+                                                the JSON island — sealed
+       THE FOOT     center: div.pricing-foot.rv > span.pricing-note[data-period-note],
+                            span.pricing-foot-dot, a.pricing-link
+                    split:  div.pricing-actions.rv > a.action-button[data-tone="light"] */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.pricing-preview {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden;
+}
+.pricing-preview:where([data-space="md"]) { @apply lg:py-28; }
+
+/* the homepage's glow. It has no fill: the homepage wrote it with a class Tailwind 3 does
+   not have (an opacity of 8), so it was never drawn — the approved ground is the plain
+   tint, and the element stays as the approved page has it. */
+.pricing-glow {
+  @apply w-[520px] h-[520px] right-[-140px] top-10;
+}
+
+.pricing-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+
+/* ── the head ────────────────────────────────────────────────────────────────── */
+/* center: a short centred column */
+:where(.pricing-preview[data-layout="center"]) .section-head {
+  @apply text-center max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-12;
+}
+
+/* split: the head beside a note card */
+.pricing-top {
+  @apply grid lg:grid-cols-[1fr_.8fr] gap-6 lg:gap-14 items-end mb-8 sm:mb-10 lg:mb-12;
+}
+.pricing-top-head {
+  @apply min-w-0;
+}
+.pricing-aside {
+  @apply flex items-start gap-3 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 px-5 py-4 sm:px-6 sm:py-5 text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-800 font-semibold;
+}
+.pricing-aside-icon {
+  @apply mt-0.5 shrink-0;
+}
+:where(.pricing-aside-icon) > svg { stroke: #DC5A45; }
+
+/* ── the foot ────────────────────────────────────────────────────────────────── */
+/* center: the period's note, a separator, a quiet link */
+.pricing-foot {
+  @apply flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] sm:text-[13px] font-medium;
+}
+.pricing-note {
+  @apply text-ink-400;
+}
+.pricing-foot-dot {
+  @apply hidden sm:block w-1 h-1 rounded-full bg-ink-300;
+}
+.pricing-link {
+  @apply font-semibold text-ink-700 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 hover:decoration-ink-500 transition-colors duration-300;
+}

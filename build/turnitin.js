@@ -37,8 +37,7 @@ const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; it renders the form (build/checker.js) in its sealed slot */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const sources = require('./sections/sources');   /* sources & scan settings: one library template */
-const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
-const pricing = require('./pricing');
+const pricingPreview = require('./sections/pricing-preview');   /* the pricing preview: one library template; the figures are build/pricing.js's */
 const reportShowcase = require('./sections/report-showcase');
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -237,10 +236,6 @@ const ext = h => (/^https?:/.test(h) ? ' rel="noopener"' : '');
 /* an external link says so: the arrow that leaves the box */
 const extIcon = '<svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>';
 
-const btnLight = (label, href) => `<a href="${href}"${ext(href)} class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-ink-100 ring-1 ring-black/10 transition-colors duration-300 text-ink-900 text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
-            ${label}
-            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-ink-900/10 items-center justify-center">${arrow}</span>
-          </a>`;
 const linkQuiet = (label, href) => `<a href="${href}"${ext(href)} class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">${label}</a>`;
 
 /* the reference to an official source: a quiet numbered pill that opens the official guide
@@ -505,48 +500,13 @@ const section9 = () => `  <!-- ================= 09 · SELF-SERVICE PRICING ====
        already converts: the homepage's widget shell and its period switcher, reading
        build/pricing-data.js. PLACEHOLDER figures — production values are backend-driven —
        and only PlagiarismSearch prices: no Turnitin number, no "cheaper". -->
-  <section id="pricing" data-component="pricing-preview" data-pricing="onetime" data-pricing-animate class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1fr_.8fr] gap-6 lg:gap-14 items-end mb-8 sm:mb-10 lg:mb-12">
-        <div class="rv min-w-0">
-${eyebrow('teal-400', COPY.pricing.eyebrow)}
-          <h2 class="${H2}">${COPY.pricing.h2}</h2>
-          <p class="${INTRO} max-w-[64ch]">${COPY.pricing.intro}</p>
-        </div>
-        <p class="rv flex items-start gap-3 rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 px-5 py-4 sm:px-6 sm:py-5 ${BODY} text-ink-800 font-semibold">
-          <span class="mt-0.5 shrink-0">${ico(I.sparkles, '#DC5A45', 17)}</span>
-          <span>${COPY.pricing.free}</span>
-        </p>
-      </div>
-
-      <div class="rv flex mb-7 sm:mb-8 lg:mb-10">
-        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" role="group" aria-label="Billing period">
-          ${[['onetime', 'One-time'], ['monthly', 'Monthly'], ['quarterly', '3-Months'], ['yearly', 'Yearly']]
-            .map(([k, label]) => `<button type="button" data-period="${k}" aria-pressed="${k === 'onetime'}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500${k === 'onetime' ? ' active' : ''}">${label}</button>`)
-            .join('\n          ')}
-        </div>
-      </div>
-
-      <div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-stretch mb-8 sm:mb-10">
-        ${['light', 'standard', 'premium'].map(tier => `<div data-tier="${tier}" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
-          <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">${tier}</span>
-          <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5">${TAGLINE[tier]}</div>
-          <div class="flex items-end gap-1.5 mb-3">
-            <span class="text-[29px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest leading-none nums js-price">${PLANS.onetime[tier].price}</span>
-            <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term">${PLANS.onetime.term}</span>
-          </div>
-          <div class="self-start inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6"><span class="js-rate">${PLANS.onetime[tier].rate}</span>&nbsp;/ 1,000 words</div>
-          <div class="h-px bg-ink-100 mb-5 sm:mb-6"></div>
-          <ul class="space-y-3 text-[13.5px] font-medium text-ink-700 mb-6 sm:mb-7 js-feats">${pricing.feats(PLANS.onetime[tier].feats, pricing.LINES.tick)}</ul>
-          <a href="${COPY.pricing.ctaHref}" class="btn-press mt-auto block text-center rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[13.5px] sm:text-[14.5px] font-semibold py-3 transition-colors duration-300">Start ${LABEL[tier]}</a>
-        </div>`).join('\n        ')}
-      </div>
-
-      <div class="rv">${btnLight(COPY.pricing.cta, COPY.pricing.ctaHref)}</div>
-      ${pricing.template(pricing.LINES.tick)}
-      ${pricing.island()}
-    </div>
-  </section>`;
+${pricingPreview.section({
+  id: 'pricing', layout: 'split', space: 'md', accent: 'teal',
+  head: { eyebrow: COPY.pricing.eyebrow, title: COPY.pricing.h2, intro: COPY.pricing.intro, introMeasure: '64' },
+  aside: { text: COPY.pricing.free, icon: I.sparkles },
+  plans: { href: COPY.pricing.ctaHref },
+  foot: { button: { label: COPY.pricing.cta, href: COPY.pricing.ctaHref } },
+})}`;
 
 /* ═══════════════ 10 · FAQ ═══════════════ */
 const section10 = () => `  <!-- ================= 10 · FAQ =================

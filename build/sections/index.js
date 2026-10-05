@@ -29,6 +29,7 @@ module.exports = [
   { name: 'sources', title: 'Sources', contract: require('./sources.contract'), check: require('./sources.check') },
   { name: 'report-showcase', title: 'Report showcase', contract: require('./report-showcase.contract'), check: require('./report-showcase.check') },
   { name: 'start-free', title: 'Start free', contract: require('./start-free.contract'), check: require('./start-free.check') },
+  { name: 'pricing-preview', title: 'Pricing preview', contract: require('./pricing-preview.contract'), check: require('./pricing-preview.check') },
   { name: 'faq', title: 'FAQ', contract: require('./faq.contract'), check: require('./faq.check') },
   { name: 'cta-band', title: 'CTA band', contract: require('./cta-band.contract'), check: require('./cta-band.check') },
   { name: 'banner', title: 'Banner', contract: require('./banner.contract'), check: require('./banner.check') },

@@ -179,9 +179,10 @@ const REPORT = {
   aiProbability: 'Low',
 };
 
-/* Plan data for the shared pricing widget. Extracted to build/pricing-data.js when the
-   Pricing page needed the same figures — one price list, two pages. */
-const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
+/* The pricing preview is the library's (build/sections/pricing-preview.js): the period
+   switch and the plan cards are rendered by build/pricing.js from build/pricing-data.js —
+   one price list, every page — and this generator holds no figure. */
+const pricingPreview = require('./sections/pricing-preview');
 
 
 /* The interactive report component. Extracted to build/report.js when the University
@@ -325,7 +326,6 @@ const S = COPY;
 /* the dot field is shared now — build/dots.js — so every hero on the tint has it */
 const { dotField } = require('./dots');
 const cta = require('./sections/cta-band');
-const pricing = require('./pricing');
 const page = require('./page');
 const faq = require('./sections/faq');   /* the FAQ: one library template */
 /* the hero is the library's; it renders the shared quick-check form (build/checker.js)
@@ -608,67 +608,16 @@ const section11 = () => `
   <!-- ================= 11 · PRICING PREVIEW =================
        v1's card architecture with the four-period switcher from the pricing page.
        The header copy is the brief's; the numbers are not — see the note on PLANS. -->
-  <section data-component="pricing-preview" data-pricing="onetime" data-pricing-animate class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
-    <div class="orb w-[520px] h-[520px] bg-teal-500/8 right-[-140px] top-10"></div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-12">
-        ${eyebrow('Plans &amp; pricing')}
-        <h2 class="${H2} mb-4 lg:mb-5">${S.s11.h2}</h2>
-        <p class="${LEAD} text-ink-600">${S.s11.intro}</p>
-      </div>
-
-      <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
-        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto">
-          ${[['onetime','One-time'],['monthly','Monthly'],['quarterly','3-Months'],['yearly','Yearly']]
-            .map(([k, label]) => `<button type="button" data-period="${k}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500${k === 'onetime' ? ' active' : ''}">${label}</button>`)
-            .join('\n          ')}
-        </div>
-      </div>
-
-      <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
-        ${['light','standard','premium'].map(tier => {
-          const dark = tier === 'standard';
-          const line = dark ? pricing.LINES.tickOnDark : pricing.LINES.tick;
-          return `<div data-tier="${tier}"${dark ? ' data-surface="dark"' : ''} class="${dark
-            ? 'relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden'
-            : 'rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7'}">
-          ${dark ? '<div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>' : ''}
-          <div class="relative">
-            <div class="flex items-center justify-between gap-3 mb-1.5">
-              <span class="text-[11px] font-bold tracking-[0.16em] uppercase ${dark ? 'text-teal-300' : 'text-orange-600'}">${tier}</span>
-              ${dark ? `<span class="flex items-center gap-1.5 text-[9.5px] font-bold tracking-widest bg-orange-500 rounded-full px-2.5 py-1">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.sparkles}</svg>
-                RECOMMENDED
-              </span>` : ''}
-            </div>
-            <div class="text-[13.5px] ${dark ? 'text-white/50' : 'text-ink-500'} mb-4 sm:mb-5 lg:mb-6">${TAGLINE[tier]}</div>
-            <div class="flex items-end gap-1.5 mb-3">
-              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price">${PLANS.onetime[tier].price}</span>
-              <span class="text-[12.5px] font-medium ${dark ? 'text-white/40' : 'text-ink-400'} pb-1.5 js-term">${PLANS.onetime.term}</span>
-            </div>
-            <div class="inline-flex items-center rounded-full ${dark ? 'bg-white/10 text-white/70' : 'bg-ink-50 text-ink-500'} px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">${PLANS.onetime[tier].rate}</span>&nbsp;/ 1,000 words</div>
-            <div class="h-px ${dark ? 'bg-white/10' : 'bg-ink-100'} mb-5 sm:mb-6 lg:mb-7"></div>
-            ${pricing.template(line)}
-            <ul class="space-y-3.5 text-[13.5px] font-medium ${dark ? 'text-white/80' : 'text-ink-700'} min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats">${pricing.feats(PLANS.onetime[tier].feats, line)}</ul>
-            <a href="${S.s11.ctaHref}" class="btn-press block text-center rounded-full ${dark
-              ? 'bg-white text-ink-900 hover:bg-ink-50'
-              : 'ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50'} text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start ${LABEL[tier]}</a>
-          </div>
-        </div>`;
-        }).join('\n        ')}
-      </div>
-
-      <!-- The brief calls this the primary CTA; Olex asked for it as a quiet text link,
-           since each card now carries its own button. The label and destination are the
-           brief's, only the weight changed. -->
-      <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] sm:text-[13px] font-medium">
-        <span class="text-ink-400" data-period-note>${PLANS.onetime.note}</span>
-        <span class="hidden sm:block w-1 h-1 rounded-full bg-ink-300"></span>
-        <a href="${S.s11.ctaHref}" class="font-semibold text-ink-700 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 hover:decoration-ink-500 transition-colors duration-300">${S.s11.cta}</a>
-      </div>
-    </div>
-    ${pricing.island()}
-  </section>`;
+${pricingPreview.section({
+  layout: 'center', space: 'md',
+  head: { eyebrow: 'Plans &amp; pricing', title: S.s11.h2, intro: S.s11.intro },
+  /* the plans' own buttons and the line under the cards lead to the Pricing page. The
+     brief calls the latter the primary CTA; Olex asked for it as a quiet text link, since
+     each card now carries its own button. The label and destination are the brief's,
+     only the weight changed. */
+  plans: { href: S.s11.ctaHref },
+  foot: { link: { label: S.s11.cta, href: S.s11.ctaHref } },
+})}`;
 
 const section12 = () => `
   <!-- ================= 12 · FAQ ================= -->

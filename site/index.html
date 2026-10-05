@@ -966,101 +966,91 @@
   <!-- ================= 11 · PRICING PREVIEW =================
        v1's card architecture with the four-period switcher from the pricing page.
        The header copy is the brief's; the numbers are not — see the note on PLANS. -->
-  <section data-component="pricing-preview" data-pricing="onetime" data-pricing-animate class="relative py-16 sm:py-24 lg:py-28 bg-ink-50 overflow-hidden">
-    <div class="orb w-[520px] h-[520px] bg-teal-500/8 right-[-140px] top-10"></div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv text-center max-w-[560px] mx-auto mb-8 sm:mb-10 lg:mb-12">
-        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Plans &amp; pricing</span>
-        </div>
-        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">Choose a plan</h2>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">Need more than the free check? Compare one-time and subscription options, or view all pricing details.</p>
+<section data-component="pricing-preview" class="pricing-preview" data-layout="center" data-bg="tint" data-space="md" data-pricing="onetime" data-pricing-animate>
+  <div class="orb pricing-glow"></div>
+  <div class="pricing-inner">
+    <div class="section-head rv">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-dot"></span>
+        <span class="section-eyebrow-label">Plans &amp; pricing</span>
       </div>
-
-      <div class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
-        <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto">
-          <button type="button" data-period="onetime" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 active">One-time</button>
-          <button type="button" data-period="monthly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">Monthly</button>
-          <button type="button" data-period="quarterly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">3-Months</button>
-          <button type="button" data-period="yearly" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">Yearly</button>
-        </div>
-      </div>
-
-      <div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
-        <div data-tier="light" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          
-          <div class="relative">
-            <div class="flex items-center justify-between gap-3 mb-1.5">
-              <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600">light</span>
-              
-            </div>
-            <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For occasional checks</div>
-            <div class="flex items-end gap-1.5 mb-3">
-              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price">$9.95</span>
-              <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term">/ one-time</span>
-            </div>
-            <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">$1.00</span>&nbsp;/ 1,000 words</div>
-            <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
-            <template data-pricing-feat><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>{feat}</li></template>
-            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>1 plagiarism check</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>1 AI check</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No expiry</li></ul>
-            <a href="prices.html" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Light</a>
-          </div>
-        </div>
-        <div data-tier="standard" data-surface="dark" class="relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden">
-          <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>
-          <div class="relative">
-            <div class="flex items-center justify-between gap-3 mb-1.5">
-              <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-teal-300">standard</span>
-              <span class="flex items-center gap-1.5 text-[9.5px] font-bold tracking-widest bg-orange-500 rounded-full px-2.5 py-1">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
-                RECOMMENDED
-              </span>
-            </div>
-            <div class="text-[13.5px] text-white/50 mb-4 sm:mb-5 lg:mb-6">For regular work</div>
-            <div class="flex items-end gap-1.5 mb-3">
-              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price">$17.95</span>
-              <span class="text-[12.5px] font-medium text-white/40 pb-1.5 js-term">/ one-time</span>
-            </div>
-            <div class="inline-flex items-center rounded-full bg-white/10 text-white/70 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">$0.90</span>&nbsp;/ 1,000 words</div>
-            <div class="h-px bg-white/10 mb-5 sm:mb-6 lg:mb-7"></div>
-            <template data-pricing-feat><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>{feat}</li></template>
-            <ul class="space-y-3.5 text-[13.5px] font-medium text-white/80 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>10 plagiarism checks</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>10 AI checks</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No expiry</li></ul>
-            <a href="prices.html" class="btn-press block text-center rounded-full bg-white text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Standard</a>
-          </div>
-        </div>
-        <div data-tier="premium" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
-          
-          <div class="relative">
-            <div class="flex items-center justify-between gap-3 mb-1.5">
-              <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600">premium</span>
-              
-            </div>
-            <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For higher-volume checks</div>
-            <div class="flex items-end gap-1.5 mb-3">
-              <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price">$41.95</span>
-              <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term">/ one-time</span>
-            </div>
-            <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">$0.42</span>&nbsp;/ 1,000 words</div>
-            <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
-            <template data-pricing-feat><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>{feat}</li></template>
-            <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>50 plagiarism checks</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>50 AI checks</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No expiry</li></ul>
-            <a href="prices.html" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Premium</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- The brief calls this the primary CTA; Olex asked for it as a quiet text link,
-           since each card now carries its own button. The label and destination are the
-           brief's, only the weight changed. -->
-      <div class="rv flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] sm:text-[13px] font-medium">
-        <span class="text-ink-400" data-period-note>One payment · packages never expire</span>
-        <span class="hidden sm:block w-1 h-1 rounded-full bg-ink-300"></span>
-        <a href="prices.html" class="font-semibold text-ink-700 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 hover:decoration-ink-500 transition-colors duration-300">See all pricing options</a>
+      <h2 class="section-title">Choose a plan</h2>
+      <p class="section-intro">Need more than the free check? Compare one-time and subscription options, or view all pricing details.</p>
+    </div>
+    <div data-slot="pricing-periods" class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
+      <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" role="group" aria-label="Billing period">
+        <button type="button" data-period="onetime" aria-pressed="true" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 active">One-time</button>
+        <button type="button" data-period="monthly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">Monthly</button>
+        <button type="button" data-period="quarterly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">3-Months</button>
+        <button type="button" data-period="yearly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">Yearly</button>
       </div>
     </div>
-    <script type="application/json" data-pricing-data>{"onetime":{"note":"One payment · packages never expire","term":"/ one-time","light":{"price":"$9.95","rate":"$1.00","feats":["1 plagiarism check","1 AI check","No expiry"]},"standard":{"price":"$17.95","rate":"$0.90","feats":["10 plagiarism checks","10 AI checks","No expiry"]},"premium":{"price":"$41.95","rate":"$0.42","feats":["50 plagiarism checks","50 AI checks","No expiry"]}},"monthly":{"note":"Recurring billing · cancel anytime","term":"/ month","light":{"price":"$22.95","rate":"$0.23","single":{"price":"$27.95","rate":"$0.28"},"feats":["100 plagiarism checks","30-day validity"]},"standard":{"price":"$34.95","rate":"$0.12","single":{"price":"$41.95","rate":"$0.14"},"feats":["300 plagiarism checks","API access","Report storage","30-day validity"]},"premium":{"price":"$54.95","rate":"$0.09","single":{"price":"$65.95","rate":"$0.11"},"feats":["300 plagiarism checks","300 AI checks","API access","Report storage","30-day validity"]}},"quarterly":{"note":"Recurring billing every 3 months · cancel anytime","term":"/ 3 months","light":{"price":"$34.95","rate":"$0.17","single":{"price":"$41.95","rate":"$0.21"},"feats":["100 plagiarism checks","100 AI checks","90-day validity"]},"standard":{"price":"$64.95","rate":"$0.10","single":{"price":"$77.95","rate":"$0.12"},"feats":["300 plagiarism checks","300 AI checks","API access","Report storage","90-day validity"]},"premium":{"price":"$89.95","rate":"$0.07","single":{"price":"$107.95","rate":"$0.09"},"feats":["500 plagiarism checks","500 AI checks","API access","Report storage","90-day validity"]}},"yearly":{"note":"Recurring billing yearly · best per-word rate","term":"/ year","light":{"price":"$114.95","rate":"$0.11","single":{"price":"$137.95","rate":"$0.14"},"feats":["1,000 plagiarism checks","365-day validity"]},"standard":{"price":"$174.95","rate":"$0.06","single":{"price":"$209.95","rate":"$0.07"},"feats":["3,000 plagiarism checks","API access","Report storage","365-day validity"]},"premium":{"price":"$259.95","rate":"$0.04","single":{"price":"$311.95","rate":"$0.05"},"feats":["3,000 plagiarism checks","3,000 AI checks","API access","Report storage","365-day validity"]}}}</script>
-  </section>
+    <div data-slot="pricing-plans" class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
+      <div data-tier="light" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+        <div class="relative">
+          <div class="flex items-center justify-between gap-3 mb-1.5">
+            <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600">light</span>
+          </div>
+          <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For occasional checks</div>
+          <div class="flex items-end gap-1.5 mb-3">
+            <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price">$9.95</span>
+            <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term">/ one-time</span>
+          </div>
+          <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">$1.00</span>&nbsp;/ 1,000 words</div>
+          <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
+          <template data-pricing-feat><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>{feat}</li></template>
+          <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>1 plagiarism check</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>1 AI check</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No expiry</li></ul>
+          <a href="prices.html" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Light</a>
+        </div>
+      </div>
+      <div data-tier="standard" data-surface="dark" class="relative rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-950 text-white ring-1 ring-white/10 shadow-diffuse-lg p-5 sm:p-6 lg:p-8 lg:-my-6 overflow-hidden">
+        <div class="orb w-[300px] h-[300px] bg-orange-500/15 -right-20 -top-24"></div>
+        <div class="relative">
+          <div class="flex items-center justify-between gap-3 mb-1.5">
+            <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-teal-300">standard</span>
+            <span class="flex items-center gap-1.5 text-[9.5px] font-bold tracking-widest bg-orange-500 rounded-full px-2.5 py-1">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>
+              RECOMMENDED
+            </span>
+          </div>
+          <div class="text-[13.5px] text-white/50 mb-4 sm:mb-5 lg:mb-6">For regular work</div>
+          <div class="flex items-end gap-1.5 mb-3">
+            <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price">$17.95</span>
+            <span class="text-[12.5px] font-medium text-white/40 pb-1.5 js-term">/ one-time</span>
+          </div>
+          <div class="inline-flex items-center rounded-full bg-white/10 text-white/70 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">$0.90</span>&nbsp;/ 1,000 words</div>
+          <div class="h-px bg-white/10 mb-5 sm:mb-6 lg:mb-7"></div>
+          <template data-pricing-feat><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>{feat}</li></template>
+          <ul class="space-y-3.5 text-[13.5px] font-medium text-white/80 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>10 plagiarism checks</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>10 AI checks</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ED7E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No expiry</li></ul>
+          <a href="prices.html" class="btn-press block text-center rounded-full bg-white text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Standard</a>
+        </div>
+      </div>
+      <div data-tier="premium" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">
+        <div class="relative">
+          <div class="flex items-center justify-between gap-3 mb-1.5">
+            <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600">premium</span>
+          </div>
+          <div class="text-[13.5px] text-ink-500 mb-4 sm:mb-5 lg:mb-6">For higher-volume checks</div>
+          <div class="flex items-end gap-1.5 mb-3">
+            <span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest leading-none nums js-price">$41.95</span>
+            <span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term">/ one-time</span>
+          </div>
+          <div class="inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">$0.42</span>&nbsp;/ 1,000 words</div>
+          <div class="h-px bg-ink-100 mb-5 sm:mb-6 lg:mb-7"></div>
+          <template data-pricing-feat><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>{feat}</li></template>
+          <ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats"><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>50 plagiarism checks</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>50 AI checks</li><li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2AA46C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No expiry</li></ul>
+          <a href="prices.html" class="btn-press block text-center rounded-full ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50 text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start Premium</a>
+        </div>
+      </div>
+      <script type="application/json" data-pricing-data>{"onetime":{"note":"One payment · packages never expire","term":"/ one-time","light":{"price":"$9.95","rate":"$1.00","feats":["1 plagiarism check","1 AI check","No expiry"]},"standard":{"price":"$17.95","rate":"$0.90","feats":["10 plagiarism checks","10 AI checks","No expiry"]},"premium":{"price":"$41.95","rate":"$0.42","feats":["50 plagiarism checks","50 AI checks","No expiry"]}},"monthly":{"note":"Recurring billing · cancel anytime","term":"/ month","light":{"price":"$22.95","rate":"$0.23","single":{"price":"$27.95","rate":"$0.28"},"feats":["100 plagiarism checks","30-day validity"]},"standard":{"price":"$34.95","rate":"$0.12","single":{"price":"$41.95","rate":"$0.14"},"feats":["300 plagiarism checks","API access","Report storage","30-day validity"]},"premium":{"price":"$54.95","rate":"$0.09","single":{"price":"$65.95","rate":"$0.11"},"feats":["300 plagiarism checks","300 AI checks","API access","Report storage","30-day validity"]}},"quarterly":{"note":"Recurring billing every 3 months · cancel anytime","term":"/ 3 months","light":{"price":"$34.95","rate":"$0.17","single":{"price":"$41.95","rate":"$0.21"},"feats":["100 plagiarism checks","100 AI checks","90-day validity"]},"standard":{"price":"$64.95","rate":"$0.10","single":{"price":"$77.95","rate":"$0.12"},"feats":["300 plagiarism checks","300 AI checks","API access","Report storage","90-day validity"]},"premium":{"price":"$89.95","rate":"$0.07","single":{"price":"$107.95","rate":"$0.09"},"feats":["500 plagiarism checks","500 AI checks","API access","Report storage","90-day validity"]}},"yearly":{"note":"Recurring billing yearly · best per-word rate","term":"/ year","light":{"price":"$114.95","rate":"$0.11","single":{"price":"$137.95","rate":"$0.14"},"feats":["1,000 plagiarism checks","365-day validity"]},"standard":{"price":"$174.95","rate":"$0.06","single":{"price":"$209.95","rate":"$0.07"},"feats":["3,000 plagiarism checks","API access","Report storage","365-day validity"]},"premium":{"price":"$259.95","rate":"$0.04","single":{"price":"$311.95","rate":"$0.05"},"feats":["3,000 plagiarism checks","3,000 AI checks","API access","Report storage","365-day validity"]}}}</script>
+    </div>
+    <div class="pricing-foot rv">
+      <span class="pricing-note" data-period-note>One payment · packages never expire</span>
+      <span class="pricing-foot-dot"></span>
+      <a href="prices.html" class="pricing-link">See all pricing options</a>
+    </div>
+  </div>
+</section>
 
 
   <!-- ================= 12 · FAQ ================= -->
