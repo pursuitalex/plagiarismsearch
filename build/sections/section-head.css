@@ -75,8 +75,35 @@
 }
 
 /* the intro's longest line, where its column is wider than a line should run */
+.section-intro:where([data-measure="64"]) {
+  @apply max-w-[64ch];
+}
 .section-intro:where([data-measure="72"]) {
   @apply max-w-[72ch];
+}
+
+/* ON A DARK SURFACE — a host that declares data-surface="dark" (the report showcase, the
+   reviews): the pill is translucent, its label and the intro are white at reduced
+   strength, the title inherits the host's white. Derived from the host, as the pill's
+   tint is on a light one; nobody sets it per head.
+   data-tone="quiet" on the same host is the homepage's dark act, a step quieter. */
+:where([data-surface="dark"]) .section-eyebrow {
+  @apply bg-white/10 ring-white/15;
+}
+:where([data-surface="dark"]) .section-eyebrow-label {
+  @apply text-white/80;
+}
+:where([data-surface="dark"]) .section-intro {
+  @apply text-white/70;
+}
+:where([data-surface="dark"][data-tone="quiet"]) .section-eyebrow {
+  @apply bg-white/[.07] ring-white/10;
+}
+:where([data-surface="dark"][data-tone="quiet"]) .section-eyebrow-label {
+  @apply text-white/70;
+}
+:where([data-surface="dark"][data-tone="quiet"]) .section-intro {
+  @apply text-white/60;
 }
 
 .section-more {

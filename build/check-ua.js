@@ -213,8 +213,9 @@ console.log('\nnegative contract');
   const hit = BAN.filter(([re]) => re.test(ua)).map(([, l]) => l);
   ok(BAN.length + ' banned patterns absent from the Ukrainian content', !hit.length, hit.join(' · '));
   ok('not the homepage translated: no proof rail, no features grid, no pricing cards, no partner logos', !/data-tier=|id="periodTabs"|partners\/(moodle|canvas)|BBB/i.test(body));
-  /* a dark block: one drawn with the utility, or the library banner's box (build/sections/banner.js) */
-  ok('two dark blocks only — the report act and the AI banner', (body.match(/bg-ink-950 (text-white )?overflow-hidden|class="banner-box\b/g) || []).length === 2 && (body.match(/class="banner-box\b/g) || []).length === 1);
+  /* a dark block: one drawn with the utility, the library banner's box (build/sections/banner.js),
+     or a library section that declares the dark surface (the report showcase) */
+  ok('two dark blocks only — the report act and the AI banner', (body.match(/bg-ink-950 (text-white )?overflow-hidden|class="banner-box\b|<section[^>]*\bdata-surface="dark"/g) || []).length === 2 && (body.match(/class="banner-box\b/g) || []).length === 1);
 }
 
 /* ── hygiene ────────────────────────────────────────────────────────────────── */

@@ -108,4 +108,79 @@ const cabSource = ([title, url, pct], i) => `<li class="cab-src cab-in flex item
                 <span class="shrink-0 rounded-full bg-orange-100 text-orange-800 px-2.5 py-1 text-[11.5px] font-bold nums">${pct}</span>
               </li>`;
 
-module.exports = { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 };
+/* ─────────────────────────────────────────────────────────────────────────────
+   THE MOCK-UP, WHOLE — one renderer for every page that shows the report (the Section
+   Library's Report showcase, build/sections/report-showcase.js, calls it).
+
+   The block is the product's screen, not editor content: it is rendered here, marked
+   data-slot="report" (sealed — copied as it is, the validator does not look inside) and
+   wired by 40-report.js through [data-report]. Its markup keeps its utilities, as the
+   quick-check form does.
+
+     report.mock()                 the report on a dark ground: two white panels
+     report.mock({ lang: 'en' })   …on a page in another language (the document is English)
+     report.mock({ frame: true })  on a white ground: the panels in a grey frame, a hairline
+                                   and the soft shadow instead of the deep one (Turnitin)
+     report.mock({ pass: true })   the homepage's: the scan line sweeps the document once
+                                   and the sidebar's figures follow (42-report-pass.js)
+
+   The three renditions differ in what each approved page drew; nothing else may. */
+const lines = (list, f, pad) => list.map(f).join('\n').split('\n').map(l => pad + l.trim()).join('\n');
+function mock({ pass = false, frame = false, lang } = {}) {
+  if (pass && frame) throw new Error('report: the pass is the dark report\'s (not framed)');
+  const num = pass ? 'nums' : 'tabular-nums';
+  const soft = pass ? ' bg-ink-50/60' : '';
+  const panel = 'rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden ' + (frame ? 'ring-1 ring-black/5 shadow-diffuse' : 'shadow-diffuse-lg');
+  const cabIn = pass ? 'cab-in ' : '';
+  const grid = `grid lg:grid-cols-[1fr_360px] ${frame ? 'gap-3 sm:gap-4 lg:gap-5' : 'gap-4 sm:gap-5 lg:gap-6'} items-stretch`;
+  const panels = `<div${pass ? ' data-report-doc' : ''} class="relative ${pass ? '' : 'min-w-0 '}${panel}">${pass ? `
+  <div data-report-scan class="absolute left-0 right-0 top-[-80px] z-10 pointer-events-none opacity-0">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
+    <div class="cab-beam h-28 w-full"></div>
+  </div>` : ''}
+  <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100${soft}">
+    <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight ${num}">${CAB.id}</span>
+    <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] ${pass ? 'text-ink-500' : 'text-ink-600'}">
+      <span>Words: <b class="font-bold text-ink-800 ${num}">${CAB.words}</b></span>
+      <span>Uploaded at: <b class="font-bold text-ink-800">${CAB.uploaded}</b></span>
+    </span>
+  </div>
+  <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
+${lines(CAB.doc, cabLine, '    ')}
+  </div>
+  <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 ${pass ? 'bg-ink-50/60' : 'bg-ink-50'}">
+${lines(CAB.legend, cabLegend, '    ')}
+  </div>
+</div>
+<div${pass ? ' data-report-side' : ''} class="flex flex-col ${pass ? '' : 'min-w-0 '}${panel}">
+  <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
+    <p class="${cabIn}text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
+${lines(CAB.metrics, cabMetric, '    ')}
+  </div>
+  <div class="${cabIn}shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
+    <span class="cab-tab on pt-3">Plagiarism</span>
+    <span class="cab-tab pt-3">AI</span>
+  </div>
+  <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
+    <ul class="absolute inset-0 divide-y divide-ink-100">
+${lines(CAB.sources, cabSource, '      ')}
+    </ul>
+  </div>
+</div>`;
+  const inset = (s, pad) => s.split('\n').map(l => (l ? pad + l : l)).join('\n');
+  if (frame) return `<div data-slot="report" class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 ring-1 ring-black/5 p-3 sm:p-4 lg:p-5">
+  <div data-report class="${grid}">
+${inset(panels, '    ')}
+  </div>
+</div>`;
+  if (pass) return `<div data-report data-slot="report">
+  <div class="${grid}">
+${inset(panels, '    ')}
+  </div>
+</div>`;
+  return `<div data-report data-slot="report" class="rv ${grid}"${lang ? ` lang="${lang}"` : ''}>
+${inset(panels, '  ')}
+</div>`;
+}
+
+module.exports = { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16, mock };

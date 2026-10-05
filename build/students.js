@@ -35,7 +35,7 @@ const hero = require('./sections/hero');   /* the hero: one library template; it
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
 const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 const startFree = require('./sections/start-free');   /* the free entry: one library template */
-const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
+const reportShowcase = require('./sections/report-showcase');
 
 /* ─────────────────────────────────────────────────────────────────────────────
    APPROVED COPY — Students brief, 2026-09-15. Verbatim.
@@ -281,65 +281,15 @@ const section3 = () => `  <!-- ================= 03 · SIGNATURE · THE REPORT, 
        under it the thing this page exists to say: "Similarity is not a plagiarism
        grade." — set as a display statement on a white card, with the interpretation
        callout beside it. No verdicts, thresholds, fixes or new fields. -->
-  <section id="before-you-submit" data-component="report-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    ${orb('dark-teal')}
-    ${orb('dark-coral')}
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
-${eyebrowDark('teal-400', COPY.report.eyebrow)}
-        <h2 class="${H2}">${COPY.report.h2}</h2>
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[72ch]">${COPY.report.intro}</p>
-      </div>
-
-      <div data-report class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
-        <div class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-          <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
-            <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">${CAB.id}</span>
-            <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
-              <span>Words: <b class="font-bold text-ink-800 tabular-nums">${CAB.words}</b></span>
-              <span>Uploaded at: <b class="font-bold text-ink-800">${CAB.uploaded}</b></span>
-            </span>
-          </div>
-          <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
-            ${CAB.doc.map(cabLine).join(NL14)}
-          </div>
-          <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50">
-            ${CAB.legend.map(cabLegend).join(NL14)}
-          </div>
-        </div>
-
-        <div class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-          <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
-            <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
-            ${CAB.metrics.map(cabMetric).join(NL14)}
-          </div>
-          <div class="shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
-            <span class="cab-tab on pt-3">Plagiarism</span>
-            <span class="cab-tab pt-3">AI</span>
-          </div>
-          <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
-            <ul class="absolute inset-0 divide-y divide-ink-100">
-              ${CAB.sources.map(cabSource).join(NL16)}
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- the principle, as the page's one display statement; the callout beside it -->
-      <div class="rv mt-6 sm:mt-8 grid lg:grid-cols-[1.15fr_.85fr] gap-4 sm:gap-5 lg:gap-6 items-stretch">
-        <div class="rounded-3xl sm:rounded-4xl bg-white text-ink-900 p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
-          <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-4">Student principle</p>
-          <p class="text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1] mb-4 lg:mb-5">${penMark(COPY.report.principle, 'not')}</p>
-          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[60ch]">${COPY.report.support}</p>
-        </div>
-        <div class="rounded-3xl sm:rounded-4xl bg-teal-400/[.07] ring-1 ring-teal-400/25 p-6 sm:p-7 lg:p-8 flex items-start gap-4 sm:gap-5">
-          <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-400/15 ring-1 ring-teal-400/30 flex items-center justify-center">${ico(I.info, '#6ED7E8')}</span>
-          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white font-semibold">${COPY.report.callout}</p>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${reportShowcase.section({
+  id: 'before-you-submit', surface: 'dark', space: 'md', accent: 'teal',
+  head: { eyebrow: COPY.report.eyebrow, title: COPY.report.h2, intro: COPY.report.intro, measure: '760', introMeasure: '72' },
+  /* the principle, as the page's one display statement; the callout beside it */
+  foot: { pair: { cards: [
+    { principle: { kicker: 'Student principle', title: COPY.report.principle, pen: 'not', text: COPY.report.support } },
+    { callout: COPY.report.callout },
+  ] } },
+})}`;
 
 /* ═══════════════ 04 · WHAT TO DO WITH A MATCH ═══════════════ */
 const section4 = () => `  <!-- ================= 04 · REVIEW YOUR DRAFT — THE DECISION =================

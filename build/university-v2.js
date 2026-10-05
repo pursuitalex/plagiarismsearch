@@ -36,7 +36,7 @@ const cta = require('./sections/cta-band');
 const hero = require('./sections/hero');   /* the hero: one library template; the diagram is its sealed slot */
 const banner = require('./sections/banner');
 const inquiry = require('./sections/inquiry-form');   /* the inquiry form: one library template */
-const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
+const reportShowcase = require('./sections/report-showcase');
 
 /* /organization-management has no page in this prototype and is a live production URL */
 const ORG = 'https://plagiarismsearch.com/organization-management';
@@ -341,71 +341,11 @@ const section2 = () => `  <!-- ================= 02 · REPORT EVIDENCE =========
        from build/report.js, semantics untouched. The three supporting concepts are a
        reading strip under it, not three cards: the report is the focal object and they
        say how to read it. -->
-  <section id="institutional-report" data-component="report-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    <div class="orb absolute orb-dark-teal"></div>
-    <div class="orb absolute orb-dark-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
-${eyebrowDark('teal-400', COPY.s2.eyebrow)}
-        ${h2(COPY.s2.h2)}
-        <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[72ch]">${COPY.s2.body}</p>
-        <p class="mt-3 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/60 max-w-[72ch]">${COPY.s2.body2}</p>
-      </div>
-
-      <div data-report class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
-        <div class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-          <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
-            <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">${CAB.id}</span>
-            <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
-              <span>Words: <b class="font-bold text-ink-800 tabular-nums">${CAB.words}</b></span>
-              <span>Uploaded at: <b class="font-bold text-ink-800">${CAB.uploaded}</b></span>
-            </span>
-          </div>
-          <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
-            ${CAB.doc.map(cabLine).join(NL14)}
-          </div>
-          <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50">
-            ${CAB.legend.map(cabLegend).join(NL14)}
-          </div>
-        </div>
-
-        <div class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-          <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
-            <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
-            ${CAB.metrics.map(cabMetric).join(NL14)}
-          </div>
-          <div class="shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
-            <span class="cab-tab on pt-3">Plagiarism</span>
-            <span class="cab-tab pt-3">AI</span>
-          </div>
-          <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
-            <ul class="absolute inset-0 divide-y divide-ink-100">
-              ${CAB.sources.map(cabSource).join(NL16)}
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- how to read it: one strip, three steps, secondary to the report above -->
-      <ol class="rv mt-6 sm:mt-8 grid sm:grid-cols-3 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
-${COPY.s2.steps.map(([head, body], i) => `        <li class="flex items-start gap-3.5 px-5 py-4 sm:px-6 sm:py-5">
-          <span class="shrink-0 inline-flex w-7 h-7 rounded-full bg-white text-ink-900 text-[12px] font-bold items-center justify-center tabular-nums">${i + 1}</span>
-          <span class="min-w-0">
-            <span class="block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-white">${head}</span>
-            <span class="block text-[12.5px] sm:text-[13px] leading-relaxed text-white/60 mt-0.5">${body}</span>
-          </span>
-        </li>`).join('\n')}
-      </ol>
-
-      <div class="rv mt-5 sm:mt-6 rounded-3xl bg-teal-400/[.07] ring-1 ring-teal-400/25 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5">
-        <span class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-400/15 ring-1 ring-teal-400/30 flex items-center justify-center">
-          ${ico('<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>', '#6ED7E8')}
-        </span>
-        <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white font-semibold max-w-[76ch]">${COPY.s2.signature}</p>
-      </div>
-    </div>
-  </section>`;
+${reportShowcase.section({
+  id: 'institutional-report', surface: 'dark', space: 'md', accent: 'teal',
+  head: { eyebrow: COPY.s2.eyebrow, title: COPY.s2.h2, intro: [COPY.s2.body, COPY.s2.body2], measure: '760', introMeasure: '72' },
+  foot: { points: COPY.s2.steps, callout: COPY.s2.signature },
+})}`;
 
 /* ═══════════════ 03 · INSTITUTIONAL CONTROL ═══════════════ */
 const section3 = () => `  <!-- ================= 03 · INSTITUTIONAL CONTROL =================

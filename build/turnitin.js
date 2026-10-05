@@ -39,7 +39,7 @@ const steps = require('./sections/steps');   /* the numbered sequences: one libr
 const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
 const pricing = require('./pricing');
-const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
+const reportShowcase = require('./sections/report-showcase');
 
 /* ─────────────────────────────────────────────────────────────────────────────
    APPROVED COPY — Turnitin Alternative brief, 2026-09-15. Verbatim.
@@ -437,65 +437,14 @@ const section5 = () => `  <!-- ================= 05 · WHAT YOU GET — THE PLAG
        The approved report (build/report.js), semantics untouched, on a light ground so
        the page keeps one dark act. Under it, the three things the report lets you do and
        the one sentence it must not be mistaken for. -->
-  <section id="report" data-component="report-light" class="relative py-16 sm:py-24 lg:py-28 bg-white">
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[760px] mb-8 sm:mb-10 lg:mb-12">
-${eyebrow('orange-500', COPY.report.eyebrow, 'ink')}
-        <h2 class="${H2}">${COPY.report.h2}</h2>
-        <p class="${INTRO} max-w-[72ch]">${COPY.report.intro}</p>
-      </div>
-
-      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 ring-1 ring-black/5 p-3 sm:p-4 lg:p-5">
-        <div data-report class="grid lg:grid-cols-[1fr_360px] gap-3 sm:gap-4 lg:gap-5 items-stretch">
-          <div class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden ring-1 ring-black/5 shadow-diffuse">
-            <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
-              <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">${CAB.id}</span>
-              <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
-                <span>Words: <b class="font-bold text-ink-800 tabular-nums">${CAB.words}</b></span>
-                <span>Uploaded at: <b class="font-bold text-ink-800">${CAB.uploaded}</b></span>
-              </span>
-            </div>
-            <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
-            ${CAB.doc.map(cabLine).join(NL14)}
-            </div>
-            <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50">
-            ${CAB.legend.map(cabLegend).join(NL14)}
-            </div>
-          </div>
-
-          <div class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden ring-1 ring-black/5 shadow-diffuse">
-            <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
-              <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
-            ${CAB.metrics.map(cabMetric).join(NL14)}
-            </div>
-            <div class="shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
-              <span class="cab-tab on pt-3">Plagiarism</span>
-              <span class="cab-tab pt-3">AI</span>
-            </div>
-            <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
-              <ul class="absolute inset-0 divide-y divide-ink-100">
-              ${CAB.sources.map(cabSource).join(NL16)}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-8 sm:mt-10 grid lg:grid-cols-[1.5fr_1fr] gap-6 lg:gap-10 items-stretch">
-        <ul class="rv-kids grid sm:grid-cols-3 gap-5 sm:gap-6">
-${COPY.report.points.map(([head, body], i) => `          <li>
-            ${chip(['orange', 'teal', 'ink'][i], [I.text, I.link, I.pointer][i])}
-            <h3 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mt-4 mb-1.5">${head}</h3>
-            <p class="${BODY} text-ink-600">${body}</p>
-          </li>`).join('\n')}
-        </ul>
-        <div class="rv rounded-3xl sm:rounded-4xl bg-orange-50 ring-1 ring-orange-200 p-6 sm:p-7 flex items-center gap-4">
-          ${chip('orange', I.info)}
-          <p class="text-[16px] sm:text-[17.5px] lg:text-[19px] font-bold tracking-tight leading-snug text-ink-900">${COPY.report.callout}</p>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${reportShowcase.section({
+  id: 'report', surface: 'light', space: 'md',
+  head: { eyebrow: COPY.report.eyebrow, title: COPY.report.h2, intro: COPY.report.intro, measure: '760', introMeasure: '72' },
+  foot: {
+    points: COPY.report.points.map(([name, text], i) => ({ name, text, tone: ['orange', 'teal', 'ink'][i], icon: [I.text, I.link, I.pointer][i] })),
+    callout: { text: COPY.report.callout, icon: I.info },
+  },
+})}`;
 
 /* ═══════════════ 06 · SOURCES & SETTINGS ═══════════════ */
 const section6 = () => `  <!-- ================= 06 · WHAT PLAGIARISMSEARCH CHECKS AGAINST =================

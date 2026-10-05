@@ -186,7 +186,7 @@ const { PLANS, LABEL, TAGLINE } = require('./pricing-data');
 
 /* The interactive report component. Extracted to build/report.js when the University
    page needed the same evidence — one report, two pages, per DEC-0043. */
-const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
+const reportShowcase = require('./sections/report-showcase');
 
 /* ── page-specific styles ────────────────────────────────────────────────── */
 /* The page's CSS lives in build/assets/css (site.css): the odometer, hero title and pulse
@@ -399,112 +399,44 @@ const section4 = () => `
   <!-- ================= 04 · SIGNATURE · INTERACTIVE REPORT =================
        The first dark act. This is the page's centrepiece, so it gets the break in
        rhythm and the accent colour on the matched text. -->
-  <section data-component="report-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="orb w-[620px] h-[620px] bg-teal-500/12 -left-52 top-10"></div>
-      <div class="orb w-[520px] h-[520px] bg-orange-500/10 right-[-160px] bottom-[-120px]"></div>
-    </div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv max-w-[720px] mb-8 sm:mb-10 lg:mb-12">
-        ${eyebrow('The report', true)}
-        <h2 class="${H2} mb-4 lg:mb-5">See the ${pen('evidence')} behind every match</h2>
-        <p class="${LEAD} text-white/60">${S.s4.intro}</p>
-      </div>
-
-
-      <!-- The report as the cabinet draws it, chosen over a card layout invented for
-           the page on 2026-08-20. Backdrop dark, both panels light, as on the real
-           screen. Structure, labels and colour system are the product's; the document
-           text is ours.
-
-           Selecting a passage opens its source under the document — the interaction the
-           brief asks for, and where its four report labels live. -->
-      <div data-report>
-        <div class="grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch">
-
-          <!-- document -->
-          <div data-report-doc class="relative rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-            <!-- the pass, borrowed from v1's #scanDoc: a line sweeps the page once and
-                 the highlights land behind it -->
-            <div data-report-scan class="absolute left-0 right-0 top-[-80px] z-10 pointer-events-none opacity-0">
-              <div class="h-px w-full bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
-              <div class="cab-beam h-28 w-full"></div>
-            </div>
-            <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100 bg-ink-50/60">
-              <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight nums">${CAB.id}</span>
-              <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-500">
-                <span>Words: <b class="font-bold text-ink-800 nums">${CAB.words}</b></span>
-                <span>Uploaded at: <b class="font-bold text-ink-800">${CAB.uploaded}</b></span>
-              </span>
-            </div>
-
-            <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
-              ${CAB.doc.map(cabLine).join(NL14)}
-            </div>
-
-
-            <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50/60">
-              ${CAB.legend.map(cabLegend).join(NL14)}
-            </div>
-          </div>
-
-          <!-- sidebar -->
-          <div data-report-side class="flex flex-col rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-            <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
-              <p class="cab-in text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
-              ${CAB.metrics.map(cabMetric).join(NL14)}
-            </div>
-
-            <div class="cab-in shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
-              <span class="cab-tab on pt-3">Plagiarism</span>
-              <span class="cab-tab pt-3">AI</span>
-            </div>
-
-            <!-- the list is longer than the panel and is cut, not scrolled: the point is
-                 that there are more sources, not that you can read them all here -->
-            <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
-              <ul class="absolute inset-0 divide-y divide-ink-100">
-                ${CAB.sources.map(cabSource).join(NL16)}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- A caveat about how to read the report, not a claim about the product, so it
-           sits under the thing it qualifies at a footnote's weight. -->
-      <p class="rv flex items-start gap-2.5 text-[12.5px] sm:text-[13px] leading-relaxed text-white/45 max-w-[76ch] mt-8 sm:mt-10 mb-10 sm:mb-12 lg:mb-14">
-        <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.shield}</svg>
-        ${S.s4.callout}
-      </p>
-
-      <!-- The integrations rail, moved here from its own section at Olex's request.
-           NOTE: the brief's page story puts the integrations proof at block 3 and the
-           report at block 4, so sitting at the foot of the report act reverses the two.
-           Moving this above the report heading would restore the order and keep the
-           visual merge — one move of this block. -->
-      <div class="rv">
-        <div class="flex items-center gap-4 mb-6 sm:mb-7 lg:mb-8">
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/40 shrink-0">${S.s3.label}</span>
-          <span class="h-px flex-1 bg-white/10"></span>
-        </div>
-        <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-          <!-- Moodle and Canvas co-primary, API next, Google Docs secondary — the
-               business priority approved 2026-08-20. Marks only, no links: the full
-               integration cards below carry the approved destinations. -->
-          <li>${partnerDark('moodle-on-dark.svg', 'Moodle')}</li>
-          <li>${partnerDark('canvas-on-dark.svg', 'Canvas')}</li>
-          <li>
-            <span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center gap-2 text-white/80">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg>
-              <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
-            </span>
-          </li>
-          <li>${partnerDark('google-docs-on-dark.svg', 'Google Docs')}</li>
-        </ul>
-      </div>
-    </div>
-  </section>`;
+${reportShowcase.section({
+  surface: 'dark', space: 'md', tone: 'quiet',
+  head: { eyebrow: 'The report', title: 'See the evidence behind every match', pen: 'evidence', penWidth: 120, intro: S.s4.intro, measure: '720' },
+  /* The report as the cabinet draws it, chosen over a card layout invented for the page
+     on 2026-08-20 — the library's sealed block (build/report.js), in the homepage's
+     rendition: the scan pass. */
+  foot: {
+    /* A caveat about how to read the report, not a claim about the product, so it sits
+       under the thing it qualifies at a footnote's weight. */
+    caveat: { text: S.s4.callout, icon: I.shield },
+    /* The integrations rail, moved here from its own section at Olex's request.
+       NOTE: the brief's page story puts the integrations proof at block 3 and the
+       report at block 4, so sitting at the foot of the report act reverses the two.
+       Moving this above the report heading would restore the order and keep the
+       visual merge — one move of this block. It is the page's own block: the section
+       seals it as [data-slot="media"], and it carries its own gap above.
+       Moodle and Canvas co-primary, API next, Google Docs secondary — the business
+       priority approved 2026-08-20. Marks only, no links: the full integration cards
+       below carry the approved destinations. */
+    media: `<div class="rv mt-10 sm:mt-12 lg:mt-14">
+  <div class="flex items-center gap-4 mb-6 sm:mb-7 lg:mb-8">
+    <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white/40 shrink-0">${S.s3.label}</span>
+    <span class="h-px flex-1 bg-white/10"></span>
+  </div>
+  <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+    <li>${partnerDark('moodle-on-dark.svg', 'Moodle')}</li>
+    <li>${partnerDark('canvas-on-dark.svg', 'Canvas')}</li>
+    <li>
+      <span class="rounded-xl bg-[#1B1F29] aspect-[324/113] w-full flex items-center justify-center gap-2 text-white/80">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.code}</svg>
+        <span class="text-[15px] sm:text-[17px] font-extrabold tracking-tight">API</span>
+      </span>
+    </li>
+    <li>${partnerDark('google-docs-on-dark.svg', 'Google Docs')}</li>
+  </ul>
+</div>`,
+  },
+})}`;
 
 const section5 = () => `
   <!-- ================= 05 · SIGNATURE · SOURCES & SCAN CONTROLS =================

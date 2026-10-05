@@ -43,7 +43,7 @@ const steps = require('./sections/steps');   /* the numbered sequences: one libr
 const sources = require('./sections/sources');   /* sources & scan settings: one library template */
 const startFree = require('./sections/start-free');   /* the free entry: one library template */
 const { REVIEWS, reviewCard } = require('./reviews');
-const { CAB, cabLine, cabLegend, cabMetric, cabSource, NL14, NL16 } = require('./report');
+const reportShowcase = require('./sections/report-showcase');
 
 const UNIVERSITY_PROOF = true;
 const ANCHOR = '#checker';
@@ -249,68 +249,16 @@ const section2 = () => `  <!-- ================= 02 · SIGNATURE · WHAT YOU GET
        untouched and untranslated — and beside the words, the path the brief asks the eye
        to follow: fragment → source → context. The interpretation callout closes the act
        at full width; it is the sentence the whole page leans on. -->
-  <section id="report" data-component="report-dark" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    <div class="orb absolute orb-dark-teal"></div>
-    <div class="orb absolute orb-dark-coral"></div>
-
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-6 lg:gap-14 items-end mb-8 sm:mb-10 lg:mb-12">
-        <div class="rv min-w-0">
-${eyebrowDark('teal-400', COPY.report.eyebrow)}
-          <h2 class="${H2}">${COPY.report.h2}</h2>
-          <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/70 max-w-[64ch]">${COPY.report.intro}</p>
-        </div>
-        <ol class="rv flex flex-wrap items-center gap-y-2 lg:justify-end" aria-label="${COPY.report.path.join(' → ')}">
-${COPY.report.path.map((p, i) => `          <li class="flex items-center">
-            <span class="inline-flex items-center gap-2 rounded-full ${i === 0 ? 'bg-orange-500/15 ring-1 ring-orange-400/40 text-white' : 'bg-white/[.06] ring-1 ring-white/10 text-white/85'} px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold">${i === 0 ? '<span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>' : ''}${p}</span>${i < 2 ? `
-            <svg class="mx-2 text-white/30" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>` : ''}
-          </li>`).join('\n')}
-        </ol>
-      </div>
-
-      <div data-report class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch" lang="en">
-        <div class="relative min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-          <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 sm:px-6 lg:px-7 py-3.5 sm:py-4 lg:py-5 border-b border-ink-100">
-            <span class="text-[13.5px] sm:text-[14.5px] font-bold tracking-tight tabular-nums">${CAB.id}</span>
-            <span class="flex items-center gap-5 text-[12px] sm:text-[12.5px] text-ink-600">
-              <span>Words: <b class="font-bold text-ink-800 tabular-nums">${CAB.words}</b></span>
-              <span>Uploaded at: <b class="font-bold text-ink-800">${CAB.uploaded}</b></span>
-            </span>
-          </div>
-          <div class="px-5 sm:px-6 lg:px-7 py-5 sm:py-6 lg:py-7 space-y-3.5">
-            ${CAB.doc.map(cabLine).join(NL14)}
-          </div>
-          <div class="cab-foot flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-7 gap-y-2 px-5 py-3.5 sm:py-4 lg:py-5 border-t border-ink-100 bg-ink-50">
-            ${CAB.legend.map(cabLegend).join(NL14)}
-          </div>
-        </div>
-
-        <div class="flex flex-col min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white text-ink-900 overflow-hidden shadow-diffuse-lg">
-          <div class="shrink-0 px-5 sm:px-6 py-5 sm:py-6">
-            <p class="text-[17px] sm:text-[18px] font-bold tracking-tight mb-5">Report information</p>
-            ${CAB.metrics.map(cabMetric).join(NL14)}
-          </div>
-          <div class="shrink-0 flex items-center gap-6 px-5 sm:px-6 border-b border-ink-200 bg-ink-100 text-[13.5px] font-semibold">
-            <span class="cab-tab on pt-3">Plagiarism</span>
-            <span class="cab-tab pt-3">AI</span>
-          </div>
-          <div class="cab-sources relative flex-1 min-h-[140px] overflow-hidden">
-            <ul class="absolute inset-0 divide-y divide-ink-100">
-              ${CAB.sources.map(cabSource).join(NL16)}
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="rv mt-6 sm:mt-8 grid lg:grid-cols-[.85fr_1.15fr] gap-4 sm:gap-5 lg:gap-6 items-stretch">
-        <p class="rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7 lg:p-8 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/75 flex items-center">${COPY.report.support}</p>
-        <div class="rounded-3xl sm:rounded-4xl bg-white text-ink-900 p-6 sm:p-7 lg:p-8 flex items-start gap-4 sm:gap-5">
-          ${chip('orange', I.info)}
-          <p class="text-[15px] sm:text-[16px] lg:text-[17px] leading-relaxed font-semibold tracking-tight">${COPY.report.callout}</p>
-        </div>
-      </div>
-    </div>
-  </section>`;
+${reportShowcase.section({
+  id: 'report', surface: 'dark', space: 'md', accent: 'teal',
+  head: { eyebrow: COPY.report.eyebrow, title: COPY.report.h2, intro: COPY.report.intro, introMeasure: '64' },
+  path: { label: COPY.report.path.join(' → '), steps: COPY.report.path, current: 0 },
+  mock: { lang: 'en' },
+  foot: { pair: { split: 'tail', cards: [
+    { aside: COPY.report.support },
+    { statement: { tone: 'orange', icon: I.info, text: COPY.report.callout } },
+  ] } },
+})}`;
 
 /* ═══════════════ 03 · OPTIONAL · UA UNIVERSITY-USER PROOF ═══════════════ */
 const section3 = () => `  <!-- ================= 03 · OPTIONAL · WHO USES IT HERE =================

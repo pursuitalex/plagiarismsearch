@@ -137,7 +137,8 @@ console.log('\nreport evidence');
   const rep = section('before-you-submit');
   ok('the approved report component is on the page, once', /cab-mark/.test(rep) && (body.match(/id="cabDoc"|data-report[ >]/g) || []).length === 1);
   ok('AI probability stays a separate metric in the report', /Total AI rate/.test(rep) && /AI probability/.test(rep));
-  ok('the principle is a display statement, not a caption', /<p class="text-\[clamp\(1\.6rem,2\.8vw,2\.4rem\)\][^>]*>[\s\S]*?Similarity is/.test(rep));
+  /* the display card of the library's report showcase (build/sections/report-showcase.js) */
+  ok('the principle is a display statement, not a caption', /<p class="report-principle-title">[\s\S]*?Similarity is/.test(rep));
   ok('no verdict, threshold or fix language in the report act', !/verdict|safe (score|percentage)|threshold|automatic(ally)? (fix|correct)|suggested citation/i.test(flat(rep)));
 }
 

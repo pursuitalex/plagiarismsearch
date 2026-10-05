@@ -427,3 +427,19 @@ acceptAgainst('330c9c9', {
 
 /* SECTION LIBRARY, WAVE 2 · START FREE (2026-10-01), against fe290a5: three pages (Students,
    PDF, the Ukrainian page), 0 px, identical in every measured property. Nothing accepted. */
+
+/* SECTION LIBRARY, WAVE 3 · THE REPORT SHOWCASE (2026-10-05), against 81480d5 — the last
+   commit before the report sections moved onto their library template
+   (build/sections/report-showcase.js; the mock-up itself is build/report.js's sealed
+   block). Seven sections on seven pages, 0 px on every page. Six are identical in every
+   measured property (PDF, Business & Teams, University, Students, the Ukrainian page,
+   Turnitin). One differs in exactly the properties named here:
+
+     Home, the report act. The head is the Section Header block, whose intro carries the
+       gap above itself (the homepage's h2 carried it below); and the footnote under the
+       report no longer carries the gap to the integrations rail — the rail, the page's
+       own sealed block, carries it above itself. The same elements in the same places;
+       only which of the two neighbours holds the margin changed. */
+acceptAgainst('81480d5', {
+  'index.html': [['margin-top', 'margin-bottom'], 'the intro and the integrations rail carry the gap above themselves (the h2 and the footnote carried it below)'],
+}, 'Report showcase: ');

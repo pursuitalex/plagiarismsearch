@@ -24,7 +24,8 @@ function parse(html) {
     text(html.slice(last, m.index), last);
     last = re.lastIndex;
     if (m[0].startsWith('<!')) continue;
-    if (m[1]) { cur.children.push({ tag: m[1].toLowerCase(), attrs: attrs(m[0].slice(1 + m[1].length, m[0].indexOf('>'))), children: [], parent: cur, line: lineAt(m.index), raw: true }); continue; }
+    /* a <script> or <style>: one raw node; `body` is its source (a JSON island is data a check may read) */
+    if (m[1]) { cur.children.push({ tag: m[1].toLowerCase(), attrs: attrs(m[0].slice(1 + m[1].length, m[0].indexOf('>'))), children: [], parent: cur, line: lineAt(m.index), raw: true, body: m[0].slice(m[0].indexOf('>') + 1, m[0].lastIndexOf('</')) }); continue; }
     if (m[2]) {
       const t = m[2].toLowerCase();
       let n = cur; while (n !== root && n.tag !== t) n = n.parent;
@@ -205,6 +206,25 @@ function rules(name, ctx) {
     return true;
   };
 
+  /* The pen mark (hero.css: .pen-word, .pen-mark; 18-pen-mark.js redraws the line for an
+     edited word): <span class="pen-word">word<svg class="pen-mark">…</svg></span>, at most
+     one in the text part `t`. The line is an icon, taken as it is — call this before
+     inlineOnly(t, […, 'span.pen-word']). Returns how many it found. */
+  const penWords = (t, what) => {
+    const pens = kids(t).filter(c => has(c, 'pen-word'));
+    pens.forEach(pw => {
+      if (pw.tag !== 'span') E(pw, `${label(pw)}: the pen word is a <span>`);
+      onlyClasses(pw, ['pen-word']); onlyAttrs(pw, { class: true });
+      const pk = kids(pw);
+      const last = pw.children.filter(c => c.tag !== '#text' || c.text.trim()).pop();
+      if (pk.length !== 1 || pk[0].tag !== 'svg' || !has(pk[0], 'pen-mark')) E(pw, `${label(pw)}: the pen word holds its text and then the line, <svg class="pen-mark">, copied as it is`);
+      else { svgIcon(pk[0], label(pw), ['pen-mark']); if (last !== pk[0]) E(pw, `${label(pw)}: the line <svg> comes after the word`); }
+      if (!texts(pw).some(x => x.text.trim())) E(pw, `${label(pw)}: the pen word is empty`);
+    });
+    if (pens.length > 1) E(t, `${label(t)}: one pen word at most in ${what} (found ${pens.length})`);
+    return pens.length;
+  };
+
   /* The root of a section-level component: <section class="…" data-component="…"> with an
      optional id and the component's own switches, and no stray text. */
   const sectionRoot = (el, component, classes, variants) => {
@@ -220,12 +240,12 @@ function rules(name, ctx) {
      [the eyebrow pill?, h2.section-title, p.section-intro?]. `measures`, `introMeasures`:
      the data-measure values the host allows on the block and on the intro. */
   const HEAD = { eyebrow: ['section-eyebrow'], eyebrowDot: ['section-eyebrow-dot'], eyebrowLabel: ['section-eyebrow-label'] };
-  const headBlock = (h, { measures = [], introMeasures = [], title = ['br', 'em', 'strong'], intro = ['strong', 'em', 'br'], reveal = true } = {}) => {
+  const headBlock = (h, { measures = [], introMeasures = [], title = ['br', 'em', 'strong'], intro = ['strong', 'em', 'br'], reveal = true, intros = 1 } = {}) => {
     if (!need(h, 'the head', reveal ? ['section-head', 'rv'] : ['section-head'], 'div')) return false;
     if (reveal) mustHave(h, ['rv']);
     onlyAttrs(h, { class: true, 'data-measure': true }); variantsOf(h, { 'data-measure': { values: measures } }); noText(h);
     const k = kids(h);
-    k.slice(headParts(k, h, { introMeasures, title, intro })).forEach(x => E(x, `${label(x)}: not part of the section head (order: eyebrow?, title, intro?)`));
+    k.slice(headParts(k, h, { introMeasures, title, intro, intros })).forEach(x => E(x, `${label(x)}: not part of the section head (order: eyebrow?, title, intro?)`));
     return true;
   };
   /* …and its parts, wherever a host holds them (a block, a column of its own). `intros`:
@@ -236,7 +256,7 @@ function rules(name, ctx) {
     if (k[i] && has(k[i], 'section-eyebrow')) eyebrow(k[i++], HEAD);
     const t = k[i];
     if (!t || !has(t, 'section-title')) E(t || host, `${label(host)}: the h2.section-title is required (after the optional eyebrow)`);
-    else { i++; need(t, 'the title', ['section-title'], 'h2'); onlyAttrs(t, { class: true, id: ID }); inlineOnly(t, title, 'the title'); filled(t, 'the title'); }
+    else { i++; need(t, 'the title', ['section-title'], 'h2'); onlyAttrs(t, { class: true, id: ID }); if (title.includes('span.pen-word')) penWords(t, 'the title'); inlineOnly(t, title, 'the title'); filled(t, 'the title'); }
     while (k[i] && has(k[i], 'section-intro') && seen < intros) {
       const p = k[i++]; seen++;
       need(p, 'the intro', ['section-intro'], 'p'); onlyAttrs(p, { class: true, 'data-measure': true }); variantsOf(p, { 'data-measure': { values: introMeasures } });
@@ -245,7 +265,7 @@ function rules(name, ctx) {
     return i;
   };
 
-  const api = { E, W, sealed, seal, exempt, at: null, onlyClasses, need, mustHave, variantsOf, onlyAttrs, requireAttrs, noText, filled, link, inlineOnly, svgIcon, eyebrow, actionButton, actionLink, iconTile, sectionRoot, headBlock, headParts };
+  const api = { E, W, sealed, seal, exempt, at: null, onlyClasses, need, mustHave, variantsOf, onlyAttrs, requireAttrs, noText, filled, link, inlineOnly, svgIcon, eyebrow, penWords, actionButton, actionLink, iconTile, sectionRoot, headBlock, headParts };
   return api;
 }
 

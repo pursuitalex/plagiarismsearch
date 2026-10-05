@@ -56,7 +56,9 @@ function validate(html) {
     let host = null;
     for (const comp of REGISTRY) {
       if (covered.get(comp.name).has(n)) host = host || comp;
-      else if (comp.check.isPart(n)) ctx.errors.push({ line: n.line, msg: `${label(n)}: ${comp.check.outside}` });
+      /* a primitive two components host (the pen mark: the hero's, and the report
+         showcase's) is not a stray where its host has taken it as its own icon */
+      else if (comp.check.isPart(n) && !sealed.has(n)) ctx.errors.push({ line: n.line, msg: `${label(n)}: ${comp.check.outside}` });
     }
     if (!host || isSealed(n)) return;
     if (n.tag === 'script' || n.tag === 'style') ctx.errors.push({ line: n.line, msg: `<${n.tag}> is not allowed inside the ${host.title}` });

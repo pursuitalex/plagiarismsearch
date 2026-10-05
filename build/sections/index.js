@@ -27,6 +27,7 @@ module.exports = [
   { name: 'steps', title: 'Steps', contract: require('./steps.contract'), check: require('./steps.check') },
   { name: 'feature-cards', title: 'Feature cards', contract: require('./feature-cards.contract'), check: require('./feature-cards.check') },
   { name: 'sources', title: 'Sources', contract: require('./sources.contract'), check: require('./sources.check') },
+  { name: 'report-showcase', title: 'Report showcase', contract: require('./report-showcase.contract'), check: require('./report-showcase.check') },
   { name: 'start-free', title: 'Start free', contract: require('./start-free.contract'), check: require('./start-free.check') },
   { name: 'faq', title: 'FAQ', contract: require('./faq.contract'), check: require('./faq.check') },
   { name: 'cta-band', title: 'CTA band', contract: require('./cta-band.contract'), check: require('./cta-band.check') },

@@ -1,0 +1,210 @@
+/* ═══ Report showcase — library component ═══════════════════════════════════════════
+   Template: build/sections/report-showcase.js · contract: build/sections/report-showcase.contract.js
+   Behaviour: build/assets/js/40-report.js ([data-report]), 42-report-pass.js (the
+   homepage's scan), 20-motion.js (.rv, .rv-kids, .pen-word) — nothing of its own
+   Written the way section-head.css explains (@apply, outside @layer, (0,1,0) selectors,
+   variants as data-* in :where()).
+
+   The section that shows the plagiarism report: a head, the report, and a few lines on
+   how to read it. The report is the product's screen — a sealed block the template
+   renders (build/report.js, 09-report.css); everything around it is the page's text.
+
+   section.report-showcase          data-surface="dark" | data-bg="white"   data-space="md|lg"
+                                    data-accent="teal"   data-tone="quiet"
+     DARK   div.orb.orb-dark-teal  div.orb.orb-dark-coral            the two glows (01-base.css)
+            data-tone="quiet": div.report-bg > div.orb.report-orb-cool, div.orb.report-orb-warm
+     .report-inner
+       THE HEAD     div.section-head.rv                              the Section Header (section-head.css)
+                    or div.report-top > div.report-top-head.rv (the head's parts),
+                       ol.report-path.rv > li.report-path-step > span.report-path-pill (+ svg.report-path-arrow)
+       THE REPORT   [data-slot="report"]                             sealed
+       THE FOOT     dark, each optional, in this order:
+                    ol.report-points.rv[data-marker="number"]        li.report-point > span.report-point-num,
+                                                                     span.report-point-body > span.report-point-name, span.report-point-text
+                    div.report-callout.rv                            span.report-callout-icon > svg, p.report-callout-text
+                    div.report-pair.rv (data-split="tail")           two cards: div.report-principle · div.report-callout ·
+                                                                     p.report-aside · div.report-statement
+                    p.report-caveat.rv                               svg.report-caveat-icon, text
+                    [data-slot="media"]                              a page's own block — sealed
+                    light:
+                    div.report-foot                                  ul.report-points.rv-kids[data-marker="icon"] >
+                                                                     li.report-point > span.icon-tile, h3.report-point-name, p.report-point-text
+                                                                     div.report-callout.rv[data-tone="orange"] > span.icon-tile, p.report-callout-text
+
+   The dark head — the pill, its label and the intro on the dark ground — is the Section
+   Header's own (section-head.css, [data-surface="dark"]); nothing here restates it. */
+
+/* ── the section ─────────────────────────────────────────────────────────────── */
+.report-showcase {
+  @apply relative py-16 sm:py-24 lg:py-32 bg-white;
+}
+.report-showcase:where([data-space="md"]) { @apply lg:py-28; }
+.report-showcase:where([data-surface="dark"]) {
+  @apply bg-ink-950 text-white overflow-hidden;
+}
+
+/* the homepage's ground: one warm glow low on the right. The cool one has no fill — the
+   homepage wrote it with a class Tailwind 3 does not have (an opacity of 12), so it was
+   never drawn, and the approved look is the warm glow alone. */
+.report-bg {
+  @apply absolute inset-0 overflow-hidden pointer-events-none;
+}
+.report-orb-cool {
+  @apply w-[620px] h-[620px] -left-52 top-10;
+}
+.report-orb-warm {
+  @apply w-[520px] h-[520px] bg-orange-500/10 right-[-160px] bottom-[-120px];
+}
+
+.report-inner {
+  @apply relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10;
+}
+
+/* ── the head ────────────────────────────────────────────────────────────────────
+   The Section Header block, a step closer to the report than to an ordinary section's
+   content; a second intro paragraph stands closer and, on the dark ground, quieter. */
+:where(.report-showcase) .section-head {
+  @apply mb-8 sm:mb-10 lg:mb-12;
+}
+:where(.report-showcase .section-intro) + .section-intro {
+  @apply mt-3;
+}
+:where(.report-showcase[data-surface="dark"] .section-intro) + .section-intro {
+  @apply text-white/60;
+}
+:where(.report-showcase) .pen-word {
+  @apply relative inline-block;
+}
+
+/* the head beside a path in pills (the Ukrainian page) */
+.report-top {
+  @apply grid lg:grid-cols-[1.15fr_.85fr] gap-6 lg:gap-14 items-end mb-8 sm:mb-10 lg:mb-12;
+}
+.report-top-head {
+  @apply min-w-0;
+}
+.report-path {
+  @apply flex flex-wrap items-center gap-y-2 lg:justify-end;
+}
+.report-path-step {
+  @apply flex items-center;
+}
+.report-path-pill {
+  @apply inline-flex items-center gap-2 rounded-full bg-white/[.06] ring-1 ring-white/10 text-white/85 px-4 py-2 text-[13px] sm:text-[13.5px] font-semibold;
+}
+.report-path-pill:where([data-state="current"]) {
+  @apply bg-orange-500/15 ring-orange-400/40 text-white;
+}
+.report-path-dot {
+  @apply w-1.5 h-1.5 rounded-full bg-orange-400;
+}
+.report-path-arrow {
+  @apply mx-2 text-white/30;
+}
+
+/* ── the foot, on the dark ground ────────────────────────────────────────────────
+   Each block carries the gap above itself. */
+
+/* three numbered points, one strip */
+.report-points:where([data-marker="number"]) {
+  @apply mt-6 sm:mt-8 grid sm:grid-cols-3 rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 divide-y sm:divide-y-0 sm:divide-x divide-white/10;
+}
+:where(.report-points[data-marker="number"]) > .report-point {
+  @apply flex items-start gap-3.5 px-5 py-4 sm:px-6 sm:py-5;
+}
+.report-point-num {
+  @apply shrink-0 inline-flex w-7 h-7 rounded-full bg-white text-ink-900 text-[12px] font-bold items-center justify-center tabular-nums;
+}
+.report-point-body {
+  @apply min-w-0;
+}
+:where(.report-points[data-marker="number"]) .report-point-name {
+  @apply block text-[14.5px] sm:text-[15px] font-bold tracking-tight text-white;
+}
+:where(.report-points[data-marker="number"]) .report-point-text {
+  @apply block text-[12.5px] sm:text-[13px] leading-relaxed text-white/60 mt-0.5;
+}
+
+/* the teal callout: one statement beside an icon */
+.report-callout {
+  @apply mt-5 sm:mt-6 rounded-3xl bg-teal-400/[.07] ring-1 ring-teal-400/25 p-5 sm:p-6 lg:p-7 flex items-start gap-4 sm:gap-5;
+}
+.report-callout-icon {
+  @apply shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-400/15 ring-1 ring-teal-400/30 flex items-center justify-center;
+}
+:where(.report-callout-icon) > svg { stroke: #6ED7E8; }
+.report-callout-text {
+  @apply text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white font-semibold max-w-[76ch];
+}
+
+/* two cards side by side: the first the wider one; data-split="tail": the second */
+.report-pair {
+  @apply mt-6 sm:mt-8 grid lg:grid-cols-[1.15fr_.85fr] gap-4 sm:gap-5 lg:gap-6 items-stretch;
+}
+.report-pair:where([data-split="tail"]) {
+  @apply lg:grid-cols-[.85fr_1.15fr];
+}
+/* the callout as a card of the pair: the pair's radius and padding, the whole width */
+:where(.report-pair) > .report-callout {
+  @apply mt-0 sm:mt-0 sm:rounded-4xl p-6 sm:p-7 lg:p-8;
+}
+:where(.report-pair > .report-callout) > .report-callout-text {
+  @apply max-w-none;
+}
+/* the white display card: a label, the statement at display size, a paragraph */
+.report-principle {
+  @apply rounded-3xl sm:rounded-4xl bg-white text-ink-900 p-6 sm:p-8 lg:p-10 flex flex-col justify-center;
+}
+.report-kicker {
+  @apply text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-4;
+}
+.report-principle-title {
+  @apply text-[clamp(1.6rem,2.8vw,2.4rem)] font-extrabold tracking-tightest leading-[1.1];
+}
+/* the statement carries the gap to the paragraph under it */
+.report-principle-title:where(:not(:last-child)) {
+  @apply mb-4 lg:mb-5;
+}
+.report-principle-text {
+  @apply text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[60ch];
+}
+/* a quiet text card */
+.report-aside {
+  @apply rounded-3xl sm:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-6 sm:p-7 lg:p-8 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-white/75 flex items-center;
+}
+/* a white card: an icon tile and one statement */
+.report-statement {
+  @apply rounded-3xl sm:rounded-4xl bg-white text-ink-900 p-6 sm:p-7 lg:p-8 flex items-start gap-4 sm:gap-5;
+}
+.report-statement-text {
+  @apply text-[15px] sm:text-[16px] lg:text-[17px] leading-relaxed font-semibold tracking-tight;
+}
+
+/* a footnote under the report */
+.report-caveat {
+  @apply mt-8 sm:mt-10 flex items-start gap-2.5 text-[12.5px] sm:text-[13px] leading-relaxed text-white/45 max-w-[76ch];
+}
+.report-caveat-icon {
+  @apply w-4 h-4 shrink-0 mt-0.5;
+}
+
+/* ── the foot, on the white section ──────────────────────────────────────────────
+   Three points with icon tiles beside the orange callout. */
+.report-foot {
+  @apply mt-8 sm:mt-10 grid lg:grid-cols-[1.5fr_1fr] gap-6 lg:gap-10 items-stretch;
+}
+.report-points:where([data-marker="icon"]) {
+  @apply grid sm:grid-cols-3 gap-5 sm:gap-6;
+}
+:where(.report-points[data-marker="icon"]) .report-point-name {
+  @apply text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mt-4 mb-1.5;
+}
+:where(.report-points[data-marker="icon"]) .report-point-text {
+  @apply text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600;
+}
+.report-callout:where([data-tone="orange"]) {
+  @apply mt-0 sm:mt-0 sm:rounded-4xl bg-orange-50 ring-1 ring-orange-200 p-6 sm:p-7 lg:p-7 items-center gap-4 sm:gap-4;
+}
+:where(.report-callout[data-tone="orange"]) > .report-callout-text {
+  @apply text-[16px] sm:text-[17.5px] lg:text-[19px] font-bold tracking-tight leading-snug text-ink-900 max-w-none;
+}
