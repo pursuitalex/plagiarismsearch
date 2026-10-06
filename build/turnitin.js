@@ -9,7 +9,7 @@
    So the page is built from things that are true about both products rather than from
    things that are good about ours. The comparison is a real <table> with two columns of
    equal weight — no winner column, no ticks and crosses, no colour that means "better" —
-   and each Turnitin cell carries the number of the official source that supports it. The
+   and the official sources that support the Turnitin cells are one list under it. The
    non-equivalence act is the one dark act and the page's signature: two systems drawn
    side by side, the same four ingredients in each, two different reports at the bottom
    and a neutral "not directly interchangeable" between them. "Which option fits" gives Turnitin its own column and its own
@@ -18,6 +18,14 @@
    The checker, the report and the closing band are the shared modules. The pricing
    preview is the homepage's widget shell reading build/pricing-data.js — placeholder
    figures until the backend widget lands, and no competitor price anywhere.
+
+   CORRECTED to the Core 4 Final Correction Pack of 2026-10-05 (new-tasks/new-page-6/):
+   the table rows carry no source buttons — no pills, no superscripts, no anchors; the one
+   list of official sources under the table is the comparison's substantiation; the
+   verification date is October 5, 2026 (re-verified by the client, not by us); and the
+   pricing intro speaks to the customer, not to the implementer. The pricing figures
+   were never this page's: they are build/pricing-data.js through build/pricing.js, the
+   one source the homepage and the Pricing page read (check-turnitin.js holds that).
 
    Run:  node build/turnitin.js  →  node build/shell.js  →  node build/check-turnitin.js
 
@@ -49,8 +57,8 @@ const reportShowcase = require('./sections/report-showcase');
    ───────────────────────────────────────────────────────────────────────────── */
 const ANCHOR = '#independent-checker';
 
-/* the five official Turnitin guides the brief rechecked on 2026-09-15 — the only
-   substantiation this page may use for a Turnitin fact */
+/* the five official Turnitin guides the brief rechecked on 2026-09-15, re-verified by the
+   client on 2026-10-05 — the only substantiation this page may use for a Turnitin fact */
 const SOURCES = [
   ['How to purchase a Turnitin subscription', 'https://guides.turnitin.com/hc/en-us/articles/37985974637453-How-to-purchase-a-Turnitin-subscription'],
   ['Turnitin and plagiarism', 'https://guides.turnitin.com/hc/en-us/articles/34400565079053-Turnitin-and-plagiarism'],
@@ -81,10 +89,12 @@ const COPY = {
   compare: {
     h2: 'PlagiarismSearch vs Turnitin®: what is actually different?',
     intro: 'Turnitin offers several products and institution-specific configurations. This comparison focuses on PlagiarismSearch self-service plagiarism checking and documented aspects of Turnitin Similarity / Feedback Studio that can be compared using current official information.',
-    verifiedLabel: 'Last verified: September 15, 2026',
-    verification: 'Turnitin information on this page was last reviewed on September 15, 2026 against current official Turnitin documentation covering subscription access, Similarity Reports, source repositories and AI Writing Reports. Turnitin product availability and settings can vary by license, institution and configuration.',
+    verifiedLabel: 'Last verified: October 5, 2026',
+    verification: 'Turnitin information on this page was last reviewed on October 5, 2026 against current official Turnitin documentation covering subscription access, Similarity Reports, source repositories and AI Writing Reports. Turnitin product availability and settings can vary by license, institution and configuration.',
     heads: ['Topic', 'Turnitin® Similarity / Feedback Studio', 'PlagiarismSearch'],
-    /* [topic, Turnitin cell, PlagiarismSearch cell, official source number] */
+    /* [topic, Turnitin cell, PlagiarismSearch cell, official source number] — the number
+       records which guide supports the row; it is not shown in the table (pack of
+       2026-10-05), the guides are listed once under it */
     rows: [
       ['Direct individual purchase',
        'Turnitin states that subscriptions to these products are designed for educational institutions and are not sold directly to individuals.',
@@ -186,7 +196,7 @@ const COPY = {
   pricing: {
     eyebrow: 'Self-Service Pricing',
     h2: 'Choose a PlagiarismSearch plan directly',
-    intro: 'PlagiarismSearch offers public self-service plan options for users who need more than the free check. Current prices, quotas, billing periods and plan entitlements should always come from the live pricing system.',
+    intro: 'PlagiarismSearch offers public self-service plan options for users who need more than the free check. Choose the PlagiarismSearch plan and billing period that fits your checking needs. Current prices and included usage are shown below.',
     free: '150 plagiarism words can be checked without registration. Registered users receive 300 plagiarism words per day.',
     cta: 'View all pricing', ctaHref: 'prices.html',
   },
@@ -239,7 +249,9 @@ const extIcon = '<svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24
 const linkQuiet = (label, href) => `<a href="${href}"${ext(href)} class="inline-flex items-center gap-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 decoration-ink-300 underline underline-offset-4 transition-colors duration-300">${label}</a>`;
 
 /* the reference to an official source: a quiet numbered pill that opens the official guide
-   itself, in a new tab (patch 2026-09-18 — the in-page jump to the registry barely moved) */
+   itself, in a new tab (patch 2026-09-18 — the in-page jump to the registry barely moved).
+   Since the pack of 2026-10-05 it is not used in the comparison table; the AI-writing act
+   still cites its one guide with it (the FAQ answer on buying Turnitin has its own link) */
 const srcRef = n => `<a href="${SOURCES[n - 1][1]}" target="_blank" rel="noopener noreferrer" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source ${n}: ${SOURCES[n - 1][0]} (opens in a new tab)">Source ${n}<span class="text-ink-400">${extIcon}</span></a>`;
 
 const penMark = (text, phrase) => {
@@ -290,9 +302,8 @@ ${hero.section({
 const section2 = () => `  <!-- ================= 02 · OBJECTIVE COMPARISON + ITS SOURCES =================
        A real table: <th scope="col"> for the two products, <th scope="row"> for the
        topic, every cell text. Both product columns are set identically — same ground,
-       same weight, no winner. Each Turnitin cell ends on the number of the official guide
-       that supports it, and the guides are listed directly under the table with the
-       date they were checked. Under 768px the table reflows into one card per topic; the
+       same weight, no winner. The cells carry no source marks; the official guides are
+       listed once, directly under the table, with the date they were checked. Under 768px the table reflows into one card per topic; the
        explicit roles keep it a table for assistive tech once display:block has been
        applied, and each cell repeats its product name as a label. -->
   <section id="comparison" data-component="compare-table" class="relative py-16 sm:py-24 lg:py-28 bg-white">
@@ -317,11 +328,10 @@ const section2 = () => `  <!-- ================= 02 · OBJECTIVE COMPARISON + IT
             </tr>
           </thead>
           <tbody role="rowgroup">
-${COPY.compare.rows.map(([topic, tii, ps, n]) => `            <tr role="row">
+${COPY.compare.rows.map(([topic, tii, ps]) => `            <tr role="row">
               <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">${topic}</th>
               <td role="cell" data-label="${COPY.compare.heads[1]}">
                 <p class="${BODY} text-ink-700">${tii}</p>
-                <p class="mt-2.5">${srcRef(n)}</p>
               </td>
               <td role="cell" data-label="${COPY.compare.heads[2]}">
                 <p class="${BODY} text-ink-700">${ps}</p>

@@ -11,7 +11,8 @@
      LinkedIn    the inactive <span>, or an <a> to linkedin.com with rel="noopener" and an
                  aria-label — never href="#" or another network
      content     name and role text only; the bio limited to strong, em, br; nothing empty;
-                 a bio outside 30–55 words is a warning
+                 a bio outside 25–55 words is a warning (25, not the brief's 30: the correction pack of
+                 2026-10-05 took a sentence from two bios and asked for nothing in its place)
      safety      no style="", no on* handlers, no <script>/<style>
    Plus, for the whole input: no Team part outside a recognised Team. */
 const C = require('./team.contract');
@@ -59,7 +60,7 @@ function checkCard(li, R) {
   if (bio && R.part(bio, 'the bio', C.classes.bio, 'p')) {
     R.onlyAttrs(bio, { class: true }); R.inlineOnly(bio, C.inline.bio, 'the bio'); R.filled(bio, 'the bio');
     const n = words(textOf(bio));
-    if (n && (n < 30 || n > 55)) R.W(bio, `${label(bio)}: the bio is ${n} words — profiles are kept even at 30–55`);
+    if (n && (n < 25 || n > 55)) R.W(bio, `${label(bio)}: the bio is ${n} words — profiles are kept even at 25–55`);
   }
 
   if (social && has(social, 'team-linkedin')) {

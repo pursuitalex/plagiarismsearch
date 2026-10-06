@@ -1,6 +1,7 @@
-/* Check site/about-us.html against the brief of 2026-09-30 and against its own copy
-   (build/about.js COPY): every string word for word; the nine profiles in order with
-   their approved roles and even bios; the six approved milestones and no other year; the
+/* Check site/about-us.html against the brief of 2026-09-30, the Core 4 Final Correction
+   Pack of 2026-10-05 (new-tasks/new-page-6/) and its own copy (build/about.js COPY):
+   every string word for word; the nine profiles in order with their approved roles;
+   what the pack removed, gone; the six approved milestones and no other year; the
    placeholders honest (no face images, no invented LinkedIn address); the links the
    brief names and no sales CTA; the wording the brief forbids absent; the page-specific
    components (build/about/) keeping their content contracts; and the global change —
@@ -70,11 +71,25 @@ console.log('\nfacts and tone (brief §2, §3, §9, §13, §25)');
   const hit = banned.filter(re => re.test(all)).map(String);
   ok(banned.length + ' forbidden wordings absent', !hit.length, hit.join(' '));
   ok('"Growth Lead" only as "SEO & Growth Lead"', (all.match(/Growth Lead/g) || []).length === (all.match(/SEO & Growth Lead/g) || []).length);
-  ok('Oleksandr Kozuliov: Technical Lead, "from the beginning", never a founder', /Oleksandr Kozuliov has guided the technical development of PlagiarismSearch from the beginning/.test(text) && !/Kozuliov[^.]*found/i.test(text) && (text.match(/found(ed|er)\b/gi) || []).length >= 2);
-  ok('Pavlo Kucheruk: founder and owner, actively involved', /founder and owner, Pavlo Kucheruk, remains actively involved/.test(text));
-  ok('AI text detection kept separate from plagiarism detection', (text.match(/AI text detection (is added )?as a capability separate from plagiarism detection/g) || []).length === 2);
+  ok('Oleksandr Kozuliov: Technical Lead, "since the beginning", never a founder, named only in his own profile', /Oleksandr has worked on PlagiarismSearch since the beginning/.test(text) && !/Kozuliov[^.]*found/i.test(text) && (text.match(/Kozuliov/g) || []).length === 1 && (text.match(/found(ed|er)\b/gi) || []).length >= 2);
+  ok('Pavlo Kucheruk: the founder, actively involved', /launched in 2009 under founder Pavlo Kucheruk/.test(text) && /Pavlo founded PlagiarismSearch and has stayed actively involved/.test(text));
+  ok('AI analysis kept separate from plagiarism checking', (text.match(/AI text detection is added as a capability separate from plagiarism detection/g) || []).length === 1 && (text.match(/separate AI-writing analysis/g) || []).length === 2);
   const years = [...new Set(text.match(/\b(?:19|20)\d\d\b/g) || [])].sort();
   ok('no year but the six approved', years.join() === '2009,2013,2017,2018,2023,2026', years.join());
+}
+
+console.log('\nthe correction pack of 2026-10-05');
+{
+  const hero = body.slice(0, body.indexOf('data-component="about-story"'));
+  const dts = [...hero.matchAll(/<dt\b[^>]*>([\s\S]*?)<\/dt>/g)].map(m => flat(m[1]));
+  ok('hero fact sheet: three ideas — Launched, Founder, Today', dts.join() === 'Launched,Founder,Today', dts.join());
+  ok('hero: 2009, the founder and the product today; nobody else named', /2009/.test(flat(hero)) && /Pavlo Kucheruk/.test(flat(hero)) && !/Kozuliov|Students/.test(flat(hero)));
+  const gone = ['This page is about its history', 'First built for', 'Six milestones, in the order they happened', 'led by Oleksandr Kozuliov',
+    'rather than any single release', 'How the work connects', 'not separate departments', 'Product direction', 'Growth & communication'];
+  const still = gone.filter(g => text.includes(g));
+  ok(gone.length + ' removed wordings absent', !still.length, still.join(' | '));
+  ok('the Story does not repeat the Timeline\'s milestones', !/Moodle|Canvas|Google Docs|API/.test(COPY.story.paras.join(' ')));
+  ok('no line over the Timeline', !/<section[^>]*data-component="timeline"[\s\S]*?class="section-intro"[\s\S]*?<ol class="timeline-list"/.test(body));
 }
 
 console.log('\ntimeline (brief §3, §6)');
@@ -97,8 +112,9 @@ console.log('\nteam (brief §7–§10, §22)');
   ok('nine profiles, the brief\'s names and roles, in the brief\'s order', JSON.stringify(got) === JSON.stringify(ROLES), got.length + ' cards');
   ok('COPY carries the same nine', JSON.stringify(P.map(p => [p.name, p.role])) === JSON.stringify(ROLES));
   const wc = P.map(p => words(p.bio)), sc = P.map(p => sentences(p.bio));
-  ok('bios 30–55 words', wc.every(n => n >= 30 && n <= 55), wc.join(' '));
-  ok('bios even: longest within 10 words of shortest', Math.max(...wc) - Math.min(...wc) <= 10, Math.min(...wc) + '–' + Math.max(...wc));
+  /* the brief asked for even bios, 30–55 words; the correction pack took a sentence from two
+     of them and said not to write anything in its place, so the floor is theirs now */
+  ok('bios 25–55 words', wc.every(n => n >= 25 && n <= 55), wc.join(' '));
   ok('bios 2–3 sentences', sc.every(n => n >= 2 && n <= 3), sc.join(' '));
   ok('each bio on the page, word for word', cards.every((c, i) => flat((c.match(/<p class="team-bio">([\s\S]*?)<\/p>/) || [])[1] || '') === P[i].bio));
   /* every card the same five parts in the same order: nobody larger, nobody first among equals */
@@ -132,16 +148,16 @@ console.log('\nstructure');
 {
   const secs = [...body.matchAll(/<section\b[^>]*>/g)].map(m => m[0]);
   const comp = secs.map(s => (s.match(/data-component="([^"]+)"/) || [])[1]);
-  ok('six sections in the brief\'s order', comp.join() === 'about-hero,about-story,timeline,team,about-bridge,cta-band', comp.join());
+  ok('five sections in the approved order', comp.join() === 'about-hero,about-story,timeline,team,cta-band', comp.join());
   /* the Section Header's pill takes its background from the host section's data-bg */
   const hosts = body.split(/(?=<section\b)/).filter(s => s.includes('class="section-eyebrow"') || s.includes('class="section-title"'));
-  ok(hosts.length + ' sections host a Section Header, each with data-bg', hosts.length === 5 && hosts.every(s => /^<section\b[^>]*data-bg="(white|tint)"/.test(s)));
+  ok(hosts.length + ' sections host a Section Header, each with data-bg', hosts.length === 4 && hosts.every(s => /^<section\b[^>]*data-bg="(white|tint)"/.test(s)));
   ok('no eyebrowBg / introSize leftovers', !/class="section-eyebrow"[^>]*data-bg|class="section-intro"[^>]*data-size/.test(body));
   ok('no <style>, no <script>, no inline style, no on* handler', !/<style|<script|\sstyle="|\son[a-z]+="/.test(body));
   ok('no <img> without a file', [...body.matchAll(/<img\b[^>]*src="([^"]+)"/g)].every(m => fs.existsSync(path.join(SITE, m[1]))));
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]);
   ok(ids.length + ' ids, none twice', new Set(ids).size === ids.length, ids.filter((x, i) => ids.indexOf(x) !== i).join(' '));
-  ok('standard section padding on the two bespoke content sections (the components carry theirs in CSS), the hero\'s own',(body.match(/<section[^>]*class="[^"]*py-16 sm:py-24 lg:py-32/g) || []).length === 2 && /pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28/.test(secs[0]));
+  ok('standard section padding on the bespoke content section (the components carry theirs in CSS), the hero\'s own',(body.match(/<section[^>]*class="[^"]*py-16 sm:py-24 lg:py-32/g) || []).length === 1 && /pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28/.test(secs[0]));
   /* the hero's button carries the size itself; the closing band's two are the library's
      pair (build/sections/cta-band.css gives data-layout="pair" the same 48 / 56px) */
   ok('standalone buttons are h-12 sm:h-14: the hero\'s, and the closing band\'s pair', (body.match(/class="btn-press[^"]*"/g) || []).length === 1 && (body.match(/class="btn-press[^"]*"/g) || []).every(c => /\bh-12 sm:h-14\b/.test(c)) &&

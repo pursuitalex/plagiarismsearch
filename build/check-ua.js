@@ -56,7 +56,7 @@ console.log('\nfunnel');
   const ACTS = [
     ['checker',         null],
     ['report',          'Дивіться не лише відсоток — перевіряйте збіги та джерела'],
-    ['ua-universities', 'PlagiarismSearch користуються студенти з університетів по всій Україні'],
+    ['ua-universities', 'PlagiarismSearch користуються студенти українських університетів'],
     ['sources',         'Перевіряйте текст із потрібними джерелами та налаштуваннями'],
     ['how-to-read',     'Як правильно оцінити знайдений збіг'],
     ['your-document',   'Що відбувається з документом після перевірки'],
@@ -128,6 +128,10 @@ console.log('\nchecker / report');
   ok('the shared report is rendered once, interactive', (body.match(/id="cabDoc"|<div data-report[ >]/g) || []).length === 1 && /cab-mark/.test(rep) && /cab-src/.test(rep));
   ok('fragment → source → context is drawn', /Фрагмент[\s\S]*Джерело[\s\S]*Контекст/.test(flat(rep)));
   ok('the report never says "Plagiarism detected"', !/plagiarism detected/i.test(rep));
+  /* the correction pack of 2026-10-05: the report keeps its AI figures, and one footnote
+     says when they appear — a caveat line, not a callout or a section */
+  ok('the AI figures\' footnote, once, as the report\'s caveat line', (body.match(/Показники ШІ відображаються, якщо перевірку на ШІ було ввімкнено\./g) || []).length === 1 &&
+    /<p class="report-caveat[^"]*">[\s\S]*?Показники ШІ відображаються[\s\S]*?<\/p>/.test(rep) && /Total AI rate|AI probability/.test(rep));
   ok('untranslated product UI is marked lang="en" (form, report, reviews)', (body.match(/lang="en"/g) || []).length === 3);
 }
 
@@ -151,7 +155,8 @@ console.log('\nuniversity proof');
 console.log('\nfacts');
 {
   ok('free limits are 150 and 300 wherever a limit is stated', !/\b(100|200|250|500) слів/.test(text));
-  ok('upload limits: 2 МБ, 24 МБ, 10 файлів', has('2 МБ') && has('24 МБ') && has('до 10 файлів'));
+  /* the correction pack of 2026-10-05: 24 MB a file, 10 files a check; no lower guest limit */
+  ok('upload limits: до 24 МБ на один файл, 10 файлів; no guest 2 МБ', has('до 24 МБ на один файл') && has('до 10 файлів') && !has('2 МБ') && !/Для гостей максимальний розмір/.test(text));
   ok('PDF: text layer, no OCR', has('Сервіс не виконує OCR'));
   ok('sources are shown as available, not as switches that are on', !/<input|class="sw\b|role="switch"/.test(section('sources')));
   /* the library's Steps (build/sections/steps.js): data-last="apart" draws the last station
@@ -184,7 +189,7 @@ console.log('\nFAQ');
     ['Що показує звіт PlagiarismSearch?', 'Звіт показує знайдені текстові збіги, відповідні джерела та пов’язані з ними фрагменти документа. Ви можете перейти від позначеного тексту до джерела й самостійно перевірити контекст.'],
     ['Чи означає знайдений збіг, що в тексті є плагіат?', 'Ні. Текстовий збіг сам по собі не є автоматичним висновком про плагіат. Важливо перевірити джерело, контекст, цитування й правила, за якими оцінюється конкретний текст.'],
     ['Чи можна перевірити PDF на плагіат?', 'Так, PlagiarismSearch може аналізувати PDF, якщо файл містить машинозчитуваний текстовий шар. Сервіс не виконує OCR: текст, який існує лише всередині сканованого зображення, не буде розпізнано. У змішаному PDF аналізується текст із тих сторінок, де він доступний як текст.'],
-    ['Який максимальний розмір файлу?', 'Для гостей максимальний розмір підтримуваного файла становить 2 МБ, для користувачів, які увійшли в акаунт, — 24 МБ. За одну операцію можна додати до 10 файлів.'],
+    ['Який максимальний розмір файлу?', 'Максимальний розмір підтримуваного файла — до 24 МБ на один файл. За одну операцію можна додати до 10 файлів.'],
     ['З якими джерелами може порівнюватися текст?', 'Залежно від доступних налаштувань перевірка може використовувати вебджерела, академічну базу, а також персональне чи організаційне сховище. Не всі джерела обов’язково використовуються в кожній перевірці.'],
     ['Чи зберігається мій документ після перевірки?', 'Завантажений вихідний документ не зберігається як окремий документ після звичайної перевірки. Згенерований звіт може залишатися у вашому акаунті для повторного перегляду, і його можна видалити. Додавання документа до Storage є окремою керованою дією.'],
     ['Чи можна використати звіт PlagiarismSearch як офіційний звіт для університету?', 'Вимоги різних університетів відрізняються. Звіт PlagiarismSearch можна використовувати для самоперевірки й роботи зі знайденими збігами, але чи приймає конкретний заклад такий звіт як офіційний документ, потрібно уточнювати безпосередньо в університеті.'],

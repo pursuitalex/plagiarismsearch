@@ -244,9 +244,8 @@
   <!-- ================= 02 · OBJECTIVE COMPARISON + ITS SOURCES =================
        A real table: <th scope="col"> for the two products, <th scope="row"> for the
        topic, every cell text. Both product columns are set identically — same ground,
-       same weight, no winner. Each Turnitin cell ends on the number of the official guide
-       that supports it, and the guides are listed directly under the table with the
-       date they were checked. Under 768px the table reflows into one card per topic; the
+       same weight, no winner. The cells carry no source marks; the official guides are
+       listed once, directly under the table, with the date they were checked. Under 768px the table reflows into one card per topic; the
        explicit roles keep it a table for assistive tech once display:block has been
        applied, and each cell repeats its product name as a label. -->
   <section id="comparison" data-component="compare-table" class="relative py-16 sm:py-24 lg:py-28 bg-white">
@@ -256,7 +255,7 @@
         <p class="mt-4 lg:mt-5 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[76ch]">Turnitin offers several products and institution-specific configurations. This comparison focuses on PlagiarismSearch self-service plagiarism checking and documented aspects of Turnitin Similarity / Feedback Studio that can be compared using current official information.</p>
         <p class="mt-5 inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 text-[12px] sm:text-[12.5px] font-semibold text-ink-700">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1B7A50" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-          Last verified: September 15, 2026
+          Last verified: October 5, 2026
         </p>
       </div>
 
@@ -275,7 +274,6 @@
               <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Direct individual purchase</th>
               <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Turnitin states that subscriptions to these products are designed for educational institutions and are not sold directly to individuals.</p>
-                <p class="mt-2.5"><a href="https://guides.turnitin.com/hc/en-us/articles/37985974637453-How-to-purchase-a-Turnitin-subscription" target="_blank" rel="noopener noreferrer" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 1: How to purchase a Turnitin subscription (opens in a new tab)">Source 1<span class="text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
               </td>
               <td role="cell" data-label="PlagiarismSearch">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Individuals can use PlagiarismSearch directly through its self-service checker and public plan options.</p>
@@ -285,7 +283,6 @@
               <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">How access works</th>
               <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Access commonly depends on an institution's Turnitin product, license and workflow. Student access to a Similarity Report can also depend on instructor or institutional settings.</p>
-                <p class="mt-2.5"><a href="https://guides.turnitin.com/hc/en-us/articles/28310712438029-Accessing-the-Similarity-Report-and-similarity-score-via-Turnitin-Website" target="_blank" rel="noopener noreferrer" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 3: Accessing the Similarity Report and similarity score via Turnitin Website (opens in a new tab)">Source 3<span class="text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
               </td>
               <td role="cell" data-label="PlagiarismSearch">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">A user can start their own check directly in PlagiarismSearch and review the generated report through their account workflow.</p>
@@ -295,7 +292,6 @@
               <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">What the report means</th>
               <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Turnitin's Similarity Report highlights text that matches selected search sources. Turnitin states that a similarity score is not itself a determination of plagiarism.</p>
-                <p class="mt-2.5"><a href="https://guides.turnitin.com/hc/en-us/articles/34400565079053-Turnitin-and-plagiarism" target="_blank" rel="noopener noreferrer" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 2: Turnitin and plagiarism (opens in a new tab)">Source 2<span class="text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
               </td>
               <td role="cell" data-label="PlagiarismSearch">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">PlagiarismSearch highlights matching or similar passages and their sources. The result is evidence for the user to review, not an automatic plagiarism determination.</p>
@@ -305,7 +301,6 @@
               <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Source collections</th>
               <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Depending on the product and settings, Turnitin documents source collections including internet content, publications and repositories of submitted works.</p>
-                <p class="mt-2.5"><a href="https://guides.turnitin.com/hc/en-us/articles/21745851240589-Customizing-account-settings-for-Similarity-and-SimCheck" target="_blank" rel="noopener noreferrer" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 4: Customizing account settings for Similarity and SimCheck (opens in a new tab)">Source 4<span class="text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
               </td>
               <td role="cell" data-label="PlagiarismSearch">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">PlagiarismSearch can search web sources, an academic database with 500M+ indexed academic texts when enabled, and available personal or organization storage sources.</p>
@@ -315,7 +310,6 @@
               <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Pricing path</th>
               <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Institutional customers request pricing based on their organization's requirements; these subscriptions are not sold directly to individuals.</p>
-                <p class="mt-2.5"><a href="https://guides.turnitin.com/hc/en-us/articles/37985974637453-How-to-purchase-a-Turnitin-subscription" target="_blank" rel="noopener noreferrer" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 1: How to purchase a Turnitin subscription (opens in a new tab)">Source 1<span class="text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
               </td>
               <td role="cell" data-label="PlagiarismSearch">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Public self-service plan options are available directly from PlagiarismSearch.</p>
@@ -325,7 +319,6 @@
               <th scope="row" role="rowheader" class="cmp-topic text-[15px] sm:text-[15.5px] font-bold tracking-tight text-ink-900">Official Turnitin report</th>
               <td role="cell" data-label="Turnitin® Similarity / Feedback Studio">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">Turnitin generates its own Similarity Reports using its products, databases and configured search targets.</p>
-                <p class="mt-2.5"><a href="https://guides.turnitin.com/hc/en-us/articles/28310712438029-Accessing-the-Similarity-Report-and-similarity-score-via-Turnitin-Website" target="_blank" rel="noopener noreferrer" class="src-ref inline-flex items-center gap-1.5 rounded-full bg-ink-50 hover:bg-ink-100 ring-1 ring-black/5 px-2.5 py-1 text-[11px] sm:text-[11.5px] font-semibold text-ink-600 hover:text-ink-900 transition-colors duration-300" aria-label="Official Turnitin source 3: Accessing the Similarity Report and similarity score via Turnitin Website (opens in a new tab)">Source 3<span class="text-ink-400"><svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span></a></p>
               </td>
               <td role="cell" data-label="PlagiarismSearch">
                 <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700">PlagiarismSearch generates a PlagiarismSearch report. It does not connect to Turnitin software or generate an official Turnitin Similarity Report.</p>
@@ -338,8 +331,8 @@
       <!-- the evidence, directly under the claims it supports -->
       <div class="rv mt-6 sm:mt-8 grid lg:grid-cols-[.9fr_1.1fr] gap-6 lg:gap-12 rounded-2xl sm:rounded-3xl bg-ink-50 p-5 sm:p-7 lg:p-8">
         <div class="min-w-0">
-          <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-3">Last verified: September 15, 2026</p>
-          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700 max-w-[62ch]">Turnitin information on this page was last reviewed on September 15, 2026 against current official Turnitin documentation covering subscription access, Similarity Reports, source repositories and AI Writing Reports. Turnitin product availability and settings can vary by license, institution and configuration.</p>
+          <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-3">Last verified: October 5, 2026</p>
+          <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-700 max-w-[62ch]">Turnitin information on this page was last reviewed on October 5, 2026 against current official Turnitin documentation covering subscription access, Similarity Reports, source repositories and AI Writing Reports. Turnitin product availability and settings can vary by license, institution and configuration.</p>
         </div>
         <div class="min-w-0">
           <p class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-500 mb-3">Official Turnitin sources</p>
@@ -804,7 +797,7 @@
           <span class="section-eyebrow-label">Self-Service Pricing</span>
         </div>
         <h2 class="section-title">Choose a PlagiarismSearch plan directly</h2>
-        <p class="section-intro" data-measure="64">PlagiarismSearch offers public self-service plan options for users who need more than the free check. Current prices, quotas, billing periods and plan entitlements should always come from the live pricing system.</p>
+        <p class="section-intro" data-measure="64">PlagiarismSearch offers public self-service plan options for users who need more than the free check. Choose the PlagiarismSearch plan and billing period that fits your checking needs. Current prices and included usage are shown below.</p>
       </div>
       <p class="pricing-aside rv">
         <span class="pricing-aside-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg></span>

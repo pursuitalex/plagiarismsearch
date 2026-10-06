@@ -11050,10 +11050,6 @@ a.team-linkedin:focus-visible {
   grid-template-columns: 2.5rem 1fr;
 }
 
-.grid-cols-\[2rem_1fr\] {
-  grid-template-columns: 2rem 1fr;
-}
-
 .grid-cols-\[2rem_1fr_auto_auto\] {
   grid-template-columns: 2rem 1fr auto auto;
 }
@@ -13956,10 +13952,6 @@ a.team-linkedin:focus-visible {
     grid-column: span 2 / span 2;
   }
 
-  .sm\:col-start-3 {
-    grid-column-start: 3;
-  }
-
   .sm\:col-start-auto {
     grid-column-start: auto;
   }
@@ -14257,10 +14249,6 @@ a.team-linkedin:focus-visible {
 
   .sm\:grid-cols-\[2\.25rem_1fr_7rem_7rem\] {
     grid-template-columns: 2.25rem 1fr 7rem 7rem;
-  }
-
-  .sm\:grid-cols-\[2\.5rem_12\.5rem_1fr\] {
-    grid-template-columns: 2.5rem 12.5rem 1fr;
   }
 
   .sm\:grid-cols-\[3rem_1fr\] {
@@ -14681,10 +14669,6 @@ a.team-linkedin:focus-visible {
 
   .sm\:pr-6 {
     padding-right: 1.5rem;
-  }
-
-  .sm\:pt-0 {
-    padding-top: 0px;
   }
 
   .sm\:pt-10 {

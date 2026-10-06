@@ -63,7 +63,7 @@ const editable = [
   { field: 'Фото', where: '.team-photo', rule: 'усередині рівно один елемент: span.team-initials (ініціали, 1–3 літери) АБО img.team-photo-img (src, alt = ім’я, width, height; пропорція 4:5)' },
   { field: 'Ім’я', where: 'h3.team-name', rule: 'лише текст, без тегів' },
   { field: 'Посада', where: 'p.team-role', rule: 'лише текст, без тегів' },
-  { field: 'Біо', where: 'p.team-bio', rule: 'текст, 2–3 речення, 30–55 слів, приблизно однакової довжини в усіх картках; допускаються strong, em, br' },
+  { field: 'Біо', where: 'p.team-bio', rule: 'текст, 2–3 речення, 25–55 слів, приблизно однакової довжини в усіх картках; допускаються strong, em, br' },
   { field: 'LinkedIn', where: '.team-linkedin', rule: 'span (неактивна іконка, адреси ще немає) АБО a з href на linkedin.com, rel="noopener" і aria-label «LinkedIn profile of …»; інших соцмереж немає' },
   { field: 'Кількість людей', where: 'li.team-card', rule: 'копіюйте або видаляйте цілий <li class="team-card rv">; усі картки однакові — жодна не більша за інші' },
 ];

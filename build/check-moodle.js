@@ -358,9 +358,9 @@ console.log('\nhygiene');
 }
 
 console.log('\ngates — open items, not defects');
-console.log('  G1    Marketplace + GitHub URLs were found by search on 2026-09-17, not supplied by the brief — confirm they are the official ones.');
+console.log('  G1    Marketplace + GitHub URLs — verified 2026-10-06 (Core 4 pack, routing QA): the GitHub Releases URL is the one the live guide links; the moodle.org/plugins/plagiarism_plagiarismsearch link of the live guide redirects to this Marketplace URL. Both answer 200.');
 console.log('  G2    The GitHub README still says Moodle 2.7–4.5 and the Marketplace text still claims workshops/forums, a free trial and manager-issued keys: the brief\'s P1 sync task (§16).');
-console.log('  G3    /account/api has no page in the prototype; the three credential links go to account.html.');
+console.log('  G3    /account/api has no page in the prototype; the two credential links go to account.html. Production target: https://plagiarismsearch.com/account/api (what the live guide links; it sends a signed-out visitor to /account/login) — developer wiring.');
 console.log('  G4    Page-local labels that are ours, not the brief\'s: "Control 1 / Control 2" on the Sources pair, the matrix row labels, the two URL-parsing level tags, the FAQ H2.');
 console.log('  G6    Patch 2026-09-18: the resubmission FAQ answer was reworded by us ("eligible Moodle Assignment submissions") — the patch asked for it without supplying text. Same for the student-access intro ("eligible files" → "eligible Moodle Assignment submissions").');
 console.log('  G5    New page-local patterns (rail + jump menu, definition table, evidence figure) — not in the component library until approved.');

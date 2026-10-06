@@ -91,7 +91,7 @@ console.log('\napproved copy');
     'PlagiarismSearch is an independent service. It is not affiliated with or endorsed by Turnitin, LLC and does not generate Turnitin Similarity Reports.',
     '150 words free - no registration required.',
     'Turnitin offers several products and institution-specific configurations. This comparison focuses on PlagiarismSearch self-service plagiarism checking and documented aspects of Turnitin Similarity / Feedback Studio that can be compared using current official information.',
-    'Turnitin information on this page was last reviewed on September 15, 2026 against current official Turnitin documentation covering subscription access, Similarity Reports, source repositories and AI Writing Reports. Turnitin product availability and settings can vary by license, institution and configuration.',
+    'Turnitin information on this page was last reviewed on October 5, 2026 against current official Turnitin documentation covering subscription access, Similarity Reports, source repositories and AI Writing Reports. Turnitin product availability and settings can vary by license, institution and configuration.',
     'PlagiarismSearch and Turnitin® use different source collections, repositories, matching methods, and settings. Because of those differences, a PlagiarismSearch similarity percentage should not be treated as a prediction of the score an official Turnitin Similarity Report may return.',
     'You need to run your own plagiarism checks without relying on an institution to provide your PlagiarismSearch account.',
     'You want to review the matches and sources found by PlagiarismSearch before you submit your final version.',
@@ -117,7 +117,7 @@ console.log('\napproved copy');
     'Your uploaded document is processed to perform the checks you select. The uploaded source document is not retained as a stored source document.',
     'A generated report may remain available in your account for convenience, and you can permanently delete reports.',
     'Adding content to Storage is a separate action you control. Running a plagiarism check does not automatically add the document to Storage.',
-    'PlagiarismSearch offers public self-service plan options for users who need more than the free check. Current prices, quotas, billing periods and plan entitlements should always come from the live pricing system.',
+    'PlagiarismSearch offers public self-service plan options for users who need more than the free check. Choose the PlagiarismSearch plan and billing period that fits your checking needs. Current prices and included usage are shown below.',
     '150 plagiarism words can be checked without registration. Registered users receive 300 plagiarism words per day.',
     'Review the matches and sources PlagiarismSearch finds before you submit your work.',
     'Turnitin® is a registered trademark of Turnitin, LLC. PlagiarismSearch is an independent service and is not affiliated with, endorsed by, sponsored by, or otherwise connected with Turnitin, LLC. References to Turnitin® on this page are used for comparative and consumer-information purposes. PlagiarismSearch does not provide access to Turnitin software or proprietary databases and does not generate Turnitin Similarity Reports.',
@@ -156,12 +156,13 @@ console.log('\ncomparison');
   const t = flat(table);
   const lost = CELLS.filter(c => !t.includes(c));
   ok('all twelve cells verbatim, as text in the table', !lost.length, lost.map(m => '“' + m.slice(0, 40) + '…”').join(' '));
-  const badges = [...table.matchAll(/<a href="([^"]+)"([^>]*)class="src-ref/g)];
-  ok('every Turnitin cell carries a Source badge that opens the official guide itself', badges.length === 6 && badges.every(m => OFFICIAL.includes(m[1])));
-  ok('badges open in a new tab, safely', badges.every(m => /target="_blank"/.test(m[2]) && /rel="noopener noreferrer"/.test(m[2])));
+  /* the pack of 2026-10-05: no source marks in the rows — no pill, no link, no superscript, no anchor */
+  ok('the table rows carry no source marks: no link, no "Source n", no superscript', !/<a\b/.test(table) && !/Source \d/.test(t) && !/<sup\b|[¹²³⁴⁵]/.test(table));
+  const refs = [...body.matchAll(/<a href="([^"]+)"([^>]*)class="src-ref/g)];
+  ok('the one source pill left on the page (the AI-writing act) opens the official guide in a new tab, safely', refs.length === 1 && refs.every(m => OFFICIAL.includes(m[1]) && /target="_blank"/.test(m[2]) && /rel="noopener noreferrer"/.test(m[2])), refs.length + ' pills');
   ok('each data cell names its product for the stacked phone layout', (table.match(/data-label="Turnitin® Similarity \/ Feedback Studio"/g) || []).length === 6 && (table.match(/data-label="PlagiarismSearch"/g) || []).length === 6);
   ok('no winner marks in the table (ticks, crosses, colour-coded cells)', !/M20 6 9 17|M18 6 6 18/.test(table) && !/bg-(mint|teal|orange|red|green)/.test(table));
-  ok('"Last verified: September 15, 2026" is visible in the comparison', /Last verified: September 15, 2026/.test(flat(cmp)));
+  ok('"Last verified: October 5, 2026" is visible in the comparison, and no September date is left', /Last verified: October 5, 2026/.test(flat(cmp)) && !/September 15, 2026/.test(html));
 }
 
 /* ── evidence: the five official guides, and nothing else ───────────────────── */
@@ -244,6 +245,15 @@ console.log('\nproduct acts');
     const shown = [...new Set([...flat(pr).matchAll(/\$\d[\d,]*(?:\.\d\d)?/g)].map(m => m[0]))];
     ok('every price in the pricing markup comes from the pricing data source', shown.every(p => allowed.has(p)), shown.filter(p => !allowed.has(p)).join(', '));
   }
+  /* the pack of 2026-10-05: one source of truth for prices — this page keeps no figure of its own */
+  {
+    const src = fs.readFileSync(path.join(__dirname, 'turnitin.js'), 'utf8');
+    const own = (src.match(/\$\d[\d,.]*/g) || []);
+    const island = h => (h.match(/<script type="application\/json" data-pricing-data>[\s\S]*?<\/script>/) || [''])[0];
+    const home = fs.readFileSync(path.join(__dirname, '..', 'site', 'index.html'), 'utf8');
+    ok('no price literal in build/turnitin.js; the pricing data on the page is the homepage\'s, byte for byte', !own.length && !!island(pr) && island(pr) === island(home), own.join(' '));
+    ok('the pricing intro speaks to the customer (no "live pricing system")', !/live pricing system|should always come from/i.test(text));
+  }
   ok('no static billing helper ("cancel anytime") on the page', !/cancel anytime/i.test(text));
 }
 
@@ -291,7 +301,7 @@ console.log('\ngates — open items, not defects');
 console.log('  G1    Final legal / trademark review before production (brief §6, §19).');
 console.log('  G2    Pricing preview reads build/pricing-data.js — placeholder figures; production is backend-driven.');
 console.log('  G0    The prototype is noindexed site-wide (donor head); production must serve this URL indexable.');
-console.log('  G3    The five guides.turnitin.com URLs must be re-verified to resolve before launch; refresh the date if rechecked.');
+console.log('  G3    The five guides.turnitin.com URLs were re-verified by the client on 2026-10-05; refresh the date if rechecked.');
 
 console.log(failed ? '\n' + failed + ' check(s) FAILED' : '\nall checks passed');
 process.exit(failed ? 1 : 0);

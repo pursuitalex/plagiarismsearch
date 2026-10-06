@@ -89,7 +89,8 @@ const BAD = [
 const GOOD = [
   ['new year, title and text', h => h.replace(/(<p class="timeline-year">)[^<]*/, '$12008').replace(/(<h3 class="timeline-title">)[^<]*/, '$1Example').replace(/(<p class="timeline-text">)[^<]*/, '$1An example milestone.')],
   ['a milestone removed', h => h.replace(/\s*<li class="timeline-item rv">[\s\S]*?<\/li>/, '')],
-  ['the intro removed', h => h.replace(/\s*<p class="section-intro">[\s\S]*?<\/p>/, '')],
+  /* the page's own Timeline has no intro since the correction pack of 2026-10-05; the head may still take one */
+  ['an intro added', h => h.replace(/(<h2 class="section-title"[^>]*>[\s\S]*?<\/h2>)/, '$1\n<p class="section-intro">An example introduction.</p>')],
   ['the other background', h => h.replace('data-bg="tint"', 'data-bg="white"')],
 ];
 
