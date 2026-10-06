@@ -59,9 +59,18 @@ console.log('\nlinks');
   const hrefs = [...body.matchAll(/href="([^"]+)"/g)].map(m => m[1]);
   for (const [name, h] of COPY.hero.winners) ok('winner ' + name, hrefs.includes(h));
   ok('"Get Started" lands on the form (#app-form-1)', hrefs.includes('#app-form-1') && /<section id="app-form-1"/.test(body));
-  ok('privacy cell links the policy', hrefs.includes('policy.html'));
   const ext = [...body.matchAll(/<a\b[^>]*href="https?:[^"]*"[^>]*>/g)].map(m => m[0]);
   ok('every external link carries rel="noopener"', ext.every(a => /rel="noopener"/.test(a)), ext.length + ' external');
+}
+
+console.log('\nthe design correction pack of 2026-10-06');
+{
+  ok('no mid-page dark application block', !/data-component="dark-act"/.test(body) && !/id="apply-for-scholarship"/.test(body));
+  ok('no generic product proof ("500,000 Clients")', !/500,000/.test(text));
+  const forms = (body.match(/<form\b/g) || []).length;
+  ok('one application destination: one form, in the last section', forms === 1 && body.lastIndexOf('<section') === body.indexOf('<section id="app-form-1"'));
+  const grounds = [...body.matchAll(/<section\b[^>]*>/g)].map(m => /data-surface="dark"|bg-ink-950/.test(m[0]) ? 'dark' : /bg-white|data-bg="white"/.test(m[0]) ? 'white' : 'tint');
+  ok('no two neighbouring sections on the same ground', grounds.every((g, i) => !i || g !== grounds[i - 1]), grounds.join(' '));
 }
 
 console.log('\nform');

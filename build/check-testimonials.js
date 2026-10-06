@@ -104,6 +104,20 @@ for (const v of D.videos.items) {
 }
 ok('no player loads with the page', !/<iframe/.test(body));
 
+console.log('\nlong reviews (design correction pack of 2026-10-06)');
+{
+  /* every card that prints its text whole holds it in one preview box (build/review-clip.js):
+     the whole text in the HTML, the button hidden until site.js finds the text really long */
+  const cards = body.split(/(?=<(?:figure|article) data-review )/).slice(1).map(c => c.slice(0, c.search(/<\/(?:figure|article)>/)));
+  const whole = cards.filter(c => !/class="sc-card/.test(c)), rows = cards.filter(c => /class="sc-card/.test(c));
+  const good = c => (c.match(/data-review-clip/g) || []).length === 1 && /<div class="rc-text">\s*<p\b/.test(c) &&
+    /<button type="button" class="rc-more" data-review-more data-more="Read more" data-less="Show less" aria-expanded="false" hidden>Read more<\/button>/.test(c) &&
+    /<h3 class="rc-title /.test(c);
+  ok(whole.length + ' review cards with a text preview, a hidden "Read more" and a title held to three lines', whole.length > 0 && whole.every(good), whole.filter(c => !good(c)).length + ' without');
+  ok('author, stars and title stand outside the preview box', whole.every(c => { const a = c.indexOf('data-review-clip'); const box = c.slice(a, c.indexOf('</button>', a)); return !/<h3\b|class="(?:rt|tp-stars)|truncate/.test(box); }));
+  ok(rows.length + ' cards of the running rows keep their own one-height clip and popup', rows.every(c => /class="sc-clip"/.test(c) && !/data-review-clip/.test(c)));
+}
+
 console.log('\nstructure');
 {
   const secs = [...body.matchAll(/<section\b[^>]*>/g)].map(m => m[0]);

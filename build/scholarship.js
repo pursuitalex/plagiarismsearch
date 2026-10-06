@@ -7,18 +7,17 @@
 
    The page is a contest page, and a contest has one path: see the prize, read the
    rules, pick a prompt, apply. So the hero is the prize and its five facts drawn as one
-   contest card; the pitch follows as an editorial split and a dark act; the fifteen
+   contest card; the pitch follows as an editorial split; the fifteen
    terms are one numbered grid a reader can scan; the five prompts are a numbered list;
    the FAQ closes the questions; and the page ends on the application form, which the
    hero's "Get Started" lands on (#app-form-1, the live fragment).
 
    Architectural liberties, none in the words:
-   - The live "Apply for Scholarship" and "Requirement" headings are h3s under no h2;
-     here they are their sections' h2s, and "Terms and Conditions" (the live subheader of
-     "What is a Scholarship?") is that section's eyebrow.
+   - The live "Requirement" heading is an h3 under no h2; here it is its section's h2,
+     and "Terms and Conditions" (the live subheader of "What is a Scholarship?") is that
+     section's eyebrow.
    - The winners are links in a sentence on the live page; here they are a row of link
      chips under the same lead-in, each name and round unchanged.
-   - "Privacy Policy" in the privacy cell links to the policy page.
    - The hero title runs one step under the system hero scale (3.6rem, not 4rem) with
      a soft break before ".com!": "PlagiarismSearch.com!" is one 21-character word that
      otherwise overruns the column at 1440 and the screen at 375.
@@ -74,18 +73,6 @@ const COPY = {
     body: [
       'In that case, you would definitely not refuse from getting as much as One Thousand USD for your talent and brilliant ideas of a writer.',
       'Who would say No if it goes about some support in covering ever-growing expenses of a student? Even if you already get some financial aid or a scholarship, such a generous gift as 1,000 USD can let you obtain more pleasure from life.',
-    ],
-  },
-
-  apply: {
-    h2: 'Apply for Scholarship',
-    body: [
-      'We have a special offer for you if you are happy to get one of the <strong>scholarships for college students</strong>. Our solution could make a valuable contribution into your daily educational expenses and help you afford the required supplies for your studies. You might have already applied for multiple scholarships for college students, but this one is different from them. If you are good at writing, seize your chance to be awarded with our 2026 Scholarship in the amount of 1,000.00 USD.',
-      'Choose one of the five topics presented below that inspires you and voila! Let us know what you think and then we will reward you for the originality of your ideas and gift for writing.',
-    ],
-    info: [
-      ['500,000 Clients', 'Our network of students, professors, and bloggers', 'users'],
-      ['Privacy policy', 'We handle uploaded documents under our Privacy Policy', 'shield', ['Privacy Policy', 'policy.html']],
     ],
   },
 
@@ -280,34 +267,11 @@ ${COPY.luck.body.map(p => `          <p class="text-[15px] sm:text-[15.5px] lg:t
     </div>
   </section>`;
 
-/* ═══════════════ 03 · APPLY FOR SCHOLARSHIP — THE DARK ACT ═══════════════ */
-const section3 = () => `  <!-- ================= 03 · APPLY FOR SCHOLARSHIP =================
-       The live page's dark block stays dark: the offer on the left, its two facts as
-       cells on the right. -->
-  <section id="apply-for-scholarship" data-component="dark-act" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    <div class="orb absolute w-[640px] h-[640px] -right-48 -top-48 bg-[rgba(44,195,219,.16)]"></div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1.35fr_1fr] gap-10 lg:gap-16 items-center">
-        <div class="rv">
-          <h2 class="${H2} mb-5 lg:mb-6">${COPY.apply.h2}</h2>
-${COPY.apply.body.map(p => `          <p class="mt-4 first:mt-0 ${BODY} lg:text-[15.5px] text-white/70 max-w-[66ch] [&_strong]:text-white [&_strong]:font-semibold">${p}</p>`).join('\n')}
-        </div>
-        <div class="rv grid sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
-${COPY.apply.info.map(([head, body, icon, link]) => {
-  const text = link ? body.replace(link[0], inline(link[0], link[1], true)) : body;
-  if (link && text === body) throw new Error('apply: link phrase not found: ' + link[0]);
-  return `          <div class="rounded-2xl sm:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-5 sm:p-6 flex items-start gap-4">
-            <span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white/10 ring-1 ring-white/15 items-center justify-center shrink-0">${ico(I[icon], '#fff')}</span>
-            <div class="min-w-0">
-              <p class="text-[20px] sm:text-[22px] lg:text-[24px] font-extrabold tracking-tight leading-tight nums">${head}</p>
-              <p class="mt-1 ${BODY} text-white/60">${text}</p>
-            </div>
-          </div>`;
-}).join('\n')}
-        </div>
-      </div>
-    </div>
-  </section>`;
+/* 03 was the live page's dark "Apply for Scholarship" block: its offer in two paragraphs and
+   two cells (500,000 Clients, Privacy policy). It went with the Secondary Pages Design
+   Correction Pack of 2026-10-06 — a second application destination well before the form,
+   led by generic product proof. Nothing stands in its place; the section numbers below
+   are kept, because v2 takes section5–7 by name. */
 
 /* ═══════════════ 04 · TERMS AND CONDITIONS ═══════════════ */
 const section4 = () => `  <!-- ================= 04 · TERMS AND CONDITIONS =================
@@ -437,7 +401,7 @@ ${F.fields.map(([label, id, type, auto]) => `            <div class="min-w-0">
 module.exports = { COPY, section4, section5, section6, section7 };
 if (require.main !== module) return;
 
-const sections = [section1, section2, section3, section4, section5, section6, section7];
+const sections = [section1, section2, section4, section5, section6, section7];
 const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
 fs.writeFileSync(path.join(SITE, OUT), html);
 

@@ -9533,10 +9533,6 @@ a.team-linkedin:focus-visible {
   right: -10rem;
 }
 
-.-right-48 {
-  right: -12rem;
-}
-
 .-right-56 {
   right: -14rem;
 }
@@ -9567,10 +9563,6 @@ a.team-linkedin:focus-visible {
 
 .-top-40 {
   top: -10rem;
-}
-
-.-top-48 {
-  top: -12rem;
 }
 
 .-top-56 {
@@ -9865,6 +9857,11 @@ a.team-linkedin:focus-visible {
 .-mx-4 {
   margin-left: -1rem;
   margin-right: -1rem;
+}
+
+.mx-1\.5 {
+  margin-left: 0.375rem;
+  margin-right: 0.375rem;
 }
 
 .mx-2 {
@@ -13734,11 +13731,6 @@ a.team-linkedin:focus-visible {
   color: rgb(140 46 31 / var(--tw-text-opacity, 1));
 }
 
-.hover\:text-teal-300:hover {
-  --tw-text-opacity: 1;
-  color: rgb(110 215 232 / var(--tw-text-opacity, 1));
-}
-
 .hover\:text-teal-800:hover {
   --tw-text-opacity: 1;
   color: rgb(4 85 102 / var(--tw-text-opacity, 1));
@@ -14092,6 +14084,10 @@ a.team-linkedin:focus-visible {
 
   .sm\:block {
     display: block;
+  }
+
+  .sm\:inline {
+    display: inline;
   }
 
   .sm\:flex {
@@ -15273,10 +15269,6 @@ a.team-linkedin:focus-visible {
     grid-template-columns: 1.2fr repeat(4,minmax(0,.7fr));
   }
 
-  .lg\:grid-cols-\[1\.35fr_1fr\] {
-    grid-template-columns: 1.35fr 1fr;
-  }
-
   .lg\:grid-cols-\[1\.4fr_1fr\] {
     grid-template-columns: 1.4fr 1fr;
   }
@@ -15929,13 +15921,4 @@ a.team-linkedin:focus-visible {
 
 .\[\&_\.qc-url\]\:\!mb-3 .qc-url {
   margin-bottom: 0.75rem !important;
-}
-
-.\[\&_strong\]\:font-semibold strong {
-  font-weight: 600;
-}
-
-.\[\&_strong\]\:text-white strong {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }

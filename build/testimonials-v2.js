@@ -173,6 +173,10 @@ const scStars = (value, lg) => `<span class="sc-stars${lg ? ' is-lg' : ''}" role
    neutral one on the site's white (the tool pages). The soft shadow is the library review
    card's own (build/sections/reviews.css, shadow-diffuse), borrowed, not invented (Olex,
    2026-10-06). */
+/* the text goes through build/review-clip.js: about nine lines, then "Read more" (design
+   correction pack of 2026-10-06). The wall keeps its masonry; a long review no longer
+   makes one card the height of a column. */
+const { clip } = require('./review-clip');
 const tpCardOn = ring => (r, i) => {
   const av = TP_AV[hash(r.name) % TP_AV.length];
   return `          <article data-review class="${i >= STEP ? 'more-later ' : ''}mb-4 rounded-xl bg-white ring-1 ${ring} shadow-diffuse p-5 sm:p-6 outline-none">
@@ -181,8 +185,8 @@ const tpCardOn = ring => (r, i) => {
               <span class="min-w-0 text-[14.5px] font-semibold text-[#191919] truncate">${esc(r.name)}</span>
             </header>
             <div class="mb-3">${tpStars(r.score)}</div>
-            <h3 class="text-[15.5px] sm:text-[16px] font-bold tracking-tight text-[#191919] mb-1.5">${esc(r.title)}</h3>
-${r.text.map(p => `            <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-[#191919]/80 mt-1.5 first-of-type:mt-0">${esc(p)}</p>`).join('\n')}
+            <h3 class="rc-title text-[15.5px] sm:text-[16px] font-bold tracking-tight text-[#191919] mb-1.5">${esc(r.title)}</h3>
+${clip(r.text.map(p => `                <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-[#191919]/80 mt-1.5 first-of-type:mt-0">${esc(p)}</p>`).join('\n'), '            ')}
           </article>`;
 };
 const tpCard = tpCardOn('ring-[#E5E5DD]');       /* on the Reviews page's cream ground */

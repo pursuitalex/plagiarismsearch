@@ -113,12 +113,15 @@ ${D.trust.tiles.map(tile).join('\n')}
   </section>`;
 
 /* ═══════════════ A PLATFORM — SUMMARY, FEATURED QUOTE, CARDS ═══════════════ */
+/* a card's text goes through build/review-clip.js: about nine lines, then "Read more"
+   (design correction pack of 2026-10-06 — a real feed can send far longer reviews) */
+const { clip } = require('./review-clip');
 const initial = n => esc([...n.trim()][0].toUpperCase());
 const card = (r, i) => `          <figure data-review class="${i >= STEP ? 'more-later ' : ''}flex flex-col rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 outline-none">
             <div class="mb-4"><span class="rt" role="img" aria-label="${r.score} out of 5"><span style="width:${r.score / 5 * 100}%"></span></span></div>
             <blockquote class="flex-1">
-              <h3 class="text-[15px] sm:text-[15.5px] font-bold tracking-tight mb-1.5">${esc(r.title)}</h3>
-${r.text.map(p => `              <p class="${BODY} text-ink-600 mt-1.5 first-of-type:mt-0">${esc(p)}</p>`).join('\n')}
+              <h3 class="rc-title text-[15px] sm:text-[15.5px] font-bold tracking-tight mb-1.5">${esc(r.title)}</h3>
+${clip(r.text.map(p => `                  <p class="${BODY} text-ink-600 mt-1.5 first-of-type:mt-0">${esc(p)}</p>`).join('\n'), '              ')}
             </blockquote>
             <figcaption class="mt-5 pt-4 border-t border-ink-100 flex items-center gap-2.5">
               <span class="shrink-0 w-8 h-8 rounded-full bg-ink-100 flex items-center justify-center text-[12.5px] font-bold text-ink-600" aria-hidden="true">${initial(r.name)}</span>

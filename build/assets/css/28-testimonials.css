@@ -96,6 +96,24 @@ html:not(.js) [data-show-more-btn] { display:none; }
   .mq-group[data-marquee-copy], [data-marquee-toggle] { display:none; }
 }
 
+/* ── the preview of a long review (build/review-clip.js, module review-clip) ─────────
+   The text of a card is capped at about nine lines — only while site.js can open it.
+   .is-long: really longer, so it fades at the foot and the button shows. .is-fit: a
+   line or two over, shown whole. .is-open: opened by the reader. A title keeps to three
+   lines, so the name, the stars and the title hold their places whatever the feed sends. */
+html.js .rc-text { max-height:13.5rem; overflow:hidden; }
+html.js .rc.is-fit .rc-text, html.js .rc.is-open .rc-text { max-height:none; }
+.rc.is-long:not(.is-open) .rc-text {
+  -webkit-mask-image:linear-gradient(#000 calc(100% - 3.25rem), transparent); mask-image:linear-gradient(#000 calc(100% - 3.25rem), transparent); }
+.rc-more { margin-top:.6rem; padding:0; background:none; border:0; cursor:pointer; font:inherit; font-size:13px; font-weight:600; color:inherit;
+  text-decoration:underline; text-decoration-color:rgba(0,0,0,.25); text-underline-offset:4px; transition:text-decoration-color .3s ease; }
+.rc-more:hover { text-decoration-color:currentColor; }
+.rc-more:focus-visible { outline:2px solid #0991A8; outline-offset:3px; border-radius:4px; }
+.rc-more[hidden] { display:none; }
+.rc-title { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+/* the SmartCustomer popup holds the whole review; a very long one scrolls inside it */
+.sc-pop .sc-card { max-height:calc(100vh - 24px); overflow-y:auto; }
+
 /* the video stage (site.js, module video-stage): the playlist item on stage */
 .vs-pick[aria-current="true"] { background:rgba(255,255,255,.1); box-shadow:inset 0 0 0 1px rgba(255,255,255,.28); }
 .vs-pick[aria-current="true"] .vs-now { opacity:1; }

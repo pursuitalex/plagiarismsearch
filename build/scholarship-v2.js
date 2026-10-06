@@ -14,11 +14,16 @@
    - "So, what should you do to try your luck?" gets a photograph, on the opposite side
      from the hero's (DESIGN.md, checkerboard imagery), with a chip carrying two of the
      terms' own titles.
-   - "Apply for Scholarship" keeps its dark act; its two facts carry spot icons.
    - The fifteen terms are sorted into three shapes (rules as tiles, the sequence from
      deadline to payout as a timeline beside a photograph, the fine print as a row) —
      every title and text unchanged, no heading invented (Olex, 2026-09-30).
-   The prompts, the FAQ and the form are v1's sections, unchanged but for their grounds.
+   The prompts, the FAQ and the form are v1's sections, unchanged.
+
+   CORRECTED to the Secondary Pages Design Correction Pack of 2026-10-06: the dark "Apply
+   for Scholarship" act is gone from both versions, so the form is the one application
+   destination. With it gone "try your luck" (tinted) met the rules (tinted), so the two
+   terms sections swapped grounds — the rules on white, the sequence on the tint — and
+   their cards swapped with them (IMAGES.md §8.5: no grey card on a grey section).
 
    Run:  node build/scholarship-v2.js  →  node build/shell.js  →  node build/check-scholarship.js scholarship-v2.html */
 const fs = require('fs');
@@ -37,7 +42,8 @@ const FORM = '#app-form-1';
    Visual vocabulary — the system's, as in scholarship.js and affiliate-v2.js.
    ───────────────────────────────────────────────────────────────────────────── */
 const amp = s => s.replace(/&(?!amp;|[a-z]+;)/g, '&amp;');
-const eyebrow = (dot, label) => `        <div class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
+/* the pill takes the ground the section does not have: white on a tint, grey on white */
+const eyebrow = (dot, label, pill = 'bg-white') => `        <div class="inline-flex items-center gap-2 rounded-full ${pill} ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
           <span class="w-1.5 h-1.5 rounded-full bg-${dot}"></span>
           <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">${label}</span>
         </div>`;
@@ -51,7 +57,6 @@ const btnDark = (label, href) => `<a href="${href}"${ext(href)} class="btn-press
             ${label}
             <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">${arrow}</span>
           </a>`;
-const inlineDark = (label, href) => `<a href="${href}"${ext(href)} class="font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white transition-colors duration-300">${label}</a>`;
 const penMark = (text, phrase) => {
   const w = Math.round(phrase.length * 18);
   const svg = `<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 ${w} 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c${Math.round(w * .25)}-7 ${Math.round(w * .67)}-7 ${w - 6}-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg>`;
@@ -149,34 +154,8 @@ ${COPY.luck.body.map(p => `            <p class="text-[15px] sm:text-[15.5px] lg
     </div>
   </section>`;
 
-/* ═══════════════ 04 · APPLY FOR SCHOLARSHIP — THE DARK ACT ═══════════════ */
-const INFO_ICONS = ['icon-community', 'icon-privacy'];
-const section4 = () => `  <!-- ================= 04 · APPLY FOR SCHOLARSHIP =================
-       v1's dark act; its two facts now carry spot icons on white plates. -->
-  <section id="apply-for-scholarship" data-component="dark-act" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
-    <div class="orb absolute w-[640px] h-[640px] -right-48 -top-48 bg-[rgba(44,195,219,.16)]"></div>
-    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="grid lg:grid-cols-[1.35fr_1fr] gap-10 lg:gap-16 items-center">
-        <div class="rv">
-          <h2 class="${H2} mb-5 lg:mb-6">${COPY.apply.h2}</h2>
-${COPY.apply.body.map(p => `          <p class="mt-4 first:mt-0 ${BODY} lg:text-[15.5px] text-white/70 max-w-[66ch] [&_strong]:text-white [&_strong]:font-semibold">${p}</p>`).join('\n')}
-        </div>
-        <div class="rv grid sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
-${COPY.apply.info.map(([head, body, , link], i) => {
-  const text = link ? body.replace(link[0], inlineDark(link[0], link[1])) : body;
-  if (link && text === body) throw new Error('apply: link phrase not found: ' + link[0]);
-  return `          <div class="rounded-2xl sm:rounded-3xl bg-white/[.06] ring-1 ring-white/10 p-4 sm:p-5 flex items-center gap-4 sm:gap-5">
-            <span class="shrink-0 w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-xl sm:rounded-2xl bg-white flex items-center justify-center"><img src="${IMG}${INFO_ICONS[i]}.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-10 h-10 sm:w-11 sm:h-11"></span>
-            <div class="min-w-0">
-              <p class="text-[20px] sm:text-[22px] lg:text-[24px] font-extrabold tracking-tight leading-tight nums">${head}</p>
-              <p class="mt-1 ${BODY} text-white/60">${text}</p>
-            </div>
-          </div>`;
-}).join('\n')}
-        </div>
-      </div>
-    </div>
-  </section>`;
+/* 04 was v1's dark "Apply for Scholarship" act. It went from both versions with the
+   Secondary Pages Design Correction Pack of 2026-10-06; nothing stands in its place. */
 
 /* ═══════════════ 05–06 · THE FIFTEEN TERMS, SORTED BY WHAT THEY ARE ═══════════════
    v1 prints the fifteen terms as one grid of fifteen equal cards — correct, and a wall
@@ -200,7 +179,8 @@ const LI = {
   coins:  '<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/>',
 };
 const TINTS = [['bg-teal-50', '#06748A'], ['bg-orange-50', '#B84431'], ['bg-mint-50', '#1B7A50'], ['bg-ink-100', '#374151']];
-const lchip = (paths, t) => `<span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl ${TINTS[t][0]} items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${TINTS[t][1]}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg></span>`;
+/* plate: on a grey card the tile is white and only the icon keeps the tone */
+const lchip = (paths, t, plate) => `<span class="inline-flex w-11 h-11 rounded-xl sm:rounded-[14px] lg:rounded-2xl ${plate ? 'bg-white' : TINTS[t][0]} items-center justify-center shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${TINTS[t][1]}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg></span>`;
 
 /* which term goes where, by its index in COPY.terms.items (v1's order) */
 const RULES = [[0, 'cap'], [1, 'check'], [4, 'ticket'], [5, 'file'], [6, 'lang'], [13, 'gift']];
@@ -210,18 +190,19 @@ const FINE = [[2, 'alert'], [3, 'scale'], [14, 'info']];
   if (all.join() !== T.map((_, i) => i).join()) throw new Error('every term must appear exactly once'); }
 
 const termsRules = () => `  <!-- ================= 05 · TERMS — THE RULES OF ENTRY =================
-       The section heading over the six short rules as tiles: who can enter and how. -->
-  <section id="terms-and-conditions" data-component="rule-tiles" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
+       The section heading over the six short rules as tiles: who can enter and how.
+       White section, grey tiles, white icon plates. -->
+  <section id="terms-and-conditions" data-component="rule-tiles" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv max-w-[820px] mb-10 sm:mb-12">
-${eyebrow('orange-500', COPY.terms.eyebrow)}
+${eyebrow('orange-500', COPY.terms.eyebrow, 'bg-ink-50')}
         <h2 class="${H2}">${COPY.terms.h2}</h2>
       </div>
       <div>
         <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4" role="list">
-${RULES.map(([n, icon], i) => `          <li class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6">
+${RULES.map(([n, icon], i) => `          <li class="rv rounded-2xl sm:rounded-3xl bg-ink-50 p-5 sm:p-6">
             <div class="flex items-center gap-3.5 mb-3">
-              ${lchip(LI[icon], i % 4)}
+              ${lchip(LI[icon], i % 4, true)}
               <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight">${T[n][0]}</h3>
             </div>
             <p class="${BODY} text-ink-600">${T[n][1]}</p>
@@ -236,7 +217,7 @@ const termsSequence = () => `  <!-- ================= 06 · TERMS — FROM DEADL
        student reading the good news; the chip is the award's own figure). The three
        terms of fine print close the section as a quiet row. No heading of its own: the
        terms' titles carry it, and the section is labelled by them. -->
-  <section id="from-deadline-to-payout" data-component="terms-timeline" aria-label="${SEQUENCE.map(n => T[n][0]).join(', ')}" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="from-deadline-to-payout" data-component="terms-timeline" aria-label="${SEQUENCE.map(n => T[n][0]).join(', ')}" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-start">
         <div class="rv relative min-w-0 lg:sticky lg:top-28">
@@ -266,7 +247,7 @@ ${list.map(x => `                <li>${x}</li>`).join('\n')}
       </div>
 
       <ul class="mt-12 sm:mt-16 grid md:grid-cols-3 gap-3 sm:gap-4" role="list">
-${FINE.map(([n, icon]) => `        <li class="rv rounded-2xl sm:rounded-3xl bg-ink-50 p-5 sm:p-6">
+${FINE.map(([n, icon]) => `        <li class="rv rounded-2xl sm:rounded-3xl bg-white ring-1 ring-black/5 p-5 sm:p-6">
           <div class="flex items-center gap-3 mb-2.5">
             ${lchip(LI[icon], 3)}
             <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight">${T[n][0]}</h3>
@@ -279,16 +260,9 @@ ${FINE.map(([n, icon]) => `        <li class="rv rounded-2xl sm:rounded-3xl bg-i
 
 if (require.main !== module) return;
 
-/* v1's sections keep their markup; only their grounds swap, so the rhythm still
-   alternates after the two new terms sections (tinted → white → tinted → white → tinted) */
-const ground = (html, from, to) => {
-  const open = html.slice(0, html.indexOf('>', html.indexOf('<section')) + 1);
-  if (!open.includes(from)) throw new Error('ground: ' + from + ' not on the section');
-  return open.replace(from, to) + html.slice(open.length);
-};
-const sections = [section1(), section2(), section3(), section4(), termsRules(), termsSequence(),
-  ground(v1.section5(), 'bg-white', 'bg-[#F7FAFC]'), ground(v1.section6(), 'data-bg="tint"', 'data-bg="white"'),
-  ground(v1.section7(), 'bg-white', 'bg-[#F7FAFC]')];
+/* v1's prompts, FAQ and form as they are: after the two terms sections (white, tinted)
+   their own grounds already alternate — white, tinted, white */
+const sections = [section1(), section2(), section3(), termsRules(), termsSequence(), v1.section5(), v1.section6(), v1.section7()];
 const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections });
 fs.writeFileSync(path.join(SITE, OUT), html);
 
