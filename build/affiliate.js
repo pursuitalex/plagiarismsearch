@@ -351,7 +351,7 @@ ${cta.section({
 /* check-affiliate.js reads COPY; requiring this file must not rewrite the page (the
    page on disk carries the header and footer shell.js filled in) */
 /* affiliate-v2.js (the illustrated version) reuses the sections that do not change */
-module.exports = { COPY, section4, section6, section7 };
+module.exports = { COPY, section2, section4, section6, section7 };
 if (require.main !== module) return;
 
 const sections = [section1, section2, section3, section4, section5, section6, section7];

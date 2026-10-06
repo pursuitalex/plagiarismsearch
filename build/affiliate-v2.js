@@ -188,6 +188,7 @@ ${W.items.map(([head, body, , link], i) => {
     </div>
   </section>`;
 
+module.exports = { section3, section5 };   /* v3 (build/affiliate-v3.js) takes How it works and Why join us */
 if (require.main !== module) return;
 
 const sections = [section1(), section2(), section3(), v1.section4(), section5(), v1.section6(), v1.section7()];

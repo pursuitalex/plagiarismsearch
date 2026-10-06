@@ -15638,6 +15638,10 @@ a.team-linkedin:focus-visible {
     padding-right: 3rem;
   }
 
+  .lg\:pr-3 {
+    padding-right: 0.75rem;
+  }
+
   .lg\:pr-5 {
     padding-right: 1.25rem;
   }
@@ -15780,6 +15784,46 @@ a.team-linkedin:focus-visible {
 }
 
 @media (min-width: 1280px) {
+  .xl\:absolute {
+    position: absolute;
+  }
+
+  .xl\:-left-14 {
+    left: -3.5rem;
+  }
+
+  .xl\:-left-24 {
+    left: -6rem;
+  }
+
+  .xl\:-right-16 {
+    right: -4rem;
+  }
+
+  .xl\:-right-24 {
+    right: -6rem;
+  }
+
+  .xl\:top-\[142px\] {
+    top: 142px;
+  }
+
+  .xl\:top-\[300px\] {
+    top: 300px;
+  }
+
+  .xl\:top-\[380px\] {
+    top: 380px;
+  }
+
+  .xl\:top-\[470px\] {
+    top: 470px;
+  }
+
+  .xl\:mt-0 {
+    margin-top: 0px;
+  }
+
   .xl\:block {
     display: block;
   }
@@ -15818,8 +15862,16 @@ a.team-linkedin:focus-visible {
          column-gap: 5rem;
   }
 
+  .xl\:pr-5 {
+    padding-right: 1.25rem;
+  }
+
   .xl\:pr-6 {
     padding-right: 1.5rem;
+  }
+
+  .xl\:text-\[16px\] {
+    font-size: 16px;
   }
 }
 
