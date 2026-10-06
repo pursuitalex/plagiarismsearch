@@ -354,8 +354,10 @@ const P = TV2.D.trustpilot;
 const FEED = 6;                  /* the live widget shows three at a time; two rows of them */
 const section9 = () => `  <!-- ================= 09 · YOUR READABILITY SCORE, AND THE FEEDBACK =================
        The invitation, then the feedback the live page loads from Trustpilot — the same
-       reviews and the same manner as Reviews v2, on Trustpilot's cream ground. -->
-  <section id="feedback" data-component="review-masonry" class="relative py-16 sm:py-24 lg:py-32 bg-[#FCFBF3]">
+       reviews and the same cards as Reviews v2, on the site's white (2026-10-06): the cream
+       ground stays on the Reviews page only. The section below is white as well, so it
+       gives up its top padding (DESIGN.md, Section rhythm). -->
+  <section id="feedback" data-component="review-masonry" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv grid lg:grid-cols-[1fr_1fr] gap-6 lg:gap-14 mb-12 sm:mb-16">
         <h2 class="${H2} text-[#191919]">${esc(C.interested.h)}</h2>
@@ -370,7 +372,7 @@ ${C.interested.body.map(p => `          <p class="${BODY} text-[#191919]/75">${e
         <p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-[#191919]/70"><b class="text-[#191919]">${esc(P.textRating)}</b> ${TV2.tpStars(P.stars)} <b class="text-[#191919] nums">${P.rating}/${P.max}</b> <span aria-hidden="true">|</span> <span>Based on <a href="${P.url}" rel="nofollow noopener" class="font-semibold text-[#191919] underline decoration-[#191919]/30 underline-offset-4">${P.count} reviews</a></span></p>
       </div>
       <div class="masonry columns-1 sm:columns-2 lg:columns-3 gap-4">
-${P.reviews.slice(0, FEED).map(TV2.tpCard).join('\n')}
+${P.reviews.slice(0, FEED).map(TV2.tpCardOn('ring-ink-200')).join('\n')}
       </div>
     </div>
   </section>`;
@@ -390,7 +392,7 @@ ${G.rows.map(([n, a, b], i) => `              <span class="text-[12px] sm:text-[
 const section10 = () => `  <!-- ================= 10 · HOW TO IMPROVE YOUR WRITING LEVEL =================
        The text beside the live page's genre chart (a picture there), drawn from its own
        ranges and labels; the call to check closes it as a band. -->
-  <section id="improve-writing-level" data-component="text-chart" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+  <section id="improve-writing-level" data-component="text-chart" class="relative pb-16 sm:pb-24 lg:pb-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
 ${head(M.h2)}
       <div class="grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-14 items-start">

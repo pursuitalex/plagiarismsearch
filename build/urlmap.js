@@ -52,11 +52,13 @@ const BUILT = [
   { file: 'plagiarism-checker-for-organization.html', path: '/plagiarism-checker-for-organization', note: 'Business & Teams to the 2026-09-15 brief: no checker; the managed organization in the hero, Organization Management as a bento led by the personal-vs-organization separation, Storage as two tracks, workspace-vs-API as one split card, the business inquiry as the conversion. Replaced the stub. Built by build/business.js, checked by build/check-business.js.' },
   { file: 'vip.html',                    path: '/vip-plagiarism-checker',                   note: 'Footer only, under Plans & Legal. Not a core product; stays out of the header.' },
 
-  /* built, kept, but outside the global navigation per DEC-0027 §5 */
-  { file: 'paper-analysis.html',         path: '/rate-my-paper',            delisted: true },
+  /* built and kept. DEC-0027 §5 put these outside the global navigation; on 2026-10-06 Olex
+     brought the three writing tools back into the footer (Popular checks). The header still
+     does not carry them, and the chat bot stays out. */
+  { file: 'paper-analysis.html',         path: '/rate-my-paper',            note: 'Footer only, under Popular checks (Olex, 2026-10-06). Not in the header.' },
   { file: 'paper-analysis-v2.html', path: null, note: 'Rate my paper (Paper analysis), illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Every word the live page\'s (build/paper-data.json); the order form rebuilt to be read at a glance — the document, one level × deadline price table, the services, and a summary that shows the sum. Built by build/paper-v2.js.' },
-  { file: 'spell-check.html',            path: '/spell-checker',            delisted: true },
-  { file: 'readability-check.html',      path: '/readability-checker',      delisted: true },
+  { file: 'spell-check.html',            path: '/spell-checker',            note: 'Footer only, under Popular checks (Olex, 2026-10-06). Not in the header.' },
+  { file: 'readability-check.html',      path: '/readability-checker',      note: 'Footer only, under Popular checks (Olex, 2026-10-06). Not in the header.' },
   { file: 'chat-bot.html',               path: '/plagiarism-checker-app',   delisted: true },
 
   /* no approved path */

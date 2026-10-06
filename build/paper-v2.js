@@ -372,14 +372,14 @@ const section8 = () => `  <!-- ================= 08 · FEEDBACK OF OUR CUSTOMERS
        The Trustpilot feedback the live page loads — the Reviews data, word for word, in
        Trustpilot's manner. Live, it follows the CTA; here the CTA band closes the page,
        as the system has it (build/sections/cta-band.js). -->
-  <section id="feedback" data-component="review-masonry" class="relative py-16 sm:py-24 lg:py-32 bg-[#FCFBF3]">
+  <section id="feedback" data-component="review-masonry" class="relative py-16 sm:py-24 lg:py-32 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv flex flex-wrap items-end justify-between gap-4 mb-8">
         <h2 class="${H2} text-[#191919]">${esc(C.feedback.h)}</h2>
         <p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-[#191919]/70"><b class="text-[#191919]">${esc(P.textRating)}</b> ${TV2.tpStars(P.stars)} <b class="text-[#191919] nums">${P.rating}/${P.max}</b> <span aria-hidden="true">|</span> <span>Based on <a href="${P.url}" rel="nofollow noopener" class="font-semibold text-[#191919] underline decoration-[#191919]/30 underline-offset-4">${P.count} reviews</a></span></p>
       </div>
       <div class="masonry columns-1 sm:columns-2 lg:columns-3 gap-4">
-${P.reviews.slice(0, 6).map(TV2.tpCard).join('\n')}
+${P.reviews.slice(0, 6).map(TV2.tpCardOn('ring-ink-200')).join('\n')}
       </div>
     </div>
   </section>`;

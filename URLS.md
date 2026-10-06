@@ -45,10 +45,10 @@ driven by this table.
 | `scholarship-v2.html` | — | no approved path | The Scholarship, illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Same live copy; the prize as a chip over the hero photograph, the four contest facts as spot-icon cards, a photograph for "try your luck", spot icons in the dark act (IMAGES.md §8). Built by build/scholarship-v2.js, checked by build/check-scholarship.js with the file name. |
 | `plagiarism-checker-for-organization.html` | `/plagiarism-checker-for-organization` | built | Business & Teams to the 2026-09-15 brief: no checker; the managed organization in the hero, Organization Management as a bento led by the personal-vs-organization separation, Storage as two tracks, workspace-vs-API as one split card, the business inquiry as the conversion. Replaced the stub. Built by build/business.js, checked by build/check-business.js. |
 | `vip.html` | `/vip-plagiarism-checker` | built | Footer only, under Plans & Legal. Not a core product; stays out of the header. |
-| `paper-analysis.html` | `/rate-my-paper` | built · out of global nav |  |
+| `paper-analysis.html` | `/rate-my-paper` | built | Footer only, under Popular checks (Olex, 2026-10-06). Not in the header. |
 | `paper-analysis-v2.html` | — | no approved path | Rate my paper (Paper analysis), illustrated — version 2 beside v1 until one is picked (the 1–2 switcher). Every word the live page's (build/paper-data.json); the order form rebuilt to be read at a glance — the document, one level × deadline price table, the services, and a summary that shows the sum. Built by build/paper-v2.js. |
-| `spell-check.html` | `/spell-checker` | built · out of global nav |  |
-| `readability-check.html` | `/readability-checker` | built · out of global nav |  |
+| `spell-check.html` | `/spell-checker` | built | Footer only, under Popular checks (Olex, 2026-10-06). Not in the header. |
+| `readability-check.html` | `/readability-checker` | built | Footer only, under Popular checks (Olex, 2026-10-06). Not in the header. |
 | `chat-bot.html` | `/plagiarism-checker-app` | built · out of global nav |  |
 | `plagiarism-check.html` | — | no approved path | Confirmed 2026-08-17: the homepage IS the Plagiarism Checker page. So this one has no approved address of its own. It stays on disk and leaves the navigation, the same treatment as the other delisted pages. |
 | `account.html` | — | no approved path | Log in / create account. The brief says only "keep existing authentication behavior" and names no path. |
@@ -62,10 +62,10 @@ driven by this table.
 
 ## Counts
 
-- 29 × built
+- 32 × built
 - 10 × no approved path
 - 5 × stub
-- 4 × built · out of global nav
+- 1 × built · out of global nav
 
 ## Open
 

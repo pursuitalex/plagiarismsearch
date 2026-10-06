@@ -169,9 +169,13 @@ const tpStars = (value, lg) => `<span class="tp-stars${lg ? ' is-lg' : ''}" data
 }).join('')}</span>`;
 const scStars = (value, lg) => `<span class="sc-stars${lg ? ' is-lg' : ''}" role="img" aria-label="${value} out of 5">${[1, 2, 3, 4, 5].map(n => `<span class="sc-star${n <= Math.round(value) ? '' : ' is-off'}"></span>`).join('')}</span>`;
 
-const tpCard = (r, i) => {
+/* tpCardOn(ring) — the card for a given ground: Trustpilot's warm rule on its cream, a
+   neutral one on the site's white (the tool pages). The soft shadow is the library review
+   card's own (build/sections/reviews.css, shadow-diffuse), borrowed, not invented (Olex,
+   2026-10-06). */
+const tpCardOn = ring => (r, i) => {
   const av = TP_AV[hash(r.name) % TP_AV.length];
-  return `          <article data-review class="${i >= STEP ? 'more-later ' : ''}mb-4 rounded-xl bg-white ring-1 ring-[#E5E5DD] p-5 sm:p-6 outline-none">
+  return `          <article data-review class="${i >= STEP ? 'more-later ' : ''}mb-4 rounded-xl bg-white ring-1 ${ring} shadow-diffuse p-5 sm:p-6 outline-none">
             <header class="flex items-center gap-3 mb-4">
               <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-semibold ${av}" aria-hidden="true">${initials(r.name)}</span>
               <span class="min-w-0 text-[14.5px] font-semibold text-[#191919] truncate">${esc(r.name)}</span>
@@ -181,8 +185,9 @@ const tpCard = (r, i) => {
 ${r.text.map(p => `            <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-[#191919]/80 mt-1.5 first-of-type:mt-0">${esc(p)}</p>`).join('\n')}
           </article>`;
 };
+const tpCard = tpCardOn('ring-[#E5E5DD]');       /* on the Reviews page's cream ground */
 
-const SC_AV = ['bg-[#0F8A7A]', 'bg-[#2B7FD4]', 'bg-[#7A5AF8]', 'bg-[#E0692F]', 'bg-[#1F2937]'];
+const SC_AV =['bg-[#0F8A7A]', 'bg-[#2B7FD4]', 'bg-[#7A5AF8]', 'bg-[#E0692F]', 'bg-[#1F2937]'];
 /* One height for every card in the rows (.sc-card): the title keeps two lines, the text
    fades out at the foot of the card. The whole review is still in the HTML, and the
    marquee module opens it in full as a popup zoomed out of the card (hover, focus, tap). */
@@ -331,7 +336,7 @@ ${V.map((v, i) => `          <li><a href="https://www.youtube.com/watch?v=${v.yo
   </section>`;
 
 /* check-testimonials.js holds the page to the data it rendered */
-module.exports = { D, SMART, tpCard, tpStars };   /* the Trustpilot card is reused by readability-v2.js */
+module.exports = { D, SMART, tpCard, tpCardOn, tpStars };   /* the Trustpilot card is reused by readability-v2.js */
 if (require.main !== module) return;
 
 const sections = [section1(), section2(), trustpilotWall(), videoStage(), sitejabberRows()];
