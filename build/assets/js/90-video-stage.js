@@ -22,7 +22,10 @@ PS.module('video-stage', () => {
       const f = PS.videoFrame(pick.dataset.videoPick, pick.dataset.videoTitle, 'absolute inset-0 h-full');
       stage.replaceChildren(f);
       f.focus({ preventScroll: true });
-      if (window.matchMedia('(max-width: 1023px)').matches) stage.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      /* the stage comes back into view where it is not beside the playlist: below 1024px,
+         and at every width on a root marked data-video-stage="scroll" (Video Tutorials,
+         where the stage stands above the cards) */
+      if (root.dataset.videoStage === 'scroll' || window.matchMedia('(max-width: 1023px)').matches) stage.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }));
   });
 });

@@ -9601,6 +9601,10 @@ a.team-linkedin:focus-visible {
   bottom: 0.625rem;
 }
 
+.bottom-3\.5 {
+  bottom: 0.875rem;
+}
+
 .bottom-4 {
   bottom: 1rem;
 }
@@ -9635,6 +9639,10 @@ a.team-linkedin:focus-visible {
 
 .left-1\/4 {
   left: 25%;
+}
+
+.left-3\.5 {
+  left: 0.875rem;
 }
 
 .left-5 {
@@ -11986,6 +11994,12 @@ a.team-linkedin:focus-visible {
   background-image: linear-gradient(to top, var(--tw-gradient-stops));
 }
 
+.from-black\/35 {
+  --tw-gradient-from: rgb(0 0 0 / 0.35) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-black\/45 {
   --tw-gradient-from: rgb(0 0 0 / 0.45) var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
@@ -12499,6 +12513,10 @@ a.team-linkedin:focus-visible {
 
 .text-\[15px\] {
   font-size: 15px;
+}
+
+.text-\[16\.5px\] {
+  font-size: 16.5px;
 }
 
 .text-\[16px\] {
@@ -14056,6 +14074,10 @@ a.team-linkedin:focus-visible {
     margin-top: 4rem;
   }
 
+  .sm\:mt-20 {
+    margin-top: 5rem;
+  }
+
   .sm\:mt-5 {
     margin-top: 1.25rem;
   }
@@ -14178,6 +14200,10 @@ a.team-linkedin:focus-visible {
 
   .sm\:w-\[210px\] {
     width: 210px;
+  }
+
+  .sm\:w-\[240px\] {
+    width: 240px;
   }
 
   .sm\:w-\[360px\] {
@@ -14403,6 +14429,10 @@ a.team-linkedin:focus-visible {
 
   .sm\:self-auto {
     align-self: auto;
+  }
+
+  .sm\:self-center {
+    align-self: center;
   }
 
   .sm\:justify-self-end {
@@ -15094,6 +15124,10 @@ a.team-linkedin:focus-visible {
     margin-top: 4rem;
   }
 
+  .lg\:mt-24 {
+    margin-top: 6rem;
+  }
+
   .lg\:mt-5 {
     margin-top: 1.25rem;
   }
@@ -15136,6 +15170,10 @@ a.team-linkedin:focus-visible {
 
   .lg\:w-36 {
     width: 9rem;
+  }
+
+  .lg\:w-\[288px\] {
+    width: 288px;
   }
 
   .lg\:w-\[400px\] {
@@ -15373,6 +15411,10 @@ a.team-linkedin:focus-visible {
 
   .lg\:gap-16 {
     gap: 4rem;
+  }
+
+  .lg\:gap-2\.5 {
+    gap: 0.625rem;
   }
 
   .lg\:gap-5 {
@@ -15724,6 +15766,10 @@ a.team-linkedin:focus-visible {
 
   .lg\:text-\[17px\] {
     font-size: 17px;
+  }
+
+  .lg\:text-\[18\.5px\] {
+    font-size: 18.5px;
   }
 
   .lg\:text-\[18px\] {

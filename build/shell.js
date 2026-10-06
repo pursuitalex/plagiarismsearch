@@ -79,6 +79,8 @@ const PAGES = {
   'cookie-policy.html':          { active: null, static: true },
   'originality-badges.html':     { active: 'resources', static: true },
   'user-manuals.html':           { active: 'resources', static: true },
+  /* Video Tutorials, from the live page (2026-10-06) — a Resources page, like the User Guide */
+  'video-on-plagiarism-tutorial.html': { active: 'resources', static: true },
   /* the news archive — a real page now, not a stub. Reached from the footer and
      from the Help Center, so no header item lights up. */
   'newsroom.html':               { active: null, static: true },

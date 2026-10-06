@@ -1290,3 +1290,22 @@ form:has(#pf-sv4:checked) [data-pf-sum="pf-sv4"] { display:flex; }
 .afp-t1 { left:150px; top:256px; }
 .afp-t2 { left:196px; top:470px; }
 .afp-t3 { left:1246px; top:474px; }
+
+/* ═══ 31 · the tutorial cards (Video Tutorials) ═════════════════════════════════════
+   A card is a pick of the video stage (90-video-stage.js): a link to YouTube that, with
+   the script, plays on the stage above. The one on the stage is marked aria-current —
+   a teal edge and a teal play button; nothing else tells the six apart. */
+.vt-card { box-shadow:0 0 0 1px rgba(10,14,26,.06), 0 2px 6px rgba(0,0,0,.03), 0 18px 40px -20px rgba(10,14,26,.14);
+  transition:box-shadow .35s cubic-bezier(.32,.72,0,1), transform .35s cubic-bezier(.32,.72,0,1); }
+.vt-card:hover { box-shadow:0 0 0 1px rgba(10,14,26,.08), 0 4px 10px rgba(0,0,0,.04), 0 28px 56px -22px rgba(10,14,26,.22); transform:translateY(-2px); }
+.vt-card img { transition:transform .6s cubic-bezier(.32,.72,0,1); }
+.vt-card:hover img { transform:scale(1.03); }
+.vt-play { transition:background-color .3s ease, color .3s ease, transform .35s cubic-bezier(.32,.72,0,1); }
+.vt-card:hover .vt-play { transform:scale(1.06); }
+.vt-card[aria-current="true"] { box-shadow:0 0 0 2px #0CA9C3, 0 18px 40px -20px rgba(12,169,195,.35); }
+.vt-card[aria-current="true"] .vt-play { background:#0991A8; color:#fff; }
+.vt-card:focus-visible { outline:2px solid #0991A8; outline-offset:3px; }
+@media (prefers-reduced-motion: reduce) {
+  .vt-card, .vt-card img, .vt-play { transition:none; }
+  .vt-card:hover, .vt-card:hover img, .vt-card:hover .vt-play { transform:none; }
+}

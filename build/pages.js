@@ -60,7 +60,7 @@ const GROUPS = [
                      || /^blog-/.test(p.file)],
   ['Account and legal', p => /account|policy|terms|privacy|refund|cookie/.test(p.file)],
   ['By file type and use case', p => /^(pdf|powerpoint|quote-checker|originality-badges|turnitin)/.test(p.file)],
-  ['Company and programmes', p => /affiliate|newsroom|scholarship|user-manuals/.test(p.file)],
+  ['Company and programmes', p => /affiliate|newsroom|scholarship|user-manuals|video-on-plagiarism/.test(p.file)],
   ['Design reference', p => /design-system|OLD-design/.test(p.file)],
 ];
 const grouped = [];
