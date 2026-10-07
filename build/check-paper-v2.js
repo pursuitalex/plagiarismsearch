@@ -62,7 +62,8 @@ const check = file => {
       else walk(C[k], k);
     }
     const squash = s => s.replace(/\s+/g, '');
-    const missing = strings.filter(s => !text.includes(flat(s)) && !squash(text).includes(squash(flat(s))));
+    /* the drop zone's second line is the checker's formats line, not the live "You can drag and drop…" */
+  const missing = strings.filter(s => s !== C.hero.drop[1]).filter(s => !text.includes(flat(s)) && !squash(text).includes(squash(flat(s))));
     ok(strings.length + ' live strings present word for word', !missing.length, missing.slice(0, 3).join(' | '));
     const opts = options('pf-type');
     ok(opts.length - 1 + ' paper types, the live list in order, after the live placeholder', opts[0] === F.typePlaceholder && opts.slice(1).join('|') === F.types.join('|'));
@@ -94,8 +95,9 @@ const check = file => {
     { const INPUTS = require('./checker').INPUTS.map(i => i.label);
       const chips = [...form.matchAll(/<(?:button type="button"|label for="pf-file") class="qc-chip[^"]*">(?:<img[^>]*>|<svg[\s\S]*?<\/svg>)([^<]+)</g)].map(m => m[1]);
       ok('the four ways in are the checker\'s own, in its order, Dropbox and OneDrive with their marks', chips.join('|') === INPUTS.join('|') && /partners\/dropbox\.svg/.test(form) && /partners\/onedrive\.svg/.test(form), chips.join(', ')); }
-    ok('the drop zone carries the checker\'s "Upload file" chip', new RegExp('class="qc-chip shrink-0[^"]*">' + require('./checker').UPLOAD_LABEL + '<').test(form) && !/UPLOAD FILE/.test(form));
-    ok('the drop zone and "Attach file" reach the file input', /<label for="pf-file" data-pf="drop"/.test(body) && /<label for="pf-file" class="qc-chip/.test(body) && /<input id="pf-file" type="file" data-pf="file"/.test(body));
+    ok('the drop zone says what the device can do, and names the formats', form.includes('<span class="qc-drop-drag">' + C.hero.drop[0] + '</span><span class="qc-drop-touch">' + require('./checker').DROP_TOUCH + '</span>') && form.includes(require('./checker').FORMATS) && !form.includes(C.hero.drop[1]) && /class="qc-ways /.test(form));
+  ok('the drop zone carries the checker\'s "Upload file" chip', new RegExp('class="qc-chip shrink-0[^"]*">' + require('./checker').UPLOAD_LABEL + '<').test(form) && !/UPLOAD FILE/.test(form));
+    ok('the drop zone is the label of the file input, shown at every width; no "Attach file" chip', /<label for="pf-file" data-pf="drop"/.test(body) && !/Attach file/.test(form) && !/qc-drop[^"]*hidden md:flex/.test(form) && /<input id="pf-file" type="file" data-pf="file"/.test(body));
   }
 
   console.log('\nlinks');

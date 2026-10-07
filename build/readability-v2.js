@@ -123,18 +123,11 @@ ${H.tiles.map(([label, href]) => { const [name, fig] = tileParts(label); return 
             <label for="rc-text" class="sr-only">${esc(C.acceptance.items[0][0])}</label>
             <textarea id="rc-text" data-rc="text" rows="4" class="qc-area block mb-4" placeholder="${esc(C.acceptance.items[0][1])}" aria-describedby="rc-lead"></textarea>
 
-            <label for="rc-file" data-rc-drop class="rc-drop qc-drop flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4 cursor-pointer">
-              <span class="qc-drop-icon">${ico(I.upload, 'currentColor', 18)}</span>
-              <span class="min-w-0 flex-1">
-                <span class="qc-drop-title">${esc(H.drop[0])}</span>
-                <span class="qc-drop-hint mt-0.5">${esc(H.drop[1])}</span>
-              </span>
-              <span class="qc-chip shrink-0 self-start sm:self-auto">${checker.UPLOAD_LABEL}</span>
-            </label>
+${checker.dropZone({ tag: 'label', attrs: 'for="rc-file" data-rc-drop', cls: 'rc-drop', title: esc(H.drop[0]), pad: '            ' })}
             <input id="rc-file" type="file" data-rc="file" class="sr-only" accept=".txt,.md,text/plain">
 
-            <div class="mt-3 flex flex-wrap gap-2">
-              ${checker.INPUTS.map(i => checker.inputChip(i, 'rc-file')).join('\n              ')}
+            <div class="qc-ways mt-3 flex flex-wrap gap-1.5 sm:gap-2">
+              ${checker.INPUTS.map(i => checker.inputChip(i)).join('\n              ')}
             </div>
 
             <div class="mt-5 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">

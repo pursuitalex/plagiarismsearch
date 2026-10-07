@@ -35,9 +35,9 @@ const COPY = {
     placeholder: 'Paste or type your text here',
     /* The brief fixes the labels; the icons are ours. Dropbox and OneDrive carry their
        own marks because recognising a service you already use is the whole point of
-       listing it — the other two are actions, not brands, so they stay in UI ink. */
+       listing it — "By URL" is an action, not a brand, so it stays in UI ink. "Attach file"
+       led the list until 2026-10-07: the drop zone's "Upload file" is that action. */
     inputs: [
-      { label: 'Attach file', icon: 'lucide', path: '<path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/>' },
       { label: 'Dropbox',     icon: 'brand',  file: 'dropbox.svg' },
       { label: 'OneDrive',    icon: 'brand',  file: 'onedrive.svg' },
       { label: 'By URL',      icon: 'lucide', path: '<path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/>' },

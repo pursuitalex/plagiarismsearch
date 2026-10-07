@@ -377,9 +377,23 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   border-radius:9999px; background:#F1F2F6; color:#4B5563; font-size:12.5px; font-weight:600;
   transition:background-color .2s ease, color .2s ease; }
 .qc-chip:hover { background:#E5E7EB; color:#111827; }
+/* on a phone the form's own chips are smaller, to win room (Olex, 2026-10-07): the three
+   ways in under the drop zone (.qc-ways; their gap is the row's gap-1.5) hold one row
+   down to 360px, and the zone's "Upload file" takes the same size. Only here — a .qc-chip elsewhere keeps its size. */
+@media (max-width:639px) {
+  .qc-ways > .qc-chip, .qc-drop .qc-chip { height:32px; padding:0 10px; gap:6px; font-size:12px; }
+}
 .qc-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
   transition:border-color .2s ease, background-color .2s ease; }
 .qc-drop:hover { border-color:#2CC3DB; background:#F0FAFC; }
+/* the zone's title says what the device can do: "Drag and drop…" where there is a mouse,
+   "Add a file" where there is none. The input device decides, not the width — a tablet
+   reads "Add a file", a narrow laptop window still "Drag and drop". */
+.qc-drop-touch { display:none; }
+@media not all and (hover:hover) and (pointer:fine) {
+  .qc-drop-drag { display:none; }
+  .qc-drop-touch { display:inline; }
+}
 
 /* the two checks */
 .sw { width:38px; height:22px; border-radius:999px; background:rgba(16,24,40,.14);

@@ -7,8 +7,9 @@
    copy of the markup would be exactly that. So the form lives here and the homepage
    renders through it, byte for byte what it rendered before.
 
-   The markup is the homepage's: field with its count in the corner, drop zone with its
-   "Upload file" button (added 2026-10-07, on every form at once), input chips, the two checks beside the button under a rule, and the free line
+   The markup is the homepage's: field with its count in the corner, the drop zone with
+   its "Upload file" button (dropZone, below — one zone for every form, at every width,
+   since 2026-10-07), the other ways in as chips, the two checks beside the button under a rule, and the free line
    under the card. Inert — no action, submit returns false; a developer binds it to the
    production checker. What varies per page is copy (placeholder, formats, the two
    labels, the CTA, the free line) and the anchor the CTA scrolls to.
@@ -50,18 +51,43 @@ const chipGlyph = (i, root = '') => {
   return `<button type="button" class="qc-chip">${glyph}${i.label}</button>`;
 };
 
-/* the same chip on a page that builds its own form round a file input (the free tools):
-   given that input's id, "Attach file" is its label, so it opens the file dialog */
-const inputChip = (i, fileInputId, root = '/') => {
-  const chip = chipGlyph(i, root);
-  return fileInputId && i.label === 'Attach file'
-    ? chip.replace('<button type="button" class="qc-chip">', `<label for="${fileInputId}" class="qc-chip cursor-pointer">`).replace(/<\/button>$/, '</label>')
-    : chip;
+/* THE DROP ZONE — one markup on every form that takes a file, at every width (Olex,
+   2026-10-07: the zone and its "Upload file" stay on a phone too; the "Attach file" chip
+   under it was the same action a second time, and is gone from every form). On a phone
+   the button drops under the words: the text asks for a width the row cannot give it
+   beside the button (basis-40), so the row wraps there and nowhere wider.
+     tag 'div'    the checker's own: the button is a <button>, inert until a developer
+                  binds it;
+     tag 'label'  a page with its own file input: attrs carry for="…", the whole zone
+                  opens the picker, and the button is a span inside that label.
+   cls: the page's own hook classes, before qc-drop. pad: the indent of the zone's line. */
+const DROP_TITLE = 'Drag and drop a file here';
+/* …and where there is no mouse to drag with — a phone, a tablet — the title says what
+   can be done there instead. One pair of titles for every form; the switch is the input
+   device (hover and a fine pointer), not the width: 08-checker.css, .qc-drop-drag / -touch. */
+const DROP_TOUCH = 'Add a file';
+/* the formats line the homepage carries, for a form that has no line of its own */
+const FORMATS = 'Supports DOC/DOCX, PDF, TXT, PPT/PPTX, XLS/XLSX and other file formats.';
+const dropZone = ({ hint = FORMATS, title = DROP_TITLE, tag = 'div', attrs = '', cls = '', pad = '          ' }) => {
+  const label = tag === 'label';
+  return `${pad}<${tag}${attrs ? ' ' + attrs : ''} class="${cls ? cls + ' ' : ''}qc-drop flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3${label ? ' cursor-pointer' : ''}">
+${pad}  <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
+${pad}    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${UPLOAD}</svg>
+${pad}  </span>
+${pad}  <span class="min-w-0 flex-1 basis-40">
+${pad}    <span class="block text-[13.5px] font-bold tracking-tight"><span class="qc-drop-drag">${title}</span><span class="qc-drop-touch">${DROP_TOUCH}</span></span>
+${pad}    <span class="block text-[12px] text-ink-500">${hint}</span>
+${pad}  </span>
+${pad}  ${label ? `<span class="qc-chip shrink-0">${UPLOAD_LABEL}</span>` : `<button type="button" class="qc-chip shrink-0">${UPLOAD_LABEL}</button>`}
+${pad}</${tag}>`;
 };
 
-/* the approved input methods, the homepage's — a page may pass its own */
+/* the same chip on a page that builds its own form (the free tools) */
+const inputChip = (i, root = '/') => chipGlyph(i, root);
+
+/* the approved ways in under the drop zone — a page may pass its own. "Attach file" led
+   this list until 2026-10-07; the zone's "Upload file" is that action now. */
 const INPUTS = [
-  { label: 'Attach file', icon: 'lucide', path: '<path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/>' },
   { label: 'Dropbox',     icon: 'brand',  file: 'dropbox.svg' },
   { label: 'OneDrive',    icon: 'brand',  file: 'onedrive.svg' },
   { label: 'By URL',      icon: 'lucide', path: '<path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/>' },
@@ -81,44 +107,32 @@ const form = (S, anchor = '#checker', ids = {}, opts = {}) => {
             <span class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums"><span ${st ? 'data-checker-count' : `id="${wc}"`}>0</span> / 150 words</span>
           </div>
 
-          <!-- Below 768 there is no pointer to drag with, so the drop zone goes and the
-               formats line it carried reappears under the input chips instead. The two
-               are exclusive — one display query, never both on screen — so the approved
-               sentence still appears exactly once at any width. -->
-          <div class="qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3">
-            <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${UPLOAD}</svg>
-            </span>
-            <span class="min-w-0 flex-1">
-              <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
-              <span class="block text-[12px] text-ink-500">${S.formats}</span>
-            </span>
-            <button type="button" class="qc-chip shrink-0">${UPLOAD_LABEL}</button>
-          </div>
+          <!-- the drop zone with its "Upload file" — the same on every form, at every width
+               (dropZone, above) — and the other ways in under it -->
+${dropZone({ hint: S.formats })}
 
-          <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
+          <div class="qc-ways flex flex-wrap gap-1.5 sm:gap-2 mb-4 lg:mb-5">
             ${(S.inputs || INPUTS).map(i => chipGlyph(i, st ? '/' : '')).join(NL12)}
           </div>
-          <p class="md:hidden text-[11.5px] sm:text-[12px] leading-relaxed text-ink-500 mb-4">${S.formats}</p>
 
-          <!-- The two checks sit beside the button they modify, not in a row of their own.
-               The row itself never wraps: the button keeps the right edge at every width,
-               and it is the checks that give — side by side where they fit, stacked below
-               640 where the pair needs about 300px and the form only has 295. -->
-          <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
-            <div class="min-w-0 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-5 sm:gap-y-3">
-              <label class="flex items-center gap-2.5 cursor-pointer">
+          <!-- The two checks and the button they modify. From 640 up they share one row,
+               the button at the right edge. On a phone (Olex, 2026-10-07) the two switches
+               stand side by side in one row — half the form each, a label may take two
+               lines — and the button goes under them at the form's full width. -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3.5 sm:gap-6 pt-4 mt-1 border-t border-ink-100">
+            <div class="min-w-0 grid grid-cols-2 gap-x-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-3">
+              <label class="flex items-center gap-2 sm:gap-2.5 cursor-pointer">
                 <input type="checkbox"${st ? '' : ` id="${plag}"`} checked class="sr-only peer">
                 <span class="sw on" ${st ? 'data-switch' : `data-for="${plag}"`}></span>
-                <span class="text-[13px] sm:text-[13.5px] font-semibold text-ink-900">${S.checkPlagiarism}</span>
+                <span class="text-[13px] sm:text-[13.5px] leading-tight sm:leading-normal font-semibold text-ink-900">${S.checkPlagiarism}</span>
               </label>
-              <label class="flex items-center gap-2.5 cursor-pointer">
+              <label class="flex items-center gap-2 sm:gap-2.5 cursor-pointer">
                 <input type="checkbox"${st ? '' : ` id="${ai}"`} class="sr-only peer">
                 <span class="sw" ${st ? 'data-switch' : `data-for="${ai}"`}></span>
-                <span class="text-[13px] sm:text-[13.5px] font-medium text-ink-600">${S.checkAI}</span>
+                <span class="text-[13px] sm:text-[13.5px] leading-tight sm:leading-normal font-medium text-ink-600">${S.checkAI}</span>
               </label>
             </div>
-            <a href="${anchor}" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            <a href="${anchor}" class="btn-press group shrink-0 flex items-center justify-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-3 sm:py-2">
               ${S.cta}
               <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -188,4 +202,4 @@ const script = (anchor = '#checker', ids = {}) => `
    is-reading, is-ready, is-error, is-busy) are CSS in build/assets/css/08-checker.css, in
    site.css, beside the form's base rules. The design-system page draws each one
    (build/design-system-checker.js). */
-module.exports = { form, free, style, script, INPUTS, ICON, inputChip, UPLOAD_LABEL };
+module.exports = { form, free, style, script, INPUTS, ICON, inputChip, UPLOAD_LABEL, DROP_TITLE, DROP_TOUCH, FORMATS, dropZone };

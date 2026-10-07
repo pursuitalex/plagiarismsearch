@@ -16,8 +16,8 @@
    Olex's own layout (drawn in Figma on 2026-10-07 — file sgIVt3vKOgTIT2LMpBIaNg, frames
    3683:32802 and 3683:32842): the head centred as on the homepage, no rating tiles, and
    two cards 738px wide, one above the other:
-     the steps    1 the document — the drop zone, the checker's own four ways in
-                  (build/checker.js: Attach file, Dropbox, OneDrive, By URL), Pages (a stepper; a .txt
+     the steps    1 the document — the checker's drop zone with "Upload file" and its
+                  other ways in (build/checker.js: Dropbox, OneDrive, By URL), Pages (a stepper; a .txt
                   file counts its own), Words, the type of paper, the description;
                   2 the level and the deadline as two selects, each option printing its
                   price for the other's choice, the price per page beside them as a
@@ -112,19 +112,15 @@ const H = C.hero;
 
 const stepDocument = () => `            <div role="group" aria-labelledby="pf-s1" class="pb-6 sm:pb-7 border-b border-ink-100">
               ${step(1, F.document).replace('<h2 ', '<h2 id="pf-s1" ')}
-              <label for="pf-file" data-pf="drop" class="pf-drop qc-drop flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4 cursor-pointer">
-                <span class="qc-drop-icon">${ico(I.upload, 'currentColor', 18)}</span>
-                <span class="min-w-0 flex-1"><span class="qc-drop-title">${esc(H.drop[0])}</span><span class="qc-drop-hint mt-0.5">${esc(H.drop[1])}</span></span>
-                <span class="qc-chip shrink-0 self-start sm:self-auto">${checker.UPLOAD_LABEL}</span>
-              </label>
+${checker.dropZone({ tag: 'label', attrs: 'for="pf-file" data-pf="drop"', cls: 'pf-drop', title: esc(H.drop[0]), pad: '              ' })}
               <input id="pf-file" type="file" data-pf="file" class="sr-only">
               <div data-pf="doc" hidden class="flex items-center gap-3 rounded-xl bg-teal-50 ring-1 ring-teal-200/70 p-3.5">
                 <span class="w-10 h-10 rounded-lg bg-white ring-1 ring-teal-200 flex items-center justify-center shrink-0">${ico(I.file, '#0991A8', 18, 1.75)}</span>
                 <span class="min-w-0 flex-1"><span data-pf="name" class="block text-[14px] font-bold truncate"></span><span data-pf="size" class="block text-[12px] text-ink-500 nums"></span></span>
                 <button type="button" data-pf="another" class="shrink-0 text-[12.5px] font-semibold text-teal-800 underline decoration-teal-300 underline-offset-4">${esc(F.another)}</button>
               </div>
-              <div class="mt-3 flex flex-wrap gap-2">
-                ${checker.INPUTS.map(i => checker.inputChip(i, 'pf-file')).join('\n                ')}
+              <div class="qc-ways mt-3 flex flex-wrap gap-1.5 sm:gap-2">
+                ${checker.INPUTS.map(i => checker.inputChip(i)).join('\n                ')}
               </div>
 
               <div class="mt-5 grid grid-cols-2 sm:grid-cols-[9rem_9rem_1fr] gap-3 sm:gap-4 items-end">

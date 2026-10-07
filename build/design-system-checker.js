@@ -127,13 +127,14 @@ const field = (ids, n, o = {}) => {
           </div>\n${o.note || ''}`;
 };
 
-/* the drop zone in its proposed states; a button, so the keyboard reaches the file picker */
-const drop = (kind, title, hint) => `          <div class="qc-drop${kind ? ` is-${kind}` : ''} hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3"${kind === 'disabled' ? ' aria-disabled="true"' : ' role="button" tabindex="0"'}>
+/* the drop zone in its proposed states; its "Upload file" is how the keyboard reaches the file picker */
+const drop = (kind, title, hint) => `          <div class="qc-drop${kind ? ` is-${kind}` : ''} flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3"${kind === 'disabled' ? ' aria-disabled="true"' : ''}>
             <span class="qc-drop-icon">${svg(kind === 'over' ? P.down : P.upload, 18, 1.75)}</span>
-            <span class="min-w-0 flex-1">
+            <span class="min-w-0 flex-1 basis-40">
               <span class="qc-drop-title">${title}</span>
               <span class="qc-drop-hint">${hint}</span>
             </span>
+            <button type="button" class="qc-chip shrink-0"${kind === 'disabled' ? ' aria-disabled="true"' : ''}>${checker.UPLOAD_LABEL}</button>
           </div>\n`;
 const DROP = {
   armed: () => drop('armed', 'Drop your file into the checker', S.formats),
@@ -212,7 +213,7 @@ function variant(id, o = {}) {
   if (o.chip) swap(new RegExp(`<button type="button" class="qc-chip">((?:(?!<button)[\\s\\S])*?)${o.chip.label}</button>`),
     (m, glyph) => `<button type="button" class="qc-chip ${o.chip.cls}"${o.chip.attrs || ''}>${glyph}${o.chip.label}</button>`, 'chip');
   if (o.chipsOff) h = h.replace(/<button type="button" class="qc-chip">/g, '<button type="button" class="qc-chip" aria-disabled="true">');
-  if (o.afterChips) swap(/(          <p class="md:hidden text-\[11\.5px\][^\n]*\n)/, m => m + o.afterChips, 'formats line');
+  if (o.afterChips) swap(/(          <div class="qc-ways flex flex-wrap gap-1\.5 sm:gap-2 mb-4 lg:mb-5">\n[^\n]*(?:\n(?!          <\/div>)[^\n]*)*\n          <\/div>\n)/, m => m + o.afterChips, 'the chips');
   if (o.checks === 'none') {
     swap(/ checked class="sr-only peer">/, ' class="sr-only peer">', 'plagiarism switch');
     swap(/<span class="sw on"/, '<span class="sw"', 'plagiarism switch');
@@ -221,7 +222,7 @@ function variant(id, o = {}) {
     swap(new RegExp(`id="${ids.ai}" class="sr-only peer">`), `id="${ids.ai}" checked class="sr-only peer">`, 'AI switch');
     swap(new RegExp(`<span class="sw" data-for="${ids.ai}"`), `<span class="sw on" data-for="${ids.ai}"`, 'AI switch');
   }
-  if (o.beforeActions) swap(/          <div class="flex items-center justify-between gap-4 sm:gap-6 pt-4 mt-1 border-t border-ink-100">/, m => o.beforeActions + m, 'button row');
+  if (o.beforeActions) swap(/          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3\.5 sm:gap-6 pt-4 mt-1 border-t border-ink-100">/, m => o.beforeActions + m, 'button row');
   if (o.cta) swap(/<a href="[^"]*" class="btn-press group[\s\S]*?<\/a>/, o.cta, 'button');
   if (o.end) swap(/        <\/form>/, m => o.end + m, 'form end');
   return h;
@@ -234,8 +235,8 @@ const STATES = [
   { group: 'Text' },
   { id: 'default', name: 'Default', status: 'live', copy: 'approved',
     about: 'Empty, before anything happens — what every checker-first page renders today. Rendered by the template unchanged.',
-    rules: [['Shows', 'placeholder, 0 / 150 words, drop zone (md and up), four input chips, the formats line on phones, the two checks, the button'],
-            ['Note', 'below 768 the drop zone goes and the formats line takes its place under the chips — already live']],
+    rules: [['Shows', 'placeholder, 0 / 150 words, the drop zone with “Upload file”, three input chips, the two checks, the button'],
+            ['Note', 'the drop zone and its button stay at every width; on a phone the button drops under the words — already live']],
     form: id => variant(id) },
   { id: 'focus', name: 'Focused', status: 'proposed', copy: 'approved',
     about: 'The caret is in the field. The field has no border of its own, so today focus is invisible — below the accessibility floor. The card takes a 2px teal ring, the same teal as every other focus ring in the system.',
@@ -492,8 +493,8 @@ const RULES = [
   ['Clear an error when its reason is gone', 'On the keystroke, the switch, the removed file — the way the AI Detector does it — not on the next submit.'],
   ['Focus goes where the fix is', 'After a failed submit, to the first thing to fix. After removing a file, to the next row or the drop zone. The gate takes focus on its first action.'],
   ['Announce, don’t shout', 'role="alert" for errors that appear after an action, role="status" for progress and warnings; aria-invalid and aria-describedby tie a field to its note.'],
-  ['The drop zone is a button', 'Today it is a div a keyboard can’t reach. With role="button" and tabindex, Enter or Space opens the file picker. A file pasted with Ctrl/Cmd+V, or dropped anywhere on the page, is added the same way.'],
-  ['Phones', 'No drop zone below 768; the Attach file chip opens the picker, and files appear in the same list.'],
+  ['The drop zone has a button', '“Upload file” is the zone’s keyboard path: Enter or Space on it opens the file picker. A file pasted with Ctrl/Cmd+V, or dropped anywhere on the page, is added the same way.'],
+  ['Phones', 'The drop zone stays below 768: “Upload file” opens the picker, and files appear in the same list. Where there is no mouse the zone’s title reads “Add a file”, not “Drag and drop a file here” (.qc-drop-drag / .qc-drop-touch: the input device decides, not the width). The three chips under it are smaller there (.qc-ways).'],
   ['Reduced motion', 'Spinners and the indeterminate bar hold still; the words carry the state.'],
 ];
 const QUESTIONS = [

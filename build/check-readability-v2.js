@@ -50,7 +50,8 @@ console.log('\ncopy, verbatim');
   walk(copy);
   /* the tiles are printed as name + figure: compare without the joining space */
   const squash = s => s.replace(/\s+/g, '');
-  const missing = strings.filter(s => !text.includes(flat(s)) && !squash(text).includes(squash(flat(s))));
+  /* the drop zone's second line is the checker's formats line, not the live "You can drag and drop…" */
+  const missing = strings.filter(s => s !== C.hero.drop[1]).filter(s => !text.includes(flat(s)) && !squash(text).includes(squash(flat(s))));
   ok(strings.length + ' live strings present word for word', !missing.length, missing.slice(0, 3).join(' | '));
   ok('no editor marker left in the copy', !/\[М1\]/.test(text));
   const labels = [charts.ease.title, charts.ease.y, charts.ease.x, ...charts.ease.bars.map(b => charts.ease.label + b[2]), ...charts.genres.rows.map(r => r[0])];
@@ -68,8 +69,9 @@ console.log('\nthe calculator');
   { const INPUTS = require('./checker').INPUTS.map(i => i.label);
     const chips = [...form.matchAll(/<(?:button type="button"|label for="rc-file") class="qc-chip[^"]*">(?:<img[^>]*>|<svg[\s\S]*?<\/svg>)([^<]+)</g)].map(m => m[1]);
     ok('the four ways in are the checker\'s own, in its order, Dropbox and OneDrive with their marks', chips.join('|') === INPUTS.join('|') && /partners\/dropbox\.svg/.test(form) && /partners\/onedrive\.svg/.test(form), chips.join(', ')); }
+  ok('the drop zone says what the device can do, and names the formats', form.includes('<span class="qc-drop-drag">' + C.hero.drop[0] + '</span><span class="qc-drop-touch">' + require('./checker').DROP_TOUCH + '</span>') && form.includes(require('./checker').FORMATS) && !form.includes(C.hero.drop[1]) && /class="qc-ways /.test(form));
   ok('the drop zone carries the checker\'s "Upload file" chip', new RegExp('class="qc-chip shrink-0[^"]*">' + require('./checker').UPLOAD_LABEL + '<').test(form) && !/UPLOAD FILE/.test(form));
-  ok('the drop zone and "Attach file" reach the file input', /<label for="rc-file" data-rc-drop/.test(body) && /<label for="rc-file" class="qc-chip/.test(body) && /<input id="rc-file" type="file" data-rc="file"/.test(body));
+  ok('the drop zone is the label of the file input, shown at every width; no "Attach file" chip', /<label for="rc-file" data-rc-drop/.test(body) && !/Attach file/.test(form) && !/qc-drop[^"]*hidden md:flex/.test(form) && /<input id="rc-file" type="file" data-rc="file"/.test(body));
   ok('the text field opens the form with nothing over it — "Simple text" is its name for a screen reader, its live line the placeholder, the lead its description', /<form data-readability[^>]*>\s*(<!--[\s\S]*?-->\s*)?<label for="rc-text" class="sr-only">Simple text<\/label>\s*<textarea id="rc-text"/.test(body) &&/<textarea id="rc-text" data-rc="text"[^>]*placeholder="Paste your text into our web-based software to get instant analysis and recommended improvements\."[^>]*aria-describedby="rc-lead"/.test(body) && /id="rc-lead"/.test(body));
   ok('"Start checking" goes back to the checker', (body.match(/href="#readability-checker-top"/g) || []).length >= 2 && /<section id="readability-checker-top"/.test(body));
 }

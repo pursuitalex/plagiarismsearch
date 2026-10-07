@@ -13,8 +13,8 @@
    The hero is the form the site's other checkers have (Olex, 2026-10-07: "має бути форма
    аналогічна, як і на всіх плагчеках чи AI-чеках… кнопочки… в одному стилі… не потрібно
    відразу виводити всі параметри… лише після того, як людина натисне перевірка"): the
-   text with its count, the drop zone with the checker's "Upload file", its four ways in
-   (build/checker.js — Attach file, Dropbox, OneDrive, By URL, with their marks), and one
+   text with its count, the checker's drop zone with "Upload file" and its other ways in
+   (build/checker.js — Dropbox, OneDrive, By URL, with their marks), and one
    row with the 47 languages, "Order analysis" and "Free check". The live result panel —
    Mistakes, Statistics, Readability, Language — is a state of the same card, shown when
    "Free check" is pressed. Statistics and Readability are computed in the browser by
@@ -134,20 +134,11 @@ const section1 = () => `  <!-- ================= 01 · HERO / THE SPELL CHECKER 
             <span data-sp="count" data-one=" word" data-many=" words" class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums">0 words</span>
           </div>
 
-          <!-- below 768 there is no pointer to drag with, so the drop zone goes, as it does
-               on the homepage's checker; "Attach file" opens the same file input -->
-          <label for="sp-file" data-sp-drop class="sp-drop qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3 cursor-pointer">
-            <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">${ico(I.upload, '#0991A8', 18, 1.75)}</span>
-            <span class="min-w-0 flex-1">
-              <span class="block text-[13.5px] font-bold tracking-tight">${esc(H.drop[0])}</span>
-              <span class="block text-[12px] text-ink-500">${esc(H.drop[1])}</span>
-            </span>
-            <span class="qc-chip shrink-0">${checker.UPLOAD_LABEL}</span>
-          </label>
+${checker.dropZone({ tag: 'label', attrs: 'for="sp-file" data-sp-drop', cls: 'sp-drop', title: esc(H.drop[0]) })}
           <input id="sp-file" type="file" data-sp="file" class="sr-only" accept=".txt,.md,text/plain">
 
-          <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
-            ${checker.INPUTS.map(i => checker.inputChip(i, 'sp-file')).join('\n            ')}
+          <div class="qc-ways flex flex-wrap gap-1.5 sm:gap-2 mb-4 lg:mb-5">
+            ${checker.INPUTS.map(i => checker.inputChip(i)).join('\n            ')}
           </div>
 
           <!-- the one choice this check has, beside the button it modifies -->

@@ -35,6 +35,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const OUT = 'ai-detector.html';
 const cta = require('./sections/cta-band');
+const checker = require('./checker');   /* the drop zone: the site's one */
 const { dotField } = require('./dots');
 const banner = require('./sections/banner');   /* the compact dark banner — recipe and reasoning live there */
 const steps = require('./sections/steps');   /* the numbered sequences: one library template */
@@ -63,7 +64,6 @@ const COPY = {
     dropzone: 'Drag and drop a document here',
     uploadBtn: 'Upload file',
     inputs: [
-      { label: 'Attach file', icon: 'lucide', path: '<path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/>' },
       { label: 'Dropbox',  icon: 'brand', file: 'dropbox.svg' },
       { label: 'OneDrive', icon: 'brand', file: 'onedrive.svg' },
       { label: 'By URL',   icon: 'lucide', path: '<path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/>' },
@@ -369,8 +369,9 @@ ${eyebrow('teal-400', 'AI Detector')}
       <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
         <form data-ai-check class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6" onsubmit="return false">
 
-          <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight mb-3 lg:mb-4">${COPY.s1.toolHeading}</h2>
-
+          <!-- the form opens with the field, as every other check form does (Olex,
+               2026-10-07): no heading over it. The brief's "Paste text or upload a
+               document" stays as the field's name for a screen reader. -->
           <label for="aiText" class="sr-only">${COPY.s1.toolHeading}</label>
           <div class="relative mb-3">
             <textarea id="aiText" rows="4" class="qc-area block" placeholder="${COPY.s1.placeholder}"></textarea>
@@ -385,18 +386,9 @@ ${eyebrow('teal-400', 'AI Detector')}
           </p>
 
           <!-- Upload is a peer of the editor, not a footnote to it: "File/document upload
-               is visually prominent and not relegated to a minor icon." Below md there is
-               no pointer to drag with, so the panel becomes a plain upload button. -->
-          <div class="qc-drop flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-4 mb-3">
-            <span class="w-11 h-11 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-            </span>
-            <span class="min-w-0 flex-1">
-              <span class="block text-[13.5px] font-bold tracking-tight"><span class="hidden md:inline">${COPY.s1.dropzone}</span><span class="md:hidden">${COPY.s1.uploadBtn}</span></span>
-              <span class="block text-[12px] text-ink-500">PlagiarismSearch extracts the readable text for AI analysis.</span>
-            </span>
-            <button type="button" class="qc-chip shrink-0">${COPY.s1.uploadBtn}</button>
-          </div>
+               is visually prominent and not relegated to a minor icon." The zone is the
+               site's one drop zone (build/checker.js, dropZone), the same at every width. -->
+${checker.dropZone({ title: COPY.s1.dropzone, hint: 'PlagiarismSearch extracts the readable text for AI analysis.' })}
 
           <!-- file error, tied to the upload area rather than the page -->
           <p id="stUnreadable" role="alert" hidden class="flex items-start gap-2 -mt-1 mb-3 text-[12.5px] font-medium text-orange-700">
@@ -404,7 +396,7 @@ ${eyebrow('teal-400', 'AI Detector')}
             ${COPY.s1.states[1][1]}
           </p>
 
-          <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
+          <div class="qc-ways flex flex-wrap gap-1.5 sm:gap-2 mb-4 lg:mb-5">
 ${COPY.s1.inputs.map(i => `            <button type="button" class="qc-chip">${
   i.icon === 'brand'
     ? `<img src="/assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">`
