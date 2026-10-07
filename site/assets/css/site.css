@@ -1004,6 +1004,31 @@ select.cf-field { appearance:none; cursor:pointer;
 .on-dark .nl:hover { color:#fff; text-decoration-color:rgba(255,255,255,.6); }
 .article .nl { word-break:break-word; }
 
+/* ── the contents of a long page (build/toc.js) ─────────────────────────────────────
+   One pattern for the article template, the legal pages and the blog post. A short page
+   keeps its card. A long page prints the list twice and shows one: the rail in the
+   column's left margin from 1280px, the folded card above the text below that. The rail
+   is the Moodle guide's (.rail, .rail-link — 21-docs.css); it hangs off the reading
+   column, so the column keeps its width and its place. */
+.toc-wrap { position:relative; }
+.toc-side { display:none; }
+.toc-fold summary { list-style:none; cursor:pointer; }
+.toc-fold summary::-webkit-details-marker { display:none; }
+.toc-fold summary:focus-visible { outline:2px solid #0991A8; outline-offset:2px; border-radius:1.5rem; }
+.toc-fold-chev { flex:none; transition:transform .25s ease; }
+.toc-fold[open] .toc-fold-chev { transform:rotate(180deg); }
+@media (min-width:1280px) {
+  .toc-fold { display:none; }
+  .toc-side { display:block; position:absolute; top:0; bottom:0; right:100%; width:196px; margin-right:40px; }
+  /* the rail sticks under the header (21-docs.css: top 112px); taller than the window, the
+     list scrolls inside it and the label stays */
+  .toc-side .rail { display:flex; flex-direction:column; max-height:calc(100vh - 148px); }
+  .toc-side-label { flex:none; margin:0 0 12px; font-size:10.5px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:#6B7280; }
+  .toc-side-scroll { flex:1 1 auto; min-height:0; padding-right:4px; }
+  .toc-side .rail-link { padding-top:6px; padding-bottom:6px; font-size:13px; line-height:1.4; }
+}
+@media (prefers-reduced-motion: reduce) { .toc-fold-chev { transition:none; } }
+
 /* ═══ 27 · the news archive (Newsroom) ═══════════════════════════════════════════
    Topic chips, the pager and the year anchors. Behaviour: site.js, module news-archive.
    Values verbatim from the page's former <style>. */

@@ -1,4 +1,5 @@
-/* The documentation navigation (Moodle Integration guide). Each [data-doc-nav] holds one
+/* The documentation navigation (the Moodle Integration guide; the contents of a long
+   article or legal page, build/toc.js). Each [data-doc-nav] holds one
    or more navigations whose links carry data-spy="<section id>" — the rail from lg, the
    jump menu (details[data-jump]) under it. The spy marks the last navigated section
    whose top has passed the reading line, in every navigation at once, and writes its
@@ -25,6 +26,13 @@ PS.module('doc-nav', () => {
         const on = a.dataset.spy === hit;
         a.classList.toggle('on', on);
         if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        /* in a rail that scrolls inside itself (the long-form contents) the marked link is
+           kept in view — the box is scrolled, never the page */
+        const box = on && a.closest('[data-scroll-fade]');
+        if (box && box.scrollHeight > box.clientHeight) {
+          const top = a.offsetTop - box.offsetTop, room = box.clientHeight;
+          if (top < box.scrollTop + 24 || top + a.offsetHeight > box.scrollTop + room - 24) box.scrollTop = Math.max(0, top - room / 2);
+        }
       });
       if (now) { const a = links.find(x => x.dataset.spy === hit); now.textContent = a ? a.textContent : ''; }
     };

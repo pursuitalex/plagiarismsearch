@@ -13,6 +13,7 @@
      node build/legal.js  →  node build/shell.js  →  node build/check.js
 */
 const fs = require('fs');
+const toc = require('./toc');   /* the contents, shared with the article template */
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
@@ -175,6 +176,8 @@ function render(page) {
   }).join('\n');
 
   const others = PAGES.filter(p => p.slug !== page.slug);
+  const long = toc.isLong(sections);
+  const TOC = { cols: 2, tone: 'text-ink-400' };   /* the legal card: two columns, its own grey */
 
   /* the numbered list's counter is site.css (26-article), the one the article template draws */
   return { blocks: blocks.length, sections: sections.length, html: shell.render({ title: page.title + ' | PlagiarismSearch', sections: [`  <!-- Legal pages are reference, not reading: the text is the site's own, carried over
@@ -195,19 +198,16 @@ function render(page) {
           ${dated ? `<p class="text-[13px] sm:text-[13.5px] font-semibold text-ink-400">${clean(dated.html)}</p>` : ''}
         </div>
 
-        <nav class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-4 sm:p-5 lg:p-6 mb-8 sm:mb-10 lg:mb-12" aria-label="On this page">
-          <div class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] uppercase text-ink-400 mb-4 lg:mb-5">On this page</div>
-          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
-${sections.map(s => `            <li class="flex gap-2.5">
-              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
-              <a href="#${s.id}" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">${s.text}</a>
-            </li>`).join('\n')}
-          </ul>
-        </nav>
+        <!-- The contents is the shared one (build/toc.js): a long document hangs a rail in
+             the margin from 1280px and folds its card below that; a short one keeps the
+             card. The wrapper is the rail's range — the document, not what follows it. -->
+${long ? `        <div ${toc.WRAP}>
+${toc.rail(sections)}
+${toc.fold(sections, TOC)}` : toc.card(sections, TOC)}
 
         <article class="min-w-0">
 ${markup}
-        </article>
+        </article>${long ? '\n        </div>' : ''}
 
         <div class="mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-100">
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4">Also in legal</div>

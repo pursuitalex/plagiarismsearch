@@ -25,6 +25,8 @@
    characters the way the blog page truncates its own. Word count is counted, not typed.
 */
 
+const toc = require('./toc');   /* the contents: a card on a short page, a rail and a folded card on a long one */
+
 const esc = s => String(s).replace(/&(?!(amp|lt|gt|quot|#\d+|nbsp);)/g, '&amp;');
 
 const slug = t => t.toLowerCase()
@@ -116,6 +118,11 @@ const page = ({ breadcrumb = [], h1, meta = [], blocks, tocLabel = 'On this page
   if (!h1 || !Array.isArray(blocks) || !blocks.length) throw new Error('article: h1 and blocks are required');
 
   const heads = blocks.filter(b => b.t === 'h2');
+  /* the contents (build/toc.js): a long article hangs a rail in the margin from 1280px and
+     folds its card below that; the wrapper is the rail's range, from the contents to the last block */
+  const items = heads.map(h => ({ id: h.id || slug(h.text), text: esc(h.text) }));
+  const long = toc.isLong(items);
+  const tocOpts = { label: tocLabel, rv: true, aside: `<span class="nums">${words(blocks).toLocaleString('en-US')}</span> words` };
   const crumbs = breadcrumb.map((c, i) => Array.isArray(c)
     ? `          <a href="${c[1]}" class="hover:text-ink-700 transition-colors duration-300">${esc(c[0])}</a>
           <span class="text-ink-500">/</span>`
@@ -147,22 +154,14 @@ ${meta.map((m, i) => (i ? '            <span class="w-1 h-1 rounded-full bg-ink-
           </div>` : ''}
         </div>
 
-${heads.length ? `        <nav class="rv rounded-3xl sm:rounded-[28px] bg-ink-50 p-4 sm:p-5 lg:p-6 mb-8 sm:mb-10 lg:mb-12" aria-label="${esc(tocLabel)}">
-          <div class="flex items-center gap-3 mb-4 lg:mb-5">
-            <span class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] uppercase text-ink-500">${esc(tocLabel)}</span>
-            <span class="ml-auto text-[11.5px] font-medium text-ink-500"><span class="nums">${words(blocks).toLocaleString('en-US')}</span> words</span>
-          </div>
-          <ul class="grid gap-y-2.5">
-${heads.map(h => `            <li class="flex gap-2.5">
-              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
-              <a href="#${h.id || slug(h.text)}" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">${esc(h.text)}</a>
-            </li>`).join('\n')}
-          </ul>
-        </nav>` : ''}
+${long ? `        <div ${toc.WRAP}>
+${toc.rail(items, { label: tocLabel })}
+
+` : ''}${!items.length ? '' : long ? toc.fold(items, tocOpts) : toc.card(items, tocOpts)}
 
         <div class="rv">
 ${blocks.map(render).join('\n')}
-        </div>
+        </div>${long ? '\n        </div>' : ''}
       </div>
     </div>
   </section>`;
