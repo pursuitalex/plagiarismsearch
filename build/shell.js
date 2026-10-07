@@ -66,6 +66,8 @@ const PAGES = {
   'faq-and-support.html':        { active: 'resources', static: true },
   'blog.html':                   { active: 'resources', static: true },
   'blog-best-checker-2026.html': { active: 'resources', static: true },
+  /* a blog author's page, from the live one (2026-10-07) */
+  'blog-author-kelsey-ayton.html': { active: 'resources', static: true },
   /* About us, to the 2026-09-30 brief (build/about.js) — first in the Company group */
   'about-us.html':               { active: 'company', static: true },
   'why-us.html':                 { active: 'company', static: true },

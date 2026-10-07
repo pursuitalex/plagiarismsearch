@@ -31,6 +31,7 @@ driven by this table.
 | `faq-and-support.html` | `/faq-and-support` | built | Support & Frequently Asked Questions. No brief: the live page's H1, nine group names, sixty-two questions and answers and the inquiry form, word for word (build/faq-data.json, read by build/faq-fetch.js). The arrangement is new: jump links in the hero, one library FAQ section a group with a schematic figure of our own interface in place of the live stock picture (build/faq/figures.js), the library Inquiry form. In the header under Resources, in the footer and on the Help Center's FAQ card (Olex, 2026-10-07). Built by build/faq.js, checked by build/check-faq.js. |
 | `blog.html` | `/blog` | built |  |
 | `blog-best-checker-2026.html` | `/blog/best-plagiarism-checker-in-2026` | built |  |
+| `blog-author-kelsey-ayton.html` | `/blog/author/kelsey-ayton` | built | A blog author's page. No brief: the live profile (heading, photograph, bio, Twitter link) and the author's ten newest posts with their titles and dates; the dress is the blog index's — its hero, its cards, its pager, its closing section. One of the ten posts is in the prototype; the other nine and pages 2–6 lead to the live site. Linked from the article's author name. Built by build/blog-author.js, checked by build/check-blog-author.js. |
 | `university-plagiarism-checker.html` | `/university-plagiarism-checker` | built | The University page to the v2 brief of 2026-09-04: nine sections, a proof type per act (hub, report, relationship map, source map, decision tree). Built by build/university-v2.js, checked by build/check-university-v2.js. |
 | `plagiarism-checker-for-students.html` | `/plagiarism-checker-for-students` | built | The Students page to the 2026-09-15 brief: the real checker in a two-column hero, the shared report with the student principle, a decision-shaped review workflow. Replaced the stub. Built by build/students.js, checked by build/check-students.js. |
 | `turnitin-checker-alternative.html` | `/turnitin-checker-alternative` | built | The Turnitin Alternative page to the 2026-09-15 brief: the real checker, a semantic comparison table with official Turnitin sources and a last-verified date, the non-equivalence act, a balanced fit section, the shared report, a pricing preview, the trademark notice. Footer only. Replaced the stub. Built by build/turnitin.js, checked by build/check-turnitin.js. |
@@ -65,7 +66,7 @@ driven by this table.
 
 ## Counts
 
-- 34 × built
+- 35 × built
 - 11 × no approved path
 - 5 × stub
 - 1 × built · out of global nav
