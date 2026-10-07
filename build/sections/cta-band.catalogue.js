@@ -16,7 +16,7 @@ const snippets = [
     html: bandOf('ai-detector.html', 'example-cta') },
   { file: 'cta-band-button.html', name: 'CTA band · одна кнопка',
     about: 'Те саме без посилання: одна дія. Копія — Pricing.',
-    uses: 'prices; paper-analysis-v2 (без іконки)',
+    uses: 'prices; paper-analysis (без іконки)',
     html: bandOf('prices.html', 'example-cta-button') },
   { file: 'cta-band-stack.html', name: 'CTA band · кнопка і рядок з іскрою (stack)',
     about: 'data-layout="stack": під кнопкою — рядок-запевнення з іскрою (p.cta-hint). Копія — Students.',
@@ -42,10 +42,6 @@ const snippets = [
     about: 'data-variant="plain": спрощена смуга — м’яка пляма замість крапкового поля, заголовок розміру секції без обведення, одна бірюзова кнопка 48/56px. Копія — Help Center.',
     uses: 'help-center, mission, contact-us, chat-bot, plagiarism-check',
     html: bandOf('help-center.html', 'example-cta-plain') },
-  { file: 'cta-band-plain-orange.html', name: 'CTA band · plain, помаранчева кнопка',
-    about: 'Те саме з data-tone="orange" на кнопці й ширшим вступом (data-measure="54"). Копія — Spell Check.',
-    uses: 'spell-check, readability-check (data-measure="52"), paper-analysis',
-    html: bandOf('spell-check.html', 'example-cta-plain-orange') },
 ];
 
 const pages = [
@@ -55,7 +51,7 @@ const pages = [
   ['prices.html', 'section', 'ряд', 'кнопка з іскрою'],
   ['plagiarism-checker-for-organization.html', 'section', 'ряд', 'вступ 62; кнопка + тихе посилання'],
   ['university-plagiarism-checker.html', 'section', 'ряд', 'вступ 62; кнопка + тихе посилання'],
-  ['paper-analysis-v2.html', 'section', 'ряд', 'вступ 56; кнопка'],
+  ['paper-analysis.html', 'section', 'ряд', 'вступ 56; кнопка'],
   ['affiliate-program-at-plagiarismsearch.html (і -v2)', 'section', 'ряд', 'рядок над заголовком; кнопка'],
   ['plagiarism-checker-for-students.html', 'section', 'stack', 'кнопка + рядок з іскрою'],
   ['pdf-plagiarism-checker.html', 'section', 'stack', 'кнопка + рядок з іскрою'],
@@ -63,7 +59,6 @@ const pages = [
   ['ua-plagiarism-check.html', 'section', 'wide · stack', 'кнопка'],
   ['about-us.html', 'section', 'pair', 'вступ 560px; дві кнопки; тиха примітка з посиланням'],
   ['help-center.html, mission.html, contact-us.html, chat-bot.html, plagiarism-check.html', 'section', 'plain', 'бірюзова кнопка'],
-  ['readability-check.html, spell-check.html, paper-analysis.html', 'section', 'plain · orange', 'помаранчева кнопка; вступ 52 / 54 / 46'],
 ];
 
 module.exports = {

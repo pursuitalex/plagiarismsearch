@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
 <meta name="googlebot" content="noindex, nofollow" />
-<title>PlagiarismSearch — Spell Checker</title>
+<meta name="description" content="Our essay grader will help you submit a premium-quality writing assignment even if English is not your native language. Read for more details and order from us." />
+<link rel="canonical" href="https://plagiarismsearch.com/spell-checker" />
+<title>Free Essay Grader as a Way to Ensure Top Quality of Writing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/site.css">
 <link rel="stylesheet" href="/assets/css/tailwind.css">
 <script>(function (h) {h.classList.add('js');if (!matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('js-motion');setTimeout(function () { if (!window.PS_READY) h.classList.remove('js', 'js-motion'); }, 3500);})(document.documentElement);</script>
@@ -17,10 +19,8 @@
 <script defer src="/assets/js/site.js"></script>
 </head>
 <body class="font-sans text-ink-900 bg-white">
-
 <div class="grain"></div>
 
-<!-- ================= FLOATING ISLAND NAV (shared chrome) ================= -->
 <header data-site-header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
   <!-- On phones the bar starts as the floating pill every other width has, and DOCKS once
        the page scrolls: flush to the top edge, no side gutters, square corners. One
@@ -143,462 +143,430 @@
     </div>
   </div>
 </header>
+
 <main>
+  <!-- ================= 01 · HERO / THE SPELL CHECKER =================
+       The form the site's other checkers have (the homepage, the AI Detector): the text,
+       the drop zone, the four ways in, and one row with the button. What a check returns
+       — Mistakes, Statistics, Readability, Language — is a state of the same card, shown
+       when "Free check" is pressed. The two service notes and the rating tiles sit under it. -->
+  <section id="spell-checker-top" data-component="hero-tool" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
+    <div class="dot-field absolute inset-0" aria-hidden="true"></div>
+    <div class="orb absolute orb-hero-teal"></div>
+    <div class="orb absolute orb-hero-coral"></div>
 
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <h1 class="rv text-center text-[clamp(2.3rem,5vw,3.8rem)] font-extrabold tracking-tightest leading-[1.04] mb-8 sm:mb-10 lg:mb-12 max-w-[18ch] mx-auto">Grammar, Style, and <span class="pen-word relative inline-block">Spell Checker<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 234 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c59-7 157-7 228-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
 
-
-
-
-
-
-<!-- ================= 01 · HERO + LIVE ANALYSER ================= -->
-<section data-component="spell-check-2" class="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F2FCFC]">
-  <div class="orb w-[640px] h-[640px] bg-orange-500/10 -left-52 -top-40"></div>
-  <div class="orb w-[560px] h-[560px] bg-teal-500/10 right-[-160px] top-48"></div>
-
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="text-center max-w-[720px] mx-auto mb-8 sm:mb-10 lg:mb-12">
-      <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Spell check</span>
-      </div>
-      <h1 class="rv text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4 lg:mb-5">
-        Grammar, Style, and
-        <span class="pen-word relative inline-block">Spell Checker<svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 220 12" fill="none" aria-hidden="true"><path class="pen-underline" d="M3 9c60-7 150-7 214-3" stroke="#F36F5A" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span>
-      </h1>
-      <p class="rv text-[15.5px] sm:text-[16px] lg:text-[16.5px] text-ink-600 leading-relaxed max-w-[52ch] mx-auto">
-        The service is free of charge. Paste your text and the statistics and readability
-        indices below update as you type.
-      </p>
-    </div>
-
-    <!-- live analyser: counting and the readability indices are published arithmetic, so this really runs -->
-    <div class="rv max-w-[1080px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse-lg">
-      <form data-spell data-unit="min" class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden" onsubmit="return false">
-
-        <div class="p-4 sm:p-6 lg:p-7">
-          <div class="flex flex-wrap items-center gap-3 mb-4">
-            <label for="spLang" class="sr-only">Language</label>
-            <select id="spLang" data-sp="lang" class="sp-select">
-              <option selected>Detect language</option>
-              <option>Arabic</option>
-              <option>Arabic (Algeria)</option>
-              <option>Asturian</option>
-              <option>Belarusian</option>
-              <option>Breton</option>
-              <option>Catalan</option>
-              <option>Catalan (Valencian)</option>
-              <option>Chinese</option>
-              <option>Danish</option>
-              <option>Dutch</option>
-              <option>English</option>
-              <option>English (Australian)</option>
-              <option>English (Canadian)</option>
-              <option>English (GB)</option>
-              <option>English (New Zealand)</option>
-              <option>English (South African)</option>
-              <option>English (US)</option>
-              <option>Esperanto</option>
-              <option>French</option>
-              <option>Galician</option>
-              <option>German</option>
-              <option>German (Austria)</option>
-              <option>German (Germany)</option>
-              <option>German (Swiss)</option>
-              <option>Greek</option>
-              <option>Irish</option>
-              <option>Italian</option>
-              <option>Japanese</option>
-              <option>Khmer</option>
-              <option>Persian</option>
-              <option>Polish</option>
-              <option>Portuguese</option>
-              <option>Portuguese (Angola preAO)</option>
-              <option>Portuguese (Brazil)</option>
-              <option>Portuguese (Moçambique preAO)</option>
-              <option>Portuguese (Portugal)</option>
-              <option>Romanian</option>
-              <option>Russian</option>
-              <option>Simple German</option>
-              <option>Slovak</option>
-              <option>Slovenian</option>
-              <option>Spanish</option>
-              <option>Swedish</option>
-              <option>Tagalog</option>
-              <option>Tamil</option>
-              <option>Ukrainian</option>
-            </select>
-            <label class="btn-press inline-flex items-center gap-2 rounded-full bg-ink-50 hover:bg-ink-100 transition-colors duration-200 text-[12px] font-semibold text-ink-700 px-3.5 py-2 cursor-pointer">
-              <input type="file" data-sp="file" class="sr-only" accept=".txt,.md,text/plain">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-              Upload a .txt file
-            </label>
-            <span data-sp="count" data-one=" word" data-many=" words" class="ml-auto text-[11.5px] font-semibold text-ink-400 nums">0 words</span>
+      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+        <form data-spell data-unit="min" onsubmit="return false" class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
+          <label for="sp-text" class="sr-only">Type your text here</label>
+          <!-- the count belongs to the text, so it sits in the corner of the field -->
+          <div class="relative mb-4">
+            <textarea id="sp-text" data-sp="text" rows="4" class="qc-area block pr-24" placeholder="Type your text here..."></textarea>
+            <span data-sp="count" data-one=" word" data-many=" words" class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums">0 words</span>
           </div>
 
-          <textarea data-sp="text" class="sp-area" aria-label="Text to analyse"
-            placeholder="Type your text here..."></textarea>
-        </div>
-
-        <div class="grid sm:grid-cols-3 border-t border-ink-100">
-          <!-- Mistakes needs a language model, so it is the one column the browser cannot fill -->
-          <div class="sp-locked p-4 sm:p-5 lg:p-6 border-b sm:border-b-0 sm:border-r border-ink-100">
-            <div class="sp-col-h flex items-center gap-1.5">
-              Mistakes
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div class="sp-row"><span>Grammar</span><b data-sp="grammar">&mdash;</b></div>
-            <div class="sp-row"><span>Punctuation</span><b data-sp="punct">&mdash;</b></div>
-            <div class="sp-row"><span>Spelling</span><b data-sp="spell">&mdash;</b></div>
-            <div class="sp-row"><span>Style</span><b data-sp="style">&mdash;</b></div>
-            <div class="mt-3 text-[11px] leading-relaxed text-ink-400">Checked server-side &mdash; press Free check.</div>
-          </div>
-
-          <div class="p-4 sm:p-5 lg:p-6 border-b sm:border-b-0 sm:border-r border-ink-100">
-            <div class="sp-col-h">Statistics</div>
-            <div class="sp-row"><span>Paragraphs</span><b data-sp="para">&mdash;</b></div>
-            <div class="sp-row"><span>Sentences</span><b data-sp="sent">&mdash;</b></div>
-            <div class="sp-row"><span>Syllables</span><b data-sp="syl">&mdash;</b></div>
-            <div class="sp-row"><span>Words</span><b data-sp="words">&mdash;</b></div>
-            <div class="sp-row"><span>Characters</span><b data-sp="chars">&mdash;</b></div>
-            <div class="sp-row"><span>Spaces</span><b data-sp="spaces">&mdash;</b></div>
-          </div>
-
-          <div class="p-4 sm:p-5 lg:p-6">
-            <div class="sp-col-h">Readability</div>
-            <div class="sp-row"><span>Read time</span><b data-sp="read">&mdash;</b></div>
-            <div class="sp-row"><span>Speak time</span><b data-sp="speak">&mdash;</b></div>
-            <div class="sp-row"><span>Automated readability index</span><b data-sp="ari">&mdash;</b></div>
-            <div class="sp-row"><span>Coleman&ndash;Liau index</span><b data-sp="cli">&mdash;</b></div>
-            <div class="sp-row"><span>Flesch reading ease</span><b data-sp="fre">&mdash;</b></div>
-            <div class="sp-row"><span>Flesch&ndash;Kincaid grade level</span><b data-sp="fkg">&mdash;</b></div>
-            <div class="sp-row"><span>SMOG grade</span><b data-sp="smog">&mdash;</b></div>
-            <div class="sp-row"><span>Gunning fog index</span><b data-sp="fog">&mdash;</b></div>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-3 px-4 sm:px-5 lg:px-6 py-4 lg:py-5 border-t border-ink-100 bg-ink-50/60">
-          <button type="submit" class="btn-press group flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[14px] font-semibold pl-4 lg:pl-5 pr-2 py-2">
-            Free check
-            <span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <!-- below 768 there is no pointer to drag with, so the drop zone goes, as it does
+               on the homepage's checker; "Attach file" opens the same file input -->
+          <label for="sp-file" data-sp-drop class="sp-drop qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3 cursor-pointer">
+            <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
+              <span class="block text-[12px] text-ink-500">You can drag and drop a file here to check grammar, style and spell</span>
             </span>
-          </button>
-          <a href="paper-analysis.html" class="btn-press inline-flex items-center rounded-full ring-1 ring-black/10 text-ink-900 text-[14px] font-semibold h-11 px-4 sm:px-5 hover:bg-ink-900/5 transition-colors duration-300">Order analysis</a>
-          <span class="text-[11.5px] font-medium text-ink-400 sm:ml-auto">Counting and indices run in your browser &mdash; syllables are estimated.</span>
-        </div>
-      </form>
-    </div>
+            <span class="qc-chip shrink-0">UPLOAD FILE</span>
+          </label>
+          <input id="sp-file" type="file" data-sp="file" class="sr-only" accept=".txt,.md,text/plain">
 
-    <div class="rv flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-5 lg:gap-x-6 gap-y-3 mt-6 sm:mt-8 lg:mt-10">
-      <span class="flex items-baseline gap-1.5">
-        <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="4.9" data-decimals="1">4.9</span>
-        <span class="text-[12px] font-semibold text-ink-500">Trustpilot</span>
-      </span>
-      <span class="w-1 h-1 rounded-full bg-ink-200"></span>
-      <span class="flex items-baseline gap-1.5">
-        <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="5.0" data-decimals="1">5.0</span>
-        <span class="text-[12px] font-semibold text-ink-500">Sitejabber</span>
-      </span>
-      <span class="w-1 h-1 rounded-full bg-ink-200"></span>
-      <span class="flex items-baseline gap-1.5">
-        <span class="text-[17px] sm:text-[18px] lg:text-[19px] font-extrabold tracking-tightest nums" data-count="490" data-suffix="K+">490K+</span>
-        <span class="text-[12px] font-semibold text-ink-500">texts checked</span>
-      </span>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 02 · FOUR THINGS IT REPORTS ================= -->
-<section data-component="spell-check-3" class="relative py-16 sm:py-24 lg:py-32 bg-white">
-  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="rv text-center max-w-[620px] mx-auto mb-8 sm:mb-11 lg:mb-14">
-      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">What it reports</span>
-      </div>
-      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Four readings of the same text</h2>
-      <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed">
-        This is not just an automated program that has a limited set of functions.
-      </p>
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-[1080px] mx-auto">
-      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="/assets/img/sp/mistakes.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Mistakes</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Grammar, punctuation, spelling and style &mdash; each flagged in place with an explanation beside it.</p>
-      </div>
-      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="/assets/img/sp/stats.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Statistics</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Paragraphs, sentences, syllables, words, characters and spaces, counted as you type.</p>
-      </div>
-      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="/assets/img/sp/readability.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Readability</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Eight indices at once, from Flesch reading ease to SMOG grade and Gunning fog.</p>
-      </div>
-      <div class="hc-card rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-ink-50 p-4 sm:p-5 lg:p-6">
-        <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
-          <img src="/assets/img/sp/language.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
-        </div>
-        <h3 class="text-[15px] sm:text-[16px] font-bold tracking-tight mb-2">Language</h3>
-        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">Detected automatically, or pick from 46 languages and regional variants.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 03 · FREE ESSAY GRADER ================= -->
-<section data-component="spell-check-4" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
-  <div class="orb w-[520px] h-[520px] bg-orange-500/8 right-[-140px] top-10"></div>
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <!-- photo RIGHT — first photo on the page -->
-    <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-10 sm:gap-14 lg:gap-16 items-center">
-
-      <div>
-        <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-mint-500"></span>
-          <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Free essay grader</span>
-        </div>
-        <h2 class="rv text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">
-          A way to ensure top quality of writing
-        </h2>
-        <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed mb-4 max-w-[50ch]">
-          Our company&rsquo;s online essay grader will help you submit a premium-quality academic paper
-          even if you are a non-native speaker of English. Handing in your paper without proper editing
-          and proofreading is not a good option &mdash; the numerous mistakes, even petty ones, may pose a
-          negative impression on your readers.
-        </p>
-        <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed mb-6 sm:mb-7 lg:mb-8 max-w-[50ch]">
-          With our help, students can check grammar, punctuation, stylistic, and spelling mistakes, and
-          thus upgrade the quality of their writing. The greatest asset is that we provide a free online
-          essay grader.
-        </p>
-
-        <div class="rv flex items-center gap-3 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white px-4 lg:px-5 py-4 max-w-[44ch]">
-          <span class="w-2 h-2 rounded-full bg-mint-500 pulse-dot shrink-0"></span>
-          <span class="text-[13.5px] font-semibold text-ink-700">An editor looks through your order in about 24 hours</span>
-        </div>
-      </div>
-
-      <div class="rv relative">
-        <img src="/assets/img/sp/proofreader.webp" alt="" width="1100" height="821" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse">
-        <div class="hidden lg:block absolute -left-9 bottom-9 w-[43%] rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white shadow-diffuse-lg px-4 lg:px-5 py-4">
-          <div class="text-[10px] font-bold tracking-[0.16em] uppercase text-ink-400 mb-3">Free check</div>
-          <div class="flex items-end gap-2 mb-1.5">
-            <span class="text-[24px] sm:text-[26px] lg:text-[30px] font-extrabold tracking-tightest leading-none nums text-ink-900">46</span>
-            <span class="text-[13px] font-bold text-ink-400 pb-1">languages</span>
+          <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
+            <label for="sp-file" class="qc-chip cursor-pointer"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>Attach file</label>
+            <button type="button" class="qc-chip"><img src="/assets/svg/partners/dropbox.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">Dropbox</button>
+            <button type="button" class="qc-chip"><img src="/assets/svg/partners/onedrive.svg" alt="" aria-hidden="true" class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0">OneDrive</button>
+            <button type="button" class="qc-chip"><svg class="w-[14px] h-[14px] sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>By URL</button>
           </div>
-          <div class="text-[11.5px] font-semibold text-ink-500">including regional variants</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ================= 04 · WHAT THE CHECK RETURNS ================= -->
-<section data-component="spell-check-5" class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
-  <div class="orb w-[600px] h-[600px] bg-teal-500/8 -left-44 top-24"></div>
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="rv text-center max-w-[640px] mx-auto mb-8 sm:mb-11 lg:mb-14">
-      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">The check</span>
-      </div>
-      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">
-        Every mistake, with the
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-teal-600">reason beside it</span>
-      </h2>
-      <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed">
-        The explanations going alongside the corrections help you see the made mistakes and avoid them next time.
-      </p>
-    </div>
+          <!-- the one choice this check has, beside the button it modifies -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6 pt-4 border-t border-ink-100">
+            <label class="flex items-center gap-2 text-ink-500 min-w-0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              <select data-sp="lang" class="sp-select min-w-0" aria-label="Detect language">
+                <option selected>Detect language</option>
+                <option>Arabic</option>
+                <option>Arabic (Algeria)</option>
+                <option>Asturian</option>
+                <option>Belarusian</option>
+                <option>Breton</option>
+                <option>Catalan</option>
+                <option>Catalan (Valencian)</option>
+                <option>Chinese</option>
+                <option>Danish</option>
+                <option>Dutch</option>
+                <option>English</option>
+                <option>English (Australian)</option>
+                <option>English (Canadian)</option>
+                <option>English (GB)</option>
+                <option>English (New Zealand)</option>
+                <option>English (South African)</option>
+                <option>English (US)</option>
+                <option>Esperanto</option>
+                <option>French</option>
+                <option>Galician</option>
+                <option>German</option>
+                <option>German (Austria)</option>
+                <option>German (Germany)</option>
+                <option>German (Swiss)</option>
+                <option>Greek</option>
+                <option>Irish</option>
+                <option>Italian</option>
+                <option>Japanese</option>
+                <option>Khmer</option>
+                <option>Persian</option>
+                <option>Polish</option>
+                <option>Portuguese</option>
+                <option>Portuguese (Angola preAO)</option>
+                <option>Portuguese (Brazil)</option>
+                <option>Portuguese (Moçambique preAO)</option>
+                <option>Portuguese (Portugal)</option>
+                <option>Romanian</option>
+                <option>Russian</option>
+                <option>Simple German</option>
+                <option>Slovak</option>
+                <option>Slovenian</option>
+                <option>Spanish</option>
+                <option>Swedish</option>
+                <option>Tagalog</option>
+                <option>Tamil</option>
+                <option>Ukrainian</option>
+              </select>
+            </label>
+            <span class="flex items-center justify-between sm:justify-end gap-4 sm:gap-5">
+              <a href="paper-analysis.html" class="text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">Order analysis</a>
+              <button type="submit" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                Free check
+                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+              </button>
+            </span>
+          </div>
 
-    <!-- schematic check screen — hand-built HTML, so the text stays sharp -->
-    <div class="rv max-w-[1080px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse-lg">
-      <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden">
-
-        <div class="flex items-center gap-2 px-4 lg:px-5 py-3.5 border-b border-ink-100">
-          <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></span>
-          <span class="ml-3 text-[11.5px] font-medium text-ink-400">essay_draft_3.docx</span>
-          <span class="ml-auto text-[9.5px] font-bold tracking-widest rounded-full px-2.5 py-1 bg-mint-100 text-mint-700">CHECK COMPLETE</span>
-        </div>
-
-        <div class="grid md:grid-cols-[1.35fr_1fr]">
-          <div class="p-6 lg:p-8 border-b md:border-b-0 md:border-r border-ink-100">
-            <div class="text-[10px] font-bold tracking-[0.18em] uppercase text-ink-400 mb-4">Paragraph 1 of 9</div>
-            <p class="text-[14.5px] leading-[1.9] text-ink-700 mb-4 lg:mb-5">
-              The research <span class="hl hl-long">show</span> that student engagement rises when feedback arrives quickly<span class="hl hl-passive">,</span> however the effect fades within a term. Many of the participants
-              <span class="hl hl-term">recieved</span> their results late.
-            </p>
-
-            <div class="space-y-2.5">
-              <div class="flex items-start gap-3 rounded-xl bg-ink-50 px-4 py-3">
-                <span class="text-[9px] font-bold tracking-widest rounded-full px-2 py-0.5 shrink-0 mt-0.5" style="background:#FDE5E0;color:#B84431">GRAMMAR</span>
-                <span class="text-[12.5px] leading-relaxed text-ink-600"><b class="font-bold text-ink-900">show</b> &rarr; <b class="font-bold text-ink-900">shows</b> &mdash; the subject &ldquo;research&rdquo; is singular.</span>
+          <!-- THE RESULT. Not a panel that waits beside the form: a state of this card,
+               shown when "Free check" is pressed with a text in the field (site.js, module
+               spell). The labels are the live widget's own. -->
+          <div data-sp-results hidden tabindex="-1" class="mt-4 pt-5 border-t border-ink-100 outline-none">
+            <div class="grid sm:grid-cols-2 gap-3 items-start">
+              <div class="grid gap-3">
+                <div class="rounded-xl sm:rounded-[14px] bg-ink-50 p-4">
+                  <p class="flex items-center gap-2 mb-2.5"><span class="w-2 h-2 rounded-full bg-orange-500" aria-hidden="true"></span><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-600">Mistakes</span></p>
+                  <dl class="grid gap-1.5">
+                    <div class="sp-row"><dt>Grammar</dt><dd><b data-sp="grammar" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>Punctuation</dt><dd><b data-sp="punct" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>Spelling</dt><dd><b data-sp="spell" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>Style</dt><dd><b data-sp="style" class="nums">&mdash;</b></dd></div>
+                  </dl>
+                </div>
+                <div class="rounded-xl sm:rounded-[14px] bg-ink-50 p-4">
+                  <p class="flex items-center gap-2 mb-2.5"><span class="w-2 h-2 rounded-full bg-teal-500" aria-hidden="true"></span><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-600">Statistics</span></p>
+                  <dl class="grid gap-1.5">
+                    <div class="sp-row"><dt>Paragraphs</dt><dd><b data-sp="para" class="nums">0</b></dd></div>
+                    <div class="sp-row"><dt>Sentences</dt><dd><b data-sp="sent" class="nums">0</b></dd></div>
+                    <div class="sp-row"><dt>Syllables</dt><dd><b data-sp="syl" class="nums">0</b></dd></div>
+                    <div class="sp-row"><dt>Words</dt><dd><b data-sp="words" class="nums">0</b></dd></div>
+                    <div class="sp-row"><dt>Characters</dt><dd><b data-sp="chars" class="nums">0</b></dd></div>
+                    <div class="sp-row"><dt>Spaces</dt><dd><b data-sp="spaces" class="nums">0</b></dd></div>
+                  </dl>
+                </div>
               </div>
-              <div class="flex items-start gap-3 rounded-xl bg-ink-50 px-4 py-3">
-                <span class="text-[9px] font-bold tracking-widest rounded-full px-2 py-0.5 shrink-0 mt-0.5" style="background:#EDE4FA;color:#6D3FB0">PUNCTUATION</span>
-                <span class="text-[12.5px] leading-relaxed text-ink-600">A comma cannot join two independent clauses. Use a semicolon before &ldquo;however&rdquo;.</span>
-              </div>
-              <div class="flex items-start gap-3 rounded-xl bg-ink-50 px-4 py-3">
-                <span class="text-[9px] font-bold tracking-widest rounded-full px-2 py-0.5 shrink-0 mt-0.5" style="background:#D3F1F6;color:#06748A">SPELLING</span>
-                <span class="text-[12.5px] leading-relaxed text-ink-600"><b class="font-bold text-ink-900">recieved</b> &rarr; <b class="font-bold text-ink-900">received</b>.</span>
+              <div class="grid gap-3">
+                <div class="rounded-xl sm:rounded-[14px] bg-ink-50 p-4">
+                  <p class="flex items-center gap-2 mb-2.5"><span class="w-2 h-2 rounded-full bg-mint-500" aria-hidden="true"></span><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-600">Readability</span></p>
+                  <dl class="grid gap-1.5">
+                    <div class="sp-row"><dt>Read time</dt><dd><b data-sp="read" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>Speak time</dt><dd><b data-sp="speak" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>Automated readability index</dt><dd><b data-sp="ari" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>Coleman–Liau index</dt><dd><b data-sp="cli" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>Flesch reading ease</dt><dd><b data-sp="fre" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>Flesch–Kincaid grade level</dt><dd><b data-sp="fkg" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>SMOG grade</dt><dd><b data-sp="smog" class="nums">&mdash;</b></dd></div>
+                    <div class="sp-row"><dt>Gunning fog index</dt><dd><b data-sp="fog" class="nums">&mdash;</b></dd></div>
+                  </dl>
+                </div>
+                <div class="rounded-xl sm:rounded-[14px] bg-ink-50 p-4">
+                  <p class="flex items-center gap-2 mb-2.5"><span class="w-2 h-2 rounded-full bg-ink-700" aria-hidden="true"></span><span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-600">Language</span></p>
+                  <p class="text-[13px] font-semibold text-ink-800" data-sp-lang-echo>Detect language</p>
+                </div>
               </div>
             </div>
           </div>
+        </form>
+      </div>
 
-          <div class="p-6 lg:p-8 bg-ink-50/50">
-            <div class="text-[10px] font-bold tracking-[0.18em] uppercase text-ink-400 mb-4 lg:mb-5">Mistakes</div>
-            <div class="mb-4 lg:mb-5">
-              <div class="mt-row"><span class="text-[13px] font-semibold text-ink-700">Grammar</span><span class="text-[13px] font-extrabold nums">4</span></div>
-              <div class="mt-bar"><i style="width:40%;background:#F36F5A"></i></div>
-            </div>
-            <div class="mb-4 lg:mb-5">
-              <div class="mt-row"><span class="text-[13px] font-semibold text-ink-700">Punctuation</span><span class="text-[13px] font-extrabold nums">6</span></div>
-              <div class="mt-bar"><i style="width:60%;background:#9A6ADE"></i></div>
-            </div>
-            <div class="mb-4 lg:mb-5">
-              <div class="mt-row"><span class="text-[13px] font-semibold text-ink-700">Spelling</span><span class="text-[13px] font-extrabold nums">2</span></div>
-              <div class="mt-bar"><i style="width:20%;background:#0CA9C3"></i></div>
-            </div>
-            <div class="mb-4 sm:mb-5 lg:mb-6">
-              <div class="mt-row"><span class="text-[13px] font-semibold text-ink-700">Style</span><span class="text-[13px] font-extrabold nums">3</span></div>
-              <div class="mt-bar"><i style="width:30%;background:#3AC184"></i></div>
-            </div>
+      <div class="rv mt-5 sm:mt-6 grid gap-1.5 text-center">
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">The service is free of charge. If you want to order a professional paper analysis from our expert, please <a href="paper-analysis.html" class="font-semibold text-ink-800 decoration-ink-300 hover:text-ink-900 underline underline-offset-4 transition-colors duration-300">click here</a>.</p>
+        <p class="text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600">If you need a detailed instruction on how it works, please <a href="https://plagiarismsearch.com/spell-checker-manual" rel="noopener" class="font-semibold text-ink-800 decoration-ink-300 hover:text-ink-900 underline underline-offset-4 transition-colors duration-300">check the manual</a>.</p>
+      </div>
+      <ul class="rv mt-5 sm:mt-6 flex flex-wrap justify-center gap-2.5" role="list">
+        <li><a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="inline-flex items-baseline gap-2 rounded-2xl bg-white/80 hover:bg-white ring-1 ring-black/5 px-4 py-2.5 transition-colors duration-300"><span class="text-[12.5px] font-semibold text-ink-500">Trustpilot</span> <span class="text-[15px] font-extrabold tracking-tight text-ink-900 nums">4.9/5</span></a></li>
+        <li><a href="https://www.sitejabber.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="inline-flex items-baseline gap-2 rounded-2xl bg-white/80 hover:bg-white ring-1 ring-black/5 px-4 py-2.5 transition-colors duration-300"><span class="text-[12.5px] font-semibold text-ink-500">Sitejabber</span> <span class="text-[15px] font-extrabold tracking-tight text-ink-900 nums">5.0/5</span></a></li>
+        <li><a href="https://workspace.google.com/marketplace/app/plagiarismsearch_plagiarism_scan_in_goog/347088629827" rel="nofollow noopener" class="inline-flex items-baseline gap-2 rounded-2xl bg-white/80 hover:bg-white ring-1 ring-black/5 px-4 py-2.5 transition-colors duration-300"><span class="text-[12.5px] font-semibold text-ink-500">Google Marketplace</span> <span class="text-[15px] font-extrabold tracking-tight text-ink-900 nums">122 | 490K+</span></a></li>
+      </ul>
+    </div>
+  </section>
 
-            <div class="space-y-2.5 pt-4 lg:pt-5 border-t border-ink-100">
-              <div class="flex items-baseline justify-between gap-3">
-                <span class="text-[12px] text-ink-500">Language</span>
-                <span class="text-[12px] font-bold text-ink-700">English (GB)</span>
-              </div>
-              <div class="flex items-baseline justify-between gap-3">
-                <span class="text-[12px] text-ink-500">Words</span>
-                <span class="text-[12px] font-bold nums text-ink-700">1,842</span>
-              </div>
-              <div class="flex items-baseline justify-between gap-3">
-                <span class="text-[12px] text-ink-500">Read time</span>
-                <span class="text-[12px] font-bold nums text-ink-700">8 min</span>
-              </div>
-            </div>
+  <!-- ================= 02 · FREE ESSAY GRADER =================
+       The claim beside a student proofreading; the chips are two of the panel's own
+       mistake types. -->
+  <section id="free-essay-grader" data-component="photo-split" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-16 items-center">
+        <div class="rv min-w-0">
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">Free Essay Grader as a Way to Ensure Top Quality of Writing</h2>
+          <p class="mt-5 lg:mt-6 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[64ch]">Our company’s online essay grader will help you submit a premium-quality academic paper even if you are a non-native speaker of English or if you have a mediocre knowledge of English. Just agree that handing in your paper without proper editing and proofreading is not a good option since the numerous mistakes (even if they are petty ones) may pose a negative impression on your readers. Usually, when students submit their papers without checking for mistakes, they get bad grades. If you do not want to risk your academic performance, be sure that you can turn to our company’s essay grader for assistance. Our company is a way out if you want to ensure proper grammar, punctuation, and spelling. Our writers are hardworking, diligent, and committed to provide a top-quality editing and proofreading service. With our help, students can check grammar, punctuation, stylistic, and spelling mistakes, and thus upgrade the quality of their writing. The greatest asset is that we provide free online essay grader.</p>
+        </div>
+        <div class="rv relative min-w-0">
+          <img src="/assets/img/spell/proofreading.webp" alt="" width="1200" height="805" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse">
+          <div class="mt-3 flex flex-col gap-2.5 sm:mt-0">
+        <span class="sm:absolute sm:-left-4 lg:-left-6 sm:top-8 flex items-center gap-2.5 rounded-full bg-white shadow-diffuse-lg pl-2 pr-4 lg:pr-5 py-2">
+          <span class="w-9 h-9 rounded-full bg-teal-500 flex items-center justify-center shrink-0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span class="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-ink-800">Grammar</span>
+        </span>
+        <span class="sm:absolute sm:-right-4 lg:-right-6 sm:bottom-10 flex items-center gap-2.5 rounded-full bg-white shadow-diffuse-lg pl-2 pr-4 lg:pr-5 py-2">
+          <span class="w-9 h-9 rounded-full bg-orange-500 flex items-center justify-center shrink-0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 16 6-12 6 12"/><path d="M8 12h8"/><path d="m16 20 2 2 4-4"/></svg></span>
+          <span class="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-ink-800">Spelling</span>
+        </span>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= 05 · WHAT IT GIVES YOU ================= -->
-<section data-component="spell-check-6" class="relative py-16 sm:py-24 lg:py-32 bg-ink-50 overflow-hidden">
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 grid lg:grid-cols-[.92fr_1.08fr] gap-10 sm:gap-14 lg:gap-16 items-center">
-    <div>
-      <div class="rv inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Advantages</span>
-      </div>
-      <h2 class="rv text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 lg:mb-5">
-        Our online grader is your perfect opportunity to:
-      </h2>
-      <p class="rv text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed max-w-[46ch]">
-        With the help of our online essay grader, you will be able to get expert assistance of an editor
-        who will review your paper and improve it depending on the requirements.
-      </p>
-    </div>
-
-    <ul class="space-y-3">
-      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white p-4 lg:p-5">
-        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">1</span>
-        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Get to know what professors think about your writing style and manner</span>
-      </li>
-      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white p-4 lg:p-5">
-        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">2</span>
-        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Become a better writing with in-depth skills</span>
-      </li>
-      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white p-4 lg:p-5">
-        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">3</span>
-        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Fix errors in grammar, punctuation, and spelling before handing in your paper</span>
-      </li>
-      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white p-4 lg:p-5">
-        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">4</span>
-        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Improve your overall academic performance</span>
-      </li>
-      <li class="rv flex items-center gap-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white p-4 lg:p-5">
-        <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-ink-50 text-[13px] font-extrabold nums text-orange-600">5</span>
-        <span class="text-[14.5px] font-semibold tracking-tight text-ink-800">Reveal your real potential</span>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- ================= 06 · ADD-ONS ================= -->
-<section data-component="addons" id="addons" class="relative py-16 sm:py-24 lg:py-32 bg-white overflow-hidden">
-  <div class="orb w-[560px] h-[560px] bg-orange-500/8 right-[-150px] top-16"></div>
-  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="rv text-center max-w-[620px] mx-auto mb-8 sm:mb-11 lg:mb-14">
-      <div class="inline-flex items-center gap-2 rounded-full bg-ink-50 ring-1 ring-black/5 px-3.5 py-1.5 mb-4 sm:mb-5 lg:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-        <span class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-700">Go further</span>
-      </div>
-      <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4">Add to the check</h2>
-      <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] text-ink-600 leading-relaxed">The spell check is free. These stack on the same text.</p>
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-[1080px] mx-auto">
-      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 p-4 sm:p-5 lg:p-6">
-        <div class="flex items-baseline justify-between gap-3 mb-2">
-          <h3 class="text-[15px] font-bold tracking-tight">Readability score</h3>
-          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$0.99</span>
+  <!-- ================= 03 · THE ADVANTAGES OF OUR FREE ESSAY GRADER =================
+       The text, then the four parts of the grader's report (the live page's four tabs) as
+       illustration cards, each listing what it holds in the panel's own words. -->
+  <section id="advantages" data-component="spot-cards" class="relative py-16 sm:py-24 lg:py-32 bg-[#F7FAFC]">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv grid lg:grid-cols-[1fr_1fr] gap-6 lg:gap-14 mb-10 sm:mb-12">
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">The Advantages of Our Free Essay Grader</h2>
+        <div class="grid gap-4">
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">If you cannot cope with your academic assignment, specifically if you find it hard to express your thoughts in English fluently and you are worried about the quality of writing, be sure that our free essay grader will help you identify mistakes in your writing and thus improve your writing skills.</p>
+          <p class="text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600">With the help of our online essay grader, you will be able to get expert assistance of an editor who will review your paper and improve it depending on the requirements. This is not just an automated program that has a limited set of functions.</p>
         </div>
-        <p class="text-[13px] leading-relaxed text-ink-600">Check whether your text is easy or difficult to understand for your target audience.</p>
       </div>
-      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 p-4 sm:p-5 lg:p-6">
-        <div class="flex items-baseline justify-between gap-3 mb-2">
-          <h3 class="text-[15px] font-bold tracking-tight">Score recommendations</h3>
-          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$1.99</span>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+            <img src="/assets/img/spell/icon-mistakes.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-3">Mistakes</h3>
+          <ul class="flex flex-wrap gap-1.5" role="list">
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Grammar</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Punctuation</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Spelling</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Style</li>
+          </ul>
         </div>
-        <p class="text-[13px] leading-relaxed text-ink-600">Get suggestions regarding the readability score of your text.</p>
-      </div>
-      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 p-4 sm:p-5 lg:p-6">
-        <div class="flex items-baseline justify-between gap-3 mb-2">
-          <h3 class="text-[15px] font-bold tracking-tight">Plagiarism check</h3>
-          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$4.99</span>
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+            <img src="/assets/img/spell/icon-statistics.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-3">Statistics</h3>
+          <ul class="flex flex-wrap gap-1.5" role="list">
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Paragraphs</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Sentences</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Syllables</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Words</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Characters</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Spaces</li>
+          </ul>
         </div>
-        <p class="text-[13px] leading-relaxed text-ink-600">You can additionally check your text for plagiarism and get a detailed report.</p>
-      </div>
-      <div class="rv rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 p-4 sm:p-5 lg:p-6">
-        <div class="flex items-baseline justify-between gap-3 mb-2">
-          <h3 class="text-[15px] font-bold tracking-tight">Paper analysis</h3>
-          <span class="text-[16px] sm:text-[17px] font-extrabold tracking-tightest nums text-orange-600">$3.50</span>
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+            <img src="/assets/img/spell/icon-readability.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-3">Readability</h3>
+          <ul class="flex flex-wrap gap-1.5" role="list">
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Read time</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Speak time</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Automated readability index</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Coleman–Liau index</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Flesch reading ease</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Flesch–Kincaid grade level</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">SMOG grade</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Gunning fog index</li>
+          </ul>
         </div>
-        <p class="text-[13px] leading-relaxed text-ink-600">Get expert assistance to improve grammar, stylistic, and punctuation errors in your text. Per page.</p>
+        <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/[.05] p-4 sm:p-5 lg:p-6">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-[#F7FAFC] mb-4 lg:mb-5 py-4 sm:py-5 lg:py-6 flex items-center justify-center">
+            <img src="/assets/img/spell/icon-language.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-[64px] h-[64px]">
+          </div>
+          <h3 class="text-[16px] sm:text-[17px] font-bold tracking-tight mb-3">Language</h3>
+          <ul class="flex flex-wrap gap-1.5" role="list">
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Arabic</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Asturian</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Belarusian</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Breton</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Catalan</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Chinese</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Danish</li>
+            <li class="rounded-full bg-[#F7FAFC] ring-1 ring-black/5 px-2.5 py-1 text-[11.5px] font-semibold text-ink-600">Dutch</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= 07 · CTA ================= -->
-<section data-component="cta-band" class="cta-band" data-variant="plain">
-  <div class="orb cta-orb-warm"></div>
-  <div class="orb cta-orb-cool"></div>
-  <div class="cta-band-inner">
-    <h2 class="cta-title rv">How to improve writing skills before submitting your paper</h2>
-    <p class="cta-lead rv" data-measure="54">Do not waste your time before the paper submission. Just upload your paper now and wait for excellent results.</p>
-    <a href="#top" class="cta-button btn-press group rv" data-tone="orange">
-      Check my text
-      <span class="cta-button-orb icon-orb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-    </a>
-  </div>
-</section>
+  <!-- ================= 04 · OUR ONLINE GRADER IS YOUR PERFECT OPPORTUNITY TO =================
+       The five opportunities on the dark act, each with its spot icon on a white plate,
+       beside a lecturer grading; the paragraph after them closes the act, its "24 hours"
+       the photograph's chip. -->
+  <section id="perfect-opportunity" data-component="dark-act" data-surface="dark" class="relative py-16 sm:py-24 lg:py-32 bg-ink-950 text-white overflow-hidden">
+    <div class="orb absolute w-[680px] h-[680px] -left-56 -top-56 bg-[rgba(44,195,219,.14)]"></div>
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[.8fr_1.2fr] gap-10 lg:gap-16 items-center">
+        <div class="rv relative min-w-0 order-2 lg:order-1">
+          <img src="/assets/img/spell/lecturer.webp" alt="" width="1000" height="1241" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl">
+          <div class="mt-3 sm:mt-0">
+        <span class="sm:absolute sm:-right-4 lg:-right-6 sm:top-10 flex items-center gap-2.5 rounded-full bg-white shadow-diffuse-lg pl-2 pr-4 lg:pr-5 py-2">
+          <span class="w-9 h-9 rounded-full bg-teal-500 flex items-center justify-center shrink-0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+          <span class="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-ink-800">24 hours</span>
+        </span>
+          </div>
+        </div>
+        <div class="rv min-w-0 order-1 lg:order-2">
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-8 lg:mb-10">Our online grader is your perfect opportunity to:</h2>
+          <ol class="grid gap-3" role="list">
+            <li class="flex items-center gap-4 rounded-2xl bg-white/[.06] ring-1 ring-white/10 p-3 pr-5"><span class="shrink-0 w-12 h-12 rounded-xl bg-white flex items-center justify-center"><img src="/assets/img/spell/icon-professors.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-8 h-8"></span><span class="text-[15px] sm:text-[16px] font-semibold tracking-tight">Get to know what professors think about your writing style and manner</span></li>
+            <li class="flex items-center gap-4 rounded-2xl bg-white/[.06] ring-1 ring-white/10 p-3 pr-5"><span class="shrink-0 w-12 h-12 rounded-xl bg-white flex items-center justify-center"><img src="/assets/img/spell/icon-skills.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-8 h-8"></span><span class="text-[15px] sm:text-[16px] font-semibold tracking-tight">Become a better writing with in-depth skills</span></li>
+            <li class="flex items-center gap-4 rounded-2xl bg-white/[.06] ring-1 ring-white/10 p-3 pr-5"><span class="shrink-0 w-12 h-12 rounded-xl bg-white flex items-center justify-center"><img src="/assets/img/spell/icon-errors.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-8 h-8"></span><span class="text-[15px] sm:text-[16px] font-semibold tracking-tight">Fix errors in grammar, punctuation, and spelling before handing in your paper</span></li>
+            <li class="flex items-center gap-4 rounded-2xl bg-white/[.06] ring-1 ring-white/10 p-3 pr-5"><span class="shrink-0 w-12 h-12 rounded-xl bg-white flex items-center justify-center"><img src="/assets/img/spell/icon-performance.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-8 h-8"></span><span class="text-[15px] sm:text-[16px] font-semibold tracking-tight">Improve your overall academic performance</span></li>
+            <li class="flex items-center gap-4 rounded-2xl bg-white/[.06] ring-1 ring-white/10 p-3 pr-5"><span class="shrink-0 w-12 h-12 rounded-xl bg-white flex items-center justify-center"><img src="/assets/img/spell/icon-potential.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-8 h-8"></span><span class="text-[15px] sm:text-[16px] font-semibold tracking-tight">Reveal your real potential</span></li>
+          </ol>
+          <p class="mt-7 lg:mt-8 text-[13.5px] sm:text-[14.5px] leading-relaxed lg:text-[15px] text-white/70 max-w-[66ch]">If you would like to know your probable grade before you submit your piece of writing, do not hesitate to use our free essay grade so that you could know how your paper could be evaluated and graded. An average time that a grader or editor needs to look through your order is 24 hours. So, be sure to grab this fantastic opportunity to get assistance of a paper rater and be able to improve your performance. Do not waste your time before the paper submission and trust your paper to our essay grader right now.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 · HOW TO IMPROVE WRITING SKILLS =================
+       The advice beside two students with a good result; "rate my paper" keeps its live
+       link, to this prototype's Rate my paper page, and the live "Order analysis" joins it. -->
+  <section id="improve-writing-skills" data-component="photo-split" class="relative py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-16 items-center">
+        <div class="rv min-w-0">
+          <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">How to Improve Writing Skills before Submitting Your Paper</h2>
+          <p class="mt-5 lg:mt-6 text-[14.5px] sm:text-[15px] lg:text-[15.5px] leading-relaxed text-ink-600 max-w-[64ch]">How to improve writing skills is one of the most popular questions asked by students, especially if they want to upgrade their academic performance. If you can critically evaluate your academic writing skills and fluency and you realize that you are not satisfied with them, be sure that you can address our company for help. You can ask our professionals, “Please <a href="paper-analysis.html" class="font-semibold text-ink-800 decoration-ink-300 hover:text-ink-900 underline underline-offset-4 transition-colors duration-300">rate my paper</a>/rate my essay” and get top-quality academic paperwork. If you are not satisfied with the grades your professor puts you, be sure that the best way out will be to ask our graders to help you. Just upload your paper now and wait for excellent results.</p>
+          <div class="mt-7 lg:mt-8"><a href="paper-analysis.html" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Order analysis
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+        </div>
+        <div class="rv min-w-0">
+          <img src="/assets/img/spell/results.webp" alt="" width="1200" height="805" loading="lazy" decoding="async" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 06 · FEEDBACK OF OUR CUSTOMERS =================
+       The Trustpilot feedback the live page loads — the Reviews data, word for word, in
+       Trustpilot's manner. -->
+  <section id="feedback" data-component="review-masonry" class="relative pb-16 sm:pb-24 lg:pb-32 bg-white">
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rv flex flex-wrap items-end justify-between gap-4 mb-8">
+        <h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] text-[#191919]">Feedback of our Customers</h2>
+        <p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-[#191919]/70"><b class="text-[#191919]">Excellent</b> <span class="tp-stars" data-score="5" role="img" aria-label="4.5 out of 5"><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star" style="--f:50%"></span></span> <b class="text-[#191919] nums">4.7/5</b> <span aria-hidden="true">|</span> <span>Based on <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="font-semibold text-[#191919] underline decoration-[#191919]/30 underline-offset-4">58 reviews</a></span></p>
+      </div>
+      <div class="masonry columns-1 sm:columns-2 lg:columns-3 gap-4">
+          <article data-review class="mb-4 rounded-xl bg-white ring-1 ring-ink-200 shadow-diffuse p-5 sm:p-6 outline-none">
+            <header class="flex items-center gap-3 mb-4">
+              <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-semibold bg-[#FFE8D6] text-[#A04A0C]" aria-hidden="true">LE</span>
+              <span class="min-w-0 text-[14.5px] font-semibold text-[#191919] truncate">Lionel Emmanuel</span>
+            </header>
+            <div class="mb-3"><span class="tp-stars" data-score="5" role="img" aria-label="5 out of 5"><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span></span></div>
+            <h3 class="rc-title text-[15.5px] sm:text-[16px] font-bold tracking-tight text-[#191919] mb-1.5">they are simply the best platform I've</h3>
+            <div class="rc" data-review-clip>
+              <div class="rc-text">
+                <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-[#191919]/80 mt-1.5 first-of-type:mt-0">they are simply the best platform I've ever used to check my work</p>
+              </div>
+              <button type="button" class="rc-more" data-review-more data-more="Read more" data-less="Show less" aria-expanded="false" hidden>Read more</button>
+            </div>
+          </article>
+          <article data-review class="mb-4 rounded-xl bg-white ring-1 ring-ink-200 shadow-diffuse p-5 sm:p-6 outline-none">
+            <header class="flex items-center gap-3 mb-4">
+              <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-semibold bg-[#F1DFFC] text-[#6B2F9E]" aria-hidden="true">TG</span>
+              <span class="min-w-0 text-[14.5px] font-semibold text-[#191919] truncate">Tersia Gouws</span>
+            </header>
+            <div class="mb-3"><span class="tp-stars" data-score="5" role="img" aria-label="5 out of 5"><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span></span></div>
+            <h3 class="rc-title text-[15.5px] sm:text-[16px] font-bold tracking-tight text-[#191919] mb-1.5">Best plagiarism-checker around</h3>
+            <div class="rc" data-review-clip>
+              <div class="rc-text">
+                <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-[#191919]/80 mt-1.5 first-of-type:mt-0">Best plagiarism-checker around. User-friendly and ticks all the boxes for me as a writer.</p>
+              </div>
+              <button type="button" class="rc-more" data-review-more data-more="Read more" data-less="Show less" aria-expanded="false" hidden>Read more</button>
+            </div>
+          </article>
+          <article data-review class="mb-4 rounded-xl bg-white ring-1 ring-ink-200 shadow-diffuse p-5 sm:p-6 outline-none">
+            <header class="flex items-center gap-3 mb-4">
+              <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-semibold bg-[#DDF6EA] text-[#16704A]" aria-hidden="true">GP</span>
+              <span class="min-w-0 text-[14.5px] font-semibold text-[#191919] truncate">Gerry Pelser</span>
+            </header>
+            <div class="mb-3"><span class="tp-stars" data-score="4" role="img" aria-label="4 out of 5"><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star is-off"></span></span></div>
+            <h3 class="rc-title text-[15.5px] sm:text-[16px] font-bold tracking-tight text-[#191919] mb-1.5">Awesome tool, can't get my job done without it.</h3>
+            <div class="rc" data-review-clip>
+              <div class="rc-text">
+                <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-[#191919]/80 mt-1.5 first-of-type:mt-0">This is a wonderful tool - I'm a professional content creator (I know, I know) and making sure my content is unique is mission critical. PlagiarismSearch makes this task easy. My only complaint is that it is a tad bit expensive. ti ahs many tools, but i do not use all of them. Still, it has paid for itself several times over.</p>
+              </div>
+              <button type="button" class="rc-more" data-review-more data-more="Read more" data-less="Show less" aria-expanded="false" hidden>Read more</button>
+            </div>
+          </article>
+          <article data-review class="mb-4 rounded-xl bg-white ring-1 ring-ink-200 shadow-diffuse p-5 sm:p-6 outline-none">
+            <header class="flex items-center gap-3 mb-4">
+              <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-semibold bg-[#E5F2FF] text-[#1C5FA8]" aria-hidden="true">CI</span>
+              <span class="min-w-0 text-[14.5px] font-semibold text-[#191919] truncate">Chioma Isaac Asiwaju</span>
+            </header>
+            <div class="mb-3"><span class="tp-stars" data-score="5" role="img" aria-label="5 out of 5"><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span></span></div>
+            <h3 class="rc-title text-[15.5px] sm:text-[16px] font-bold tracking-tight text-[#191919] mb-1.5">PlagiarismSearch is simply phenomenal.</h3>
+            <div class="rc" data-review-clip>
+              <div class="rc-text">
+                <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-[#191919]/80 mt-1.5 first-of-type:mt-0">PlagiarismSearch is by far the best plagiarism checkers I've ever seen. And, I've used quite a number of them. In fact, they are so good I had to subscribe. And this is coming from someone who doesn't believe in paying for anything online.</p>
+              </div>
+              <button type="button" class="rc-more" data-review-more data-more="Read more" data-less="Show less" aria-expanded="false" hidden>Read more</button>
+            </div>
+          </article>
+          <article data-review class="mb-4 rounded-xl bg-white ring-1 ring-ink-200 shadow-diffuse p-5 sm:p-6 outline-none">
+            <header class="flex items-center gap-3 mb-4">
+              <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-semibold bg-[#FCE1E4] text-[#A3243A]" aria-hidden="true">PJ</span>
+              <span class="min-w-0 text-[14.5px] font-semibold text-[#191919] truncate">Paul Johnson</span>
+            </header>
+            <div class="mb-3"><span class="tp-stars" data-score="5" role="img" aria-label="5 out of 5"><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span></span></div>
+            <h3 class="rc-title text-[15.5px] sm:text-[16px] font-bold tracking-tight text-[#191919] mb-1.5">Great tool for people who have a hard time writing academic papers</h3>
+            <div class="rc" data-review-clip>
+              <div class="rc-text">
+                <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-[#191919]/80 mt-1.5 first-of-type:mt-0">I used this in writing my academic papers, it helped with my vocab and grammar. This is really great!</p>
+              </div>
+              <button type="button" class="rc-more" data-review-more data-more="Read more" data-less="Show less" aria-expanded="false" hidden>Read more</button>
+            </div>
+          </article>
+          <article data-review class="mb-4 rounded-xl bg-white ring-1 ring-ink-200 shadow-diffuse p-5 sm:p-6 outline-none">
+            <header class="flex items-center gap-3 mb-4">
+              <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-semibold bg-[#FFF4CC] text-[#7A5A00]" aria-hidden="true">P</span>
+              <span class="min-w-0 text-[14.5px] font-semibold text-[#191919] truncate">pey</span>
+            </header>
+            <div class="mb-3"><span class="tp-stars" data-score="4" role="img" aria-label="4 out of 5"><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star"></span><span class="tp-star is-off"></span></span></div>
+            <h3 class="rc-title text-[15.5px] sm:text-[16px] font-bold tracking-tight text-[#191919] mb-1.5">tried once for free plagiarism check</h3>
+            <div class="rc" data-review-clip>
+              <div class="rc-text">
+                <p class="text-[14px] sm:text-[14.5px] leading-relaxed text-[#191919]/80 mt-1.5 first-of-type:mt-0">tried once for free plagiarism check. never try the thorough checking yet.</p>
+              </div>
+              <button type="button" class="rc-more" data-review-more data-more="Read more" data-less="Show less" aria-expanded="false" hidden>Read more</button>
+            </div>
+          </article>
+      </div>
+      <div class="rv mt-6 flex justify-center"><a href="#spell-checker-top" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+            Free check
+            <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a></div>
+    </div>
+  </section>
 </main>
 
 <footer data-surface="dark" class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
@@ -760,16 +728,5 @@
   </button>
 
 </footer>
-<!-- VSWITCH · temporary review tool, remove with the retired version -->
-<div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[100] print:hidden">
-  <div class="flex items-center gap-1 rounded-full bg-white/95 backdrop-blur-md ring-1 ring-black/10 shadow-diffuse-lg p-1 pl-3">
-    <span class="text-[9px] font-bold uppercase tracking-[0.16em] text-ink-400">Version</span>
-    <div class="flex items-center gap-0.5 ml-1.5">
-      <span aria-current="page" class="rounded-full bg-ink-900 text-white text-[12px] font-bold px-3.5 py-1.5 tabular-nums">1</span>
-      <a href="spell-check-v2.html" class="rounded-full text-[12px] font-bold text-ink-500 hover:text-ink-900 hover:bg-ink-100 px-3.5 py-1.5 tabular-nums transition-colors duration-200">2</a>
-    </div>
-  </div>
-</div>
-<!-- /VSWITCH -->
 </body>
 </html>

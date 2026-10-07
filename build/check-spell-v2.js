@@ -1,4 +1,4 @@
-/* Check site/spell-check-v2.html against the live page's words (build/spell-data.json)
+/* Check site/spell-check.html (build/spell-v2.js) against the live page's words (build/spell-data.json)
    and its working parts: every string word for word, all 47 languages, every result-panel
    label bound to the spell module's output, the drop zone and "Attach file" reaching the
    file input, the live links (rate my paper → this prototype's page, the manual → live),
@@ -9,7 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const html = fs.readFileSync(path.join(__dirname, '..', 'site', 'spell-check-v2.html'), 'utf8');
+const html = fs.readFileSync(path.join(__dirname, '..', 'site', 'spell-check.html'), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 const unesc = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&mdash;/g, '—');
 const flat = s => unesc(s.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').replace(/\s+([,.;:!?])/g, '$1').trim();
@@ -35,7 +35,8 @@ console.log('page-level');
 
 console.log('\ncopy, verbatim');
 {
-  const skip = new Set(['source', 'read', 'title', 'meta', 'canonical', 'placeholder', 'languages']);
+  /* sources: the four ways in are the site's checker's own (build/checker.js), checked below */
+  const skip = new Set(['source', 'read', 'title', 'meta', 'canonical', 'placeholder', 'languages', 'sources']);
   const strings = [];
   const walk = (v, k) => {
     if (skip.has(k)) return;
@@ -61,6 +62,12 @@ console.log('\nthe tool');
   ok('the word count carries its units, the form its time unit', /data-sp="count" data-one=" word" data-many=" words"/.test(form) && /<form data-spell data-unit="min"/.test(body));
   ok('inert: onsubmit="return false"', /<form data-spell[^>]*onsubmit="return false"/.test(body));
   ok('the drop zone and "Attach file" reach the file input', /<label for="sp-file" data-sp-drop/.test(body) && /<label for="sp-file" class="qc-chip/.test(body) && /<input id="sp-file" type="file" data-sp="file"/.test(body));
+  const INPUTS = require('./checker').INPUTS.map(i => i.label);
+  const chips = [...form.matchAll(/<(?:button type="button"|label for="sp-file") class="qc-chip[^"]*">(?:<img[^>]*>|<svg[\s\S]*?<\/svg>)([^<]+)</g)].map(m => m[1]);
+  ok('the four ways in are the checker\'s own, in its order, Dropbox and OneDrive with their marks', chips.join('|') === INPUTS.join('|') && /partners\/dropbox\.svg/.test(form) && /partners\/onedrive\.svg/.test(form), chips.join(', '));
+  ok('the form opens with the text field, as the checker\'s does', /<form data-spell[^>]*>\s*<label for="sp-text" class="sr-only">[^<]+<\/label>[\s\S]{0,200}?<textarea id="sp-text" data-sp="text" rows="4" class="qc-area/.test(body));
+  const res = form.slice(form.indexOf('data-sp-results'));
+  ok('the result is held back until "Free check": one hidden block, after the button, with every readout in it', /<div data-sp-results hidden/.test(form) && form.indexOf('data-sp-results') > form.indexOf('type="submit"') && ['para', 'fre', 'grammar'].every(k => res.includes('data-sp="' + k + '"')) && !form.slice(0, form.indexOf('data-sp-results')).includes('sp-row'));
   const labels = C.panel.flatMap(([g, rows]) => [g, ...rows]);
   const lostLabel = labels.filter(l => !form.includes('>' + l + '<'));
   ok(labels.length + ' result-panel labels, the live widget\'s', !lostLabel.length, lostLabel.join(', '));

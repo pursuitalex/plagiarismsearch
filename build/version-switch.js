@@ -37,12 +37,7 @@ const PAIRS = {
   'testimonials.html':    { other: 'testimonials-v2.html', self: 1 },
   'testimonials-v2.html': { other: 'testimonials.html',    self: 2 },
   /* the free tools, redesigned from the live copy (2026-09-30) */
-  'readability-check.html':    { other: 'readability-check-v2.html', self: 1 },
-  'readability-check-v2.html': { other: 'readability-check.html',    self: 2 },
-  'spell-check.html':          { other: 'spell-check-v2.html', self: 1 },
-  'spell-check-v2.html':       { other: 'spell-check.html',    self: 2 },
-  'paper-analysis.html':       { other: 'paper-analysis-v2.html', self: 1 },
-  'paper-analysis-v2.html':    { other: 'paper-analysis.html',    self: 2 },
+  /* Paper Analysis left this list on 2026-10-07: Olex kept one version (build/paper-v2.js) */
 };
 
 const OPEN = '<!-- VSWITCH · temporary review tool, remove with the retired version -->';

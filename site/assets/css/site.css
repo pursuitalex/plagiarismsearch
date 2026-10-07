@@ -303,39 +303,18 @@ textarea.fld { height:auto; padding:12px 14px; resize:vertical; min-height:96px;
 .pm-best::after { content:''; position:absolute; inset:0; border:1.5px solid #2CC3DB;
   border-radius:14px; pointer-events:none; }
 
-/* passages marked in a sample text */
-.hl { background-repeat:no-repeat; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
-  box-decoration-break:clone; -webkit-box-decoration-break:clone; }
-.hl-long    { background-image:linear-gradient(rgba(243,111,90,.16), rgba(243,111,90,.16)); color:#B84431; font-weight:600; }
-.hl-passive { background-image:linear-gradient(rgba(154,106,222,.18), rgba(154,106,222,.18)); color:#6D3FB0; font-weight:600; }
-.hl-term    { background-image:linear-gradient(rgba(12,169,195,.14), rgba(12,169,195,.14)); color:#06748A; font-weight:600; }
-
-/* a metric with its bar */
-.mt-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:6px; }
-.mt-bar { height:6px; border-radius:9999px; background:#F1F2F6; overflow:hidden; }
-.mt-bar i { display:block; height:100%; border-radius:9999px; }
-
 /* Readability */
-.rc-area { width:100%; border:0; outline:none; background:transparent; resize:vertical;
-  min-height:132px; font-size:15px; line-height:1.6; font-weight:500; color:#111827; }
-.rc-area::placeholder { color:#9CA3AF; font-weight:400; }
 .rc-scale { position:relative; height:8px; border-radius:9999px; overflow:hidden;
   background:linear-gradient(90deg,#B84431 0%,#F36F5A 30%,#F3B45A 50%,#5ED2A0 72%,#2AA46C 100%); }
 .rc-needle { position:absolute; top:-4px; width:4px; height:16px; border-radius:9999px;
   background:#0A0E1A; box-shadow:0 0 0 2px #fff; transform:translateX(-2px);
   transition:left .35s cubic-bezier(.32,.72,0,1); }
 :where(html:not(.js-motion)) .rc-needle { transition:none; }
-.rc-stat { display:flex; flex-direction:column; gap:2px; }
-.rc-stat b { font-size:19px; font-weight:800; letter-spacing:-0.035em; line-height:1; }
-.rc-stat span { font-size:11px; font-weight:600; color:#9CA3AF; }
 /* Readability v2: the drop zone (site.js, module readability, [data-rc-drop]) — the
    checker's dashed zone (.qc-drop), lit while a file is over it */
 .rc-drop.is-over, .sp-drop.is-over { border-style:solid; border-color:#0CA9C3; background:#E8F8FB; box-shadow:0 0 0 4px rgba(12,169,195,.14); }
 
 /* Spell Check */
-.sp-area { width:100%; border:0; outline:none; background:transparent; resize:vertical;
-  min-height:190px; font-size:15px; line-height:1.7; font-weight:500; color:#111827; }
-.sp-area::placeholder { color:#9CA3AF; font-weight:400; }
 .sp-select { height:38px; padding:0 34px 0 12px; border-radius:10px; border:1px solid #E5E7EB;
   background:#fff; font:inherit; font-size:12.5px; font-weight:600; color:#111827;
   appearance:none; cursor:pointer;
@@ -347,32 +326,6 @@ textarea.fld { height:auto; padding:12px 14px; resize:vertical; min-height:96px;
 .sp-row span, .sp-row dt { color:#6B7280; }
 .sp-row dd { margin:0; }
 .sp-row b { font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; color:#111827; }
-.sp-col-h { font-size:10px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase;
-  color:#9CA3AF; margin-bottom:8px; }
-.sp-locked { position:relative; }
-.sp-locked .sp-row b { color:#D1D5DB; }
-
-/* Paper Analysis */
-.pa-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
-  transition:border-color .2s ease, background-color .2s ease; }
-.pa-drop:hover, .pa-drop.drag { border-color:#2CC3DB; background:#F0FAFC; }
-.pa-drop:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
-.pa-select { width:100%; height:42px; padding:0 36px 0 14px; border-radius:12px;
-  border:1px solid #E5E7EB; background:#fff; font:inherit; font-size:13.5px; font-weight:600;
-  color:#111827; appearance:none; cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat; background-position:right 12px center; background-size:14px; }
-.pa-select:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
-.pa-step { display:flex; align-items:center; height:42px; border-radius:12px; border:1px solid #E5E7EB;
-  background:#fff; overflow:hidden; }
-.pa-step:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
-.pa-step button { width:34px; height:100%; flex:none; font-size:16px; font-weight:700; color:#6B7280;
-  background:none; border:0; cursor:pointer; transition:color .15s ease, background-color .15s ease; }
-.pa-step button:hover { color:#111827; background:#F1F2F6; }
-.pa-step input { flex:1; min-width:0; height:100%; border:0; outline:none; text-align:center;
-  font:inherit; font-size:13.5px; font-weight:700; color:#111827; -moz-appearance:textfield; }
-.pa-step input::-webkit-outer-spin-button, .pa-step input::-webkit-inner-spin-button {
-  -webkit-appearance:none; margin:0; }
 
 /* numbered steps on one line (Paper Analysis, the old checker) */
 .step-rail > li { position:relative; }
@@ -388,20 +341,15 @@ textarea.fld { height:auto; padding:12px 14px; resize:vertical; min-height:96px;
    here at every width, exactly as it did when these lived in two <style> blocks. Moving
    this block after the components would change the approved phone layout. */
 @media (max-width: 639px) {
-  .qc-area, .rc-area, .sp-area { font-size: 14px; }
+  .qc-area { font-size: 14px; }
   .fld, .cf-field { height: 44px; font-size: 14px; }
   textarea.fld { height: auto; }
   .stepper { height: 44px; }
   .stepper input { font-size: 14px; }
   .stepper button { width: 34px; font-size: 16px; }
-  .pa-select { height: 40px; font-size: 13px; }
-  .pa-step { height: 40px; }
-  .pa-step input { font-size: 13px; }
-  .pa-step button { width: 32px; font-size: 15px; }
   .sp-select { height: 36px; font-size: 12px; }
   .qc-chip { height: 34px; font-size: 12px; padding: 0 12px; }
   .chip-opt span { height: 30px; font-size: 11.5px; padding: 0 11px; }
-  .rc-stat b { font-size: 17px; }
   .sp-row { font-size: 12px; }
   .hc-search { height: 48px; font-size: 14px; padding: 0 96px 0 44px; }
   .cf-label { font-size: 11.5px; }
@@ -1188,43 +1136,9 @@ html.js .rc.is-fit .rc-text, html.js .rc.is-open .rc-text { max-height:none; }
 .vs-pick[aria-current="true"] .vs-now { opacity:1; }
 .vs-pick:focus-visible { outline:2px solid #7FE0EE; outline-offset:3px; }
 
-/* ═══ 29 · the paper-analysis order form, v2 (Rate my paper v2) ══════════════════════
-   Behaviour: site.js, module paper-form. The matrix is plain radios, so the checked cell
-   is marked by CSS alone and works without JS. */
-
-/* the matrix: a level column that stays put while the deadlines scroll on a phone */
-.pf-table { border-collapse:separate; border-spacing:6px; min-width:560px; width:100%; }
-.pf-table th { font-weight:600; }
-.pf-table thead th { font-size:12px; color:#6B7280; text-align:center; padding:4px 0 2px; transition:color .2s ease; }
-.pf-table tbody th { font-size:13px; color:#374151; text-align:left; white-space:nowrap; padding-right:6px; transition:color .2s ease;
-  position:sticky; left:0; z-index:1; background:#fff; }
-.pf-table th.is-on { color:#111827; font-weight:800; }
-.pf-cell { display:block; cursor:pointer; }
-.pf-cell > span { display:flex; align-items:center; justify-content:center; height:44px; border-radius:12px;
-  background:#F4F6F8; font-size:14px; font-weight:700; color:#1F2937; font-variant-numeric:tabular-nums;
-  transition:background-color .2s ease, color .2s ease, box-shadow .2s ease; }
-.pf-cell:hover > span { background:#E8F8FB; box-shadow:inset 0 0 0 1px #A7E3ED; }
-.pf-cell input:checked + span { background:#111827; color:#fff; box-shadow:0 6px 16px -6px rgba(17,24,39,.45); }
-.pf-cell input:focus-visible + span { outline:2px solid #0CA9C3; outline-offset:2px; }
-
-/* a phone: no sideways scroll — each level's name sits above its six prices, which share
-   the width; the deadlines head the lot once */
-@media (max-width:639px) {
-  .pf-table, .pf-table thead, .pf-table tbody { display:block; min-width:0; }
-  .pf-table tr { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:4px; }
-  .pf-table td { display:block; }
-  .pf-table thead th:first-child { display:none; }
-  .pf-table thead th { font-size:11px; padding-bottom:0; }
-  .pf-table tbody th { grid-column:1 / -1; position:static; padding:12px 0 2px; font-size:12.5px; }
-  .pf-cell > span { height:40px; border-radius:10px; font-size:12.5px; letter-spacing:-.01em; }
-}
-
-/* the services: a whole row is the control */
-.pf-service { display:flex; align-items:flex-start; gap:14px; padding:14px 16px; border-radius:14px; cursor:pointer;
-  box-shadow:inset 0 0 0 1px #E5E7EB; transition:background-color .2s ease, box-shadow .2s ease; }
-.pf-service:hover { background:#F8FAFB; }
-.pf-service:has(input:checked) { background:#F2FCFC; box-shadow:inset 0 0 0 1.5px #0CA9C3; }
-.pf-service input { margin-top:3px; width:18px; height:18px; accent-color:#0991A8; flex:none; }
+/* ═══ 29 · the paper-analysis order form (Rate my paper, build/paper-v2.js) ═════════
+   Behaviour: site.js, module paper-form. The level and the deadline are plain selects,
+   so the choice shows and holds without JS. */
 
 /* the stepper */
 .pf-step { display:flex; align-items:center; height:44px; border-radius:12px; box-shadow:inset 0 0 0 1px #E5E7EB; background:#fff; }
@@ -1232,13 +1146,33 @@ html.js .rc.is-fit .rc-text, html.js .rc.is-open .rc-text { max-height:none; }
 .pf-step button:hover { color:#111827; }
 .pf-step input { width:100%; min-width:0; text-align:center; font-weight:800; font-size:15px; border:0; outline:none; background:transparent; font-variant-numeric:tabular-nums; }
 
+.pf-drop.is-over { border-style:solid; border-color:#0CA9C3; background:#E8F8FB; box-shadow:0 0 0 4px rgba(12,169,195,.14); }
+
+/* the services: a whole row is the control, one line — the box, the name, the price */
+.pf-service { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:14px; cursor:pointer;
+  box-shadow:inset 0 0 0 1px #E5E7EB; transition:background-color .2s ease, box-shadow .2s ease; }
+.pf-service:hover { background:#F8FAFB; }
+.pf-service:has(input:checked) { background:#F2FCFC; box-shadow:inset 0 0 0 1.5px #0CA9C3; }
+.pf-service input { width:18px; height:18px; accent-color:#0991A8; flex:none; }
+
 /* the summary lists a service only while its checkbox is on — CSS alone, so it holds without JS */
 .pf-sum-line { display:none; }
 form:has(#pf-sv1:checked) [data-pf-sum="pf-sv1"],
 form:has(#pf-sv2:checked) [data-pf-sum="pf-sv2"],
 form:has(#pf-sv4:checked) [data-pf-sum="pf-sv4"] { display:flex; }
 
-.pf-drop.is-over { border-style:solid; border-color:#0CA9C3; background:#E8F8FB; box-shadow:0 0 0 4px rgba(12,169,195,.14); }
+/* step 2: the level, the deadline and the price per page in one row */
+.pf-compact { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; }
+/* on a phone the level takes the row to itself — "Undergraduate — $6.50" does not fit half of one */
+.pf-compact > :first-child { grid-column:1 / -1; }
+@media (min-width:640px) {
+  .pf-compact { grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) auto; gap:16px; }
+  .pf-compact > :first-child { grid-column:auto; }
+}
+/* the price per page as a quiet readout — the number, then "$ / page" */
+.pf-per { display:flex; align-items:center; gap:12px; height:44px; margin:0; padding:0 16px; border-radius:12px; background:#F8F9FB;
+  font-size:15px; font-weight:700; color:#111827; white-space:nowrap; }
+.pf-per > :last-child { font-size:12px; font-weight:600; color:#9CA3AF; }
 
 /* ═══ 30 · the affiliate panel in a browser window (Affiliate v3) ═══════════════════
    The old site's hero showed a raster screenshot of the affiliate cabinet. This is the

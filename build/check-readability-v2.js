@@ -1,4 +1,4 @@
-/* Check site/readability-check-v2.html against the live page's words
+/* Check site/readability-check.html (build/readability-v2.js) against the live page's words
    (build/readability-data.json) and its working parts.
 
    Every string in the data — headings, paragraphs, list items, the hero's controls, the
@@ -11,7 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const html = fs.readFileSync(path.join(__dirname, '..', 'site', 'readability-check-v2.html'), 'utf8');
+const html = fs.readFileSync(path.join(__dirname, '..', 'site', 'readability-check.html'), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 const unesc = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&mdash;/g, '—');
 const flat = s => unesc(s.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').replace(/\s+([,.;:!?])/g, '$1').trim();
@@ -65,7 +65,7 @@ console.log('\nthe calculator');
   ok('every hook the readability module reads', !lost.length, lost.join(', '));
   ok('inert: onsubmit="return false"', /<form data-readability[^>]*onsubmit="return false"/.test(body));
   ok('the drop zone and "Attach file" reach the file input', /<label for="rc-file" data-rc-drop/.test(body) && /<label for="rc-file" class="qc-chip/.test(body) && /<input id="rc-file" type="file" data-rc="file"/.test(body));
-  ok('the box is labelled "Simple text", its live line the placeholder, the lead its description', /<label for="rc-text"[\s\S]*?>Simple text<\/span><\/label>/.test(body) && /<textarea id="rc-text" data-rc="text"[^>]*placeholder="Paste your text into our web-based software to get instant analysis and recommended improvements\."[^>]*aria-describedby="rc-lead"/.test(body) && /id="rc-lead"/.test(body));
+  ok('the text field opens the form with nothing over it — "Simple text" is its name for a screen reader, its live line the placeholder, the lead its description', /<form data-readability[^>]*>\s*(<!--[\s\S]*?-->\s*)?<label for="rc-text" class="sr-only">Simple text<\/label>\s*<textarea id="rc-text"/.test(body) &&/<textarea id="rc-text" data-rc="text"[^>]*placeholder="Paste your text into our web-based software to get instant analysis and recommended improvements\."[^>]*aria-describedby="rc-lead"/.test(body) && /id="rc-lead"/.test(body));
   ok('"Start checking" goes back to the checker', (body.match(/href="#readability-checker-top"/g) || []).length >= 2 && /<section id="readability-checker-top"/.test(body));
 }
 

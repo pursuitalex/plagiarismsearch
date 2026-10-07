@@ -1517,10 +1517,8 @@ PS.module('word-count', () => {
      hint's data-empty / data-short / data-ok are its three messages.
    spell — form[data-spell]: counts and eight readability indices over [data-sp="text"]
      (an optional drop zone [data-sp-drop]; readability's is [data-rc-drop]);
+     where the form has [data-sp-results], hidden, the submit button shows it;
      the word count's data-one / data-many, the reading times' data-unit.
-   paper-analysis — form[data-paper]: the price of a paper from its pages, deadline, level
-     and add-ons. The rate matrix is the form's JSON island ([data-pa-rates]), the same
-     numbers section 05 prints; data-per-page and data-kb are the units.
 
    Syllables use the usual vowel-group heuristic, so grade-style figures are indicative. */
 const syllables = w => {
@@ -1652,72 +1650,20 @@ PS.module('spell', () => {
     area.addEventListener('input', analyse);
     readFile($('file'), t => { area.value = t; analyse(); });
     dropFile(form.querySelector('[data-sp-drop]'), t => { area.value = t; analyse(); area.focus(); });
+    /* where the page keeps the result back ([data-sp-results], Spell v2), "Free check"
+       shows it — for a text; with none it puts the caret in the field instead */
+    const results = form.querySelector('[data-sp-results]');
+    if (results) form.addEventListener('submit', () => {
+      if (!area.value.trim()) { area.focus(); return; }
+      analyse();
+      results.hidden = false;
+      results.focus({ preventScroll: true });
+      results.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
     /* the result panel's Language row echoes the language picked (Spell v2) */
     const echo = form.querySelector('[data-sp-lang-echo]');
     if (echo && $('lang')) $('lang').addEventListener('change', () => { echo.textContent = $('lang').value; });
     analyse();
-  });
-});
-
-PS.module('paper-analysis', () => {
-  document.querySelectorAll('form[data-paper]').forEach(form => {
-    if (form.dataset.paperReady) return;
-    const island = form.querySelector('script[type="application/json"][data-pa-rates]');
-    if (!island) return;
-    form.dataset.paperReady = '1';
-    const RATE = JSON.parse(island.textContent);
-    const WORDS_PER_PAGE = 275;
-    const $ = k => form.querySelector('[data-pa="' + k + '"]');
-    const pages = $('pages'), total = $('total'), rate = $('rate'), words = $('words');
-    const drop = $('drop'), doc = $('doc'), file = $('file');
-    const money = n => '$' + n.toFixed(2);
-
-    const recalc = () => {
-      const n = Math.min(200, Math.max(1, parseInt(pages.value, 10) || 1));
-      const dl = form.querySelector('input[name=paDl]:checked').value;
-      const lv = form.querySelector('input[name=paLevel]:checked').value;
-      const per = RATE[dl][lv];
-      let sum = per * n;
-      form.querySelectorAll('.ck:checked[data-price]').forEach(c => { sum += parseFloat(c.dataset.price); });
-      total.textContent = money(sum);
-      rate.textContent = money(per) + ' ' + rate.dataset.perPage;
-      words.textContent = (n * WORDS_PER_PAGE).toLocaleString('en-US');
-    };
-    form.addEventListener('change', recalc);
-    pages.addEventListener('input', recalc);
-    form.querySelectorAll('.pa-step button').forEach(b => b.addEventListener('click', () => {
-      pages.value = Math.min(200, Math.max(1, (parseInt(pages.value, 10) || 1) + Number(b.dataset.step)));
-      recalc();
-    }));
-    pages.addEventListener('blur', () => {
-      pages.value = Math.min(200, Math.max(1, parseInt(pages.value, 10) || 1));
-      recalc();
-    });
-
-    /* drop zone and document card are alternate states — showing one hides the other */
-    const showFile = f => {
-      if (!f) return;
-      $('name').textContent = f.name;
-      $('size').textContent = (f.size / 1024).toFixed(2) + ' ' + $('size').dataset.kb;
-      drop.classList.add('hidden');
-      doc.classList.remove('hidden');
-      doc.classList.add('flex');
-    };
-    const clearFile = () => {
-      file.value = '';
-      doc.classList.add('hidden');
-      doc.classList.remove('flex');
-      drop.classList.remove('hidden');
-    };
-    file.addEventListener('change', () => showFile(file.files[0]));
-    $('clear').addEventListener('click', clearFile);
-    ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('drag'); }));
-    ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('drag'); }));
-    drop.addEventListener('drop', e => {
-      const f = e.dataTransfer && e.dataTransfer.files[0];
-      if (f) { file.files = e.dataTransfer.files; showFile(f); }
-    });
-    recalc();
   });
 });
 
@@ -1784,23 +1730,25 @@ PS.module('video-stage', () => {
 });
 
 /* ── 91-paper-form.js ── */
-/* The paper-analysis order form, v2 (Rate my paper v2). In each form[data-paper-form]:
+/* The paper-analysis order form (Rate my paper). In each form[data-paper-form]:
 
-   - the price matrix is radios, one per level × deadline cell (name="pf-cell",
-     value="<level>|<days>"), priced per page from the JSON island [data-pf-rates]
-     ({ level: { days: price } }) — the live page's thirty prices;
+   - the price per page is the academic level × the deadline, from the JSON island
+     [data-pf-rates] ({ level: { days: price } }) — the live page's thirty prices. The
+     two are chosen in two selects, [data-pf="levelSel"] and [data-pf="daysSel"], whose
+     options print their price for the other's choice; the price stands beside them
+     as a figure in [data-pf="rateNum"] ("6", "6.25");
    - pages come from [data-pf="pages"] (a stepper, [data-pf-step]), or from a dropped or
      chosen .txt file, whose words are counted at data-words-per-page a page; any other
      file shows its name and leaves the pages to the stepper;
    - [data-pf-service] checkboxes add their data-price once per order;
-   - the summary prints the per-page price, pages, the services and the total, and
-     marks the chosen cell's row and column headers (.is-on);
+   - the sum is printed wherever the form has a place for it: [data-pf="rate"],
+     "pagesOut", "base", "level", "deadline", "total";
    - "Apply" checks a discount code; a prototype knows none, so it answers with the live
      page's own message, data-error;
    - the description toggles with the live labels data-show / data-hide.
 
-   Without JS the matrix still works (plain radios, CSS marks the checked cell) and the
-   summary shows the total for the defaults, which the page renders. */
+   Without JS the choices still work (plain selects) and the form shows
+   the total for the defaults, which the page renders. */
 PS.module('paper-form', () => {
   document.querySelectorAll('form[data-paper-form]').forEach(form => {
     if (form.dataset.paperFormReady) return;
@@ -1815,22 +1763,32 @@ PS.module('paper-form', () => {
     const pages = $('pages');
     const clamp = v => Math.min(200, Math.max(1, parseInt(v, 10) || 1));
 
+    /* the level and the deadline */
+    const selLevel = $('levelSel'), selDays = $('daysSel');
+    [selLevel, selDays].forEach(s => { if (s) [...s.options].forEach(o => { o.dataset.label = o.textContent; }); });
+    const choice = () => {
+      return { level: selLevel.value, days: selDays.value, levelLabel: selLevel.selectedOptions[0].dataset.label, dayLabel: selDays.selectedOptions[0].dataset.label };
+    };
+
     const recalc = () => {
-      const cell = form.querySelector('input[name="pf-cell"]:checked');
-      const [level, days] = cell.value.split('|');
+      const { level, days, levelLabel, dayLabel } = choice();
       const per = RATES[level][days];
       const n = clamp(pages.value);
       let extras = 0;
       form.querySelectorAll('[data-pf-service]:checked').forEach(c => { extras += +c.dataset.price; });
       set('rate', money(per));
-      set('level', cell.dataset.levelLabel);
-      set('deadline', cell.dataset.dayLabel);
+      set('rateNum', Number.isInteger(per) ? String(per) : per.toFixed(2));
+      set('level', levelLabel);
+      set('deadline', dayLabel);
       set('pagesOut', n);
       set('base', money(per * n));
-      set('extras', money(extras));
       set('total', money(per * n + extras));
       if (!form.dataset.wordsFromFile) set('words', (n * WPP).toLocaleString('en-US'));
-      form.querySelectorAll('[data-pf-row], [data-pf-col]').forEach(h => h.classList.toggle('is-on', h.dataset.pfRow === level || h.dataset.pfCol === days));
+      /* the selects: each option prints its price for the other select's choice */
+      if (selLevel && selDays) {
+        [...selLevel.options].forEach(o => { o.textContent = o.dataset.label + ' — ' + money(RATES[o.value][days]); });
+        [...selDays.options].forEach(o => { o.textContent = o.dataset.label + ' — ' + money(RATES[level][o.value]); });
+      }
     };
 
     form.addEventListener('change', recalc);

@@ -11,39 +11,18 @@
 .pm-best::after { content:''; position:absolute; inset:0; border:1.5px solid #2CC3DB;
   border-radius:14px; pointer-events:none; }
 
-/* passages marked in a sample text */
-.hl { background-repeat:no-repeat; border-radius:.25em; padding:.05em .1em; margin:-.05em -.1em;
-  box-decoration-break:clone; -webkit-box-decoration-break:clone; }
-.hl-long    { background-image:linear-gradient(rgba(243,111,90,.16), rgba(243,111,90,.16)); color:#B84431; font-weight:600; }
-.hl-passive { background-image:linear-gradient(rgba(154,106,222,.18), rgba(154,106,222,.18)); color:#6D3FB0; font-weight:600; }
-.hl-term    { background-image:linear-gradient(rgba(12,169,195,.14), rgba(12,169,195,.14)); color:#06748A; font-weight:600; }
-
-/* a metric with its bar */
-.mt-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:6px; }
-.mt-bar { height:6px; border-radius:9999px; background:#F1F2F6; overflow:hidden; }
-.mt-bar i { display:block; height:100%; border-radius:9999px; }
-
 /* Readability */
-.rc-area { width:100%; border:0; outline:none; background:transparent; resize:vertical;
-  min-height:132px; font-size:15px; line-height:1.6; font-weight:500; color:#111827; }
-.rc-area::placeholder { color:#9CA3AF; font-weight:400; }
 .rc-scale { position:relative; height:8px; border-radius:9999px; overflow:hidden;
   background:linear-gradient(90deg,#B84431 0%,#F36F5A 30%,#F3B45A 50%,#5ED2A0 72%,#2AA46C 100%); }
 .rc-needle { position:absolute; top:-4px; width:4px; height:16px; border-radius:9999px;
   background:#0A0E1A; box-shadow:0 0 0 2px #fff; transform:translateX(-2px);
   transition:left .35s cubic-bezier(.32,.72,0,1); }
 :where(html:not(.js-motion)) .rc-needle { transition:none; }
-.rc-stat { display:flex; flex-direction:column; gap:2px; }
-.rc-stat b { font-size:19px; font-weight:800; letter-spacing:-0.035em; line-height:1; }
-.rc-stat span { font-size:11px; font-weight:600; color:#9CA3AF; }
 /* Readability v2: the drop zone (site.js, module readability, [data-rc-drop]) — the
    checker's dashed zone (.qc-drop), lit while a file is over it */
 .rc-drop.is-over, .sp-drop.is-over { border-style:solid; border-color:#0CA9C3; background:#E8F8FB; box-shadow:0 0 0 4px rgba(12,169,195,.14); }
 
 /* Spell Check */
-.sp-area { width:100%; border:0; outline:none; background:transparent; resize:vertical;
-  min-height:190px; font-size:15px; line-height:1.7; font-weight:500; color:#111827; }
-.sp-area::placeholder { color:#9CA3AF; font-weight:400; }
 .sp-select { height:38px; padding:0 34px 0 12px; border-radius:10px; border:1px solid #E5E7EB;
   background:#fff; font:inherit; font-size:12.5px; font-weight:600; color:#111827;
   appearance:none; cursor:pointer;
@@ -55,32 +34,6 @@
 .sp-row span, .sp-row dt { color:#6B7280; }
 .sp-row dd { margin:0; }
 .sp-row b { font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; color:#111827; }
-.sp-col-h { font-size:10px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase;
-  color:#9CA3AF; margin-bottom:8px; }
-.sp-locked { position:relative; }
-.sp-locked .sp-row b { color:#D1D5DB; }
-
-/* Paper Analysis */
-.pa-drop { border:1.5px dashed #A7E3ED; border-radius:16px; background:#F8FDFE;
-  transition:border-color .2s ease, background-color .2s ease; }
-.pa-drop:hover, .pa-drop.drag { border-color:#2CC3DB; background:#F0FAFC; }
-.pa-drop:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
-.pa-select { width:100%; height:42px; padding:0 36px 0 14px; border-radius:12px;
-  border:1px solid #E5E7EB; background:#fff; font:inherit; font-size:13.5px; font-weight:600;
-  color:#111827; appearance:none; cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat; background-position:right 12px center; background-size:14px; }
-.pa-select:focus { outline:none; border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
-.pa-step { display:flex; align-items:center; height:42px; border-radius:12px; border:1px solid #E5E7EB;
-  background:#fff; overflow:hidden; }
-.pa-step:focus-within { border-color:#0CA9C3; box-shadow:0 0 0 3px rgba(12,169,195,.15); }
-.pa-step button { width:34px; height:100%; flex:none; font-size:16px; font-weight:700; color:#6B7280;
-  background:none; border:0; cursor:pointer; transition:color .15s ease, background-color .15s ease; }
-.pa-step button:hover { color:#111827; background:#F1F2F6; }
-.pa-step input { flex:1; min-width:0; height:100%; border:0; outline:none; text-align:center;
-  font:inherit; font-size:13.5px; font-weight:700; color:#111827; -moz-appearance:textfield; }
-.pa-step input::-webkit-outer-spin-button, .pa-step input::-webkit-inner-spin-button {
-  -webkit-appearance:none; margin:0; }
 
 /* numbered steps on one line (Paper Analysis, the old checker) */
 .step-rail > li { position:relative; }

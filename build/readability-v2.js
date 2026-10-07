@@ -1,6 +1,9 @@
-/* Generate site/readability-check-v2.html — the Readability Score Checker, illustrated.
-   v1 (site/readability-check.html, hand-written in an earlier session) stays beside it;
-   the switcher (build/version-switch.js) puts the two one click apart until Olex picks.
+/* Generate site/readability-check.html — the Readability Score Checker, illustrated.
+
+   The one version of the page (Olex, 2026-10-07: "Залишаємо варіант 2… перший
+   видаляємо"). It was "v2" while it stood beside the hand-written first page; that one is
+   gone, and this one took the page's own name, so the links to it never changed. This
+   file and its check keep their names.
 
    Every word is the live page's (plagiarismsearch.com/readability-checker, read
    2026-09-30), from build/readability-data.json — made from the page's text by line
@@ -11,8 +14,8 @@
 
    The manner is the illustrated one of the company pages (IMAGES.md §8, the wardrobe law):
    three photographs in place of the live page's stock images, a duotone spot-icon set,
-   chips carrying only the page's own words. The working calculator is v1's (site.js,
-   module readability: Flesch Reading Ease and Flesch-Kincaid Grade Level in the browser),
+   chips carrying only the page's own words. The working calculator is the first page's
+   (site.js, module readability: Flesch Reading Ease and Flesch-Kincaid Grade Level in the browser),
    now with the live page's upload options and a drop zone that reads a dropped file.
 
    Liberties, none in the words:
@@ -29,7 +32,7 @@ const TV2 = require('./testimonials-v2');
 const C = require('./readability-data.json');
 
 const SITE = path.join(__dirname, '..', 'site');
-const OUT = 'readability-check-v2.html';
+const OUT = 'readability-check.html';
 const IMG = '/assets/img/readability/';
 const TOP = '#readability-checker-top';
 
@@ -93,8 +96,8 @@ const H = C.hero;
 /* the tiles: the live link text, the platform name and the figure set apart */
 const tileParts = t => { const m = t.match(/^(.*?)\s([\d.]+\/5|\d+ \| [\dK+]+)$/); return m ? [m[1], m[2]] : [t, '']; };
 const section1 = () => `  <!-- ================= 01 · HERO / READABILITY CHECKER =================
-       The working calculator (v1's module), dressed in the live page's own controls: the
-       box, the drop zone with "UPLOAD FILE", the four sources, "CHECK TEXT". Its readouts
+       The working calculator, dressed in the live page's own controls: the text field,
+       the drop zone with "UPLOAD FILE", the four sources, "CHECK TEXT". Its readouts
        are named in the page's own terms. The live rating tiles sit under the lead. -->
   <section id="readability-checker-top" data-component="hero-tool" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
     ${dotField()}
@@ -113,8 +116,11 @@ ${H.tiles.map(([label, href]) => { const [name, fig] = tileParts(label); return 
 
         <div class="rv min-w-0 rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
           <form data-readability data-bands='[[0,""]]' onsubmit="return false" class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
-            <label for="rc-text" class="flex items-center gap-2 mb-2.5"><span class="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center shrink-0">${ico('<path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/>', '#fff', 13, 2.4)}</span><span class="text-[14px] font-bold tracking-tight text-ink-900">${esc(C.acceptance.items[0][0])}</span></label>
-            <textarea id="rc-text" data-rc="text" class="rc-area mb-4 rounded-xl sm:rounded-[14px] bg-ink-50/60 ring-1 ring-black/[.06] focus:ring-teal-500 px-4 py-3 transition-shadow duration-200" placeholder="${esc(C.acceptance.items[0][1])}" aria-describedby="rc-lead"></textarea>
+            <!-- the form opens as the site's checker does (Olex, 2026-10-07): the text itself,
+                 with nothing over it but its placeholder — no heading, no box — then the
+                 drop zone. "Simple text" stays as the field's name for a screen reader. -->
+            <label for="rc-text" class="sr-only">${esc(C.acceptance.items[0][0])}</label>
+            <textarea id="rc-text" data-rc="text" rows="4" class="qc-area block mb-4" placeholder="${esc(C.acceptance.items[0][1])}" aria-describedby="rc-lead"></textarea>
 
             <label for="rc-file" data-rc-drop class="rc-drop qc-drop flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4 cursor-pointer">
               <span class="qc-drop-icon">${ico(I.upload, 'currentColor', 18)}</span>

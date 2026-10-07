@@ -1,20 +1,22 @@
-/* The paper-analysis order form, v2 (Rate my paper v2). In each form[data-paper-form]:
+/* The paper-analysis order form (Rate my paper). In each form[data-paper-form]:
 
-   - the price matrix is radios, one per level × deadline cell (name="pf-cell",
-     value="<level>|<days>"), priced per page from the JSON island [data-pf-rates]
-     ({ level: { days: price } }) — the live page's thirty prices;
+   - the price per page is the academic level × the deadline, from the JSON island
+     [data-pf-rates] ({ level: { days: price } }) — the live page's thirty prices. The
+     two are chosen in two selects, [data-pf="levelSel"] and [data-pf="daysSel"], whose
+     options print their price for the other's choice; the price stands beside them
+     as a figure in [data-pf="rateNum"] ("6", "6.25");
    - pages come from [data-pf="pages"] (a stepper, [data-pf-step]), or from a dropped or
      chosen .txt file, whose words are counted at data-words-per-page a page; any other
      file shows its name and leaves the pages to the stepper;
    - [data-pf-service] checkboxes add their data-price once per order;
-   - the summary prints the per-page price, pages, the services and the total, and
-     marks the chosen cell's row and column headers (.is-on);
+   - the sum is printed wherever the form has a place for it: [data-pf="rate"],
+     "pagesOut", "base", "level", "deadline", "total";
    - "Apply" checks a discount code; a prototype knows none, so it answers with the live
      page's own message, data-error;
    - the description toggles with the live labels data-show / data-hide.
 
-   Without JS the matrix still works (plain radios, CSS marks the checked cell) and the
-   summary shows the total for the defaults, which the page renders. */
+   Without JS the choices still work (plain selects) and the form shows
+   the total for the defaults, which the page renders. */
 PS.module('paper-form', () => {
   document.querySelectorAll('form[data-paper-form]').forEach(form => {
     if (form.dataset.paperFormReady) return;
@@ -29,22 +31,32 @@ PS.module('paper-form', () => {
     const pages = $('pages');
     const clamp = v => Math.min(200, Math.max(1, parseInt(v, 10) || 1));
 
+    /* the level and the deadline */
+    const selLevel = $('levelSel'), selDays = $('daysSel');
+    [selLevel, selDays].forEach(s => { if (s) [...s.options].forEach(o => { o.dataset.label = o.textContent; }); });
+    const choice = () => {
+      return { level: selLevel.value, days: selDays.value, levelLabel: selLevel.selectedOptions[0].dataset.label, dayLabel: selDays.selectedOptions[0].dataset.label };
+    };
+
     const recalc = () => {
-      const cell = form.querySelector('input[name="pf-cell"]:checked');
-      const [level, days] = cell.value.split('|');
+      const { level, days, levelLabel, dayLabel } = choice();
       const per = RATES[level][days];
       const n = clamp(pages.value);
       let extras = 0;
       form.querySelectorAll('[data-pf-service]:checked').forEach(c => { extras += +c.dataset.price; });
       set('rate', money(per));
-      set('level', cell.dataset.levelLabel);
-      set('deadline', cell.dataset.dayLabel);
+      set('rateNum', Number.isInteger(per) ? String(per) : per.toFixed(2));
+      set('level', levelLabel);
+      set('deadline', dayLabel);
       set('pagesOut', n);
       set('base', money(per * n));
-      set('extras', money(extras));
       set('total', money(per * n + extras));
       if (!form.dataset.wordsFromFile) set('words', (n * WPP).toLocaleString('en-US'));
-      form.querySelectorAll('[data-pf-row], [data-pf-col]').forEach(h => h.classList.toggle('is-on', h.dataset.pfRow === level || h.dataset.pfCol === days));
+      /* the selects: each option prints its price for the other select's choice */
+      if (selLevel && selDays) {
+        [...selLevel.options].forEach(o => { o.textContent = o.dataset.label + ' — ' + money(RATES[o.value][days]); });
+        [...selDays.options].forEach(o => { o.textContent = o.dataset.label + ' — ' + money(RATES[level][o.value]); });
+      }
     };
 
     form.addEventListener('change', recalc);

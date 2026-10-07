@@ -1,17 +1,25 @@
-/* Generate site/spell-check-v2.html — the Grammar, Style, and Spell Checker, illustrated.
-   v1 (site/spell-check.html, hand-written in an earlier session) stays beside it; the
-   switcher (build/version-switch.js) puts the two one click apart until Olex picks.
+/* Generate site/spell-check.html — the Grammar, Style, and Spell Checker, illustrated.
+
+   The one version of the page (Olex, 2026-10-07: "Залишаємо варіант 2 для Spell Check,
+   перший видаляємо"). It was "v2" while it stood beside the hand-written first page; that
+   one is gone, and this one took the page's own name, so the links to it never changed.
+   This file and its check keep their names.
 
    Every word is the live page's (plagiarismsearch.com/spell-checker, read 2026-09-30),
    from build/spell-data.json, made from the page's text by line number; the result
    panel's group and row labels are the live widget's own. The feedback is the Reviews
    data in Trustpilot's manner (testimonials-v2.js), as on Readability v2.
 
-   The hero is the live tool, whole: the box, the drop zone and "UPLOAD FILE", the four
-   sources, the 47 languages, "Free check" and "Order analysis", beside the live result
-   panel — Mistakes, Statistics, Readability, Language. Statistics and Readability are
-   computed in the browser by v1's module (site.js, module spell), which reads a dropped
-   file too; the mistake counts need the service, so they stay a dash here.
+   The hero is the form the site's other checkers have (Olex, 2026-10-07: "має бути форма
+   аналогічна, як і на всіх плагчеках чи AI-чеках… кнопочки… в одному стилі… не потрібно
+   відразу виводити всі параметри… лише після того, як людина натисне перевірка"): the
+   text with its count, the drop zone and "UPLOAD FILE", the checker's own four ways in
+   (build/checker.js — Attach file, Dropbox, OneDrive, By URL, with their marks), and one
+   row with the 47 languages, "Order analysis" and "Free check". The live result panel —
+   Mistakes, Statistics, Readability, Language — is a state of the same card, shown when
+   "Free check" is pressed. Statistics and Readability are computed in the browser by
+   the first page's module (site.js, module spell), which reads a dropped file too; the mistake
+   counts need the service, so they stay a dash here.
 
    The manner is the illustrated one (IMAGES.md §8, the wardrobe law): three photographs,
    a spot-icon set, chips carrying only the page's own words.
@@ -25,10 +33,11 @@ const path = require('path');
 const page = require('./page');
 const { dotField } = require('./dots');
 const TV2 = require('./testimonials-v2');
+const checker = require('./checker');
 const C = require('./spell-data.json');
 
 const SITE = path.join(__dirname, '..', 'site');
-const OUT = 'spell-check-v2.html';
+const OUT = 'spell-check.html';
 const IMG = '/assets/img/spell/';
 const TOP = '#spell-checker-top';
 const PAPER = 'paper-analysis.html';                              /* the live /rate-my-paper */
@@ -91,16 +100,34 @@ const HOOK = {
 };
 const ZERO = new Set(['para', 'sent', 'syl', 'words', 'chars', 'spaces']);
 const TONE = { Mistakes: 'bg-orange-500', Statistics: 'bg-teal-500', Readability: 'bg-mint-500', Language: 'bg-ink-700' };
-const panel = () => C.panel.map(([group, rows]) => `              <div class="rounded-xl sm:rounded-[14px] bg-white ring-1 ring-black/[.05] p-4">
-                <p class="flex items-center gap-2 mb-2.5"><span class="w-2 h-2 rounded-full ${TONE[group]}" aria-hidden="true"></span><span class="${CAP} text-ink-600">${esc(group)}</span></p>
-${rows.length ? `                <dl class="grid gap-1.5">
-${rows.map(r => `                  <div class="sp-row"><dt>${esc(r)}</dt><dd><b data-sp="${HOOK[r]}" class="nums">${ZERO.has(HOOK[r]) ? '0' : '&mdash;'}</b></dd></div>`).join('\n')}
-                </dl>` : `                <p class="text-[13px] font-semibold text-ink-800" data-sp-lang-echo>${esc(H.languages[0])}</p>`}
-              </div>`).join('\n');
+const panel = () => C.panel.map(([group, rows]) => `                <div class="rounded-xl sm:rounded-[14px] bg-ink-50 p-4">
+                  <p class="flex items-center gap-2 mb-2.5"><span class="w-2 h-2 rounded-full ${TONE[group]}" aria-hidden="true"></span><span class="${CAP} text-ink-600">${esc(group)}</span></p>
+${rows.length ? `                  <dl class="grid gap-1.5">
+${rows.map(r => `                    <div class="sp-row"><dt>${esc(r)}</dt><dd><b data-sp="${HOOK[r]}" class="nums">${ZERO.has(HOOK[r]) ? '0' : '&mdash;'}</b></dd></div>`).join('\n')}
+                  </dl>` : `                  <p class="text-[13px] font-semibold text-ink-800" data-sp-lang-echo>${esc(H.languages[0])}</p>`}
+                </div>`);
+/* two columns that each stack their own groups, so a short group leaves no hole beside a
+   long one: Mistakes over Statistics, Readability over Language */
+const panelColumns = () => { const g = panel(), half = Math.ceil(g.length / 2); return [g.slice(0, half), g.slice(half)].map(col => `              <div class="grid gap-3">
+${col.join('\n')}
+              </div>`).join('\n'); };
+
+/* the ways in are the site's checker's own (build/checker.js): the same four, in the same
+   order, with the same marks — "Attach file" opens the file input here */
+const source = i => {
+  const glyph = i.icon === 'brand'
+    ? `<img src="/assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${checker.ICON} shrink-0">`
+    : `<svg class="${checker.ICON} shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
+  return i.label === 'Attach file'
+    ? `<label for="sp-file" class="qc-chip cursor-pointer">${glyph}${i.label}</label>`
+    : `<button type="button" class="qc-chip">${glyph}${i.label}</button>`;
+};
 
 const section1 = () => `  <!-- ================= 01 · HERO / THE SPELL CHECKER =================
-       The live tool whole: input on the left, the live result panel on the right. The
-       rating tiles and the two service notes (with their live links) sit under it. -->
+       The form the site's other checkers have (the homepage, the AI Detector): the text,
+       the drop zone, the four ways in, and one row with the button. What a check returns
+       — Mistakes, Statistics, Readability, Language — is a state of the same card, shown
+       when "Free check" is pressed. The two service notes and the rating tiles sit under it. -->
   <section id="spell-checker-top" data-component="hero-tool" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-hidden">
     ${dotField()}
     <div class="orb absolute orb-hero-teal"></div>
@@ -109,60 +136,64 @@ const section1 = () => `  <!-- ================= 01 · HERO / THE SPELL CHECKER 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <h1 class="rv text-center text-[clamp(2.3rem,5vw,3.8rem)] font-extrabold tracking-tightest leading-[1.04] mb-8 sm:mb-10 lg:mb-12 max-w-[18ch] mx-auto">${penMark(esc(H.h1), 'Spell Checker')}</h1>
 
-      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-        <form data-spell data-unit="min" onsubmit="return false" class="grid lg:grid-cols-[1.25fr_1fr] rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-hidden">
-          <div class="p-4 sm:p-5 lg:p-6 min-w-0 flex flex-col">
-            <label for="sp-file" data-sp-drop class="sp-drop qc-drop flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4 cursor-pointer mb-4">
-              <span class="qc-drop-icon">${ico(I.upload, 'currentColor', 18)}</span>
-              <span class="min-w-0 flex-1">
-                <span class="qc-drop-title">${esc(H.drop[0])}</span>
-                <span class="qc-drop-hint mt-0.5">${esc(H.drop[1])}</span>
-              </span>
-              <span class="self-start sm:self-auto shrink-0 inline-flex items-center rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[12px] font-bold tracking-wide text-ink-900">${esc(H.upload)}</span>
-            </label>
-            <input id="sp-file" type="file" data-sp="file" class="sr-only" accept=".txt,.md,text/plain">
-
-            <textarea data-sp="text" class="rc-area rounded-xl sm:rounded-[14px] bg-ink-50/60 ring-1 ring-black/[.06] focus:ring-teal-500 px-4 py-3 transition-shadow duration-200 min-h-[220px] flex-1" placeholder="${esc(H.placeholder)}" aria-label="${esc(H.placeholder.replace(/\.+$/, ''))}"></textarea>
-
-            <div class="mt-3 flex flex-wrap items-center gap-2">
-${H.sources.map((s, i) => {
-  const icon = [I.box, I.cloud, I.clip, I.link][i];
-  return i === 2
-    ? `              <label for="sp-file" class="qc-chip cursor-pointer">${ico(icon, 'currentColor', 14, 1.75)}${esc(s)}</label>`
-    : `              <button type="button" class="qc-chip">${ico(icon, 'currentColor', 14, 1.75)}${esc(s)}</button>`;
-}).join('\n')}
-              <span data-sp="count" data-one=" word" data-many=" words" class="ml-auto text-[11.5px] font-semibold text-ink-400 nums">0 words</span>
-            </div>
-
-            <div class="mt-5 pt-5 border-t border-ink-100 flex flex-col sm:flex-row sm:items-center gap-3">
-              <label class="relative flex items-center gap-2 text-ink-500">${ico(I.globe, 'currentColor', 15, 1.75)}
-                <select data-sp="lang" class="sp-select" aria-label="${esc(H.languages[0])}">
-${H.languages.map((l, i) => `                  <option${i ? '' : ' selected'}>${esc(l)}</option>`).join('\n')}
-                </select>
-              </label>
-              <span class="sm:ml-auto flex flex-wrap items-center gap-3">
-                <a href="${PAPER}" class="text-[13.5px] font-semibold text-ink-600 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${esc(H.order)}</a>
-                <button type="submit" class="btn-press group inline-flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] font-semibold pl-5 pr-2 py-2">${esc(H.free)}<span class="icon-orb w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">${arrow}</span></button>
-              </span>
-            </div>
+      <div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
+        <form data-spell data-unit="min" onsubmit="return false" class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl p-4 sm:p-5 lg:p-6">
+          <label for="sp-text" class="sr-only">${esc(H.placeholder.replace(/\.+$/, ''))}</label>
+          <!-- the count belongs to the text, so it sits in the corner of the field -->
+          <div class="relative mb-4">
+            <textarea id="sp-text" data-sp="text" rows="4" class="qc-area block pr-24" placeholder="${esc(H.placeholder)}"></textarea>
+            <span data-sp="count" data-one=" word" data-many=" words" class="pointer-events-none absolute bottom-0 right-0 text-[12px] font-medium text-ink-400 nums">0 words</span>
           </div>
 
-          <div class="bg-ink-50 p-4 sm:p-5 lg:p-6 border-t lg:border-t-0 lg:border-l border-ink-100 min-w-0">
-            <div class="grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3 items-start">
-${panel()}
+          <!-- below 768 there is no pointer to drag with, so the drop zone goes, as it does
+               on the homepage's checker; "Attach file" opens the same file input -->
+          <label for="sp-file" data-sp-drop class="sp-drop qc-drop hidden md:flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3.5 mb-3 cursor-pointer">
+            <span class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 ring-1 ring-black/5">${ico(I.upload, '#0991A8', 18, 1.75)}</span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[13.5px] font-bold tracking-tight">${esc(H.drop[0])}</span>
+              <span class="block text-[12px] text-ink-500">${esc(H.drop[1])}</span>
+            </span>
+            <span class="qc-chip shrink-0">${esc(H.upload)}</span>
+          </label>
+          <input id="sp-file" type="file" data-sp="file" class="sr-only" accept=".txt,.md,text/plain">
+
+          <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
+            ${checker.INPUTS.map(source).join('\n            ')}
+          </div>
+
+          <!-- the one choice this check has, beside the button it modifies -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6 pt-4 border-t border-ink-100">
+            <label class="flex items-center gap-2 text-ink-500 min-w-0">${ico(I.globe, 'currentColor', 15, 1.75)}
+              <select data-sp="lang" class="sp-select min-w-0" aria-label="${esc(H.languages[0])}">
+${H.languages.map((l, i) => `                <option${i ? '' : ' selected'}>${esc(l)}</option>`).join('\n')}
+              </select>
+            </label>
+            <span class="flex items-center justify-between sm:justify-end gap-4 sm:gap-5">
+              <a href="${PAPER}" class="text-[13px] sm:text-[13.5px] font-semibold text-ink-500 hover:text-ink-900 underline decoration-ink-300 underline-offset-4 transition-colors duration-300">${esc(H.order)}</a>
+              <button type="submit" class="btn-press group shrink-0 flex items-center gap-2.5 rounded-full bg-ink-900 hover:bg-ink-800 transition-colors duration-300 text-white text-[13.5px] sm:text-[14.5px] font-semibold px-5 sm:pl-6 sm:pr-2 py-2">
+                ${esc(H.free)}
+                <span class="icon-orb hidden sm:flex w-8 h-8 rounded-full bg-white/10 items-center justify-center">${arrow}</span>
+              </button>
+            </span>
+          </div>
+
+          <!-- THE RESULT. Not a panel that waits beside the form: a state of this card,
+               shown when "Free check" is pressed with a text in the field (site.js, module
+               spell). The labels are the live widget's own. -->
+          <div data-sp-results hidden tabindex="-1" class="mt-4 pt-5 border-t border-ink-100 outline-none">
+            <div class="grid sm:grid-cols-2 gap-3 items-start">
+${panelColumns()}
             </div>
           </div>
         </form>
       </div>
 
-      <div class="rv mt-8 grid lg:grid-cols-[auto_1fr] gap-5 lg:gap-10 items-center">
-        <ul class="flex flex-wrap gap-2.5" role="list">
-${H.tiles.map(([label, h]) => { const [name, fig] = tileParts(label); return `          <li><a href="${h}" rel="nofollow noopener" class="inline-flex items-baseline gap-2 rounded-2xl bg-white/80 hover:bg-white ring-1 ring-black/5 px-4 py-2.5 transition-colors duration-300"><span class="text-[12.5px] font-semibold text-ink-500">${esc(name)}</span> <span class="text-[15px] font-extrabold tracking-tight text-ink-900 nums">${esc(fig)}</span></a></li>`; }).join('\n')}
-        </ul>
-        <div class="grid gap-1.5 lg:justify-self-end lg:text-right">
-${H.notes.map(([t, l]) => `          <p class="${SMALL} text-ink-600">${linked(t, l)}</p>`).join('\n')}
-        </div>
+      <div class="rv mt-5 sm:mt-6 grid gap-1.5 text-center">
+${H.notes.map(([t, l]) => `        <p class="${SMALL} text-ink-600">${linked(t, l)}</p>`).join('\n')}
       </div>
+      <ul class="rv mt-5 sm:mt-6 flex flex-wrap justify-center gap-2.5" role="list">
+${H.tiles.map(([label, h]) => { const [name, fig] = tileParts(label); return `        <li><a href="${h}" rel="nofollow noopener" class="inline-flex items-baseline gap-2 rounded-2xl bg-white/80 hover:bg-white ring-1 ring-black/5 px-4 py-2.5 transition-colors duration-300"><span class="text-[12.5px] font-semibold text-ink-500">${esc(name)}</span> <span class="text-[15px] font-extrabold tracking-tight text-ink-900 nums">${esc(fig)}</span></a></li>`; }).join('\n')}
+      </ul>
     </div>
   </section>`;
 

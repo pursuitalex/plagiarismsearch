@@ -1,6 +1,9 @@
-/* Generate site/paper-analysis-v2.html — Rate my paper (Paper analysis), illustrated.
-   v1 (site/paper-analysis.html, hand-written in an earlier session) stays beside it; the
-   switcher (build/version-switch.js) puts the two one click apart until Olex picks.
+/* Generate site/paper-analysis.html — Rate my paper (Paper analysis), illustrated.
+
+   The one version of the page (Olex, 2026-10-07: "залишаємо другий варіант… інші
+   видаляємо"). It was "v2" while it stood beside the hand-written first page and a third
+   first screen; both are gone, and it took the page's own name, so the links to it never
+   changed. This file and its check keep their names.
 
    Every word is the live page's (plagiarismsearch.com/rate-my-paper, read 2026-09-30),
    from build/paper-data.json, including the form's labels, its 21 paper types and its
@@ -9,20 +12,27 @@
    THE FORM (Olex, 2026-09-30: "a strange form, but the only one — make it clearer, it
    matters"). The live form hides how the price is made: a card per deadline, the level
    behind arrows inside each card, a figure that is really a price per page, and the
-   total only after an upload. Here the same choices are laid out as what they are:
-     1  the document — the drop zone, then its card: Pages (a stepper; a .txt file counts
-        its own), Words, the type of paper, the description;
-     2  the price per page — one table, the five academic levels by the six deadlines,
-        all thirty prices at once; a cell is the choice of both;
-     3  the three services, each row a checkbox, the plagiarism check on as it is live;
-   and beside them a summary that shows the sum being made — level and deadline, the
-   price per page times the pages, each service chosen, the total — with the discount
-   code, the agreement and "CHECK YOUR TEXT". It recomputes on every change (site.js,
-   module paper-form); without JS the table still works and the defaults' total shows.
+   total only after an upload. Here the same choices are laid out as what they are, in
+   Olex's own layout (drawn in Figma on 2026-10-07 — file sgIVt3vKOgTIT2LMpBIaNg, frames
+   3683:32802 and 3683:32842): the head centred as on the homepage, no rating tiles, and
+   two cards 738px wide, one above the other:
+     the steps    1 the document — the drop zone, the sources, Pages (a stepper; a .txt
+                  file counts its own), Words, the type of paper, the description;
+                  2 the level and the deadline as two selects, each option printing its
+                  price for the other's choice, the price per page beside them as a
+                  quiet readout ("6 $ / page");
+                  3 the services, one line each — the box, the name, the price (what a
+                  service adds stays in the page for a screen reader only);
+     the summary  the sum's lines, the discount code, then the agreement and the total on
+                  one line over "CHECK YOUR TEXT". The live note "Please upload your file
+                  to find out the final price" is not in this layout.
+   One module recomputes the sum on every change (site.js, module paper-form); without JS
+   the selects still work and the defaults' total shows.
 
-   New words, marked for Olex's review: "/ page" and "×" in the table and the summary (the
-   live page never says the price is per page), the step numbers 1–3, and "Services" as
-   step 3's heading.
+   New words, marked for Olex's review: "Deadline" (the accessible name of the second
+   select; the live form never names it). Approved on 2026-09-30: "/ page", "$ / page"
+   and "×" (the live page never says the price is per page), the step numbers 1–3, and
+   "Services".
 
    Run:  node build/paper-v2.js  →  node build/shell.js  →  node build/check-paper-v2.js */
 const fs = require('fs');
@@ -34,11 +44,12 @@ const cta = require('./sections/cta-band');
 const C = require('./paper-data.json');
 
 const SITE = path.join(__dirname, '..', 'site');
-const OUT = 'paper-analysis-v2.html';
+const OUT = 'paper-analysis.html';
 const F = C.form;
-const WPP = 275;                                   /* words to a page, as v1's module counts */
+const WPP = 275;                                   /* words to a page, as the live form counts */
 const DEFAULT = { level: F.levels[0], days: '2', pages: 1 };   /* the live form's featured card */
-const SERVICES = 'Services';                       /* NEW WORD — the live form's services have no heading */
+const SERVICES = 'Services';                       /* approved 2026-09-30 — the live form's services have no heading */
+const DEADLINE = 'Deadline';                       /* NEW WORD — the live form never names the deadline */
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = s => esc(s).replace(/"/g, '&quot;');
@@ -96,7 +107,6 @@ const dayLabel = d => F.dayLabels[F.days.indexOf(+d)];
 
 /* ═══════════════ 01 · HERO — THE ORDER FORM ═══════════════ */
 const H = C.hero;
-const tileParts = t => { const m = t.match(/^(.*?)\s([\d.]+\/5|\d+ \| [\dK+]+)$/); return m ? [m[1], m[2]] : [t, '']; };
 
 const stepDocument = () => `            <div role="group" aria-labelledby="pf-s1" class="pb-6 sm:pb-7 border-b border-ink-100">
               ${step(1, F.document).replace('<h2 ', '<h2 id="pf-s1" ')}
@@ -140,82 +150,93 @@ ${F.types.map(t => `                    <option>${esc(t)}</option>`).join('\n')}
               </div>
             </div>`;
 
+/* step 2: the price per page as a quiet readout beside the selects — "6 $ / page" */
+const perNum = n => (Number.isInteger(n) ? String(n) : n.toFixed(2));
 const stepMatrix = () => `            <div role="group" aria-labelledby="pf-s2" class="py-6 sm:py-7 border-b border-ink-100">
-              ${step(2, F.levelLabel).replace('<h2 ', '<h2 id="pf-s2" ').replace('</h2></div>', '</h2><span class="ml-auto text-[12px] font-semibold text-ink-400">$ / page</span></div>')}
-              <div class="sm:-mx-1.5">
-                <table class="pf-table">
-                  <thead><tr><th scope="col"><span class="sr-only">${esc(F.levelLabel)}</span></th>${F.days.map((d, i) => `<th scope="col" data-pf-col="${d}"${String(d) === DEFAULT.days ? ' class="is-on"' : ''}>${esc(F.dayLabels[i])}</th>`).join('')}</tr></thead>
-                  <tbody>
-${F.levels.map((lv, r) => `                    <tr><th scope="row" data-pf-row="${attr(lv)}"${lv === DEFAULT.level ? ' class="is-on"' : ''}>${esc(F.levelLabels[r])}</th>${F.days.map((d, c) => `<td><label class="pf-cell"><input type="radio" class="sr-only" name="pf-cell" value="${attr(lv)}|${d}" data-level-label="${attr(F.levelLabels[r])}" data-day-label="${attr(F.dayLabels[c])}" aria-label="${attr(F.levelLabels[r] + ', ' + F.dayLabels[c] + ', ' + money(F.rates[lv][d]) + ' / page')}"${lv === DEFAULT.level && String(d) === DEFAULT.days ? ' checked' : ''}><span>${money(F.rates[lv][d])}</span></label></td>`).join('')}</tr>`).join('\n')}
-                  </tbody>
-                </table>
+              ${step(2, F.levelLabel).replace('<h2 ', '<h2 id="pf-s2" ')}
+              <div class="pf-compact">
+                <select id="pf-level" data-pf="levelSel" aria-label="${attr(F.levelLabel)}" class="sp-select w-full h-11">
+${F.levels.map((lv, r) => `                  <option value="${attr(lv)}"${lv === DEFAULT.level ? ' selected' : ''}>${esc(F.levelLabels[r])}</option>`).join('\n')}
+                </select>
+                <select id="pf-days" data-pf="daysSel" aria-label="${DEADLINE}" class="sp-select w-full h-11">
+${F.days.map((d, c) => `                  <option value="${d}"${String(d) === DEFAULT.days ? ' selected' : ''}>${esc(F.dayLabels[c])}</option>`).join('\n')}
+                </select>
+                <p class="pf-per"><span class="nums" data-pf="rateNum">${perNum(per0)}</span><span>$ / page</span></p>
               </div>
             </div>`;
 
+/* step 3: a service is one line — the box, the name, the price; what it adds stays in
+   the page for a screen reader */
 const stepServices = () => `            <div role="group" aria-labelledby="pf-s3" class="pt-6 sm:pt-7">
               ${step(3, SERVICES).replace('<h2 ', '<h2 id="pf-s3" ')}
               <div class="grid gap-2.5">
-${F.services.map(s => `                <label class="pf-service"><input type="checkbox" id="pf-sv${s.id}" data-pf-service data-price="${s.price}" name="services[${s.id}]"${s.checked ? ' checked' : ''}><span class="min-w-0 flex-1"><span class="block text-[14.5px] font-bold tracking-tight">${esc(s.title)}</span><span class="block text-[13px] text-ink-500 leading-snug mt-0.5">${esc(s.hint)}</span></span><span class="shrink-0 text-[15px] font-extrabold nums">${money(s.price)}</span></label>`).join('\n')}
+${F.services.map(s => `                <label class="pf-service"><input type="checkbox" id="pf-sv${s.id}" data-pf-service data-price="${s.price}" name="services[${s.id}]"${s.checked ? ' checked' : ''}><span class="min-w-0 flex-1"><span class="block text-[14.5px] font-bold tracking-tight">${esc(s.title)}</span><span class="sr-only">${esc(s.hint)}</span></span><span class="shrink-0 text-[15px] font-extrabold nums">${money(s.price)}</span></label>`).join('\n')}
               </div>
             </div>`;
 
-const summary = () => `          <aside class="bg-ink-50 border-t lg:border-t-0 lg:border-l border-ink-100 p-5 sm:p-6 lg:p-7">
-            <div class="lg:sticky lg:top-28 grid gap-4">
-              <dl class="grid gap-2.5 text-[13.5px]">
-                <div class="flex justify-between gap-3"><dt class="text-ink-500">${esc(F.levelLabel)}</dt><dd class="font-bold text-right"><span data-pf="level">${esc(F.levelLabels[0])}</span> · <span data-pf="deadline">${esc(dayLabel(DEFAULT.days))}</span></dd></div>
-                <div class="flex justify-between gap-3"><dt class="text-ink-500"><span data-pf="rate" class="nums">${money(per0)}</span> / page × <span data-pf="pagesOut" class="nums">${DEFAULT.pages}</span> ${esc(F.pages)}</dt><dd data-pf="base" class="font-bold nums">${money(per0 * DEFAULT.pages)}</dd></div>
-${F.services.map(s => `                <div class="pf-sum-line justify-between gap-3" data-pf-sum="pf-sv${s.id}"><dt class="text-ink-500">${esc(s.title)}</dt><dd class="font-bold nums">${money(s.price)}</dd></div>`).join('\n')}
-              </dl>
+/* the sum's parts */
+const sumLines = pad => `${pad}<dl class="grid gap-2.5 text-[13.5px]">
+${pad}  <div class="flex justify-between gap-3"><dt class="text-ink-500">${esc(F.levelLabel)}</dt><dd class="font-bold text-right"><span data-pf="level">${esc(F.levelLabels[0])}</span> · <span data-pf="deadline">${esc(dayLabel(DEFAULT.days))}</span></dd></div>
+${pad}  <div class="flex justify-between gap-3"><dt class="text-ink-500"><span data-pf="rate" class="nums">${money(per0)}</span> / page × <span data-pf="pagesOut" class="nums">${DEFAULT.pages}</span> ${esc(F.pages)}</dt><dd data-pf="base" class="font-bold nums">${money(per0 * DEFAULT.pages)}</dd></div>
+${F.services.map(s => `${pad}  <div class="pf-sum-line justify-between gap-3" data-pf-sum="pf-sv${s.id}"><dt class="text-ink-500">${esc(s.title)}</dt><dd class="font-bold nums">${money(s.price)}</dd></div>`).join('\n')}
+${pad}</dl>`;
+const codeRow = pad => `${pad}<div class="flex gap-2">
+${pad}  <input type="text" data-pf="code" name="discount_code" placeholder="${attr(F.discountPlaceholder)}" aria-label="${attr(F.discountPlaceholder)}" class="cf-field !h-11 flex-1 min-w-0">
+${pad}  <button type="button" data-pf="apply" class="shrink-0 h-11 rounded-xl bg-white ring-1 ring-black/10 hover:ring-black/20 px-4 text-[13px] font-bold">${esc(F.apply)}</button>
+${pad}</div>
+${pad}<p data-pf="codeMsg" data-error="${attr(F.discountError)}" role="status" hidden class="-mt-2 text-[12.5px] font-semibold text-orange-700"></p>`;
+const agreement = () => `<label class="flex items-start gap-2.5 text-[13px] text-ink-600 cursor-pointer"><input type="checkbox" name="agreement" required class="mt-0.5 w-4 h-4 accent-teal-600 shrink-0"><span>${esc(F.agreement[0])} <a href="${live(F.terms)}" rel="noopener" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4">${esc(F.agreement[1])}</a> ${esc(F.agreement[2])} <a href="${internal(F.policy)}" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4">${esc(F.agreement[3])}</a></span></label>`;
+const submitCoral = () => `<button type="submit" class="btn-press group flex items-center justify-center gap-2.5 w-full rounded-full bg-orange-500 hover:bg-orange-600 transition-colors duration-300 text-white text-[14px] font-bold tracking-wide py-3.5">${esc(F.submit)}${ico(I.arrow, '#fff', 16, 2)}</button>`;
 
-              <div class="flex gap-2">
-                <input type="text" data-pf="code" name="discount_code" placeholder="${attr(F.discountPlaceholder)}" aria-label="${attr(F.discountPlaceholder)}" class="cf-field !h-11 flex-1 min-w-0">
-                <button type="button" data-pf="apply" class="shrink-0 h-11 rounded-xl bg-white ring-1 ring-black/10 hover:ring-black/20 px-4 text-[13px] font-bold">${esc(F.apply)}</button>
+/* the summary, a card of its own under the steps: the sum's lines, the code, then the
+   agreement and the total on one line over the button */
+const summaryCard = () => `          <div class="${SHELL}">
+            <div class="${SHEET} p-5 sm:p-6 lg:p-7 grid gap-4">
+${sumLines('              ')}
+
+${codeRow('              ')}
+
+              <div class="pt-4 border-t border-ink-200/70 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+                ${agreement()}
+                <p class="ml-auto flex items-baseline gap-4"><span class="text-[13.5px] font-bold">${esc(F.total)}</span><span data-pf="total" class="text-[20px] sm:text-[22px] lg:text-[24px] font-extrabold tracking-tightest leading-none nums">${money(per0 * DEFAULT.pages + extras0)}</span></p>
               </div>
-              <p data-pf="codeMsg" data-error="${attr(F.discountError)}" role="status" hidden class="-mt-2 text-[12.5px] font-semibold text-orange-700"></p>
 
-              <div class="pt-4 border-t border-ink-200/70 flex items-baseline justify-between gap-3">
-                <span class="text-[14px] font-bold">${esc(F.total)}</span>
-                <span data-pf="total" class="text-[clamp(1.8rem,3vw,2.3rem)] font-extrabold tracking-tightest leading-none nums">${money(per0 * DEFAULT.pages + extras0)}</span>
-              </div>
-              <p data-pf="hint" class="rounded-xl bg-orange-50 ring-1 ring-orange-200/60 px-3.5 py-2.5 text-[12.5px] text-ink-700">${esc(F.uploadHint[0])} <label for="pf-file" class="font-semibold text-orange-700 underline underline-offset-4 cursor-pointer">${esc(F.uploadHint[1])}</label> ${esc(F.uploadHint[2])}</p>
-
-              <label class="flex items-start gap-2.5 text-[13px] text-ink-600 cursor-pointer"><input type="checkbox" name="agreement" required class="mt-0.5 w-4 h-4 accent-teal-600 shrink-0"><span>${esc(F.agreement[0])} <a href="${live(F.terms)}" rel="noopener" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4">${esc(F.agreement[1])}</a> ${esc(F.agreement[2])} <a href="${internal(F.policy)}" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4">${esc(F.agreement[3])}</a></span></label>
-
-              <button type="submit" class="btn-press group flex items-center justify-center gap-2.5 w-full rounded-full bg-orange-500 hover:bg-orange-600 transition-colors duration-300 text-white text-[14px] font-bold tracking-wide py-3.5">${esc(F.submit)}${ico(I.arrow, '#fff', 16, 2)}</button>
+              ${submitCoral()}
             </div>
-          </aside>`;
+          </div>`;
 
-const section1 = () => `  <!-- ================= 01 · HERO / THE ORDER FORM =================
-       The live form's choices laid out as what they are (see the file's header): three
-       steps and a summary that shows the sum being made. -->
-  <section id="paper-analysis-top" data-component="order-form" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24 bg-[#F2FCFC] overflow-clip">
+/* the card: a tinted shell with a hairline, and the white sheet inside it */
+const SHELL = 'rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse';
+const SHEET = 'rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl';
+
+/* ═══════════════ THE FIRST SCREEN — THE STEPS IN ONE COLUMN, THE SUMMARY A CARD UNDER THEM ═══════════════ */
+const section1 = () => `  <!-- ================= 01 · HERO / THE ORDER FORM, ONE COLUMN =================
+       The head centred, and under it two cards one above the other, 738px wide: the three
+       numbered steps, then the summary with the button (see the file's header). -->
+  <section id="paper-analysis-top" data-component="order-form" class="relative pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20 bg-[#F2FCFC] overflow-clip">
     ${dotField()}
     <div class="orb absolute orb-hero-teal"></div>
     <div class="orb absolute orb-hero-coral"></div>
 
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
-      <div class="rv grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-12 items-end mb-8 sm:mb-10">
-        <div>
-          <h1 class="text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold tracking-tightest leading-[1.02] mb-4">${penMark(esc(H.h1), 'analysis')}</h1>
-          <p class="text-[15.5px] sm:text-[16px] lg:text-[17px] leading-relaxed text-ink-600 max-w-[52ch]">${esc(H.lead)} <i class="not-italic font-semibold text-ink-800">${esc(H.leadTail)}</i></p>
-        </div>
-        <ul class="flex flex-wrap gap-2.5 lg:justify-end" role="list">
-${H.tiles.map(([label, h]) => { const [name, fig] = tileParts(label); return `          <li><a href="${h}" rel="nofollow noopener" class="inline-flex items-baseline gap-2 rounded-2xl bg-white/80 hover:bg-white ring-1 ring-black/5 px-4 py-2.5 transition-colors duration-300"><span class="text-[12.5px] font-semibold text-ink-500">${esc(name)}</span> <span class="text-[15px] font-extrabold tracking-tight text-ink-900 nums">${esc(fig)}</span></a></li>`; }).join('\n')}
-        </ul>
+      <div class="rv max-w-[760px] mx-auto text-center mb-8 sm:mb-10">
+        <h1 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08] mb-4 sm:mb-5">${penMark(esc(H.h1), 'analysis')}</h1>
+        <p class="text-[15.5px] sm:text-[16px] lg:text-[16.5px] leading-relaxed text-ink-600 max-w-[54ch] mx-auto">${esc(H.lead)} <i class="not-italic font-semibold text-ink-800">${esc(H.leadTail)}</i></p>
       </div>
 
-      <div class="rv rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.025] ring-1 ring-black/[.12] p-1.5 sm:p-2 shadow-diffuse">
-        <form data-paper-form data-words-per-page="${WPP}" onsubmit="return false" class="grid lg:grid-cols-[1.55fr_1fr] rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl overflow-clip">
-          <script type="application/json" data-pf-rates>${JSON.stringify(F.rates)}</script>
-          <div class="p-5 sm:p-6 lg:p-8 min-w-0">
+      <form data-paper-form data-words-per-page="${WPP}" onsubmit="return false" class="rv max-w-[738px] mx-auto grid gap-6 sm:gap-7">
+        <script type="application/json" data-pf-rates>${JSON.stringify(F.rates)}</script>
+        <div class="${SHELL}">
+          <div class="${SHEET} p-5 sm:p-6 lg:p-8 min-w-0">
 ${stepDocument()}
 ${stepMatrix()}
 ${stepServices()}
           </div>
-${summary()}
-        </form>
-      </div>
-      <p class="rv mt-5 text-center text-[13.5px] text-ink-600">${esc(H.manual[0])} <a href="${live(H.manual[1][1])}" rel="noopener" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4">${esc(H.manual[1][0])}</a>.</p>
+        </div>
+${summaryCard()}
+      </form>
+
+      <p class="rv mt-5 sm:mt-6 text-center text-[13.5px] text-ink-600">${esc(H.manual[0])} <a href="${live(H.manual[1][1])}" rel="noopener" class="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4">${esc(H.manual[1][0])}</a>.</p>
     </div>
   </section>`;
 
@@ -404,4 +425,4 @@ fs.writeFileSync(path.join(SITE, OUT), html);
 
 const count = re => (html.match(re) || []).length;
 console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
-console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' + count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/<img\b/g) + ' images, ' + count(/<option\b/g) + ' paper types');
+console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' + count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/<img\b/g) + ' images, ' + F.types.length + ' paper types');

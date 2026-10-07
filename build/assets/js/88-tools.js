@@ -7,10 +7,8 @@
      hint's data-empty / data-short / data-ok are its three messages.
    spell — form[data-spell]: counts and eight readability indices over [data-sp="text"]
      (an optional drop zone [data-sp-drop]; readability's is [data-rc-drop]);
+     where the form has [data-sp-results], hidden, the submit button shows it;
      the word count's data-one / data-many, the reading times' data-unit.
-   paper-analysis — form[data-paper]: the price of a paper from its pages, deadline, level
-     and add-ons. The rate matrix is the form's JSON island ([data-pa-rates]), the same
-     numbers section 05 prints; data-per-page and data-kb are the units.
 
    Syllables use the usual vowel-group heuristic, so grade-style figures are indicative. */
 const syllables = w => {
@@ -142,71 +140,19 @@ PS.module('spell', () => {
     area.addEventListener('input', analyse);
     readFile($('file'), t => { area.value = t; analyse(); });
     dropFile(form.querySelector('[data-sp-drop]'), t => { area.value = t; analyse(); area.focus(); });
+    /* where the page keeps the result back ([data-sp-results], Spell v2), "Free check"
+       shows it — for a text; with none it puts the caret in the field instead */
+    const results = form.querySelector('[data-sp-results]');
+    if (results) form.addEventListener('submit', () => {
+      if (!area.value.trim()) { area.focus(); return; }
+      analyse();
+      results.hidden = false;
+      results.focus({ preventScroll: true });
+      results.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
     /* the result panel's Language row echoes the language picked (Spell v2) */
     const echo = form.querySelector('[data-sp-lang-echo]');
     if (echo && $('lang')) $('lang').addEventListener('change', () => { echo.textContent = $('lang').value; });
     analyse();
-  });
-});
-
-PS.module('paper-analysis', () => {
-  document.querySelectorAll('form[data-paper]').forEach(form => {
-    if (form.dataset.paperReady) return;
-    const island = form.querySelector('script[type="application/json"][data-pa-rates]');
-    if (!island) return;
-    form.dataset.paperReady = '1';
-    const RATE = JSON.parse(island.textContent);
-    const WORDS_PER_PAGE = 275;
-    const $ = k => form.querySelector('[data-pa="' + k + '"]');
-    const pages = $('pages'), total = $('total'), rate = $('rate'), words = $('words');
-    const drop = $('drop'), doc = $('doc'), file = $('file');
-    const money = n => '$' + n.toFixed(2);
-
-    const recalc = () => {
-      const n = Math.min(200, Math.max(1, parseInt(pages.value, 10) || 1));
-      const dl = form.querySelector('input[name=paDl]:checked').value;
-      const lv = form.querySelector('input[name=paLevel]:checked').value;
-      const per = RATE[dl][lv];
-      let sum = per * n;
-      form.querySelectorAll('.ck:checked[data-price]').forEach(c => { sum += parseFloat(c.dataset.price); });
-      total.textContent = money(sum);
-      rate.textContent = money(per) + ' ' + rate.dataset.perPage;
-      words.textContent = (n * WORDS_PER_PAGE).toLocaleString('en-US');
-    };
-    form.addEventListener('change', recalc);
-    pages.addEventListener('input', recalc);
-    form.querySelectorAll('.pa-step button').forEach(b => b.addEventListener('click', () => {
-      pages.value = Math.min(200, Math.max(1, (parseInt(pages.value, 10) || 1) + Number(b.dataset.step)));
-      recalc();
-    }));
-    pages.addEventListener('blur', () => {
-      pages.value = Math.min(200, Math.max(1, parseInt(pages.value, 10) || 1));
-      recalc();
-    });
-
-    /* drop zone and document card are alternate states — showing one hides the other */
-    const showFile = f => {
-      if (!f) return;
-      $('name').textContent = f.name;
-      $('size').textContent = (f.size / 1024).toFixed(2) + ' ' + $('size').dataset.kb;
-      drop.classList.add('hidden');
-      doc.classList.remove('hidden');
-      doc.classList.add('flex');
-    };
-    const clearFile = () => {
-      file.value = '';
-      doc.classList.add('hidden');
-      doc.classList.remove('flex');
-      drop.classList.remove('hidden');
-    };
-    file.addEventListener('change', () => showFile(file.files[0]));
-    $('clear').addEventListener('click', clearFile);
-    ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('drag'); }));
-    ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('drag'); }));
-    drop.addEventListener('drop', e => {
-      const f = e.dataTransfer && e.dataTransfer.files[0];
-      if (f) { file.files = e.dataTransfer.files; showFile(f); }
-    });
-    recalc();
   });
 });

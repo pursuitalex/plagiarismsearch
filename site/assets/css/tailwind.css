@@ -9541,10 +9541,6 @@ a.team-linkedin:focus-visible {
   right: -2rem;
 }
 
-.-right-9 {
-  right: -2.25rem;
-}
-
 .-top-1\.5 {
   top: -0.375rem;
 }
@@ -9579,10 +9575,6 @@ a.team-linkedin:focus-visible {
 
 .bottom-1\/2 {
   bottom: 50%;
-}
-
-.bottom-10 {
-  bottom: 2.5rem;
 }
 
 .bottom-16 {
@@ -9639,10 +9631,6 @@ a.team-linkedin:focus-visible {
 
 .left-5 {
   left: 1.25rem;
-}
-
-.left-\[-140px\] {
-  left: -140px;
 }
 
 .left-\[21px\] {
@@ -9719,10 +9707,6 @@ a.team-linkedin:focus-visible {
 
 .top-16 {
   top: 4rem;
-}
-
-.top-20 {
-  top: 5rem;
 }
 
 .top-24 {
@@ -10260,10 +10244,6 @@ a.team-linkedin:focus-visible {
   height: 420px;
 }
 
-.h-\[42px\] {
-  height: 42px;
-}
-
 .h-\[460px\] {
   height: 460px;
 }
@@ -10338,10 +10318,6 @@ a.team-linkedin:focus-visible {
 
 .min-h-\[140px\] {
   min-height: 140px;
-}
-
-.min-h-\[220px\] {
-  min-height: 220px;
 }
 
 .min-h-\[60px\] {
@@ -10576,20 +10552,12 @@ a.team-linkedin:focus-visible {
   width: 60%;
 }
 
-.w-\[600px\] {
-  width: 600px;
-}
-
 .w-\[62\%\] {
   width: 62%;
 }
 
 .w-\[620px\] {
   width: 620px;
-}
-
-.w-\[62px\] {
-  width: 62px;
 }
 
 .w-\[64\%\] {
@@ -10810,10 +10778,6 @@ a.team-linkedin:focus-visible {
   max-width: 58ch;
 }
 
-.max-w-\[600px\] {
-  max-width: 600px;
-}
-
 .max-w-\[60ch\] {
   max-width: 60ch;
 }
@@ -10860,6 +10824,10 @@ a.team-linkedin:focus-visible {
 
 .max-w-\[72ch\] {
   max-width: 72ch;
+}
+
+.max-w-\[738px\] {
+  max-width: 738px;
 }
 
 .max-w-\[760px\] {
@@ -11701,10 +11669,6 @@ a.team-linkedin:focus-visible {
   background-color: rgb(0 0 0 / .02);
 }
 
-.bg-current {
-  background-color: currentColor;
-}
-
 .bg-ink-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(241 242 246 / var(--tw-bg-opacity, 1));
@@ -11806,10 +11770,6 @@ a.team-linkedin:focus-visible {
 .bg-orange-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(253 229 224 / var(--tw-bg-opacity, 1));
-}
-
-.bg-orange-100\/70 {
-  background-color: rgb(253 229 224 / 0.7);
 }
 
 .bg-orange-200 {
@@ -12646,10 +12606,6 @@ a.team-linkedin:focus-visible {
   font-size: clamp(1.8rem,2.8vw,2.3rem);
 }
 
-.text-\[clamp\(1\.8rem\2c 3vw\2c 2\.3rem\)\] {
-  font-size: clamp(1.8rem,3vw,2.3rem);
-}
-
 .text-\[clamp\(1\.9rem\2c 3\.4vw\2c 2\.9rem\)\] {
   font-size: clamp(1.9rem,3.4vw,2.9rem);
 }
@@ -12704,10 +12660,6 @@ a.team-linkedin:focus-visible {
 
 .text-\[clamp\(2\.6rem\2c 4vw\2c 3\.4rem\)\] {
   font-size: clamp(2.6rem,4vw,3.4rem);
-}
-
-.text-\[clamp\(2rem\2c 4vw\2c 3\.4rem\)\] {
-  font-size: clamp(2rem,4vw,3.4rem);
 }
 
 .text-\[clamp\(3rem\2c 6vw\2c 4\.4rem\)\] {
@@ -12837,14 +12789,6 @@ a.team-linkedin:focus-visible {
 
 .leading-\[1\.85\] {
   line-height: 1.85;
-}
-
-.leading-\[1\.8\] {
-  line-height: 1.8;
-}
-
-.leading-\[1\.9\] {
-  line-height: 1.9;
 }
 
 .leading-none {
@@ -13824,11 +13768,6 @@ a.team-linkedin:focus-visible {
   --tw-ring-color: rgb(9 145 168 / var(--tw-ring-opacity, 1));
 }
 
-.focus\:ring-teal-500:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(12 169 195 / var(--tw-ring-opacity, 1));
-}
-
 .focus-visible\:outline-none:focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -13973,11 +13912,6 @@ a.team-linkedin:focus-visible {
     grid-row: span 1 / span 1;
   }
 
-  .sm\:-mx-1\.5 {
-    margin-left: -0.375rem;
-    margin-right: -0.375rem;
-  }
-
   .sm\:-mx-5 {
     margin-left: -1.25rem;
     margin-right: -1.25rem;
@@ -14053,10 +13987,6 @@ a.team-linkedin:focus-visible {
 
   .sm\:mb-9 {
     margin-bottom: 2.25rem;
-  }
-
-  .sm\:ml-auto {
-    margin-left: auto;
   }
 
   .sm\:mt-0 {
@@ -14203,10 +14133,6 @@ a.team-linkedin:focus-visible {
     width: 1.75rem;
   }
 
-  .sm\:w-\[210px\] {
-    width: 210px;
-  }
-
   .sm\:w-\[240px\] {
     width: 240px;
   }
@@ -14312,12 +14238,12 @@ a.team-linkedin:focus-visible {
     align-items: center;
   }
 
-  .sm\:items-baseline {
-    align-items: baseline;
-  }
-
   .sm\:justify-start {
     justify-content: flex-start;
+  }
+
+  .sm\:justify-end {
+    justify-content: flex-end;
   }
 
   .sm\:justify-between {
@@ -14330,10 +14256,6 @@ a.team-linkedin:focus-visible {
 
   .sm\:gap-0\.5 {
     gap: 0.125rem;
-  }
-
-  .sm\:gap-1\.5 {
-    gap: 0.375rem;
   }
 
   .sm\:gap-10 {
@@ -14901,10 +14823,6 @@ a.team-linkedin:focus-visible {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
-  .md\:grid-cols-\[1\.35fr_1fr\] {
-    grid-template-columns: 1.35fr 1fr;
-  }
-
   .md\:grid-cols-\[1fr_auto\] {
     grid-template-columns: 1fr auto;
   }
@@ -15226,10 +15144,6 @@ a.team-linkedin:focus-visible {
     grid-template-columns: .92fr 1.08fr;
   }
 
-  .lg\:grid-cols-\[\.94fr_1\.06fr\] {
-    grid-template-columns: .94fr 1.06fr;
-  }
-
   .lg\:grid-cols-\[\.95fr_1\.05fr\] {
     grid-template-columns: .95fr 1.05fr;
   }
@@ -15292,10 +15206,6 @@ a.team-linkedin:focus-visible {
 
   .lg\:grid-cols-\[1\.4fr_1fr\] {
     grid-template-columns: 1.4fr 1fr;
-  }
-
-  .lg\:grid-cols-\[1\.55fr_1fr\] {
-    grid-template-columns: 1.55fr 1fr;
   }
 
   .lg\:grid-cols-\[1\.85fr_1fr\] {
@@ -15492,10 +15402,6 @@ a.team-linkedin:focus-visible {
 
   .lg\:border-r {
     border-right-width: 1px;
-  }
-
-  .lg\:border-t-0 {
-    border-top-width: 0px;
   }
 
   .lg\:border-\[\#E4E8EE\] {
@@ -15882,10 +15788,6 @@ a.team-linkedin:focus-visible {
 
   .xl\:grid {
     display: grid;
-  }
-
-  .xl\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .xl\:grid-cols-6 {
