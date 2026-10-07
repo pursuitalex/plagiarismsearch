@@ -4,7 +4,14 @@ section[id] { scroll-margin-top: 100px; }
 
 a:focus-visible, button:not(.dd-button):focus-visible, summary:focus-visible, select:focus-visible,
 [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible {
-  outline: 2px solid #0CA9C3; outline-offset: 3px; border-radius: 4px; }
+  outline: 2px solid #0CA9C3; outline-offset: 3px; }
+/* The ring's soft corners, for what has no corners of its own — a link in a line of text,
+   the checker's bare field. They used to be part of the rule above, whose weight beat
+   every component's own radius: a field went from 10px to 4px the moment it was clicked
+   (a field always shows its focus), and a pill or a card lost its shape under the Tab
+   key. In :where() the declaration weighs nothing, so any radius an element is given
+   anywhere — a utility, a component class — stays, and the ring follows that shape. */
+:where(a, button, summary, select, [tabindex], input, textarea):where(:focus-visible) { border-radius: 4px; }
 /* On a dark ground the ring goes light. The ground says so with data-surface="dark" on
    the section (or footer) — not by inference from a colour utility, which would break
    silently the day the section's background class changed. */
