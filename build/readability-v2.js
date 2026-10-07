@@ -29,6 +29,7 @@ const path = require('path');
 const page = require('./page');
 const { dotField } = require('./dots');
 const TV2 = require('./testimonials-v2');
+const checker = require('./checker');
 const C = require('./readability-data.json');
 
 const SITE = path.join(__dirname, '..', 'site');
@@ -128,17 +129,12 @@ ${H.tiles.map(([label, href]) => { const [name, fig] = tileParts(label); return 
                 <span class="qc-drop-title">${esc(H.drop[0])}</span>
                 <span class="qc-drop-hint mt-0.5">${esc(H.drop[1])}</span>
               </span>
-              <span class="self-start sm:self-auto shrink-0 inline-flex items-center rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[12px] font-bold tracking-wide text-ink-900">${esc(H.upload)}</span>
+              <span class="qc-chip shrink-0 self-start sm:self-auto">${checker.UPLOAD_LABEL}</span>
             </label>
             <input id="rc-file" type="file" data-rc="file" class="sr-only" accept=".txt,.md,text/plain">
 
             <div class="mt-3 flex flex-wrap gap-2">
-${H.sources.map((s, i) => {
-  const icon = [I.box, I.cloud, I.clip, I.link][i];
-  return i === 2
-    ? `              <label for="rc-file" class="qc-chip cursor-pointer">${ico(icon, 'currentColor', 14, 1.75)}${esc(s)}</label>`
-    : `              <button type="button" class="qc-chip">${ico(icon, 'currentColor', 14, 1.75)}${esc(s)}</button>`;
-}).join('\n')}
+              ${checker.INPUTS.map(i => checker.inputChip(i, 'rc-file')).join('\n              ')}
             </div>
 
             <div class="mt-5 rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-ink-50 p-4 lg:p-5">

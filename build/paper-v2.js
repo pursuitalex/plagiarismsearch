@@ -16,7 +16,8 @@
    Olex's own layout (drawn in Figma on 2026-10-07 — file sgIVt3vKOgTIT2LMpBIaNg, frames
    3683:32802 and 3683:32842): the head centred as on the homepage, no rating tiles, and
    two cards 738px wide, one above the other:
-     the steps    1 the document — the drop zone, the sources, Pages (a stepper; a .txt
+     the steps    1 the document — the drop zone, the checker's own four ways in
+                  (build/checker.js: Attach file, Dropbox, OneDrive, By URL), Pages (a stepper; a .txt
                   file counts its own), Words, the type of paper, the description;
                   2 the level and the deadline as two selects, each option printing its
                   price for the other's choice, the price per page beside them as a
@@ -41,6 +42,7 @@ const page = require('./page');
 const { dotField } = require('./dots');
 const TV2 = require('./testimonials-v2');
 const cta = require('./sections/cta-band');
+const checker = require('./checker');
 const C = require('./paper-data.json');
 
 const SITE = path.join(__dirname, '..', 'site');
@@ -113,7 +115,7 @@ const stepDocument = () => `            <div role="group" aria-labelledby="pf-s1
               <label for="pf-file" data-pf="drop" class="pf-drop qc-drop flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4 cursor-pointer">
                 <span class="qc-drop-icon">${ico(I.upload, 'currentColor', 18)}</span>
                 <span class="min-w-0 flex-1"><span class="qc-drop-title">${esc(H.drop[0])}</span><span class="qc-drop-hint mt-0.5">${esc(H.drop[1])}</span></span>
-                <span class="self-start sm:self-auto shrink-0 inline-flex items-center rounded-full bg-white ring-1 ring-black/10 px-4 py-2 text-[12px] font-bold tracking-wide text-ink-900">${esc(H.upload)}</span>
+                <span class="qc-chip shrink-0 self-start sm:self-auto">${checker.UPLOAD_LABEL}</span>
               </label>
               <input id="pf-file" type="file" data-pf="file" class="sr-only">
               <div data-pf="doc" hidden class="flex items-center gap-3 rounded-xl bg-teal-50 ring-1 ring-teal-200/70 p-3.5">
@@ -122,9 +124,7 @@ const stepDocument = () => `            <div role="group" aria-labelledby="pf-s1
                 <button type="button" data-pf="another" class="shrink-0 text-[12.5px] font-semibold text-teal-800 underline decoration-teal-300 underline-offset-4">${esc(F.another)}</button>
               </div>
               <div class="mt-3 flex flex-wrap gap-2">
-${H.sources.map((s, i) => { const icon = [I.box, I.cloud, I.clip, I.link][i]; return i === 2
-    ? `                <label for="pf-file" class="qc-chip cursor-pointer">${ico(icon, 'currentColor', 14, 1.75)}${esc(s)}</label>`
-    : `                <button type="button" class="qc-chip">${ico(icon, 'currentColor', 14, 1.75)}${esc(s)}</button>`; }).join('\n')}
+                ${checker.INPUTS.map(i => checker.inputChip(i, 'pf-file')).join('\n                ')}
               </div>
 
               <div class="mt-5 grid grid-cols-2 sm:grid-cols-[9rem_9rem_1fr] gap-3 sm:gap-4 items-end">

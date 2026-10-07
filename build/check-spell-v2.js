@@ -36,7 +36,7 @@ console.log('page-level');
 console.log('\ncopy, verbatim');
 {
   /* sources: the four ways in are the site's checker's own (build/checker.js), checked below */
-  const skip = new Set(['source', 'read', 'title', 'meta', 'canonical', 'placeholder', 'languages', 'sources']);
+  const skip = new Set(['source', 'read', 'title', 'meta', 'canonical', 'placeholder', 'languages', 'sources', 'upload']);
   const strings = [];
   const walk = (v, k) => {
     if (skip.has(k)) return;
@@ -65,6 +65,7 @@ console.log('\nthe tool');
   const INPUTS = require('./checker').INPUTS.map(i => i.label);
   const chips = [...form.matchAll(/<(?:button type="button"|label for="sp-file") class="qc-chip[^"]*">(?:<img[^>]*>|<svg[\s\S]*?<\/svg>)([^<]+)</g)].map(m => m[1]);
   ok('the four ways in are the checker\'s own, in its order, Dropbox and OneDrive with their marks', chips.join('|') === INPUTS.join('|') && /partners\/dropbox\.svg/.test(form) && /partners\/onedrive\.svg/.test(form), chips.join(', '));
+  ok('the drop zone carries the checker\'s "Upload file" chip', new RegExp('class="qc-chip shrink-0[^"]*">' + require('./checker').UPLOAD_LABEL + '<').test(form) && !/UPLOAD FILE/.test(form));
   ok('the form opens with the text field, as the checker\'s does', /<form data-spell[^>]*>\s*<label for="sp-text" class="sr-only">[^<]+<\/label>[\s\S]{0,200}?<textarea id="sp-text" data-sp="text" rows="4" class="qc-area/.test(body));
   const res = form.slice(form.indexOf('data-sp-results'));
   ok('the result is held back until "Free check": one hidden block, after the button, with every readout in it', /<div data-sp-results hidden/.test(form) && form.indexOf('data-sp-results') > form.indexOf('type="submit"') && ['para', 'fre', 'grammar'].every(k => res.includes('data-sp="' + k + '"')) && !form.slice(0, form.indexOf('data-sp-results')).includes('sp-row'));

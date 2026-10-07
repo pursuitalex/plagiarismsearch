@@ -13,7 +13,7 @@
    The hero is the form the site's other checkers have (Olex, 2026-10-07: "має бути форма
    аналогічна, як і на всіх плагчеках чи AI-чеках… кнопочки… в одному стилі… не потрібно
    відразу виводити всі параметри… лише після того, як людина натисне перевірка"): the
-   text with its count, the drop zone and "UPLOAD FILE", the checker's own four ways in
+   text with its count, the drop zone with the checker's "Upload file", its four ways in
    (build/checker.js — Attach file, Dropbox, OneDrive, By URL, with their marks), and one
    row with the 47 languages, "Order analysis" and "Free check". The live result panel —
    Mistakes, Statistics, Readability, Language — is a state of the same card, shown when
@@ -112,17 +112,6 @@ const panelColumns = () => { const g = panel(), half = Math.ceil(g.length / 2); 
 ${col.join('\n')}
               </div>`).join('\n'); };
 
-/* the ways in are the site's checker's own (build/checker.js): the same four, in the same
-   order, with the same marks — "Attach file" opens the file input here */
-const source = i => {
-  const glyph = i.icon === 'brand'
-    ? `<img src="/assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${checker.ICON} shrink-0">`
-    : `<svg class="${checker.ICON} shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
-  return i.label === 'Attach file'
-    ? `<label for="sp-file" class="qc-chip cursor-pointer">${glyph}${i.label}</label>`
-    : `<button type="button" class="qc-chip">${glyph}${i.label}</button>`;
-};
-
 const section1 = () => `  <!-- ================= 01 · HERO / THE SPELL CHECKER =================
        The form the site's other checkers have (the homepage, the AI Detector): the text,
        the drop zone, the four ways in, and one row with the button. What a check returns
@@ -153,12 +142,12 @@ const section1 = () => `  <!-- ================= 01 · HERO / THE SPELL CHECKER 
               <span class="block text-[13.5px] font-bold tracking-tight">${esc(H.drop[0])}</span>
               <span class="block text-[12px] text-ink-500">${esc(H.drop[1])}</span>
             </span>
-            <span class="qc-chip shrink-0">${esc(H.upload)}</span>
+            <span class="qc-chip shrink-0">${checker.UPLOAD_LABEL}</span>
           </label>
           <input id="sp-file" type="file" data-sp="file" class="sr-only" accept=".txt,.md,text/plain">
 
           <div class="flex flex-wrap gap-2 mb-4 lg:mb-5">
-            ${checker.INPUTS.map(source).join('\n            ')}
+            ${checker.INPUTS.map(i => checker.inputChip(i, 'sp-file')).join('\n            ')}
           </div>
 
           <!-- the one choice this check has, beside the button it modifies -->

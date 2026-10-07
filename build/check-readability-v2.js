@@ -37,7 +37,8 @@ console.log('page-level');
 
 console.log('\ncopy, verbatim');
 {
-  const skip = new Set(['source', 'read', 'title', 'meta', 'canonical']);
+  /* sources: the four ways in are the site's checker's own (build/checker.js), checked below */
+  const skip = new Set(['source', 'read', 'title', 'meta', 'canonical', 'sources', 'upload']);
   const strings = [];
   const walk = (v, k) => {
     if (skip.has(k)) return;
@@ -64,6 +65,10 @@ console.log('\nthe calculator');
   const lost = need.filter(k => !new RegExp('data-rc="' + k + '"').test(form + body));
   ok('every hook the readability module reads', !lost.length, lost.join(', '));
   ok('inert: onsubmit="return false"', /<form data-readability[^>]*onsubmit="return false"/.test(body));
+  { const INPUTS = require('./checker').INPUTS.map(i => i.label);
+    const chips = [...form.matchAll(/<(?:button type="button"|label for="rc-file") class="qc-chip[^"]*">(?:<img[^>]*>|<svg[\s\S]*?<\/svg>)([^<]+)</g)].map(m => m[1]);
+    ok('the four ways in are the checker\'s own, in its order, Dropbox and OneDrive with their marks', chips.join('|') === INPUTS.join('|') && /partners\/dropbox\.svg/.test(form) && /partners\/onedrive\.svg/.test(form), chips.join(', ')); }
+  ok('the drop zone carries the checker\'s "Upload file" chip', new RegExp('class="qc-chip shrink-0[^"]*">' + require('./checker').UPLOAD_LABEL + '<').test(form) && !/UPLOAD FILE/.test(form));
   ok('the drop zone and "Attach file" reach the file input', /<label for="rc-file" data-rc-drop/.test(body) && /<label for="rc-file" class="qc-chip/.test(body) && /<input id="rc-file" type="file" data-rc="file"/.test(body));
   ok('the text field opens the form with nothing over it — "Simple text" is its name for a screen reader, its live line the placeholder, the lead its description', /<form data-readability[^>]*>\s*(<!--[\s\S]*?-->\s*)?<label for="rc-text" class="sr-only">Simple text<\/label>\s*<textarea id="rc-text"/.test(body) &&/<textarea id="rc-text" data-rc="text"[^>]*placeholder="Paste your text into our web-based software to get instant analysis and recommended improvements\."[^>]*aria-describedby="rc-lead"/.test(body) && /id="rc-lead"/.test(body));
   ok('"Start checking" goes back to the checker', (body.match(/href="#readability-checker-top"/g) || []).length >= 2 && /<section id="readability-checker-top"/.test(body));

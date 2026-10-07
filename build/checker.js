@@ -7,8 +7,8 @@
    copy of the markup would be exactly that. So the form lives here and the homepage
    renders through it, byte for byte what it rendered before.
 
-   The markup is the homepage's, unchanged: field with its count in the corner, drop
-   zone, input chips, the two checks beside the button under a rule, and the free line
+   The markup is the homepage's: field with its count in the corner, drop zone with its
+   "Upload file" button (added 2026-10-07, on every form at once), input chips, the two checks beside the button under a rule, and the free line
    under the card. Inert — no action, submit returns false; a developer binds it to the
    production checker. What varies per page is copy (placeholder, formats, the two
    labels, the CTA, the free line) and the anchor the CTA scrolls to.
@@ -35,6 +35,9 @@
    and not inspected by the library validator. Nothing else changes. */
 
 const ICON = 'w-[14px] h-[14px] sm:w-4 sm:h-4';
+/* the button in the drop zone: the same chip, the same words, on every form that takes a
+   file (Olex, 2026-10-07) — the AI Detector's, which had it first */
+const UPLOAD_LABEL = 'Upload file';
 const UPLOAD = '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>';
 const SPARKLES = '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>';
 
@@ -45,6 +48,15 @@ const chipGlyph = (i, root = '') => {
     ? `<img src="${root}assets/svg/partners/${i.file}" alt="" aria-hidden="true" class="${ICON} shrink-0">`
     : `<svg class="${ICON} shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${i.path}</svg>`;
   return `<button type="button" class="qc-chip">${glyph}${i.label}</button>`;
+};
+
+/* the same chip on a page that builds its own form round a file input (the free tools):
+   given that input's id, "Attach file" is its label, so it opens the file dialog */
+const inputChip = (i, fileInputId, root = '/') => {
+  const chip = chipGlyph(i, root);
+  return fileInputId && i.label === 'Attach file'
+    ? chip.replace('<button type="button" class="qc-chip">', `<label for="${fileInputId}" class="qc-chip cursor-pointer">`).replace(/<\/button>$/, '</label>')
+    : chip;
 };
 
 /* the approved input methods, the homepage's — a page may pass its own */
@@ -81,6 +93,7 @@ const form = (S, anchor = '#checker', ids = {}, opts = {}) => {
               <span class="block text-[13.5px] font-bold tracking-tight">Drag and drop a file here</span>
               <span class="block text-[12px] text-ink-500">${S.formats}</span>
             </span>
+            <button type="button" class="qc-chip shrink-0">${UPLOAD_LABEL}</button>
           </div>
 
           <div class="flex flex-wrap gap-2 mb-2 md:mb-4 lg:mb-5">
@@ -175,4 +188,4 @@ const script = (anchor = '#checker', ids = {}) => `
    is-reading, is-ready, is-error, is-busy) are CSS in build/assets/css/08-checker.css, in
    site.css, beside the form's base rules. The design-system page draws each one
    (build/design-system-checker.js). */
-module.exports = { form, free, style, script, INPUTS, ICON };
+module.exports = { form, free, style, script, INPUTS, ICON, inputChip, UPLOAD_LABEL };

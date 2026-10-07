@@ -57,7 +57,7 @@ const check = file => {
     };
     /* Olex's layout leaves out the rating tiles and the note about uploading */
     for (const k in C) {
-      if (k === 'hero') { const { tiles, ...rest } = C.hero; walk(rest, k); }
+      if (k === 'hero') { const { tiles, sources, upload, ...rest } = C.hero; walk(rest, k); }   /* sources: the checker's own, checked below */
       else if (k === 'form') { const { uploadHint, ...rest } = C.form; walk(rest, k); }
       else walk(C[k], k);
     }
@@ -91,6 +91,10 @@ const check = file => {
     const extras = F.services.filter(s => s.checked).reduce((n, s) => n + s.price, 0);
     const total = (form.match(/data-pf="total"[^>]*>([^<]+)</) || [])[1];
     ok('the defaults\' total rendered for no-JS', total === money(F.rates[DEFAULT.level][DEFAULT.days] + extras), total);
+    { const INPUTS = require('./checker').INPUTS.map(i => i.label);
+      const chips = [...form.matchAll(/<(?:button type="button"|label for="pf-file") class="qc-chip[^"]*">(?:<img[^>]*>|<svg[\s\S]*?<\/svg>)([^<]+)</g)].map(m => m[1]);
+      ok('the four ways in are the checker\'s own, in its order, Dropbox and OneDrive with their marks', chips.join('|') === INPUTS.join('|') && /partners\/dropbox\.svg/.test(form) && /partners\/onedrive\.svg/.test(form), chips.join(', ')); }
+    ok('the drop zone carries the checker\'s "Upload file" chip', new RegExp('class="qc-chip shrink-0[^"]*">' + require('./checker').UPLOAD_LABEL + '<').test(form) && !/UPLOAD FILE/.test(form));
     ok('the drop zone and "Attach file" reach the file input', /<label for="pf-file" data-pf="drop"/.test(body) && /<label for="pf-file" class="qc-chip/.test(body) && /<input id="pf-file" type="file" data-pf="file"/.test(body));
   }
 
