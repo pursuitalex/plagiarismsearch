@@ -138,7 +138,10 @@ const card = g => `        <div class="rounded-3xl sm:rounded-[28px] bg-white ri
             <h2 class="text-[15.5px] sm:text-[16.5px] font-bold tracking-tight">${g.name}</h2>
             <span class="ml-auto text-[11.5px] font-semibold text-ink-400 tabular-nums">${g.links.length}</span>
           </div>
-          <ul class="divide-y divide-ink-100">
+          <!-- the article list scrolls inside the card when it outgrows six rows (.ug-list);
+               icon, name and count above it stay where they are. -mx-2 px-2: the links'
+               hover plates reach 8px past the text, and a scrolling box would clip them -->
+          <ul class="ug-list -mx-2 px-2 divide-y divide-ink-100" data-scroll-fade="y">
 ${g.links.map(link).join('\n')}
           </ul>
         </div>`;

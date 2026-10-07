@@ -1327,3 +1327,26 @@ form:has(#pf-sv4:checked) [data-pf-sum="pf-sv4"] { display:flex; }
   .vt-card, .vt-card img, .vt-play { transition:none; }
   .vt-card:hover, .vt-card:hover img, .vt-card:hover .vt-play { transform:none; }
 }
+
+/* ═══ 32 · a box that scrolls inside the page, and says so ═══════════════════════════
+   [data-scroll-fade="y" | "x"] — one pattern for content that may outgrow its box
+   (Secondary Pages Design Correction Pack, 2026-10-06): the article list inside a User
+   Guide card (y). The box scrolls on its own axis only when it has to, with a thin
+   scrollbar; site.js (module scroll-fade) marks where there is more — .can-more, .can-back
+   — and the content fades out on that edge. Without site.js it is a plain scrolling box.
+   Scrolling chains to the page at either end (no overscroll-behavior: contain), so a
+   finger that lands on the box on a phone is never trapped in it. */
+[data-scroll-fade] { --sf:28px; scrollbar-width:thin; scrollbar-color:rgba(10,14,26,.22) transparent; }
+[data-scroll-fade="y"] { overflow-y:auto; overflow-x:hidden; }
+[data-scroll-fade="x"] { overflow-x:auto; overflow-y:hidden; }
+[data-scroll-fade="y"].can-more { -webkit-mask-image:linear-gradient(#000 calc(100% - var(--sf)), transparent); mask-image:linear-gradient(#000 calc(100% - var(--sf)), transparent); }
+[data-scroll-fade="y"].can-back { -webkit-mask-image:linear-gradient(transparent, #000 var(--sf)); mask-image:linear-gradient(transparent, #000 var(--sf)); }
+[data-scroll-fade="y"].can-back.can-more { -webkit-mask-image:linear-gradient(transparent, #000 var(--sf), #000 calc(100% - var(--sf)), transparent); mask-image:linear-gradient(transparent, #000 var(--sf), #000 calc(100% - var(--sf)), transparent); }
+[data-scroll-fade="x"].can-more { -webkit-mask-image:linear-gradient(90deg, #000 calc(100% - var(--sf)), transparent); mask-image:linear-gradient(90deg, #000 calc(100% - var(--sf)), transparent); }
+[data-scroll-fade="x"].can-back { -webkit-mask-image:linear-gradient(90deg, transparent, #000 var(--sf)); mask-image:linear-gradient(90deg, transparent, #000 var(--sf)); }
+[data-scroll-fade="x"].can-back.can-more { -webkit-mask-image:linear-gradient(90deg, transparent, #000 var(--sf), #000 calc(100% - var(--sf)), transparent); mask-image:linear-gradient(90deg, transparent, #000 var(--sf), #000 calc(100% - var(--sf)), transparent); }
+[data-scroll-fade]:focus-visible { outline:2px solid #0991A8; outline-offset:2px; }
+
+/* the User Guide's article list: six rows, the height of the tallest list the page was
+   approved with — a longer list scrolls inside its card, the card keeps its size */
+.ug-list { max-height:13.8125rem; }
