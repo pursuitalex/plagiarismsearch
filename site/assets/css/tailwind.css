@@ -4771,7 +4771,9 @@ video {
        THE HEAD     center: div.section-head.rv, centred                      (section-head.css)
                     split:  div.pricing-top > div.pricing-top-head.rv (the head's parts),
                             p.pricing-aside.rv > span.pricing-aside-icon > svg, span.pricing-aside-text
-       [data-slot="pricing-periods"]            the period switch — sealed
+       [data-slot="pricing-periods"]            the period switch — sealed; in center it may
+                                                hold, under the tabs, the "Recurring payments"
+                                                switch (label.pr-switch, 17-pricing.css)
        [data-slot="pricing-plans"]              the plan cards, the feature-line template and
                                                 the JSON island — sealed
        THE FOOT     center: div.pricing-foot.rv > span.pricing-note[data-period-note],
@@ -12928,11 +12930,6 @@ a.team-linkedin:focus-visible {
   color: rgb(107 47 158 / var(--tw-text-opacity, 1));
 }
 
-.text-\[\#6B7280\] {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
-}
-
 .text-\[\#7A5A00\] {
   --tw-text-opacity: 1;
   color: rgb(122 90 0 / var(--tw-text-opacity, 1));
@@ -13307,6 +13304,10 @@ a.team-linkedin:focus-visible {
 
 .ring-black\/\[\.06\] {
   --tw-ring-color: rgb(0 0 0 / .06);
+}
+
+.ring-black\/\[\.07\] {
+  --tw-ring-color: rgb(0 0 0 / .07);
 }
 
 .ring-black\/\[\.12\] {
@@ -14097,6 +14098,10 @@ a.team-linkedin:focus-visible {
     height: 1.75rem;
   }
 
+  .sm\:h-9 {
+    height: 2.25rem;
+  }
+
   .sm\:h-\[340px\] {
     height: 340px;
   }
@@ -14135,6 +14140,10 @@ a.team-linkedin:focus-visible {
 
   .sm\:w-7 {
     width: 1.75rem;
+  }
+
+  .sm\:w-9 {
+    width: 2.25rem;
   }
 
   .sm\:w-\[240px\] {

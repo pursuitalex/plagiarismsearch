@@ -18,24 +18,10 @@
 /* Each pair, both ways round. A page absent from this table gets no switcher, and any
    switcher previously written into it is stripped — so retiring a v1 is one deletion
    here rather than an edit in two files. */
-const AFFILIATE = [
-  [1, 'affiliate-program-at-plagiarismsearch.html'],
-  [2, 'affiliate-program-at-plagiarismsearch-v2.html'],
-  [3, 'affiliate-program-at-plagiarismsearch-v3.html'],
-];
 const PAIRS = {
-  /* 2026-09-30: the three company pages built from the live copy (v1) beside their
-     illustrated versions — photographs in the bithide.vercel.app "Revenue Infrastructure"
-     manner, HTML chips over them, duotone spot icons (v2). Olex compares, then one goes. */
-  /* 2026-10-06: a third Affiliate — the old site's first screen (people on dashed paths, the
-     cabinet in a browser window, the tool cards over its edge) redrawn in the new system */
-  'affiliate-program-at-plagiarismsearch.html':    { self: 1, tabs: AFFILIATE },
-  'affiliate-program-at-plagiarismsearch-v2.html': { self: 2, tabs: AFFILIATE },
-  'affiliate-program-at-plagiarismsearch-v3.html': { self: 3, tabs: AFFILIATE },
-  'scholarship.html':    { other: 'scholarship-v2.html', self: 1 },
-  'scholarship-v2.html': { other: 'scholarship.html',    self: 2 },
-  'testimonials.html':    { other: 'testimonials-v2.html', self: 1 },
-  'testimonials-v2.html': { other: 'testimonials.html',    self: 2 },
+  /* No page has two versions now. The company pages (Affiliate, Scholarship, Reviews)
+     left this list on 2026-10-07, when the developer's review named the final version of
+     each; the free tools the same day. The table stays for the next comparison. */
   /* the free tools, redesigned from the live copy (2026-09-30) */
   /* Paper Analysis left this list on 2026-10-07: Olex kept one version (build/paper-v2.js) */
 };

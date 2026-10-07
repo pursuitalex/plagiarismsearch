@@ -19,6 +19,13 @@
      video and video-stage, the Reviews page's own) and the page scrolls back to it.
    Nothing is requested from YouTube's player until someone asks.
 
+   THE LIST IS PAGED (review of 2026-10-07: "provide pagination for the video list so that
+   the page remains manageable as the tutorial library grows" — the cards and the featured
+   video unchanged). PER_PAGE tutorials to a page, under the Newsroom's own pager; the
+   whole list is in the HTML and the pager is hidden there, so without the script every
+   tutorial shows (site.js, module paged-list). New words, for the pager: "{from}–{to} of
+   {total} tutorials", "Tutorial pages"; "Previous", "Next" and "Page" are the Newsroom's.
+
    THE WORDS (COPY below) were read from the live page on 2026-10-06 and are unchanged
    but for two corrections Olex approved the same day: the live "PlagairismSearch" in
    the first name is "PlagiarismSearch" here, and the live "How Plagiarism Checker Work"
@@ -66,6 +73,9 @@ const still = (id, size) => `https://i.ytimg.com/vi/${id}/${size}.jpg`;
 const playIco = size => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L8.5 4.64A1 1 0 0 0 7 5.5Z"/></svg>`;
 
 const V = COPY.videos;
+/* tutorials to a page. Four, so the six of today already page (4 + 2) and the pager can
+   be seen and judged; one number to change as the library grows. */
+const PER_PAGE = 4;
 
 /* a tutorial in the library: the 640px still cropped to 16:9 (it is 4:3 with bars), the
    name, the whole description. The card is the pick. A row, not a tile: the descriptions
@@ -73,7 +83,7 @@ const V = COPY.videos;
    neighbours half empty; beside a still, in the stage's own width, every length sits.
    The still is inset and always 16:9 — a row grows with its text, the picture does not
    (stretched to a taller row, the 4:3 file showed its black bars). */
-const card = ([id, name, text], i) => `          <li><a href="${watch(id)}" rel="noopener" data-video-pick="${id}" data-video-title="${attr(name)}" data-name="${attr(name)}" aria-current="${i === 0 ? 'true' : 'false'}" class="vt-card group flex flex-col sm:flex-row sm:items-start rounded-3xl bg-white p-2.5 sm:p-3">
+const card = ([id, name, text], i) => `          <li data-paged-item><a href="${watch(id)}" rel="noopener" data-video-pick="${id}" data-video-title="${attr(name)}" data-name="${attr(name)}" aria-current="${i === 0 ? 'true' : 'false'}" class="vt-card group flex flex-col sm:flex-row sm:items-start rounded-3xl bg-white p-2.5 sm:p-3">
             <div class="relative shrink-0 w-full sm:w-[240px] lg:w-[288px] aspect-video rounded-2xl bg-ink-100 overflow-hidden">
               <img src="${still(id, 'sddefault')}" alt="" loading="lazy" width="640" height="480" class="absolute inset-0 w-full h-full object-cover">
               <span class="vt-play absolute left-3.5 bottom-3.5 w-11 h-11 rounded-full bg-white/95 text-ink-900 flex items-center justify-center shadow-diffuse" aria-hidden="true">${playIco(16)}</span>
@@ -114,11 +124,28 @@ const section1 = () => `  <!-- ================= VIDEO TUTORIALS ===============
         </figcaption>
       </figure>
 
-      <div class="mt-14 sm:mt-20 lg:mt-24">
+      <div data-paged-list="${PER_PAGE}" class="mt-14 sm:mt-20 lg:mt-24 scroll-mt-28">
         <h2 class="rv text-center text-[17px] sm:text-[19px] lg:text-[20px] font-semibold tracking-tight text-ink-800 max-w-[44ch] mx-auto mb-7 sm:mb-9 lg:mb-10">${COPY.lead}</h2>
         <ul class="rv-kids grid gap-3.5 sm:gap-4 max-w-[1040px] mx-auto" role="list">
 ${V.map(card).join('\n')}
         </ul>
+
+        <!-- The pager — the Newsroom's, in the list's own width. Hidden until the script
+             pages the list; a list of one page keeps it hidden. -->
+        <nav data-pager hidden class="max-w-[1040px] mx-auto flex flex-wrap items-center justify-between gap-4 mt-6 sm:mt-8" aria-label="Tutorial pages">
+          <p data-pager-count data-format="{from}–{to} of {total} tutorials" class="text-[13px] sm:text-[13.5px] text-ink-500"></p>
+          <div class="flex items-center gap-1.5">
+            <button type="button" data-pager-prev class="pg-step inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-2 text-[13px] font-semibold text-ink-600">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+              Previous
+            </button>
+            <div data-pager-nums data-page-label="Page" class="flex items-center gap-1.5"></div>
+            <button type="button" data-pager-next class="pg-step inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-black/5 px-3.5 py-2 text-[13px] font-semibold text-ink-600">
+              Next
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </nav>
       </div>
     </div>
   </section>`;

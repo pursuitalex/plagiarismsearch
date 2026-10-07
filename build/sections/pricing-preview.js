@@ -16,6 +16,7 @@
        accent: 'teal',                         // optional: the pill's dot (default orange)
        head: { eyebrow, title, intro, introMeasure },
        aside: { text, icon },                  // split: the note card beside the head
+       recurring: 'Recurring payments',        // optional, center: the switch under the tabs
        plans: { href: 'prices.html' },         // where a plan's own button leads
        foot: { button: { label, href } },      // split: a light button under the cards
      })                                        // center: foot: { link: { label, href } }
@@ -30,7 +31,9 @@
    Layouts
      center   the homepage: the head and the switch centred, the recommended plan dark and
               raised; under the cards one line — the period's note (from the data) and a
-              quiet link
+              quiet link. With `recurring`, the Pricing page's "Recurring payments" switch
+              sits under the tabs, inside their sealed block: one for the three cards,
+              off and disabled on a period that cannot recur (60-pricing.js does the rest)
      split    Turnitin: the head beside a note card, the switch at the column's edge, three
               equal cards; under them a light button
 
@@ -90,7 +93,9 @@ ${sh.render({ ...h, introMeasure }, '    ')}
 </div>`);
   }
 
-  parts.push(pricing.periods({ align: center ? 'center' : 'start', initial: INITIAL }));
+  need(!o.recurring || center, 'recurring: the switch under the tabs belongs to layout: center');
+  noPrice(o.recurring, 'recurring');
+  parts.push(pricing.periods({ align: center ? 'center' : 'start', initial: INITIAL, recurring: o.recurring }));
   parts.push(pricing.plans({ style: center ? 'spotlight' : 'even', href: o.plans.href, initial: INITIAL }));
 
   if (center) {

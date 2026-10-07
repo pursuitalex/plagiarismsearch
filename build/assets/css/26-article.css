@@ -51,3 +51,18 @@
   .toc-side .rail-link { padding-top:6px; padding-bottom:6px; font-size:13px; line-height:1.4; }
 }
 @media (prefers-reduced-motion: reduce) { .toc-fold-chev { transition:none; } }
+
+/* ── the legal pages on a phone: nothing may widen the page ─────────────────────────
+   Review of 2026-10-07 (responsive only — the desktop template is as approved): at about
+   440px a legal page could be pushed wider than the screen, so it sat shifted or clipped.
+   What did it: a string with no spaces — the Google Drive scope in <code> on the Privacy
+   Policy — which a phone's wider monospace no longer fitted on one line. The rule, for
+   the whole legal section (section[data-component="legal"]): text breaks where it must
+   rather than push its box wider — headings, body text, links and the labels of "On this
+   page" wrap at their words, and a word too long for its line (a URL, a code string)
+   breaks inside itself. break-word, not anywhere: it acts only on a line that would
+   overflow and leaves every box's own minimum width alone, so the cookie table's columns
+   and everything on a wider screen stay exactly as approved. The boxes of the reading
+   column may shrink to it. The cookie table keeps its own scroll inside its box. */
+[data-component="legal"] { overflow-wrap:break-word; }
+[data-component="legal"] :where(.toc-wrap, .toc-fold, .toc-fold li, article) { min-width:0; max-width:100%; }

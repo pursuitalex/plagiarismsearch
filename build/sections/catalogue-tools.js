@@ -26,4 +26,10 @@ function sectionOf(file, cls, id, pick = () => true) {
   return pad ? out.split('\n').map(l => (l.startsWith(pad) ? l.slice(pad.length) : l)).join('\n') : out;
 }
 
-module.exports = { sectionOf, SITE };
+/* a snippet whose page is gone: the last approved rendering, kept as the catalogue wrote
+   it (build/sections/kept/<file>). The variant is still the component's, and its
+   validator still tests against the snippet; only no page wears it now. */
+const KEPT = path.join(__dirname, 'kept');
+const kept = file => fs.readFileSync(path.join(KEPT, file), 'utf8').replace(/\r?\n$/, '');
+
+module.exports = { sectionOf, kept, SITE };

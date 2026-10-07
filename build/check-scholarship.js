@@ -10,7 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 
-/* the illustrated version carries the same words, links and form: node build/check-scholarship.js scholarship-v2.html */
+/* the page is the illustrated one (build/scholarship-v2.js) since 2026-10-07 */
 const FILE = process.argv[2] || 'scholarship.html';
 const html = fs.readFileSync(path.join(__dirname, '..', 'site', FILE), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));

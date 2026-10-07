@@ -65,6 +65,11 @@ console.log('\nthe stage');
     new RegExp('data-stage[\\s\\S]{0,200}data-video="' + COPY.videos[0][0] + '"').test(body));
   ok('the caption holds the first name', new RegExp('data-caption-name[^>]*>' + COPY.videos[0][1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '<').test(body.replace(/&amp;/g, '&')));
   ok('no player loaded up front', !/<iframe\b/.test(body));
+  /* the list is paged by the script; the HTML holds every tutorial and a hidden pager */
+  const per = +(body.match(/data-paged-list="(\d+)"/) || [])[1];
+  ok('the list is paged, ' + per + ' to a page: every card is a paged item', per > 0 && times(body, '<li data-paged-item>') === COPY.videos.length && times(body, 'data-paged-list=') === 1);
+  ok('the pager is in the page, hidden until the script pages the list, with every part the module reads',
+     /<nav data-pager hidden [^>]*aria-label="Tutorial pages"/.test(body) && ['data-pager-count data-format="{from}–{to} of {total} tutorials"', 'data-pager-prev', 'data-pager-next', 'data-pager-nums data-page-label="Page"'].every(h => body.includes(h)));
 }
 
 console.log('\nstructure');

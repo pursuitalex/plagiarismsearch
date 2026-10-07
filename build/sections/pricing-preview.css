@@ -17,7 +17,9 @@
        THE HEAD     center: div.section-head.rv, centred                      (section-head.css)
                     split:  div.pricing-top > div.pricing-top-head.rv (the head's parts),
                             p.pricing-aside.rv > span.pricing-aside-icon > svg, span.pricing-aside-text
-       [data-slot="pricing-periods"]            the period switch — sealed
+       [data-slot="pricing-periods"]            the period switch — sealed; in center it may
+                                                hold, under the tabs, the "Recurring payments"
+                                                switch (label.pr-switch, 17-pricing.css)
        [data-slot="pricing-plans"]              the plan cards, the feature-line template and
                                                 the JSON island — sealed
        THE FOOT     center: div.pricing-foot.rv > span.pricing-note[data-period-note],

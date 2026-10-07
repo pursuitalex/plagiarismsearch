@@ -11,13 +11,13 @@
 const fs = require('fs');
 const path = require('path');
 
-/* the illustrated version carries the same reviews: node build/check-testimonials.js testimonials-v2.html */
+/* the page is the illustrated one (build/testimonials-v2.js) since 2026-10-07 */
 const FILE = process.argv[2] || 'testimonials.html';
 const html = fs.readFileSync(path.join(__dirname, '..', 'site', FILE), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));
 /* v2 renames Sitejabber to SmartCustomer and takes that profile's figures (Olex,
    2026-09-30); its generator exports the data it renders, so both are held to the same */
-const D = FILE === 'testimonials-v2.html' ? require('./testimonials-v2').D : require('./testimonials-data.json');
+const D = require('./testimonials-v2').D;
 const unesc = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
 /* inline tags leave a space before the punctuation that follows them (the pen mark's
    </span> before "Impact:"); both sides of every comparison go through this */
@@ -41,6 +41,18 @@ console.log('page-level');
   ok('self-canonical', /<link rel="canonical" href="https:\/\/plagiarismsearch\.com\/testimonials"/.test(html));
   ok('no H4+', !/<h[4-6]\b/.test(body));
   for (const s of [D.lead, D.trust.title, D.trust.text, D.videos.title, D.videos.text]) ok('"' + s.slice(0, 40) + '…"', text.includes(s));
+}
+
+console.log('\nplatform marks');
+{
+  /* Olex's own SVGs (site/assets/svg/reviews/): a mark beside each printed name — the hero
+     chip and the tile; Google has only its tile — and the logo over each wall's score */
+  const count = file => body.split('/assets/svg/reviews/' + file + '"').length - 1;
+  ok('marks: Trustpilot ×2, SmartCustomer ×2, Google ×1', count('trustpilot-mark.svg') === 2 && count('smartcustomer-mark.svg') === 2 && count('google-mark.svg') === 1,
+     [count('trustpilot-mark.svg'), count('smartcustomer-mark.svg'), count('google-mark.svg')].join(' / '));
+  ok('logos: Trustpilot and SmartCustomer once each, named by their alt', /<img src="\/assets\/svg\/reviews\/trustpilot-logo\.svg" alt="Trustpilot"/.test(body) && /<img src="\/assets\/svg\/reviews\/smartcustomer-logo\.svg" alt="SmartCustomer"/.test(body) && count('trustpilot-logo.svg') === 1 && count('smartcustomer-logo.svg') === 1);
+  const files = [...new Set([...body.matchAll(/src="(\/assets\/svg\/reviews\/[^"]+)"/g)].map(m => m[1]))];
+  ok(files.length + ' files on disk, none with the export\'s grey ground', files.length === 5 && files.every(p => { const q = path.join(__dirname, '..', 'site', p); return fs.existsSync(q) && !/#F5F5F5/i.test(fs.readFileSync(q, 'utf8')); }));
 }
 
 console.log('\nrating tiles');

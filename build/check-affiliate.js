@@ -10,7 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 
-/* the illustrated version carries the same words and links: node build/check-affiliate.js affiliate-program-at-plagiarismsearch-v2.html */
+/* the page is build/affiliate-v3.js's since 2026-10-07; it carries the same words and links */
 const FILE = process.argv[2] || 'affiliate-program-at-plagiarismsearch.html';
 const html = fs.readFileSync(path.join(__dirname, '..', 'site', FILE), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>'));

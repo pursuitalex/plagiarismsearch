@@ -134,7 +134,7 @@ ${checker.dropZone({ tag: 'label', attrs: 'for="pf-file" data-pf="drop"', cls: '
                 </div>
                 <div class="col-span-2 sm:col-span-1">
                   <label for="pf-type" class="${CAP} text-ink-500 block mb-2">${esc(F.typeLabel)}</label>
-                  <select id="pf-type" name="type" class="sp-select w-full h-11">
+                  <select id="pf-type" name="type" class="dd-select sp-select w-full h-11">
                     <option value="" selected>${esc(F.typePlaceholder)}</option>
 ${F.types.map(t => `                    <option>${esc(t)}</option>`).join('\n')}
                   </select>
@@ -151,10 +151,10 @@ const perNum = n => (Number.isInteger(n) ? String(n) : n.toFixed(2));
 const stepMatrix = () => `            <div role="group" aria-labelledby="pf-s2" class="py-6 sm:py-7 border-b border-ink-100">
               ${step(2, F.levelLabel).replace('<h2 ', '<h2 id="pf-s2" ')}
               <div class="pf-compact">
-                <select id="pf-level" data-pf="levelSel" aria-label="${attr(F.levelLabel)}" class="sp-select w-full h-11">
+                <select id="pf-level" data-pf="levelSel" aria-label="${attr(F.levelLabel)}" class="dd-select sp-select w-full h-11">
 ${F.levels.map((lv, r) => `                  <option value="${attr(lv)}"${lv === DEFAULT.level ? ' selected' : ''}>${esc(F.levelLabels[r])}</option>`).join('\n')}
                 </select>
-                <select id="pf-days" data-pf="daysSel" aria-label="${DEADLINE}" class="sp-select w-full h-11">
+                <select id="pf-days" data-pf="daysSel" aria-label="${DEADLINE}" class="dd-select sp-select w-full h-11">
 ${F.days.map((d, c) => `                  <option value="${d}"${String(d) === DEFAULT.days ? ' selected' : ''}>${esc(F.dayLabels[c])}</option>`).join('\n')}
                 </select>
                 <p class="pf-per"><span class="nums" data-pf="rateNum">${perNum(per0)}</span><span>$ / page</span></p>

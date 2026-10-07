@@ -191,11 +191,7 @@ ${W.items.map(([head, body, , link], i) => {
 module.exports = { section3, section5 };   /* v3 (build/affiliate-v3.js) takes How it works and Why join us */
 if (require.main !== module) return;
 
-const sections = [section1(), section2(), section3(), v1.section4(), section5(), v1.section6(), v1.section7()];
-const html = page.render({ title: esc(COPY.title), meta: COPY.meta, canonical: COPY.canonical, sections });
-fs.writeFileSync(path.join(SITE, OUT), html);
-
-const count = re => (html.match(re) || []).length;
-console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
-console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' + count(/<h2\b/g) + ' h2, ' +
-            count(/<h3\b/g) + ' h3, ' + count(/<img\b/g) + ' images, ' + count(/class="faq-item/g) + ' faq items');
+/* This file writes no page any more. The page it wrote was the first version; the final
+   one is build/affiliate-v3.js (developer's review of 2026-10-07), which takes the page's own name and
+   is built from the parts exported above (How it works and Why join us). */
+console.log('  build/affiliate-v2.js writes no page since 2026-10-07 — run node build/affiliate-v3.js');

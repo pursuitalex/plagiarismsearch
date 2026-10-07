@@ -108,9 +108,8 @@ const pages = [
   ['plagiarism-checker-for-students.html', 'section', 'tint · lg · fluid', 'пігулка'],
   ['turnitin-checker-alternative.html', 'section', 'white · md · fluid', 'пігулка; розгорнуті відповіді; посилання на джерело'],
   ['ua-plagiarism-check.html', 'section', 'tint · md · fluid-narrow', 'без пігулки'],
-  ['affiliate-program-at-plagiarismsearch.html (і -v2)', 'section', 'white · lg · fluid', 'без пігулки; вступ; під вступом — блок сторінки [data-slot="aside"] (картка «Contact Us»); розгорнуті відповіді'],
-  ['scholarship.html', 'section', 'tint · lg · fluid', 'без пігулки й вступу — лише заголовок; розгорнуті відповіді'],
-  ['scholarship-v2.html', 'section', 'white · lg · fluid', 'без пігулки й вступу — лише заголовок; розгорнуті відповіді'],
+  ['affiliate-program-at-plagiarismsearch.html', 'section', 'white · lg · fluid', 'без пігулки; вступ; під вступом — блок сторінки [data-slot="aside"] (картка «Contact Us»); розгорнуті відповіді'],
+  ['scholarship.html', 'section', 'white · lg · fluid', 'без пігулки й вступу — лише заголовок; розгорнуті відповіді'],
   ['user-manuals.html', 'grid', 'fixed', 'усередині user-guide; без .rv; відступ дає хост'],
   ['integration-guide.html', 'frame', 'doc', 'усередині гайду; h3; без .rv'],
 ];

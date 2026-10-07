@@ -18,6 +18,9 @@
                      the section's first period: price, term, rate, each feature line
                    · the switch has one button per period of the data, the first period's
                      pressed
+                   · the "Recurring payments" switch, where a centred section has one, is
+                     the only one, under the tabs, and disabled on a first period the data
+                     gives no one-off price
                    · the period's note (center) is the data's note */
 const C = require('./pricing-preview.contract');
 const { kids, cls, has, walk, label, textOf, rules } = require('./check-tools');
@@ -162,6 +165,26 @@ function checkPricing(el, R) {
     }
   }
 
+  /* ── the "Recurring payments" switch: optional; one, under the tabs of a centred section ──
+     60-pricing.js reads one input[data-recurring] per section and moves all three cards
+     with it, so a second one would be dead; and the state it opens in is the data's — a
+     first period with no one-off price cannot recur */
+  const switches = []; walk(el, n => { if (n.attrs && 'data-recurring' in n.attrs) switches.push(n); });
+  if (switches.length) {
+    const sw = switches[0], box = sw.parent;
+    let under = false; if (periods && periods.attrs['data-slot'] === 'pricing-periods') walk(periods, n => { if (n === sw) under = true; });
+    if (switches.length > 1) E(switches[1], `${label(switches[1])}: one "Recurring payments" switch per section — it moves all three cards (found ${switches.length})`);
+    if (!center) E(sw, `${label(sw)}: the "Recurring payments" switch belongs to data-layout="center"`);
+    if (!under) E(sw, `${label(sw)}: the "Recurring payments" switch belongs inside the period switch's block ([data-slot="pricing-periods"]), under the tabs`);
+    if (sw.tag !== 'input' || sw.attrs.type !== 'checkbox' || !('data-default-on' in sw.attrs)) E(sw, `${label(sw)}: the "Recurring payments" switch is <input type="checkbox" data-recurring data-default-on>, copied as it is`);
+    if (!box || box.tag !== 'label' || !has(box, 'pr-switch')) E(sw, `${label(sw)}: the "Recurring payments" switch sits in its <label class="pr-switch …">, with the track and the label's text`);
+    else { if (!plainText(box)) E(box, `${label(box)}: the "Recurring payments" switch has lost its text`); noPrice(box, 'the switch\'s label'); }
+    if (DATA && DATA[initial]) {
+      const canRecur = TIERS.some(t => DATA[initial][t] && DATA[initial][t].single);
+      if (canRecur === ('disabled' in sw.attrs)) E(sw, `${label(sw)}: the pricing data gives the first period, "${initial}", ${canRecur ? 'a one-off price, so the "Recurring payments" switch opens enabled' : 'no one-off price, so the "Recurring payments" switch opens disabled (the script enables it on a period that can recur)'}`);
+    }
+  }
+
   /* ── the foot ── */
   const foot = p[i];
   if (foot && has(foot, 'pricing-foot')) {
@@ -231,6 +254,9 @@ const BAD = [
   ['the plans pasted without their slot mark', h => h.replace('<div data-slot="pricing-plans" ', '<div ')],
   ['the switch pasted without its slot mark', h => h.replace('<div data-slot="pricing-periods" ', '<div ')],
   ['the switch removed', h => h.replace(/\s*<div data-slot="pricing-periods"[\s\S]*?\n    <\/div>(?=\n    <div data-slot="pricing-plans")/, '')],
+  ['the "Recurring payments" switch enabled on One-time, which cannot recur', h => h.replace(' data-recurring data-default-on disabled>', ' data-recurring data-default-on>')],
+  ['a second "Recurring payments" switch', h => h.replace(/(\s*<label class="pr-switch[\s\S]*?<\/label>)/, '$1$1')],
+  ['the "Recurring payments" switch moved under the cards', h => { const m = h.match(/\s*<label class="pr-switch[\s\S]*?<\/label>/); return m ? h.replace(m[0], '').replace(/(\n    <div class="pricing-foot rv">)/, all => m[0] + all) : h; }],
   ['the first period removed from the section', h => h.replace(' data-pricing="onetime"', '')],
   ['the period\'s note rewritten', h => h.replace(/(data-period-note>)[^<]*/, '$1Cancel anytime · no hidden fees')],
   ['the period\'s note without its hook', h => h.replace(' data-period-note', '')],

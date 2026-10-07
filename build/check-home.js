@@ -200,6 +200,18 @@ console.log('\nforbidden');
     const allowed = new Set(Object.values(PLANS.onetime).flatMap(v => v && typeof v === 'object' ? [v.price, v.rate] : []));
     const shown = [...new Set([...text.matchAll(/\$\s?\d[\d,]*(?:\.\d\d)?/g)].map(m => m[0]))];
     ok('every price in the body comes from the pricing data source', shown.every(p => allowed.has(p)), shown.filter(p => !allowed.has(p)).join(', '));
+
+    /* the Pricing page's "Recurring payments" switch, on the preview too (Olex, 2026-10-07):
+       one, straight under the tabs, in the markup build/check-prices.js holds prices.html
+       to, disabled on the initial One-time tab; every recurring card has its one-off price
+       in the island, or the switch would have nothing to show */
+    const at = body.indexOf('data-component="pricing-preview"');
+    const preview = at < 0 ? '' : body.slice(body.lastIndexOf('<section', at), body.indexOf('</section>', at));
+    const island = JSON.parse((preview.match(/data-pricing-data>([\s\S]*?)<\/script>/) || [])[1] || '{}');
+    const lacking = ['monthly', 'quarterly', 'yearly'].flatMap(k => ['light', 'standard', 'premium'].filter(t => !(island[k] && island[k][t] && island[k][t].single)).map(t => k + '.' + t));
+    ok('"Recurring payments" switch under the pricing tabs, off on One-time, a one-off price for all nine recurring cards',
+       (body.match(/data-recurring/g) || []).length === 1 && /<\/button>\s*<\/div>\s*<label class="pr-switch [^"]*">\s*<input type="checkbox" class="sr-only" data-recurring data-default-on disabled>[\s\S]*?Recurring payments\s*<\/label>/.test(preview) && !lacking.length,
+       lacking.join(', '));
   }
 }
 
@@ -242,8 +254,9 @@ console.log('\nstructure');
      external.map(h => h.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]).join(', '));
 
   /* the AI checkbox must default to off, plagiarism to on */
-  /* by id on the old markup, by order on the shared form (plagiarism first, then AI) */
-  const boxes = [...body.matchAll(/<input type="checkbox"[^>]*>/g)].map(m => m[0]);
+  /* by id on the old markup, by order on the shared form (plagiarism first, then AI);
+     the pricing preview's "Recurring payments" switch is a checkbox too, and not the form's */
+  const boxes = [...body.matchAll(/<input type="checkbox"[^>]*>/g)].map(m => m[0]).filter(b => !/ data-recurring\b/.test(b));
   ok('plagiarism checked by default, AI not',
      (/id="optPlag" checked/.test(body) && !/id="optAI" checked/.test(body)) ||
      (boxes.length === 2 && / checked\b/.test(boxes[0]) && !/ checked\b/.test(boxes[1])));

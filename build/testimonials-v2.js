@@ -1,6 +1,10 @@
-/* Generate site/testimonials-v2.html — Reviews, illustrated. v1 (build/testimonials.js)
-   stays beside it; the switcher (build/version-switch.js) puts the two one click apart
-   until Olex picks one.
+/* Generate site/testimonials.html — Reviews, illustrated.
+
+   The one version of the page: the developer's review of 2026-10-07 selected it ("Version
+   2 as the final version"). It was "v2" beside the first Reviews page; that page is gone
+   and this one took its name, so the links to it never changed. build/testimonials.js is
+   kept for the parts this file takes from it, and writes nothing. This file and its check
+   keep their names.
 
    Everything on the page is still the live page's, read into testimonials-data.json by
    build/testimonials-fetch.js. The opening is in the illustrated manner of Affiliate v2
@@ -27,7 +31,7 @@
    - The four video reviews get a stage: the first one large (YouTube's 1280px still),
      the four as a playlist beside it; a pick plays on the stage (module video-stage).
 
-   Run:  node build/testimonials-v2.js  →  node build/shell.js  →  node build/check-testimonials.js testimonials-v2.html */
+   Run:  node build/testimonials-v2.js  →  node build/shell.js  →  node build/check-testimonials.js */
 const fs = require('fs');
 const path = require('path');
 const page = require('./page');
@@ -54,7 +58,7 @@ D.trust.tiles = D.trust.tiles.map(t => t.key === 'sitejabber'
 const NAME = { ...v1.NAME, sitejabber: SMART.name };
 
 const SITE = path.join(__dirname, '..', 'site');
-const OUT = 'testimonials-v2.html';
+const OUT = 'testimonials.html';
 const IMG = '/assets/img/reviews/';
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -75,8 +79,22 @@ const I = {
 };
 
 /* a chip over a photograph (affiliate-v2.js): under the photo on a phone, floating from sm */
-const chip = (pos, tone, icon, big, small) => `        <span class="${pos} flex items-center gap-3 rounded-2xl bg-white shadow-diffuse-lg pl-2.5 pr-4 lg:pr-5 py-2.5">
-          <span class="w-10 h-10 rounded-full ${tone} flex items-center justify-center shrink-0">${ico(I[icon], '#fff')}</span>
+/* The platforms' own marks and logos, wherever the page shows a platform's rating (Olex,
+   2026-10-07). The files are his: exported from his Figma frame (file sgIVt3vKOgTIT2LMpBIaNg,
+   node 3688:32620) into site/assets/svg/reviews/ — a mark for each platform (Trustpilot's
+   star, SmartCustomer's star, Google's G) and the full logo of the two that have a wall of
+   reviews here. Google Workspace Marketplace wears the Google mark.
+     mark  — beside a printed name (the hero chips, the three tiles): decorative, alt empty;
+     logo  — in place of the printed name, over a platform's score: its alt is the name. */
+const SVG = '/assets/svg/reviews/';
+const MARK = { trustpilot: 'trustpilot-mark.svg', sitejabber: 'smartcustomer-mark.svg', 'google-workspace': 'google-mark.svg' };
+const LOGO = { trustpilot: ['trustpilot-logo.svg', 318, 78], sitejabber: ['smartcustomer-logo.svg', 480, 78] };
+const mark = (key, cls) => `<img src="${SVG}${MARK[key]}" alt="" aria-hidden="true" width="78" height="78" class="${cls} shrink-0">`;
+const logo = (key, cls) => `<img src="${SVG}${LOGO[key][0]}" alt="${NAME[key]}" width="${LOGO[key][1]}" height="${LOGO[key][2]}" class="${cls} w-auto">`;
+
+/* a chip over the hero photograph: the platform's mark on a white disc, its figure, its name */
+const chip = (pos, key, big, small) => `        <span class="${pos} flex items-center gap-3 rounded-2xl bg-white shadow-diffuse-lg pl-2.5 pr-4 lg:pr-5 py-2.5">
+          <span class="w-10 h-10 rounded-full bg-white ring-1 ring-black/[.07] flex items-center justify-center shrink-0">${mark(key, 'w-5 h-5')}</span>
           <span class="flex flex-col">
             <span class="text-[15px] sm:text-[16px] font-extrabold tracking-tight leading-tight nums">${big}</span>
             <span class="text-[12px] sm:text-[12.5px] text-ink-500 leading-snug">${small}</span>
@@ -104,8 +122,8 @@ const section1 = () => `  <!-- ================= 01 · HERO / REVIEWS ==========
         <div class="rv relative min-w-0">
           <img src="${IMG}hero.webp" alt="" width="1000" height="1241" class="w-full rounded-3xl sm:rounded-[28px] lg:rounded-4xl shadow-diffuse" fetchpriority="high">
           <div class="mt-3 flex flex-col gap-2.5 sm:mt-0">
-${chip('sm:absolute sm:-right-4 lg:-right-6 sm:top-10', 'bg-teal-500', 'star', TP.rating + ' / ' + TP.max, NAME.trustpilot)}
-${chip('sm:absolute sm:-left-4 lg:-left-6 sm:bottom-14', 'bg-orange-500', 'star', SJ.rating + ' / ' + SJ.max, NAME.sitejabber)}
+${chip('sm:absolute sm:-right-4 lg:-right-6 sm:top-10', 'trustpilot', TP.rating + ' / ' + TP.max, NAME.trustpilot)}
+${chip('sm:absolute sm:-left-4 lg:-left-6 sm:bottom-14', 'sitejabber', SJ.rating + ' / ' + SJ.max, NAME.sitejabber)}
           </div>
         </div>
       </div>
@@ -113,7 +131,6 @@ ${chip('sm:absolute sm:-left-4 lg:-left-6 sm:bottom-14', 'bg-orange-500', 'star'
   </section>`;
 
 /* ═══════════════ 02 · JOIN THOUSANDS ═══════════════ */
-const ICON = { trustpilot: 'icon-rating', sitejabber: 'icon-review', 'google-workspace': 'icon-install' };
 const tile = t => {
   const figure = t.rating != null
     ? `<span class="col-start-2 sm:col-start-auto text-[22px] sm:text-[24px] font-extrabold tracking-tightest leading-none nums">${t.rating} <span class="text-ink-300 font-bold">/</span> ${t.max}</span>`
@@ -121,7 +138,7 @@ const tile = t => {
   /* a grid, not a row: on a phone the figure drops under the name beside the plate
      (a 375px row cannot hold plate, name, stars and "492.000+"); from sm it sits right */
   return `          <a href="${t.url}" rel="nofollow noopener" class="group grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto_auto] items-center gap-x-4 sm:gap-x-5 gap-y-2 rounded-2xl sm:rounded-3xl bg-ink-50 hover:bg-ink-100 p-3.5 sm:p-4 pr-5 sm:pr-6 transition-colors duration-300">
-            <span class="row-span-2 sm:row-span-1 shrink-0 w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-xl sm:rounded-2xl bg-white flex items-center justify-center"><img src="${IMG}${ICON[t.key]}.webp" alt="" width="288" height="288" loading="lazy" decoding="async" class="w-10 h-10 sm:w-11 sm:h-11"></span>
+            <span class="row-span-2 sm:row-span-1 shrink-0 w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-xl sm:rounded-2xl bg-white flex items-center justify-center">${mark(t.key, 'w-8 h-8 sm:w-9 sm:h-9')}</span>
             <span class="min-w-0 flex-1 flex flex-col gap-1.5">
               <span class="text-[14px] sm:text-[14.5px] font-bold tracking-tight">${NAME[t.key]}</span>
               <span class="flex items-center gap-2.5">${stars(t.stars)}${t.reviewsCount ? `<span class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-ink-600 nums">${ico(I.message, '#6B7280', 13)}${t.reviewsCount}</span>` : ''}</span>
@@ -133,8 +150,8 @@ const tile = t => {
 
 const section2 = () => `  <!-- ================= 02 · JOIN THOUSANDS =================
        A photograph left (opposite the hero's), the heading, the line and the three
-       platform tiles right — each tile a link to the platform, its spot icon on a white
-       plate, the live figures beside the system's stars. -->
+       platform tiles right — each tile a link to the platform, the platform's own mark on
+       a white plate, the live figures beside the system's stars. -->
   <section id="join-thousands" data-component="photo-tiles" class="relative py-16 sm:py-24 lg:py-28 bg-white">
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-center">
@@ -218,7 +235,7 @@ const trustpilotWall = () => `  <!-- ================= TRUSTPILOT, IN ITS MANNER
     <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
       <div class="rv grid lg:grid-cols-[auto_1fr] gap-6 lg:gap-12 items-center rounded-2xl sm:rounded-3xl bg-white ring-1 ring-[#E5E5DD] p-6 sm:p-8 lg:p-10 mb-10 sm:mb-12">
         <div class="flex flex-col gap-2.5 lg:pr-12 lg:border-r lg:border-[#E5E5DD]">
-          <p class="text-[13px] font-semibold text-[#191919]/60">${NAME.trustpilot}</p>
+          <p>${logo('trustpilot', 'h-6 sm:h-7')}</p>
           <p class="flex items-baseline gap-3"><span class="text-[clamp(2.6rem,4vw,3.4rem)] font-extrabold tracking-tightest leading-none text-[#191919] nums">${P_TP.rating}</span><span class="text-[15px] font-semibold text-[#191919]/50 nums">/ ${P_TP.max}</span></p>
           ${P_TP.textRating ? `<p class="text-[17px] font-bold text-[#191919]">${esc(P_TP.textRating)}</p>` : ''}
           ${tpStars(P_TP.stars, true)}
@@ -262,7 +279,7 @@ const sitejabberRows = () => `  <!-- ================= SMARTCUSTOMER, IN ITS MAN
           <blockquote class="text-[15px] sm:text-[16px] lg:text-[17px] leading-[1.7] text-[#374151] max-w-[70ch]">${esc(P_SJ.featured.text)}</blockquote>
         </figure>
         <div class="order-1 lg:order-2 flex flex-col gap-2.5 lg:pl-12 lg:border-l lg:border-[#E4E8EE]">
-          <p class="text-[13px] font-semibold text-[#6B7280]">${NAME.sitejabber}</p>
+          <p>${logo('sitejabber', 'h-6 sm:h-7')}</p>
           <p class="flex items-center gap-3">${scStars(P_SJ.stars, true)}<span class="text-[clamp(1.8rem,2.8vw,2.3rem)] font-extrabold tracking-tightest leading-none text-[#111827] nums">${P_SJ.rating} <span class="text-[#9CA3AF] font-bold">/</span> ${P_SJ.max}</span></p>
           <p class="text-[13.5px] text-[#4B5563]">Based on <a href="${P_SJ.url}" rel="nofollow noopener" class="font-semibold text-[#1E7FD0] underline decoration-[#1E7FD0]/30 underline-offset-4 hover:decoration-[#1E7FD0] nums">${P_SJ.count} reviews</a></p>
         </div>

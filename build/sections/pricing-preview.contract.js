@@ -53,7 +53,7 @@ const hooks = { glow: ['orb'], block: ['rv'] };
 
 /* the sealed slots: rendered by build/pricing.js, copied as they are */
 const slots = {
-  'pricing-periods': 'the period switch (.period-btn buttons, one per period of the data)',
+  'pricing-periods': 'the period switch (.period-btn buttons, one per period of the data); in center, optionally with the "Recurring payments" switch under the tabs (label.pr-switch > input[data-recurring])',
   'pricing-plans': 'the plan cards ([data-tier]) with the feature-line template and the JSON island of the pricing data',
 };
 
@@ -81,6 +81,7 @@ const editable = [
 const locked = [
   'ЦІНИ. Назви тарифів, ціни, ставка за 1000 слів, квоти, періоди, позначка Recommended і кнопки тарифів — не текст сторінки. Вони приходять з єдиного джерела даних (build/pricing-data.js; у продакшні — віджет бекенду, DEC-0042) і вписані в два запечатані блоки. Жодної цифри в них редактор не змінює',
   'перемикач періодів — блок [data-slot="pricing-periods"]: копіюється як є',
+  'перемикач «Recurring payments» (center, де він є) — label.pr-switch > input[data-recurring] у тому ж блоці, під вкладками: один на три картки, копіюється разом із блоком. Увімкнений — картки показують ціну підписки, вимкнений — разову ціну періоду (single з даних); на One-time, де підписки немає, він вимкнений і неактивний (disabled). Валідатор відхиляє другий перемикач, перемикач поза блоком або в split, і перемикач без disabled на початковому періоді без разової ціни',
   'картки тарифів — блок [data-slot="pricing-plans"]: копіюється як є, разом із <template data-pricing-feat> і <script type="application/json" data-pricing-data> усередині. Це «острів» даних: із нього скрипт бере цифри для інших періодів. Без нього перемикач не працює',
   'валідатор відхиляє секцію, якщо: острова немає або він не читається; острів відрізняється від джерела даних (змінена ціна, квота чи період); цифри в картках не збігаються з островом для початкового періоду; кнопки перемикача не відповідають періодам острова',
   'data-pricing="onetime" (початковий період) і data-pricing-animate на секції — гачки скрипта build/assets/js/60-pricing.js; data-component="pricing-preview", data-layout, data-bg, data-space — обов’язкові',

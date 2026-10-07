@@ -5,7 +5,7 @@
    an approved page, read back from site/ as it stands there — the approved copy, the
    approved configuration — with only its anchor id renamed (catalogue-tools.js). Run
    after the page generators. */
-const { sectionOf } = require('./catalogue-tools');
+const { sectionOf, kept } = require('./catalogue-tools');
 
 /* the cards section of a page, under an example id; `own`: the section's id on the page,
    where the page has two */
@@ -18,8 +18,8 @@ const snippets = [
     html: cardsOf('pdf-plagiarism-checker.html', 'example-cards-grid') },
   { file: 'feature-cards-inline-head.html', name: 'Feature cards · заголовок у першій комірці',
     about: 'data-head="inline": заголовок і вступ стоять першою коміркою сітки, далі картки (тут п’ять); у тексті картки може бути посилання a.cards-link. Копія — Affiliate Program.',
-    uses: 'affiliate-program-at-plagiarismsearch (#why-join-us)',
-    html: cardsOf('affiliate-program-at-plagiarismsearch.html', 'example-cards-inline', 'why-join-us') },
+    uses: 'жодна сторінка зараз — приклад збережено з першої версії Affiliate Program (сторінку прибрано 2026-10-07)',
+    html: kept('feature-cards-inline-head.html') },
   { file: 'feature-cards-compact.html', name: 'Feature cards · картки сторінки API (compact)',
     about: 'data-size="compact": пласка плитка на найсвітлішому тоні, менший текст; на бірюзовому тлі. Копія — API.',
     uses: 'api (#api-use-cases)',
@@ -40,7 +40,6 @@ const snippets = [
 
 const pages = [
   ['pdf-plagiarism-checker.html', 'section', 'grid · cool · lg', '4 картки, остання акцентна; світла кнопка'],
-  ['affiliate-program-at-plagiarismsearch.html (#why-join-us)', 'section', 'grid · cool · lg · head inline', 'заголовок у сітці + 5 карток; посилання в тексті'],
   ['api.html (#api-use-cases)', 'section', 'grid · aqua · lg · compact', '3 картки; блок заголовка 760'],
   ['index.html', 'section', 'grid · cool · md · lead', '3 картки з кнопкою ghost; блок заголовка 720'],
   ['plagiarism-checker-for-organization.html (#data-handling)', 'section', 'panel · white · lg', '3 комірки; примітка і світла кнопка'],

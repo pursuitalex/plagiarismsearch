@@ -1,5 +1,11 @@
-/* Generate site/affiliate-program-at-plagiarismsearch-v3.html — the Affiliate Program with
-   the old site's opening, redrawn. v1 and v2 stay beside it; the switcher shows 1 · 2 · 3.
+/* Generate site/affiliate-program-at-plagiarismsearch.html — the Affiliate Program with
+   the old site's opening, redrawn.
+
+   The one version of the page: the developer's review of 2026-10-07 confirmed it ("proceed
+   with Version 3 as the final version"). It was "v3" beside two earlier pages; those are
+   gone and this one took the page's name, so the links to it never changed.
+   build/affiliate.js and build/affiliate-v2.js are kept for the parts this file takes from
+   them, and write nothing. This file and its check keep their names.
 
    Olex, 2026-10-06: on the old page (plagiarismsearch.com/affiliate-program-at-
    plagiarismsearch) he likes the first screen and how it runs into the second — the
@@ -34,7 +40,7 @@
    The hero is page-specific: Section Library V1 is frozen, and a one-off composition is
    not a reason to extend it.
 
-   Run:  node build/affiliate-v3.js  →  node build/shell.js  →  node build/check-affiliate.js affiliate-program-at-plagiarismsearch-v3.html */
+   Run:  node build/affiliate-v3.js  →  node build/shell.js  →  node build/check-affiliate.js */
 const fs = require('fs');
 const path = require('path');
 const page = require('./page');
@@ -44,7 +50,7 @@ const v2 = require('./affiliate-v2');
 const { COPY } = v1;
 
 const SITE = path.join(__dirname, '..', 'site');
-const OUT = 'affiliate-program-at-plagiarismsearch-v3.html';
+const OUT = 'affiliate-program-at-plagiarismsearch.html';
 const IMG = '/assets/img/affiliate/';
 const JOIN = 'https://app.plagiarismsearch.com/affiliate';
 

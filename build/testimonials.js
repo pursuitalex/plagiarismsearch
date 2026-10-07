@@ -208,11 +208,7 @@ ${D.videos.items.map(v => `        <figure class="rounded-2xl sm:rounded-3xl bg-
 module.exports = { D, NAME, platform, section4 };
 if (require.main !== module) return;
 
-const sections = [section1(), section2(), platform('trustpilot', 'bg-[#F7FAFC]'), section4(), platform('sitejabber', 'bg-[#F7FAFC]')];
-const html = page.render({ title: esc(D.title), meta: D.meta, canonical: 'https://plagiarismsearch.com/testimonials', sections });
-fs.writeFileSync(path.join(SITE, OUT), html);
-
-const count = re => (html.match(re) || []).length;
-console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
-console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' + count(/<h2\b/g) + ' h2, ' +
-            count(/<h3\b/g) + ' h3 (review titles), ' + count(/more-later/g) + ' behind "Show more"');
+/* This file writes no page any more. The page it wrote was the first version; the final
+   one is build/testimonials-v2.js (developer's review of 2026-10-07), which takes the page's own name and
+   is built from the parts exported above (the data, the review walls, the videos). */
+console.log('  build/testimonials.js writes no page since 2026-10-07 — run node build/testimonials-v2.js');

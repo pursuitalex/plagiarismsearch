@@ -144,7 +144,7 @@ ${checker.dropZone({ tag: 'label', attrs: 'for="sp-file" data-sp-drop', cls: 'sp
           <!-- the one choice this check has, beside the button it modifies -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6 pt-4 border-t border-ink-100">
             <label class="flex items-center gap-2 text-ink-500 min-w-0">${ico(I.globe, 'currentColor', 15, 1.75)}
-              <select data-sp="lang" class="sp-select min-w-0" aria-label="${esc(H.languages[0])}">
+              <select data-sp="lang" class="dd-select sp-select min-w-0" aria-label="${esc(H.languages[0])}">
 ${H.languages.map((l, i) => `                <option${i ? '' : ' selected'}>${esc(l)}</option>`).join('\n')}
               </select>
             </label>

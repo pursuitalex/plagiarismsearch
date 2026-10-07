@@ -9,13 +9,18 @@
       <h2 class="section-title">Choose a plan</h2>
       <p class="section-intro">Need more than the free check? Compare one-time and subscription options, or view all pricing details.</p>
     </div>
-    <div data-slot="pricing-periods" class="rv flex justify-center mb-8 sm:mb-10 lg:mb-12">
+    <div data-slot="pricing-periods" class="rv flex flex-col items-center gap-3 mb-8 sm:mb-10 lg:mb-12">
       <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" role="group" aria-label="Billing period">
         <button type="button" data-period="onetime" aria-pressed="true" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500 active">One-time</button>
         <button type="button" data-period="monthly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">Monthly</button>
         <button type="button" data-period="quarterly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">3-Months</button>
         <button type="button" data-period="yearly" aria-pressed="false" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500">Yearly</button>
       </div>
+      <label class="pr-switch inline-flex items-center gap-2.5 rounded-full bg-white ring-1 ring-black/5 shadow-sm pl-2 pr-4 py-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 whitespace-nowrap">
+        <input type="checkbox" class="sr-only" data-recurring data-default-on disabled>
+        <span class="pr-switch-track" aria-hidden="true"></span>
+        Recurring payments
+      </label>
     </div>
     <div data-slot="pricing-plans" class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-auto mb-8 sm:mb-10 lg:mb-12">
       <div data-tier="light" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7">

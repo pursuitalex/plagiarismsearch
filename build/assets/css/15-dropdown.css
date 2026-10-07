@@ -1,0 +1,84 @@
+/* ═══ 15 · the dropdown — a select with the site's own list ═══════════════════════════
+   A component, by class. Write a plain <select class="dd-select …"> with whatever field
+   class it wears (.sp-select) — nothing else. A select of the field recipe,
+   <select class="cf-field">, is one already: no class to add (so the library's Inquiry
+   form is untouched). Behaviour: site.js, module dropdown, which builds the rest round it:
+
+     span.dd                    the box: a grid of one cell, so the select still gives the size
+       select.dd-select         the real control — its value is the form's; kept for a
+                                reader without JS, who gets the browser's own list
+       button.dd-button         what is seen: it takes the select's classes, so a field
+                                looks exactly as it did; .dd-value holds the chosen text
+     ul.dd-list                 the list, appended to <body> so no card can clip it
+       li.dd-option             .is-active — the one under the pointer or the arrow keys;
+                                [aria-selected="true"] — the chosen one, with a tick
+
+   The list scrolls inside itself (wheel, touch, keys) and never drags the page with it.
+   Everything a page may want to tune is a custom property on .dd-list. */
+
+.dd { display:inline-grid; position:relative; min-width:0; vertical-align:middle; }
+.dd.dd-block { display:grid; width:100%; }
+.dd > * { grid-area:1 / 1; min-width:0; }
+/* the select stays in the layout — it is what makes the box as wide as its longest
+   option — but is not seen, not clicked and not in the tab order */
+.dd > .dd-select { opacity:0; pointer-events:none; }
+/* the button. Its look is the field's own classes; what it adds is its chevron — drawn
+   here, not as the field's background, so it can turn up while the list is open. Size,
+   inset and ink are the field recipe's own figures: .sp-select by default, .cf-field below. */
+.dd-button { --dd-chevron-size:13px; --dd-chevron-inset:11px; --dd-chevron-ink:#9CA3AF;
+  position:relative; width:100%; text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  background-image:none; cursor:pointer; }
+.dd-button.cf-field { --dd-chevron-size:12px; --dd-chevron-inset:14px; --dd-chevron-ink:#6B7280; padding-right:36px; }
+.dd-button::after { content:''; position:absolute; top:50%; right:var(--dd-chevron-inset);
+  width:var(--dd-chevron-size); height:var(--dd-chevron-size); margin-top:calc(var(--dd-chevron-size) / -2);
+  background:var(--dd-chevron-ink); pointer-events:none; transition:transform .2s ease;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat; }
+.dd-button[aria-expanded="true"] { border-color:#0CA9C3; }
+.dd-button[aria-expanded="true"]::after { transform:rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .dd-button::after { transition:none; } }
+.dd-button[disabled] { cursor:not-allowed; color:#9CA3AF; background-color:#F8F9FB; }
+.dd-button.is-invalid { border-color:#DC5A45; }
+
+.dd-list {
+  --dd-max: 280px;                 /* the tallest the list grows before it scrolls */
+  --dd-gap: 6px;                   /* between the field and the list */
+  --dd-radius: 12px;
+  --dd-ground: #fff;
+  --dd-ink: #374151;
+  --dd-ink-strong: #111827;
+  --dd-hover: #F1F2F6;             /* the option under the pointer or the keys */
+  --dd-accent: #0991A8;            /* the tick of the chosen option */
+  --dd-rule: rgba(17,24,39,.08);
+  position:absolute; z-index:200; margin:0; padding:6px; list-style:none;
+  max-height:var(--dd-max); overflow-y:auto; overscroll-behavior:contain;
+  border-radius:var(--dd-radius); background:var(--dd-ground); color:var(--dd-ink);
+  box-shadow:0 0 0 1px var(--dd-rule), 0 2px 6px rgba(17,24,39,.05), 0 24px 48px -16px rgba(17,24,39,.22);
+  font-size:13px; font-weight:600; line-height:1.35;
+  animation:dd-in .14s ease-out;
+}
+.dd-list[data-side="top"] { animation-name:dd-in-up; }
+/* the scrollbar: a thumb alone, to show where the list stands — no track, no arrow
+   buttons. Chromium and Safari take the ::-webkit- rules; the standard properties are
+   kept from them (given both, Chromium draws its own bar, arrows and all) and left for
+   Firefox, whose thin bar has no buttons. */
+@supports not selector(::-webkit-scrollbar) { .dd-list { scrollbar-width:thin; scrollbar-color:#D1D5DB transparent; } }
+.dd-list::-webkit-scrollbar { width:10px; }
+.dd-list::-webkit-scrollbar-button { display:none; width:0; height:0; }
+.dd-list::-webkit-scrollbar-track, .dd-list::-webkit-scrollbar-corner { background:transparent; }
+.dd-list::-webkit-scrollbar-thumb { background:#D1D5DB; border-radius:9999px; border:3px solid var(--dd-ground); }
+.dd-list::-webkit-scrollbar-thumb:hover { background:#9CA3AF; }
+
+.dd-option { display:flex; align-items:center; justify-content:space-between; gap:12px;
+  min-height:36px; padding:8px 10px; border-radius:8px; cursor:pointer; }
+.dd-option.is-active { background:var(--dd-hover); color:var(--dd-ink-strong); }
+.dd-option[aria-selected="true"] { color:var(--dd-ink-strong); font-weight:700; }
+.dd-option[aria-selected="true"]::after { content:''; flex:none; width:14px; height:14px; background:var(--dd-accent);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat; }
+.dd-option[aria-disabled="true"] { color:#C4C8CF; cursor:not-allowed; }
+.dd-option[aria-disabled="true"].is-active { background:transparent; color:#C4C8CF; }
+
+@keyframes dd-in { from { opacity:0; transform:translateY(-4px); } }
+@keyframes dd-in-up { from { opacity:0; transform:translateY(4px); } }
+@media (prefers-reduced-motion: reduce) { .dd-list { animation:none; } }

@@ -4,7 +4,7 @@
    approved page, read back from site/ as it stands there — the approved copy, the
    approved configuration — with only its anchor id renamed (catalogue-tools.js). Run
    after the page generators. */
-const { sectionOf } = require('./catalogue-tools');
+const { sectionOf, kept } = require('./catalogue-tools');
 
 /* the steps section of a page, under an example id; `own`: the section's id on the page,
    where the page has two */
@@ -49,8 +49,8 @@ const snippets = [
     html: stepsOf('plagiarism-checker-for-organization.html', 'example-steps-rows') },
   { file: 'steps-rows-icon.html', name: 'Steps · рядки з іконкою і підписом (rows, icon)',
     about: 'data-marker="icon": у рядку ще плитка з іконкою та підпис «Step 1» над назвою; аркуш — список <ol>. Копія — Affiliate Program.',
-    uses: 'affiliate-program-at-plagiarismsearch',
-    html: stepsOf('affiliate-program-at-plagiarismsearch.html', 'example-steps-rows-icon') },
+    uses: 'жодна сторінка зараз — приклад збережено з першої версії Affiliate Program (сторінку прибрано 2026-10-07)',
+    html: kept('steps-rows-icon.html') },
 ];
 
 const pages = [
@@ -63,7 +63,6 @@ const pages = [
   ['api.html', 'section', 'cards · badge · white · lg', '4 картки (<div>); запечатана схема; блок заголовка 760'],
   ['ai-detector.html', 'section', 'cards · badge-sm · aqua · lg', '3 картки (<div>); рядок із посиланням; блок заголовка 760'],
   ['plagiarism-checker-for-organization.html', 'section', 'rows · white · lg', '3 рядки з мітками'],
-  ['affiliate-program-at-plagiarismsearch.html', 'section', 'rows · icon · cool · lg', '3 рядки (<ol>) з іконкою і підписом'],
 ];
 
 module.exports = {

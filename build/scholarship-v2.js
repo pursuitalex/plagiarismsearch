@@ -1,6 +1,10 @@
-/* Generate site/scholarship-v2.html — the 2026 Scholarship, illustrated. v1
-   (build/scholarship.js) stays beside it; the switcher (build/version-switch.js) puts
-   the two one click apart until Olex picks one.
+/* Generate site/scholarship.html — the 2026 Scholarship, illustrated.
+
+   The one version of the page: the developer's review of 2026-10-07 selected it ("Version
+   2 as the final version"). It was "v2" beside the first Scholarship page; that page is
+   gone and this one took its name, so the links to it never changed. build/scholarship.js
+   is kept for the parts this file takes from it, and writes nothing. This file and its
+   check keep their names.
 
    Same words as v1 — the live page's, verbatim, from scholarship.js COPY — in the same
    order. The manner is the illustrated one of Affiliate v2 (IMAGES.md §8): photographs in
@@ -19,7 +23,7 @@
      every title and text unchanged, no heading invented (Olex, 2026-09-30).
    The prompts, the FAQ and the form are v1's sections, unchanged but for their grounds.
 
-   Run:  node build/scholarship-v2.js  →  node build/shell.js  →  node build/check-scholarship.js scholarship-v2.html */
+   Run:  node build/scholarship-v2.js  →  node build/shell.js  →  node build/check-scholarship.js */
 const fs = require('fs');
 const path = require('path');
 const page = require('./page');
@@ -28,7 +32,7 @@ const v1 = require('./scholarship');
 const { COPY } = v1;
 
 const SITE = path.join(__dirname, '..', 'site');
-const OUT = 'scholarship-v2.html';
+const OUT = 'scholarship.html';
 const IMG = '/assets/img/scholarship/';
 const FORM = '#app-form-1';
 

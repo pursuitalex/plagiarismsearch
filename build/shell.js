@@ -107,18 +107,10 @@ const PAGES = {
   'plagiarism-checker-for-organization.html': { active: 'solutions', static: true },
   /* the Affiliate Program — no brief, the live copy verbatim (2026-09-30); footer-only */
   'affiliate-program-at-plagiarismsearch.html': { active: null, static: true },
-  /* its illustrated version, beside it until one is picked (build/version-switch.js) */
-  'affiliate-program-at-plagiarismsearch-v2.html': { active: null, static: true },
-  /* and the old site's opening redrawn — version 3 (build/affiliate-v3.js) */
-  'affiliate-program-at-plagiarismsearch-v3.html': { active: null, static: true },
   /* the Scholarship — no brief, the live copy verbatim (2026-09-30); footer-only */
   'scholarship.html': { active: null, static: true },
-  /* its illustrated version, beside it until one is picked (build/version-switch.js) */
-  'scholarship-v2.html': { active: null, static: true },
   /* Reviews — no brief, the live page's reviews via build/testimonials-data.json (2026-09-30) */
   'testimonials.html': { active: 'company', static: true },
-  /* its illustrated version, beside it until one is picked (build/version-switch.js) */
-  'testimonials-v2.html': { active: 'company', static: true },
   'paper-analysis.html':         { active: null, static: true },
   'readability-check.html':      { active: null, static: true },
   'spell-check.html':            { active: null, static: true },

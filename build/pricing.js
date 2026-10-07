@@ -49,20 +49,39 @@ const island = (plans = PLANS) => `<script type="application/json" data-pricing-
 
      pricing.periods({ align: 'center' })       the switch, centred (the homepage) or at the
                                                 column's edge ('start', Turnitin)
+     pricing.periods({ recurring: 'Recurring payments' })
+                                                centred only: under the tabs, the Pricing
+                                                page's switch on its white pill, with that
+                                                label (60-pricing.js, input[data-recurring]) —
+                                                one for the three cards, which show a period's
+                                                one-off `single` price while it is off
      pricing.plans({ style: 'spotlight', href }) the homepage's cards: the recommended plan
                                                 dark and raised, the others white
      pricing.plans({ style: 'even', href })     three equal white cards with dark buttons
    href: where a card's button leads. `initial`: the period shown first ('onetime'). */
 const { LABEL, TAGLINE } = require('./pricing-data');
 const TABS = [['onetime', 'One-time'], ['monthly', 'Monthly'], ['quarterly', '3-Months'], ['yearly', 'Yearly']];
+const TIERS = ['light', 'standard', 'premium'];
 const SPARK = '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>';
 
-function periods({ align = 'center', initial = 'onetime' } = {}) {
+function periods({ align = 'center', initial = 'onetime', recurring } = {}) {
   if (!['center', 'start'].includes(align)) throw new Error('pricing: align must be center or start');
-  return `<div data-slot="pricing-periods" class="rv flex ${align === 'center' ? 'justify-center mb-8 sm:mb-10 lg:mb-12' : 'mb-7 sm:mb-8 lg:mb-10'}">
+  if (recurring && align !== 'center') throw new Error('pricing: the "Recurring payments" switch sits under the centred tabs only');
+  /* the Pricing page's switch, as build/prices-v2.js writes it, in the state the script
+     would leave it: a period with no one-off price cannot recur, so there it is off and
+     disabled */
+  const canRecur = TIERS.some(tier => PLANS[initial][tier].single);
+  const toggle = recurring ? `
+  <label class="pr-switch inline-flex items-center gap-2.5 rounded-full bg-white ring-1 ring-black/5 shadow-sm pl-2 pr-4 py-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-700 whitespace-nowrap">
+    <input type="checkbox" class="sr-only" data-recurring data-default-on${canRecur ? ' checked' : ' disabled'}>
+    <span class="pr-switch-track" aria-hidden="true"></span>
+    ${recurring}
+  </label>` : '';
+  const box = recurring ? 'flex-col items-center gap-3 mb-8 sm:mb-10 lg:mb-12' : align === 'center' ? 'justify-center mb-8 sm:mb-10 lg:mb-12' : 'mb-7 sm:mb-8 lg:mb-10';
+  return `<div data-slot="pricing-periods" class="rv flex ${box}">
   <div class="inline-flex items-center rounded-full bg-ink-100 p-1 max-w-full overflow-x-auto" role="group" aria-label="Billing period">
 ${TABS.map(([k, label]) => `    <button type="button" data-period="${k}" aria-pressed="${k === initial}" class="period-btn whitespace-nowrap rounded-full px-3.5 sm:px-5 lg:px-6 py-2.5 text-[13px] sm:text-[13.5px] font-semibold text-ink-500${k === initial ? ' active' : ''}">${label}</button>`).join('\n')}
-  </div>
+  </div>${toggle}
 </div>`;
 }
 
@@ -70,7 +89,6 @@ function plans({ style, href, initial = 'onetime' } = {}) {
   if (!['spotlight', 'even'].includes(style)) throw new Error('pricing: style must be spotlight or even');
   if (!href) throw new Error('pricing: href (where a card\'s button leads) is required');
   const P = PLANS[initial];
-  const TIERS = ['light', 'standard', 'premium'];
   if (style === 'even') return `<div data-slot="pricing-plans" class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-stretch mb-8 sm:mb-10">
 ${TIERS.map(tier => `  <div data-tier="${tier}" class="rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-white ring-1 ring-black/5 shadow-diffuse p-5 sm:p-6 lg:p-7 flex flex-col">
     <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-orange-600 mb-1.5">${tier}</span>

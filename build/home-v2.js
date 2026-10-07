@@ -134,6 +134,8 @@ const COPY = {
     placeholder: 'BACKEND-SUPPLIED CURRENT PRICE / WORD QUOTA / APPROVED ENTITLEMENT FIELDS',
     cta: 'See all pricing options',
     ctaHref: 'prices.html',
+    /* not the brief's: the Pricing page's own label, for the same switch (Olex, 2026-10-07) */
+    recurring: 'Recurring payments',
   },
 
   s12: {
@@ -566,6 +568,9 @@ const section11 = () => `
 ${pricingPreview.section({
   layout: 'center', space: 'md',
   head: { eyebrow: 'Plans &amp; pricing', title: S.s11.h2, intro: S.s11.intro },
+  /* under the tabs, the Pricing page's "Recurring payments" switch — one for the three
+     cards, off on One-time (Olex, 2026-10-07) */
+  recurring: S.s11.recurring,
   /* the plans' own buttons and the line under the cards lead to the Pricing page. The
      brief calls the latter the primary CTA; Olex asked for it as a quiet text link, since
      each card now carries its own button. The label and destination are the brief's,

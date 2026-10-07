@@ -354,11 +354,7 @@ ${cta.section({
 module.exports = { COPY, section2, section4, section6, section7 };
 if (require.main !== module) return;
 
-const sections = [section1, section2, section3, section4, section5, section6, section7];
-const html = page.render({ title: esc(COPY.title), meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
-fs.writeFileSync(path.join(SITE, OUT), html);
-
-const count = re => (html.match(re) || []).length;
-console.log('  site/' + OUT + ' — ' + html.length + ' bytes');
-console.log('  ' + count(/<section\b/g) + ' sections, ' + count(/<h1\b/g) + ' h1, ' +
-            count(/<h2\b/g) + ' h2, ' + count(/<h3\b/g) + ' h3, ' + count(/class="faq-item/g) + ' faq items');
+/* This file writes no page any more. The page it wrote was the first version; the final
+   one is build/affiliate-v3.js (developer's review of 2026-10-07), which takes the page's own name and
+   is built from the parts exported above (the copy, the tools sheet, the programs, the FAQ, the closing band). */
+console.log('  build/affiliate.js writes no page since 2026-10-07 — run node build/affiliate-v3.js');

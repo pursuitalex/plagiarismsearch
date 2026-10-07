@@ -56,7 +56,6 @@ const pages = [
   ['ua-plagiarism-check.html', 'section', 'split', 'чекер (форма lang="en")'],
   ['plagiarism-checker-for-organization.html', 'section', 'hub · note 58', 'пігулка; два абзаци; кнопка + посилання; примітка; схема'],
   ['university-plagiarism-checker.html', 'section', 'hub · lead 62', 'пігулка; кнопка + посилання; примітка; схема'],
-  ['affiliate-program-at-plagiarismsearch.html', 'section', 'hub', 'пігулка; кнопка + посилання; картка з фактами в блоці media'],
 ];
 
 module.exports = {

@@ -32,7 +32,8 @@
    and turning it off buys the same package once, at a higher price and through a different
    checkout. `single` is that one-off price and rate, read off plagiarismsearch.com/prices by
    switching each of the nine cards (2026-09-30). The Pricing page shows one switch for all
-   three cards (60-pricing.js, [data-recurring]); the homepage has none and ignores it. */
+   three cards (60-pricing.js, [data-recurring]), and since 2026-10-07 so does the homepage's
+   preview, under its tabs; a preview without the switch (Turnitin) ignores `single`. */
 const PLANS = {
   onetime: {
     note: 'One payment · packages never expire',
