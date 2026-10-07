@@ -34,6 +34,7 @@ const BUILT = [
   { file: 'mission.html',                path: '/plagiarismsearch-mission-and-core-values' },
   { file: 'contact-us.html',             path: '/contact-us' },
   { file: 'help-center.html',            path: '/help-center' },
+  { file: 'faq-and-support.html',        path: '/faq-and-support', note: 'Support & Frequently Asked Questions. No brief: the live page\'s H1, nine group names, sixty-two questions and answers and the inquiry form, word for word (build/faq-data.json, read by build/faq-fetch.js). The arrangement is new: jump links in the hero, one library FAQ section a group with a schematic figure of our own interface in place of the live stock picture (build/faq/figures.js), the library Inquiry form. In the header under Resources, in the footer and on the Help Center\'s FAQ card (Olex, 2026-10-07). Built by build/faq.js, checked by build/check-faq.js.' },
   { file: 'blog.html',                   path: '/blog' },
   { file: 'blog-best-checker-2026.html', path: '/blog/best-plagiarism-checker-in-2026' },
   { file: 'university-plagiarism-checker.html', path: '/university-plagiarism-checker', note: 'The University page to the v2 brief of 2026-09-04: nine sections, a proof type per act (hub, report, relationship map, source map, decision tree). Built by build/university-v2.js, checked by build/check-university-v2.js.' },

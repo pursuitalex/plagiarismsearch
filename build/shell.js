@@ -62,6 +62,8 @@ const PAGES = {
   'api.html':                    { active: 'products', static: true },   /* DEC-0041 */
   'prices.html':                 { active: 'pricing', static: true },    /* DEC-0042 */
   'help-center.html':            { active: 'resources', static: true },
+  /* Support & FAQ, from the live page (2026-10-07) — a Resources page */
+  'faq-and-support.html':        { active: 'resources', static: true },
   'blog.html':                   { active: 'resources', static: true },
   'blog-best-checker-2026.html': { active: 'resources', static: true },
   /* About us, to the 2026-09-30 brief (build/about.js) — first in the Company group */
