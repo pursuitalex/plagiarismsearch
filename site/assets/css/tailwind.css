@@ -9859,11 +9859,6 @@ a.team-linkedin:focus-visible {
   margin-right: -1rem;
 }
 
-.mx-1\.5 {
-  margin-left: 0.375rem;
-  margin-right: 0.375rem;
-}
-
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -13561,6 +13556,10 @@ a.team-linkedin:focus-visible {
   writing-mode: vertical-rl;
 }
 
+.first-letter\:uppercase::first-letter {
+  text-transform: uppercase;
+}
+
 .marker\:font-bold *::marker {
   font-weight: 700;
 }
@@ -14093,10 +14092,6 @@ a.team-linkedin:focus-visible {
     display: block;
   }
 
-  .sm\:inline {
-    display: inline;
-  }
-
   .sm\:flex {
     display: flex;
   }
@@ -14264,10 +14259,6 @@ a.team-linkedin:focus-visible {
 
   .sm\:grid-cols-\[8rem_1fr\] {
     grid-template-columns: 8rem 1fr;
-  }
-
-  .sm\:grid-cols-\[9\.5rem_1fr\] {
-    grid-template-columns: 9.5rem 1fr;
   }
 
   .sm\:grid-cols-\[9rem_1fr\] {
@@ -14575,11 +14566,6 @@ a.team-linkedin:focus-visible {
   .sm\:py-24 {
     padding-top: 6rem;
     padding-bottom: 6rem;
-  }
-
-  .sm\:py-3 {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
   }
 
   .sm\:py-3\.5 {

@@ -18,7 +18,8 @@ const team = require('./about/team');
 const CHECKS = [require('./about/team.check'), require('./about/timeline.check')];
 
 const SITE = path.join(__dirname, '..', 'site');
-const html = fs.readFileSync(path.join(SITE, OUT), 'utf8');
+const FILE = process.argv[2] || OUT;
+const html = fs.readFileSync(path.join(SITE, FILE), 'utf8');
 const body = html.slice(html.indexOf('<main>'), html.indexOf('</main>') + 7);
 const unesc = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
 const flat = s => unesc(s.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').replace(/\s+([,.;:!?])/g, '$1').trim();
@@ -57,7 +58,9 @@ console.log('\ncopy, verbatim');
     else if (v && typeof v === 'object') for (const kk in v) walk(v[kk], kk);
   };
   walk(COPY);
-  const missing = strings.filter(s => !text.includes(flat(s)));
+  /* the hero prints the Today line as four chips: the same words without the dots between them */
+  const dots = s => s.replace(/ · /g, ' ');
+  const missing = strings.filter(s => !dots(text).includes(dots(flat(s))));
   ok(strings.length + ' strings of COPY present word for word', !missing.length, missing.slice(0, 3).join(' | '));
 }
 
@@ -71,7 +74,7 @@ console.log('\nfacts and tone (brief §2, §3, §9, §13, §25)');
   const hit = banned.filter(re => re.test(all)).map(String);
   ok(banned.length + ' forbidden wordings absent', !hit.length, hit.join(' '));
   ok('"Growth Lead" only as "SEO & Growth Lead"', (all.match(/Growth Lead/g) || []).length === (all.match(/SEO & Growth Lead/g) || []).length);
-  ok('Oleksandr Kozuliov: Technical Lead, "since the beginning", never a founder, named only in his own profile', /Oleksandr has worked on PlagiarismSearch since the beginning/.test(text) && !/Kozuliov[^.]*found/i.test(text) && (text.match(/Kozuliov/g) || []).length === 1 && (text.match(/found(ed|er)\b/gi) || []).length >= 2);
+  ok('Oleksandr Kozuliov: Technical Lead, "from the beginning", never a founder; named in the Story and in his profile, not in the hero', /Oleksandr Kozuliov has guided the technical development of PlagiarismSearch from the beginning/.test(text) && !/Kozuliov[^.]*found/i.test(text) && (text.match(/Kozuliov/g) || []).length === 2 && (text.match(/found(ed|er)\b/gi) || []).length >= 2);
   ok('Pavlo Kucheruk: the founder, actively involved', /launched in 2009 under founder Pavlo Kucheruk/.test(text) && /Pavlo founded PlagiarismSearch and has stayed actively involved/.test(text));
   ok('AI analysis kept separate from plagiarism checking', (text.match(/AI text detection is added as a capability separate from plagiarism detection/g) || []).length === 1 && (text.match(/separate AI-writing analysis/g) || []).length === 2);
   const years = [...new Set(text.match(/\b(?:19|20)\d\d\b/g) || [])].sort();

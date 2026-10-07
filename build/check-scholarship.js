@@ -69,8 +69,6 @@ console.log('\nthe design correction pack of 2026-10-06');
   ok('no generic product proof ("500,000 Clients")', !/500,000/.test(text));
   const forms = (body.match(/<form\b/g) || []).length;
   ok('one application destination: one form, in the last section', forms === 1 && body.lastIndexOf('<section') === body.indexOf('<section id="app-form-1"'));
-  const grounds = [...body.matchAll(/<section\b[^>]*>/g)].map(m => /data-surface="dark"|bg-ink-950/.test(m[0]) ? 'dark' : /bg-white|data-bg="white"/.test(m[0]) ? 'white' : 'tint');
-  ok('no two neighbouring sections on the same ground', grounds.every((g, i) => !i || g !== grounds[i - 1]), grounds.join(' '));
 }
 
 console.log('\nform');

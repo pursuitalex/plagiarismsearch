@@ -1,0 +1,30 @@
+/* ═══ 33 · About us, the hero's three facts (build/about.js) ═══════════════════════════════════
+   The hero's three facts — launched, founder, today — as one drawing instead of a table:
+   the year large, the founder and the four parts of "today" as chips, a dashed path from
+   one to the next (the Affiliate opening's manner: chips on dashed lines over the tint).
+   A <dl> throughout. Under 1024px it is a plain column and nothing is positioned; from
+   1024px the three are placed in a 440px stage and the path is drawn between them. */
+.abh { position:relative; display:grid; gap:24px; margin:0; }
+.abh dd { margin:0; }
+.abh-path, .abh-dot { display:none; }
+.abh-num { display:block; margin-top:6px; font-size:clamp(4.75rem, 9vw, 7.25rem); font-weight:800; letter-spacing:-.055em; line-height:.86; color:#0A0E1A; }
+.abh-founder { justify-self:start; display:inline-flex; align-items:center; gap:12px; padding:10px 20px 10px 10px; border-radius:18px; background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.05), 0 24px 48px -18px rgba(10,14,26,.2); }
+.abh-avatar { flex:none; width:46px; height:46px; border-radius:50%; background:#0A0E1A; color:#fff; display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:700; letter-spacing:.02em; }
+.abh-chip { display:flex; align-items:center; gap:11px; min-width:0; padding:9px 14px 9px 9px; border-radius:16px; background:#fff;
+  box-shadow:0 0 0 1px rgba(10,14,26,.05), 0 12px 26px -14px rgba(10,14,26,.2);
+  font-size:13.5px; font-weight:600; line-height:1.32; color:#1F2937; }
+.abh-chip > span:last-child { min-width:0; }
+
+@media (min-width:1024px) {
+  .abh { display:block; height:440px; }
+  .abh-path { display:block; position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .abh-path path { stroke:#9CCFD8; stroke-width:1.5; stroke-dasharray:4 5; stroke-linecap:round; vector-effect:non-scaling-stroke; }
+  .abh-dot { display:block; position:absolute; width:8px; height:8px; margin:-4px 0 0 -4px; border-radius:50%; background:#7CC4D0; }
+  .abh-dot-a { left:57%; top:16%; }
+  .abh-dot-b { left:80%; top:59%; }
+  .abh-year { position:absolute; left:0; top:0; }
+  .abh-founder { position:absolute; right:0; top:31%; }
+  .abh-today { position:absolute; left:0; right:0; bottom:0; }
+}

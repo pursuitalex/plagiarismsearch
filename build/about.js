@@ -7,7 +7,7 @@
 
    CORRECTED to the Core 4 Final Correction Pack of 2026-10-05 (new-tasks/new-page-6/): the
    hero's fact sheet down to three ideas (launched, founder, today), a new hero lead, a
-   short Story, no line over the Timeline, two bios a sentence shorter, and the section
+   shorter Story (no milestone sequence), no line over the Timeline, two bios a sentence shorter, and the section
    "How the work connects" gone with nothing in its place. The architecture is the
    approved one: Hero → Story → Timeline → Team → Mission / Contact.
 
@@ -18,9 +18,9 @@
    presented as plagiarism detection.
 
    FIVE SECTIONS
-     01  hero        bespoke     the title, two sentences, an anchor to the team, and a
-                                 fact sheet of three lines instead of a product mock-up
-     02  story       bespoke     Section Header + two sentences
+     01  hero        bespoke     the title, two sentences, an anchor to the team, and the
+                                 three facts drawn as a path instead of a product mock-up
+     02  story       bespoke     Section Header + three short paragraphs
      03  timeline    build/about/timeline.js   the six approved milestones
      04  team        build/about/team.js       nine profiles, all the same size
      05  closing     build/sections/cta-band.js, the shared band — Mission & Values, then Contact
@@ -41,6 +41,7 @@ const page = require('./page');
 const { dotField } = require('./dots');
 const cta = require('./sections/cta-band');
 const sh = require('./sections/section-head');
+const tile = require('./sections/icon-tile');
 const team = require('./about/team');
 const timeline = require('./about/timeline');
 
@@ -75,6 +76,9 @@ const COPY = {
     h2: 'The story behind PlagiarismSearch',
     paras: [
       'PlagiarismSearch launched in 2009 under founder Pavlo Kucheruk.',
+      /* the approved paragraph about the technical lead stays: the pack shortened the Story
+         around it (the milestone sequence went) and did not ask for it to go */
+      'Oleksandr Kozuliov has guided the technical development of PlagiarismSearch from the beginning and, as Technical Lead, is responsible for the whole technical side of the product.',
       'Since then, it has remained an actively developed product, expanding as the ways people create, review, and work with content have changed.',
     ],
     more: 'Why people choose PlagiarismSearch',
@@ -107,7 +111,8 @@ const COPY = {
       { name: 'Oleksandr Kozuliov', role: 'Technical Lead', photo: null, linkedin: '',
         bio: 'Oleksandr has worked on PlagiarismSearch since the beginning and is responsible for the entire technical side of the product. That covers its architecture, day-to-day development and integrations, as well as reliability. He also guides how the technology evolves as new capabilities are added.' },
       { name: 'Denys Olshtynskyi', role: 'Senior Software Engineer', photo: null, linkedin: '',
-        bio: 'Denys works on the technically demanding parts of PlagiarismSearch. His areas include backend systems, architecture and infrastructure, along with complex engineering problems that come up as the product grows.' },
+        /* the second sentence is the correction pack's own (2026-10-05, CHANGE 5), word for word */
+        bio: 'Denys works on the technically demanding parts of PlagiarismSearch. His work focuses on complex engineering problems across backend systems, architecture, infrastructure, and technically demanding product development.' },
       { name: 'Viacheslav Hladun', role: 'SEO & Growth Lead', photo: null, linkedin: '',
         bio: 'Viacheslav leads organic search strategy and analytics, and his role extends well beyond technical SEO. He works on site and information architecture, content and localization strategy, product positioning, landing pages and conversion, and competitor research, and coordinates growth-related work on the website.' },
       { name: 'Viktoriia Bas', role: 'Customer Success Lead', photo: null, linkedin: '',
@@ -156,10 +161,33 @@ const btnLight = (label, href) => `<a href="${href}" class="btn-press inline-fle
 
 /* ═══════════════ 01 · HERO ═══════════════ */
 const H = COPY.hero;
+/* The three facts as a drawing, not a table (Olex, 2026-10-07: the first hero set them as
+   rows in a card; of the two options he kept this one). In the manner of the Affiliate
+   page's opening — chips on dashed lines over the tint. Still a <dl>: three terms, three
+   definitions. The words are COPY.hero.facts; the Today line is split on " · " for its
+   four chips, not retyped. CSS: build/assets/css/33-about-hero.css — under 1024px the
+   three stand in a column and the path is not drawn. */
+const fact = label => { const f = H.facts.find(x => x[0] === label); if (!f) throw new Error('about: no fact "' + label + '"'); return f; };
+const [, YEAR] = fact('Launched');
+const [, FOUNDER] = fact('Founder');
+const TODAY = fact('Today')[2].split(' · ');
+if (TODAY.length !== 4) throw new Error('about: the Today line is drawn as four chips, got ' + TODAY.length);
+const initials = n => n.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+
+/* one Lucide icon and one tone per part of the Today line, in its order */
+const PARTS = [
+  ['teal',   '<path d="m8 11 2 2 4-4"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>'],
+  ['orange', '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>'],
+  ['ink',    '<path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/>'],
+  ['mint',   '<rect width="7" height="7" x="14" y="3" rx="1"/><path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"/>'],
+];
+
 const section1 = () => `  <!-- ================= 01 · HERO / ABOUT PLAGIARISMSEARCH =================
        A company page says so at once: the title, two plain sentences, one neutral
-       action (down to the team) and a fact sheet where a product page would put its
-       mock-up. No checker, no sales CTA. The tint and the dot field are every hero's. -->
+       action (down to the team), and beside them the page's three facts — launched,
+       founder, today — drawn as one dashed path: the year is the large object, the
+       founder and the four parts of "today" are chips. No checker, no sales CTA, no
+       photograph. The tint and the dot field are every hero's. -->
   <section id="about-us" data-component="about-hero" data-bg="tint" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-[#F2FCFC] overflow-hidden">
     ${dotField()}
     <div class="orb absolute orb-hero-teal"></div>
@@ -174,16 +202,35 @@ ${sh.eyebrow(esc(H.eyebrow)).split('\n').map(l => '          ' + l).join('\n')}
           ${btnDark(H.cta, H.ctaHref)}
         </div>
 
-        <div class="rv min-w-0 rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black/[.02] ring-1 ring-black/5 p-1.5 sm:p-2 shadow-diffuse">
-          <div class="rounded-[18px] sm:rounded-[20px] lg:rounded-[calc(2rem-0.5rem)] bg-white shadow-inner-hl px-5 sm:px-6 lg:px-8 py-2 sm:py-3">
-            <h2 class="sr-only">${esc(H.factsLabel)}</h2>
-            <dl class="divide-y divide-ink-100">
-${H.facts.map(([k, v, note], i) => `              <div class="grid sm:grid-cols-[9.5rem_1fr] gap-1.5 sm:gap-6 sm:items-baseline py-4 sm:py-5">
-                <dt class="${CAP} text-ink-500">${esc(k)}</dt>
-                <dd class="min-w-0">${v ? `<span class="block ${i === 0 ? 'text-[clamp(2.2rem,3.2vw,2.9rem)] font-extrabold tracking-tightest leading-none nums' : 'text-[16px] sm:text-[17px] font-bold tracking-tight'}">${esc(v)}</span>` : ''}${note ? `<span class="block ${v ? 'mt-0.5 ' : ''}${SMALL} text-ink-600">${whole(note)}</span>` : ''}</dd>
-              </div>`).join('\n')}
-            </dl>
-          </div>
+        <div class="rv min-w-0">
+          <h2 class="sr-only">${esc(H.factsLabel)}</h2>
+          <dl class="abh">
+            <svg class="abh-path" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M57 16 H 73 Q 80 16 80 23 V 31"/><path d="M80 47 V 59"/></svg>
+            <span class="abh-dot abh-dot-a" aria-hidden="true"></span>
+            <span class="abh-dot abh-dot-b" aria-hidden="true"></span>
+
+            <div class="abh-year">
+              <dt class="${CAP} text-ink-500">${esc(fact('Launched')[0])}</dt>
+              <dd class="abh-num nums">${esc(YEAR)}</dd>
+            </div>
+
+            <div class="abh-founder">
+              <span class="abh-avatar" aria-hidden="true">${initials(FOUNDER)}</span>
+              <div class="flex flex-col-reverse">
+                <dt class="${CAP} text-ink-500">${esc(fact('Founder')[0])}</dt>
+                <dd class="text-[16px] sm:text-[17px] font-bold tracking-tight leading-tight text-ink-900">${esc(FOUNDER)}</dd>
+              </div>
+            </div>
+
+            <div class="abh-today">
+              <dt class="${CAP} text-ink-500 mb-3">${esc(fact('Today')[0])}</dt>
+              <dd>
+                <ul class="grid sm:grid-cols-2 gap-2.5" role="list">
+${TODAY.map((t, i) => `                  <li class="abh-chip">${tile.render({ tone: PARTS[i][0], icon: PARTS[i][1], size: 18 })}<span class="first-letter:uppercase">${whole(t)}</span></li>`).join('\n')}
+                </ul>
+              </dd>
+            </div>
+          </dl>
         </div>
       </div>
     </div>
@@ -192,8 +239,8 @@ ${H.facts.map(([k, v, note], i) => `              <div class="grid sm:grid-cols-
 /* ═══════════════ 02 · THE STORY ═══════════════ */
 const S = COPY.story;
 const section2 = () => `  <!-- ================= 02 · THE STORY BEHIND PLAGIARISMSEARCH =================
-       The history in two sentences, the first set as the lead (the milestones are the
-       Timeline's, not repeated here). The head
+       The history in three short paragraphs, the first set as the lead (the milestones
+       are the Timeline's, not repeated here). The head
        sits left and the prose right, so nothing leaves a gap down one side. The quiet
        link after the prose is the one contextual way to Why us — this page is who, that
        page is why. -->
