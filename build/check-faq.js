@@ -106,7 +106,7 @@ console.log('\nstructure');
 console.log('\ngates — open items, not defects');
 console.log('  G1    The answers are the live page\'s and some no longer agree with the approved pages (file size 64 MB / 2 MB vs 24 MB; "Moodle now, Canvas and Blackboard planned"; the report\'s colours; "will not be added to any databases" vs Storage). Content is the client\'s to update.');
 console.log('  G2    The live "Live Chat" button is not carried: the prototype has no chat to open.');
-console.log('  G3    Linked from the header (Resources), the footer and the Help Center\'s FAQ card. The two "Visit the Help Center" links (AI Detector, Pricing) still go to the live /faq-and-support.');
+console.log('  G3    Linked from the header (Resources), the footer, the Help Center\'s FAQ card and the "Visit the Help Center" links of AI Detector and Pricing.');
 
 console.log('\n' + (failed ? failed + ' check(s) FAILED' : 'all ok'));
 process.exit(failed ? 1 : 0);

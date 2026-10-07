@@ -229,7 +229,7 @@ console.log('\nstructure');
      account.html is the prototype's shared auth route, standing in for the approved
      /account/signup?from=/ai-content-detector flow the way every other page does. */
   const APPROVED = new Set(['index.html', 'policy.html', 'api.html', 'account.html',
-                            'https://plagiarismsearch.com/faq-and-support']);
+                            'faq-and-support.html']);   /* /faq-and-support, local since 2026-10-07 */
   const links = [...body.matchAll(/href="([^"#][^"]*)"/g)].map(m => m[1])
     .filter(h => !h.startsWith('mailto:') && !h.startsWith('assets/'));
   const extra = [...new Set(links)].filter(h => !APPROVED.has(h));

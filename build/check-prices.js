@@ -281,7 +281,7 @@ console.log('\nstructure');
   const APPROVED = new Set(['index.html', 'ai-detector.html', 'paper-analysis.html',
                             'spell-check.html', 'readability-check.html', 'vip.html',
                             'contact-us.html',
-                            'https://plagiarismsearch.com/faq-and-support']);
+                            'faq-and-support.html']);   /* /faq-and-support, local since 2026-10-07 */
   const links = [...body.matchAll(/href="([^"#][^"]*)"/g)].map(m => m[1])
     .filter(h => !h.startsWith('mailto:') && !h.startsWith('assets/'));
   const extra = [...new Set(links)].filter(h => !APPROVED.has(h));

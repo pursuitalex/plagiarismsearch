@@ -280,7 +280,7 @@ const COPY = {
     ],
     footer: 'Still have a question about your account, reports, or AI checking?',
     cta: 'Visit the Help Center',
-    ctaHref: 'https://plagiarismsearch.com/faq-and-support',
+    ctaHref: 'faq-and-support.html',   /* /faq-and-support — the prototype has the page since 2026-10-07 */
   },
 
   s10: {

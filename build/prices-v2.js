@@ -43,7 +43,7 @@ const banner = require('./sections/banner');
 const { PLANS, LABEL } = require('./pricing-data');
 const pricing = require('./pricing');   /* TAGLINE is the homepage's; DEC-0042 grants no plan subtitle */
 
-const HELP = 'https://plagiarismsearch.com/faq-and-support';   /* live production, no page here */
+const HELP = 'faq-and-support.html';   /* /faq-and-support — the prototype has the page since 2026-10-07 */
 
 /* ─────────────────────────────────────────────────────────────────────────────
    APPROVED COPY — DEC-0042, 2026-08-24. Verbatim.
