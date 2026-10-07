@@ -7,6 +7,14 @@
 .tp-scroll::-webkit-scrollbar { display:none; }
 
 /* topic chips — the pricing switcher's shape */
+/* an archive item's text is a preview (build/review-clip.js, .rc): the archive is an index
+   of updates, so one long update — steps, a list — does not run on down the page. Set
+   by reading width: a phone's narrow column needs more lines for the same words. */
+html.js .rc-news .rc-text { max-height:20rem; }
+@media (min-width:640px)  { html.js .rc-news .rc-text { max-height:16rem; } }
+@media (min-width:1024px) { html.js .rc-news .rc-text { max-height:14rem; } }
+.rc-news .rc-more { margin-top:.85rem; font-size:13.5px; color:#1F2937; }
+
 .tp-btn { background:#fff; transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
 .tp-btn:hover { background:#F1F2F6; }
 .tp-btn.active { background:#111827; color:#fff; box-shadow:0 1px 2px rgba(0,0,0,.08); }

@@ -258,8 +258,13 @@ const eyebrowDark = (dot, label) => `        <div class="inline-flex items-cente
 
 const h2 = t => `<h2 class="text-[clamp(1.9rem,3.4vw,2.9rem)] font-extrabold tracking-tightest leading-[1.08]">${t}</h2>`;
 
-/* one item's body — the stored paragraphs, their lists, and the read-more link */
-const body = (it, dark) => {
+/* one item's body — the stored paragraphs, their lists, and the read-more link.
+   In the archive (preview: true) the paragraphs and lists sit in the preview box of
+   build/review-clip.js — a set height, then "Read update" opens the rest in place
+   (design correction pack of 2026-10-06). The item's own "Read more" link, where it has
+   one, stays outside the box, always in sight. */
+const { clip } = require('./review-clip');
+const body = (it, dark, preview) => {
   const p = dark ? BODY + ' text-white/75' : BODY + ' text-ink-700';
   const out = [];
   for (const para of it.paras) {
@@ -273,6 +278,7 @@ ${para.itemsHtml.map(li => `              <li class="pl-1">${rich(li)}</li>`).jo
       out.push(`            <p class="${p} mt-3 first:mt-0">${rich(para.html)}</p>`);
     }
   }
+  if (preview) out.splice(0, out.length, clip(out.map(b => b.replace(/^/gm, '    ')).join('\n'), '            ', { cls: 'rc-news', more: 'Read update' }));
   if (it.more) {
     const to = localise(it.more.href);
     const away = /^https?:/i.test(to);
@@ -377,7 +383,7 @@ ${eyebrow('teal-400', 'Archive')}
       <div class="rv sticky top-[74px] z-20 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10 py-3 mb-7 lg:mb-9 bg-[#F7F9FA]/92 backdrop-blur">
         <!-- the sticky band above is full-bleed on purpose, so the blur reaches the
              page edges; the chips inside it sit on the column like everything else -->
-        <div class="${COL} overflow-x-auto tp-scroll">
+        <div class="${COL} overflow-x-auto tp-scroll chip-scroll" data-scroll-fade="x">
           <div class="flex flex-nowrap lg:flex-wrap gap-1.5 w-max lg:w-auto" role="group" aria-label="Filter updates by topic">
           <button type="button" data-topic="all" aria-pressed="true" class="tp-btn active inline-flex items-center gap-2 whitespace-nowrap rounded-full ring-1 ring-black/5 px-3.5 py-2 text-[13px] sm:text-[13.5px] font-semibold text-ink-600">All <span class="tp-n tabular-nums text-ink-500">${archive.length}</span></button>
 ${TOPICS.map(([key, label, icon]) => {
@@ -419,7 +425,7 @@ ${byYear(y).map(it => {
                   ${label}
                 </span>
                 <h4 class="text-[16px] sm:text-[17px] lg:text-[17.5px] font-bold tracking-tight leading-[1.32] mb-2">${it.h}</h4>
-${body(it, false)}
+${body(it, false, true)}
               </div>
             </div>
           </article>`;

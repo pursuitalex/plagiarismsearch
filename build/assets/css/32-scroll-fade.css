@@ -17,6 +17,13 @@
 [data-scroll-fade="x"].can-back.can-more { -webkit-mask-image:linear-gradient(90deg, transparent, #000 var(--sf), #000 calc(100% - var(--sf)), transparent); mask-image:linear-gradient(90deg, transparent, #000 var(--sf), #000 calc(100% - var(--sf)), transparent); }
 [data-scroll-fade]:focus-visible { outline:2px solid #0991A8; outline-offset:2px; }
 
+/* the row of filter chips (the Newsroom's topics, the Blog's categories): it wraps on a
+   desktop; below 1024px it is one row that scrolls sideways, without a scrollbar — the
+   fade on the edge says there is more. One behaviour for both pages, so a category added
+   later lengthens the row, not the page. */
+[data-scroll-fade].chip-scroll { scrollbar-width:none; -ms-overflow-style:none; }
+[data-scroll-fade].chip-scroll::-webkit-scrollbar { display:none; }
+
 /* the User Guide's article list: six rows, the height of the tallest list the page was
    approved with — a longer list scrolls inside its card, the card keeps its size */
 .ug-list { max-height:13.8125rem; }

@@ -167,48 +167,53 @@
         </div>
       </div>
 
-      <!-- the sidebar categories become the filter row -->
-      <div class="rv flex flex-wrap justify-center gap-2 mt-6 sm:mt-7 lg:mt-8 max-w-[900px] mx-auto">
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-ink-900 text-white px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+      <!-- the sidebar categories become the filter row. The Newsroom's behaviour (design
+           correction pack of 2026-10-06): it wraps on a desktop; below 1024px it is one
+           row that scrolls sideways to the page edges, so more categories never add
+           rows to the hero. The row is build/assets/css/32-scroll-fade.css. -->
+      <div class="rv chip-scroll -mx-4 sm:-mx-6 lg:mx-auto px-4 sm:px-6 lg:px-0 py-1 mt-5 sm:mt-6 lg:mt-7 max-w-none lg:max-w-[900px]" data-scroll-fade="x">
+        <div class="flex flex-nowrap lg:flex-wrap lg:justify-center gap-2 w-max lg:w-auto" role="group" aria-label="Blog categories">
+        <a href="#" aria-current="true" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-ink-900 text-white px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           Avoiding Plagiarism
           <span class="text-[10.5px] font-bold nums text-white/50">58</span>
         </a>
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+        <a href="#" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           Plagiarism Cases
           <span class="text-[10.5px] font-bold nums text-ink-400">21</span>
         </a>
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+        <a href="#" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           AI and Authenticity
           <span class="text-[10.5px] font-bold nums text-ink-400">21</span>
         </a>
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+        <a href="#" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           Writing Inspiration
           <span class="text-[10.5px] font-bold nums text-ink-400">18</span>
         </a>
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+        <a href="#" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           Where Muses Hide
           <span class="text-[10.5px] font-bold nums text-ink-400">8</span>
         </a>
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+        <a href="#" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           Webmaster&rsquo;s Secrets
           <span class="text-[10.5px] font-bold nums text-ink-400">6</span>
         </a>
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+        <a href="#" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           Awesome Tips
           <span class="text-[10.5px] font-bold nums text-ink-400">5</span>
         </a>
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+        <a href="#" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           Cinematic Matters
           <span class="text-[10.5px] font-bold nums text-ink-400">3</span>
         </a>
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+        <a href="#" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           Student Life Stories
           <span class="text-[10.5px] font-bold nums text-ink-400">2</span>
         </a>
-        <a href="#" class="btn-press inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
+        <a href="#" class="btn-press inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white ring-1 ring-black/5 text-ink-700 hover:bg-ink-50 px-3.5 py-2 text-[12.5px] font-semibold transition-colors duration-300">
           World of High Technologies
           <span class="text-[10.5px] font-bold nums text-ink-400">1</span>
         </a>
+        </div>
       </div>
     </div>
   </section>
@@ -252,7 +257,7 @@
             </a>
             <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
               <a href="blog-best-checker-2026.html" class="group flex flex-col">
-                <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Best Plagiarism Checker in 2026: How to Choose a Safe and Accurate Tool</h3>
+                <h3 class="line-clamp-4 text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Best Plagiarism Checker in 2026: How to Choose a Safe and Accurate Tool</h3>
                 <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </a>
               <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
@@ -269,7 +274,7 @@
             </a>
             <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
               <a href="blog-best-checker-2026.html" class="group flex flex-col">
-                <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Plagiarism Quiz: 24 Tricky Questions Most People Get Wrong</h3>
+                <h3 class="line-clamp-4 text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Plagiarism Quiz: 24 Tricky Questions Most People Get Wrong</h3>
                 <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </a>
               <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
@@ -286,7 +291,7 @@
             </a>
             <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
               <a href="blog-best-checker-2026.html" class="group flex flex-col">
-                <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">How to Avoid Plagiarism: A Comprehensive Guide to Writing Original Content</h3>
+                <h3 class="line-clamp-4 text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">How to Avoid Plagiarism: A Comprehensive Guide to Writing Original Content</h3>
                 <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </a>
               <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
@@ -303,7 +308,7 @@
             </a>
             <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
               <a href="blog-best-checker-2026.html" class="group flex flex-col">
-                <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Changing Attitudes: What Do Young People Really Think About Plagiarism?</h3>
+                <h3 class="line-clamp-4 text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Changing Attitudes: What Do Young People Really Think About Plagiarism?</h3>
                 <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </a>
               <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
@@ -320,7 +325,7 @@
             </a>
             <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
               <a href="blog-best-checker-2026.html" class="group flex flex-col">
-                <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Turnitin Unavailable? 7 Practical Solutions for Students Without an Academic Account</h3>
+                <h3 class="line-clamp-4 text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Turnitin Unavailable? 7 Practical Solutions for Students Without an Academic Account</h3>
                 <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </a>
               <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
@@ -337,7 +342,7 @@
             </a>
             <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
               <a href="blog-best-checker-2026.html" class="group flex flex-col">
-                <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">At What Point Does AI Help Become Academic Dishonesty?</h3>
+                <h3 class="line-clamp-4 text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">At What Point Does AI Help Become Academic Dishonesty?</h3>
                 <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </a>
               <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
@@ -354,7 +359,7 @@
             </a>
             <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
               <a href="blog-best-checker-2026.html" class="group flex flex-col">
-                <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Reasons to Be Skeptical of AI in Teaching Environments</h3>
+                <h3 class="line-clamp-4 text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Reasons to Be Skeptical of AI in Teaching Environments</h3>
                 <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </a>
               <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
@@ -371,7 +376,7 @@
             </a>
             <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
               <a href="blog-best-checker-2026.html" class="group flex flex-col">
-                <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">The Integration of AI in Ghostwriting Practices</h3>
+                <h3 class="line-clamp-4 text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">The Integration of AI in Ghostwriting Practices</h3>
                 <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </a>
               <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">
@@ -388,7 +393,7 @@
             </a>
             <div class="p-4 sm:p-5 lg:p-6 flex flex-col flex-1">
               <a href="blog-best-checker-2026.html" class="group flex flex-col">
-                <h3 class="text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Is AI Causing More Cheating? A New Study Challenges Assumptions</h3>
+                <h3 class="line-clamp-4 text-[17px] sm:text-[19px] lg:text-[20px] font-bold tracking-tight leading-snug mb-2 group-hover:text-teal-700 transition-colors duration-300">Is AI Causing More Cheating? A New Study Challenges Assumptions</h3>
                 <span class="inline-flex items-center gap-1.5 text-[13.5px] sm:text-[14.5px] font-semibold text-teal-700">Read the article <svg class="transition-transform duration-300 group-hover:translate-x-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </a>
               <div class="mt-auto flex items-center gap-2.5 pt-4 sm:pt-5 lg:pt-6">

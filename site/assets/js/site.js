@@ -952,7 +952,8 @@ PS.module('news-archive', () => {
       if (scroll) root.scrollIntoView({ block: 'start', behavior: 'smooth' });
     };
 
-    tabs.forEach(t => t.addEventListener('click', () => { topic = t.dataset.topic; page = 1; render(false); }));
+    /* in the scrolling row of a phone the chosen chip is brought fully into view */
+    tabs.forEach(t => t.addEventListener('click', () => { topic = t.dataset.topic; page = 1; render(false); t.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' }); }));
     prev.addEventListener('click', () => { if (page > 1) { page--; render(true); } });
     next.addEventListener('click', () => { page++; render(true); });
     render(false);
