@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "site", "-l", "4173"],
       "port": 4173
+    },
+    {
+      "name": "video",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "video", "-l", "4174"],
+      "port": 4174
     }
   ]
 }
