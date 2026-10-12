@@ -36,6 +36,7 @@ driven by this table.
 | `plagiarism-checker-for-students.html` | `/plagiarism-checker-for-students` | built | The Students page to the 2026-09-15 brief: the real checker in a two-column hero, the shared report with the student principle, a decision-shaped review workflow. Replaced the stub. Built by build/students.js, checked by build/check-students.js. |
 | `turnitin-checker-alternative.html` | `/turnitin-checker-alternative` | built | The Turnitin Alternative page to the 2026-09-15 brief: the real checker, a semantic comparison table with official Turnitin sources and a last-verified date, the non-equivalence act, a balanced fit section, the shared report, a pricing preview, the trademark notice. Footer only. Replaced the stub. Built by build/turnitin.js, checked by build/check-turnitin.js. |
 | `integration-guide.html` | `/integration-guide` | built | The Moodle Integration guide to the 2026-09-15 brief: a documentation-led page — compact product header, quick facts, a sticky On-this-page rail, definition tables, masked crops of the real plugin screens, troubleshooting, FAQ, support handoff. Replaced the stub. Built by build/moodle.js, checked by build/check-moodle.js. |
+| `canvas-integration.html` | `/canvas-integration` | built | Canvas Integration to the approved illustrated brief of 2026-10-08 (new-tasks/new-page-7): eleven sections in the brief's order, its English copy verbatim, and the two real developer screenshots of Canvas SpeedGrader as the proof — behind two tabs in the SpeedGrader act, each beside the brief's crop of its report panel and opening enlarged. The hero carries no screenshot (Olex, 2026-10-12): it draws the integration as a loop between the Canvas and PlagiarismSearch marks. The Admin and Teacher guides are linked on the live site, not recreated. Built by build/canvas.js (the screenshot parts: build/evidence.js), checked by build/check-canvas.js. |
 | `ua-plagiarism-check.html` | `/ua/plagiarism-check` | built | The Ukrainian dedicated checker to the 2026-09-16 brief — the AR-03 master. Ukrainian content, English shell and product UI by decision. Flat file in the prototype; the production path is /ua/plagiarism-check. Built by build/ua.js, checked by build/check-ua.js. |
 | `pdf-plagiarism-checker.html` | `/pdf-plagiarism-checker` | built | The PDF Plagiarism Checker to the 2026-09-15 brief: protect-first — title and route kept, the real checker first, the text-based / scan-only / mixed extraction act as the signature, no OCR. Replaced the stub. Built by build/pdf.js, checked by build/check-pdf.js. |
 | `affiliate-program-at-plagiarismsearch.html` | `/affiliate-program-at-plagiarismsearch` | built | The Affiliate Program with the old site's opening redrawn — the one version since 2026-10-07 (the developer's review). The title among people on dashed paths, the affiliate cabinet in a browser window (Olex's Figma frame, drawn in HTML and SVG), the four facts as chips; then v1's three tools and v2's sections. Built by build/affiliate-v3.js. |
@@ -54,14 +55,13 @@ driven by this table.
 | `how-to-use-plagiarismsearch-google-add-on.html` | `/how-to-use-plagiarismsearch-google-add-on` | stub | Approved destination, page not designed yet. |
 | `powerpoint-plagiarism-checker.html` | `/powerpoint-plagiarism-checker` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
 | `quote-checker-at-plagiarismsearch.html` | `/quote-checker-at-plagiarismsearch` | stub | Footer only. The brief keeps it out of the header and out of the homepage body. |
-| `canvas-integration.html` | `/canvas-integration` | stub | Treated as live: Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate. The address closed with it — the point-fix brief of 2026-08-20 approves /canvas-integration as final, so the filename is no longer provisional. |
 | `plagiarism-checker-for-teachers.html` | `/plagiarism-checker-for-teachers` | stub | The Teachers URL audit closed on 2026-08-20: Educators lands here, and no second educator address is created. The page itself will be rewritten separately around real educator use cases. |
 
 ## Counts
 
-- 35 × built
-- 5 × stub
+- 36 × built
 - 4 × no approved path
+- 4 × stub
 - 1 × built · out of global nav
 
 ## Open

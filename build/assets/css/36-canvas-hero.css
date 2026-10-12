@@ -1,0 +1,26 @@
+/* ═══ 36 · Canvas Integration, the hero's drawing (build/canvas.js) ═══════════════════
+   The integration as one loop, drawn open on the hero's tint: the Canvas plate and the
+   PlagiarismSearch plate side by side, joined through "LTI 1.3"; over them a bracket that
+   carries what Canvas sends (the two submission types), under them a bracket that carries
+   what comes back to SpeedGrader. Lines are dashed and the dashes travel the way the work
+   does — out in teal, back in coral. A diagram of words from the page's own copy: no
+   screen is drawn, no figure shown.
+
+     .cvh                       the drawing (one column at every width)
+       .cvh-lane                a bracket and what travels along it
+         svg.cvh-line > path    the bracket itself, stretched to the lane's box
+         .cvh-tip               the arrow where the bracket lands on a plate
+       .cvh-lane-back           the return bracket (coral)
+
+   The layout is utilities in the markup; here is only what utilities cannot say: the
+   stretched line and its motion. The dashes move only under html.js-motion, so a reader
+   who asked for reduced motion, or has no script, gets the same drawing at rest. */
+.cvh-line { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.cvh-line path { fill:none; stroke:#5FB9C8; stroke-width:1.5; stroke-dasharray:5 6; stroke-linecap:round; vector-effect:non-scaling-stroke; }
+.cvh-lane-back .cvh-line path { stroke:#EE9C8B; }
+.cvh-tip { position:absolute; display:block; width:12px; height:12px; color:#3AA5B8; }
+.cvh-lane-back .cvh-tip { color:#E37F6B; }
+/* one dash and one gap are 11px: an offset of two periods loops without a seam */
+@keyframes cvh-flow { to { stroke-dashoffset:-22; } }
+html.js-motion .cvh-line path { animation:cvh-flow 1.5s linear infinite; }
+@media (prefers-reduced-motion: reduce) { html.js-motion .cvh-line path { animation:none; } }

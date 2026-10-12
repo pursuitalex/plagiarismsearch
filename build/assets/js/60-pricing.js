@@ -5,7 +5,9 @@
      .period-btn                 the tabs (data-period); aria-pressed kept in step if present
      [data-tier]                 a card: .js-price .js-term .js-rate .js-feats
      template[data-pricing-feat] in the card, else in the section: one feature line, {feat}
-     [data-period-note]          optional: the period's note
+     [data-period-note]          optional: the period's note. It states the billing mode
+                                 ("Recurring billing · …"), so it is hidden while a period
+                                 that can recur is shown at its one-off price (the switch off)
      [data-period-only="…"]      optional: shown for that period only
      data-pricing-animate        on the section: the values fade up on a switch
      input[data-recurring]       optional: the "Recurring payments" switch. On, a card shows
@@ -46,7 +48,7 @@ PS.module('pricing', () => {
         b.classList.toggle('active', b.dataset.period === key);
         if (b.hasAttribute('aria-pressed')) b.setAttribute('aria-pressed', String(b.dataset.period === key));
       });
-      if (note) note.textContent = period.note;
+      if (note) { note.textContent = period.note; note.hidden = !!once; }
       only.forEach(el => { el.hidden = el.dataset.periodOnly !== key; });
       cards.forEach(card => {
         const tier = period[card.dataset.tier];

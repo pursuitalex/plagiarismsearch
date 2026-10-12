@@ -26,9 +26,7 @@ const STUBS = [
   { slug: 'powerpoint-plagiarism-checker',         label: 'PowerPoint Plagiarism Checker', group: 'Footer · Popular Checks',   note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
   { slug: 'quote-checker-at-plagiarismsearch',     label: 'Quote Checker',             group: 'Footer · Popular Checks',       note: 'Footer only. The brief keeps it out of the header and out of the homepage body.' },
 
-  /* no approved slug yet — the filenames below are provisional and marked as such */
-  { slug: 'canvas-integration',                    label: 'Canvas',                    group: 'Products · Integrations',
-    note: 'Treated as live: Olex confirmed 2026-08-17 that Canvas is definitely shipping, so it renders as an ordinary navigation item rather than a release gate. The address closed with it — the point-fix brief of 2026-08-20 approves /canvas-integration as final, so the filename is no longer provisional.' },
+  /* Canvas left this list on 2026-10-12: the page is built (build/canvas.js) */
   { slug: 'plagiarism-checker-for-teachers',       label: 'Educators',                 group: 'Solutions · For individuals',
     note: 'The Teachers URL audit closed on 2026-08-20: Educators lands here, and no second educator address is created. The page itself will be rewritten separately around real educator use cases.' },
 ];

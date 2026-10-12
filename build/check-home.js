@@ -212,6 +212,22 @@ console.log('\nforbidden');
     ok('"Recurring payments" switch under the pricing tabs, off on One-time, a one-off price for all nine recurring cards',
        (body.match(/data-recurring/g) || []).length === 1 && /<\/button>\s*<\/div>\s*<label class="pr-switch [^"]*">\s*<input type="checkbox" class="sr-only" data-recurring data-default-on disabled>[\s\S]*?Recurring payments\s*<\/label>/.test(preview) && !lacking.length,
        lacking.join(', '));
+
+    /* the line under the cards states the billing mode, so it may not contradict the switch
+       (developer's review, 2026-10-12): on Monthly / 3-Months / Yearly with "Recurring
+       payments" off the shared script hides the period's note, and the separator goes with
+       it; on One-time, the first paint, the note stands. This file reads the page, it does
+       not run it — so it holds each link the behaviour hangs on: the note written visible
+       with One-time's own line, the separator as its next sibling, the script's hiding of
+       the note in the built site.js, the separator's rule in the built tailwind.css. */
+    const asset = f => fs.readFileSync(path.join(__dirname, '..', 'site', 'assets', f), 'utf8');
+    const note = preview.match(/<span class="pricing-note" data-period-note>([^<]*)<\/span>\s*<span class="pricing-foot-dot"><\/span>/);
+    const links = [
+      [note && note[1] === PLANS.onetime.note, 'the note is not One-time\'s, written visible, straight before the separator'],
+      [/\bnote\.hidden = !!once\b/.test(asset('js/site.js')), 'site.js does not hide the note while the switch is off'],
+      [/\.pricing-note\[hidden\]\) \+ \.pricing-foot-dot \{\s*display: none;/.test(asset('css/tailwind.css')), 'tailwind.css does not drop the separator after a hidden note'],
+    ].filter(([pass]) => !pass).map(([, why]) => why);
+    ok('the period\'s note stands on One-time and hides, with its separator, while "Recurring payments" is off', !links.length, links.join('; '));
   }
 }
 

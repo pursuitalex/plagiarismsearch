@@ -33,7 +33,9 @@
               raised; under the cards one line — the period's note (from the data) and a
               quiet link. With `recurring`, the Pricing page's "Recurring payments" switch
               sits under the tabs, inside their sealed block: one for the three cards,
-              off and disabled on a period that cannot recur (60-pricing.js does the rest)
+              off and disabled on a period that cannot recur (60-pricing.js does the rest).
+              While it is off on a period that can recur, the script hides the period's
+              note — it says "Recurring billing" — and the separator goes with it
      split    Turnitin: the head beside a note card, the switch at the column's edge, three
               equal cards; under them a light button
 

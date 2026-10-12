@@ -1577,3 +1577,91 @@ form:has(#pf-sv4:checked) [data-pf-sum="pf-sv4"] { display:flex; }
 
 /* the check running */
 .fg-progress { height:4px; }
+
+/* ═══ 35 · evidence — a product screenshot shown as proof (build/evidence.js) ═════════
+   Two parts, by class. Behaviour: site.js, modules tabs and zoom (52-evidence.js).
+
+     .ev-tabs[data-tabs]            the tab row and its panels
+       .ev-tablist[role=tablist]      the row: a pill of buttons
+         button.ev-tab[role=tab]        [aria-selected="true"] — the one shown
+       .ev-panel[role=tabpanel]       .is-active — the one shown
+     button.ev-zoom[data-zoom]      a screenshot that opens enlarged
+       img                            the screenshot, untouched
+       .ev-zoom-hint                  the "Enlarge" label on its corner
+     dialog.ev-dialog               the enlarged view, made by the script on first use
+
+   A tab swaps a picture and its caption; it runs nothing. Without script every panel is
+   shown and a screenshot is an image: the collapse exists only under html.js.
+   On a dark section (a host with data-surface="dark") the row turns translucent. */
+
+.ev-tablist { display:inline-flex; max-width:100%; margin-bottom:24px; padding:4px; border-radius:9999px; background:#F1F2F6; }
+.ev-tab { white-space:nowrap; border-radius:9999px; padding:10px 20px; font-size:13.5px; line-height:1.25; font-weight:600; color:#6B7280;
+  transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+.ev-tab:hover { color:#111827; }
+.ev-tab[aria-selected="true"] { background:#fff; color:#111827; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+@media (max-width:639px) { .ev-tab { padding:9px 14px; font-size:13px; } }
+
+:where([data-surface="dark"]) .ev-tablist { background:rgba(255,255,255,.08); box-shadow:inset 0 0 0 1px rgba(255,255,255,.1); }
+:where([data-surface="dark"]) .ev-tab { color:rgba(255,255,255,.7); }
+:where([data-surface="dark"]) .ev-tab:hover { color:#fff; }
+:where([data-surface="dark"]) .ev-tab[aria-selected="true"] { background:#fff; color:#111827; box-shadow:none; }
+
+/* one panel at a time — only when the script that turns them is there */
+html.js .ev-tabs[data-tabs] > .ev-panel:not(.is-active) { display:none; }
+/* …and without it the panels stand one under the other, apart */
+.ev-panel + .ev-panel { margin-top:32px; }
+html.js .ev-panel + .ev-panel { margin-top:0; }
+@media (prefers-reduced-motion: reduce) { .ev-tab { transition:none; } }
+
+/* the screenshot as a button: the picture fills it, the label sits on its corner */
+.ev-zoom { position:relative; display:block; width:100%; padding:0; border:0; background:none; cursor:zoom-in; text-align:left; }
+.ev-zoom > img, .ev-shot > img { display:block; width:100%; height:auto; }
+.ev-zoom-hint { position:absolute; right:10px; bottom:10px; display:inline-flex; align-items:center; gap:6px; padding:6px 11px 6px 9px;
+  border-radius:9999px; background:rgba(17,24,39,.86); color:#fff; font-size:11.5px; line-height:1; font-weight:600; pointer-events:none;
+  transition:background-color .2s ease; }
+.ev-zoom:hover .ev-zoom-hint { background:#0CA9C3; }
+/* no script, no enlarged view: the label would promise what nothing delivers */
+html:not(.js) .ev-zoom { cursor:default; }
+html:not(.js) .ev-zoom-hint { display:none; }
+
+/* the enlarged view. As wide as the screenshot itself where the window allows it; on a
+   narrower one the picture keeps a readable size and the view scrolls both ways. */
+.ev-dialog { width:min(96vw, var(--ev-w, 1200px)); max-width:none; max-height:92vh; padding:0; border:0; border-radius:16px; overflow:hidden;
+  background:#0B0F19; color:#fff; box-shadow:0 24px 80px -16px rgba(0,0,0,.6); }
+.ev-dialog[open] { display:flex; flex-direction:column; }
+.ev-dialog::backdrop { background:rgba(11,15,25,.76); }
+.ev-dialog-bar { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:10px 10px 10px 18px; }
+.ev-dialog-title { min-width:0; margin:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:600; color:rgba(255,255,255,.82); }
+.ev-dialog-close { flex:none; display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:9999px;
+  background:rgba(255,255,255,.1); color:#fff; transition:background-color .2s ease; }
+.ev-dialog-close:hover { background:rgba(255,255,255,.2); }
+.ev-dialog-scroll { flex:1 1 auto; min-height:0; overflow:auto; overscroll-behavior:contain; background:#fff; }
+.ev-dialog-scroll > img { display:block; max-width:none; height:auto; width:max(100%, min(var(--ev-w, 100%), 1400px)); }
+@media (min-width:1024px) { .ev-dialog-scroll > img { width:100%; } }
+
+/* ═══ 36 · Canvas Integration, the hero's drawing (build/canvas.js) ═══════════════════
+   The integration as one loop, drawn open on the hero's tint: the Canvas plate and the
+   PlagiarismSearch plate side by side, joined through "LTI 1.3"; over them a bracket that
+   carries what Canvas sends (the two submission types), under them a bracket that carries
+   what comes back to SpeedGrader. Lines are dashed and the dashes travel the way the work
+   does — out in teal, back in coral. A diagram of words from the page's own copy: no
+   screen is drawn, no figure shown.
+
+     .cvh                       the drawing (one column at every width)
+       .cvh-lane                a bracket and what travels along it
+         svg.cvh-line > path    the bracket itself, stretched to the lane's box
+         .cvh-tip               the arrow where the bracket lands on a plate
+       .cvh-lane-back           the return bracket (coral)
+
+   The layout is utilities in the markup; here is only what utilities cannot say: the
+   stretched line and its motion. The dashes move only under html.js-motion, so a reader
+   who asked for reduced motion, or has no script, gets the same drawing at rest. */
+.cvh-line { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.cvh-line path { fill:none; stroke:#5FB9C8; stroke-width:1.5; stroke-dasharray:5 6; stroke-linecap:round; vector-effect:non-scaling-stroke; }
+.cvh-lane-back .cvh-line path { stroke:#EE9C8B; }
+.cvh-tip { position:absolute; display:block; width:12px; height:12px; color:#3AA5B8; }
+.cvh-lane-back .cvh-tip { color:#E37F6B; }
+/* one dash and one gap are 11px: an offset of two periods loops without a seam */
+@keyframes cvh-flow { to { stroke-dashoffset:-22; } }
+html.js-motion .cvh-line path { animation:cvh-flow 1.5s linear infinite; }
+@media (prefers-reduced-motion: reduce) { html.js-motion .cvh-line path { animation:none; } }

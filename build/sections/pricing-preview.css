@@ -24,6 +24,8 @@
                                                 the JSON island — sealed
        THE FOOT     center: div.pricing-foot.rv > span.pricing-note[data-period-note],
                             span.pricing-foot-dot, a.pricing-link
+                            (the script hides the note, and with it the separator, while
+                            "Recurring payments" is off on a period that can recur)
                     split:  div.pricing-actions.rv > a.action-button[data-tone="light"] */
 
 /* ── the section ─────────────────────────────────────────────────────────────── */
@@ -75,6 +77,10 @@
 .pricing-foot-dot {
   @apply hidden sm:block w-1 h-1 rounded-full bg-ink-300;
 }
+/* the note is hidden while "Recurring payments" is off on a period that can recur
+   (60-pricing.js sets [hidden] on it): the separator goes with it, and the link stands
+   alone at the row's centre */
+:where(.pricing-note[hidden]) + .pricing-foot-dot { display: none; }
 .pricing-link {
   @apply font-semibold text-ink-700 underline decoration-ink-300 underline-offset-4 hover:text-ink-900 hover:decoration-ink-500 transition-colors duration-300;
 }
