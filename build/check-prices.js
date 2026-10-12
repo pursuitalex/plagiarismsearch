@@ -284,7 +284,12 @@ console.log('\nstructure');
                             'faq-and-support.html']);   /* /faq-and-support, local since 2026-10-07 */
   const links = [...body.matchAll(/href="([^"#][^"]*)"/g)].map(m => m[1])
     .filter(h => !h.startsWith('mailto:') && !h.startsWith('assets/'));
-  const extra = [...new Set(links)].filter(h => !APPROVED.has(h));
+  /* a plan card's button starts its order on the payment page (Olex, 2026-10-12) — it led
+     to the homepage until the page existed */
+  const ORDER = /^payment\.html#plan=(light|standard|premium)&period=onetime$/;
+  const orders = [...new Set(links)].filter(h => /^payment\.html/.test(h));
+  ok('the three plan buttons start their orders on the payment page', orders.length === 3 && orders.every(h => ORDER.test(h)) && (body.match(/data-order-link="payment\.html"/g) || []).length === 3, orders.join(', '));
+  const extra = [...new Set(links)].filter(h => !APPROVED.has(h) && !ORDER.test(h));
   ok('only the approved body destinations', !extra.length, extra.join(', '));
 }
 

@@ -1,0 +1,23 @@
+/* ═══ 38 · the 404 page's drawing (build/not-found.js) ═══════════════════════════════
+   The number 404 with a lens for its zero, a dashed trail that wanders in behind it and
+   loops, and an empty outline where the page should be.
+
+     .nf                the stage
+       svg.nf-trail     the trail: one path, stretched to the stage (so its loops widen
+                        with the page; the line keeps its weight and its dashes)
+       .nf-start        where the trail comes from
+       .nf-sheet        the missing page: a dashed outline with a question mark
+       .nf-num          the numerals;  .nf-lens — the zero
+
+   Sizes and places are utilities in the markup. Here: the stretched line, and the two
+   small motions — the dashes walk along the trail, the outline bobs — which run only
+   under html.js-motion, so reduced motion and no script leave the drawing at rest. */
+.nf-trail { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.nf-trail path { fill:none; stroke:#5FB9C8; stroke-width:1.75; stroke-dasharray:5 7; stroke-linecap:round; vector-effect:non-scaling-stroke; }
+/* one dash and one gap are 12px: two periods loop without a seam */
+@keyframes nf-walk { to { stroke-dashoffset:-24; } }
+@keyframes nf-bob { 0%,100% { transform:translateY(0) rotate(6deg); } 50% { transform:translateY(-7px) rotate(3deg); } }
+.nf-sheet { transform:rotate(6deg); }
+html.js-motion .nf-trail path { animation:nf-walk 1.8s linear infinite; }
+html.js-motion .nf-sheet { animation:nf-bob 4.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { html.js-motion .nf-trail path, html.js-motion .nf-sheet { animation:none; } }

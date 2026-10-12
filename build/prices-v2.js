@@ -277,7 +277,7 @@ ${dark ? `              <span class="text-[9.5px] font-bold tracking-widest bg-o
             <div class="inline-flex items-center rounded-full ${dark ? 'bg-white/10 text-white/70' : 'bg-ink-50 text-ink-600'} px-3 py-1 text-[11.5px] font-bold tabular-nums mb-5 sm:mb-6 lg:mb-7"><span class="js-rate">${PLANS.onetime[tier].rate}</span>&nbsp;/ 1,000 words</div>
             <div class="h-px ${dark ? 'bg-white/10' : 'bg-ink-100'} mb-5 sm:mb-6 lg:mb-7"></div>
             <ul class="space-y-3.5 text-[13.5px] font-medium ${dark ? 'text-white/80' : 'text-ink-700'} min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats">${pricing.feats(PLANS.onetime[tier].feats, pricing.LINES.check)}</ul>
-            <a href="index.html" class="btn-press block text-center rounded-full ${dark
+            <a href="${pricing.orderHref('payment.html', tier, 'onetime')}" data-order-link="payment.html" class="btn-press block text-center rounded-full ${dark
               ? 'bg-white text-ink-900 hover:bg-ink-50'
               : 'ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50'} text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start ${LABEL[tier]}</a>
           </div>

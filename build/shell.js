@@ -103,6 +103,12 @@ const PAGES = {
   'ua-plagiarism-check.html': { active: null, static: true },
   /* Canvas Integration to the brief of 2026-10-08 — the stub graduated (build/canvas.js) */
   'canvas-integration.html': { active: 'products', static: true },
+  /* the payment page, from the live one (build/payment.js): reached from a plan's button,
+     so it lights Pricing */
+  'payment.html': { active: 'pricing', static: true },
+  /* the page for an address that leads nowhere (build/not-found.js): the host serves it
+     at any missing path, so its head carries a base for the shell's relative links */
+  '404.html': { active: null, static: true },
   /* the PowerPoint Plagiarism Checker to the brief of 2026-10-08 — the stub graduated
      (build/powerpoint.js); footer-led, no nav item */
   'powerpoint-plagiarism-checker.html': { active: null, static: true },

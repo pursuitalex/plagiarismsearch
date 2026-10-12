@@ -50,6 +50,8 @@ driven by this table.
 | `readability-check.html` | `/readability-checker` | built | Footer only, under Popular checks (Olex, 2026-10-06). Not in the header. One version since 2026-10-07: every word the live page's (build/readability-data.json); the working Flesch calculator with the live upload controls and a drop zone; the two charts the live page shows as pictures drawn from their own numbers; the Trustpilot feedback from the Reviews data; photographs and spot icons (IMAGES.md §8). Built by build/readability-v2.js, checked by build/check-readability-v2.js. |
 | `chat-bot.html` | `/plagiarism-checker-app` | built · out of global nav |  |
 | `plagiarism-check.html` | — | no approved path | Confirmed 2026-08-17: the homepage IS the Plagiarism Checker page. So this one has no approved address of its own. It stays on disk and leaves the navigation, the same treatment as the other delisted pages. |
+| `payment.html` | — | no approved path | The payment page — where a customer lands after choosing a plan. No brief; Olex asked for it on 2026-10-12 from a screenshot of the live page ("Standard Monthly subscription payment"): its copy word for word, in the design system, the payment methods on the left and the order summary sticky on the right. The plan shown is an example and its figures come from build/pricing-data.js; the payment marks are names until logo files arrive; the form sends nothing. Every plan card on the site leads here and names its order in the address fragment (#plan=…&period=…&recurring=on), and the page shows that order (62-payment.js). The live address of this page is not known. Built by build/payment.js, checked by build/check-payment.js. |
+| `404.html` | — | no approved path | The page for an address that leads nowhere — no brief; Olex asked for it on 2026-10-12. Our own copy: the 404 with a lens for its zero, a dashed trail that wanders in and stops at an empty outline, "This page wandered off", a button home, the Help Center and five usual destinations. Served by the host at any missing address, so its head carries a base for relative links. Not linked from anywhere. Built by build/not-found.js, checked by build/check-not-found.js. |
 | `account.html` | — | no approved path | Log in / create account. The brief says only "keep existing authentication behavior" and names no path. |
 | `design-system.html` | — | no approved path | Internal reference sheet. Never part of the public site. |
 | `section-library.html` | — | no approved path | Internal: the Section Library catalogue — each library component and variant, live, with its copy-paste HTML and content contract. Never part of the public site. Built by build/section-library.js; validated by build/check-library.js. |
@@ -60,7 +62,7 @@ driven by this table.
 ## Counts
 
 - 37 × built
-- 4 × no approved path
+- 6 × no approved path
 - 3 × stub
 - 1 × built · out of global nav
 

@@ -514,7 +514,7 @@ ${pricingPreview.section({
   id: 'pricing', layout: 'split', space: 'md', accent: 'teal',
   head: { eyebrow: COPY.pricing.eyebrow, title: COPY.pricing.h2, intro: COPY.pricing.intro, introMeasure: '64' },
   aside: { text: COPY.pricing.free, icon: I.sparkles },
-  plans: { href: COPY.pricing.ctaHref },
+  plans: { href: 'payment.html' },
   foot: { button: { label: COPY.pricing.cta, href: COPY.pricing.ctaHref } },
 })}`;
 

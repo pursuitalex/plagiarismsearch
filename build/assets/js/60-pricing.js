@@ -9,6 +9,10 @@
                                  ("Recurring billing · …"), so it is hidden while a period
                                  that can recur is shown at its one-off price (the switch off)
      [data-period-only="…"]      optional: shown for that period only
+     a[data-order-link]          in a card: its button to the payment page. Its address is
+                                 the bare destination (the attribute) plus the order the
+                                 card shows — #plan=…&period=…, and &recurring=on while the
+                                 card shows a subscription price
      data-pricing-animate        on the section: the values fade up on a switch
      input[data-recurring]       optional: the "Recurring payments" switch. On, a card shows
                                  the subscription price; off, its one-off `single` price. A
@@ -60,6 +64,8 @@ PS.module('pricing', () => {
         card.querySelector('.js-term').textContent = period.term;
         card.querySelector('.js-rate').textContent = shown.rate;
         feats.innerHTML = tier.feats.map(f => line.split('{feat}').join(f)).join('');
+        const order = card.querySelector('a[data-order-link]');
+        if (order) order.setAttribute('href', order.dataset.orderLink + '#plan=' + card.dataset.tier + '&period=' + key + (tier.single && !once ? '&recurring=on' : ''));
         if (fade && animate && window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
           gsap.fromTo([card.querySelector('.js-price'), card.querySelector('.js-rate'), feats],
             { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .28, ease: 'power2.out', overwrite: 'auto' });

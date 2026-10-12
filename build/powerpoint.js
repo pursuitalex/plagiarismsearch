@@ -26,7 +26,7 @@
    THE TEST MATERIAL IS INTERNAL. The slides say "INTERNAL QA · PLEASE DO NOT PUBLISH" and
    the report excerpts carry test markings, so no screenshot of them is on the page or in
    the repository: the proof is drawn from them (see "THE TEST'S EVIDENCE, DRAWN" below),
-   each drawing tagged for the product owner's review. The page never prints the test's
+   reviewed and approved by the owner on 2026-10-12. The page never prints the test's
    own figures (its percentage, its word and source counts) or claims OCR, a per-slide
    score or an accuracy.
 
@@ -117,6 +117,9 @@ const COPY = {
       ['Interactive review', 'Select a match to review the source and passage in context.'],
     ],
     callout: 'A similarity percentage is evidence to review, not an automatic plagiarism verdict.',
+    /* the owner's wording (review of 2026-10-12): this report is the sitewide sample, not
+       the report of the PPTX test */
+    caveat: 'Illustrative PlagiarismSearch report example. The controlled PowerPoint test results are shown in the section above.',
   },
 
   how: {
@@ -207,12 +210,10 @@ const COPY = {
      numbers on each marker.
    Left out, on both sides alike: the test deck's QA chrome (its header and footer lines,
    the "TEST A" badge, the QA subtitle) — and nothing is added. No figure of the test.
-   A redrawing is a new visual and needs the product owner's review before production,
-   as the brief says; the page tags each one so.
+   The owner reviewed the drawings on 2026-10-12 and approved them; the review badges and
+   the prototype note that stood on them have left the page.
    ───────────────────────────────────────────────────────────────────────────── */
 const DECK = 'PlagiarismSearch_PowerPoint_Extraction_Test_2026.pptx';
-const REDRAWN = 'Redrawn · for review';
-const REDRAWN_NOTE = 'Prototype note: these are redrawings of the internal test slides and report excerpts — same passages, same highlights and source numbers — pending the product owner’s review.';
 const TXT = {
   dickens: 'It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way—in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only.',
   decl: ['When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature\'s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.',
@@ -344,7 +345,6 @@ ${indent(action.button({ label: COPY.types.cta, href: PROOF, tone: 'light' }), '
 
 /* ═══════════════ 03 · A REAL CHECK — NEW MODULE B ═══════════════ */
 /* ── the redrawn pair ────────────────────────────────────────────────────────── */
-const redrawnTag = `<span class="shrink-0 rounded-full bg-teal-50 ring-1 ring-teal-200 px-2.5 py-1 text-[11px] font-semibold text-teal-800 whitespace-nowrap">${REDRAWN}</span>`;
 const PASSAGE = 'text-[12.5px] sm:text-[13.5px] leading-[1.7] text-ink-800';
 const SLIDE_LABEL = 'text-[9.5px] sm:text-[10px] font-bold uppercase tracking-[0.14em] text-teal-700';
 const slideEl = s => {
@@ -379,7 +379,6 @@ const slideEl = s => {
 const redrawnSlide = s => `<figure class="h-full min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-3 sm:p-4 flex flex-col">
   <figcaption class="flex items-center justify-between gap-3 px-1 pb-3">
     <span class="${LABEL} text-ink-600">${COPY.proof.captions[0]}</span>
-    ${redrawnTag}
   </figcaption>
   <div class="flex-1 flex flex-col justify-center gap-3 rounded-xl sm:rounded-2xl bg-ink-50 p-3.5 sm:p-5 lg:p-6">
     <div class="rounded-xl sm:rounded-2xl bg-white ring-1 ring-black/10 shadow-diffuse overflow-hidden">
@@ -420,7 +419,6 @@ const redrawnReport = r => {
   return `<figure class="h-full min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-3 sm:p-4 flex flex-col">
   <figcaption class="flex items-center justify-between gap-3 px-1 pb-3">
     <span class="${LABEL} text-ink-600">${COPY.proof.captions[1]}</span>
-    ${redrawnTag}
   </figcaption>
   <div class="flex-1 min-w-0 flex flex-col rounded-xl sm:rounded-2xl bg-ink-50 p-3.5 sm:p-5 lg:p-6">
     <div class="flex-1 min-w-0 flex flex-col rounded-xl sm:rounded-2xl bg-white ring-1 ring-black/10 shadow-diffuse overflow-hidden">
@@ -453,7 +451,8 @@ const section3 = () => `  <!-- ================= 03 · A REAL POWERPOINT CHECK /
        (build/evidence.js) — it runs no check and is not wired to the form above. Light and
        restrained on purpose: the dark report act follows. Both sides are drawn from the
        test (its passages word for word, the report's own categories and source numbers)
-       and tagged for review; no screenshot, and no figure of the test, is on the page. -->
+       — no screenshot, and no figure of the test, is on the page. The caveat under the tabs
+       says where the examples come from. -->
   <section id="${PROOF.slice(1)}" data-component="pptx-proof" data-bg="cool" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="${WRAP}">
 ${indent(sh.block({ eyebrow: COPY.proof.eyebrow, title: COPY.proof.h2, intro: COPY.proof.intro, measure: '860' }), '      ')}
@@ -466,7 +465,6 @@ ${indent(ev.tabs({ ns: 'pptx-proof', label: 'Where the text was in the test pres
         <span class="mt-0.5 shrink-0 text-ink-500">${ico(I.info, 'currentColor', 16)}</span>
         <span>${COPY.proof.caveat}</span>
       </p>
-      <p data-prototype-note class="rv mt-2.5 pl-7 max-w-[880px] text-[12px] sm:text-[12.5px] leading-relaxed text-teal-800">${REDRAWN_NOTE}</p>
       <div class="rv mt-7 sm:mt-8">
 ${indent(action.button({ label: COPY.proof.cta, href: ANCHOR }), '        ')}
       </div>
@@ -477,11 +475,12 @@ ${indent(action.button({ label: COPY.proof.cta, href: ANCHOR }), '        ')}
 const section4 = () => `  <!-- ================= 04 · EXPLORE THE SIMILARITY REPORT =================
        The library's report showcase with the sitewide sample report (build/report.js) —
        the page's one dark act. It is the static sample, not the result of the PPTX test
-       above, and it does not answer to the switches in the hero. -->
+       above, and it does not answer to the switches in the hero; the footnote under it says
+       so in the owner's words (the library's caveat line). -->
 ${reportShowcase.section({
   id: 'powerpoint-report', surface: 'dark', space: 'md', accent: 'teal',
   head: { eyebrow: COPY.report.eyebrow, title: COPY.report.h2, intro: COPY.report.intro, measure: '760', introMeasure: '72' },
-  foot: { points: COPY.report.points, callout: COPY.report.callout },
+  foot: { points: COPY.report.points, callout: COPY.report.callout, caveat: { text: COPY.report.caveat, icon: I.info } },
 })}`;
 
 /* ═══════════════ 05 · THREE STEPS ═══════════════ */
@@ -536,7 +535,7 @@ ${pricingPreview.section({
   id: 'pricing', layout: 'center', space: 'md',
   head: { eyebrow: COPY.pricing.eyebrow, title: COPY.pricing.h2, intro: COPY.pricing.intro },
   recurring: COPY.pricing.recurring,
-  plans: { href: COPY.pricing.ctaHref },
+  plans: { href: 'payment.html' },
   foot: { link: { label: COPY.pricing.cta, href: COPY.pricing.ctaHref } },
 })}`;
 
@@ -585,7 +584,7 @@ ${cta.section({
    ───────────────────────────────────────────────────────────────────────────── */
 const sections = [section1, section2, section3, section4, section5, section6, section7, section8, section9, section10];
 
-module.exports = { COPY, PLATFORMS, REDRAW, REDRAWN, REDRAWN_NOTE, TXT, DECK, ANCHOR, PROOF, OUT };
+module.exports = { COPY, PLATFORMS, REDRAW, TXT, DECK, ANCHOR, PROOF, OUT };
 if (require.main !== module) return;
 
 const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });

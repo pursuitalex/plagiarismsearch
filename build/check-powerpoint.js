@@ -155,7 +155,9 @@ console.log('\nmodule B — the proof');
   ok('no screenshot in the proof — it is drawn', !/<img\b/.test(b) && !/data-zoom/.test(b));
   ok('no test screenshot anywhere on the page or in the site', !/pptx-internal-reference/.test(html) && !fs.existsSync(path.join(SITE, 'assets', 'img', 'pptx-internal-reference')));
   ok('the review switch is gone: one view, nothing hidden', !/data-review-tool|pv-scope|pv-before|pv-after|data-proof-view/.test(html) && !/Before · screenshots|Internal reference/.test(text));
-  ok('every drawn card is tagged for review, and the note says what it is', (b.split('>' + P.REDRAWN + '<').length - 1) === 8 && b.includes(P.REDRAWN_NOTE) && /data-prototype-note/.test(b));
+  /* the owner's review of 2026-10-12: no internal annotation on the page */
+  ok('no review badge, no prototype note: nothing internal is on the page', !/· for review|Prototype note|product owner|data-prototype-note|Internal reference|Redrawn/i.test(body));
+  ok('the factual caveat stays under the examples', b.includes(K.proof.caveat));
 
   const passages = [[P.TXT.dickens], P.TXT.decl, P.TXT.alice, P.TXT.lincoln];
   const count = (hay, s) => hay.split(plain(s)).length - 1;
@@ -177,6 +179,7 @@ console.log('\nmodule B — the proof');
 console.log('\nlibrary sections');
 {
   ok('the sample report is the sealed library one', /data-slot="report"/.test(section('powerpoint-report')));
+  ok('…and says it is a general example, not the PPTX test\'s report', section('powerpoint-report').includes('class="report-caveat') && flat(section('powerpoint-report')).includes(plain(K.report.caveat)) && K.report.caveat === 'Illustrative PlagiarismSearch report example. The controlled PowerPoint test results are shown in the section above.');
   const pr = section('pricing');
   ok('the full pricing module: four periods, the Recurring payments switch, the data island', ['onetime', 'monthly', 'quarterly', 'yearly'].every(k => pr.includes(`data-period="${k}"`)) && /data-recurring/.test(pr) && /type="application\/json"/.test(pr));
   ok('no price typed into the copy around the cards', !/[$€£]\s?\d/.test(flat(pr.slice(0, pr.indexOf('data-slot="pricing-periods"')))));

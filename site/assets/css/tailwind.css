@@ -9653,6 +9653,10 @@ a.team-linkedin:focus-visible {
   left: -6px;
 }
 
+.left-\[14\%\] {
+  left: 14%;
+}
+
 .left-\[21px\] {
   left: 21px;
 }
@@ -9663,6 +9667,10 @@ a.team-linkedin:focus-visible {
 
 .left-\[75\.5\%\] {
   left: 75.5%;
+}
+
+.left-\[84\%\] {
+  left: 84%;
 }
 
 .left-full {
@@ -9715,6 +9723,10 @@ a.team-linkedin:focus-visible {
 
 .right-\[-6px\] {
   right: -6px;
+}
+
+.right-\[1\%\] {
+  right: 1%;
 }
 
 .right-full {
@@ -9773,6 +9785,10 @@ a.team-linkedin:focus-visible {
   top: 2.25rem;
 }
 
+.top-\[-16\%\] {
+  top: -16%;
+}
+
 .top-\[-160px\] {
   top: -160px;
 }
@@ -9783,6 +9799,10 @@ a.team-linkedin:focus-visible {
 
 .top-\[-80px\] {
   top: -80px;
+}
+
+.top-\[14\%\] {
+  top: 14%;
 }
 
 .top-\[22\.27\%\] {
@@ -9799,6 +9819,14 @@ a.team-linkedin:focus-visible {
 
 .top-\[74px\] {
   top: 74px;
+}
+
+.top-\[81\.9\%\] {
+  top: 81.9%;
+}
+
+.top-\[84\%\] {
+  top: 84%;
 }
 
 .top-full {
@@ -9890,6 +9918,11 @@ a.team-linkedin:focus-visible {
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.mx-\[0\.07em\] {
+  margin-left: 0.07em;
+  margin-right: 0.07em;
 }
 
 .mx-auto {
@@ -10093,6 +10126,10 @@ a.team-linkedin:focus-visible {
   margin-top: 0.75rem;
 }
 
+.mt-3\.5 {
+  margin-top: 0.875rem;
+}
+
 .mt-4 {
   margin-top: 1rem;
 }
@@ -10264,6 +10301,10 @@ a.team-linkedin:focus-visible {
   height: 7rem;
 }
 
+.h-3 {
+  height: 0.75rem;
+}
+
 .h-3\.5 {
   height: 0.875rem;
 }
@@ -10292,6 +10333,14 @@ a.team-linkedin:focus-visible {
   height: 2.25rem;
 }
 
+.h-\[0\.34em\] {
+  height: 0.34em;
+}
+
+.h-\[0\.7em\] {
+  height: 0.7em;
+}
+
 .h-\[14px\] {
   height: 14px;
 }
@@ -10306,6 +10355,10 @@ a.team-linkedin:focus-visible {
 
 .h-\[22px\] {
   height: 22px;
+}
+
+.h-\[30\%\] {
+  height: 30%;
 }
 
 .h-\[300px\] {
@@ -10342,6 +10395,10 @@ a.team-linkedin:focus-visible {
 
 .h-\[560px\] {
   height: 560px;
+}
+
+.h-\[58px\] {
+  height: 58px;
 }
 
 .h-\[600px\] {
@@ -10496,6 +10553,10 @@ a.team-linkedin:focus-visible {
   width: 7rem;
 }
 
+.w-3 {
+  width: 0.75rem;
+}
+
 .w-3\.5 {
   width: 0.875rem;
 }
@@ -10542,6 +10603,14 @@ a.team-linkedin:focus-visible {
 
 .w-9 {
   width: 2.25rem;
+}
+
+.w-\[0\.105em\] {
+  width: 0.105em;
+}
+
+.w-\[0\.7em\] {
+  width: 0.7em;
 }
 
 .w-\[100\%\] {
@@ -10618,6 +10687,10 @@ a.team-linkedin:focus-visible {
 
 .w-\[43\%\] {
   width: 43%;
+}
+
+.w-\[44px\] {
+  width: 44px;
 }
 
 .w-\[46\%\] {
@@ -10838,6 +10911,10 @@ a.team-linkedin:focus-visible {
   max-width: 220px;
 }
 
+.max-w-\[22ch\] {
+  max-width: 22ch;
+}
+
 .max-w-\[36ch\] {
   max-width: 36ch;
 }
@@ -11056,6 +11133,10 @@ a.team-linkedin:focus-visible {
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
 }
 
+.origin-top {
+  transform-origin: top;
+}
+
 .-translate-x-1\/2 {
   --tw-translate-x: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -11068,6 +11149,11 @@ a.team-linkedin:focus-visible {
 
 .translate-y-3 {
   --tw-translate-y: 0.75rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-rotate-45 {
+  --tw-rotate: -45deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -11102,6 +11188,12 @@ a.team-linkedin:focus-visible {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.select-none {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 .resize-none {
@@ -11585,6 +11677,10 @@ a.team-linkedin:focus-visible {
   border-top-left-radius: 1rem;
 }
 
+.rounded-tl-full {
+  border-top-left-radius: 9999px;
+}
+
 .rounded-tr-2xl {
   border-top-right-radius: 1rem;
 }
@@ -11599,6 +11695,10 @@ a.team-linkedin:focus-visible {
 
 .border-2 {
   border-width: 2px;
+}
+
+.border-\[0\.105em\] {
+  border-width: 0.105em;
 }
 
 .border-x {
@@ -11627,12 +11727,20 @@ a.team-linkedin:focus-visible {
   border-left-width: 2px;
 }
 
+.border-l-\[0\.035em\] {
+  border-left-width: 0.035em;
+}
+
 .border-r {
   border-right-width: 1px;
 }
 
 .border-t {
   border-top-width: 1px;
+}
+
+.border-t-\[0\.035em\] {
+  border-top-width: 0.035em;
 }
 
 .border-t-\[1\.5px\] {
@@ -11664,6 +11772,11 @@ a.team-linkedin:focus-visible {
 .border-ink-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+}
+
+.border-ink-900 {
+  --tw-border-opacity: 1;
+  border-color: rgb(17 24 39 / var(--tw-border-opacity, 1));
 }
 
 .border-ink-900\/10 {
@@ -12110,6 +12223,10 @@ a.team-linkedin:focus-visible {
   background-color: rgb(255 255 255 / 0.6);
 }
 
+.bg-white\/70 {
+  background-color: rgb(255 255 255 / 0.7);
+}
+
 .bg-white\/75 {
   background-color: rgb(255 255 255 / 0.75);
 }
@@ -12514,10 +12631,6 @@ a.team-linkedin:focus-visible {
   padding-left: 1.5rem;
 }
 
-.pl-7 {
-  padding-left: 1.75rem;
-}
-
 .pl-9 {
   padding-left: 2.25rem;
 }
@@ -12894,12 +13007,20 @@ a.team-linkedin:focus-visible {
   font-size: clamp(2.6rem,4vw,3.4rem);
 }
 
+.text-\[clamp\(2rem\2c 4\.2vw\2c 3\.4rem\)\] {
+  font-size: clamp(2rem,4.2vw,3.4rem);
+}
+
 .text-\[clamp\(3rem\2c 6vw\2c 4\.4rem\)\] {
   font-size: clamp(3rem,6vw,4.4rem);
 }
 
 .text-\[clamp\(3rem\2c 6vw\2c 4\.5rem\)\] {
   font-size: clamp(3rem,6vw,4.5rem);
+}
+
+.text-\[clamp\(6\.5rem\2c 24vw\2c 16rem\)\] {
+  font-size: clamp(6.5rem,24vw,16rem);
 }
 
 .font-bold {
@@ -12965,6 +13086,10 @@ a.team-linkedin:focus-visible {
 
 .leading-\[1\.08\] {
   line-height: 1.08;
+}
+
+.leading-\[1\.12\] {
+  line-height: 1.12;
 }
 
 .leading-\[1\.15\] {
@@ -13631,6 +13756,10 @@ a.team-linkedin:focus-visible {
   --tw-ring-color: rgb(12 169 195 / 0.15);
 }
 
+.ring-teal-500\/20 {
+  --tw-ring-color: rgb(12 169 195 / 0.2);
+}
+
 .ring-teal-500\/25 {
   --tw-ring-color: rgb(12 169 195 / 0.25);
 }
@@ -14170,6 +14299,28 @@ a.team-linkedin:focus-visible {
   color: rgb(6 116 138 / var(--tw-text-opacity, 1));
 }
 
+.has-\[\:checked\]\:bg-white:has(:checked) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.has-\[\:checked\]\:shadow-diffuse:has(:checked) {
+  --tw-shadow: 0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08);
+  --tw-shadow-colored: 0 1px 2px var(--tw-shadow-color), 0 20px 40px -15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.has-\[\:checked\]\:ring-2:has(:checked) {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.has-\[\:checked\]\:ring-teal-500:has(:checked) {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(12 169 195 / var(--tw-ring-opacity, 1));
+}
+
 @media (min-width: 640px) {
   .sm\:not-sr-only {
     position: static;
@@ -14214,12 +14365,20 @@ a.team-linkedin:focus-visible {
     right: 1.75rem;
   }
 
+  .sm\:right-\[5\.5\%\] {
+    right: 5.5%;
+  }
+
   .sm\:top-10 {
     top: 2.5rem;
   }
 
   .sm\:top-8 {
     top: 2rem;
+  }
+
+  .sm\:top-\[2\%\] {
+    top: 2%;
   }
 
   .sm\:col-span-1 {
@@ -14423,6 +14582,10 @@ a.team-linkedin:focus-visible {
     height: 6rem;
   }
 
+  .sm\:h-3\.5 {
+    height: 0.875rem;
+  }
+
   .sm\:h-4 {
     height: 1rem;
   }
@@ -14455,6 +14618,10 @@ a.team-linkedin:focus-visible {
     height: 72px;
   }
 
+  .sm\:h-\[84px\] {
+    height: 84px;
+  }
+
   .sm\:h-\[88px\] {
     height: 88px;
   }
@@ -14473,6 +14640,10 @@ a.team-linkedin:focus-visible {
 
   .sm\:w-24 {
     width: 6rem;
+  }
+
+  .sm\:w-3\.5 {
+    width: 0.875rem;
   }
 
   .sm\:w-32 {
@@ -14495,12 +14666,20 @@ a.team-linkedin:focus-visible {
     width: 2.25rem;
   }
 
+  .sm\:w-\[210px\] {
+    width: 210px;
+  }
+
   .sm\:w-\[240px\] {
     width: 240px;
   }
 
   .sm\:w-\[360px\] {
     width: 360px;
+  }
+
+  .sm\:w-\[64px\] {
+    width: 64px;
   }
 
   .sm\:w-\[72px\] {
@@ -14758,6 +14937,10 @@ a.team-linkedin:focus-visible {
 
   .sm\:rounded-lg {
     border-radius: 0.5rem;
+  }
+
+  .sm\:rounded-xl {
+    border-radius: 0.75rem;
   }
 
   .sm\:rounded-t-xl {
@@ -15484,6 +15667,10 @@ a.team-linkedin:focus-visible {
     aspect-ratio: auto;
   }
 
+  .lg\:h-\[98px\] {
+    height: 98px;
+  }
+
   .lg\:w-36 {
     width: 9rem;
   }
@@ -15494,6 +15681,10 @@ a.team-linkedin:focus-visible {
 
   .lg\:w-\[400px\] {
     width: 400px;
+  }
+
+  .lg\:w-\[76px\] {
+    width: 76px;
   }
 
   .lg\:w-auto {
@@ -15683,6 +15874,10 @@ a.team-linkedin:focus-visible {
 
   .lg\:grid-cols-\[minmax\(0\2c 1fr\)_400px\] {
     grid-template-columns: minmax(0,1fr) 400px;
+  }
+
+  .lg\:grid-cols-\[minmax\(0\2c 1fr\)_minmax\(0\2c 400px\)\] {
+    grid-template-columns: minmax(0,1fr) minmax(0,400px);
   }
 
   .lg\:grid-cols-\[minmax\(0\2c 320px\)_1fr\] {
@@ -15962,6 +16157,10 @@ a.team-linkedin:focus-visible {
     padding-bottom: 2.5rem;
   }
 
+  .lg\:pb-12 {
+    padding-bottom: 3rem;
+  }
+
   .lg\:pb-16 {
     padding-bottom: 4rem;
   }
@@ -16024,6 +16223,10 @@ a.team-linkedin:focus-visible {
 
   .lg\:pt-12 {
     padding-top: 3rem;
+  }
+
+  .lg\:pt-14 {
+    padding-top: 3.5rem;
   }
 
   .lg\:pt-16 {
@@ -16238,6 +16441,10 @@ a.team-linkedin:focus-visible {
 
   .xl\:gap-14 {
     gap: 3.5rem;
+  }
+
+  .xl\:gap-16 {
+    gap: 4rem;
   }
 
   .xl\:gap-x-16 {

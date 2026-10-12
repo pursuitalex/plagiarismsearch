@@ -42,7 +42,8 @@
 
     <!-- ==================== SIDE NAV ==================== -->
     <nav class="hidden xl:block">
-      <div class="sticky top-24 py-16 ds-nav space-y-0.5" data-ds-nav>
+      <div class="sticky top-24 py-16">
+      <div class="ds-nav space-y-0.5" data-ds-nav>
         <div class="eyebrow px-3 pb-3">Contents</div>
         <a href="#foundations">Theme layers</a>
         <a href="#color">Color</a>
@@ -61,6 +62,13 @@
         <a href="#motion">Motion</a>
         <a href="#a11y">Accessibility</a>
         <a href="#anti">Anti-patterns</a>
+      </div>
+      <!-- pages that nothing on the site links to. Outside [data-ds-nav] on purpose: the
+           scroll-spy reads every href in it as a selector of a section on this page. -->
+      <div class="ds-nav space-y-0.5 mt-8">
+        <div class="eyebrow px-3 pb-3">Pages</div>
+        <a href="404.html">404 · Page not found</a>
+      </div>
       </div>
     </nav>
 

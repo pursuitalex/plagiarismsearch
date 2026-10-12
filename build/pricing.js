@@ -85,6 +85,14 @@ ${TABS.map(([k, label]) => `    <button type="button" data-period="${k}" aria-pr
 </div>`;
 }
 
+/* where a plan's button leads: the payment page, told which order it starts. The choice
+   rides in the address's fragment — plan, period and, for a subscription, recurring=on —
+   so it needs no server and survives a host that rewrites the path. The button also
+   carries the bare destination (data-order-link): 60-pricing.js rewrites the fragment
+   whenever the period or the Recurring payments switch changes. A period that can recur
+   starts as a subscription, as its card shows the subscription price. */
+const orderHref = (href, tier, period) => `${href}#plan=${tier}&period=${period}${TIERS.some(t => PLANS[period][t].single) ? '&recurring=on' : ''}`;
+
 function plans({ style, href, initial = 'onetime' } = {}) {
   if (!['spotlight', 'even'].includes(style)) throw new Error('pricing: style must be spotlight or even');
   if (!href) throw new Error('pricing: href (where a card\'s button leads) is required');
@@ -100,7 +108,7 @@ ${TIERS.map(tier => `  <div data-tier="${tier}" class="rounded-3xl sm:rounded-[2
     <div class="self-start inline-flex items-center rounded-full bg-ink-50 text-ink-500 px-3 py-1 text-[11.5px] font-bold nums mb-5 sm:mb-6"><span class="js-rate">${P[tier].rate}</span>&nbsp;/ 1,000 words</div>
     <div class="h-px bg-ink-100 mb-5 sm:mb-6"></div>
     <ul class="space-y-3 text-[13.5px] font-medium text-ink-700 mb-6 sm:mb-7 js-feats">${feats(P[tier].feats, LINES.tick)}</ul>
-    <a href="${href}" class="btn-press mt-auto block text-center rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[13.5px] sm:text-[14.5px] font-semibold py-3 transition-colors duration-300">Start ${LABEL[tier]}</a>
+    <a href="${orderHref(href, tier, initial)}" data-order-link="${href}" class="btn-press mt-auto block text-center rounded-full bg-ink-900 hover:bg-ink-800 text-white text-[13.5px] sm:text-[14.5px] font-semibold py-3 transition-colors duration-300">Start ${LABEL[tier]}</a>
   </div>`).join('\n')}
   ${template(LINES.tick)}
   ${island()}
@@ -130,7 +138,7 @@ ${TIERS.map(tier => {
       <div class="h-px ${dark ? 'bg-white/10' : 'bg-ink-100'} mb-5 sm:mb-6 lg:mb-7"></div>
       ${template(line)}
       <ul class="space-y-3.5 text-[13.5px] font-medium ${dark ? 'text-white/80' : 'text-ink-700'} min-h-[9rem] mb-6 sm:mb-7 lg:mb-8 js-feats">${feats(P[tier].feats, line)}</ul>
-      <a href="${href}" class="btn-press block text-center rounded-full ${dark
+      <a href="${orderHref(href, tier, initial)}" data-order-link="${href}" class="btn-press block text-center rounded-full ${dark
         ? 'bg-white text-ink-900 hover:bg-ink-50'
         : 'ring-1 ring-ink-200 text-ink-900 hover:bg-ink-50'} text-[13.5px] sm:text-[14.5px] font-semibold py-3 sm:py-3.5 transition-colors duration-300">Start ${LABEL[tier]}</a>
     </div>
@@ -140,4 +148,4 @@ ${TIERS.map(tier => {
 </div>`;
 }
 
-module.exports = { PLANS, LINES, feats, template, island, periods, plans };
+module.exports = { PLANS, LINES, feats, template, island, periods, plans, orderHref };

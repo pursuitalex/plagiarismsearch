@@ -575,7 +575,8 @@ ${pricingPreview.section({
      brief calls the latter the primary CTA; Olex asked for it as a quiet text link, since
      each card now carries its own button. The label and destination are the brief's,
      only the weight changed. */
-  plans: { href: S.s11.ctaHref },
+  /* a plan's own button starts its order on the payment page (Olex, 2026-10-12) */
+  plans: { href: 'payment.html' },
   foot: { link: { label: S.s11.cta, href: S.s11.ctaHref } },
 })}`;
 

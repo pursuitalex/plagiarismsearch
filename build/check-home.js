@@ -262,7 +262,13 @@ console.log('\nstructure');
      destinations — counting them failed the page for citing its own sources. External
      links are still printed, because they should never grow unnoticed either. */
   const all = new Set([...body.matchAll(/href="([^"#][^"]*)"/g)].map(m => m[1]));
-  const internal = [...all].filter(h => !/^https?:/.test(h));
+  /* a plan card's button starts its order on the payment page (Olex, 2026-10-12). It is
+     the purchase action of the card, not a place the homepage sends a reader to read, so
+     it is not one of the 8–12 — and it is held on its own, below */
+  const ORDER = /^payment\.html#plan=(light|standard|premium)&period=onetime$/;
+  const orders = [...all].filter(h => /^payment\.html/.test(h));
+  ok('the three plan buttons start their orders on the payment page', orders.length === 3 && orders.every(h => ORDER.test(h)), orders.join(', '));
+  const internal = [...all].filter(h => !/^https?:/.test(h) && !/^payment\.html/.test(h));
   const external = [...all].filter(h => /^https?:/.test(h));
   ok('8–12 unique internal body destinations', internal.length >= 8 && internal.length <= 12,
      internal.length + ': ' + internal.join(', '));
