@@ -145,47 +145,32 @@ console.log('\nmodule B — the proof');
   const tabs = [...b.matchAll(/<button type="button" role="tab"[^>]*>([^<]*)<\/button>/g)].map(m => m[1]);
   ok('four tabs, each named for its tested content type', tabs.join(' | ') === K.proof.tabs.map(t => t[0]).join(' | '), tabs.join(' | '));
   const panels = b.split('role="tabpanel"').slice(1);
-  const src = p => [...p.matchAll(/<img\b[^>]*src="([^"]*)"/g)].map(m => m[1]);
-  ok('A → R-A, B → R-B, C → R-C, D → R-D: a slide never meets another slide\'s excerpt',
-     panels.length === 4 && P.PAIRS.every((pr, i) => src(panels[i]).join(' ') === [pr.source.src, pr.report.src].join(' ')));
-  ok('each panel carries its own description and both fixed captions', panels.length === 4 && K.proof.tabs.every((t, i) => panels[i].includes(t[1]) && K.proof.captions.every(c => panels[i].includes(c))));
-  ok('the notes tab prints the notes and says they are not on the slide', panels.length === 4 && panels[3].includes(P.NOTES.label) && panels[3].includes(P.NOTES.text) && panels.slice(0, 3).every(p => !p.includes(P.NOTES.label)));
-  const imgs = [...b.matchAll(/<img\b[^>]*>/g)].map(m => m[0]);
-  const files = P.PAIRS.flatMap(pr => [pr.source, pr.report]);
-  ok('eight pictures, each its own file at its own size', imgs.length === 8 && files.every(f => fs.existsSync(path.join(SITE, f.src)) && imgs.some(i => i.includes(`src="${f.src}"`) && i.includes(`width="${f.w}"`) && i.includes(`height="${f.h}"`))));
-  ok('every picture has a factual alt and opens enlarged', imgs.every(i => ((i.match(/alt="([^"]*)"/) || [, ''])[1]).length > 60) && (b.match(/<button type="button" class="ev-zoom" data-zoom/g) || []).length === 8);
-  ok('every picture stands under an "Internal reference" tag', (b.split('>' + P.INTERNAL + '<').length - 1) === 8);
-  ok('the prototype note says what they are', b.includes(P.PROTOTYPE_NOTE) && /data-prototype-note/.test(b));
-  ok('the test pictures live in a folder named for what they are', files.every(f => f.src.startsWith('/assets/img/pptx-internal-reference/')));
-  ok('tabs are wired by id', [1, 2, 3, 4].every(n => b.includes(`id="pptx-proof-tab-${n}" aria-controls="pptx-proof-panel-${n}"`) && b.includes(`id="pptx-proof-panel-${n}" aria-labelledby="pptx-proof-tab-${n}"`)));
-  /* the only inputs here are the review switch's two radios */
-  const inputs = [...b.matchAll(/<input\b[^>]*>/g)].map(m => m[0]);
-  ok('a tab is not wired to the form', !/data-period|data-recurring|<form\b/.test(b) && inputs.every(i => /type="radio" name="pptx-proof-view"/.test(i)));
-
-  /* ── the same evidence, redrawn (Olex, 2026-10-12) — and the Before / After switch ── */
   const flatP = panels.map(flat);
-  ok('review switch: two radios, After checked, marked as a review tool', inputs.length === 2 && /data-review-tool/.test(b) && /value="after"[^>]*checked/.test(b) && !/value="before"[^>]*checked/.test(b) && /class="pv-scope\b/.test(b));
-  ok('each tab holds both views: redrawn first, the screenshots second', panels.length === 4 && panels.every(p => p.indexOf('data-proof-view="after"') > -1 && p.indexOf('data-proof-view="after"') < p.indexOf('data-proof-view="before"')));
-  const after = panels.map(p => p.slice(p.indexOf('data-proof-view="after"'), p.indexOf('data-proof-view="before"')));
-  ok('the redrawn views carry no screenshot', after.every(a => !/<img\b/.test(a)));
-  ok('every redrawn card is tagged for review, and the note says what it is', (b.split('>' + P.REDRAWN + '<').length - 1) === 8 && b.includes(P.REDRAWN_NOTE));
+  ok('each panel carries its own description and both fixed captions', panels.length === 4 && K.proof.tabs.every((t, i) => panels[i].includes(t[1]) && K.proof.captions.every(c => panels[i].includes(c))));
+  ok('tabs are wired by id', [1, 2, 3, 4].every(n => b.includes(`id="pptx-proof-tab-${n}" aria-controls="pptx-proof-panel-${n}"`) && b.includes(`id="pptx-proof-panel-${n}" aria-labelledby="pptx-proof-tab-${n}"`)));
+  ok('a tab is not wired to the form: no input, no form, nothing of the pricing or the checker', !/data-period|data-recurring|<form\b|<input\b/.test(b));
+
+  /* the evidence is drawn from the test (Olex, 2026-10-12): no screenshot of the internal
+     test material is on the page, in the site or in the repository */
+  ok('no screenshot in the proof — it is drawn', !/<img\b/.test(b) && !/data-zoom/.test(b));
+  ok('no test screenshot anywhere on the page or in the site', !/pptx-internal-reference/.test(html) && !fs.existsSync(path.join(SITE, 'assets', 'img', 'pptx-internal-reference')));
+  ok('the review switch is gone: one view, nothing hidden', !/data-review-tool|pv-scope|pv-before|pv-after|data-proof-view/.test(html) && !/Before · screenshots|Internal reference/.test(text));
+  ok('every drawn card is tagged for review, and the note says what it is', (b.split('>' + P.REDRAWN + '<').length - 1) === 8 && b.includes(P.REDRAWN_NOTE) && /data-prototype-note/.test(b));
+
   const passages = [[P.TXT.dickens], P.TXT.decl, P.TXT.alice, P.TXT.lincoln];
   const count = (hay, s) => hay.split(plain(s)).length - 1;
-  ok('each passage is the test\'s own, word for word, on the slide and in the report excerpt', passages.every((ps, i) => ps.every(s => count(flat(after[i]), s) === 2)),
-     passages.map((ps, i) => ps.map(s => count(flat(after[i]), s)).join('/')).join(' '));
-  ok('a passage never appears under another tab', passages.every((ps, i) => ps.every(s => flatP.every((t, n) => n === i || !t.includes(plain(s))))));
-  ok('each slide keeps its own title, element and number', P.REDRAW.every((r, i) => flat(after[i]).includes(r.slide.title) && after[i].includes('>' + r.slide.tag + '<') && after[i].includes('Slide ' + r.slide.no + ' of 7')));
-  ok('the table is a real table; the notes stand in a Notes pane apart from the slide', /<table role="table"/.test(after[1]) && /Notes pane · not on the slide/.test(after[3]) && after.slice(0, 3).every(a => !/Notes pane/.test(a)));
+  ok('each passage is the test\'s own, word for word, on the slide and in the report excerpt', passages.every((ps, i) => ps.every(s => count(flatP[i], s) === 2)),
+     passages.map((ps, i) => ps.map(s => count(flatP[i], s)).join('/')).join(' '));
+  ok('A → R-A, B → R-B, C → R-C, D → R-D: a passage never appears under another tab', passages.every((ps, i) => ps.every(s => flatP.every((t, n) => n === i || !t.includes(plain(s))))));
+  ok('each slide keeps its own title, element and number', P.REDRAW.every((r, i) => flatP[i].includes(r.slide.title) && panels[i].includes('>' + r.slide.tag + '<') && panels[i].includes('Slide ' + r.slide.no + ' of 7')));
+  ok('the table is a real table; the notes stand in a Notes pane apart from the slide', /<table role="table"/.test(panels[1]) && /Notes pane · not on the slide/.test(panels[3]) && panels.slice(0, 3).every(p => !/Notes pane/.test(p)));
   /* the real report's categories and source numbers, per excerpt */
-  const marks = a => [...a.matchAll(/<mark data-kind="(plag|sim)"/g)].map(m => m[1]).join(' ');
-  ok('the highlights keep the real report\'s categories, in its order', P.REDRAW.every((r, i) => marks(after[i]) === r.report.filter(l => l.mark).map(l => l.mark).join(' ')), after.map(marks).join(' | '));
-  ok('text box: all Plagiarism; table and shape: Similarities then Plagiarism; notes: all Plagiarism', marks(after[0]) === 'plag plag' && marks(after[1]) === 'sim sim sim plag' && marks(after[2]) === 'sim sim plag' && marks(after[3]) === 'plag plag plag');
-  ok('every source marker carries the report\'s own numbers', P.REDRAW.every((r, i) => r.report.filter(l => l.src).every(l => flat(after[i]).includes('Sources ' + l.src))));
-  ok('a category is never said by colour alone: a legend names each one used', P.REDRAW.every((r, i) => [...new Set(r.report.filter(l => l.mark).map(l => l.mark))].every(k => after[i].includes('>' + { plag: 'Plagiarism', sim: 'Similarities' }[k] + '</li>'))));
-  ok('the test deck\'s QA chrome is not redrawn', !/INTERNAL QA|DO NOT PUBLISH|TEST [A-F]\b|Positive control|CONTENT EXTRACTION TEST/.test(text));
-  ok('no test screenshot anywhere else on the page', sections.filter(s => s.id !== 'powerpoint-proof').every(s => !section(s.id).includes('pptx-internal-reference')));
-  const deployed = fs.readdirSync(path.join(SITE, 'assets', 'img', 'pptx-internal-reference'));
-  ok('only the eight paired pictures are in the site: no PDF, no PPTX, no overview, no image-only or control slide', deployed.length === 8 && deployed.every(f => files.some(x => x.src.endsWith('/' + f))), deployed.join(' '));
+  const marks = p => [...p.matchAll(/<mark data-kind="(plag|sim)"/g)].map(m => m[1]).join(' ');
+  ok('the highlights keep the real report\'s categories, in its order', P.REDRAW.every((r, i) => marks(panels[i]) === r.report.filter(l => l.mark).map(l => l.mark).join(' ')), panels.map(marks).join(' | '));
+  ok('text box: all Plagiarism; table and shape: Similarities then Plagiarism; notes: all Plagiarism', marks(panels[0]) === 'plag plag' && marks(panels[1]) === 'sim sim sim plag' && marks(panels[2]) === 'sim sim plag' && marks(panels[3]) === 'plag plag plag');
+  ok('every source marker carries the report\'s own numbers', P.REDRAW.every((r, i) => r.report.filter(l => l.src).every(l => flatP[i].includes('Sources ' + l.src))));
+  ok('a category is never said by colour alone: a legend names each one used', P.REDRAW.every((r, i) => [...new Set(r.report.filter(l => l.mark).map(l => l.mark))].every(k => panels[i].includes('>' + { plag: 'Plagiarism', sim: 'Similarities' }[k] + '</li>'))));
+  ok('the test deck\'s QA chrome is not drawn', !/INTERNAL QA|DO NOT PUBLISH|TEST [A-F]\b|Positive control|CONTENT EXTRACTION TEST/.test(text));
 }
 
 /* ── the library sections ───────────────────────────────────────────────────── */

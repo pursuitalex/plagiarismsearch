@@ -199,27 +199,25 @@ const COPY = {
 const IMG = '/assets/img/canvas/';
 const SHOTS = {
   file: {
-    full: { src: IMG + 'speedgrader-file-upload.webp', w: 1918, h: 951,
+    full: { src: IMG + 'speedgrader-file-upload-tidied.webp', w: 1918, h: 951,
       title: 'Canvas SpeedGrader — File Upload submission',
       alt: 'Canvas SpeedGrader with a File Upload submission open: the submitted document is previewed on the left; in the right sidebar, Submitted Files lists ai-5.docx and the Document processor reports panel shows PlagiarismSearch with AI Probability 66.5% and Similarity Score 100.0%, each with a link to its report.' },
-    panel: { src: IMG + 'speedgrader-file-upload-panel.webp', w: 470, h: 404,
+    panel: { src: IMG + 'speedgrader-file-upload-panel-tidied.webp', w: 470, h: 404,
       alt: 'Close-up of the same screenshot: Document processor reports — PlagiarismSearch, file ai-5.docx, AI Probability 66.5% with a View AI Probability Report button, Similarity Score 100.0% with a View Similarity Score Report button.' },
     /* where the crop sits in the full file — 1448,223 470×404 of 1918×951, an exact pixel
        match — as per cent; and the crop's own width, which it is never stretched past */
     spot: 'left-[75.5%] top-[23.45%] w-[24.5%] h-[42.48%]', panelMax: 'max-w-[470px]',
-    tidied: [IMG + 'speedgrader-file-upload-tidied.webp', IMG + 'speedgrader-file-upload-panel-tidied.webp'],
     kind: 'File Upload submission',
     caption: 'The student submitted a document. SpeedGrader lists the file and shows an AI Probability and a Similarity Score indicator for it, each with a link to its detailed report.',
   },
   text: {
-    full: { src: IMG + 'speedgrader-text-entry.webp', w: 1911, h: 943,
+    full: { src: IMG + 'speedgrader-text-entry-tidied.webp', w: 1911, h: 943,
       title: 'Canvas SpeedGrader — Text Entry submission',
       alt: 'Canvas SpeedGrader with a Text Entry submission open: the submitted text is shown on the left; in the right sidebar, the Document processor reports panel shows PlagiarismSearch under “Text submitted to Canvas” with AI Probability 50.0% and Similarity Score 100.0%, each with a link to its report.' },
-    panel: { src: IMG + 'speedgrader-text-entry-panel.webp', w: 635, h: 390,
+    panel: { src: IMG + 'speedgrader-text-entry-panel-tidied.webp', w: 635, h: 390,
       alt: 'Close-up of the same screenshot: Document processor reports — PlagiarismSearch, Text submitted to Canvas, AI Probability 50.0% with a View AI Probability Report button, Similarity Score 100.0% with a View Similarity Score Report button.' },
     /* 1265,210 635×390 of 1911×943, an exact pixel match */
     spot: 'left-[66.2%] top-[22.27%] w-[33.23%] h-[41.36%]', panelMax: 'max-w-[635px]',
-    tidied: [IMG + 'speedgrader-text-entry-tidied.webp', IMG + 'speedgrader-text-entry-panel-tidied.webp'],
     kind: 'Text Entry submission',
     caption: 'The student typed the text directly in Canvas. SpeedGrader marks it “Text submitted to Canvas” and shows an AI Probability and a Similarity Score indicator for it, each with a link to its detailed report.',
   },
@@ -227,8 +225,9 @@ const SHOTS = {
 /* the brief's sample-data caution, said once by each screenshot */
 const DEMO = 'Screenshot of a demo submission. The values shown are specific to this example.';
 /* THE TIDIED FILES (Olex, 2026-10-12). The Canvas interface is not touched; three details
-   of the demo data are, on copies of the developer's files (the originals stay, and the
-   review switch's "Before" shows them):
+   of the demo data are, on copies of the developer's files. The page shows the copies
+   (Olex kept them after one review round beside the originals; the originals then left
+   the site — they are the developer's PNGs in the brief's package, which stays local):
    · File Upload — the app's name in our report block reads "PlagiarismSearch", as it does
      on the other screenshot (the file had a second test install's name, "PlagiarismSearch2");
      the empty grade field carries a grade, as the other screenshot's does;
@@ -356,39 +355,25 @@ ${steps.section({
 /* one tab's panel: the screenshot whole (it opens enlarged), the brief's crop of its report
    panel beside it, and the caption that says which kind of submission this is. On a
    phone: screenshot → close-up → caption. */
-const proofBefore = s => `<figure class="grid lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-x-8 gap-y-5 sm:gap-y-6 items-start">
-  <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl overflow-hidden ring-1 ring-white/15 bg-white">
-${indent(ev.shot({ ...s.full, zoom: true, start: 'end' }), '    ')}
-  </div>
-  <div class="ev-shot lg:row-span-2 rounded-2xl sm:rounded-[20px] lg:rounded-3xl overflow-hidden ring-1 ring-white/15 bg-white">
-    ${ev.shot(s.panel)}
-  </div>
-  <figcaption class="min-w-0 max-w-[640px]">
-    <span class="block ${LABEL} text-teal-300">${s.kind}</span>
-    <span class="block mt-2 ${BODY} text-white/75">${s.caption}</span>
-    ${demoNote(true)}
-  </figcaption>
-</figure>`;
-
-/* THE SAME TWO PICTURES, BETTER SET (Olex, 2026-10-12: as on the PowerPoint page, but
-   the interface shown must not be changed). So nothing of Canvas is redrawn and not a
-   pixel of either file is touched — the same two files, at their own proportions. What
-   changes is only what is ours, around them:
+/* THE SETTING OF THE TWO SCREENSHOTS (Olex, 2026-10-12: as on the PowerPoint page, but
+   the interface shown must not be changed). So nothing of Canvas is redrawn: the two
+   files stand at their own proportions (the tidied copies — see THE TIDIED FILES above),
+   and what is designed is only what is ours, around them:
    · the screenshot gets the whole width of the section, on a plate with room at its
      sides and a title line that says what it is — large enough that the sidebar reads;
    · the close-up stands under it on a plate of its own, at its own size and never
      stretched past it, beside the caption;
    · one thin outline on the screenshot marks the area the close-up enlarges (s.spot: the
      crop's exact place in the file, in per cent). It is an element beside the image,
-     not part of it — the file is as supplied, and the enlarged view shows it bare. */
-const proofAfter = s => `<figure>
+     not part of it — the enlarged view shows the screenshot bare. */
+const proofPanel = s => `<figure data-proof-panel>
   <div class="rounded-2xl sm:rounded-3xl lg:rounded-4xl bg-white/[.05] ring-1 ring-white/10 p-3 sm:p-5 lg:p-7">
     <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 px-1 pb-3 sm:pb-4 lg:pb-5">
       <span class="${LABEL} text-white/70">Canvas SpeedGrader · ${s.kind}</span>
       <span class="text-[11.5px] sm:text-[12px] font-semibold text-white/45">${TIDIED}</span>
     </div>
     <div class="relative rounded-xl sm:rounded-2xl overflow-hidden ring-1 ring-white/20 bg-white">
-${indent(ev.shot({ ...s.full, src: s.tidied[0], zoom: true, start: 'end' }), '      ')}
+${indent(ev.shot({ ...s.full, zoom: true, start: 'end' }), '      ')}
       <span class="absolute ${s.spot} rounded-[5px] sm:rounded-lg ring-2 ring-inset ring-teal-400 pointer-events-none" aria-hidden="true"></span>
     </div>
   </div>
@@ -396,7 +381,7 @@ ${indent(ev.shot({ ...s.full, src: s.tidied[0], zoom: true, start: 'end' }), '  
     <div class="rounded-2xl sm:rounded-3xl bg-white/[.05] ring-1 ring-white/10 p-3 sm:p-5 lg:p-6">
       <p class="flex items-center gap-2 px-1 pb-3 ${LABEL} text-teal-300"><span class="inline-block w-3.5 h-3.5 rounded-[4px] ring-2 ring-teal-400" aria-hidden="true"></span>Close-up of the outlined area</p>
       <div class="ev-shot mx-auto ${s.panelMax} rounded-xl sm:rounded-2xl overflow-hidden ring-1 ring-white/20 bg-white">
-        ${ev.shot({ ...s.panel, src: s.tidied[1] })}
+        ${ev.shot(s.panel)}
       </div>
     </div>
     <figcaption class="min-w-0 max-w-[560px]">
@@ -407,27 +392,6 @@ ${indent(ev.shot({ ...s.full, src: s.tidied[0], zoom: true, start: 'end' }), '  
   </div>
 </figure>`;
 
-/* a tab's panel: both settings of the same two files; the review switch shows one */
-const proofPanel = s => `<div data-proof-panel>
-  <div class="pv-after" data-proof-view="after">
-${indent(proofAfter(s), '    ')}
-  </div>
-  <div class="pv-before" data-proof-view="before">
-${indent(proofBefore(s), '    ')}
-  </div>
-</div>`;
-
-/* the review switch (35-evidence.css: .pv-scope:has(…)) — a review tool, not part of the
-   page; it goes when one of the two is chosen */
-const reviewSwitch = `<fieldset data-review-tool class="pv-switch-row rv flex flex-wrap items-center gap-x-3 gap-y-2 mb-5 sm:mb-6">
-  <legend class="sr-only">Review tool: the screenshots’ setting, before and after</legend>
-  <span class="text-[11px] sm:text-[11.5px] font-semibold text-white/55" aria-hidden="true">Review · screenshot setting</span>
-  <span class="pv-switch">
-    <label><input type="radio" name="canvas-proof-view" value="after" class="pv-input-after sr-only" checked><span>After</span></label>
-    <label><input type="radio" name="canvas-proof-view" value="before" class="pv-input-before sr-only"><span>Before</span></label>
-  </span>
-</fieldset>`;
-
 const section3 = () => `  <!-- ================= 03 · SPEEDGRADER EVIDENCE / COMPONENT B — INTERACTIVE REPORT PROOF =================
        The page's one dark act. Two tabs and nothing else: "File Upload" shows the first
        developer screenshot, "Text Entry" the second, each with the brief's crop of its
@@ -435,18 +399,17 @@ const section3 = () => `  <!-- ================= 03 · SPEEDGRADER EVIDENCE / CO
        picture and a caption (build/evidence.js) — it starts no check and changes no
        value; the buttons inside a screenshot are part of the photograph. The three
        reading points and the caution follow, as the brief words them. -->
-  <section id="speedgrader-results" data-component="canvas-proof" data-surface="dark" class="pv-scope relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
+  <section id="speedgrader-results" data-component="canvas-proof" data-surface="dark" class="relative py-16 sm:py-24 lg:py-28 bg-ink-950 text-white overflow-hidden">
     <div class="orb absolute orb-dark-teal"></div>
     <div class="orb absolute orb-dark-coral"></div>
     <div class="${WRAP}">
 ${indent(sh.block({ title: COPY.proof.h2, intro: COPY.proof.intro, measure: '860' }), '      ')}
-${indent(reviewSwitch, '      ')}
 
       <div class="rv">
 ${indent(ev.tabs({ ns: 'speedgrader', label: 'Submission type shown in the screenshot',
     items: [SHOTS.file, SHOTS.text].map((s, i) => ({ tab: COPY.proof.tabs[i], panel: proofPanel(s) })) }), '        ')}
       </div>
-      <p data-prototype-note class="pv-after rv mt-4 max-w-[880px] text-[12px] sm:text-[12.5px] leading-relaxed text-teal-300/90">${TIDIED_NOTE}</p>
+      <p data-prototype-note class="rv mt-4 max-w-[880px] text-[12px] sm:text-[12.5px] leading-relaxed text-teal-300/90">${TIDIED_NOTE}</p>
 
       <ul class="rv-kids grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mt-10 sm:mt-12 lg:mt-14">
 ${COPY.proof.points.map(([name, text], i) => `        <li class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white/[.04] ring-1 ring-white/10 p-5 sm:p-6 lg:p-7">

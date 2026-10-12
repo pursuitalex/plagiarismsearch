@@ -24,12 +24,11 @@
      card, the trust strip a row of the review platforms' marks without a figure.
 
    THE TEST MATERIAL IS INTERNAL. The slides say "INTERNAL QA · PLEASE DO NOT PUBLISH" and
-   the report excerpts carry test markings; the brief has them shown in the prototype as
-   clearly marked internal references, pending publication-safe versions. So every one
-   stands under an "Internal reference" tag, they live in a folder named for what they are
-   (site/assets/img/pptx-internal-reference/), and the page never prints the test's own
-   figures (its percentage, its word and source counts) or claims OCR, a per-slide score
-   or an accuracy.
+   the report excerpts carry test markings, so no screenshot of them is on the page or in
+   the repository: the proof is drawn from them (see "THE TEST'S EVIDENCE, DRAWN" below),
+   each drawing tagged for the product owner's review. The page never prints the test's
+   own figures (its percentage, its word and source counts) or claims OCR, a per-slide
+   score or an accuracy.
 
    Destinations: /prices → prices.html, /policy → policy.html; every checker action
    returns to the one form in the hero.
@@ -193,45 +192,14 @@ const COPY = {
 };
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   THE TEST MATERIAL — one controlled PPTX and the report it produced, as supplied.
-   A source slide is paired with the excerpt that came from it and with no other:
-   A → R-A (text box), B → R-B (table), C → R-C (shape), D → R-D (speaker notes).
-   w and h are the files' own pixels. Internal reference: see the head of this file.
-   ───────────────────────────────────────────────────────────────────────────── */
-const IMG = '/assets/img/pptx-internal-reference/';
-const INTERNAL = 'Internal reference';
-const PROTOTYPE_NOTE = 'Prototype note: these are internal test screenshots, shown as references until publication-ready versions are approved.';
-/* the notes of slide D, as they are in the test file (the opening of the Gettysburg
-   Address — public domain); the slide itself does not show them */
-const NOTES = {
-  label: 'Speaker notes of this slide — in the Notes pane, not on the slide',
-  text: 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure.',
-};
-const PAIRS = [
-  { source: { src: IMG + 'source-a-textbox.webp', w: 1600, h: 900, title: 'Source slide — native text box',
-      alt: 'Test slide “Native text box”: an ordinary PowerPoint text box holding the opening passage of Charles Dickens’s A Tale of Two Cities.' },
-    report: { src: IMG + 'report-a-textbox.webp', w: 966, h: 639, title: 'Report excerpt — text box',
-      alt: 'Excerpt of the PlagiarismSearch report for that slide: the Dickens passage from the text box appears as extracted text, highlighted as matching, with numbered source markers.' } },
-  { source: { src: IMG + 'source-b-table.webp', w: 1600, h: 900, title: 'Source slide — native PowerPoint table',
-      alt: 'Test slide “Native PowerPoint table”: a table whose cell holds the opening passage of the Declaration of Independence.' },
-    report: { src: IMG + 'report-b-table.webp', w: 985, h: 796, title: 'Report excerpt — table',
-      alt: 'Excerpt of the PlagiarismSearch report for that slide: the passage from the table cell appears as extracted text, highlighted, with numbered source markers.' } },
-  { source: { src: IMG + 'source-c-shape.webp', w: 1600, h: 900, title: 'Source slide — editable shape',
-      alt: 'Test slide “Editable shape text”: a rounded rectangle shape holding the opening passage of Lewis Carroll’s Alice’s Adventures in Wonderland.' },
-    report: { src: IMG + 'report-c-shape.webp', w: 985, h: 648, title: 'Report excerpt — shape',
-      alt: 'Excerpt of the PlagiarismSearch report for that slide: the passage from the shape appears as extracted text, highlighted, with numbered source markers.' } },
-  { source: { src: IMG + 'source-d-notes.webp', w: 1600, h: 900, title: 'Source slide — speaker notes only',
-      alt: 'Test slide “Speaker notes only”: the slide itself carries no source passage and says the text is in the PowerPoint speaker notes.' },
-    report: { src: IMG + 'report-d-speaker-notes.webp', w: 985, h: 722, title: 'Report excerpt — speaker notes',
-      alt: 'Excerpt of the PlagiarismSearch report for that slide: the Gettysburg Address passage, stored only in the speaker notes, appears as extracted text, highlighted, with numbered source markers.' },
-    notes: true },
-];
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   THE SAME EVIDENCE, REDRAWN (Olex, 2026-10-12). A raw screenshot sits badly in a card —
-   no room at its sides, two different shapes side by side — so each pair is also drawn in
-   the site's own manner: the slide as a slide, the report excerpt as a sheet of extracted
-   text. The manner is ours; the content is the test's:
+   THE TEST'S EVIDENCE, DRAWN (Olex, 2026-10-12). The proof is one controlled PPTX and the
+   report it produced: slide A → excerpt R-A (text box), B → R-B (table), C → R-C (shape),
+   D → R-D (speaker notes). A raw screenshot sat badly in a card — no room at its sides,
+   two different shapes side by side — so each pair is drawn in the site's own manner: the
+   slide as a slide, the report excerpt as a sheet of extracted text. The screenshots were
+   shown beside the drawings for one review round; Olex kept the drawings, and the
+   screenshots (internal test material, never in the repository) left the page.
+   The manner is ours; the content is the test's:
    · a slide keeps its own title, its own element (text box, table, shape, notes) and the
      passage it held, word for word;
    · a report excerpt keeps the lines the real report shows for that slide, in its order,
@@ -240,7 +208,7 @@ const PAIRS = [
    Left out, on both sides alike: the test deck's QA chrome (its header and footer lines,
    the "TEST A" badge, the QA subtitle) — and nothing is added. No figure of the test.
    A redrawing is a new visual and needs the product owner's review before production,
-   as the brief says; the page tags it so. "Before" keeps the screenshots for comparison.
+   as the brief says; the page tags each one so.
    ───────────────────────────────────────────────────────────────────────────── */
 const DECK = 'PlagiarismSearch_PowerPoint_Extraction_Test_2026.pptx';
 const REDRAWN = 'Redrawn · for review';
@@ -375,21 +343,6 @@ ${indent(action.button({ label: COPY.types.cta, href: PROOF, tone: 'light' }), '
   </section>`;
 
 /* ═══════════════ 03 · A REAL CHECK — NEW MODULE B ═══════════════ */
-const internalTag = `<span class="shrink-0 rounded-full bg-orange-50 ring-1 ring-orange-200 px-2.5 py-1 text-[11px] font-semibold text-orange-700 whitespace-nowrap">${INTERNAL}</span>`;
-const proofFigure = (caption, shot, extra = '') => `<figure class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-3 sm:p-4">
-  <figcaption class="flex items-center justify-between gap-3 px-1 pb-3">
-    <span class="${LABEL} text-ink-600">${caption}</span>
-    ${internalTag}
-  </figcaption>
-  <div class="rounded-xl sm:rounded-2xl overflow-hidden ring-1 ring-black/10 bg-white">
-${indent(ev.shot({ ...shot, zoom: true }), '    ')}
-  </div>${extra}
-</figure>`;
-const notesBox = `
-  <div class="mt-3 rounded-xl sm:rounded-2xl bg-teal-50 ring-1 ring-teal-200 p-4">
-    <p class="text-[12px] sm:text-[12.5px] font-bold text-teal-800 mb-1.5">${NOTES.label}</p>
-    <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-700">“${NOTES.text}”</p>
-  </div>`;
 /* ── the redrawn pair ────────────────────────────────────────────────────────── */
 const redrawnTag = `<span class="shrink-0 rounded-full bg-teal-50 ring-1 ring-teal-200 px-2.5 py-1 text-[11px] font-semibold text-teal-800 whitespace-nowrap">${REDRAWN}</span>`;
 const PASSAGE = 'text-[12.5px] sm:text-[13.5px] leading-[1.7] text-ink-800';
@@ -483,35 +436,14 @@ ${kinds.map(k => `        <li class="inline-flex items-center gap-2"><span class
 </figure>`;
 };
 
-/* a tab's panel: the description, then the pair twice — redrawn ("After", shown) and as
-   the screenshots ("Before"); the review switch over the tabs shows one of the two */
-const proofPanel = (p, i) => `<div data-proof-panel>
+/* a tab's panel: the description, then the pair */
+const proofPanel = (r, i) => `<div data-proof-panel>
   <p class="text-[15px] sm:text-[16px] lg:text-[17px] font-semibold tracking-tight leading-snug text-ink-900 max-w-[70ch] mb-5 sm:mb-6">${COPY.proof.tabs[i][1]}</p>
-  <div class="pv-after" data-proof-view="after">
-    <div class="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
-${indent(redrawnSlide(REDRAW[i].slide), '      ')}
-${indent(redrawnReport(REDRAW[i].report), '      ')}
-    </div>
-  </div>
-  <div class="pv-before" data-proof-view="before">
-    <div class="grid lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 items-start">
-${indent(proofFigure(COPY.proof.captions[0], p.source, p.notes ? notesBox : ''), '      ')}
-${indent(proofFigure(COPY.proof.captions[1], p.report), '      ')}
-    </div>
+  <div class="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+${indent(redrawnSlide(r.slide), '    ')}
+${indent(redrawnReport(r.report), '    ')}
   </div>
 </div>`;
-
-/* the review switch: Before / After for the proof's pictures. A review tool, not part of
-   the page — two radios and CSS (35-evidence.css: .pv-scope:has(…)), no script. It goes
-   when one of the two is chosen. */
-const reviewSwitch = `<fieldset data-review-tool class="pv-switch-row rv flex flex-wrap items-center gap-x-3 gap-y-2 mb-5 sm:mb-6">
-  <legend class="sr-only">Review tool: the proof’s pictures, before and after</legend>
-  <span class="text-[11px] sm:text-[11.5px] font-semibold text-ink-500" aria-hidden="true">Review · proof pictures</span>
-  <span class="pv-switch">
-    <label><input type="radio" name="pptx-proof-view" value="after" class="pv-input-after sr-only" checked><span>After · redrawn</span></label>
-    <label><input type="radio" name="pptx-proof-view" value="before" class="pv-input-before sr-only"><span>Before · screenshots</span></label>
-  </span>
-</fieldset>`;
 
 const section3 = () => `  <!-- ================= 03 · A REAL POWERPOINT CHECK / NEW MODULE B — FROM PPTX TO REPORT EVIDENCE =================
        One controlled PPTX, four tabs, and in each the source slide on the left and, on the
@@ -519,24 +451,22 @@ const section3 = () => `  <!-- ================= 03 · A REAL POWERPOINT CHECK /
        text box, table, shape, speaker notes. The notes tab also prints the notes
        themselves, because the slide does not show them. A tab changes the evidence shown
        (build/evidence.js) — it runs no check and is not wired to the form above. Light and
-       restrained on purpose: the dark report act follows. Every picture is internal test
-       material and is tagged so; no figure of the test is printed. -->
-  <section id="${PROOF.slice(1)}" data-component="pptx-proof" data-bg="cool" class="pv-scope relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+       restrained on purpose: the dark report act follows. Both sides are drawn from the
+       test (its passages word for word, the report's own categories and source numbers)
+       and tagged for review; no screenshot, and no figure of the test, is on the page. -->
+  <section id="${PROOF.slice(1)}" data-component="pptx-proof" data-bg="cool" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="${WRAP}">
 ${indent(sh.block({ eyebrow: COPY.proof.eyebrow, title: COPY.proof.h2, intro: COPY.proof.intro, measure: '860' }), '      ')}
-${indent(reviewSwitch, '      ')}
       <div class="rv">
 ${indent(ev.tabs({ ns: 'pptx-proof', label: 'Where the text was in the test presentation',
-    items: PAIRS.map((p, i) => ({ tab: COPY.proof.tabs[i][0], panel: proofPanel(p, i) })) }), '        ')}
+    items: REDRAW.map((r, i) => ({ tab: COPY.proof.tabs[i][0], panel: proofPanel(r, i) })) }), '        ')}
       </div>
 
       <p class="rv mt-6 sm:mt-8 flex items-start gap-3 max-w-[880px] ${BODY} text-ink-700">
         <span class="mt-0.5 shrink-0 text-ink-500">${ico(I.info, 'currentColor', 16)}</span>
         <span>${COPY.proof.caveat}</span>
       </p>
-      <p data-prototype-note class="pv-after rv mt-2.5 pl-7 max-w-[880px] text-[12px] sm:text-[12.5px] leading-relaxed text-teal-800">${REDRAWN_NOTE}</p>
-      <p data-prototype-note class="pv-before rv mt-2.5 pl-7 max-w-[880px] text-[12px] sm:text-[12.5px] leading-relaxed text-orange-700">${PROTOTYPE_NOTE}</p>
-
+      <p data-prototype-note class="rv mt-2.5 pl-7 max-w-[880px] text-[12px] sm:text-[12.5px] leading-relaxed text-teal-800">${REDRAWN_NOTE}</p>
       <div class="rv mt-7 sm:mt-8">
 ${indent(action.button({ label: COPY.proof.cta, href: ANCHOR }), '        ')}
       </div>
@@ -655,7 +585,7 @@ ${cta.section({
    ───────────────────────────────────────────────────────────────────────────── */
 const sections = [section1, section2, section3, section4, section5, section6, section7, section8, section9, section10];
 
-module.exports = { COPY, PAIRS, NOTES, PLATFORMS, INTERNAL, PROTOTYPE_NOTE, REDRAW, REDRAWN, REDRAWN_NOTE, TXT, DECK, ANCHOR, PROOF, OUT };
+module.exports = { COPY, PLATFORMS, REDRAW, REDRAWN, REDRAWN_NOTE, TXT, DECK, ANCHOR, PROOF, OUT };
 if (require.main !== module) return;
 
 const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
