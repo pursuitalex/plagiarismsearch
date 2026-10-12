@@ -61,3 +61,20 @@ html:not(.js) .ev-zoom-hint { display:none; }
 .ev-dialog-scroll { flex:1 1 auto; min-height:0; overflow:auto; overscroll-behavior:contain; background:#fff; }
 .ev-dialog-scroll > img { display:block; max-width:none; height:auto; width:max(100%, min(var(--ev-w, 100%), 1400px)); }
 @media (min-width:1024px) { .ev-dialog-scroll > img { width:100%; } }
+
+/* ── the review switch: Before / After (build/powerpoint.js) ──────────────────────────
+   A review tool, not part of a page: two radios in a .pv-switch, and a scope
+   (.pv-scope, the section) that shows .pv-after or .pv-before by which is checked.
+   CSS alone — no script, so it works wherever the markup is. It goes with the choice. */
+.pv-before { display:none; }
+.pv-scope:has(.pv-input-before:checked) .pv-before { display:block; }
+.pv-scope:has(.pv-input-before:checked) .pv-after { display:none; }
+.pv-switch-row { border:0; margin-left:0; margin-right:0; padding:0; min-width:0; }
+.pv-switch { display:inline-flex; padding:3px; border-radius:9999px; background:#fff; box-shadow:0 0 0 1px rgba(17,24,39,.1), 0 1px 2px rgba(0,0,0,.04); }
+.pv-switch label { display:block; cursor:pointer; }
+.pv-switch label > span { display:block; white-space:nowrap; border-radius:9999px; padding:6px 14px; font-size:12px; line-height:1.3; font-weight:700; color:#6B7280;
+  transition:background-color .2s ease, color .2s ease; }
+.pv-switch label:hover > span { color:#111827; }
+.pv-switch input:checked + span { background:#111827; color:#fff; }
+.pv-switch input:focus-visible + span { outline:2px solid #0CA9C3; outline-offset:2px; }
+@media (max-width:639px) { .pv-switch label > span { padding:6px 11px; font-size:11.5px; } }

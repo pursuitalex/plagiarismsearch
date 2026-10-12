@@ -227,6 +227,61 @@ const PAIRS = [
     notes: true },
 ];
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   THE SAME EVIDENCE, REDRAWN (Olex, 2026-10-12). A raw screenshot sits badly in a card —
+   no room at its sides, two different shapes side by side — so each pair is also drawn in
+   the site's own manner: the slide as a slide, the report excerpt as a sheet of extracted
+   text. The manner is ours; the content is the test's:
+   · a slide keeps its own title, its own element (text box, table, shape, notes) and the
+     passage it held, word for word;
+   · a report excerpt keeps the lines the real report shows for that slide, in its order,
+     with the real category on each (Plagiarism / Similarities) and the real source
+     numbers on each marker.
+   Left out, on both sides alike: the test deck's QA chrome (its header and footer lines,
+   the "TEST A" badge, the QA subtitle) — and nothing is added. No figure of the test.
+   A redrawing is a new visual and needs the product owner's review before production,
+   as the brief says; the page tags it so. "Before" keeps the screenshots for comparison.
+   ───────────────────────────────────────────────────────────────────────────── */
+const DECK = 'PlagiarismSearch_PowerPoint_Extraction_Test_2026.pptx';
+const REDRAWN = 'Redrawn · for review';
+const REDRAWN_NOTE = 'Prototype note: these are redrawings of the internal test slides and report excerpts — same passages, same highlights and source numbers — pending the product owner’s review.';
+const TXT = {
+  dickens: 'It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way—in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only.',
+  decl: ['When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature\'s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.',
+    'We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.'],
+  alice: ['Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do:',
+    'once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, \'and what is the use of a book,\' thought Alice \'without pictures or conversation?\' So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.'],
+  lincoln: ['Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.',
+    'Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure.',
+    'We are met on a great battle-field of that war.'],
+};
+/* a report line: { plain } as extracted, unmarked · { mark: 'plag' | 'sim', text, src } — a
+   highlighted run, src: the source numbers on the marker that opens it (the report's own) */
+const REDRAW = [
+  { slide: { no: '2', tag: 'Text box', title: 'Native text box', el: 'textbox', label: 'Source excerpt / Charles Dickens', text: TXT.dickens },
+    report: [{ plain: 'Native text box' },
+      { mark: 'plag', src: '8, 9, 10, 11, 27', text: 'SOURCE EXCERPT / CHARLES DICKENS' },
+      { mark: 'plag', text: TXT.dickens }] },
+  { slide: { no: '3', tag: 'Table', title: 'Native PowerPoint table', el: 'table', heads: ['Probe', 'Source text in a native table cell'], row: 'Declaration of Independence', text: TXT.decl.join(' ') },
+    report: [{ plain: 'Native PowerPoint table' },
+      { mark: 'sim', src: '13, 18, 19, 20, 21, 22, 23, 24, 25', text: 'PROBE   SOURCE TEXT IN A NATIVE TABLE CELL' },
+      { mark: 'sim', text: 'Declaration of Independence' },
+      { mark: 'sim', text: TXT.decl[0], join: true },
+      { mark: 'plag', src: '1, 13, 28, 29, 30, 31, 32, 33, 47, 48, 49', text: TXT.decl[1] }] },
+  { slide: { no: '4', tag: 'Shape', title: 'Editable shape text', el: 'shape', label: 'Source excerpt / Lewis Carroll', text: TXT.alice.join(' ') },
+    report: [{ plain: 'Editable shape text' },
+      { mark: 'sim', src: '12, 60, 61', text: 'SOURCE EXCERPT / LEWIS CARROLL' },
+      { mark: 'sim', text: TXT.alice[0], join: true },
+      { mark: 'plag', src: '12, 14, 15, 16, 17, 26, 37', text: TXT.alice[1] }] },
+  { slide: { no: '5', tag: 'Speaker notes', title: 'Speaker notes only', el: 'notes', line: 'This slide has no source passage on the canvas. The text is in PowerPoint speaker notes.', notes: TXT.lincoln.join(' ') + ' …' },
+    report: [{ plain: 'Speaker notes only' },
+      { plain: 'This slide has no source passage on the canvas. The text is in PowerPoint speaker notes.' },
+      { mark: 'plag', src: '1, 2, 3, 4, 5, 6, 7, 35, 46', text: TXT.lincoln[0], join: true },
+      { mark: 'plag', src: '1, 2, 3, 4, 5, 6, 7, 44, 45', text: TXT.lincoln[1], join: true },
+      { mark: 'plag', src: '1, 2, 3, 4, 5, 62', text: TXT.lincoln[2] }] },
+];
+const KIND = { plag: 'Plagiarism', sim: 'Similarities' };
+
 /* the review platforms' own pages and marks (build/reviews.js holds the addresses) */
 const PLATFORMS = [
   { name: 'Trustpilot', url: REVIEWS.SOURCES.trustpilot.url, img: '/assets/svg/reviews/trustpilot-logo.svg', w: 318, h: 78, cls: 'h-7 sm:h-8' },
@@ -335,13 +390,128 @@ const notesBox = `
     <p class="text-[12px] sm:text-[12.5px] font-bold text-teal-800 mb-1.5">${NOTES.label}</p>
     <p class="text-[13px] sm:text-[13.5px] leading-relaxed text-ink-700">“${NOTES.text}”</p>
   </div>`;
+/* ── the redrawn pair ────────────────────────────────────────────────────────── */
+const redrawnTag = `<span class="shrink-0 rounded-full bg-teal-50 ring-1 ring-teal-200 px-2.5 py-1 text-[11px] font-semibold text-teal-800 whitespace-nowrap">${REDRAWN}</span>`;
+const PASSAGE = 'text-[12.5px] sm:text-[13.5px] leading-[1.7] text-ink-800';
+const SLIDE_LABEL = 'text-[9.5px] sm:text-[10px] font-bold uppercase tracking-[0.14em] text-teal-700';
+const slideEl = s => {
+  if (s.el === 'textbox') return `<div class="rounded-xl sm:rounded-2xl bg-white ring-1 ring-ink-200 shadow-diffuse p-4 sm:p-5">
+  <p class="${SLIDE_LABEL} mb-2.5">${s.label}</p>
+  <p class="${PASSAGE}">${s.text}</p>
+</div>`;
+  if (s.el === 'shape') return `<div class="rounded-[22px] sm:rounded-[28px] bg-teal-50 ring-1 ring-teal-200 px-5 py-5 sm:px-7 sm:py-6">
+  <p class="${SLIDE_LABEL} mb-2.5 text-center">${s.label}</p>
+  <p class="${PASSAGE}">${s.text}</p>
+</div>`;
+  /* a real table. Under 640px two columns would leave the passage a ribbon one word
+     wide, so the row stacks — each cell under its own column's name (data-label) — and
+     the explicit roles keep it a table for assistive tech once it is display:block */
+  const CELL_LABEL = 'before:content-[attr(data-label)] before:block sm:before:hidden before:mb-1.5 before:text-[9.5px] before:font-bold before:uppercase before:tracking-[0.14em] before:text-teal-700';
+  if (s.el === 'table') return `<table role="table" class="block sm:table w-full border-separate border-spacing-0 rounded-xl sm:rounded-2xl ring-1 ring-ink-200 overflow-hidden text-left">
+  <thead role="rowgroup" class="sr-only sm:not-sr-only sm:table-header-group">
+    <tr role="row" class="bg-ink-50">
+      <th scope="col" role="columnheader" class="${SLIDE_LABEL} px-4 py-2.5 w-[30%] align-top">${s.heads[0]}</th>
+      <th scope="col" role="columnheader" class="${SLIDE_LABEL} px-4 py-2.5 border-l border-ink-200 align-top">${s.heads[1]}</th>
+    </tr>
+  </thead>
+  <tbody role="rowgroup" class="block sm:table-row-group">
+    <tr role="row" class="block sm:table-row">
+      <th scope="row" role="rowheader" data-label="${s.heads[0]}" class="block sm:table-cell ${CELL_LABEL} bg-teal-50 px-4 py-3.5 align-top text-[13.5px] sm:text-[14px] font-bold tracking-tight text-ink-900 sm:border-t border-ink-200">${s.row}</th>
+      <td role="cell" data-label="${s.heads[1]}" class="block sm:table-cell ${CELL_LABEL} px-4 py-3.5 align-top border-t sm:border-l border-ink-200 ${PASSAGE}">${s.text}</td>
+    </tr>
+  </tbody>
+</table>`;
+  return `<p class="${PASSAGE} text-ink-600">${s.line}</p>`;
+};
+const redrawnSlide = s => `<figure class="h-full min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-3 sm:p-4 flex flex-col">
+  <figcaption class="flex items-center justify-between gap-3 px-1 pb-3">
+    <span class="${LABEL} text-ink-600">${COPY.proof.captions[0]}</span>
+    ${redrawnTag}
+  </figcaption>
+  <div class="flex-1 flex flex-col justify-center gap-3 rounded-xl sm:rounded-2xl bg-ink-50 p-3.5 sm:p-5 lg:p-6">
+    <div class="rounded-xl sm:rounded-2xl bg-white ring-1 ring-black/10 shadow-diffuse overflow-hidden">
+      <span class="block h-1.5 bg-teal-500" aria-hidden="true"></span>
+      <div class="p-4 sm:p-5 lg:p-6">
+        <div class="flex items-center justify-between gap-3 mb-3">
+          <span class="text-[10.5px] sm:text-[11px] font-semibold text-ink-500 tabular-nums">Slide ${s.no} of 7</span>
+          <span class="rounded-md bg-teal-50 ring-1 ring-teal-200 px-2 py-0.5 text-[10.5px] sm:text-[11px] font-bold text-teal-800">${s.tag}</span>
+        </div>
+        <p class="text-[17px] sm:text-[19px] lg:text-[21px] font-extrabold tracking-tight leading-tight text-ink-900 mb-3.5 sm:mb-4">${s.title}</p>
+${indent(slideEl(s), '        ')}
+      </div>
+    </div>${s.el === 'notes' ? `
+    <div class="rounded-xl sm:rounded-2xl bg-teal-50 ring-1 ring-teal-200 p-4 sm:p-5">
+      <p class="${SLIDE_LABEL} mb-2">Notes pane · not on the slide</p>
+      <p class="${PASSAGE}">${s.notes}</p>
+    </div>` : ''}
+  </div>
+</figure>`;
+/* a highlighted run: the category is said by the colour, by the line under it (solid for
+   Plagiarism, dashed for Similarities) and by the legend — never by colour alone */
+const MARK = { plag: 'bg-orange-100 border-b-2 border-orange-400', sim: 'bg-yellow-100 border-b-2 border-dashed border-yellow-500' };
+const srcChip = n => `<span class="inline-flex items-center align-[1px] mr-1.5 rounded-full bg-orange-500 px-1.5 py-px text-[9.5px] leading-[1.5] font-bold text-white tabular-nums"><span class="sr-only">Sources </span>${n}</span>`;
+const reportLines = lines => {
+  /* consecutive runs marked join: true are one paragraph, as the report sets them */
+  const paras = []; let open = null;
+  for (const l of lines) {
+    const html = l.plain !== undefined ? l.plain
+      : `${l.src ? srcChip(l.src) : ''}<mark data-kind="${l.mark}" class="${MARK[l.mark]} text-ink-900 px-0.5 [box-decoration-break:clone] [-webkit-box-decoration-break:clone]">${l.text}</mark>`;
+    if (open) { open.push(html); if (!l.join) { paras.push(open.join(' ')); open = null; } }
+    else if (l.join) open = [html];
+    else paras.push(html);
+  }
+  return paras.map(p => `<p>${p}</p>`).join('\n');
+};
+const redrawnReport = r => {
+  const kinds = [...new Set(r.filter(l => l.mark).map(l => l.mark))];
+  return `<figure class="h-full min-w-0 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse p-3 sm:p-4 flex flex-col">
+  <figcaption class="flex items-center justify-between gap-3 px-1 pb-3">
+    <span class="${LABEL} text-ink-600">${COPY.proof.captions[1]}</span>
+    ${redrawnTag}
+  </figcaption>
+  <div class="flex-1 min-w-0 flex flex-col rounded-xl sm:rounded-2xl bg-ink-50 p-3.5 sm:p-5 lg:p-6">
+    <div class="flex-1 min-w-0 flex flex-col rounded-xl sm:rounded-2xl bg-white ring-1 ring-black/10 shadow-diffuse overflow-hidden">
+      <p class="flex items-center gap-2.5 px-4 sm:px-5 lg:px-6 py-3 border-b border-ink-100 text-[11.5px] sm:text-[12px] font-semibold text-ink-700"><span class="shrink-0 text-ink-400">${ico(I.file, 'currentColor', 15)}</span><span class="min-w-0 truncate">${DECK}</span></p>
+      <div class="flex-1 px-4 sm:px-5 lg:px-6 py-4 sm:py-5 space-y-3 text-[12.5px] sm:text-[13.5px] leading-[1.9] text-ink-700">
+${indent(reportLines(r), '        ')}
+      </div>
+      <ul class="flex flex-wrap items-center gap-x-5 gap-y-1.5 px-4 sm:px-5 lg:px-6 py-3 border-t border-ink-100 text-[11px] sm:text-[11.5px] font-semibold text-ink-500">
+${kinds.map(k => `        <li class="inline-flex items-center gap-2"><span class="inline-block w-5 h-2.5 ${MARK[k]}" aria-hidden="true"></span>${KIND[k]}</li>`).join('\n')}
+      </ul>
+    </div>
+  </div>
+</figure>`;
+};
+
+/* a tab's panel: the description, then the pair twice — redrawn ("After", shown) and as
+   the screenshots ("Before"); the review switch over the tabs shows one of the two */
 const proofPanel = (p, i) => `<div data-proof-panel>
   <p class="text-[15px] sm:text-[16px] lg:text-[17px] font-semibold tracking-tight leading-snug text-ink-900 max-w-[70ch] mb-5 sm:mb-6">${COPY.proof.tabs[i][1]}</p>
-  <div class="grid lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 items-start">
-${indent(proofFigure(COPY.proof.captions[0], p.source, p.notes ? notesBox : ''), '    ')}
-${indent(proofFigure(COPY.proof.captions[1], p.report), '    ')}
+  <div class="pv-after" data-proof-view="after">
+    <div class="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+${indent(redrawnSlide(REDRAW[i].slide), '      ')}
+${indent(redrawnReport(REDRAW[i].report), '      ')}
+    </div>
+  </div>
+  <div class="pv-before" data-proof-view="before">
+    <div class="grid lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 items-start">
+${indent(proofFigure(COPY.proof.captions[0], p.source, p.notes ? notesBox : ''), '      ')}
+${indent(proofFigure(COPY.proof.captions[1], p.report), '      ')}
+    </div>
   </div>
 </div>`;
+
+/* the review switch: Before / After for the proof's pictures. A review tool, not part of
+   the page — two radios and CSS (35-evidence.css: .pv-scope:has(…)), no script. It goes
+   when one of the two is chosen. */
+const reviewSwitch = `<fieldset data-review-tool class="pv-switch-row rv flex flex-wrap items-center gap-x-3 gap-y-2 mb-5 sm:mb-6">
+  <legend class="sr-only">Review tool: the proof’s pictures, before and after</legend>
+  <span class="text-[11px] sm:text-[11.5px] font-semibold text-ink-500" aria-hidden="true">Review · proof pictures</span>
+  <span class="pv-switch">
+    <label><input type="radio" name="pptx-proof-view" value="after" class="pv-input-after sr-only" checked><span>After · redrawn</span></label>
+    <label><input type="radio" name="pptx-proof-view" value="before" class="pv-input-before sr-only"><span>Before · screenshots</span></label>
+  </span>
+</fieldset>`;
 
 const section3 = () => `  <!-- ================= 03 · A REAL POWERPOINT CHECK / NEW MODULE B — FROM PPTX TO REPORT EVIDENCE =================
        One controlled PPTX, four tabs, and in each the source slide on the left and, on the
@@ -351,9 +521,10 @@ const section3 = () => `  <!-- ================= 03 · A REAL POWERPOINT CHECK /
        (build/evidence.js) — it runs no check and is not wired to the form above. Light and
        restrained on purpose: the dark report act follows. Every picture is internal test
        material and is tagged so; no figure of the test is printed. -->
-  <section id="${PROOF.slice(1)}" data-component="pptx-proof" data-bg="cool" class="relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
+  <section id="${PROOF.slice(1)}" data-component="pptx-proof" data-bg="cool" class="pv-scope relative py-16 sm:py-24 lg:py-28 bg-[#F7FAFC]">
     <div class="${WRAP}">
 ${indent(sh.block({ eyebrow: COPY.proof.eyebrow, title: COPY.proof.h2, intro: COPY.proof.intro, measure: '860' }), '      ')}
+${indent(reviewSwitch, '      ')}
       <div class="rv">
 ${indent(ev.tabs({ ns: 'pptx-proof', label: 'Where the text was in the test presentation',
     items: PAIRS.map((p, i) => ({ tab: COPY.proof.tabs[i][0], panel: proofPanel(p, i) })) }), '        ')}
@@ -363,7 +534,8 @@ ${indent(ev.tabs({ ns: 'pptx-proof', label: 'Where the text was in the test pres
         <span class="mt-0.5 shrink-0 text-ink-500">${ico(I.info, 'currentColor', 16)}</span>
         <span>${COPY.proof.caveat}</span>
       </p>
-      <p data-prototype-note class="rv mt-2.5 pl-7 max-w-[880px] text-[12px] sm:text-[12.5px] leading-relaxed text-orange-700">${PROTOTYPE_NOTE}</p>
+      <p data-prototype-note class="pv-after rv mt-2.5 pl-7 max-w-[880px] text-[12px] sm:text-[12.5px] leading-relaxed text-teal-800">${REDRAWN_NOTE}</p>
+      <p data-prototype-note class="pv-before rv mt-2.5 pl-7 max-w-[880px] text-[12px] sm:text-[12.5px] leading-relaxed text-orange-700">${PROTOTYPE_NOTE}</p>
 
       <div class="rv mt-7 sm:mt-8">
 ${indent(action.button({ label: COPY.proof.cta, href: ANCHOR }), '        ')}
@@ -483,7 +655,7 @@ ${cta.section({
    ───────────────────────────────────────────────────────────────────────────── */
 const sections = [section1, section2, section3, section4, section5, section6, section7, section8, section9, section10];
 
-module.exports = { COPY, PAIRS, NOTES, PLATFORMS, INTERNAL, PROTOTYPE_NOTE, ANCHOR, PROOF, OUT };
+module.exports = { COPY, PAIRS, NOTES, PLATFORMS, INTERNAL, PROTOTYPE_NOTE, REDRAW, REDRAWN, REDRAWN_NOTE, TXT, DECK, ANCHOR, PROOF, OUT };
 if (require.main !== module) return;
 
 const html = page.render({ title: COPY.title, meta: COPY.meta, canonical: COPY.canonical, sections: sections.map(f => f()) });
