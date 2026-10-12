@@ -123,7 +123,10 @@ console.log('\nscreenshots');
   const imgs = [...body.matchAll(/<img\b[^>]*>/g)].map(m => m[0]);
   const src = i => (i.match(/src="([^"]*)"/) || [, ''])[1];
   const S = C.SHOTS;
-  const files = [S.file.full, S.file.panel, S.text.full, S.text.panel];
+  /* the four supplied files, and their four tidied copies (the same size, three details
+     of the demo data retouched — build/canvas.js says which) */
+  const supplied = [S.file.full, S.file.panel, S.text.full, S.text.panel];
+  const files = [...supplied, ...[S.file, S.text].flatMap(s => [{ ...s.full, src: s.tidied[0] }, { ...s.panel, src: s.tidied[1] }])];
   const LOGOS = ['/assets/svg/partners/canvas.svg', '/assets/svg/logo.svg'];
   ok('every image is one of the four supplied files, or one of the two marks in the hero', imgs.length > 0 && imgs.every(i => files.some(f => f.src === src(i)) || LOGOS.includes(src(i))), imgs.map(src).filter(s => !files.some(f => f.src === s) && !LOGOS.includes(s)).join(', '));
   ok('each file is there and is its own size', files.every(f => fs.existsSync(path.join(SITE, f.src)) && imgs.filter(i => src(i) === f.src).every(i => i.includes(`width="${f.w}"`) && i.includes(`height="${f.h}"`))));
@@ -144,13 +147,29 @@ console.log('\nscreenshots');
   ok('two tabs only: File Upload, Text Entry', tabs.join(' | ') === 'File Upload | Text Entry', tabs.join(' | '));
   const panels = proof.split('role="tabpanel"').slice(1);
   const pimgs = p => [...p.matchAll(/<img\b[^>]*>/g)].map(m => src(m[0])).join(' ');
-  ok('tab 1 shows the File Upload screenshot and its crop', panels.length === 2 && pimgs(panels[0]) === [S.file.full.src, S.file.panel.src].join(' '));
-  ok('tab 2 shows the Text Entry screenshot and its crop', panels.length === 2 && pimgs(panels[1]) === [S.text.full.src, S.text.panel.src].join(' '));
-  ok('each caption says which kind of submission it is', panels.length === 2 && panels[0].includes(S.file.kind) && panels[0].includes(S.file.caption) && panels[1].includes(S.text.kind) && panels[1].includes(S.text.caption));
+  /* a tab holds the same two files twice — the new setting ("After") and the first one
+     ("Before"), for the review switch (Olex, 2026-10-12) */
+  const view = (p, v) => { const a = p.indexOf('data-proof-view="after"'), b = p.indexOf('data-proof-view="before"'); return v === 'after' ? p.slice(a, b) : p.slice(b); };
+  const pair = (s, v) => (v === 'after' ? s.tidied : [s.full.src, s.panel.src]).join(' ');
+  ok('tab 1 shows the File Upload screenshot and its crop: tidied in After, as supplied in Before', panels.length === 2 && ['after', 'before'].every(v => pimgs(view(panels[0], v)) === pair(S.file, v)));
+  ok('tab 2 shows the Text Entry screenshot and its crop: tidied in After, as supplied in Before', panels.length === 2 && ['after', 'before'].every(v => pimgs(view(panels[1], v)) === pair(S.text, v)));
+  ok('a tidied file is named for what it is and is never called "as supplied"', [S.file, S.text].every(s => s.tidied.every(f => /-tidied\.webp$/.test(f))) && panels.every(p => view(p, 'after').includes(C.TIDIED) && !/as supplied/i.test(flat(view(p, 'after')))));
+  ok('the review note says what was retouched', proof.includes(C.TIDIED_NOTE) && /data-prototype-note/.test(proof));
+  ok('each caption says which kind of submission it is, in both settings', panels.length === 2 && ['after', 'before'].every(v => [S.file, S.text].every((s, i) => view(panels[i], v).includes(s.kind) && view(panels[i], v).includes(s.caption))));
+  const inputs = [...body.matchAll(/<input\b[^>]*>/g)].map(m => m[0]);
+  ok('review switch: two radios, After checked, marked as a review tool', inputs.length === 2 && inputs.every(i => /type="radio" name="canvas-proof-view"/.test(i)) && /data-review-tool/.test(proof) && /value="after"[^>]*checked/.test(proof) && !/value="before"[^>]*checked/.test(proof) && /class="pv-scope\b/.test(proof));
+  /* the interface shown is not changed: no Canvas screen is drawn in HTML, the files are
+     the supplied ones at their own proportions, and the one mark on a screenshot is an
+     outline beside the image, at the crop's exact place in the file */
+  const after = panels.map(p => view(p, 'after'));
+  ok('the new setting redraws nothing of Canvas: the two files and our frame only', after.every(a => !/<table\b|<button(?![^>]*class="ev-zoom")|role="img"/.test(a)) && after.every(a => (a.match(/<img\b/g) || []).length === 2));
+  ok('the outline is an element beside the image, hidden from a screen reader, never a link or a button', after.every(a => (a.match(/<span class="absolute [^"]*ring-teal-400 pointer-events-none" aria-hidden="true"><\/span>/g) || []).length === 1));
+  ok('the outline stands where the crop was cut from the file', after[0].includes(S.file.spot) && after[1].includes(S.text.spot) && S.file.spot === 'left-[75.5%] top-[23.45%] w-[24.5%] h-[42.48%]' && S.text.spot === 'left-[66.2%] top-[22.27%] w-[33.23%] h-[41.36%]');
+  ok('a close-up is never stretched past its own width', after[0].includes(`max-w-[${S.file.panel.w}px]`) && after[1].includes(`max-w-[${S.text.panel.w}px]`));
   ok('tabs are wired by id: aria-controls ↔ panel, aria-labelledby ↔ tab', [1, 2].every(n => proof.includes(`id="speedgrader-tab-${n}" aria-controls="speedgrader-panel-${n}"`) && proof.includes(`id="speedgrader-panel-${n}" aria-labelledby="speedgrader-tab-${n}"`)));
   ok('the first tab is the one selected in the HTML', /id="speedgrader-tab-1"[^>]*aria-selected="true"/.test(proof) && /id="speedgrader-tab-2"[^>]*aria-selected="false"/.test(proof));
   ok('nothing in a screenshot is a link: the report buttons stay a photograph', !/<a\b[^>]*>\s*<img/.test(body) && !/<map\b|usemap=/.test(body));
-  ok('the demo note stands by each screenshot (the two tabs)', (body.split(C.DEMO).length - 1) === 2);
+  ok('the demo note stands by each screenshot (the two tabs, each in both settings)', (body.split(C.DEMO).length - 1) === 4);
   ok('no figure from a screenshot in the page\'s own copy', !/\d+(?:\.\d+)?\s?%/.test(text), (text.match(/\d+(?:\.\d+)?\s?%/) || [''])[0]);
   ok('no other section carries a screenshot', sections.filter(s => s.id !== 'speedgrader-results').every(s => !files.some(f => section(s.id).includes(f.src))));
 }
@@ -169,7 +188,8 @@ console.log('\nguardrails');
     [/100% (?:original|accurate)|plagiarism-free|proves? (?:plagiarism|authorship|misconduct)/i, 'a verdict promise'],
   ];
   for (const [re, what] of BANNED) ok('no ' + what, !re.test(text), (text.match(re) || [''])[0]);
-  ok('no checker form, no upload field: this page sends to the guides', !/data-slot="checker"|<form\b|<input\b/.test(body));
+  /* the only inputs on the page are the review switch's two radios */
+  ok('no checker form, no upload field: this page sends to the guides', !/data-slot="checker"|<form\b|<textarea\b|type="file"/.test(body) && [...body.matchAll(/<input\b[^>]*>/g)].every(m => /type="radio" name="canvas-proof-view"/.test(m[0])));
   ok('no pricing block, no testimonial, no partner badge', !/data-component="(?:pricing-preview|reviews|stat-rail)"/.test(body));
 }
 
