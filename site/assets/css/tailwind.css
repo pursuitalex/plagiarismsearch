@@ -10021,6 +10021,10 @@ a.team-linkedin:focus-visible {
   margin-right: 0.25rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .mr-\[19\%\] {
   margin-right: 19%;
 }
@@ -10160,6 +10164,14 @@ a.team-linkedin:focus-visible {
   display: none;
 }
 
+.\!aspect-\[16\/6\] {
+  aspect-ratio: 16/6 !important;
+}
+
+.aspect-\[16\/9\] {
+  aspect-ratio: 16/9;
+}
+
 .aspect-\[324\/113\] {
   aspect-ratio: 324/113;
 }
@@ -10264,6 +10276,10 @@ a.team-linkedin:focus-visible {
   height: 14px;
 }
 
+.h-\[176px\] {
+  height: 176px;
+}
+
 .h-\[18px\] {
   height: 18px;
 }
@@ -10326,6 +10342,10 @@ a.team-linkedin:focus-visible {
 
 .h-\[720px\] {
   height: 720px;
+}
+
+.h-\[72px\] {
+  height: 72px;
 }
 
 .h-\[96px\] {
@@ -10548,6 +10568,10 @@ a.team-linkedin:focus-visible {
   width: 38%;
 }
 
+.w-\[42\%\] {
+  width: 42%;
+}
+
 .w-\[420px\] {
   width: 420px;
 }
@@ -10636,6 +10660,10 @@ a.team-linkedin:focus-visible {
   width: 720px;
 }
 
+.w-\[76\%\] {
+  width: 76%;
+}
+
 .w-\[78\%\] {
   width: 78%;
 }
@@ -10662,6 +10690,14 @@ a.team-linkedin:focus-visible {
 
 .w-\[92\%\] {
   width: 92%;
+}
+
+.w-\[94\%\] {
+  width: 94%;
+}
+
+.w-\[96\%\] {
+  width: 96%;
 }
 
 .w-\[calc\(1\.25rem\+3rem\)\] {
@@ -10756,6 +10792,10 @@ a.team-linkedin:focus-visible {
 
 .max-w-\[18ch\] {
   max-width: 18ch;
+}
+
+.max-w-\[220px\] {
+  max-width: 220px;
 }
 
 .max-w-\[36ch\] {
@@ -11107,6 +11147,10 @@ a.team-linkedin:focus-visible {
   flex-wrap: nowrap;
 }
 
+.content-center {
+  align-content: center;
+}
+
 .content-start {
   align-content: flex-start;
 }
@@ -11415,6 +11459,10 @@ a.team-linkedin:focus-visible {
 
 .rounded-\[18px\] {
   border-radius: 18px;
+}
+
+.rounded-\[3px\] {
+  border-radius: 3px;
 }
 
 .rounded-\[calc\(outer-0\.5rem\)\] {
@@ -11916,6 +11964,14 @@ a.team-linkedin:focus-visible {
   background-color: rgb(44 195 219 / 0.15);
 }
 
+.bg-teal-400\/60 {
+  background-color: rgb(44 195 219 / 0.6);
+}
+
+.bg-teal-400\/70 {
+  background-color: rgb(44 195 219 / 0.7);
+}
+
 .bg-teal-400\/\[\.07\] {
   background-color: rgb(44 195 219 / .07);
 }
@@ -12371,6 +12427,10 @@ a.team-linkedin:focus-visible {
 
 .pl-6 {
   padding-left: 1.5rem;
+}
+
+.pl-7 {
+  padding-left: 1.75rem;
 }
 
 .pl-9 {
@@ -13848,6 +13908,10 @@ a.team-linkedin:focus-visible {
   --tw-ring-color: rgb(0 0 0 / 0.1);
 }
 
+.hover\:ring-black\/15:hover {
+  --tw-ring-color: rgb(0 0 0 / 0.15);
+}
+
 .hover\:ring-black\/20:hover {
   --tw-ring-color: rgb(0 0 0 / 0.2);
 }
@@ -13932,6 +13996,11 @@ a.team-linkedin:focus-visible {
 .group:hover .group-hover\:text-ink-600 {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+.group:hover .group-hover\:text-ink-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
 }
 
 .group:hover .group-hover\:text-ink-900 {
@@ -14187,8 +14256,16 @@ a.team-linkedin:focus-visible {
     height: 1.75rem;
   }
 
+  .sm\:h-8 {
+    height: 2rem;
+  }
+
   .sm\:h-9 {
     height: 2.25rem;
+  }
+
+  .sm\:h-\[184px\] {
+    height: 184px;
   }
 
   .sm\:h-\[340px\] {
@@ -14596,6 +14673,11 @@ a.team-linkedin:focus-visible {
   .sm\:py-10 {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
+  }
+
+  .sm\:py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .sm\:py-14 {
@@ -15395,6 +15477,10 @@ a.team-linkedin:focus-visible {
     grid-template-columns: auto 1fr;
   }
 
+  .lg\:grid-cols-\[minmax\(0\2c 1\.1fr\)_minmax\(0\2c 1fr\)\] {
+    grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
+  }
+
   .lg\:grid-cols-\[minmax\(0\2c 1\.55fr\)_minmax\(0\2c 1fr\)\] {
     grid-template-columns: minmax(0,1.55fr) minmax(0,1fr);
   }
@@ -15619,6 +15705,11 @@ a.team-linkedin:focus-visible {
   .lg\:py-10 {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
+  }
+
+  .lg\:py-14 {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
   }
 
   .lg\:py-16 {

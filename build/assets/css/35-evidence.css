@@ -14,7 +14,10 @@
    shown and a screenshot is an image: the collapse exists only under html.js.
    On a dark section (a host with data-surface="dark") the row turns translucent. */
 
-.ev-tablist { display:inline-flex; max-width:100%; margin-bottom:24px; padding:4px; border-radius:9999px; background:#F1F2F6; }
+/* a row longer than a phone is wide scrolls inside itself, never the page */
+.ev-tablist { display:inline-flex; max-width:100%; margin-bottom:24px; padding:4px; border-radius:9999px; background:#F1F2F6;
+  overflow-x:auto; scrollbar-width:none; }
+.ev-tablist::-webkit-scrollbar { display:none; }
 .ev-tab { white-space:nowrap; border-radius:9999px; padding:10px 20px; font-size:13.5px; line-height:1.25; font-weight:600; color:#6B7280;
   transition:background-color .3s ease, color .3s ease, box-shadow .3s ease; }
 .ev-tab:hover { color:#111827; }

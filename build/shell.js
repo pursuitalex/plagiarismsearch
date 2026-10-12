@@ -103,6 +103,9 @@ const PAGES = {
   'ua-plagiarism-check.html': { active: null, static: true },
   /* Canvas Integration to the brief of 2026-10-08 — the stub graduated (build/canvas.js) */
   'canvas-integration.html': { active: 'products', static: true },
+  /* the PowerPoint Plagiarism Checker to the brief of 2026-10-08 — the stub graduated
+     (build/powerpoint.js); footer-led, no nav item */
+  'powerpoint-plagiarism-checker.html': { active: null, static: true },
   /* the PDF Plagiarism Checker to the 2026-09-15 brief — footer-led, no nav item */
   'pdf-plagiarism-checker.html': { active: null, static: true },
   /* Business & Teams to the 2026-09-15 brief — the stub graduated */
