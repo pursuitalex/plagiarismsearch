@@ -27,10 +27,11 @@
    nothing is sent: the form has no action and submits nowhere. No card field is drawn —
    the customer enters payment details at the provider, after "To checkout".
 
-   THE PAYMENT MARKS ARE NAMES FOR NOW. The live page shows the providers' and card
-   schemes' logos; the prototype has no approved files for them, and a brand mark is not
-   drawn by hand. So each stands as its name in a plate, sized as a logo will be, until
-   the files arrive (MARKS below is the one place to put them).
+   THE PAYMENT MARKS. The eight card and wallet marks are the live page's own files (Olex
+   saved the live page on 2026-10-12; copied as they are to site/assets/svg/payments/,
+   38×24 each). The two providers' logos — Stripe, and PayPal's "Smart Connect" lockup —
+   are the live site's files too (LOGOS below). No brand mark is drawn by hand.
+   As on the live page, each provider's name opens its own site.
 
    THE ORDER FOLLOWS THE ADDRESS (Olex, 2026-10-12). Every plan card's button leads here
    and names its order in the address's fragment — #plan=standard&period=monthly&recurring=on
@@ -42,7 +43,8 @@
    without script, the page shows the example order rendered here.
    The live page names a subscription "… subscription payment"; a one-off order's name is
    not known from the screenshot, so it is "… payment" (WORDS below) — to be confirmed.
-   The live address of this page is not known.
+   On the live site each order has an address of its own (the saved page is
+   /pay/subscription-monthly-standart); the prototype has this one page for all of them.
 
    Run:  node build/payment.js  →  node build/shell.js  →  node build/check-payment.js
 */
@@ -81,10 +83,11 @@ const COPY = {
     /* [before the button's name, the button's name, after it, the address] */
     note: ['Dear Customer! Please refer to the payment system that is more convenient for you and press', 'To checkout', '. In case you experience any inconveniences, please do not hesitate to contact us any time. Depending on your request you may contact our live chat or'],
     items: [
-      { id: 'stripe', name: 'Stripe', text: 'facilitates transactions worldwide, accepting a wide range of payment methods including major debit and credit cards, e-wallets, bank debits, and transfers. Accredited by the Better Business Bureau, Stripe maintains an outstanding A+ rating.',
-        marks: ['Visa', 'Mastercard', 'American Express', 'Discover', 'Diners Club', 'JCB', 'UnionPay', 'Apple Pay'] },
-      { id: 'paypal', name: 'PayPal', text: 'is a trusted online payment platform that accepts various methods including major credit and debit cards providing users with flexibility and convenience in their financial transactions.',
-        marks: ['Visa', 'Mastercard', 'Amex', 'Discover'] },
+      { id: 'stripe', name: 'Stripe', url: 'https://stripe.com/', text: 'facilitates transactions worldwide, accepting a wide range of payment methods including major debit and credit cards, e-wallets, bank debits, and transfers. Accredited by the Better Business Bureau, Stripe maintains an outstanding A+ rating.',
+        logoAlt: 'Stripe', marks: ['Visa', 'Mastercard', 'American Express', 'Discover', 'Diners Club', 'JCB', 'UnionPay', 'Apple Pay'] },
+      { id: 'paypal', name: 'PayPal', url: 'https://www.paypal.com/', text: 'is a trusted online payment platform that accepts various methods including major credit and debit cards providing users with flexibility and convenience in their financial transactions.',
+        /* the four marks PayPal accepts here are in its logo, as on the live page */
+        logoAlt: 'PayPal Smart Connect — Visa, Mastercard, American Express, Discover', marks: [] },
     ],
   },
   summary: {
@@ -99,7 +102,22 @@ const COPY = {
 };
 
 /* a payment mark: the provider's or scheme's logo, when its file is here — { name: [src, w, h] } */
-const MARKS = {};
+const SVG = '/assets/svg/payments/';
+const CARD = f => [SVG + f + '.svg', 38, 24];
+const MARKS = {
+  'Visa': CARD('visa'), 'Mastercard': CARD('mastercard'), 'American Express': CARD('amex'), 'Amex': CARD('amex'),
+  'Discover': CARD('discover'), 'Diners Club': CARD('diners-club'), 'JCB': CARD('jcb'), 'UnionPay': CARD('unionpay'), 'Apple Pay': CARD('apple-pay'),
+};
+/* the two providers' logos, the live site's own files (fetched with Olex's word on
+   2026-10-12 from /files/2019/images/payment/): [src, w, h, the height it stands at].
+   PayPal's is the "Smart Connect" lockup the live page uses for this method — a small PNG
+   with its four card marks in it — so it is never shown above its own 53px, and the
+   PayPal method carries no second row of marks. */
+const LOGOS = {
+  Stripe: [SVG + 'stripe.svg', 90, 38, 'h-9 sm:h-10'],
+  PayPal: ['/assets/img/payments/paypal-smart-connect.png', 161, 53, 'h-[46px] sm:h-[53px]'],
+};
+const logo = (name, alt) => `<img src="${LOGOS[name][0]}" alt="${alt}" width="${LOGOS[name][1]}" height="${LOGOS[name][2]}" loading="lazy" decoding="async" class="${LOGOS[name][3]} w-auto max-w-none">`;
 
 const LABEL = 'text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em]';
 const WRAP = 'relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10';
@@ -112,7 +130,7 @@ const I = {
   lock:  '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
 };
 const mark = name => (MARKS[name]
-  ? `<img src="${MARKS[name][0]}" alt="${name}" width="${MARKS[name][1]}" height="${MARKS[name][2]}" loading="lazy" decoding="async" class="h-6 w-auto">`
+  ? `<img src="${MARKS[name][0]}" alt="${name}" width="${MARKS[name][1]}" height="${MARKS[name][2]}" loading="lazy" decoding="async" class="h-7 w-auto rounded-[4px] ring-1 ring-black/10">`
   : `<span class="inline-flex items-center h-7 rounded-md bg-white ring-1 ring-black/10 px-2 text-[11px] font-bold tracking-tight text-ink-700 whitespace-nowrap">${name}</span>`);
 
 /* ═══════════════ THE HEAD ═══════════════ */
@@ -138,14 +156,14 @@ ${COPY.crumbs.map(([l, h]) => `        <a href="${h}" class="hover:text-ink-700 
 const method = (m, i) => `            <label class="group relative flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 lg:gap-8 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-ink-50 ring-1 ring-black/5 has-[:checked]:bg-white has-[:checked]:ring-2 has-[:checked]:ring-teal-500 has-[:checked]:shadow-diffuse hover:ring-black/15 p-5 sm:p-6 lg:p-7 cursor-pointer transition-shadow duration-300">
               <span class="flex items-center gap-4 sm:w-[210px] shrink-0">
                 <input type="radio" name="payment_method" value="${m.id}"${i === 0 ? ' checked' : ''} class="w-[18px] h-[18px] shrink-0 accent-teal-600">
-                <span class="text-[22px] sm:text-[24px] lg:text-[26px] font-extrabold tracking-tightest leading-none text-ink-900">${MARKS[m.name] ? mark(m.name) : m.name}</span>
+                ${LOGOS[m.name] ? logo(m.name, m.logoAlt) : `<span class="text-[22px] sm:text-[24px] lg:text-[26px] font-extrabold tracking-tightest leading-none text-ink-900">${m.name}</span>`}
               </span>
               <span class="min-w-0 flex-1">
-                <span class="block text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600"><span class="font-semibold text-ink-900">${m.name}</span> ${m.text}</span>
-                <span class="flex flex-wrap gap-1.5 mt-3.5" aria-label="Accepted through ${m.name}">
+                <span class="block text-[13.5px] sm:text-[14.5px] leading-relaxed text-ink-600"><a href="${m.url}" target="_blank" rel="noopener noreferrer" class="font-semibold text-ink-900 underline decoration-ink-300 hover:decoration-ink-500 underline-offset-4 transition-colors duration-300">${m.name}</a> ${m.text}</span>
+${m.marks.length ? `                <span class="flex flex-wrap gap-1.5 mt-3.5" aria-label="Accepted through ${m.name}">
 ${m.marks.map(n => '                  ' + mark(n)).join('\n')}
                 </span>
-              </span>
+` : ''}              </span>
             </label>`;
 
 const main = () => `  <!-- ================= PAYMENT · METHODS + ORDER SUMMARY =================

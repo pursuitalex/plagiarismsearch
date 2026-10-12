@@ -37,6 +37,18 @@ console.log('the live page\'s words');
   ok(all.length + ' strings of the live page present verbatim', !missing.length, missing.slice(0, 2).map(s => '"' + s.slice(0, 40) + '…"').join(' '));
   ok('the breadcrumb: Home / Prices / this page', /aria-label="Breadcrumb"/.test(body) && /href="index\.html"[^>]*>Home</.test(body) && /href="prices\.html"[^>]*>Prices</.test(body) && /aria-current="page"/.test(body));
   ok('the support address is a mail link', body.includes('href="mailto:' + P.SUPPORT + '"'));
+  /* the card and wallet marks are the live page's own files; each provider's name opens its site */
+  const MARKS_DIR = path.join(SITE, 'assets', 'svg', 'payments');
+  const marks = [...body.matchAll(/<img src="(\/assets\/svg\/payments\/[a-z-]+\.svg)" alt="([^"]+)" width="38" height="24"/g)].map(m => [m[1], m[2]]);
+  ok('eight payment marks under Stripe, each a file with its name as alt', marks.length === 8 && marks.every(m => fs.existsSync(path.join(SITE, m[0])) && m[1].length > 2), marks.length + ' found');
+  /* the two providers' logos are the live site's files: Stripe's, and PayPal's lockup with its four marks in it */
+  const logos = [...body.matchAll(/<img src="(\/assets\/(?:svg|img)\/payments\/(?:stripe\.svg|paypal-smart-connect\.png))" alt="([^"]+)" width="(\d+)" height="(\d+)"/g)].map(m => m.slice(1));
+  ok('two provider logos, Stripe and PayPal, at their own proportions', logos.length === 2 && logos.every(l => fs.existsSync(path.join(SITE, l[0]))) && logos[0].slice(1).join(' ') === 'Stripe 90 38' && logos[1].slice(2).join(' ') === '161 53' && /^PayPal/.test(logos[1][1]));
+  ok('PayPal\'s raster lockup is never shown above its own height', /sm:h-\[53px\]/.test(body) && !/paypal-smart-connect\.png"[^>]*class="[^"]*h-(?:14|16|20|\[(?:5[4-9]|[6-9]\d)px\])/.test(body));
+  ok('ten images on the page: the eight marks and the two logos', (body.match(/<img\b/g) || []).length === 10);
+  ok('nine files in the payments SVG folder, none unused', fs.readdirSync(MARKS_DIR).length === 9 && new Set(marks.map(m => m[0])).size === 8 && fs.existsSync(path.join(MARKS_DIR, 'stripe.svg')));
+  ok('no mark file carries a script or an outside address', fs.readdirSync(MARKS_DIR).every(f => !/<script|\bon[a-z]+=|href="https?:|<image\b|<foreignObject/i.test(fs.readFileSync(path.join(MARKS_DIR, f), 'utf8'))));
+  ok('Stripe and PayPal open their own sites in a new tab', /<a href="https:\/\/stripe\.com\/" target="_blank" rel="noopener noreferrer"[^>]*>Stripe<\/a>/.test(body) && /<a href="https:\/\/www\.paypal\.com\/" target="_blank" rel="noopener noreferrer"[^>]*>PayPal<\/a>/.test(body));
 }
 
 console.log('\nthe order');
