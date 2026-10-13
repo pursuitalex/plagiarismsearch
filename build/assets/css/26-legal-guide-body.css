@@ -1,0 +1,267 @@
+/* ═══ 26 · the Legal document and the User Guide article: plain semantic HTML ═════════
+   The same principle as the blog article body (.article-body, 26-article.css), for the
+   two other long-form templates. Each approved template sets every element with its own
+   utility classes; a document transferred from the live site is plain HTML — <h2>, <p>,
+   <ul>, <table> with no class — and under the site's reset (Tailwind's preflight) such an
+   element has no type of its own. These two blocks give plain elements the type of the
+   template they stand in.
+
+     .legal-body   on the <article> of the Legal template        (build/legal.js)
+     .guide-body   on the element that holds the article's blocks (build/article.js) —
+                   the <div> after the title, the meta line and "On this page"
+
+   ONE HOOK EACH, and nothing else in the markup. ONLY ELEMENTS WITHOUT A class ATTRIBUTE
+   are styled (…:not([class])), so everything the approved pages set with classes — and
+   any component placed inside a document (the guide's notes) — is not touched; and
+   nothing outside the container is reached: not the title, not the contents, not the
+   header or the footer. Each selector weighs one class (the :where() parts weigh
+   nothing): enough to win over preflight, never more than a utility class.
+
+   THE TWO ARE NOT ONE STYLE. Each block repeats its own template's values, measured on
+   the approved pages (2026-10-13) at the site's two steps, 640px and 1024px:
+
+                      Legal (.legal-body)              Guide (.guide-body)
+     p, li            15.5 / 16 / 17px · 1.75          15.5 / 16 / 17px · 1.72
+     p under          16 / 20 / 20px                   16 / 20 / 24px
+     h2               19 / 20 / 22px · 1.25            21 / 23 / 26px · 1.2
+       over / under   40 / 48 / 56 · 12 / 12 / 16      40 / 48 / 56 · 16 / 16 / 20
+     h3               16 / 17 / 18px                   17 / 19 / 20px
+       over / under   28 / 32 / 32 · 10 / 10 / 12      32 / 36 / 40 · 12 / 12 / 16
+     ul               a teal dot, 10px between items   the teal tick, 12px between items
+     ol               the numbered disc, text at 36px  the numbered disc, text at 40px
+     a                teal, regular weight             the body-copy link (.nl), semibold
+     table            the cookie table                 (none approved — the blog's)
+
+   Where a template has no approved instance of an element, the block continues that
+   template's own scale: Legal — h5, h6, nested lists, blockquote, pre, hr, pictures;
+   Guide — h4 to h6, nested lists, blockquote, pictures, tables, code, hr (taken from the
+   blog article, which the guide template was lifted from; screenshots get a hairline and
+   a smaller radius, so an interface's corners are not cut off).
+
+   A heading keeps its own space above even straight under another heading, and the first
+   and last elements keep their margins: that is what the approved templates do, and a
+   plain document must sit in them exactly as a classed one does.
+
+   Written mobile first; the two steps restate only what changes. */
+
+/* ══════════════════════════════════ LEGAL ══════════════════════════════════ */
+/* a word too long for its line — a URL, a code string — breaks inside itself instead of
+   widening the page (the fix of 2026-10-07, here on the container itself) */
+.legal-body { overflow-wrap:break-word; }
+
+/* text */
+.legal-body :where(p:not([class])) { margin:0 0 16px; font-size:15.5px; line-height:1.75; color:#374151; }
+.legal-body :where(strong:not([class]), b:not([class])) { font-weight:700; color:#111827; }
+.legal-body :where(a:not([class])) { color:#06748A; text-decoration:underline; text-underline-offset:2px;
+  text-decoration-color:rgba(9,145,168,.3); transition:color .3s cubic-bezier(.4,0,.2,1), text-decoration-color .3s cubic-bezier(.4,0,.2,1); }
+.legal-body :where(a:not([class])):hover { color:#045566; text-decoration-color:#0991A8; }
+.legal-body :where(code:not([class])) { padding:2px 6px; border-radius:6px; background:#F1F2F6; font-size:.9em; font-weight:600; color:#1F2937; }
+.legal-body :where(small:not([class])) { font-size:.86em; }
+.legal-body :where(sup:not([class]), sub:not([class])) { font-size:.72em; line-height:0; }
+
+/* headings: the document's sections are h2; the contents links to them, and they stop
+   clear of the fixed header (7rem) */
+.legal-body :where(h2:not([class]), h3:not([class]), h4:not([class]), h5:not([class]), h6:not([class])) { color:#111827; scroll-margin-top:7rem; }
+.legal-body :where(h2:not([class])) { margin:40px 0 12px; font-size:19px; font-weight:800; line-height:1.25; letter-spacing:-.035em; }
+.legal-body :where(h3:not([class])) { margin:28px 0 10px; font-size:16px; font-weight:700; line-height:1.375; letter-spacing:-.025em; }
+.legal-body :where(h4:not([class])) { margin:24px 0 8px; font-size:15px; font-weight:700; line-height:1.5; letter-spacing:-.025em; }
+.legal-body :where(h5:not([class])) { margin:20px 0 6px; font-size:14px; font-weight:700; line-height:1.5; }
+.legal-body :where(h6:not([class])) { margin:20px 0 6px; font-size:12px; font-weight:700; line-height:1.5; letter-spacing:.14em; text-transform:uppercase; color:#4B5563; }
+
+/* lists. The marker is drawn, as on the approved pages; the item stays a block, so text,
+   <strong> and links inside it run on as one line of text */
+.legal-body :where(ul:not([class]), ol:not([class])) { margin:0 0 20px; padding:0; list-style:none; }
+.legal-body :where(ul:not([class]) > li, ol:not([class]) > li) { position:relative; font-size:15.5px; line-height:1.75; color:#374151; }
+.legal-body :where(ul:not([class]) > li + li, ol:not([class]) > li + li) { margin-top:10px; }
+.legal-body :where(ul:not([class]) > li) { padding-left:18px; }
+.legal-body :where(ul:not([class]) > li)::before { content:''; position:absolute; left:0; top:.7em; width:6px; height:6px; border-radius:999px; background:#0CA9C3; }
+.legal-body :where(ol:not([class]) > li) { padding-left:36px; }
+/* the number is the list's own (list-item), so start, reversed and value="" are kept */
+.legal-body :where(ol:not([class]) > li)::before { content:counter(list-item); position:absolute; left:0; top:.1em; width:1.65em; height:1.65em;
+  display:flex; align-items:center; justify-content:center; border-radius:999px; background:#E6F4F7; color:#0991A8;
+  font-size:.72em; font-weight:800; font-variant-numeric:tabular-nums; }
+/* the dots of a list inside an item are a step quieter */
+.legal-body :where(li > ul:not([class]) > li)::before { background:#9CA3AF; }
+.legal-body :where(dl:not([class])) { margin:0 0 20px; font-size:15.5px; line-height:1.75; color:#374151; }
+.legal-body :where(dl:not([class]) > dt) { font-weight:700; color:#111827; }
+.legal-body :where(dl:not([class]) > dd) { margin:0 0 10px; }
+
+/* a table: the cookie table. Its rows are ruled, its head is small capitals, its first
+   column is the name. Under 640px it scrolls inside itself, from one edge of the screen
+   to the other, as the approved one does — a wide table never widens the page */
+.legal-body :where(table:not([class])) { width:100%; margin:28px 0; border-collapse:collapse; text-align:left; }
+.legal-body :where(table:not([class]) th, table:not([class]) td) { padding:12px 16px 12px 1px; text-align:left; vertical-align:top;
+  border-bottom:1px solid #F1F2F6; font-size:13.5px; font-weight:400; line-height:1.625; color:#374151; }
+.legal-body :where(table:not([class]) th:last-child, table:not([class]) td:last-child) { padding-right:0; }
+.legal-body :where(table:not([class]) thead th) { padding-top:10px; padding-bottom:10px; vertical-align:middle; border-bottom-color:#E5E7EB;
+  font-size:10.5px; font-weight:700; line-height:1.5; letter-spacing:.14em; text-transform:uppercase; color:#9CA3AF; }
+.legal-body :where(table:not([class]) tbody th, table:not([class]) td:first-child) { font-weight:600; color:#111827; }
+.legal-body :where(table:not([class]) tbody tr:last-child > *) { border-bottom:0; }
+.legal-body :where(table:not([class]) caption) { caption-side:bottom; padding-top:12px; font-size:13px; line-height:1.6; color:#6B7280; text-align:left; }
+/* The approved table is 640px wide on a phone, inside a box that scrolls. A plain table
+   has no box around it, so it becomes the box itself (display:block), and what is inside
+   it is kept 640px wide by an empty caption of that width: a table is never narrower than
+   its caption, and its columns then share the 640px by their content, as approved. */
+@media (max-width:639px) {
+  .legal-body :where(table:not([class])) { display:block; width:auto; margin-left:-16px; margin-right:-16px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .legal-body :where(table:not([class]))::before { content:''; display:table-caption; width:640px; height:0; }
+}
+
+/* a quotation, preformatted text, a rule, a picture — none on the approved pages */
+.legal-body :where(blockquote:not([class])) { margin:24px 0; padding-left:16px; border-left:2px solid #A7E3ED; color:#374151; }
+.legal-body :where(blockquote:not([class]) > p:not([class]):last-child) { margin-bottom:0; }
+.legal-body :where(pre:not([class])) { margin:24px 0; padding:14px 16px; border-radius:12px; background:#F8F9FB; box-shadow:inset 0 0 0 1px rgba(17,24,39,.06);
+  overflow-x:auto; font-size:13.5px; line-height:1.65; color:#1F2937; }
+.legal-body :where(pre:not([class]) > code:not([class])) { padding:0; background:none; font-size:inherit; font-weight:400; }
+.legal-body :where(hr:not([class])) { margin:32px 0; border:0; border-top:1px solid #E5E7EB; }
+.legal-body :where(img:not([class])) { max-width:100%; height:auto; margin:24px 0; }
+
+@media (min-width:640px) {
+  .legal-body :where(p:not([class]), ul:not([class]) > li, ol:not([class]) > li, dl:not([class])) { font-size:16px; }
+  .legal-body :where(p:not([class])) { margin-bottom:20px; }
+  .legal-body :where(ul:not([class]), ol:not([class]), dl:not([class])) { margin-bottom:24px; }
+  .legal-body :where(h2:not([class])) { margin-top:48px; font-size:20px; }
+  .legal-body :where(h3:not([class])) { margin-top:32px; font-size:17px; }
+  .legal-body :where(h4:not([class])) { font-size:15.5px; }
+  .legal-body :where(table:not([class])) { margin-top:36px; margin-bottom:36px; }
+  .legal-body :where(table:not([class]) th, table:not([class]) td) { font-size:14.5px; }
+  .legal-body :where(table:not([class]) thead th) { font-size:10.5px; }
+}
+@media (min-width:1024px) {
+  .legal-body :where(p:not([class]), ul:not([class]) > li, ol:not([class]) > li, dl:not([class])) { font-size:17px; }
+  .legal-body :where(h2:not([class])) { margin-top:56px; margin-bottom:16px; font-size:22px; }
+  .legal-body :where(h3:not([class])) { margin-bottom:12px; font-size:18px; }
+}
+/* at every width, after the steps */
+/* inside an item: a nested list sits close; a paragraph is the item's own text, with a small gap */
+.legal-body :where(li > ul:not([class]), li > ol:not([class])) { margin:10px 0 0; }
+.legal-body :where(li > p:not([class])) { margin-bottom:10px; font-size:inherit; }
+.legal-body :where(li > p:not([class]):last-child) { margin-bottom:0; }
+@media (prefers-reduced-motion: reduce) { .legal-body :where(a:not([class])) { transition:none; } }
+
+/* ══════════════════════════════════ GUIDE ══════════════════════════════════ */
+/* a word too long for its line — a URL, a code string — breaks inside itself instead of
+   widening the page. Set on the plain elements, not on the container, so the approved
+   blocks, which carry classes, keep every computed value they were approved with. */
+.guide-body :where(p:not([class]), h2:not([class]), h3:not([class]), h4:not([class]), h5:not([class]), h6:not([class]), li:not([class]),
+  dt:not([class]), dd:not([class]), th:not([class]), td:not([class]), blockquote:not([class]), figcaption:not([class])) { overflow-wrap:break-word; }
+
+/* text */
+.guide-body :where(p:not([class])) { margin:0 0 16px; font-size:15.5px; line-height:1.72; color:#374151; }
+.guide-body :where(strong:not([class]), b:not([class])) { font-weight:700; color:#111827; }
+.guide-body :where(a:not([class])) { font-weight:600; color:#06748A; text-decoration:underline; text-underline-offset:2px;
+  text-decoration-color:rgba(6,116,138,.32); word-break:break-word; transition:color .2s ease, text-decoration-color .2s ease; }
+.guide-body :where(a:not([class])):hover { color:#111827; text-decoration-color:rgba(17,24,39,.45); }
+.guide-body :where(mark:not([class])) { background:#FDE5E0; color:inherit; padding:0 .15em; border-radius:3px; }
+.guide-body :where(small:not([class])) { font-size:.86em; }
+.guide-body :where(sup:not([class]), sub:not([class])) { font-size:.72em; line-height:0; }
+
+/* headings: the article's sections are h2; the contents links to them, and they stop
+   clear of the fixed header (7rem) */
+.guide-body :where(h2:not([class]), h3:not([class]), h4:not([class]), h5:not([class]), h6:not([class])) { color:#111827; scroll-margin-top:7rem; }
+.guide-body :where(h2:not([class])) { margin:40px 0 16px; font-size:21px; font-weight:800; line-height:1.2; letter-spacing:-.035em; }
+.guide-body :where(h3:not([class])) { margin:32px 0 12px; font-size:17px; font-weight:700; line-height:1.375; letter-spacing:-.025em; }
+.guide-body :where(h4:not([class])) { margin:28px 0 10px; font-size:15.5px; font-weight:700; line-height:1.4; letter-spacing:-.015em; }
+.guide-body :where(h5:not([class])) { margin:24px 0 8px; font-size:14.5px; font-weight:700; line-height:1.45; }
+.guide-body :where(h6:not([class])) { margin:24px 0 8px; font-size:12px; font-weight:700; line-height:1.5; letter-spacing:.14em; text-transform:uppercase; color:#4B5563; }
+
+/* lists. The marker is drawn, as in the approved article; the item stays a block. An <li>
+   that stands outside any list — the archive has such — is set as an item of a ul. */
+.guide-body :where(ul:not([class]), ol:not([class])) { margin:0 0 16px; padding:0; list-style:none; }
+.guide-body :where(ol:not([class])) { margin-bottom:20px; }
+.guide-body :where(ul:not([class]) > li, ol:not([class]) > li, :not(ul, ol, menu) > li:not([class])) { position:relative; padding-left:26px; list-style:none; font-size:15.5px; line-height:1.72; color:#374151; }
+.guide-body :where(ul:not([class]) > li + li, ol:not([class]) > li + li, :not(ul, ol, menu) > li:not([class]) + li:not([class])) { margin-top:12px; }
+.guide-body :where(ul:not([class]) > li, ol:not([class]) > li, :not(ul, ol, menu) > li:not([class]))::before { content:''; position:absolute; left:0; top:8px; width:14px; height:14px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230991A8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat; }
+.guide-body :where(ol:not([class]) > li) { padding-left:40px; }
+/* the number is the list's own (list-item), so start, reversed and value="" are kept */
+.guide-body :where(ol:not([class]) > li)::before { content:counter(list-item); background-image:none; top:.1em; width:1.65em; height:1.65em;
+  display:flex; align-items:center; justify-content:center; border-radius:999px; background:#E6F4F7; color:#0991A8;
+  font-size:.72em; font-weight:800; font-variant-numeric:tabular-nums; }
+/* a list inside an item: closer, and its bullets a step quieter than the ticks */
+.guide-body :where(li > ul:not([class]) > li) { padding-left:22px; }
+.guide-body :where(li > ul:not([class]) > li)::before { top:calc((1.72em - 6px) / 2); left:4px; width:6px; height:6px; border-radius:999px; background:#F58971; }
+/* items outside a list: the run ends with the paragraph's own distance */
+.guide-body :where(:not(ul, ol, menu) > li:not([class]) + p:not([class])) { margin-top:16px; }
+.guide-body :where(dl:not([class])) { margin:0 0 16px; font-size:15.5px; line-height:1.72; color:#374151; }
+.guide-body :where(dl:not([class]) > dt) { font-weight:700; color:#111827; }
+.guide-body :where(dl:not([class]) > dd) { margin:0 0 12px; }
+
+/* a quotation */
+.guide-body :where(blockquote:not([class])) { margin:32px 0; padding-left:20px; border-left:2px solid #F58971;
+  font-size:19px; font-weight:600; line-height:1.45; letter-spacing:-.025em; color:#111827; }
+.guide-body :where(blockquote:not([class]) cite, blockquote:not([class]) footer) { display:block; margin-top:12px; font-size:13.5px; font-weight:500;
+  font-style:normal; letter-spacing:0; line-height:1.6; color:#6B7280; }
+
+/* screenshots and other pictures: never wider than the column, their proportions kept
+   whatever width and height the markup carries; a hairline, because a screenshot is
+   mostly white; a small radius, so an interface's corners are not cut off */
+.guide-body :where(img:not([class])) { display:block; max-width:100%; height:auto; margin:28px auto; border-radius:12px;
+  box-shadow:0 0 0 1px rgba(17,24,39,.08), 0 20px 40px -15px rgba(0,0,0,.08); }
+.guide-body :where(figure:not([class])) { margin:28px 0; }
+.guide-body :where(p:not([class]):has(> img:not([class]):only-child)) { margin:28px 0; }
+.guide-body :where(figure:not([class]) > figcaption:not([class])) { margin-top:12px; font-size:13px; line-height:1.6; color:#6B7280; }
+.guide-body :where(iframe:not([class]), video:not([class])) { display:block; width:100%; max-width:100%; height:auto; aspect-ratio:16 / 9; margin:28px 0; border:0; border-radius:12px; }
+
+/* a table. Under 640px it scrolls inside itself — a wide table never widens the page */
+.guide-body :where(table:not([class])) { width:100%; margin:32px 0; border-collapse:collapse; text-align:left; font-size:14.5px; line-height:1.6; color:#374151; }
+.guide-body :where(table:not([class]) th, table:not([class]) td) { padding:14px 16px 14px 0; text-align:left; vertical-align:top; border-bottom:1px solid #F1F2F6; }
+.guide-body :where(table:not([class]) th:last-child, table:not([class]) td:last-child) { padding-right:0; }
+.guide-body :where(table:not([class]) thead th) { padding-top:10px; padding-bottom:10px; border-bottom-color:#E5E7EB;
+  font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#6B7280; }
+.guide-body :where(table:not([class]) tbody th, table:not([class]) td:first-child) { font-weight:700; color:#111827; }
+.guide-body :where(table:not([class]) caption) { caption-side:bottom; padding-top:12px; font-size:13px; line-height:1.6; color:#6B7280; text-align:left; }
+@media (max-width:639px) {
+  .guide-body :where(table:not([class])) { display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .guide-body :where(table:not([class]) th, table:not([class]) td) { min-width:8.5em; }
+}
+
+/* code, rules */
+.guide-body :where(code:not([class])) { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.9em; padding:.12em .4em; border-radius:6px; background:#F1F2F6; color:#1F2937; }
+.guide-body :where(pre:not([class])) { margin:28px 0; padding:16px 18px; border-radius:16px; background:#F8F9FB; box-shadow:inset 0 0 0 1px rgba(17,24,39,.06);
+  overflow-x:auto; font-size:13.5px; line-height:1.65; color:#1F2937; }
+.guide-body :where(hr:not([class])) { margin:40px 0; border:0; border-top:1px solid #E5E7EB; }
+
+@media (min-width:640px) {
+  .guide-body :where(p:not([class]), ul:not([class]) > li, ol:not([class]) > li, :not(ul, ol, menu) > li:not([class]), dl:not([class])) { font-size:16px; }
+  .guide-body :where(p:not([class]), ul:not([class]), dl:not([class])) { margin-bottom:20px; }
+  .guide-body :where(ol:not([class])) { margin-bottom:24px; }
+  .guide-body :where(:not(ul, ol, menu) > li:not([class]) + p:not([class])) { margin-top:20px; }
+  .guide-body :where(h2:not([class])) { margin-top:48px; font-size:23px; }
+  .guide-body :where(h3:not([class])) { margin-top:36px; font-size:19px; }
+  .guide-body :where(h4:not([class])) { font-size:16px; }
+  .guide-body :where(blockquote:not([class])) { margin:40px 0; padding-left:24px; font-size:21px; }
+  .guide-body :where(img:not([class])) { margin-top:32px; margin-bottom:32px; border-radius:16px; }
+  .guide-body :where(figure:not([class]), pre:not([class]), iframe:not([class]), video:not([class]), p:not([class]):has(> img:not([class]):only-child)) { margin-top:32px; margin-bottom:32px; }
+  .guide-body :where(table:not([class])) { margin-top:40px; margin-bottom:40px; font-size:15px; }
+  .guide-body :where(figure:not([class]) > figcaption:not([class])) { font-size:13.5px; }
+}
+@media (min-width:1024px) {
+  .guide-body :where(p:not([class]), ul:not([class]) > li, ol:not([class]) > li, :not(ul, ol, menu) > li:not([class]), dl:not([class])) { font-size:17px; }
+  .guide-body :where(p:not([class]), ul:not([class]), dl:not([class])) { margin-bottom:24px; }
+  .guide-body :where(ol:not([class])) { margin-bottom:28px; }
+  .guide-body :where(:not(ul, ol, menu) > li:not([class]) + p:not([class])) { margin-top:24px; }
+  .guide-body :where(h2:not([class])) { margin-top:56px; margin-bottom:20px; font-size:26px; }
+  .guide-body :where(h3:not([class])) { margin-top:40px; margin-bottom:16px; font-size:20px; }
+  .guide-body :where(h4:not([class])) { font-size:17px; }
+  .guide-body :where(blockquote:not([class])) { margin:48px 0; padding-left:28px; font-size:23px; }
+  .guide-body :where(img:not([class])) { margin-top:40px; margin-bottom:40px; }
+  .guide-body :where(figure:not([class]), pre:not([class]), iframe:not([class]), video:not([class]), p:not([class]):has(> img:not([class]):only-child)) { margin-top:40px; margin-bottom:40px; }
+  .guide-body :where(table:not([class])) { margin-top:48px; margin-bottom:48px; }
+  .guide-body :where(hr:not([class])) { margin:56px 0; }
+}
+
+/* at every width, after the steps */
+/* inside an item: a nested list sits close; a paragraph is the item's own text, with a
+   small gap; a picture sits close under the text */
+.guide-body :where(li > ul:not([class]), li > ol:not([class])) { margin:12px 0 0; }
+.guide-body :where(li > p:not([class])) { margin-bottom:12px; font-size:inherit; }
+.guide-body :where(li > p:not([class]):last-child) { margin-bottom:0; }
+.guide-body :where(li > img:not([class])) { margin:14px 0 6px; }
+/* inside a quotation the paragraphs take the quotation's type */
+.guide-body :where(blockquote:not([class]) > p:not([class])) { margin:0 0 .6em; font-size:inherit; line-height:inherit; color:inherit; }
+.guide-body :where(blockquote:not([class]) > :last-child) { margin-bottom:0; }
+/* a picture that already stands in a figure, a link or a paragraph of its own takes that box's margins */
+.guide-body :where(figure:not([class]) img:not([class]), p:not([class]) > img:not([class]):only-child, a:not([class]) > img:not([class])) { margin-top:0; margin-bottom:0; }
+.guide-body :where(pre:not([class]) > code:not([class])) { padding:0; background:none; font-size:inherit; }
+@media (prefers-reduced-motion: reduce) { .guide-body :where(a:not([class])) { transition:none; } }

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>Legal typography | PlagiarismSearch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/tailwind.css">
+<script>(function (h) {h.classList.add('js');if (!matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('js-motion');setTimeout(function () { if (!window.PS_READY) h.classList.remove('js', 'js-motion'); }, 3500);})(document.documentElement);</script>
+<script defer src="/assets/vendor/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="/assets/vendor/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="/assets/js/site.js"></script>
+</head>
+<body class="font-sans text-ink-900 bg-white">
+<div class="grain"></div>
+
+<header data-site-header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
+  <!-- On phones the bar starts as the floating pill every other width has, and DOCKS once
+       the page scrolls: flush to the top edge, no side gutters, square corners. One
+       class, toggled by the script at the foot of this element; nothing changes from sm
+       up. The transition is on the three properties that move and respects reduced
+       motion. -->
+  <div class="flex justify-center">
+  <nav class="site-nav pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+    <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-5 xl:pr-6">
+      <!-- the mark alone on phones, so Sign in and Check free fit beside it -->
+      <img src="/assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
+      <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
+    </a>
+    <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[230px]">
+            <div class="px-3 pt-2 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Core Products</div>
+            <a href="index.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
+            <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI Detector</a>
+            <a href="api.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Integrations</div>
+            <a href="integration-guide.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Moodle</a>
+            <a href="canvas-integration.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Canvas</a>
+            <a href="how-to-use-plagiarismsearch-google-add-on.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Google Docs</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[240px]">
+            <div class="px-3 pt-2 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">For organizations</div>
+            <a href="university-plagiarism-checker.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Education &amp; Institutions</a>
+            <a href="plagiarism-checker-for-organization.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">For individuals</div>
+            <a href="plagiarism-checker-for-students.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
+            <a href="plagiarism-checker-for-teachers.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
+          </div>
+        </div>
+      </div>
+      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Pricing</a>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Resources<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[190px]">
+            <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
+            <a href="faq-and-support.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">FAQ</a>
+            <a href="blog.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[220px]">
+            <a href="about-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">About us</a>
+            <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why PlagiarismSearch</a>
+            <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Mission &amp; Values</a>
+            <a href="testimonials.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Reviews</a>
+            <a href="contact-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="min-w-0 flex items-center gap-2 ml-auto lg:ml-6 shrink-0">
+      <div class="nav-item relative hidden xl:block">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13.5px] font-medium text-ink-600 hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true" aria-label="Language">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          EN<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <a href="account.html" class="btn-press inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5">Check free</a>
+      <button type="button" data-nav-burger class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+        <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
+        <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
+      </button>
+    </div>
+  </nav>
+  </div>
+
+  <div id="navPanel" data-nav-panel class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
+    <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Core</div>
+      <a href="index.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
+      <a href="ai-detector.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI Detector</a>
+      <a href="api.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Integrations</div>
+      <a href="integration-guide.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Moodle</a>
+      <a href="canvas-integration.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Canvas</a>
+      <a href="how-to-use-plagiarismsearch-google-add-on.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Google Docs</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions &middot; For organizations</div>
+      <a href="university-plagiarism-checker.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Education &amp; Institutions</a>
+      <a href="plagiarism-checker-for-organization.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions &middot; For individuals</div>
+      <a href="plagiarism-checker-for-students.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
+      <a href="plagiarism-checker-for-teachers.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Resources</div>
+      <a href="help-center.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
+      <a href="faq-and-support.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">FAQ</a>
+      <a href="blog.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
+      <a href="about-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">About us</a>
+      <a href="why-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why PlagiarismSearch</a>
+      <a href="mission.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Mission &amp; Values</a>
+      <a href="testimonials.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Reviews</a>
+      <a href="contact-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact</a>
+      <a href="prices.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 mt-1 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Pricing</a>
+      <div class="mt-3 pt-3 border-t border-ink-100 space-y-2">
+        <button type="button" class="w-full flex items-center justify-center gap-2 rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14px] font-medium text-ink-700 hover:bg-ink-50 transition-colors duration-200" aria-label="Language">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          English
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Legal pages are reference, not reading: the text is the site's own, carried over
+       word for word, and only its dress is new. One centred column at the site's reading
+       size, a contents list built from the document's own headings, and no decoration
+       competing with the clauses. A legal document does not fade in. -->
+  <section data-component="legal" class="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-white">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
+    </div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="mx-auto max-w-[720px]">
+
+        <div class="mb-8 sm:mb-10 lg:mb-12">
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4 lg:mb-5">Reference</div>
+          <h1 class="text-[clamp(2.1rem,4vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4 lg:mb-5">Legal typography: every element of a legal document</h1>
+          <p class="text-[13px] sm:text-[13.5px] font-semibold text-ink-400">A reference page, not a legal document</p>
+        </div>
+
+        <!-- The contents is the shared one (build/toc.js): a long document hangs a rail in
+             the margin from 1280px and folds its card below that; a short one keeps the
+             card. The wrapper is the rail's range — the document, not what follows it. -->
+        <nav class="rounded-3xl sm:rounded-[28px] bg-ink-50 p-4 sm:p-5 lg:p-6 mb-8 sm:mb-10 lg:mb-12" aria-label="On this page">
+          <div class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] uppercase text-ink-400 mb-4 lg:mb-5">On this page</div>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#1-a-second-level-heading-opens-a-section-of-" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">1. A second-level heading opens a section of the document</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#2-a-very-long-second-level-heading-of-the-ki" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">2. A very long second-level heading, of the kind a legal document is full of, that runs past the end of one line on a desktop and across four or five on a phone</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#3-lists" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">3. Lists</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#4-links-addresses-and-code" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">4. Links, addresses and code</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#5-a-table" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">5. A table</a>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+              <a href="#6-a-quotation-preformatted-text-and-a-rule" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">6. A quotation, preformatted text and a rule</a>
+            </li>
+          </ul>
+        </nav>
+
+        <article class="min-w-0 legal-body">
+<p>This page is a reference, not a legal document: it holds every element the legal document body styles, written as plain HTML with no class on anything. It exists so the legal typography can be checked in one place, on a phone and on a desktop, before a document is moved into the template.</p>
+<p>A second paragraph follows the first at the document's rhythm. It carries a <a href="policy.html">link inside the text</a>, a term in <strong>bold</strong>, a phrase in <em>italics</em>, a footnote sign<sup>1</sup> and a name in <code>inline_code</code>, so each can be seen against ordinary text.</p>
+
+<h2 id="1-a-second-level-heading-opens-a-section-of-">1. A second-level heading opens a section of the document</h2>
+<p>The paragraph under a heading sits close to it, and the heading sits well clear of what came before. Each section heading carries an id, so the contents of the page can link to it and the heading stops below the fixed header.</p>
+
+<h3>1.1. A third-level heading divides a section</h3>
+<p>It is smaller and lighter than the heading above it, and larger and heavier than the text under it.</p>
+
+<h4>A fourth-level heading names a clause inside a subsection</h4>
+<p>It is set close to the size of body text, in bold.</p>
+
+<h5>A fifth-level heading is rarely needed</h5>
+<p>When a document uses one, it stays a heading and stays quieter than the fourth level.</p>
+
+<h6>A sixth-level heading reads as a label</h6>
+<p>It is set small, in capitals.</p>
+
+<h2 id="2-a-very-long-second-level-heading-of-the-ki">2. A very long second-level heading, of the kind a legal document is full of, that runs past the end of one line on a desktop and across four or five on a phone</h2>
+<h3>2.1. A third-level heading placed directly under a second-level heading</h3>
+<p>Each heading keeps its own space above, as it does on the approved pages.</p>
+
+<h2 id="3-lists">3. Lists</h2>
+<p>An unordered list takes the document's dot; an ordered list takes its numbered disc.</p>
+<ul>
+  <li>A short item;</li>
+  <li><strong>An item that opens in bold.</strong> The rest of the sentence runs on in the same line of text, and wraps under itself rather than under the marker when it is long enough to need a second line;</li>
+  <li>An item with a <a href="cookie-policy.html">link</a> in it;</li>
+  <li>An item that holds a list of its own:
+    <ul>
+      <li>a nested item, set in and marked with a quieter dot;</li>
+      <li>a second nested item;</li>
+    </ul>
+  </li>
+  <li>The last item.</li>
+</ul>
+<ol>
+  <li>The first step.</li>
+  <li>The second step, which is long enough to wrap: its second line starts under its first, to the right of the number, at every width.</li>
+  <li>A step with lettered parts:
+    <ol>
+      <li>The first part.</li>
+      <li>The second part.</li>
+    </ol>
+  </li>
+  <li>The fourth step.</li>
+</ol>
+<p>A list that continues an earlier count keeps its numbers:</p>
+<ol start="5">
+  <li>The fifth step.</li>
+  <li>The sixth step.</li>
+</ol>
+<ul>
+  <li>
+    <p>An item written as paragraphs keeps a small gap between them.</p>
+    <p>Its second paragraph belongs to the same item.</p>
+  </li>
+  <li>
+    <p>The next item starts at the usual distance.</p>
+  </li>
+</ul>
+<dl>
+  <dt>A defined term</dt>
+  <dd>Its definition, in body text.</dd>
+  <dt>A second term</dt>
+  <dd>A second definition.</dd>
+</dl>
+
+<h2 id="4-links-addresses-and-code">4. Links, addresses and code</h2>
+<p>A very long address inside a paragraph breaks instead of pushing the column wider: <a href="https://plagiarismsearch.com/policy">https://plagiarismsearch.com/an-address-with-no-spaces-in-it/that-is-longer-than-a-phone-is-wide/and-keeps-going/until-it-has-to-break</a>.</p>
+<p>The same holds for a code string with no spaces, such as a permission scope: <code>https://www.googleapis.com/auth/drive.readonly.metadata.and.a.longer.scope.name</code>.</p>
+<p>An address block keeps its line breaks:</p>
+<p><strong>A Company Name Ltd.</strong><br>1 Example Street, Office 2<br>00000 Example City<br>Country</p>
+
+<h2 id="5-a-table">5. A table</h2>
+<p>A table takes the cookie table's rows. On a phone a wide table scrolls inside itself, from one edge of the screen to the other, and the page stays as wide as the screen.</p>
+<table>
+  <thead>
+    <tr><th>Name</th><th>Provider</th><th>Purpose</th><th>Type</th><th>Duration</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>session_id</code></td><td>The site itself</td><td>Keeps a visitor signed in between pages</td><td>Necessary</td><td>Session</td></tr>
+    <tr><td><code>_analytics_&lt;container-id&gt;</code></td><td>An analytics service</td><td>Tells one visit from another, for counting</td><td>Analytics</td><td>13 months</td></tr>
+    <tr><td><code>consent</code></td><td>The site itself</td><td>Remembers the choice made in the cookie notice</td><td>Necessary</td><td>12 months</td></tr>
+  </tbody>
+</table>
+<p>A table of two columns, with its row headings in the first, takes the same rows:</p>
+<table>
+  <tbody>
+    <tr><th>Controller</th><td>The company named above</td></tr>
+    <tr><th>Contact</th><td><a href="mailto:privacy@example.com">privacy@example.com</a></td></tr>
+  </tbody>
+</table>
+
+<h2 id="6-a-quotation-preformatted-text-and-a-rule">6. A quotation, preformatted text and a rule</h2>
+<p>A quoted provision is set off by a rule at its side:</p>
+<blockquote>
+  <p>"Personal data" means any information relating to an identified or identifiable natural person.</p>
+</blockquote>
+<p>Preformatted text scrolls sideways rather than widening the page:</p>
+<pre><code>Set-Cookie: session_id=EXAMPLE; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=0; Domain=.example.com</code></pre>
+<hr>
+<p>A horizontal rule separates two parts of a document without a heading. <small>Small print is set a little smaller than the text it sits in.</small></p>
+        </article>
+
+        <div class="mt-10 sm:mt-12 lg:mt-14 pt-7 sm:pt-8 border-t border-ink-100">
+          <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4">Also in legal</div>
+          <div class="flex flex-wrap gap-3">
+            <a href="terms-of-use.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-900 transition-colors duration-300">
+              Terms of Use
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="policy.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-900 transition-colors duration-300">
+              Privacy Policy
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="cookie-policy.html" class="btn-press inline-flex items-center gap-2 rounded-full ring-1 ring-black/10 hover:bg-ink-900/5 px-4 sm:px-5 py-2.5 text-[13.5px] sm:text-[14.5px] font-semibold text-ink-900 transition-colors duration-300">
+              Cookie Policy
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-surface="dark" class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+
+    <!-- Brand row. The blurb that used to sit here carried "17 languages" and "500,000
+         writers"; DEC-0027 forbids marketing claims it does not supply, and supplies
+         none, so nothing replaces it.
+
+         The app badge (Olex, 2026-09-30, variant A; App Store only until there is a
+         Google Play listing). Apple's rules, followed to the letter
+         (developer.apple.com/app-store/marketing/guidelines):
+         - the official artwork, unmodified — the black "Download on the App Store"
+           badge from Apple's marketing toolbox, its grey border part of the artwork;
+         - 40px high, Apple's onscreen minimum;
+         - clear space of a quarter of its height (10px) on every side: the p-2.5 box;
+         - subordinate to the main message: the footer, beside the logo;
+         - the credit line once, in the legal line of the bottom bar.
+         When a Google Play badge joins it: App Store stays first and stays the black
+         badge; Google Play goes after it at the same height or larger, with its own
+         quarter-height clear space, and its credit line joins Apple's. -->
+    <div class="grid sm:grid-cols-2 gap-8 sm:gap-10 items-center mb-10 sm:mb-13 lg:mb-16">
+      <a href="index.html" class="inline-flex items-center">
+        <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+      </a>
+      <div class="sm:justify-self-end flex flex-wrap items-center -m-2.5">
+        <a href="https://apps.apple.com/us/app/plagiarismsearch/id6789566745" rel="nofollow noopener" class="block p-2.5 rounded-xl focus-visible:outline-offset-0">
+          <img src="/assets/svg/stores/app-store-badge-black-en.svg" alt="Download on the App Store" width="120" height="40" class="block h-10 w-auto">
+        </a>
+        <!-- Google Play: the official "Get it on Google Play" web badge (Partner Marketing
+             Hub, English, updated 2025-11-17), unmodified. Second after App Store, the same
+             40px height (Google: the same size or larger than the other badges; minimum
+             28px), a quarter of its height clear on every side (the p-2.5 box; between the
+             two badges the two boxes make 20px). PLACEHOLDER LINK (a Play Store search for now, so no page carries a dead in-page anchor): the listing URL comes
+             from Olex later (2026-09-30) — replace the href with the Play Store address. -->
+        <a href="https://play.google.com/store/search?q=PlagiarismSearch&amp;c=apps" rel="nofollow noopener" class="block p-2.5 rounded-xl focus-visible:outline-offset-0">
+          <img src="/assets/svg/stores/google-play-badge-en.svg" alt="Get it on Google Play" width="135" height="40" class="block h-10 w-auto">
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PRODUCTS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="index.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="ai-detector.html" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="api.html" class="hover:text-white transition-colors duration-300">API</a></li>
+          <li><a href="integration-guide.html" class="hover:text-white transition-colors duration-300">Moodle Integration</a></li>
+          <li><a href="canvas-integration.html" class="hover:text-white transition-colors duration-300">Canvas Integration</a></li>
+          <li><a href="how-to-use-plagiarismsearch-google-add-on.html" class="hover:text-white transition-colors duration-300">Google Docs Add-on</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="university-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">Education &amp; Institutions</a></li>
+          <li><a href="plagiarism-checker-for-organization.html" class="hover:text-white transition-colors duration-300">Business &amp; Teams</a></li>
+          <li><a href="plagiarism-checker-for-students.html" class="hover:text-white transition-colors duration-300">Students</a></li>
+          <li><a href="plagiarism-checker-for-teachers.html" class="hover:text-white transition-colors duration-300">Educators</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">POPULAR CHECKS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="powerpoint-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PowerPoint Plagiarism Checker</a></li>
+          <li><a href="pdf-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PDF Plagiarism Checker</a></li>
+          <li><a href="quote-checker-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Quote Checker</a></li>
+          <li><a href="turnitin-checker-alternative.html" class="hover:text-white transition-colors duration-300">Turnitin Alternative</a></li>
+          <li><a href="ua-plagiarism-check.html" class="hover:text-white transition-colors duration-300">UA Plagiarism Checker</a></li>
+          <!-- The three writing tools, footer only (Olex, 2026-10-06). DEC-0027 §5 kept them
+               out of the global navigation; the header still does not carry them. Named as
+               the Pricing page's Optional Services names them. -->
+          <li><a href="paper-analysis.html" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="readability-check.html" class="hover:text-white transition-colors duration-300">Readability Check</a></li>
+          <li><a href="spell-check.html" class="hover:text-white transition-colors duration-300">Spell Check</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="help-center.html" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="faq-and-support.html" class="hover:text-white transition-colors duration-300">FAQ</a></li>
+          <li><a href="user-manuals.html" class="hover:text-white transition-colors duration-300">User Guide</a></li>
+          <li><a href="video-on-plagiarism-tutorial.html" class="hover:text-white transition-colors duration-300">Video Tutorials</a></li>
+          <li><a href="blog.html" class="hover:text-white transition-colors duration-300">Blog</a></li>
+          <li><a href="newsroom.html" class="hover:text-white transition-colors duration-300">News</a></li>
+          <li><a href="originality-badges.html" class="hover:text-white transition-colors duration-300">Originality Badges</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="about-us.html" class="hover:text-white transition-colors duration-300">About us</a></li>
+          <li><a href="why-us.html" class="hover:text-white transition-colors duration-300">Why PlagiarismSearch</a></li>
+          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">Mission &amp; Values</a></li>
+          <li><a href="testimonials.html" class="hover:text-white transition-colors duration-300">Reviews</a></li>
+          <li><a href="contact-us.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="scholarship.html" class="hover:text-white transition-colors duration-300">Scholarship</a></li>
+          <li><a href="affiliate-program-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Affiliate Program</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PLANS &amp; LEGAL</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="prices.html" class="hover:text-white transition-colors duration-300">Pricing</a></li>
+          <li><a href="vip.html" class="hover:text-white transition-colors duration-300">VIP / High-volume</a></li>
+          <li><a href="policy.html" class="hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+          <li><a href="terms-of-use.html" class="hover:text-white transition-colors duration-300">Terms of Use</a></li>
+          <li><a href="cookie-policy.html" class="hover:text-white transition-colors duration-300">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="h-px bg-white/10 mb-6 sm:mb-7 lg:mb-8"></div>
+    <!-- The legal links live in the Plans & Legal column now, so this bar no longer
+         repeats them. DPA was never in the brief and is gone with them. -->
+    <!-- The review ratings moved here from the brand row when the app badge took their
+         place (variant A). They are review data, which the briefs treat as a dynamic
+         field — placeholders until production values are frozen. -->
+    <div class="flex flex-wrap items-center gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>&copy; 2026 PlagiarismSearch. All rights reserved.</span>
+      <span class="flex flex-wrap items-center gap-x-4 gap-y-1" aria-label="Ratings on review platforms">
+        <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="hover:text-white transition-colors duration-300">Trustpilot <b class="font-bold text-white/80 nums">4.7</b></a>
+        <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="hover:text-white transition-colors duration-300">SmartCustomer <b class="font-bold text-white/80 nums">4.0</b></a>
+        <span>G2 <b class="font-bold text-white/80 nums">4.3</b></span>
+      </span>
+      <button type="button" class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70 hover:text-white transition-colors duration-300" aria-label="Language">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </div>
+    <!-- The stores' credit lines, required once wherever their badges appear (Apple:
+         Legal Requirements, credit both Apple and the Apple Logo; Google Play the same). The international
+         form, the site being served outside the U.S. as well. -->
+    <p class="mt-5 text-[11px] leading-relaxed text-white/30 max-w-[88ch]">Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+
+  <!-- Back to top. Global chrome, so it lives in the shell rather than being copied on
+       to whichever page happens to be long today — the homepage and the blog article both
+       run past fifteen thousand pixels.
+
+       It is fixed, so it is positioned against the viewport and the footer clipping its
+       own overflow does not reach it. That holds only while no ancestor carries a
+       transform: one here would make this footer-relative and it would vanish upward.
+
+       Inside the footer element on purpose. shell.js replaces a page from the opening
+       tag to the first closing one, so anything placed after that closing tag would
+       survive the replacement and be added again by every build. -->
+  <button type="button" data-to-top aria-label="Back to top"
+    class="fixed z-40 bottom-5 right-5 sm:bottom-7 sm:right-7 lg:bottom-9 lg:right-9
+           w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-ink-900 shadow-diffuse-lg
+           ring-2 ring-teal-600/45 flex items-center justify-center opacity-0 translate-y-3
+           pointer-events-none transition-[opacity,transform,background-color] duration-300
+           hover:bg-teal-50 hover:ring-teal-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-600/35">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+  </button>
+
+</footer>
+</body>
+</html>

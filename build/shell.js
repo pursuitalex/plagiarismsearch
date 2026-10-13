@@ -70,6 +70,13 @@ const PAGES = {
      an archive article set in the blog template as it is, and every element once */
   'blog-affiliate-programs.html': { active: 'resources', static: true },
   'blog-article-elements.html': { active: 'resources', static: true },
+  /* four pages that prove the Legal and User Guide plain-HTML typography
+     (build/body-plain.js): a real document set in each template as it is, and every
+     element once; they carry the header state of the templates they stand in */
+  'legal-plain-cookie-policy.html': { active: null, static: true },
+  'legal-elements.html': { active: null, static: true },
+  'guide-plain-storage.html': { active: null, static: true },
+  'guide-elements.html': { active: null, static: true },
   /* a blog author's page, from the live one (2026-10-07) */
   'blog-author-kelsey-ayton.html': { active: 'resources', static: true },
   /* About us, to the 2026-09-30 brief (build/about.js) — first in the Company group */

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>What is Storage Checking? | PlagiarismSearch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Flow+Circular&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/tailwind.css">
+<script>(function (h) {h.classList.add('js');if (!matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('js-motion');setTimeout(function () { if (!window.PS_READY) h.classList.remove('js', 'js-motion'); }, 3500);})(document.documentElement);</script>
+<script defer src="/assets/vendor/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="/assets/vendor/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="/assets/js/site.js"></script>
+</head>
+<body class="font-sans text-ink-900 bg-white">
+<div class="grain"></div>
+
+<header data-site-header class="site-header fixed top-5 inset-x-0 z-50 px-4 pointer-events-none">
+  <!-- On phones the bar starts as the floating pill every other width has, and DOCKS once
+       the page scrolls: flush to the top edge, no side gutters, square corners. One
+       class, toggled by the script at the foot of this element; nothing changes from sm
+       up. The transition is on the three properties that move and respects reduced
+       motion. -->
+  <div class="flex justify-center">
+  <nav class="site-nav pointer-events-auto flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md ring-1 ring-black/5 shadow-diffuse pl-4 lg:pl-5 pr-3 py-2 w-full sm:w-auto max-w-full">
+    <a href="index.html" class="flex items-center shrink-0 pr-4 lg:pr-5 xl:pr-6">
+      <!-- the mark alone on phones, so Sign in and Check free fit beside it -->
+      <img src="/assets/svg/logo-mark.svg" alt="PlagiarismSearch" class="sm:hidden h-7 w-auto max-w-none">
+      <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="hidden sm:block h-6 w-auto max-w-none">
+    </a>
+    <div class="hidden lg:flex items-center gap-1 text-[13.5px] font-medium text-ink-600">
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Products<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[230px]">
+            <div class="px-3 pt-2 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Core Products</div>
+            <a href="index.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
+            <a href="ai-detector.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI Detector</a>
+            <a href="api.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Integrations</div>
+            <a href="integration-guide.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Moodle</a>
+            <a href="canvas-integration.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Canvas</a>
+            <a href="how-to-use-plagiarismsearch-google-add-on.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Google Docs</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Solutions<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[240px]">
+            <div class="px-3 pt-2 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">For organizations</div>
+            <a href="university-plagiarism-checker.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Education &amp; Institutions</a>
+            <a href="plagiarism-checker-for-organization.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">For individuals</div>
+            <a href="plagiarism-checker-for-students.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
+            <a href="plagiarism-checker-for-teachers.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
+          </div>
+        </div>
+      </div>
+      <a href="prices.html" class="px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300">Pricing</a>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Resources<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[190px]">
+            <a href="help-center.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
+            <a href="faq-and-support.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">FAQ</a>
+            <a href="blog.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item relative">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true">Company<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-drop absolute left-1/2 top-full pt-4 lg:pt-5">
+          <div class="rounded-xl sm:rounded-[14px] lg:rounded-2xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-2 w-[220px]">
+            <a href="about-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">About us</a>
+            <a href="why-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why PlagiarismSearch</a>
+            <a href="mission.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Mission &amp; Values</a>
+            <a href="testimonials.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Reviews</a>
+            <a href="contact-us.html" class="block rounded-xl px-3 py-2 text-[13px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="min-w-0 flex items-center gap-2 ml-auto lg:ml-6 shrink-0">
+      <div class="nav-item relative hidden xl:block">
+        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13.5px] font-medium text-ink-600 hover:bg-ink-900/5 transition-colors duration-300" aria-haspopup="true" aria-label="Language">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          EN<svg class="nav-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <a href="account.html" class="btn-press inline-flex whitespace-nowrap rounded-full ring-1 ring-black/10 text-ink-900 text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 hover:bg-ink-900/5 transition-colors duration-300">Sign in</a>
+      <a href="index.html#top" class="btn-press inline-flex whitespace-nowrap rounded-full bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white text-[13px] sm:text-[13.5px] font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5">Check free</a>
+      <button type="button" data-nav-burger class="lg:hidden btn-press flex items-center justify-center w-10 h-10 shrink-0 rounded-full text-ink-900 hover:bg-ink-900/5 transition-colors duration-300" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
+        <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5H2M22 15.5H2"/></svg>
+        <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5 5 19M5 5l14 14"/></svg>
+      </button>
+    </div>
+  </nav>
+  </div>
+
+  <div id="navPanel" data-nav-panel class="nav-panel pointer-events-auto lg:hidden mx-auto mt-3 max-w-[560px]">
+    <div class="rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-white ring-1 ring-black/5 shadow-diffuse-lg p-3 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Core</div>
+      <a href="index.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Plagiarism Checker</a>
+      <a href="ai-detector.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">AI Detector</a>
+      <a href="api.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">API</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Products &middot; Integrations</div>
+      <a href="integration-guide.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Moodle</a>
+      <a href="canvas-integration.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Canvas</a>
+      <a href="how-to-use-plagiarismsearch-google-add-on.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Google Docs</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions &middot; For organizations</div>
+      <a href="university-plagiarism-checker.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Education &amp; Institutions</a>
+      <a href="plagiarism-checker-for-organization.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Business &amp; Teams</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Solutions &middot; For individuals</div>
+      <a href="plagiarism-checker-for-students.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Students</a>
+      <a href="plagiarism-checker-for-teachers.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Educators</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Resources</div>
+      <a href="help-center.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Help Center</a>
+      <a href="faq-and-support.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">FAQ</a>
+      <a href="blog.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Blog</a>
+      <div class="px-4 pt-3 pb-1 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-400">Company</div>
+      <a href="about-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">About us</a>
+      <a href="why-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Why PlagiarismSearch</a>
+      <a href="mission.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Mission &amp; Values</a>
+      <a href="testimonials.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Reviews</a>
+      <a href="contact-us.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-2.5 text-[14px] font-medium text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors duration-200">Contact</a>
+      <a href="prices.html" class="block rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 mt-1 text-[14.5px] font-bold tracking-tight text-ink-900 hover:bg-ink-50 transition-colors duration-200">Pricing</a>
+      <div class="mt-3 pt-3 border-t border-ink-100 space-y-2">
+        <button type="button" class="w-full flex items-center justify-center gap-2 rounded-xl sm:rounded-[14px] lg:rounded-2xl px-4 py-3 text-[14px] font-medium text-ink-700 hover:bg-ink-50 transition-colors duration-200" aria-label="Language">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          English
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section data-component="article" data-rv-start="top 80%" data-rv-delay=".1" class="article relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-28 bg-white">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="orb w-[560px] h-[560px] bg-teal-500/10 -left-44 -top-40"></div>
+      <div class="orb w-[420px] h-[420px] bg-teal-500/15 -right-24 -top-40"></div>
+    </div>
+
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+
+      <!-- One column, dead centre: 700px of text, nothing in the margins. Body type is
+           15.5/16/17, the one ramp the site uses. At 700 that runs to about 86
+           characters a line — wider than the 65–75 reading is comfortable at, and a
+           deliberate call: one body size across the site was worth more than the
+           measure here. Narrowing the column is the fix if that stops being true. -->
+      <div class="mx-auto max-w-[700px]">
+
+        <div class="rv mb-6 sm:mb-8 lg:mb-10">
+          <nav class="flex items-center gap-2 text-[12.5px] font-medium text-ink-500 mb-4 sm:mb-5 lg:mb-6" aria-label="Breadcrumb">
+          <a href="user-manuals.html" class="hover:text-ink-700 transition-colors duration-300">All guides</a>
+          <span class="text-ink-500">/</span>
+          <span class="text-ink-700">Storage Checking</span>
+          </nav>
+          <h1 class="text-[clamp(2.4rem,5.5vw,3.6rem)] font-extrabold tracking-tightest leading-[1.06] mb-5 sm:mb-6 lg:mb-7">What is Storage Checking? Get Advantages from a User Private Database</h1>
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span class="text-[12.5px] font-medium text-ink-500">User Guide</span>
+            <span class="w-1 h-1 rounded-full bg-ink-300" aria-hidden="true"></span>
+            <span class="text-[12.5px] font-medium text-ink-500"><span class="nums">8</span> min read</span>
+          </div>
+        </div>
+
+        <div class="toc-wrap" data-doc-nav>
+        <aside class="toc-side" aria-label="On this page">
+          <div class="rail">
+            <p class="toc-side-label">On this page</p>
+            <nav class="toc-side-scroll" data-scroll-fade="y" aria-label="On this page">
+              <ul>
+                <li><a href="#what-is-personal-storage" data-spy="what-is-personal-storage" class="rail-link">What is Personal Storage?</a></li>
+                <li><a href="#how-does-it-work" data-spy="how-does-it-work" class="rail-link">How does It Work?</a></li>
+                <li><a href="#accessing-personal-storage" data-spy="accessing-personal-storage" class="rail-link">Accessing Personal Storage</a></li>
+                <li><a href="#adding-files-and-archives-to-your-storag" data-spy="adding-files-and-archives-to-your-storag" class="rail-link">Adding Files and Archives to Your Storage</a></li>
+                <li><a href="#storage-options-for-individual-customers" data-spy="storage-options-for-individual-customers" class="rail-link">Storage Options for Individual Customers</a></li>
+                <li><a href="#storage-options-for-universities-and-bus" data-spy="storage-options-for-universities-and-bus" class="rail-link">Storage Options for Universities and Business Owners</a></li>
+                <li><a href="#data-storing-and-security" data-spy="data-storing-and-security" class="rail-link">Data Storing and Security</a></li>
+                <li><a href="#prevent-self-plagiarism-using-storage-se" data-spy="prevent-self-plagiarism-using-storage-se" class="rail-link">Prevent Self-Plagiarism Using Storage Search</a></li>
+                <li><a href="#new-options-to-advance-storage-search" data-spy="new-options-to-advance-storage-search" class="rail-link">New Options to Advance Storage Search</a></li>
+                <li><a href="#other-advantages-of-having-private-stora" data-spy="other-advantages-of-having-private-stora" class="rail-link">Other Advantages of Having Private Storage Space at PlagiarismSearch.com</a></li>
+                <li><a href="#conclusion" data-spy="conclusion" class="rail-link">Conclusion</a></li>
+              </ul>
+            </nav>
+          </div>
+        </aside>
+
+        <details class="toc-fold rv rounded-3xl sm:rounded-[28px] bg-ink-50 mb-8 sm:mb-10 lg:mb-12">
+          <summary class="flex items-center gap-3 p-4 sm:p-5 lg:p-6">
+            <span class="text-[10px] sm:text-[10.5px] font-bold tracking-[0.22em] uppercase text-ink-500">On this page</span>
+            <span class="ml-auto flex items-center gap-3 text-[11.5px] font-medium text-ink-500"><span><span class="nums">1,663</span> words</span><svg class="toc-fold-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+          </summary>
+          <nav class="px-4 sm:px-5 lg:px-6 pb-4 sm:pb-5 lg:pb-6" aria-label="On this page">
+            <ul class="grid gap-y-2.5">
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#what-is-personal-storage" data-spy="what-is-personal-storage" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">What is Personal Storage?</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#how-does-it-work" data-spy="how-does-it-work" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">How does It Work?</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#accessing-personal-storage" data-spy="accessing-personal-storage" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Accessing Personal Storage</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#adding-files-and-archives-to-your-storag" data-spy="adding-files-and-archives-to-your-storag" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Adding Files and Archives to Your Storage</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#storage-options-for-individual-customers" data-spy="storage-options-for-individual-customers" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Storage Options for Individual Customers</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#storage-options-for-universities-and-bus" data-spy="storage-options-for-universities-and-bus" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Storage Options for Universities and Business Owners</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#data-storing-and-security" data-spy="data-storing-and-security" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Data Storing and Security</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#prevent-self-plagiarism-using-storage-se" data-spy="prevent-self-plagiarism-using-storage-se" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Prevent Self-Plagiarism Using Storage Search</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#new-options-to-advance-storage-search" data-spy="new-options-to-advance-storage-search" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">New Options to Advance Storage Search</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#other-advantages-of-having-private-stora" data-spy="other-advantages-of-having-private-stora" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Other Advantages of Having Private Storage Space at PlagiarismSearch.com</a>
+              </li>
+              <li class="flex gap-2.5">
+                <span class="shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-ink-300" aria-hidden="true"></span>
+                <a href="#conclusion" data-spy="conclusion" class="min-w-0 text-[13.5px] sm:text-[14.5px] font-medium text-ink-600 hover:text-ink-900 leading-snug transition-colors duration-300">Conclusion</a>
+              </li>
+            </ul>
+          </nav>
+        </details>
+
+        <!-- the article's content. guide-body is the one hook that sets plain semantic
+             HTML in the article's type (26-legal-guide-body.css); the blocks below carry
+             classes of their own and are not touched by it -->
+        <div class="rv guide-body">
+<p>One of the typical requirements from our customers, both corporate and educational ones, is to detect similarities in specific texts merely against the databases of their own. That is where a plagiarism database feature known as Storage comes into play. You can use our high-end plagiarism checker to scan your new texts against what has been written before to check the plagiarism of unintentional nature.  
+</p>
+<h2 id="what-is-personal-storage">What is Personal Storage?</h2>
+<p>By uploading the archives into the Storage system, you create an individual storage which will help you get a database to check for plagiarism only against your own texts: it helps to avoid self-plagiarism. It is easy to use this feature: all you need to do is to tick the option Personal Storage of the plagiarism database checker. You can check plagiarism online or you can compare your new writing against the works completed before. Having purchased a corporate package, you will even get a repository for the students&rsquo; works with a solid guarantee of customer privacy. Every time you proceed with checking against your plagiarism database, you obtain a <a href="https://plagiarismsearch.com/interpreting-plagiarismsearch-similarity-report">plagiarism report</a> with all the details indicated. 
+</p>
+<h2 id="how-does-it-work">How does It Work? </h2>
+<p>Our customers can make use of a convenient and reliable plagiarism checker with a solid individual database to check for plagiarism. They can potentially detect all cases of self-plagiarism using the created storage for plagiarism check, as our system can be integrated with either their own or their school&rsquo;s LMS. Thus, they check the plagiarism against their personal databases with the already written papers and those already scanned against them. Using our tool, you can also upload your archives via our <a href="https://plagiarismsearch.com/plagiarism-api">API</a> and prevent issues with plagiarism, checking the text both against the Internet resources and a personal plagiarism database, or choosing either of the options separately. 
+</p>
+<h2 id="accessing-personal-storage">Accessing Personal Storage</h2>
+<p>You can check plagiarism online and access the storage only if you have got a yearly or monthly submission package. No matter which subscription plan you choose, you will get lifetime access to 100 MB of space to use. A yearly or monthly <a href="https://plagiarismsearch.com/vip-plagiarism-checker">VIP Service Package</a> will enable you to get a personal plagiarism database storage with 100 MB of space at no extra charge. It is a great option of plagiarism check for the clients with high expectations and discipline of excellence.</p><p><img src="https://plagiarismsearch.com/files/uploads/_Screenshot_1.jpg" border="0" alt="1" width="930" height="678" /></p><h2 id="adding-files-and-archives-to-your-storag">Adding Files and Archives to Your Storage</h2><p>One of the options is
+uploading the files and archives with text files to the storage manually.
+Please note that the file size cannot exceed 24 MB, while the archive cannot be
+larger than 256 MB. You can either drag and drop the required files or browse the
+files on your PC and upload the needed ones. We recommend ticking the option
+&lsquo;allow to replace file with the same name&rsquo; below the window for uploading files
+only if there is no risk that overwriting the previous file will cause loss of
+important data. Otherwise, it is convenient as it ensures proper filing and
+prevents confusion.</p>
+
+<p>Another option is to change
+the system settings in My profile &ndash; System and tick the option <strong>&lsquo;Add reports
+text to storage.&rsquo;</strong> This way, all the files scanned for plagiarism will be
+automatically uploaded to the storage.</p><p><img src="https://plagiarismsearch.com/files/uploads/_Screenshot_2.jpg" border="0" alt="2" width="1251" height="606" /></p>
+<h2 id="storage-options-for-individual-customers">Storage Options for Individual Customers</h2>
+<p>Our individual customers can check plagiarism online and use their own plagiarism database with an automatically assigned area for reports and messages. The system keeps the saved reports for a 30-day period, but the time frame becomes longer for the customers with VIP packages. You can be sure that every plagiarism database is secure. All the files of our customers as well as all corresponding reports generated after they check the plagiarism are never disclosed. You will get a plagiarism report to each uploaded text and you will find it in your storage. 
+</p>
+<h2 id="storage-options-for-universities-and-bus">Storage Options for Universities and Business Owners</h2>
+<p>
+It will cost you nothing at all to get access to Storage needed to <a href="https://plagiarismsearch.com/plagiarism-check">check text for plagiarism</a>. By default, you will get 100 MB of space if you use our API. It may seem to be insufficient to enjoy all the benefits of plagiarism check for businesses and educational establishments, which scan various written projects systematically. However, you should note that we save the data in the text form, not accumulating large files. It means that the size of the saved text is 100 times less than the size of the file itself. Most of our clients find the storage capacity of 100 MB sufficient for their purposes. Still, to be on the safe side, you can pay for the extra storage space: 
+</p>
+<ul>
+<li>Your lifetime access to storage + 100 MB will cost you $ 2,95.</li>
+<li>Your lifetime access to storage + 250 MB will cost you $ 5,95.</li>
+<li>Your lifetime access to storage + 500 MB will cost you $ 8,95.</li>
+</ul>
+
+<p>Upload all your archives with the customized API integrated into the required LMS and check text for plagiarism against the texts from your individual storage. It is possible to make use of Google Docs or FTP servers to upload all databases of your company or university. 
+</p>
+<h2 id="data-storing-and-security">Data Storing and Security </h2>
+<p>You can be 100% sure about reliable data protection because we keep all customers&rsquo; files and personal details strictly confidential. Every personal plagiarism database contains the generated reports, which the customer can access only from a personal account. It is a secure system that makes it possible to check plagiarism online and use personal databases without any risk of data dissemination. Moreover, the holders of VIP packages will find it convenient and easy to search for a specific file or report, as the system creates individual folders with month-to-month sorting particularly for VIP clients.</p><h2 id="prevent-self-plagiarism-using-storage-se">Prevent Self-Plagiarism Using Storage Search</h2><p>It is common that the students
+plagiarize their own previous papers, doing that either on purpose or
+unintentionally. In any case, without citing the original text, it is re-using
+the same concepts, ideas and even wording, which leads to 100% plagiarism. The
+students may believe that they may use the texts they have written themselves
+in their own discretion and it is crucial to prevent this. PlagiarismSearch
+allows the users to upload all the previous papers of the students into the
+storage and save reports with the texts of the documents scanned for
+copy-pasted content. Thus, universities can guard against self-plagiarism and
+prevent students from this type of research misconduct.</p>
+
+<p>
+
+
+Prior to scanning a new file
+for plagiarism, you have to reach the system settings in My profile &ndash; System
+and tick both options in &lsquo;Search on&rsquo; &ndash; the web and the storage.&nbsp;
+</p>
+
+
+
+
+
+<h2 id="new-options-to-advance-storage-search">New Options to Advance Storage Search</h2><p>Getting to the system settings
+in My profile &ndash; System, you will see the option <strong>Show web sources above
+sources from Storage. </strong>The
+developers of PlagiarismSearch made a decision to add an extra layer to ensure
+that plagiarism from the web sources is traced effectively. This feature is of
+great use if it is necessary to scan a lot of texts which might be similar, for
+instance, the essays of the students of the same course on the same topic. So,
+if our software traced certain plagiarism from the websites not later than a
+month ago and it appeared in another paper again, the sources of copied content
+will be shown on the top 5 list of matches in the course of the next attempts
+of detecting plagiarism. Ticking the option &lsquo;Show web sources above sources from
+Storage,&rsquo; you will see the sources from web pages before the sources from
+previously uploaded papers. It is a way to prioritize the Internet sources of
+plagiarized text over the Storage and instantly show the copy-pasted pieces
+taken from the web sources.&nbsp;&nbsp;</p>
+
+<p>Using
+the option &lsquo;<strong>Show maximum number of web sources,&rsquo; </strong>you indicate an exact
+number of web pages as sources of plagiarized content that will be shown above
+the sources from PlagiarismSearch Storage.</p>
+
+<p>Using
+the option &lsquo;<strong>Show maximum number of sources from Storage,&rsquo; </strong>you will
+indicate an exact number of files from the Storage as sources of plagiarized
+content that will be shown below the sources from the web sources.</p><p><img src="https://plagiarismsearch.com/files/uploads/_Screenshot_5.jpg" border="0" alt="5" width="957" height="647" /></p><h2 id="other-advantages-of-having-private-stora">Other Advantages of Having Private Storage Space at PlagiarismSearch.com </h2>
+<p>We aim at the precision and correctness of detecting plagiarism at <a href="https://plagiarismsearch.com">PlagiarismSearch.com</a>, but you can also contribute to improving the accuracy of your personalized plagiarism database checker. Make sure that you have chosen the right options in the process of setting up your search.
+</p>
+<p>We recommend you to tick the following options, if applicable:</p>
+<ul>
+<li>Search on my storage / search on the web;</li>
+<li>Exclude in-text citations;</li>
+<li>Exclude references;</li>
+<li>Only Latin characters (students may cheat via inserting Cyrillic letters).</li>
+</ul>
+<p>You can make your thorough checking for coincidences even more effective if you heed our tips and recommendations:</p>
+<ol>
+<li>Do not tick the option of scanning texts against your personal storage if that is not of your immediate interest.</li>
+<li>Check whether the quotes in your text are formatted properly, as incorrectly outlined in-text citations will be presented as plagiarism in a plagiarism report.</li></ol><p>In some cases, it
+will be necessary for you to exclude the references from results, while in
+others you will need to check on the works cited as well. It may happen that
+checking in-text citations is needed, but in most cases you will have to
+exclude it to get merely the results from the newly-written texts. You can
+boost the efficiency of self-plagiarism detection in the papers, using the
+option of checking against the Storage, if you choose the right <a href="https://plagiarismsearch.com/different-options-in-search-filters">search filters</a>,
+customized for your individual preferences and needs.&nbsp;&nbsp;</p><ol>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>PlagiarismSearch.com is a perfect tool for individual customers, universities, colleges, schools, and business owners. An exclusive chargeless feature of 100 MB Storage makes it in-demand among the service customers. It is needed to check new texts both against the available data in web resources and unique private databases. You can merely upload the archives of the composed content via API and avoid any chance of plagiarism in your texts with our help. 
+</p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-surface="dark" class="relative bg-ink-950 text-white pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
+  <div class="orb w-[500px] h-[480px] bg-teal-500/8 right-[-120px] top-[-160px]"></div>
+  <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
+
+    <!-- Brand row. The blurb that used to sit here carried "17 languages" and "500,000
+         writers"; DEC-0027 forbids marketing claims it does not supply, and supplies
+         none, so nothing replaces it.
+
+         The app badge (Olex, 2026-09-30, variant A; App Store only until there is a
+         Google Play listing). Apple's rules, followed to the letter
+         (developer.apple.com/app-store/marketing/guidelines):
+         - the official artwork, unmodified — the black "Download on the App Store"
+           badge from Apple's marketing toolbox, its grey border part of the artwork;
+         - 40px high, Apple's onscreen minimum;
+         - clear space of a quarter of its height (10px) on every side: the p-2.5 box;
+         - subordinate to the main message: the footer, beside the logo;
+         - the credit line once, in the legal line of the bottom bar.
+         When a Google Play badge joins it: App Store stays first and stays the black
+         badge; Google Play goes after it at the same height or larger, with its own
+         quarter-height clear space, and its credit line joins Apple's. -->
+    <div class="grid sm:grid-cols-2 gap-8 sm:gap-10 items-center mb-10 sm:mb-13 lg:mb-16">
+      <a href="index.html" class="inline-flex items-center">
+        <img src="/assets/svg/logo.svg" alt="PlagiarismSearch" class="h-7 w-auto brightness-0 invert">
+      </a>
+      <div class="sm:justify-self-end flex flex-wrap items-center -m-2.5">
+        <a href="https://apps.apple.com/us/app/plagiarismsearch/id6789566745" rel="nofollow noopener" class="block p-2.5 rounded-xl focus-visible:outline-offset-0">
+          <img src="/assets/svg/stores/app-store-badge-black-en.svg" alt="Download on the App Store" width="120" height="40" class="block h-10 w-auto">
+        </a>
+        <!-- Google Play: the official "Get it on Google Play" web badge (Partner Marketing
+             Hub, English, updated 2025-11-17), unmodified. Second after App Store, the same
+             40px height (Google: the same size or larger than the other badges; minimum
+             28px), a quarter of its height clear on every side (the p-2.5 box; between the
+             two badges the two boxes make 20px). PLACEHOLDER LINK (a Play Store search for now, so no page carries a dead in-page anchor): the listing URL comes
+             from Olex later (2026-09-30) — replace the href with the Play Store address. -->
+        <a href="https://play.google.com/store/search?q=PlagiarismSearch&amp;c=apps" rel="nofollow noopener" class="block p-2.5 rounded-xl focus-visible:outline-offset-0">
+          <img src="/assets/svg/stores/google-play-badge-en.svg" alt="Get it on Google Play" width="135" height="40" class="block h-10 w-auto">
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-13 lg:mb-16">
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PRODUCTS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="index.html" class="hover:text-white transition-colors duration-300">Plagiarism Checker</a></li>
+          <li><a href="ai-detector.html" class="hover:text-white transition-colors duration-300">AI Detector</a></li>
+          <li><a href="api.html" class="hover:text-white transition-colors duration-300">API</a></li>
+          <li><a href="integration-guide.html" class="hover:text-white transition-colors duration-300">Moodle Integration</a></li>
+          <li><a href="canvas-integration.html" class="hover:text-white transition-colors duration-300">Canvas Integration</a></li>
+          <li><a href="how-to-use-plagiarismsearch-google-add-on.html" class="hover:text-white transition-colors duration-300">Google Docs Add-on</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">SOLUTIONS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="university-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">Education &amp; Institutions</a></li>
+          <li><a href="plagiarism-checker-for-organization.html" class="hover:text-white transition-colors duration-300">Business &amp; Teams</a></li>
+          <li><a href="plagiarism-checker-for-students.html" class="hover:text-white transition-colors duration-300">Students</a></li>
+          <li><a href="plagiarism-checker-for-teachers.html" class="hover:text-white transition-colors duration-300">Educators</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">POPULAR CHECKS</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="powerpoint-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PowerPoint Plagiarism Checker</a></li>
+          <li><a href="pdf-plagiarism-checker.html" class="hover:text-white transition-colors duration-300">PDF Plagiarism Checker</a></li>
+          <li><a href="quote-checker-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Quote Checker</a></li>
+          <li><a href="turnitin-checker-alternative.html" class="hover:text-white transition-colors duration-300">Turnitin Alternative</a></li>
+          <li><a href="ua-plagiarism-check.html" class="hover:text-white transition-colors duration-300">UA Plagiarism Checker</a></li>
+          <!-- The three writing tools, footer only (Olex, 2026-10-06). DEC-0027 §5 kept them
+               out of the global navigation; the header still does not carry them. Named as
+               the Pricing page's Optional Services names them. -->
+          <li><a href="paper-analysis.html" class="hover:text-white transition-colors duration-300">Paper Analysis</a></li>
+          <li><a href="readability-check.html" class="hover:text-white transition-colors duration-300">Readability Check</a></li>
+          <li><a href="spell-check.html" class="hover:text-white transition-colors duration-300">Spell Check</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">RESOURCES</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="help-center.html" class="hover:text-white transition-colors duration-300">Help Center</a></li>
+          <li><a href="faq-and-support.html" class="hover:text-white transition-colors duration-300">FAQ</a></li>
+          <li><a href="user-manuals.html" class="hover:text-white transition-colors duration-300">User Guide</a></li>
+          <li><a href="video-on-plagiarism-tutorial.html" class="hover:text-white transition-colors duration-300">Video Tutorials</a></li>
+          <li><a href="blog.html" class="hover:text-white transition-colors duration-300">Blog</a></li>
+          <li><a href="newsroom.html" class="hover:text-white transition-colors duration-300">News</a></li>
+          <li><a href="originality-badges.html" class="hover:text-white transition-colors duration-300">Originality Badges</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">COMPANY</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="about-us.html" class="hover:text-white transition-colors duration-300">About us</a></li>
+          <li><a href="why-us.html" class="hover:text-white transition-colors duration-300">Why PlagiarismSearch</a></li>
+          <li><a href="mission.html" class="hover:text-white transition-colors duration-300">Mission &amp; Values</a></li>
+          <li><a href="testimonials.html" class="hover:text-white transition-colors duration-300">Reviews</a></li>
+          <li><a href="contact-us.html" class="hover:text-white transition-colors duration-300">Contact</a></li>
+          <li><a href="scholarship.html" class="hover:text-white transition-colors duration-300">Scholarship</a></li>
+          <li><a href="affiliate-program-at-plagiarismsearch.html" class="hover:text-white transition-colors duration-300">Affiliate Program</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[10.5px] font-bold tracking-[0.2em] text-white/35 mb-4 lg:mb-5">PLANS &amp; LEGAL</div>
+        <ul class="space-y-3 text-[13.5px] font-medium text-white/75">
+          <li><a href="prices.html" class="hover:text-white transition-colors duration-300">Pricing</a></li>
+          <li><a href="vip.html" class="hover:text-white transition-colors duration-300">VIP / High-volume</a></li>
+          <li><a href="policy.html" class="hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+          <li><a href="terms-of-use.html" class="hover:text-white transition-colors duration-300">Terms of Use</a></li>
+          <li><a href="cookie-policy.html" class="hover:text-white transition-colors duration-300">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="h-px bg-white/10 mb-6 sm:mb-7 lg:mb-8"></div>
+    <!-- The legal links live in the Plans & Legal column now, so this bar no longer
+         repeats them. DPA was never in the brief and is gone with them. -->
+    <!-- The review ratings moved here from the brand row when the app badge took their
+         place (variant A). They are review data, which the briefs treat as a dynamic
+         field — placeholders until production values are frozen. -->
+    <div class="flex flex-wrap items-center gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-4 text-[12px] font-medium text-white/40">
+      <span>&copy; 2026 PlagiarismSearch. All rights reserved.</span>
+      <span class="flex flex-wrap items-center gap-x-4 gap-y-1" aria-label="Ratings on review platforms">
+        <a href="https://www.trustpilot.com/review/plagiarismsearch.com" rel="nofollow noopener" class="hover:text-white transition-colors duration-300">Trustpilot <b class="font-bold text-white/80 nums">4.7</b></a>
+        <a href="https://www.smartcustomer.com/reviews/plagiarismsearch.com" rel="nofollow noopener" class="hover:text-white transition-colors duration-300">SmartCustomer <b class="font-bold text-white/80 nums">4.0</b></a>
+        <span>G2 <b class="font-bold text-white/80 nums">4.3</b></span>
+      </span>
+      <button type="button" class="ml-auto flex items-center gap-2 rounded-full bg-white/[.06] px-3.5 py-2 text-white/70 hover:text-white transition-colors duration-300" aria-label="Language">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        EN
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </div>
+    <!-- The stores' credit lines, required once wherever their badges appear (Apple:
+         Legal Requirements, credit both Apple and the Apple Logo; Google Play the same). The international
+         form, the site being served outside the U.S. as well. -->
+    <p class="mt-5 text-[11px] leading-relaxed text-white/30 max-w-[88ch]">Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+
+  <!-- Back to top. Global chrome, so it lives in the shell rather than being copied on
+       to whichever page happens to be long today — the homepage and the blog article both
+       run past fifteen thousand pixels.
+
+       It is fixed, so it is positioned against the viewport and the footer clipping its
+       own overflow does not reach it. That holds only while no ancestor carries a
+       transform: one here would make this footer-relative and it would vanish upward.
+
+       Inside the footer element on purpose. shell.js replaces a page from the opening
+       tag to the first closing one, so anything placed after that closing tag would
+       survive the replacement and be added again by every build. -->
+  <button type="button" data-to-top aria-label="Back to top"
+    class="fixed z-40 bottom-5 right-5 sm:bottom-7 sm:right-7 lg:bottom-9 lg:right-9
+           w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-ink-900 shadow-diffuse-lg
+           ring-2 ring-teal-600/45 flex items-center justify-center opacity-0 translate-y-3
+           pointer-events-none transition-[opacity,transform,background-color] duration-300
+           hover:bg-teal-50 hover:ring-teal-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-600/35">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0991A8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+  </button>
+
+</footer>
+</body>
+</html>

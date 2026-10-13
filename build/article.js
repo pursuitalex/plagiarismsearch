@@ -102,6 +102,12 @@ ${inner}
         </div>`;
     }
 
+    /* a document as it is: plain semantic HTML with no class on anything, set by the
+       container (.guide-body, 26-legal-guide-body.css). `headings` names its h2s —
+       [{ id, text }], the ids already in the markup — for the contents. */
+    case 'html':
+      return b.html;
+
     default:
       throw new Error('article: unknown block type "' + b.t + '"');
   }
@@ -117,7 +123,16 @@ const words = blocks => blocks.reduce((n, b) => {
 const page = ({ breadcrumb = [], h1, meta = [], blocks, tocLabel = 'On this page', ground = 'bg-white' }) => {
   if (!h1 || !Array.isArray(blocks) || !blocks.length) throw new Error('article: h1 and blocks are required');
 
-  const heads = blocks.filter(b => b.t === 'h2');
+  /* every h2 gets its id here, once, and a second heading with the same words gets a
+     number after it: the contents links by id, so an id may not repeat on the page */
+  {
+    const seen = new Set();
+    const unique = id => { let u = id, n = 1; while (seen.has(u)) u = id + '-' + (++n); seen.add(u); return u; };
+    blocks.forEach(b => { if (b.t === 'html') (b.headings || []).forEach(h => seen.add(h.id)); });
+    blocks = blocks.map(b => (b.t === 'h2' ? Object.assign({}, b, { id: unique(b.id || slug(b.text)) }) : b));
+  }
+
+  const heads = blocks.flatMap(b => (b.t === 'h2' ? [b] : b.t === 'html' ? (b.headings || []) : []));
   /* the contents (build/toc.js): a long article hangs a rail in the margin from 1280px and
      folds its card below that; the wrapper is the rail's range, from the contents to the last block */
   const items = heads.map(h => ({ id: h.id || slug(h.text), text: esc(h.text) }));
@@ -159,7 +174,10 @@ ${toc.rail(items, { label: tocLabel })}
 
 ` : ''}${!items.length ? '' : long ? toc.fold(items, tocOpts) : toc.card(items, tocOpts)}
 
-        <div class="rv">
+        <!-- the article's content. guide-body is the one hook that sets plain semantic
+             HTML in the article's type (26-legal-guide-body.css); the blocks below carry
+             classes of their own and are not touched by it -->
+        <div class="rv guide-body">
 ${blocks.map(render).join('\n')}
         </div>${long ? '\n        </div>' : ''}
       </div>

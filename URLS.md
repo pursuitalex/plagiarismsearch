@@ -32,6 +32,10 @@ driven by this table.
 | `blog.html` | `/blog` | built |  |
 | `blog-best-checker-2026.html` | `/blog/best-plagiarism-checker-in-2026` | built |  |
 | `blog-affiliate-programs.html` | `/blog/best-plagiarism-checker-affiliate-programs-for-education-bloggers-and-academic-creators` | built | A real article from the archive, set in the approved blog article template exactly as the archive holds it — plain semantic HTML with no class on any element — to prove the article body typography (.article-body, build/assets/css/26-article.css). Its pictures are served from the live site. Built by build/blog-plain.js from build/blog/affiliate-programs.body.html, checked by build/check-blog-plain.js. |
+| `legal-plain-cookie-policy.html` | — | no approved path | Internal reference, not a page of the site: the Cookie Policy as the live site holds it — plain HTML with no class on anything — in the approved Legal template, set by the one hook .legal-body (build/body-plain.js). The approved page is cookie-policy.html. |
+| `legal-elements.html` | — | no approved path | Internal reference, not a page of the site: every element the legal document body styles, once, as plain HTML (build/body-plain.js). |
+| `guide-plain-storage.html` | `/plagiarism-database` | built | A User Guide article from the archive, set in the approved article template exactly as the archive holds it — plain HTML, three screenshots — by the one hook .guide-body (build/body-plain.js). A proof of the template, not a designed page. |
+| `guide-elements.html` | — | no approved path | Internal reference, not a page of the site: every element the User Guide article body styles, once, as plain HTML (build/body-plain.js). |
 | `blog-article-elements.html` | — | no approved path | Internal reference, not a page of the site: every element the article body styles, once — h2 to h6, long headings, nested lists, a quotation, a figure, a table, code — as plain HTML in the blog article template. Built by build/blog-plain.js from build/blog/elements.body.html. |
 | `blog-author-kelsey-ayton.html` | `/blog/author/kelsey-ayton` | built | A blog author's page. No brief: the live profile (heading, photograph, bio, Twitter link) and the author's ten newest posts with their titles and dates; the dress is the blog index's — its hero, its cards, its pager, its closing section. One of the ten posts is in the prototype; the other nine and pages 2–6 lead to the live site. Linked from the article's author name. Built by build/blog-author.js, checked by build/check-blog-author.js. |
 | `university-plagiarism-checker.html` | `/university-plagiarism-checker` | built | The University page to the v2 brief of 2026-09-04: nine sections, a proof type per act (hub, report, relationship map, source map, decision tree). Built by build/university-v2.js, checked by build/check-university-v2.js. |
@@ -65,8 +69,8 @@ driven by this table.
 
 ## Counts
 
-- 40 × built
-- 7 × no approved path
+- 41 × built
+- 10 × no approved path
 - 3 × stub
 - 1 × built · out of global nav
 

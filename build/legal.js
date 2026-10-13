@@ -74,7 +74,8 @@ const clean = html => html
   .replace(/\s+/g, ' ')
   .trim();
 
-function render(page) {
+/* the document as the live page holds it: what is inside its container, untouched */
+function container(page) {
   const file = path.join(SRC, page.slug + '.html');
   if (!fs.existsSync(file)) return null;
   const src = fs.readFileSync(file, 'utf8');
@@ -100,7 +101,16 @@ function render(page) {
     if (depth === 0) { end = t.index; break; }
   }
   if (end < 0) throw new Error(page.slug + ': container never closes');
-  const doc = src.slice(from, end);
+  return src.slice(from, end);
+}
+
+/* an id for each section heading; a second heading with the same words gets a number
+   after it — the contents links by id, so an id may not repeat on the page */
+const uniqueIds = () => { const seen = new Set(); return id => { let u = id, n = 1; while (seen.has(u)) u = id + '-' + (++n); seen.add(u); return u; }; };
+
+function render(page) {
+  const doc = container(page);
+  if (doc === null) return null;
 
   /* top-level blocks, in the order the document sets them */
   const blocks = [];
@@ -122,8 +132,9 @@ function render(page) {
 
   /* Contents, built from the document's own section headings. Derived, not written:
      nothing here is a sentence anyone had to compose. */
+  const unique = uniqueIds();
   const sections = rest.filter(x => x.tag === 'h2').map(x => ({
-    id: slugOf(x.html), text: clean(x.html).replace(/<[^>]+>/g, ''),
+    id: unique(slugOf(x.html)), text: clean(x.html).replace(/<[^>]+>/g, ''),
   }));
   let n = 0;
   const markup = rest.map(x => {
@@ -175,12 +186,23 @@ function render(page) {
     ].join('\n');
   }).join('\n');
 
+  return { blocks: blocks.length, sections: sections.length,
+    html: sheet(page, { h1: clean(h1 ? h1.html : page.title), dated: dated ? clean(dated.html) : '', sections, markup }) };
+}
+
+/* The page around a document: the masthead (h1, the line it dates itself with), the
+   contents built from `sections` ([{ id, text }]), the document (`markup`) and the links
+   to the other legal pages. `markup` is either what render() writes — every element with
+   its own classes — or a document as it is, plain semantic HTML: the <article> carries
+   legal-body, the one hook that sets plain elements in the legal type
+   (26-legal-guide-body.css) and touches nothing that has a class. */
+function sheet(page, { h1, dated, sections, markup }) {
   const others = PAGES.filter(p => p.slug !== page.slug);
   const long = toc.isLong(sections);
   const TOC = { cols: 2, tone: 'text-ink-400' };   /* the legal card: two columns, its own grey */
 
   /* the numbered list's counter is site.css (26-article), the one the article template draws */
-  return { blocks: blocks.length, sections: sections.length, html: shell.render({ title: page.title + ' | PlagiarismSearch', sections: [`  <!-- Legal pages are reference, not reading: the text is the site's own, carried over
+  return shell.render({ title: page.title + ' | PlagiarismSearch', sections: [`  <!-- Legal pages are reference, not reading: the text is the site's own, carried over
        word for word, and only its dress is new. One centred column at the site's reading
        size, a contents list built from the document's own headings, and no decoration
        competing with the clauses. A legal document does not fade in. -->
@@ -194,8 +216,8 @@ function render(page) {
 
         <div class="mb-8 sm:mb-10 lg:mb-12">
           <div class="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-ink-400 mb-4 lg:mb-5">${page.eyebrow}</div>
-          <h1 class="text-[clamp(2.1rem,4vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4 lg:mb-5">${clean(h1 ? h1.html : page.title)}</h1>
-          ${dated ? `<p class="text-[13px] sm:text-[13.5px] font-semibold text-ink-400">${clean(dated.html)}</p>` : ''}
+          <h1 class="text-[clamp(2.1rem,4vw,3rem)] font-extrabold tracking-tightest leading-[1.06] mb-4 lg:mb-5">${h1}</h1>
+          ${dated ? `<p class="text-[13px] sm:text-[13.5px] font-semibold text-ink-400">${dated}</p>` : ''}
         </div>
 
         <!-- The contents is the shared one (build/toc.js): a long document hangs a rail in
@@ -205,7 +227,7 @@ ${long ? `        <div ${toc.WRAP}>
 ${toc.rail(sections)}
 ${toc.fold(sections, TOC)}` : toc.card(sections, TOC)}
 
-        <article class="min-w-0">
+        <article class="min-w-0 legal-body">
 ${markup}
         </article>${long ? '\n        </div>' : ''}
 
@@ -221,8 +243,11 @@ ${others.map(o => `            <a href="${o.slug}.html" class="btn-press inline-
 
       </div>
     </div>
-  </section>`] }) };
+  </section>`] });
 }
+
+module.exports = { PAGES, T, container, sheet, slugOf, uniqueIds };
+if (require.main !== module) return;
 
 let built = 0;
 PAGES.forEach(p => {

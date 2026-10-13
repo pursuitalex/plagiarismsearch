@@ -1,0 +1,103 @@
+<p>This page is a reference, not a legal document: it holds every element the legal document body styles, written as plain HTML with no class on anything. It exists so the legal typography can be checked in one place, on a phone and on a desktop, before a document is moved into the template.</p>
+<p>A second paragraph follows the first at the document's rhythm. It carries a <a href="policy.html">link inside the text</a>, a term in <strong>bold</strong>, a phrase in <em>italics</em>, a footnote sign<sup>1</sup> and a name in <code>inline_code</code>, so each can be seen against ordinary text.</p>
+
+<h2>1. A second-level heading opens a section of the document</h2>
+<p>The paragraph under a heading sits close to it, and the heading sits well clear of what came before. Each section heading carries an id, so the contents of the page can link to it and the heading stops below the fixed header.</p>
+
+<h3>1.1. A third-level heading divides a section</h3>
+<p>It is smaller and lighter than the heading above it, and larger and heavier than the text under it.</p>
+
+<h4>A fourth-level heading names a clause inside a subsection</h4>
+<p>It is set close to the size of body text, in bold.</p>
+
+<h5>A fifth-level heading is rarely needed</h5>
+<p>When a document uses one, it stays a heading and stays quieter than the fourth level.</p>
+
+<h6>A sixth-level heading reads as a label</h6>
+<p>It is set small, in capitals.</p>
+
+<h2>2. A very long second-level heading, of the kind a legal document is full of, that runs past the end of one line on a desktop and across four or five on a phone</h2>
+<h3>2.1. A third-level heading placed directly under a second-level heading</h3>
+<p>Each heading keeps its own space above, as it does on the approved pages.</p>
+
+<h2>3. Lists</h2>
+<p>An unordered list takes the document's dot; an ordered list takes its numbered disc.</p>
+<ul>
+  <li>A short item;</li>
+  <li><strong>An item that opens in bold.</strong> The rest of the sentence runs on in the same line of text, and wraps under itself rather than under the marker when it is long enough to need a second line;</li>
+  <li>An item with a <a href="cookie-policy.html">link</a> in it;</li>
+  <li>An item that holds a list of its own:
+    <ul>
+      <li>a nested item, set in and marked with a quieter dot;</li>
+      <li>a second nested item;</li>
+    </ul>
+  </li>
+  <li>The last item.</li>
+</ul>
+<ol>
+  <li>The first step.</li>
+  <li>The second step, which is long enough to wrap: its second line starts under its first, to the right of the number, at every width.</li>
+  <li>A step with lettered parts:
+    <ol>
+      <li>The first part.</li>
+      <li>The second part.</li>
+    </ol>
+  </li>
+  <li>The fourth step.</li>
+</ol>
+<p>A list that continues an earlier count keeps its numbers:</p>
+<ol start="5">
+  <li>The fifth step.</li>
+  <li>The sixth step.</li>
+</ol>
+<ul>
+  <li>
+    <p>An item written as paragraphs keeps a small gap between them.</p>
+    <p>Its second paragraph belongs to the same item.</p>
+  </li>
+  <li>
+    <p>The next item starts at the usual distance.</p>
+  </li>
+</ul>
+<dl>
+  <dt>A defined term</dt>
+  <dd>Its definition, in body text.</dd>
+  <dt>A second term</dt>
+  <dd>A second definition.</dd>
+</dl>
+
+<h2>4. Links, addresses and code</h2>
+<p>A very long address inside a paragraph breaks instead of pushing the column wider: <a href="https://plagiarismsearch.com/policy">https://plagiarismsearch.com/an-address-with-no-spaces-in-it/that-is-longer-than-a-phone-is-wide/and-keeps-going/until-it-has-to-break</a>.</p>
+<p>The same holds for a code string with no spaces, such as a permission scope: <code>https://www.googleapis.com/auth/drive.readonly.metadata.and.a.longer.scope.name</code>.</p>
+<p>An address block keeps its line breaks:</p>
+<p><strong>A Company Name Ltd.</strong><br>1 Example Street, Office 2<br>00000 Example City<br>Country</p>
+
+<h2>5. A table</h2>
+<p>A table takes the cookie table's rows. On a phone a wide table scrolls inside itself, from one edge of the screen to the other, and the page stays as wide as the screen.</p>
+<table>
+  <thead>
+    <tr><th>Name</th><th>Provider</th><th>Purpose</th><th>Type</th><th>Duration</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>session_id</code></td><td>The site itself</td><td>Keeps a visitor signed in between pages</td><td>Necessary</td><td>Session</td></tr>
+    <tr><td><code>_analytics_&lt;container-id&gt;</code></td><td>An analytics service</td><td>Tells one visit from another, for counting</td><td>Analytics</td><td>13 months</td></tr>
+    <tr><td><code>consent</code></td><td>The site itself</td><td>Remembers the choice made in the cookie notice</td><td>Necessary</td><td>12 months</td></tr>
+  </tbody>
+</table>
+<p>A table of two columns, with its row headings in the first, takes the same rows:</p>
+<table>
+  <tbody>
+    <tr><th>Controller</th><td>The company named above</td></tr>
+    <tr><th>Contact</th><td><a href="mailto:privacy@example.com">privacy@example.com</a></td></tr>
+  </tbody>
+</table>
+
+<h2>6. A quotation, preformatted text and a rule</h2>
+<p>A quoted provision is set off by a rule at its side:</p>
+<blockquote>
+  <p>"Personal data" means any information relating to an identified or identifiable natural person.</p>
+</blockquote>
+<p>Preformatted text scrolls sideways rather than widening the page:</p>
+<pre><code>Set-Cookie: session_id=EXAMPLE; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=0; Domain=.example.com</code></pre>
+<hr>
+<p>A horizontal rule separates two parts of a document without a heading. <small>Small print is set a little smaller than the text it sits in.</small></p>
