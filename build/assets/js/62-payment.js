@@ -17,7 +17,11 @@
    An order recurs only if the address says so AND the period has a one-off price to be
    the alternative: One-time never recurs. A fragment that names no known plan or period
    changes nothing — the page keeps the example order it was built with, as it does
-   without this script. Only text is written, never markup. */
+   without this script. Only text is written, never markup.
+
+   The page after the payment (build/thank-you.js) is a second [data-payment] root: its
+   pass carries the same hooks, without a "title" one, and names the tab the same for
+   every order. */
 PS.module('payment', () => {
   document.querySelectorAll('[data-payment]').forEach(root => {
     if (root.dataset.paymentReady) return;

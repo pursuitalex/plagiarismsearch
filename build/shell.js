@@ -66,6 +66,10 @@ const PAGES = {
   'faq-and-support.html':        { active: 'resources', static: true },
   'blog.html':                   { active: 'resources', static: true },
   'blog-best-checker-2026.html': { active: 'resources', static: true },
+  /* two pages that prove the article body's plain-HTML typography (build/blog-plain.js):
+     an archive article set in the blog template as it is, and every element once */
+  'blog-affiliate-programs.html': { active: 'resources', static: true },
+  'blog-article-elements.html': { active: 'resources', static: true },
   /* a blog author's page, from the live one (2026-10-07) */
   'blog-author-kelsey-ayton.html': { active: 'resources', static: true },
   /* About us, to the 2026-09-30 brief (build/about.js) — first in the Company group */
@@ -106,6 +110,10 @@ const PAGES = {
   /* the payment page, from the live one (build/payment.js): reached from a plan's button,
      so it lights Pricing */
   'payment.html': { active: 'pricing', static: true },
+  /* the page after the payment (build/thank-you.js): the end of the same path */
+  'thank-you.html': { active: 'pricing', static: true },
+  /* discounts and special offers, from the live /discounts (build/discounts.js) */
+  'discounts.html': { active: 'pricing', static: true },
   /* the page for an address that leads nowhere (build/not-found.js): the host serves it
      at any missing path, so its head carries a base for the shell's relative links */
   '404.html': { active: null, static: true },

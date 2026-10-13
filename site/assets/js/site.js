@@ -1653,7 +1653,11 @@ PS.module('pricing', () => {
    An order recurs only if the address says so AND the period has a one-off price to be
    the alternative: One-time never recurs. A fragment that names no known plan or period
    changes nothing — the page keeps the example order it was built with, as it does
-   without this script. Only text is written, never markup. */
+   without this script. Only text is written, never markup.
+
+   The page after the payment (build/thank-you.js) is a second [data-payment] root: its
+   pass carries the same hooks, without a "title" one, and names the tab the same for
+   every order. */
 PS.module('payment', () => {
   document.querySelectorAll('[data-payment]').forEach(root => {
     if (root.dataset.paymentReady) return;
@@ -1685,6 +1689,33 @@ PS.module('payment', () => {
     };
     window.addEventListener('hashchange', show);
     show();
+  });
+});
+
+/* ── 63-copy-text.js ── */
+/* A button that copies a short text — a discount code (build/discounts.js).
+
+     button[data-copy-text="15off"]     what is copied: the attribute's value, as written
+       [data-copy-label]                the label inside it (optional; else the button's own
+                                        text) — swapped for data-copied ("Copied" if the
+                                        button names none) for a moment, then back
+
+   The text is on the page beside the button and can be selected by hand, so a browser
+   that refuses the clipboard, or a page without this script, loses a convenience and
+   nothing else: the label then stays as it is. */
+PS.module('copy-text', () => {
+  document.querySelectorAll('[data-copy-text]').forEach(btn => {
+    if (btn.dataset.copyReady) return;
+    btn.dataset.copyReady = '1';
+    const label = btn.querySelector('[data-copy-label]') || btn;
+    const idle = label.textContent;
+    let timer;
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(btn.dataset.copyText); } catch (e) { return; }
+      label.textContent = btn.dataset.copied || 'Copied';
+      clearTimeout(timer);
+      timer = setTimeout(() => { label.textContent = idle; }, 1600);
+    });
   });
 });
 

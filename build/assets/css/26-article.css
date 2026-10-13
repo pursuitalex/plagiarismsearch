@@ -66,3 +66,152 @@
    column may shrink to it. The cookie table keeps its own scroll inside its box. */
 [data-component="legal"] { overflow-wrap:break-word; }
 [data-component="legal"] :where(.toc-wrap, .toc-fold, .toc-fold li, article) { min-width:0; max-width:100%; }
+
+/* ── the article body: plain semantic HTML, styled by the container ───────────────────
+   The approved blog article sets every element with its own utility classes. An article
+   from the archive is plain HTML — <h2>, <p>, <ul>, <table> with no class — and under the
+   site's reset (Tailwind's preflight, in tailwind.css) such an element has no type of its
+   own: a heading inherits the body size and weight, a paragraph has no margin, a list no
+   marker. This block gives plain elements the approved article's type.
+
+   ONE HOOK: the class .article-body on the article's content container — the <article>
+   of the blog template. Nothing else is needed in the markup.
+
+   ONLY ELEMENTS WITHOUT A class ATTRIBUTE are styled (…:not([class])). An element that
+   carries classes — everything in the approved article, any component placed inside an
+   article — is not touched, so the approved design cannot move; and nothing outside
+   .article-body is reached. Each selector weighs one class (the :where() parts weigh
+   nothing): enough to win over preflight, which comes later in the cascade with element
+   selectors, and never more than a utility class.
+
+   The values are the approved article's (build/article.js: CLS; site/blog-best-checker-
+   2026.html), at the site's two steps, 640px and 1024px:
+     p            15.5 / 16 / 17px · 1.72 · ink-700 · 16 / 20 / 24px under
+     h2           21 / 23 / 26px · 800 · 1.2 · 40 / 48 / 56px over, 16 / 16 / 20px under
+     h3           17 / 19 / 20px · 700 · 1.375 · 32 / 36 / 40px over, 12 / 12 / 16px under
+     ul           the teal tick, 12px between items;  ol — the numbered disc of .counter
+     blockquote   the coral rule and the larger semibold line of the approved pull quote
+     table        the approved comparison table: small-caps heads, hairline rows
+     img, figure  the approved figure: rounded, 32 / 40 / 48px over and under
+     a            the body-copy link (.nl)
+   h4–h6, nested lists, code, hr, dl and embeds have no approved instance; they continue
+   the same scale downwards.
+
+   Written mobile first; the two steps restate only what changes. A rule that must hold at
+   every width and could be overridden by a step (the flush first and last child, a
+   heading under a heading, an image inside a figure) is written once, AFTER the steps. */
+.article-body { overflow-wrap:break-word; }
+
+/* text */
+.article-body :where(p:not([class])) { margin:0 0 16px; font-size:15.5px; line-height:1.72; color:#374151; }
+.article-body :where(strong:not([class]), b:not([class])) { font-weight:700; }
+.article-body :where(a:not([class])) { font-weight:600; color:#06748A; text-decoration:underline; text-underline-offset:2px;
+  text-decoration-color:rgba(6,116,138,.32); word-break:break-word; transition:color .2s ease, text-decoration-color .2s ease; }
+.article-body :where(a:not([class])):hover { color:#111827; text-decoration-color:rgba(17,24,39,.45); }
+.article-body :where(mark:not([class])) { background:#FDE5E0; color:inherit; padding:0 .15em; border-radius:3px; }
+.article-body :where(small:not([class])) { font-size:.86em; }
+.article-body :where(sup:not([class]), sub:not([class])) { font-size:.72em; line-height:0; }
+
+/* headings */
+.article-body :where(h2:not([class]), h3:not([class]), h4:not([class]), h5:not([class]), h6:not([class])) { color:#111827; scroll-margin-top:7rem; }
+.article-body :where(h2:not([class])) { margin:40px 0 16px; font-size:21px; font-weight:800; line-height:1.2; letter-spacing:-.035em; }
+.article-body :where(h3:not([class])) { margin:32px 0 12px; font-size:17px; font-weight:700; line-height:1.375; letter-spacing:-.025em; }
+.article-body :where(h4:not([class])) { margin:28px 0 10px; font-size:15.5px; font-weight:700; line-height:1.4; letter-spacing:-.015em; }
+.article-body :where(h5:not([class])) { margin:24px 0 8px; font-size:14.5px; font-weight:700; line-height:1.45; }
+.article-body :where(h6:not([class])) { margin:24px 0 8px; font-size:12px; font-weight:700; line-height:1.5; letter-spacing:.14em; text-transform:uppercase; color:#4B5563; }
+
+/* lists. The marker is drawn, as in the approved article; the item stays a block, so
+   text, <strong> and links inside it run on as one line of text */
+.article-body :where(ul:not([class]), ol:not([class])) { margin:0 0 16px; padding:0; list-style:none; }
+.article-body :where(ul:not([class]) > li, ol:not([class]) > li) { position:relative; font-size:15.5px; line-height:1.72; color:#374151; }
+.article-body :where(ul:not([class]) > li + li, ol:not([class]) > li + li) { margin-top:12px; }
+.article-body :where(ul:not([class]) > li) { padding-left:26px; }
+.article-body :where(ul:not([class]) > li)::before { content:''; position:absolute; left:0; top:calc((1.72em - 14px) / 2); width:14px; height:14px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230991A8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat; }
+.article-body :where(ol:not([class]) > li) { padding-left:40px; }
+/* the number is the list's own (list-item), so start, reversed and value="" are kept */
+.article-body :where(ol:not([class]) > li)::before { content:counter(list-item); position:absolute; left:0; top:.1em; width:1.65em; height:1.65em;
+  display:flex; align-items:center; justify-content:center; border-radius:999px; background:#E6F4F7; color:#0991A8;
+  font-size:.72em; font-weight:800; font-variant-numeric:tabular-nums; }
+/* a list inside an item: closer, and its bullets a step quieter than the ticks */
+.article-body :where(li > ul:not([class]) > li) { padding-left:22px; }
+.article-body :where(li > ul:not([class]) > li)::before { top:calc((1.72em - 6px) / 2); left:4px; width:6px; height:6px; border-radius:999px; background:#F58971; }
+.article-body :where(dl:not([class])) { margin:0 0 16px; font-size:15.5px; line-height:1.72; color:#374151; }
+.article-body :where(dl:not([class]) > dt) { font-weight:700; color:#111827; }
+.article-body :where(dl:not([class]) > dd) { margin:0 0 12px; }
+
+/* a quotation: the approved pull quote */
+.article-body :where(blockquote:not([class])) { margin:32px 0; padding-left:20px; border-left:2px solid #F58971;
+  font-size:19px; font-weight:600; line-height:1.45; letter-spacing:-.025em; color:#111827; }
+.article-body :where(blockquote:not([class]) cite, blockquote:not([class]) footer) { display:block; margin-top:12px; font-size:13.5px; font-weight:500;
+  font-style:normal; letter-spacing:0; line-height:1.6; color:#6B7280; }
+
+/* pictures and embeds */
+.article-body :where(img:not([class])) { display:block; max-width:100%; height:auto; margin:32px auto; border-radius:16px;
+  box-shadow:0 1px 2px rgba(0,0,0,.04), 0 20px 40px -15px rgba(0,0,0,.08); }
+.article-body :where(figure:not([class])) { margin:32px 0; }
+.article-body :where(p:not([class]):has(> img:not([class]):only-child)) { margin:32px 0; }
+.article-body :where(figure:not([class]) > figcaption:not([class])) { margin-top:12px; font-size:13px; line-height:1.6; color:#6B7280; }
+.article-body :where(iframe:not([class]), video:not([class])) { display:block; width:100%; max-width:100%; height:auto; aspect-ratio:16 / 9; margin:32px 0; border:0; border-radius:16px; }
+
+/* a table: the approved comparison table. Under 640px it scrolls inside itself — a wide
+   table never widens the page */
+.article-body :where(table:not([class])) { width:100%; margin:32px 0; border-collapse:collapse; text-align:left; font-size:14.5px; line-height:1.6; color:#374151; }
+.article-body :where(table:not([class]) th, table:not([class]) td) { padding:14px 16px 14px 0; vertical-align:top; border-bottom:1px solid #F1F2F6; }
+.article-body :where(table:not([class]) th:last-child, table:not([class]) td:last-child) { padding-right:0; }
+.article-body :where(table:not([class]) thead th) { padding-top:10px; padding-bottom:10px; border-bottom-color:#E5E7EB;
+  font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#6B7280; }
+.article-body :where(table:not([class]) tbody th, table:not([class]) td:first-child) { font-weight:700; color:#111827; }
+.article-body :where(table:not([class]) caption) { caption-side:bottom; padding-top:12px; font-size:13px; line-height:1.6; color:#6B7280; text-align:left; }
+@media (max-width:639px) {
+  .article-body :where(table:not([class])) { display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .article-body :where(table:not([class]) th, table:not([class]) td) { min-width:8.5em; }
+}
+
+/* code, rules */
+.article-body :where(code:not([class])) { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.9em; padding:.12em .4em; border-radius:6px; background:#F1F2F6; color:#1F2937; }
+.article-body :where(pre:not([class])) { margin:32px 0; padding:16px 18px; border-radius:16px; background:#F8F9FB; box-shadow:inset 0 0 0 1px rgba(17,24,39,.06);
+  overflow-x:auto; font-size:13.5px; line-height:1.65; color:#1F2937; }
+.article-body :where(hr:not([class])) { margin:40px 0; border:0; border-top:1px solid #E5E7EB; }
+
+@media (min-width:640px) {
+  .article-body :where(p:not([class]), ul:not([class]) > li, ol:not([class]) > li, dl:not([class])) { font-size:16px; }
+  .article-body :where(p:not([class]), ul:not([class]), ol:not([class]), dl:not([class])) { margin-bottom:20px; }
+  .article-body :where(h2:not([class])) { margin-top:48px; font-size:23px; }
+  .article-body :where(h3:not([class])) { margin-top:36px; font-size:19px; }
+  .article-body :where(h4:not([class])) { font-size:16px; }
+  .article-body :where(blockquote:not([class])) { margin:40px 0; padding-left:24px; font-size:21px; }
+  .article-body :where(img:not([class])) { margin-top:40px; margin-bottom:40px; border-radius:24px; }
+  .article-body :where(figure:not([class]), table:not([class]), pre:not([class]), iframe:not([class]), video:not([class]), p:not([class]):has(> img:not([class]):only-child)) { margin-top:40px; margin-bottom:40px; }
+  .article-body :where(table:not([class])) { font-size:15px; }
+  .article-body :where(figure:not([class]) > figcaption:not([class])) { font-size:13.5px; }
+}
+@media (min-width:1024px) {
+  .article-body :where(p:not([class]), ul:not([class]) > li, ol:not([class]) > li, dl:not([class])) { font-size:17px; }
+  .article-body :where(p:not([class]), ul:not([class]), ol:not([class]), dl:not([class])) { margin-bottom:24px; }
+  .article-body :where(h2:not([class])) { margin-top:56px; margin-bottom:20px; font-size:26px; }
+  .article-body :where(h3:not([class])) { margin-top:40px; margin-bottom:16px; font-size:20px; }
+  .article-body :where(h4:not([class])) { font-size:17px; }
+  .article-body :where(blockquote:not([class])) { margin:48px 0; padding-left:28px; font-size:23px; }
+  .article-body :where(img:not([class])) { margin-top:48px; margin-bottom:48px; border-radius:28px; }
+  .article-body :where(figure:not([class]), table:not([class]), pre:not([class]), iframe:not([class]), video:not([class]), p:not([class]):has(> img:not([class]):only-child)) { margin-top:48px; margin-bottom:48px; }
+  .article-body :where(hr:not([class])) { margin:56px 0; }
+}
+
+/* at every width, after the steps */
+/* a heading straight under a heading keeps the upper one's gap, not its own */
+.article-body :where(h2:not([class]) + h3:not([class]), h3:not([class]) + h4:not([class]), h4:not([class]) + h5:not([class]), h5:not([class]) + h6:not([class])) { margin-top:0; }
+/* inside an item: a nested list sits close, a paragraph keeps a small gap */
+.article-body :where(li > ul:not([class]), li > ol:not([class])) { margin:12px 0 0; }
+.article-body :where(li > p:not([class])) { margin-bottom:12px; }
+.article-body :where(li > p:not([class]):last-child) { margin-bottom:0; }
+/* inside a quotation the paragraphs take the quotation's type */
+.article-body :where(blockquote:not([class]) > p:not([class])) { margin:0 0 .6em; font-size:inherit; line-height:inherit; color:inherit; }
+.article-body :where(blockquote:not([class]) > :last-child) { margin-bottom:0; }
+/* a picture that already stands in a figure, a link or a paragraph of its own takes that box's margins */
+.article-body :where(figure:not([class]) img:not([class]), p:not([class]) > img:not([class]):only-child, a:not([class]) > img:not([class])) { margin-top:0; margin-bottom:0; }
+.article-body :where(pre:not([class]) > code:not([class])) { padding:0; background:none; font-size:inherit; }
+/* the first and the last thing in the body sit flush with its edges */
+.article-body > :where(:first-child:not([class])) { margin-top:0; }
+.article-body > :where(:last-child:not([class])) { margin-bottom:0; }
+@media (prefers-reduced-motion: reduce) { .article-body :where(a:not([class])) { transition:none; } }

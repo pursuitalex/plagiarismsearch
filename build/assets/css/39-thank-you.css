@@ -1,0 +1,30 @@
+/* ═══ 39 · the thank-you page's mark (build/thank-you.js) ════════════════════════════
+   The moment of the page: a green disc with a tick, a halo that leaves it once, and a
+   few small sparks around it — the old page's plus signs and rings, kept as a quiet nod.
+
+     .ty-mark           the stage (sized by utilities in the markup)
+       .ty-halo         a ring that grows out of the disc once and is gone
+       .ty-disc         the disc
+       svg.ty-check     the tick: one path of pathLength 1, so it can be drawn
+       .ty-spark        a spark: a dot, a ring or a plus
+
+   Everything is at rest by default — the disc, the tick and the sparks are simply there,
+   the halo is not. The motion runs once, on arrival, and only under html.js-motion, so
+   reduced motion and no script show the finished mark. Nothing loops: a thank-you page
+   is read once and left. */
+.ty-halo { opacity:0; }
+.ty-check path { stroke-dasharray:1; stroke-dashoffset:0; }
+
+@keyframes ty-pop { 0% { transform:scale(.55); opacity:0; } 60% { transform:scale(1.07); opacity:1; } 100% { transform:scale(1); opacity:1; } }
+@keyframes ty-draw { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
+@keyframes ty-halo { 0% { transform:scale(.8); opacity:.7; } 100% { transform:scale(1.75); opacity:0; } }
+
+html.js-motion .ty-disc { animation:ty-pop .6s cubic-bezier(.32,.72,0,1) .15s both; }
+html.js-motion .ty-check path { animation:ty-draw .42s cubic-bezier(.65,0,.35,1) .6s both; }
+html.js-motion .ty-halo { animation:ty-halo 1.2s cubic-bezier(.16,1,.3,1) .55s both; }
+html.js-motion .ty-spark { animation:ty-pop .5s cubic-bezier(.32,.72,0,1) .85s both; }
+html.js-motion .ty-spark:nth-of-type(2n) { animation-delay:.97s; }
+html.js-motion .ty-spark:nth-of-type(3n) { animation-delay:1.09s; }
+@media (prefers-reduced-motion: reduce) {
+  html.js-motion .ty-disc, html.js-motion .ty-check path, html.js-motion .ty-halo, html.js-motion .ty-spark { animation:none; }
+}
