@@ -1,0 +1,729 @@
+[
+ {
+  "file": "build/assets/js/00-core.js",
+  "module": "(no PS.module)",
+  "selectors": [],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 26
+ },
+ {
+  "file": "build/assets/js/10-header.js",
+  "module": "header",
+  "selectors": [
+   "[data-site-header]",
+   "[data-nav-burger]",
+   "[data-nav-panel]",
+   "a",
+   "[data-to-top]",
+   "header a, header button"
+  ],
+  "exact": [
+   "getAttribute('aria-expanded') !== 'true'"
+  ],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 56
+ },
+ {
+  "file": "build/assets/js/18-pen-mark.js",
+  "module": "pen-mark",
+  "selectors": [
+   ".pen-word > svg.pen-mark",
+   ".pen-underline"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [
+   ".pen-word > svg.pen-mark"
+  ],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 25
+ },
+ {
+  "file": "build/assets/js/20-motion.js",
+  "module": "motion",
+  "selectors": [
+   "[data-rv-start], [data-rv-delay]",
+   "[data-hero-title]",
+   ".pen-underline",
+   ".ring-path"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 94
+ },
+ {
+  "file": "build/assets/js/22-hero-title.js",
+  "module": "hero-title",
+  "selectors": [
+   "[data-hero-title]",
+   ".hw-in",
+   "section",
+   "[data-hero-support]",
+   ".pen-word",
+   ".pen-underline"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 51
+ },
+ {
+  "file": "build/assets/js/24-odometer.js",
+  "module": "odometer",
+  "selectors": [
+   ".od-r",
+   "section"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 50
+ },
+ {
+  "file": "build/assets/js/26-count-up.js",
+  "module": "count-up",
+  "selectors": [
+   "[data-count]"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 28
+ },
+ {
+  "file": "build/assets/js/30-checker.js",
+  "module": "checker",
+  "selectors": [
+   "[data-checker]",
+   "[data-checker-text]",
+   "[data-checker-count]",
+   "[data-switch]",
+   "label",
+   "input"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 43
+ },
+ {
+  "file": "build/assets/js/35-form-arrive.js",
+  "module": "form-arrive",
+  "selectors": [
+   "form[data-focus-first]",
+   "input:not([type=hidden]):not([type=checkbox]):not([type=radio]), textarea, select"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 19
+ },
+ {
+  "file": "build/assets/js/36-inquiry-form.js",
+  "module": "inquiry-form",
+  "selectors": [
+   "form[data-inquiry-form]",
+   "section[id]",
+   ".inquiry-field",
+   "label",
+   "input, textarea, select"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 30
+ },
+ {
+  "file": "build/assets/js/37-dropdown.js",
+  "module": "dropdown",
+  "selectors": [
+   ".dd-option",
+   "select.dd-select, select.cf-field"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": true,
+  "lines": 217
+ },
+ {
+  "file": "build/assets/js/40-report.js",
+  "module": "report",
+  "selectors": [
+   "[data-report]",
+   ".cab-mark",
+   ".cab-src"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 23
+ },
+ {
+  "file": "build/assets/js/42-report-pass.js",
+  "module": "report-pass",
+  "selectors": [
+   "[data-report]",
+   "[data-report-doc]",
+   "[data-report-side]",
+   "[data-report-scan]",
+   ".cab-mark",
+   ".cab-in",
+   ".cab-bar",
+   ".cab-figure"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 72
+ },
+ {
+  "file": "build/assets/js/44-review-rating.js",
+  "module": "review-rating",
+  "selectors": [
+   ".review-rating[data-rating]",
+   ".review-rating-value",
+   ".review-stars"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 29
+ },
+ {
+  "file": "build/assets/js/45-carousel.js",
+  "module": "carousel",
+  "selectors": [
+   "[data-carousel]",
+   "[data-carousel-track]",
+   "[data-carousel-dots]",
+   "[data-carousel-prev]",
+   "[data-carousel-next]",
+   ".rev-dot"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 83
+ },
+ {
+  "file": "build/assets/js/45-scroll-fade.js",
+  "module": "scroll-fade",
+  "selectors": [
+   "[data-scroll-fade]"
+  ],
+  "exact": [
+   "dataset.scrollFade === 'x'"
+  ],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": true,
+  "lines": 25
+ },
+ {
+  "file": "build/assets/js/46-marquee.js",
+  "module": "marquee",
+  "selectors": [
+   "[data-marquee]",
+   ".mq",
+   ".mq-track",
+   ".mq-group",
+   ":focus-visible",
+   ".sc-card, [data-review]",
+   "[data-marquee-toggle]",
+   "[data-marquee-pop]",
+   ".mq .sc-card",
+   "h3",
+   ":hover"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": true,
+  "lines": 176
+ },
+ {
+  "file": "build/assets/js/47-news-archive.js",
+  "module": "news-archive",
+  "selectors": [
+   "[data-archive]",
+   "[data-pager]",
+   ".tp-btn[data-topic]",
+   ".yr-group",
+   ".news-item",
+   "[data-archive-empty]",
+   "[data-pager-count]",
+   "[data-pager-nums]",
+   "[data-pager-prev]",
+   "[data-pager-next]",
+   ".yr-count"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 111
+ },
+ {
+  "file": "build/assets/js/48-paged-list.js",
+  "module": "paged-list",
+  "selectors": [
+   "[data-paged-list]",
+   "[data-pager]",
+   "[data-paged-item]",
+   "[data-pager-count]",
+   "[data-pager-nums]",
+   "[data-pager-prev]",
+   "[data-pager-next]",
+   ".pg-num.on"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 89
+ },
+ {
+  "file": "build/assets/js/48-review-clip.js",
+  "module": "review-clip",
+  "selectors": [
+   ".rc-text",
+   "[data-review-more]",
+   "[data-review-clip]"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": true,
+  "lines": 39
+ },
+ {
+  "file": "build/assets/js/48-show-more.js",
+  "module": "show-more",
+  "selectors": [
+   "[data-show-more]",
+   "[data-show-more-btn]",
+   ".more-later"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 27
+ },
+ {
+  "file": "build/assets/js/49-badges.js",
+  "module": "badges",
+  "selectors": [
+   "[data-badges]",
+   "[data-badge-modal]",
+   ".badge-tab",
+   ".badge-lang",
+   "[data-badge-plate]",
+   "[data-badge-size]",
+   "[data-badge-code]",
+   "[data-badge-copy]",
+   "[data-badge-copy-label]",
+   "[data-close]",
+   ".badge-pick",
+   "img",
+   "https://plagiarismsearch.com"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 85
+ },
+ {
+  "file": "build/assets/js/50-faq.js",
+  "module": "faq",
+  "selectors": [
+   "[data-faq]",
+   ".faq-item",
+   ".faq-a[id]",
+   ".faq-q",
+   ".faq-a"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 41
+ },
+ {
+  "file": "build/assets/js/52-evidence.js",
+  "module": "tabs",
+  "selectors": [
+   "[data-tabs]",
+   ".ev-dialog-close",
+   "button[data-zoom]",
+   "img",
+   ".ev-dialog-title",
+   ".ev-dialog-scroll"
+  ],
+  "exact": [
+   "getAttribute('aria-selected') === 'true'",
+   "dataset.zoomStart === 'end'"
+  ],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 87
+ },
+ {
+  "file": "build/assets/js/60-pricing.js",
+  "module": "pricing",
+  "selectors": [
+   "[data-pricing]",
+   ".period-btn",
+   "[data-tier]",
+   "[data-period-note]",
+   "[data-period-only]",
+   "input[data-recurring]",
+   "template[data-pricing-feat]",
+   ":scope > template[data-pricing-feat], template[data-pricing-feat]",
+   ".js-feats",
+   ".js-price",
+   ".js-term",
+   ".js-rate",
+   "a[data-order-link]"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": true,
+  "directChild": [
+   ":scope > template[data-pricing-feat], template[data-pricing-feat]"
+  ],
+  "json": true,
+  "hash": false,
+  "observer": false,
+  "lines": 80
+ },
+ {
+  "file": "build/assets/js/62-payment.js",
+  "module": "payment",
+  "selectors": [
+   "[data-payment]"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": true,
+  "hash": true,
+  "observer": false,
+  "lines": 58
+ },
+ {
+  "file": "build/assets/js/63-copy-text.js",
+  "module": "copy-text",
+  "selectors": [
+   "[data-copy-text]",
+   "[data-copy-label]"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 26
+ },
+ {
+  "file": "build/assets/js/65-ai-package.js",
+  "module": "ai-package",
+  "selectors": [
+   "[data-ai-package]",
+   ".ai-opt",
+   ".js-ai-words"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 25
+ },
+ {
+  "file": "build/assets/js/68-package-cta.js",
+  "module": "package-cta",
+  "selectors": [
+   "[data-group]",
+   "[data-cta]",
+   "input:checked"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 18
+ },
+ {
+  "file": "build/assets/js/70-code.js",
+  "module": "code",
+  "selectors": [
+   "[data-code]",
+   ".code-tab",
+   ".code-panel",
+   "[data-copy]",
+   ".code-panel.on code"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 32
+ },
+ {
+  "file": "build/assets/js/75-ai-check.js",
+  "module": "ai-check",
+  "selectors": [
+   "form[data-ai-check]",
+   "textarea",
+   "[data-too-short]",
+   "[data-auth-gate]",
+   "a"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 31
+ },
+ {
+  "file": "build/assets/js/80-doc-nav.js",
+  "module": "doc-nav",
+  "selectors": [
+   "[data-doc-nav]",
+   "[data-spy]",
+   "[data-jump-now]",
+   "details[data-jump]",
+   "[data-scroll-fade]",
+   "a"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 48
+ },
+ {
+  "file": "build/assets/js/85-modal.js",
+  "module": "modal",
+  "selectors": [
+   "[data-autofocus]",
+   "[data-modal-open]",
+   "[data-close]"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 54
+ },
+ {
+  "file": "build/assets/js/86-small-forms.js",
+  "module": "auth-tabs",
+  "selectors": [
+   "[data-auth]",
+   ".auth-tab",
+   "[data-auth-panel]",
+   "input",
+   "[data-goto]",
+   ".stepper",
+   ".step-btn[data-step]",
+   "form[data-word-count]",
+   ".qc-area",
+   ".qc-count"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 63
+ },
+ {
+  "file": "build/assets/js/88-tools.js",
+  "module": "readability",
+  "selectors": [
+   "form[data-readability]",
+   "[data-rc-drop]",
+   "form[data-spell]",
+   "[data-sp-drop]",
+   "[data-sp-results]",
+   "[data-sp-lang-echo]"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 159
+ },
+ {
+  "file": "build/assets/js/89-video.js",
+  "module": "video",
+  "selectors": [
+   "a[data-video]"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 28
+ },
+ {
+  "file": "build/assets/js/90-video-stage.js",
+  "module": "video-stage",
+  "selectors": [
+   "[data-video-stage]",
+   "[data-stage]",
+   "a[data-video-pick]",
+   "[data-caption-name]",
+   "[data-caption-line]"
+  ],
+  "exact": [
+   "dataset.videoStage === 'scroll'"
+  ],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": false,
+  "hash": false,
+  "observer": false,
+  "lines": 32
+ },
+ {
+  "file": "build/assets/js/91-paper-form.js",
+  "module": "paper-form",
+  "selectors": [
+   "form[data-paper-form]",
+   "[data-pf-service]:checked",
+   "[data-pf-step]"
+  ],
+  "exact": [],
+  "emptyAttr": [],
+  "scope": false,
+  "directChild": [],
+  "json": true,
+  "hash": false,
+  "observer": false,
+  "lines": 121
+ }
+]

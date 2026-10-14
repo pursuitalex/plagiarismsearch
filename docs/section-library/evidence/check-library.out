@@ -1,0 +1,649 @@
+Library contracts (Hero, Stat rail, Steps, Feature cards, Sources, Report showcase, Start free, Pricing preview, Reviews, FAQ, CTA band, Banner, Inquiry form) — every page
+  ok    404.html: 0 components
+  ok    about-us.html: 1 component (cta-band section#about-next, line 372)
+  ok    account.html: 0 components
+  ok    affiliate-program-at-plagiarismsearch.html: 3 components (feature-cards section#affiliate-tools panel 3 cards, line 278; faq section#affiliate-faq 6 q, line 496; cta-band section#affiliate-cta, line 566)
+          warn line 502: <div class="mt-8 lg:mt-10 rounded-3xl bg-ink-50 p-5 sm:p-6 lg:p-7"> (line 502): an aside slot — validated by its own component's contract, not here
+  ok    ai-detector.html: 4 components (steps section#ai-data-handling cards · badge-sm 3 steps, line 670; banner section#ai-api teal split, line 723; faq section#ai-detector-faq 10 q, line 884; cta-band section#ai-final-cta, line 985)
+  ok    api.html: 5 components (steps section#api-workflow cards · badge 4 steps, line 404; feature-cards section#api-use-cases grid · compact 3 cards, line 557; inquiry-form section#api-quote 6 fields, line 692; faq section#api-faq 9 q, line 752; cta-band section#api-final-cta, line 838)
+  ok    blog-affiliate-programs.html: 0 components
+  ok    blog-article-elements.html: 0 components
+  ok    blog-author-kelsey-ayton.html: 0 components
+  ok    blog-best-checker-2026.html: 0 components
+  ok    blog.html: 0 components
+  ok    canvas-integration.html: 8 components (hero section#canvas-integration hub, line 153; steps section#how-it-works cards · icon 4 steps, line 214; sources section#configuration list, line 450; steps section#document-handling rail · icon 3 steps, line 586; feature-cards section#institutional-value grid 3 cards, line 637; banner section#evaluate-for-your-institution teal, line 663; faq section#canvas-faq 8 q, line 683; cta-band section#canvas-cta, line 755)
+  ok    chat-bot.html: 1 component (cta-band section plain, line 444)
+  ok    contact-us.html: 1 component (cta-band section plain, line 427)
+  ok    cookie-policy.html: 0 components
+  ok    discounts.html: 0 components
+  ok    faq-and-support.html: 10 components (faq section#what-is-plagiarism 2 q, line 182; faq section#general-inquiries 7 q, line 227; faq section#how-it-works 13 q, line 316; faq section#for-universities 11 q, line 476; faq section#paper-analysis-service 7 q, line 600; faq section#grammar-style-and-spell-checker-faq 4 q, line 696; faq section#readability-score-checker-faq 5 q, line 757; faq section#other 9 q, line 835; faq section#ai-checker-faq 4 q, line 942; inquiry-form section#send-free-inquiry 6 fields, line 1006)
+          warn line 187: <div class="fg"> (line 187): an aside slot — validated by its own component's contract, not here
+          warn line 232: <div class="fg"> (line 232): an aside slot — validated by its own component's contract, not here
+          warn line 321: <div class="fg"> (line 321): an aside slot — validated by its own component's contract, not here
+          warn line 481: <div class="fg"> (line 481): an aside slot — validated by its own component's contract, not here
+          warn line 605: <div class="fg"> (line 605): an aside slot — validated by its own component's contract, not here
+          warn line 701: <div class="fg"> (line 701): an aside slot — validated by its own component's contract, not here
+          warn line 762: <div class="fg"> (line 762): an aside slot — validated by its own component's contract, not here
+          warn line 840: <div class="fg"> (line 840): an aside slot — validated by its own component's contract, not here
+          warn line 947: <div class="fg"> (line 947): an aside slot — validated by its own component's contract, not here
+  ok    guide-elements.html: 0 components
+  ok    guide-plain-storage.html: 0 components
+  ok    help-center.html: 1 component (cta-band section plain, line 398)
+  ok    how-to-use-plagiarismsearch-google-add-on.html: 0 components
+  ok    index.html: 10 components (hero section#checker center, line 155; stat-rail section soft 3 items, line 247; report-showcase section dark · quiet, line 273; sources section groups, line 450; steps section cards · icon-stack 4 steps, line 581; feature-cards section grid · lead 3 cards, line 717; reviews section carousel 8 reviews, line 777; pricing-preview section center, line 975; faq section#faq 9 q, line 1068; cta-band section#cta, line 1165)
+  ok    integration-guide.html: 2 components (faq frame 11 q, line 776; banner section#moodle-support teal, line 886)
+  ok    legal-elements.html: 0 components
+  ok    legal-plain-cookie-policy.html: 0 components
+  ok    mission.html: 1 component (cta-band section plain, line 372)
+  ok    newsroom.html: 0 components
+  ok    originality-badges.html: 0 components
+  ok    pages.html: 0 components
+  ok    paper-analysis.html: 1 component (cta-band section#paper-final-cta, line 620)
+  ok    payment.html: 0 components
+  ok    pdf-plagiarism-checker.html: 8 components (hero section#pdf-checker split-aside, line 156; steps section#how-to-check-a-pdf cards · icon 3 steps, line 259; report-showcase section#pdf-report dark, line 372; sources section#sources-and-settings flow, line 540; feature-cards section#pdf-handling grid 4 cards, line 608; start-free section#start-free framed, line 653; faq section#pdf-faq 9 q, line 693; cta-band section#pdf-cta, line 776)
+  ok    plagiarism-and-ai-check-report.html: 0 components
+  ok    plagiarism-check.html: 1 component (cta-band section plain, line 550)
+  ok    plagiarism-checker-for-organization.html: 8 components (hero section#business-and-teams hub, line 153; report-showcase section#report-evidence dark, line 335; steps section#business-workflows rows 3 steps, line 606; feature-cards section#data-handling panel 3 cards, line 714; banner section#plans-and-custom coral, line 758; inquiry-form section#business-inquiry 9 fields, line 785; faq section#business-faq 9 q, line 896; cta-band section#business-cta, line 980)
+  ok    plagiarism-checker-for-students.html: 8 components (hero section#student-checker split-aside, line 154; stat-rail section 3 items, line 257; report-showcase section#before-you-submit dark, line 284; sources section#sources-and-settings groups, line 519; steps section#your-paper rail · icon 4 steps, line 592; start-free section#start-free open, line 693; faq section#student-faq 9 q, line 730; cta-band section#student-cta, line 813)
+  ok    plagiarism-checker-for-teachers.html: 0 components
+  ok    policy.html: 0 components
+  ok    powerpoint-plagiarism-checker.html: 7 components (hero section#powerpoint-checker split-aside, line 153; report-showcase section#powerpoint-report dark, line 541; steps section#how-to-check-a-powerpoint cards · icon 3 steps, line 710; steps section#your-powerpoint rail · icon 3 steps, line 789; pricing-preview section#pricing center, line 839; faq section#powerpoint-faq 7 q, line 951; cta-band section#powerpoint-cta, line 1017)
+  ok    prices.html: 3 components (banner section#high-volume coral, line 457; faq section#pricing-faq 7 q, line 551; cta-band section#free-check, line 623)
+  ok    quote-checker-at-plagiarismsearch.html: 0 components
+  ok    readability-check.html: 0 components
+  ok    scholarship.html: 1 component (faq section#scholarship-faq 6 q, line 474)
+  ok    section-library.html: 65 components (hero section#example-hero-path split-aside, line 140; hero section#example-hero-facts split-aside, line 351; hero section#example-hero-notice split-aside, line 560; hero section#example-hero-split split, line 745; hero section#example-hero-hub hub, line 914; hero section#example-hero-hub-leads hub, line 1085; hero section#example-hero-center center, line 1262; stat-rail section#example-stat-rail 3 items, line 1486; stat-rail section#example-stat-rail-roll soft 3 items, line 1543; steps section#example-steps-rail rail · icon 4 steps, line 1696; steps section#example-steps-rail-3 rail · icon 3 steps, line 1829; steps section#example-steps-rail-apart rail · icon 4 steps, line 1924; steps section#example-steps-rail-disc rail · disc 3 steps, line 2033; steps section#example-steps-cards cards · icon 3 steps, line 2116; steps section#example-steps-stack cards · icon-stack 4 steps, line 2211; steps section#example-steps-badge cards · badge 4 steps, line 2348; steps section#example-steps-compact cards · badge-sm 3 steps, line 2537; steps section#example-steps-rows rows 3 steps, line 2630; steps section#example-steps-rows-icon rows · icon 3 steps, line 2747; feature-cards section#example-cards-grid grid 4 cards, line 2937; feature-cards section#example-cards-inline grid 5 cards, line 3032; feature-cards section#example-cards-compact grid · compact 3 cards, line 3117; feature-cards section#example-cards-lead grid · lead 3 cards, line 3190; feature-cards section#example-cards-panel panel 3 cards, line 3299; feature-cards section#example-cards-panel-bare panel 3 cards, line 3394; sources section#example-sources-groups groups, line 3538; sources section#example-sources-labels groups, line 3687; sources section#example-sources-flow flow, line 3836; sources section#example-sources-list list, line 3979; sources section#example-sources-cells cells, line 4098; report-showcase section#example-report dark, line 4297; report-showcase section#example-report-pair dark, line 4634; report-showcase section#example-report-path dark, line 4939; report-showcase section#example-report-quiet dark · quiet, line 5274; report-showcase section#example-report-light white, line 5627; start-free section#example-start-free open, line 6029; start-free section#example-start-free-framed framed, line 6112; pricing-preview section#example-pricing center, line 6277; pricing-preview section#example-pricing-split split, line 6472; reviews section#example-reviews carousel 8 reviews, line 6713; reviews section#example-reviews-grid grid 3 reviews, line 7114; faq section#example-faq 3 q, line 7353; faq section#example-faq-title 3 q, line 7448; faq section#example-faq-white 3 q, line 7539; faq section#example-faq-rich 3 q, line 7634; faq section#example-faq-narrow 3 q, line 7739; faq section#example-faq-fixed 3 q, line 7822; faq grid 3 q, line 7924; faq frame 3 q, line 8019; cta-band section#example-cta, line 8186; cta-band section#example-cta-button, line 8239; cta-band section#example-cta-stack, line 8290; cta-band section#example-cta-eyebrow, line 8347; cta-band section#example-cta-kicker, line 8408; cta-band section#example-cta-pair, line 8457; cta-band section#example-cta-wide, line 8510; cta-band section#example-cta-plain plain, line 8559; banner section#example-banner coral, line 8674; banner section#example-banner-detail teal, line 8731; banner section#example-banner-link coral, line 8790; banner section#example-banner-split teal split, line 8849; banner section#example-banner-callout violet split, line 8954; inquiry-form section#example-inquiry 8 fields, line 9140; inquiry-form section#example-inquiry-chips 9 fields, line 9325; inquiry-form section#example-inquiry-cool 6 fields, line 9554)
+  ok    spell-check.html: 0 components
+  ok    terms-of-use.html: 0 components
+  ok    testimonials.html: 0 components
+  ok    thank-you.html: 0 components
+  ok    turnitin-checker-alternative.html: 7 components (hero section#independent-checker split-aside, line 155; report-showcase section#report white, line 496; sources section#sources-and-settings list, line 659; steps section#your-document rail · icon 3 steps, line 742; pricing-preview section#pricing split, line 788; faq section#turnitin-alternative-faq 8 q, line 864; cta-band section#independent-cta, line 958)
+  ok    ua-plagiarism-check.html: 10 components (hero section#checker split, line 153; report-showcase section#report dark, line 236; sources section#sources cells, line 435; steps section#how-to-read rail · disc 3 steps, line 487; steps section#your-document rail · icon 4 steps, line 526; start-free section#start-free open, line 578; reviews section#reviews grid 3 reviews, line 616; banner section#ai-detector coral-soft, line 686; faq section#faq 9 q, line 710; cta-band section#ua-cta, line 790)
+  ok    university-plagiarism-checker.html: 6 components (hero section#university-plagiarism-checker hub, line 153; report-showcase section#institutional-report dark, line 237; banner section#institutional-ai violet split, line 782; inquiry-form section#institutional-inquiry 8 fields, line 832; faq section#university-faq 9 q, line 920; cta-band section#institutional-cta, line 1004)
+  ok    user-manuals.html: 1 component (faq grid 6 q, line 352)
+  ok    video-on-plagiarism-tutorial.html: 0 components
+  ok    vip.html: 0 components
+  ok    why-us.html: 0 components
+  (55 pages with library markup; not validated: design-system.html — showcase renditions)
+
+Library contracts — the catalogue snippets (as pasted)
+  ok    snippets/banner-row-detail.html: 1 component (banner section#example-banner-detail teal, line 1)
+  ok    snippets/banner-row-link.html: 1 component (banner section#example-banner-link coral, line 1)
+  ok    snippets/banner-row.html: 1 component (banner section#example-banner coral, line 1)
+  ok    snippets/banner-split-callout.html: 1 component (banner section#example-banner-callout violet split, line 1)
+  ok    snippets/banner-split.html: 1 component (banner section#example-banner-split teal split, line 1)
+  ok    snippets/cta-band-button.html: 1 component (cta-band section#example-cta-button, line 1)
+  ok    snippets/cta-band-eyebrow.html: 1 component (cta-band section#example-cta-eyebrow, line 1)
+  ok    snippets/cta-band-kicker.html: 1 component (cta-band section#example-cta-kicker, line 1)
+  ok    snippets/cta-band-link.html: 1 component (cta-band section#example-cta, line 1)
+  ok    snippets/cta-band-pair.html: 1 component (cta-band section#example-cta-pair, line 1)
+  ok    snippets/cta-band-plain.html: 1 component (cta-band section#example-cta-plain plain, line 1)
+  ok    snippets/cta-band-stack.html: 1 component (cta-band section#example-cta-stack, line 1)
+  ok    snippets/cta-band-wide.html: 1 component (cta-band section#example-cta-wide, line 1)
+  ok    snippets/faq-fixed.html: 1 component (faq section#example-faq-fixed 3 q, line 1)
+  ok    snippets/faq-fluid-narrow.html: 1 component (faq section#example-faq-narrow 3 q, line 1)
+  ok    snippets/faq-fluid-rich.html: 1 component (faq section#example-faq-rich 3 q, line 1)
+  ok    snippets/faq-fluid-title-only.html: 1 component (faq section#example-faq-title 3 q, line 1)
+  ok    snippets/faq-fluid-white.html: 1 component (faq section#example-faq-white 3 q, line 1)
+  ok    snippets/faq-fluid.html: 1 component (faq section#example-faq 3 q, line 1)
+  ok    snippets/faq-frame-doc.html: 1 component (faq frame 3 q, line 1)
+  ok    snippets/faq-grid-embedded.html: 1 component (faq grid 3 q, line 1)
+  ok    snippets/feature-cards-compact.html: 1 component (feature-cards section#example-cards-compact grid · compact 3 cards, line 1)
+  ok    snippets/feature-cards-grid.html: 1 component (feature-cards section#example-cards-grid grid 4 cards, line 1)
+  ok    snippets/feature-cards-inline-head.html: 1 component (feature-cards section#example-cards-inline grid 5 cards, line 1)
+  ok    snippets/feature-cards-lead.html: 1 component (feature-cards section#example-cards-lead grid · lead 3 cards, line 1)
+  ok    snippets/feature-cards-panel-bare.html: 1 component (feature-cards section#example-cards-panel-bare panel 3 cards, line 1)
+  ok    snippets/feature-cards-panel.html: 1 component (feature-cards section#example-cards-panel panel 3 cards, line 1)
+  ok    snippets/hero-center.html: 1 component (hero section#example-hero-center center, line 1)
+  ok    snippets/hero-hub-two-leads.html: 1 component (hero section#example-hero-hub-leads hub, line 1)
+  ok    snippets/hero-hub.html: 1 component (hero section#example-hero-hub hub, line 1)
+  ok    snippets/hero-split-facts.html: 1 component (hero section#example-hero-facts split-aside, line 1)
+  ok    snippets/hero-split-notice.html: 1 component (hero section#example-hero-notice split-aside, line 1)
+  ok    snippets/hero-split-path.html: 1 component (hero section#example-hero-path split-aside, line 1)
+  ok    snippets/hero-split.html: 1 component (hero section#example-hero-split split, line 1)
+  ok    snippets/inquiry-form-chips.html: 1 component (inquiry-form section#example-inquiry-chips 9 fields, line 1)
+  ok    snippets/inquiry-form-cool.html: 1 component (inquiry-form section#example-inquiry-cool 6 fields, line 1)
+  ok    snippets/inquiry-form-select.html: 1 component (inquiry-form section#example-inquiry 8 fields, line 1)
+  ok    snippets/pricing-preview-center.html: 1 component (pricing-preview section#example-pricing center, line 1)
+  ok    snippets/pricing-preview-split.html: 1 component (pricing-preview section#example-pricing-split split, line 1)
+  ok    snippets/report-showcase-dark.html: 1 component (report-showcase section#example-report dark, line 1)
+  ok    snippets/report-showcase-light.html: 1 component (report-showcase section#example-report-light white, line 1)
+  ok    snippets/report-showcase-pair.html: 1 component (report-showcase section#example-report-pair dark, line 1)
+  ok    snippets/report-showcase-path.html: 1 component (report-showcase section#example-report-path dark, line 1)
+  ok    snippets/report-showcase-quiet.html: 1 component (report-showcase section#example-report-quiet dark · quiet, line 1)
+  ok    snippets/reviews-carousel.html: 1 component (reviews section#example-reviews carousel 8 reviews, line 1)
+  ok    snippets/reviews-grid.html: 1 component (reviews section#example-reviews-grid grid 3 reviews, line 1)
+  ok    snippets/sources-cells.html: 1 component (sources section#example-sources-cells cells, line 1)
+  ok    snippets/sources-flow.html: 1 component (sources section#example-sources-flow flow, line 1)
+  ok    snippets/sources-groups-labels.html: 1 component (sources section#example-sources-labels groups, line 1)
+  ok    snippets/sources-groups.html: 1 component (sources section#example-sources-groups groups, line 1)
+  ok    snippets/sources-list.html: 1 component (sources section#example-sources-list list, line 1)
+  ok    snippets/start-free-framed.html: 1 component (start-free section#example-start-free-framed framed, line 1)
+  ok    snippets/start-free-open.html: 1 component (start-free section#example-start-free open, line 1)
+  ok    snippets/stat-rail-roll.html: 1 component (stat-rail section#example-stat-rail-roll soft 3 items, line 1)
+  ok    snippets/stat-rail.html: 1 component (stat-rail section#example-stat-rail 3 items, line 1)
+  ok    snippets/steps-cards-badge.html: 1 component (steps section#example-steps-badge cards · badge 4 steps, line 1)
+  ok    snippets/steps-cards-compact.html: 1 component (steps section#example-steps-compact cards · badge-sm 3 steps, line 1)
+  ok    snippets/steps-cards-linked.html: 1 component (steps section#example-steps-cards cards · icon 3 steps, line 1)
+  ok    snippets/steps-cards-stack.html: 1 component (steps section#example-steps-stack cards · icon-stack 4 steps, line 1)
+  ok    snippets/steps-rail-3.html: 1 component (steps section#example-steps-rail-3 rail · icon 3 steps, line 1)
+  ok    snippets/steps-rail-apart.html: 1 component (steps section#example-steps-rail-apart rail · icon 4 steps, line 1)
+  ok    snippets/steps-rail-disc.html: 1 component (steps section#example-steps-rail-disc rail · disc 3 steps, line 1)
+  ok    snippets/steps-rail.html: 1 component (steps section#example-steps-rail rail · icon 4 steps, line 1)
+  ok    snippets/steps-rows-icon.html: 1 component (steps section#example-steps-rows-icon rows · icon 3 steps, line 1)
+  ok    snippets/steps-rows.html: 1 component (steps section#example-steps-rows rows 3 steps, line 1)
+
+Hero contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to the title  (<h1 class="hero-title text-ink-900"> (line 8): class "text-ink-900" is not part of the Her)
+  ok    rejects an unknown layout  (<section class="hero"> (line 1): data-layout="wide" is not a variant (split-aside | split )
+  ok    rejects the layout removed  (<section class="hero"> (line 1): data-layout is required (split-aside | split | hub | cent)
+  ok    rejects an <h2> for the title  (<h2 class="hero-title"> (line 8): expected <h1> for the title)
+  ok    rejects the dot field removed  (<section class="hero"> (line 1): the hero holds the dot field, the two glows and div.hero-)
+  ok    rejects a glow given an inline style  (<div class="orb orb-hero-teal"> (line 3): attribute style is not part of the Hero contract)
+  ok    rejects the checker removed  (<div class="hero-inner"> (line 5): p.hero-free (the line under the checker) follows the ch)
+  ok    rejects the checker pasted without its slot mark  (<div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black)
+  ok    rejects the checker slot emptied  (<div class="rv max-w-[860px] mx-auto rounded-3xl sm:rounded-[28px] lg:rounded-4xl bg-black)
+  ok    rejects two pen words  (<h1 class="hero-title"> (line 8): the title carries at most one pen word (found 2))
+  ok    rejects the pen word without its line  (<span class="pen-word"> (line 8): the pen word holds its text and then the line, <svg clas)
+  ok    rejects a second lead beside the checker  (<div class="hero-head rv"> (line 7): one lead beside the checker (found 2))
+  ok    rejects a button beside the checker  (<div class="hero-actions"> (line 10): the actions belong to the hub layout — beside a chec)
+  ok    rejects the aside removed from split-aside  (<div class="hero-grid"> (line 6): data-layout="split-aside" holds a third block, div.hero-)
+  ok    rejects markup in a path pill  (<b> (line 76) is not allowed in a pill (text only; the dot goes with data-state="current"))
+  ok    rejects two current steps  (<ol class="hero-path"> (line 74): one current step at most (found 2))
+  ok    rejects the arrow after a pill removed  (<li class="hero-path-step"> (line 75): the pill is followed by the arrow, <svg class="hero)
+  ok    rejects a <script> in the hero  (<div class="hero-inner"> (line 5): holds exactly one div.hero-grid)
+  ok    rejects facts: two figures  (<div class="hero-facts-grid"> (line 75): three figures (found 2))
+  ok    rejects notice: an unknown tile tone  (<span class="icon-tile"> (line 79): data-tone="blue" is not a variant (teal | ink | orange)
+  ok    rejects notice: the tile removed  (<div class="hero-notice"> (line 78): the notice opens with its span.icon-tile)
+  ok    rejects hub: the diagram without its slot mark  (<div class="hero-media rv"> (line 23): the hub's object is one block with data-slot="media)
+  ok    rejects hub: a light button  (<a class="action-button btn-press group"> (line 15): data-tone="light" is not a button of )
+  ok    rejects hub: the button's behaviour hooks removed  (<a class="action-button"> (line 15): class "btn-press" is required here (a behaviour hook))
+  ok    rejects hub: a javascript: link  (<a class="action-link"> (line 19): javascript: links are not allowed)
+  ok    rejects hub: an aside  (<div class="hero-aside rv"> (line 76): data-layout="hub" holds the head and the diagram; a)
+  ok    rejects hub: an unknown note measure  (<p class="hero-note"> (line 21): data-measure="90" is not a variant (58))
+  ok    rejects center: a pill  (<div class="section-eyebrow"> (line 9): the center hero has no pill)
+  ok    rejects center: the ground layer removed  (<section class="hero"> (line 1): the center hero holds div.hero-bg and div.hero-inner (fou)
+  ok    rejects center: the reveal class on the head  (<div class="hero-head rv"> (line 8): class "rv" is not part of the Hero contract)
+
+Hero contract — the validator accepts allowed edits
+  ok    accepts a new title, lead and free line
+  ok    accepts another pen word (the script redraws the line)
+  ok    accepts the pen word removed
+  ok    accepts a pill added, the long title size, another measure
+  ok    accepts the section id changed with the checker's button
+  ok    accepts the section id changed alone (a warning)
+  ok    accepts a path step removed, the current step moved
+  ok    accepts facts: new figures, the link under the card removed
+  ok    accepts notice: another tone and text
+  ok    accepts hub: the quiet link and the note removed
+  ok    accepts hub: the pill removed, a second lead, an external button link
+  ok    accepts center: a word typed bare into the rising title (a warning)
+
+Stat rail contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to a figure  (<div class="stat-rail-value text-ink-900"> (line 6): class "text-ink-900" is not part of t)
+  ok    rejects an unknown tone  (<section class="stat-rail"> (line 1): data-tone="dark" is not a variant (soft))
+  ok    rejects the reveal hook removed from the list  (<div class="stat-rail-list"> (line 3): class "rv" is required here (a behaviour hook))
+  ok    rejects a heading added to the rail  (<h2 class="section-title"> (line 3): expected <div> for the list)
+  ok    rejects a single item  (<div class="stat-rail-list rv"> (line 3): two to five items (found 1))
+  ok    rejects six items  (<div class="stat-rail-list rv"> (line 3): two to five items (found 6))
+  ok    rejects an item without its label  (<div class="stat-rail-item"> (line 4): div.stat-rail-label closes the item)
+  ok    rejects an empty label  (<div class="stat-rail-label"> (line 7): the label is empty)
+  ok    rejects an item without the spacer or a line over the figure  (<div class="stat-rail-item"> (line 4): div.stat-rail-label closes the item)
+  ok    rejects text typed into the spacer  (<div class="stat-rail-gap"> (line 5): the spacer stays empty — a line over the figure is <)
+  ok    rejects a link in a label  (<a> (line 7) is not allowed in the label (allowed: text only))
+  ok    rejects markup in a figure  (<strong> (line 6) is not allowed in the figure (allowed: text only))
+  ok    rejects a figure outside its row  (<div class="stat-rail-value"> (line 6): expected class "stat-rail-figure" (the figure's ro)
+  ok    rejects two figures in one row  (<div class="stat-rail-figure"> (line 6): holds one div.stat-rail-value (a figure) or one i)
+  ok    rejects the mark without its source  (<img class="stat-rail-mark"> (line 16): the mark needs its src)
+  ok    rejects the mark without alt  (<img class="stat-rail-mark"> (line 16): alt="" is required — the label under the mark name)
+  ok    rejects an inline style on the mark  (<img class="stat-rail-mark"> (line 16): attribute style is not part of the Stat rail contr)
+  ok    rejects a button under the list  (<a class="action-button btn-press group"> (line 20): the column holds div.stat-rail-list a)
+
+Stat rail contract — the validator accepts allowed edits
+  ok    accepts new figures and labels
+  ok    accepts an item removed
+  ok    accepts an item copied (four items)
+  ok    accepts a line over a figure instead of the spacer
+  ok    accepts the line over a figure replaced by the spacer
+  ok    accepts the lighter labels, an id
+  ok    accepts the figures made to roll
+  ok    accepts another mark
+  ok    accepts a figure instead of the mark
+  ok    accepts roll: the roll removed from one figure, the standard labels
+
+Steps contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to a step's name  (<h3 class="steps-title text-ink-900"> (line 18): class "text-ink-900" is not part of the S)
+  ok    rejects an unknown layout  (<section class="steps-section"> (line 1): data-layout="timeline" is not a variant (rail | )
+  ok    rejects a marker of another layout  (<section class="steps-section"> (line 1): data-layout="rail" takes data-marker="icon | dis)
+  ok    rejects the background removed  (<section class="steps-section"> (line 1): data-bg is required (white | cool | aqua))
+  ok    rejects an unknown rhythm  (<section class="steps-section"> (line 1): data-space="xl" is not a variant (md | lg))
+  ok    rejects the rail removed from the list  (<ol class="steps-list rv-kids"> (line 11): the rail list opens with <span class="steps-lin)
+  ok    rejects the reveal hook removed from the list  (<ol class="steps-list"> (line 11): class "rv-kids" is required here (a behaviour hook))
+  ok    rejects the column count removed  (<ol class="steps-list rv-kids"> (line 11): data-cols is required (3 | 4))
+  ok    rejects a step without its icon tile  (<div class="steps-marker"> (line 14): the marker row opens with span.icon-tile)
+  ok    rejects an unknown tile tone  (<span class="icon-tile"> (line 15): data-tone="blue" is not a variant (teal | ink | orange)
+  ok    rejects markup in a step's name  (<b> (line 18) is not allowed in the step's name (allowed: text only))
+  ok    rejects a step's text removed  (<li class="steps-item"> (line 13): p.steps-text closes the step)
+  ok    rejects a single step  (<ol class="steps-list rv-kids"> (line 11): 2–6 steps (found 1))
+  ok    rejects a link in the middle of a step, as a button  (<a class="action-button btn-press group"> (line 20): a step holds its marker, its name and)
+  ok    rejects two blocks under the list  (<div class="steps-actions rv"> (line 47): one block at most under the list)
+  ok    rejects a style attribute on the section title  (<h2 class="section-title"> (line 8): attribute style is not part of the Steps contract)
+  ok    rejects cards: connectors without data-link  (<span class="steps-link"> (line 13): connectors go with data-link="line" on the list)
+  ok    rejects cards: the last card given a connector  (<span class="steps-link"> (line 31): the last card has no connector after it)
+  ok    rejects cards: data-last on a card list  (<ol class="steps-list rv-kids"> (line 11): data-last belongs to layout "rail")
+  ok    rejects badge: a word in the badge  (<span class="steps-badge"> (line 12): the badge is a number (found "One"))
+  ok    rejects badge: the sealed block without its slot mark  (<div class="rv mt-6 lg:mt-8 rounded-3xl sm:rounded-4xl bg-ink-950 p-6 sm:p-8 lg:p-10 grid )
+  ok    rejects stack: the ring tile outside its marker  (<li class="steps-item"> (line 15): data-marker="icon": the step opens with div.steps-marke)
+  ok    rejects stack: an unknown button tone  (<a class="action-button btn-press group"> (line 54): data-tone="blue" is not a button of t)
+  ok    rejects rows: a tile without data-marker="icon"  (<div class="steps-row-head"> (line 15): the head opens with the h3.steps-title (a tile and)
+  ok    rejects rows: an empty tags block  (<div class="steps-tags"> (line 17): at least one span.steps-tag (remove the block instead))
+  ok    rejects rows: the reveal hook removed from the frame  (<div class="steps-frame"> (line 11): class "rv" is required here (a behaviour hook))
+  ok    rejects rows, icon: tags instead of the label  (<div class="steps-tags"> (line 16): the name block holds an optional p.steps-kicker and th)
+
+Steps contract — the validator accepts allowed edits
+  ok    accepts new step names and texts
+  ok    accepts a step removed (a warning: the row is not full, the numbers)
+  ok    accepts another tone for a tile, another icon
+  ok    accepts the pill and the intro removed, another head width
+  ok    accepts another ground, rhythm and accent, the id removed
+  ok    accepts the note panel without its button, one line
+  ok    accepts the foot removed
+  ok    accepts cards: a new text, the intro given <em>
+  ok    accepts badge: another title
+  ok    accepts compact: the line with a link edited, an external link
+  ok    accepts disc: the callout removed
+  ok    accepts rows: a tag removed, the tags of the last step removed
+  ok    accepts rows, icon: the label over a name removed
+
+Feature cards contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to a card  (<div class="cards-item p-8"> (line 12): class "p-8" is not part of the Feature cards contr)
+  ok    rejects an unknown layout  (<section class="cards-section"> (line 1): data-layout="bento" is not a variant (grid | pan)
+  ok    rejects the rhythm removed  (<section class="cards-section"> (line 1): data-space is required (sm | md | lg))
+  ok    rejects the column count removed  (<div class="cards-grid rv-kids"> (line 11): data-cols is required (3 | 4))
+  ok    rejects the reveal hook removed from the grid  (<div class="cards-grid"> (line 11): class "rv-kids" is required here (a behaviour hook))
+  ok    rejects the head removed from a grid  (<div class="cards-inner"> (line 2): a grid needs its head — div.section-head before the gr)
+  ok    rejects a card without its tile  (<div class="cards-item"> (line 12): a card opens with its span.icon-tile)
+  ok    rejects a card's name as a paragraph  (<p class="cards-title"> (line 14): expected <h3> for the name)
+  ok    rejects markup in a card's name  (<em> (line 14) is not allowed in the name (allowed: text only))
+  ok    rejects a card's text removed  (<div class="cards-item"> (line 12): p.cards-text follows the name)
+  ok    rejects two accent cards  (<div class="cards-grid rv-kids"> (line 11): one accent card at most (found 2))
+  ok    rejects an unknown accent  (<div class="cards-item"> (line 27): data-tone="coral" is not a variant (teal))
+  ok    rejects a button inside a card of the plain size  (<div class="cards-item-action"> (line 16): a card holds its tile, its name and its text (a)
+  ok    rejects a javascript: link under the grid  (<a class="action-button btn-press group"> (line 34): javascript: links are not allowed)
+  ok    rejects a single card  (<div class="cards-grid rv-kids"> (line 11): 2–8 cards (found 1))
+  ok    rejects inline head: a head block above the grid as well  (<div class="section-head rv"> (line 3): with data-head="inline" the head is the grid's fir)
+  ok    rejects inline head: the head cell removed  (<div class="cards-grid rv"> (line 3): with data-head="inline" the grid opens with div.card)
+  ok    rejects inline head: an unsafe link in a card's text  (<a class="cards-link"> (line 21): javascript: links are not allowed)
+  ok    rejects compact: the ring tile of another size  (<span class="icon-tile"> (line 13): data-variant="ring" is not a tile of this Feature card)
+  ok    rejects lead: an unknown button tone  (<a class="action-button btn-press group"> (line 17): data-tone="dark" is not a button of t)
+  ok    rejects lead: a card's name as a heading  (<h3 class="cards-title"> (line 14): expected <p> for the name)
+  ok    rejects panel: data-size on a panel  (<section class="cards-section"> (line 1): data-size belongs to layout "grid")
+  ok    rejects panel: five cells  (<div class="cards-cells"> (line 12): 2–4 cells (found 5))
+  ok    rejects panel: the reveal hook removed  (<div class="cards-panel"> (line 11): class "rv" is required here (a behaviour hook))
+  ok    rejects panel: a card of the grid inside the sheet  (<div class="cards-item"> (line 13): expected class "cards-cell" (a cell))
+
+Feature cards contract — the validator accepts allowed edits
+  ok    accepts new names and texts, a link in a text
+  ok    accepts a card removed (a warning: the row is not full)
+  ok    accepts the accent removed, another tile tone
+  ok    accepts the button under the grid removed
+  ok    accepts the pill and the intro removed, another ground and rhythm, three columns
+  ok    accepts inline head: the intro removed, a card removed
+  ok    accepts compact: another tone
+  ok    accepts lead: a card without its button
+  ok    accepts panel: the last row without its button
+  ok    accepts panel: the last row removed
+  ok    accepts bare panel: another label and text
+
+Sources contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to a group  (<div class="sources-group p-8"> (line 12): class "p-8" is not part of the Sources contract)
+  ok    rejects an unknown layout  (<section class="sources-section"> (line 1): data-layout="table" is not a variant (groups |)
+  ok    rejects the background removed  (<section class="sources-section"> (line 1): data-bg is required (white | cool))
+  ok    rejects a switch in an item  (<li class="sources-item"> (line 18): span.sources-item-body (the name and its text) follow)
+  ok    rejects an item without its tick  (<li class="sources-item"> (line 18): an item opens with its tick, <svg class="sources-tick)
+  ok    rejects a label instead of a name and a text  (<li class="sources-item"> (line 18): span.sources-item-body (the name and its text) follow)
+  ok    rejects a third group  (<div class="sources-grid rv-kids"> (line 11): div.sources-stat (the figure) closes the row)
+  ok    rejects the figure card removed  (<div class="sources-grid rv-kids"> (line 11): div.sources-stat (the figure) closes the row)
+  ok    rejects markup in the figure  (<b> (line 58) is not allowed in the figure (allowed: text only))
+  ok    rejects three notes  (<div class="sources-notes rv"> (line 62): one or two p.sources-note (found 3))
+  ok    rejects an unknown note tone  (<p class="sources-note"> (line 64): data-tone="red" is not a variant (warm))
+  ok    rejects the reveal hook removed from the grid  (<div class="sources-grid"> (line 11): class "rv-kids" is required here (a behaviour hook))
+  ok    rejects a style attribute on a group's name  (<span class="sources-kicker"> (line 15): attribute style is not part of the Sources contra)
+  ok    rejects labels: a name and a text in the homepage groups  (<li class="sources-item"> (line 18): with data-items="labels" the tick is followed by span)
+  ok    rejects labels: data-items on another layout  (<section class="sources-section"> (line 1): data-items belongs to layout "groups")
+  ok    rejects flow: the input without its slot mark  (<div class="sources-flow rv"> (line 11): the flow opens with the input — one block with da)
+  ok    rejects flow: the arrow removed  (<div class="sources-flow rv"> (line 11): div.sources-arrow follows the input, copied as it)
+  ok    rejects flow: a second group  (<div class="sources-group"> (line 62): the flow holds the input, the arrow and one group)
+  ok    rejects list: a description without its name  (<div class="sources-row-body"> (line 17): dt.sources-term (the source's name) is required)
+  ok    rejects list: a head block above the split  (<div class="section-head rv"> (line 3): expected class "sources-split" (the split))
+  ok    rejects list: the reveal hook removed from the frame  (<div class="sources-frame"> (line 12): class "rv" is required here (a behaviour hook))
+  ok    rejects cells: three cells  (<dl class="sources-cells cells"> (line 12): two or four cells — the sheet is two across (f)
+  ok    rejects cells: the hairline hook removed  (<dl class="sources-cells"> (line 12): class "cells" is required here (a behaviour hook))
+  ok    rejects cells: a cell without its kind  (<div class="sources-cell-head"> (line 14): span.sources-kicker (the kind) follows the tile)
+
+Sources contract — the validator accepts allowed edits
+  ok    accepts new names and texts, a group's last item removed
+  ok    accepts another figure and sentence
+  ok    accepts one note
+  ok    accepts the notes removed
+  ok    accepts another ground, rhythm, accent and tile tone, the id removed
+  ok    accepts labels: another label, an item added
+  ok    accepts flow: new item texts
+  ok    accepts list: a row removed, the dark line removed
+  ok    accepts cells: two cells, another kind
+
+Report showcase contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to the title  (<h2 class="section-title text-white"> (line 10): class "text-white" is not part of the Rep)
+  ok    rejects the report removed  (<ol class="report-points rv"> (line 14): the report follows the head — the block with data)
+  ok    rejects the report pasted without its slot mark  (<div class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch"> (line)
+  ok    rejects the report slot emptied  (<div> (line 13): the report slot holds the report whole ([data-report] with its marked pas)
+  ok    rejects the report's sources cut out of the slot  (<div class="rv grid lg:grid-cols-[1fr_360px] gap-4 sm:gap-5 lg:gap-6 items-stretch"> (line)
+  ok    rejects neither surface  (<section class="report-showcase"> (line 1): the section carries exactly one of data-surfac)
+  ok    rejects both surfaces  (<section class="report-showcase"> (line 1): the section carries exactly one of data-surfac)
+  ok    rejects the white ground on the dark section's markup  (<section class="report-showcase"> (line 1): the white section holds div.report-inner alone)
+  ok    rejects the rhythm removed  (<section class="report-showcase"> (line 1): data-space is required (md | lg))
+  ok    rejects an unknown rhythm  (<section class="report-showcase"> (line 1): data-space="xl" is not a variant (md | lg))
+  ok    rejects data-tone="quiet" on the two-glow ground  (<section class="report-showcase"> (line 1): with data-tone="quiet" the section holds div.r)
+  ok    rejects a glow removed  (<section class="report-showcase"> (line 1): the dark section holds its two glows (div.orb.)
+  ok    rejects a glow given an inline style  (<div class="orb orb-dark-teal"> (line 2): attribute style is not part of the Report showca)
+  ok    rejects the head removed  (<div class="report-inner"> (line 4): the head comes first — div.section-head, or div.repor)
+  ok    rejects an unknown head width  (<div class="section-head rv"> (line 5): data-measure="900" is not a variant (720 | 760 | 8)
+  ok    rejects a fourth point  (<ol class="report-points rv"> (line 133): exactly three points (found 4))
+  ok    rejects two points  (<ol class="report-points rv"> (line 133): exactly three points (found 2))
+  ok    rejects a word in a point's number  (<span class="report-point-num"> (line 135): the number is a digit (found "One"))
+  ok    rejects markup in a point's name  (<b> (line 137) is not allowed in the point's name (allowed: text only))
+  ok    rejects the points with icons on the dark section  (<ol class="report-points rv"> (line 133): on the dark section the points carry data-marker)
+  ok    rejects the reveal hook removed from the points  (<ol class="report-points"> (line 133): class "rv" is required here (a behaviour hook))
+  ok    rejects the callout without its icon  (<div class="report-callout rv"> (line 156): p.report-callout-text follows the icon)
+  ok    rejects the orange callout on the dark section  (<div class="report-callout rv"> (line 156): data-tone="orange" — the coloured callout belo)
+  ok    rejects a button under the report  (<a class="action-button btn-press group"> (line 160): not part of the section (under the r)
+  ok    rejects a <script> in the section  (<div class="report-inner"> (line 4): the head comes first — div.section-head, or div.repor)
+  ok    rejects pair: three cards  (<div class="report-pair rv"> (line 148): exactly two cards (found 3))
+  ok    rejects pair: an unknown split  (<div class="report-pair rv"> (line 148): data-split="even" is not a variant (tail))
+  ok    rejects pair: the points strip before the pair  (<div class="report-pair rv"> (line 134): a pair of cards stands instead of the points stri)
+  ok    rejects pair: two pen words in the statement  (<p class="report-principle-title"> (line 136): one pen word at most in the statement (foun)
+  ok    rejects pair: the pen word without its line  (<span class="pen-word"> (line 136): the pen word holds its text and then the line, <svg cl)
+  ok    rejects path: two current pills  (<ol class="report-path rv"> (line 14): one current pill at most (found 2))
+  ok    rejects path: the arrow removed between two steps  (<li class="report-path-step"> (line 15): the arrow <svg class="report-path-arrow"> follows)
+  ok    rejects path: a single step  (<ol class="report-path rv"> (line 14): two to four steps (found 1))
+  ok    rejects quiet: the ground removed  (<section class="report-showcase"> (line 1): with data-tone="quiet" the section holds div.r)
+  ok    rejects quiet: the page's block without its slot mark  (<div class="rv mt-10 sm:mt-12 lg:mt-14"> (line 145): not part of the section (under the re)
+  ok    rejects quiet: the footnote without its icon  (<p class="report-caveat rv"> (line 141): the footnote opens with its icon, <svg class="rep)
+  ok    rejects white: the dark section's glows  (<section class="report-showcase"> (line 1): the white section holds div.report-inner alone)
+  ok    rejects white: data-tone on the section  (<section class="report-showcase"> (line 1): data-tone belongs to the dark section)
+  ok    rejects white: the callout without its colour  (<div class="report-callout rv"> (line 151): on the white section the callout is data-tone=)
+  ok    rejects white: the stagger hook removed from the points  (<ul class="report-points"> (line 134): class "rv-kids" is required here (a behaviour hook))
+  ok    rejects white: an unknown tile tone  (<span class="icon-tile"> (line 136): data-tone="blue" is not a variant (teal | ink | orang)
+
+Report showcase contract — the validator accepts allowed edits
+  ok    accepts new title, intro and point texts
+  ok    accepts the pill removed, a second intro added
+  ok    accepts another head width, the intro's measure removed
+  ok    accepts the other rhythm, the orange dot, the id removed
+  ok    accepts the callout removed
+  ok    accepts the points removed
+  ok    accepts nothing under the report
+  ok    accepts a pen word in the title
+  ok    accepts pair: another pen word, the label and the paragraph removed
+  ok    accepts pair: the second card the wider one
+  ok    accepts path: the current pill moved, another tile tone
+  ok    accepts path: a step removed (two left)
+  ok    accepts quiet: the footnote edited, the page's block removed
+  ok    accepts quiet: the footnote removed
+  ok    accepts white: new point names, another tile tone
+  ok    accepts white: the foot removed
+
+Start free contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to a figure  (<div class="start-free-figure p-8"> (line 21): class "p-8" is not part of the Start free c)
+  ok    rejects an unknown layout  (<section class="start-free"> (line 1): data-layout="banner" is not a variant (open | frame)
+  ok    rejects the background removed  (<section class="start-free"> (line 1): data-bg is required (white))
+  ok    rejects another background  (<section class="start-free"> (line 1): data-bg="cool" is not a variant (white))
+  ok    rejects a figure removed  (<div class="start-free-figures rv-kids"> (line 20): two div.start-free-figure — the light )
+  ok    rejects the dark figure first  (<div class="start-free-figure"> (line 21): the first figure is data-tone="teal")
+  ok    rejects markup in a figure  (<b> (line 22) is not allowed in the figure (allowed: text only))
+  ok    rejects a figure without its label  (<div class="start-free-figure"> (line 21): a figure holds p.start-free-value, p.start-free)
+  ok    rejects the paragraphs removed  (<div class="start-free-text rv"> (line 4): a p.section-intro follows the title — the sente)
+  ok    rejects three paragraphs  (<p class="section-intro"> (line 12): expected <div> for the actions)
+  ok    rejects the button removed  (<div class="start-free-actions"> (line 12): the first action is the a.action-button)
+  ok    rejects a second button in place of the quiet link  (<a class="action-button btn-press group"> (line 17): the button is followed only by the qu)
+  ok    rejects the reveal hook removed from the figures  (<div class="start-free-figures"> (line 20): class "rv-kids" is required here (a behaviour )
+  ok    rejects a line under the figures in the open layout  (<p class="start-free-note"> (line 31): the line under the figures belongs to data-layout=")
+  ok    rejects a style attribute on the title  (<h2 class="section-title"> (line 9): attribute style is not part of the Start free contrac)
+  ok    rejects framed: the frame removed  (<div> (line 3): expected class "start-free-frame" (the frame))
+  ok    rejects framed: the reveal class on the text column  (<div class="start-free-text rv"> (line 5): class "rv" is not part of the Start free contra)
+
+Start free contract — the validator accepts allowed edits
+  ok    accepts new title, paragraph and labels
+  ok    accepts the second paragraph removed
+  ok    accepts the quiet link removed, the pill removed
+  ok    accepts another rhythm, the id removed
+  ok    accepts the button pointed at another checker anchor
+  ok    accepts framed: the line under the figures removed
+  ok    accepts framed: new figures
+
+Pricing preview contract — the validator rejects known-bad pastes
+  ok    rejects a price edited in a card  (<span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest le)
+  ok    rejects a price edited in the island  (<script> (line 82): the pricing data island is not the pricing data source's (build/pricin)
+  ok    rejects a price edited in the card AND in the island (the two agree, the data source does not)  (<span class="text-[29px] sm:text-[34px] lg:text-[40px] font-extrabold tracking-tightest le)
+  ok    rejects a yearly price edited in the island (not on screen at first paint)  (<script> (line 82): the pricing data island is not the pricing data source's (build/pricin)
+  ok    rejects a quota edited in a card  (<ul class="space-y-3.5 text-[13.5px] font-medium text-white/80 min-h-[9rem] mb-6 sm:mb-7 l)
+  ok    rejects a feature line added to a card  (<ul class="space-y-3.5 text-[13.5px] font-medium text-ink-700 min-h-[9rem] mb-6 sm:mb-7 lg)
+  ok    rejects the rate edited in a card  (<span class="js-rate"> (line 36): the light card shows rate "$0.50", the pricing data says)
+  ok    rejects the term edited in a card  (<span class="text-[12.5px] font-medium text-ink-400 pb-1.5 js-term"> (line 34): the light )
+  ok    rejects the island removed  (<div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-)
+  ok    rejects the island emptied  (<script> (line 82): the pricing data island is not readable JSON (Unexpected end of JSON i)
+  ok    rejects the island broken (not JSON)  (<script> (line 82): the pricing data island is not readable JSON (Expected property name o)
+  ok    rejects the island moved out of the plans block  (<script> (line 89): the section holds its glow and div.pricing-inner)
+  ok    rejects a second island  (<script> (line 90): the section holds its glow and div.pricing-inner)
+  ok    rejects a period removed from the island  (<script> (line 82): the pricing data island is not the pricing data source's (build/pricin)
+  ok    rejects a period button removed from the switch  (<div class="rv flex flex-col items-center gap-3 mb-8 sm:mb-10 lg:mb-12"> (line 12): the sw)
+  ok    rejects another period pressed without its figures  (<div class="rv flex flex-col items-center gap-3 mb-8 sm:mb-10 lg:mb-12"> (line 12): the pr)
+  ok    rejects a plan card removed  (<div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-)
+  ok    rejects a plan card given another tier name  (<div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-)
+  ok    rejects the feature-line templates removed  (<div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-)
+  ok    rejects the plans pasted without their slot mark  (<div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-)
+  ok    rejects the switch pasted without its slot mark  (<div class="rv flex flex-col items-center gap-3 mb-8 sm:mb-10 lg:mb-12"> (line 12): the pe)
+  ok    rejects the switch removed  (<div class="rv grid lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-center max-w-[1180px] mx-)
+  ok    rejects the "Recurring payments" switch enabled on One-time, which cannot recur  (<input class="sr-only"> (line 20): the pricing data gives the first period, "onetime", no )
+  ok    rejects a second "Recurring payments" switch  (<input class="sr-only"> (line 25): one "Recurring payments" switch per section — it moves )
+  ok    rejects the "Recurring payments" switch moved under the cards  (<label class="pr-switch inline-flex items-center gap-2.5 rounded-full bg-white ring-1 ring)
+  ok    rejects the first period removed from the section  (<section class="pricing-preview"> (line 1): data-pricing is required (onetime | monthly | )
+  ok    rejects the period's note rewritten  (<span class="pricing-note"> (line 85): the note says "Cancel anytime · no hidden fees", th)
+  ok    rejects the period's note without its hook  (<span class="pricing-note"> (line 85): data-period-note is required — the script writes ea)
+  ok    rejects a price typed into the intro  (<div class="section-head rv"> (line 4): a price in the head — figures are shown by the pla)
+  ok    rejects a price typed into the title  (<div class="section-head rv"> (line 4): a price in the head — figures are shown by the pla)
+  ok    rejects a utility added to the title  (<h2 class="section-title text-ink-900"> (line 9): class "text-ink-900" is not part of the )
+  ok    rejects an unknown layout  (<section class="pricing-preview"> (line 1): data-layout="wide" is not a variant (center | )
+  ok    rejects another ground  (<section class="pricing-preview"> (line 1): data-bg="white" is not a variant (tint))
+  ok    rejects the glow removed  (<section class="pricing-preview"> (line 1): data-layout="center": the section opens with <)
+  ok    rejects a javascript: link  (<a class="pricing-link"> (line 87): javascript: links are not allowed)
+  ok    rejects center: a button under the cards  (<div class="pricing-actions rv"> (line 84): a button under the cards belongs to data-layou)
+  ok    rejects split: a price typed into the note card  (<span class="pricing-aside-text"> (line 14): a price in the note — figures are shown by th)
+  ok    rejects split: the dark button under the cards  (<a class="action-button btn-press group"> (line 66): the button under the cards is the lig)
+  ok    rejects split: the note card without its icon  (<p class="pricing-aside rv"> (line 12): span.pricing-aside-text follows the icon)
+  ok    rejects split: a price edited in a card  (<span class="text-[29px] sm:text-[32px] lg:text-[38px] font-extrabold tracking-tightest le)
+  ok    rejects split: the island removed  (<div class="rv grid md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-stretch mb-8 sm:mb-10"> ()
+
+Pricing preview contract — the validator accepts allowed edits
+  ok    accepts new title, intro and pill text
+  ok    accepts the pill and the intro removed
+  ok    accepts the other rhythm, the teal dot, an id of the page's own
+  ok    accepts the quiet link's text and address
+  ok    accepts the quiet link removed with its separator
+  ok    accepts the line under the cards removed
+  ok    accepts split: the note card's text, the intro's measure
+  ok    accepts split: the note card removed
+  ok    accepts split: the button's label and address
+  ok    accepts split: the button removed
+
+Reviews contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to a quote  (<blockquote class="review-quote text-white"> (line 30): class "text-white" is not part of )
+  ok    rejects an unknown layout  (<section class="reviews-section"> (line 1): data-layout="masonry" is not a variant (carous)
+  ok    rejects the carousel on the tint section  (<section class="reviews-section"> (line 1): data-layout="carousel" stands on the dark sect)
+  ok    rejects the carousel's hook removed from the section  (<section class="reviews-section"> (line 1): data-carousel is required on the section — the)
+  ok    rejects the track's hook removed  (<div class="reviews-track"> (line 16): data-carousel-track is required — the script pages )
+  ok    rejects an arrow removed  (<div class="reviews-rail rv"> (line 15): the "next" arrow — <button type="button" data-car)
+  ok    rejects an arrow without its label  (<button class="reviews-nav"> (line 178): the "previous" arrow needs an aria-label (it hold)
+  ok    rejects the dots' holder removed  (<div class="reviews-actions rv"> (line 185): expected class "reviews-dots" (the dots' hold)
+  ok    rejects dots written by hand  (<div class="reviews-dots"> (line 185): the holder stays empty — the script draws the dots)
+  ok    rejects the ground removed  (<section class="reviews-section"> (line 1): the dark section opens with div.reviews-bg, co)
+  ok    rejects a card without its quote  (<figure class="review-card"> (line 18): <figcaption class="review-by"> closes the card)
+  ok    rejects an empty quote  (<blockquote class="review-quote"> (line 30): the quote (remove the whole card instead) is )
+  ok    rejects a card without its author  (<figcaption class="review-by"> (line 31): span.review-author (the name the platform prints)
+  ok    rejects a card without its platform  (<div class="review-source"> (line 19): span.review-source-name (the platform) is required)
+  ok    rejects emphasis added inside a quote  (<strong> (line 30) is not allowed in the quote (allowed: br))
+  ok    rejects a link inside a quote  (<a> (line 30) is not allowed in the quote (allowed: br))
+  ok    rejects a rating that is not a review's (4.7)  (<span class="review-rating"> (line 22): data-rating="4.7" is not a variant (1 | 1.5 | 2 | )
+  ok    rejects a rating without its value  (<span class="review-rating"> (line 22): data-rating is required (1 | 1.5 | 2 | 2.5 | 3 | 3)
+  ok    rejects a word as the rating's figure  (<span class="review-rating-value"> (line 27): the figure is the rating as a number ("4.5"))
+  ok    rejects the stars lit by an inline style  (<span class="review-stars-lit"> (line 25): attribute style is not part of the Reviews cont)
+  ok    rejects four stars in a row  (<span class="review-stars-base"> (line 24): the base row holds its five star <svg>, copied)
+  ok    rejects the stars removed from a rating  (<span class="review-rating"> (line 22): span.review-rating-value (the figure) follows the )
+  ok    rejects a card outside its item  (<figure class="review-card"> (line 17): expected <div> for a review)
+  ok    rejects a heading inside a card  (<h3> (line 30): expected <blockquote> for the quote)
+  ok    rejects a javascript: link to the source  (<a class="review-link"> (line 33): javascript: links are not allowed)
+  ok    rejects a single review  (<div class="reviews-track"> (line 16): at least two reviews (found 1))
+  ok    rejects the dark button under the rail  (<a class="action-button btn-press group"> (line 187): on the dark section the button is th)
+  ok    rejects a <script> in the section  (<script> (line 5): expected <div> for the top row)
+  ok    rejects grid: on the dark section  (<section class="reviews-section"> (line 1): data-layout="grid" stands on the tint section )
+  ok    rejects grid: the stagger hook removed  (<div class="reviews-grid"> (line 6): class "rv-kids" is required here (a behaviour hook))
+  ok    rejects grid: a button under the cards  (<div class="reviews-actions rv"> (line 68): the grid section holds its head and div.review)
+  ok    rejects grid: an unknown language code  (<div class="reviews-grid rv-kids"> (line 6): lang="english" is not an allowed value)
+  ok    rejects grid: the head removed  (<div class="reviews-inner"> (line 2): the head block, div.section-head, comes first)
+
+Reviews contract — the validator accepts allowed edits
+  ok    accepts a new title, the pill removed
+  ok    accepts a review removed
+  ok    accepts a review copied
+  ok    accepts another real review in a card: quote, name, rating, all in step
+  ok    accepts a rating changed in data-rating alone (a warning: the script repairs the rest)
+  ok    accepts a review without a rating
+  ok    accepts a review without the platform's mark and without its link
+  ok    accepts the link to the source edited
+  ok    accepts the quotes' language marked, the words of the rail translated
+  ok    accepts the button under the rail removed, the standard dark head, an id
+  ok    accepts a line break in a quote
+  ok    accepts grid: six reviews, the reveal beat removed
+  ok    accepts grid: a pill and an intro added, another head width
+  ok    accepts grid: four reviews (a warning: the last row is not full)
+
+FAQ contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to an answer  (<p class="faq-a-body text-ink-900"> (line 20): class "text-ink-900" is not part of the FAQ)
+  ok    rejects an unknown variant value  (<section class="faq"> (line 1): data-bg="blue" is not a variant (white | tint))
+  ok    rejects a variant removed  (<section class="faq"> (line 1): data-space is required (lg | md))
+  ok    rejects a pill given its own background  (<div class="section-eyebrow"> (line 5): attribute data-bg is not part of the FAQ contract)
+  ok    rejects an intro given a size  (<p class="section-intro"> (line 10): attribute data-size is not part of the FAQ contract)
+  ok    rejects a margin utility on an embedded grid  (<div class="faq-grid mt-12"> (line 1): class "mt-12" is not part of the FAQ contract — a T)
+  ok    rejects aria-expanded out of step with .open  (<button class="faq-q"> (line 16): aria-expanded="false" but the item is open — it must be )
+  ok    rejects the inner <div> of an answer removed  (<div class="faq-a"> (line 27): holds exactly one plain <div> (it clips the answer while it)
+  ok    rejects data-faq removed  (<div class="faq-list"> (line 14): data-faq is required (the accordion's JS hook))
+  ok    rejects a style attribute  (<h2 class="section-title"> (line 9): attribute style is not part of the FAQ contract)
+  ok    rejects markup in a question  (<b> (line 17) is not allowed in the question (allowed: text only))
+  ok    rejects a <div> left open  (<div> (line 14): expected class "faq-item" (a question))
+
+FAQ contract — the validator accepts allowed edits
+  ok    accepts new question and answer text
+  ok    accepts a rich answer: two paragraphs with <strong>
+  ok    accepts the last question removed
+  ok    accepts the intro and the more link removed
+  ok    accepts other variant values
+  ok    accepts a question copied as it is, ids and all (the script renumbers)
+  ok    accepts a question pasted without its id pair
+  ok    accepts aria-controls left pointing at another answer
+  ok    accepts an aside slot for another block (a contact card)
+
+CTA band contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to the title  (<h2 class="cta-title rv text-ink-900"> (line 8): class "text-ink-900" is not part of the C)
+  ok    rejects an unknown measure  (<p class="cta-lead rv"> (line 9): data-measure="80" is not a variant (46 | 52 | 54 | 56 | )
+  ok    rejects an unknown layout  (<div class="cta-actions rv"> (line 10): data-layout="grid" is not a variant (stack | pair))
+  ok    rejects the ground removed  (<section class="cta-band"> (line 1): the band holds div.cta-band-bg and div.cta-band-inner)
+  ok    rejects a glow given an inline style  (<div class="orb cta-glow-warm"> (line 4): attribute style is not part of the CTA band cont)
+  ok    rejects the ring word removed from the title  (<h2 class="cta-title rv"> (line 8): the title carries exactly one ring word, <span class=")
+  ok    rejects two ring words  (<h2 class="cta-title rv"> (line 8): the title carries exactly one ring word, <span class=")
+  ok    rejects the button without its arrow orb  (<a class="cta-button btn-press group"> (line 11): the button ends with span.cta-button-orb)
+  ok    rejects the button's behaviour hooks removed  (<a class="cta-button"> (line 11): class "btn-press" is required here (a behaviour hook))
+  ok    rejects a button colour in the signature band  (<a class="cta-button btn-press group"> (line 11): data-tone belongs to the plain band's bu)
+  ok    rejects the spark line in a row  (<p class="cta-hint"> (line 16): expected <a> for the quiet link)
+  ok    rejects a second button without data-layout="pair"  (<a class="cta-button-secondary btn-press"> (line 16): expected class "cta-link" (the quiet)
+  ok    rejects a line above the title together with a lead  (<p class="cta-lead rv"> (line 10): a band has a line above the title or a lead under it, n)
+  ok    rejects a javascript: link  (<a class="cta-link"> (line 16): javascript: links are not allowed)
+  ok    rejects a <script> in the band  (<div class="cta-band-inner"> (line 7): the h2.cta-title is required (after the optional ey)
+  ok    rejects plain: a ring word in the title  (<span class="ring-word"> (line 5): the ring word holds its text and then the loop, <svg cl)
+  ok    rejects plain: the lead removed  (<div class="cta-band-inner"> (line 4): the a.cta-button follows the lead)
+  ok    rejects plain: an unknown button colour  (<a class="cta-button btn-press group rv"> (line 7): data-tone="blue" is not a variant (ora)
+  ok    rejects plain: the wide column  (<section class="cta-band"> (line 1): data-width belongs to the signature band, not to the )
+
+CTA band contract — the validator accepts allowed edits
+  ok    accepts new lead and link text
+  ok    accepts another ring word
+  ok    accepts the lead removed
+  ok    accepts the quiet link removed
+  ok    accepts the button's leading icon removed
+  ok    accepts another measure, the wide column, the section id removed
+  ok    accepts an eyebrow pill added
+  ok    accepts a note with <strong> under the actions
+  ok    accepts an external button link with target and rel
+  ok    accepts plain: the orange button and another measure
+
+Banner contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to the box  (<div class="banner-box rv text-white"> (line 3): class "text-white" is not part of the Ban)
+  ok    rejects an unknown glow  (<section class="banner"> (line 1): data-glow="green" is not a variant (teal | coral | cora)
+  ok    rejects the glow removed  (<section class="banner"> (line 1): data-glow is required (teal | coral | coral-soft | viol)
+  ok    rejects a pill given its own dot colour  (<span class="section-eyebrow-dot bg-teal-400"> (line 8): class "bg-teal-400" is not part o)
+  ok    rejects data-surface removed from the box  (<div class="banner-box rv"> (line 3): data-surface="dark" is required)
+  ok    rejects the title turned into an h3  (<h3 class="banner-title"> (line 11): expected <h2> for the title)
+  ok    rejects the lead removed  (<div class="banner-text"> (line 6): the p.banner-lead follows the title)
+  ok    rejects an unknown measure  (<p class="banner-lead"> (line 12): data-measure="80" is not a variant (54 | 60 | 62 | 66))
+  ok    rejects a second button  (<div class="banner-action"> (line 14): holds the a.banner-button, or div.banner-actions wi)
+  ok    rejects the button without its arrow orb  (<a class="banner-button btn-press group"> (line 14): the button holds its text and span.ba)
+  ok    rejects a link in the pill label  (<a> (line 9) is not allowed in the eyebrow label (allowed: text only))
+  ok    rejects an onclick handler  (<a class="banner-button btn-press group"> (line 14): attribute onclick is not part of the )
+  ok    rejects split: a third child in the schematic  (<div class="banner-branch-children"> (line 24): the bracket is drawn for exactly two child)
+  ok    rejects split: aria-hidden removed from the schematic  (<div class="banner-branch"> (line 19): aria-hidden="true" is required)
+  ok    rejects split: the schematic removed, the layout kept  (<div class="banner-grid"> (line 5): div.banner-action with the a.banner-button is required)
+  ok    rejects split: the layout attribute removed  (<div class="banner-aside"> (line 18): expected class "banner-action" (the action))
+  ok    rejects row + link: the link without its column  (<div class="banner-action"> (line 15): holds the a.banner-button, or div.banner-actions wi)
+
+Banner contract — the validator accepts allowed edits
+  ok    accepts new title, lead and button text
+  ok    accepts another glow, another measure, the id removed
+  ok    accepts the eyebrow pill removed
+  ok    accepts a second paragraph added
+  ok    accepts a pill and a detail added under the lead
+  ok    accepts an external button link with target and rel
+  ok    accepts split: new labels in the schematic
+  ok    accepts split: the pill and the detail removed
+  ok    accepts row + link: new link text and address
+
+Inquiry form contract — the validator rejects known-bad pastes
+  ok    rejects a utility added to the card  (<div class="inquiry-card rv text-ink-900"> (line 13): class "text-ink-900" is not part of )
+  ok    rejects an unknown background  (<section class="inquiry"> (line 1): data-bg="dark" is not a variant (white | cool))
+  ok    rejects the background removed  (<section class="inquiry"> (line 1): data-bg is required (white | cool))
+  ok    rejects a pill given its own background  (<div class="section-eyebrow"> (line 5): attribute data-bg is not part of the Inquiry form )
+  ok    rejects data-inquiry-form removed from the form  (<form> (line 14): data-inquiry-form is required)
+  ok    rejects another inline handler on the form  (<form> (line 14): onsubmit="send(this)" must be onsubmit="return false")
+  ok    rejects a field without its label  (<div class="inquiry-field"> (line 16): second child is the control: input, textarea or sel)
+  ok    rejects a control without the field class  (<div class="inquiry-field"> (line 16): second child is the control: input, textarea or sel)
+  ok    rejects a checkbox as a plain field  (<input class="cf-field"> (line 18): type="checkbox" is not a field type of the form (text )
+  ok    rejects a style attribute on a field  (<input class="cf-field"> (line 18): attribute style is not part of the Inquiry form contra)
+  ok    rejects an unknown field width  (<div class="inquiry-field"> (line 24): data-span="half" is not a variant (full))
+  ok    rejects the submit button turned into a link  (<a class="inquiry-button btn-press group"> (line 72): expected <button> for the button)
+  ok    rejects the button made type="button"  (<button class="inquiry-button btn-press group"> (line 72): type="submit" is required)
+  ok    rejects the success state shown  (<div class="inquiry-success"> (line 78): hidden is required)
+  ok    rejects a <script> in the form  (<script> (line 15): expected <div> for the field grid)
+  ok    rejects chips: a chip without its checkbox  (<label class="inquiry-option"> (line 43): second child is span.inquiry-chip)
+  ok    rejects chips: a chip without a value  (<input class="inquiry-option-input"> (line 44): value is required)
+
+Inquiry form contract — the validator accepts allowed edits
+  ok    accepts new head, label, placeholder and button text
+  ok    accepts other variants: cool ground, wider head column, teal dot, no sticky
+  ok    accepts the eyebrow, the intro and the line under it removed
+  ok    accepts a hint added under a field, a field made full width
+  ok    accepts a field copied as it is, id and all (the script repairs the pair)
+  ok    accepts a field pasted without its id pair
+  ok    accepts the consent line removed
+  ok    accepts the success state removed
+  ok    accepts the prototype stub removed from the form (the backend binding takes over)
+  ok    accepts chips: new chip text and value, one chip removed
+
+all inputs keep the library contract
