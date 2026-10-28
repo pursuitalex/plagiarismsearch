@@ -2140,3 +2140,34 @@ html.js-motion .ty-spark:nth-of-type(3n) { animation-delay:1.09s; }
 @media (prefers-reduced-motion: reduce) {
   html.js-motion .ty-disc, html.js-motion .ty-check path, html.js-motion .ty-halo, html.js-motion .ty-spark { animation:none; }
 }
+
+/* ═══ 40 · cookie consent (build/shell/footer-v2.html, module cookie-consent) ════════════
+   The small card in the lower left corner. Layout, colours and type are utilities in the
+   markup; here are its three button shapes, the ring its controls keep although the card
+   sits inside the dark footer element, and its entrance.
+
+     .cc-button.cc-button-dark    Accept / Accept all — the site's dark pill
+     .cc-button.cc-button-light   Reject / Save choices — the same size, on white: refusing
+                                  is as easy as agreeing
+     .cc-quiet                    Settings — a quiet text button
+
+   The card arrives once, rising 12px and fading in, only under html.js-motion: with
+   reduced motion, or without the motion script, it is simply there. */
+.cc-button { display:inline-flex; align-items:center; justify-content:center; height:40px; padding:0 18px; border-radius:9999px;
+  font-size:13.5px; font-weight:700; white-space:nowrap; transition:background-color .2s ease, box-shadow .2s ease, color .2s ease; }
+.cc-button-dark { background:#111827; color:#fff; }
+.cc-button-dark:hover { background:#1F2937; }
+.cc-button-light { background:#fff; color:#111827; box-shadow:inset 0 0 0 1px rgba(0,0,0,.12); }
+.cc-button-light:hover { box-shadow:inset 0 0 0 1px rgba(0,0,0,.24); background:#F8F9FB; }
+.cc-quiet { height:40px; padding:0 4px; font-size:13.5px; font-weight:600; color:#4B5563; text-decoration:underline;
+  text-decoration-color:#D1D5DB; text-underline-offset:4px; transition:color .2s ease, text-decoration-color .2s ease; }
+.cc-quiet:hover { color:#111827; text-decoration-color:#6B7280; }
+
+/* the card is white although the footer around it is dark: its focus ring stays teal
+   (07-a11y.css turns rings light inside [data-surface="dark"]) */
+.cookie-consent a:focus-visible, .cookie-consent button:focus-visible { outline-color:#0CA9C3; }
+
+/* the entrance */
+html.js-motion .cookie-consent { opacity:0; transform:translateY(12px); transition:opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1); }
+html.js-motion .cookie-consent.is-in { opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce) { html.js-motion .cookie-consent { opacity:1; transform:none; transition:none; } }

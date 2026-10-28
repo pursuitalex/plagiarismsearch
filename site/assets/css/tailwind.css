@@ -9681,6 +9681,10 @@ a.team-linkedin:focus-visible {
   left: 0.875rem;
 }
 
+.left-4 {
+  left: 1rem;
+}
+
 .left-5 {
   left: 1.25rem;
 }
@@ -9727,6 +9731,10 @@ a.team-linkedin:focus-visible {
 
 .right-1\/4 {
   right: 25%;
+}
+
+.right-3 {
+  right: 0.75rem;
 }
 
 .right-3\.5 {
@@ -9799,6 +9807,10 @@ a.team-linkedin:focus-visible {
 
 .top-24 {
   top: 6rem;
+}
+
+.top-3 {
+  top: 0.75rem;
 }
 
 .top-4 {
@@ -9901,12 +9913,20 @@ a.team-linkedin:focus-visible {
   z-index: 1;
 }
 
+.z-\[45\] {
+  z-index: 45;
+}
+
 .z-\[90\] {
   z-index: 90;
 }
 
 .z-\[95\] {
   z-index: 95;
+}
+
+.-order-1 {
+  order: -1;
 }
 
 .order-1 {
@@ -10128,6 +10148,10 @@ a.team-linkedin:focus-visible {
 
 .mr-\[50\%\] {
   margin-right: 50%;
+}
+
+.mr-auto {
+  margin-right: auto;
 }
 
 .mt-0 {
@@ -10531,6 +10555,10 @@ a.team-linkedin:focus-visible {
 
 .min-h-\[26px\] {
   min-height: 26px;
+}
+
+.min-h-\[300px\] {
+  min-height: 300px;
 }
 
 .min-h-\[60px\] {
@@ -11698,6 +11726,10 @@ a.team-linkedin:focus-visible {
   border-radius: 18px;
 }
 
+.rounded-\[20px\] {
+  border-radius: 20px;
+}
+
 .rounded-\[22px\] {
   border-radius: 22px;
 }
@@ -12800,6 +12832,10 @@ a.team-linkedin:focus-visible {
   padding-right: 1.25rem;
 }
 
+.pr-8 {
+  padding-right: 2rem;
+}
+
 .pt-1 {
   padding-top: 0.25rem;
 }
@@ -13733,6 +13769,10 @@ a.team-linkedin:focus-visible {
   opacity: 0;
 }
 
+.opacity-60 {
+  opacity: 0.6;
+}
+
 .opacity-70 {
   opacity: 0.7;
 }
@@ -14591,12 +14631,20 @@ a.team-linkedin:focus-visible {
     bottom: 3.5rem;
   }
 
+  .sm\:bottom-6 {
+    bottom: 1.5rem;
+  }
+
   .sm\:bottom-7 {
     bottom: 1.75rem;
   }
 
   .sm\:left-6 {
     left: 1.5rem;
+  }
+
+  .sm\:right-4 {
+    right: 1rem;
   }
 
   .sm\:right-7 {
@@ -14611,8 +14659,16 @@ a.team-linkedin:focus-visible {
     right: 5.5%;
   }
 
+  .sm\:right-auto {
+    right: auto;
+  }
+
   .sm\:top-10 {
     top: 2.5rem;
+  }
+
+  .sm\:top-4 {
+    top: 1rem;
   }
 
   .sm\:top-8 {
@@ -14924,6 +14980,10 @@ a.team-linkedin:focus-visible {
     width: 360px;
   }
 
+  .sm\:w-\[400px\] {
+    width: 400px;
+  }
+
   .sm\:w-\[64px\] {
     width: 64px;
   }
@@ -15177,6 +15237,10 @@ a.team-linkedin:focus-visible {
     border-radius: 20px;
   }
 
+  .sm\:rounded-\[24px\] {
+    border-radius: 24px;
+  }
+
   .sm\:rounded-\[28px\] {
     border-radius: 28px;
   }
@@ -15212,6 +15276,10 @@ a.team-linkedin:focus-visible {
 
   .sm\:border-t {
     border-top-width: 1px;
+  }
+
+  .sm\:p-10 {
+    padding: 2.5rem;
   }
 
   .sm\:p-12 {
@@ -15728,12 +15796,20 @@ a.team-linkedin:focus-visible {
     bottom: 1.25rem;
   }
 
+  .lg\:bottom-8 {
+    bottom: 2rem;
+  }
+
   .lg\:bottom-9 {
     bottom: 2.25rem;
   }
 
   .lg\:left-0 {
     left: 0px;
+  }
+
+  .lg\:left-8 {
+    left: 2rem;
   }
 
   .lg\:right-6 {
